@@ -17,12 +17,12 @@ namespace DTXMania
 		public void tフェードアウト開始()
 		{
 			this.mode = EFIFOモード.フェードアウト;
-			this.counter = new CCounter( 0, 600, 5, CDTXMania.Timer );
+			this.counter = new CCounter( 0, 400, 5, CDTXMania.Timer );
 		}
 		public void tフェードイン開始()
 		{
 			this.mode = EFIFOモード.フェードイン;
-			this.counter = new CCounter( 0, 600, 5, CDTXMania.Timer );
+			this.counter = new CCounter( 0, 400, 5, CDTXMania.Timer );
 		}
 		public void tフェードイン完了()		// #25406 2011.6.9 yyagi
 		{
@@ -56,13 +56,13 @@ namespace DTXMania
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Excellent.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Drums_black.png"));
                 this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenSelect preimage default.png"));
-                this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
+                //this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
                 this.nAVI再生開始時刻 = -1;
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
                 this.pAVIBmp = IntPtr.Zero;
 
-                this.tリザルト動画の指定があれば構築する();
+                //this.tリザルト動画の指定があれば構築する();
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -76,11 +76,6 @@ namespace DTXMania
             {
                 this.sfリザルトAVI画像.Dispose();
                 this.sfリザルトAVI画像 = null;
-            }
-            if (this.tx描画用 != null)
-            {
-                this.tx描画用.Dispose();
-                this.tx描画用 = null;
             }
             CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
             CDTXMania.tテクスチャの解放( ref this.txリザルト画像がないときの画像 );
@@ -167,7 +162,7 @@ namespace DTXMania
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
                         }
                     }
-                */
+                
                 if (this.sfリザルトAVI画像 != null)
                 {
                     if (((this.avi != null) && (this.sfリザルトAVI画像 != null)) && (this.nAVI再生開始時刻 != -1))
@@ -225,10 +220,10 @@ namespace DTXMania
                         }
                     }
                 }
-                
+                */
 
                 // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
-                /*
+                
                 if (this.sfリザルトAVI画像 == null)
                 {
                     if (this.tx白タイル64x64 != null)
@@ -239,7 +234,7 @@ namespace DTXMania
                         }
                         else
                         {
-                            this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 500)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
+                            this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
                         }
                         for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
                         {
@@ -250,9 +245,9 @@ namespace DTXMania
                         }
                     }
                 }
-                */
+                
             }
-			if( this.counter.n現在の値 != 600 )
+			if( this.counter.n現在の値 != 400 )
 			{
 				return 0;
 			}

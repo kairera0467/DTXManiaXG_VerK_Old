@@ -269,40 +269,7 @@ namespace DTXMania
 
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                 {
-                    this.nミス数 = base.nヒット数・Auto含まない.Drums.Miss + base.nヒット数・Auto含まない.Drums.Poor;
-                    switch (nミス数)
-                    {
-                        case 0:
-                            {
-                                this.nパフェ数 = base.nヒット数・Auto含まない.Drums.Perfect;
-                                if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
-                                {
-                                    this.nパフェ数 = base.nヒット数・Auto含む.Drums.Perfect;
-                                }
-                                    if(nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
-                                        #region[ エクセ ]
-                                        { 
-                                            this.bエクセ = true;
-                                            if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                            this.actScore.n現在の本当のスコア.Drums += 30000;
-                                            break;
-                                        }
-                                        #endregion
-                                    else
-                                        #region[ フルコン ]
-                                        {
-                                            this.bフルコン = true;
-                                            if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                            this.actScore.n現在の本当のスコア.Drums += 15000;
-                                            break;
-                                        }
-                                        #endregion
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }
+
                     this.bサビ区間 = true;
                     UnitTime = 15;
                     ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
@@ -318,15 +285,47 @@ namespace DTXMania
                     {
                         this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-
+                        this.rResultSound.t再生を開始する();
                         this.actFOStageClear.tフェードアウト開始();
-                        //this.td = new Thread(new ThreadStart(this.tフェードアウト));
-                        //this.td.Start();
                     }
 
                 }
                 if (bIsFinishedFadeout)
                 {
+                    this.nミス数 = base.nヒット数・Auto含まない.Drums.Miss + base.nヒット数・Auto含まない.Drums.Poor;
+                    switch (nミス数)
+                    {
+                        case 0:
+                            {
+                                this.nパフェ数 = base.nヒット数・Auto含まない.Drums.Perfect;
+                                if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
+                                {
+                                    this.nパフェ数 = base.nヒット数・Auto含む.Drums.Perfect;
+                                }
+                                if (nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                                #region[ エクセ ]
+                                {
+                                    this.bエクセ = true;
+                                    if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                        this.actScore.n現在の本当のスコア.Drums += 30000;
+                                    break;
+                                }
+                                #endregion
+                                else
+                                #region[ フルコン ]
+                                {
+                                    this.bフルコン = true;
+                                    if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                        this.actScore.n現在の本当のスコア.Drums += 15000;
+                                    break;
+                                }
+                                #endregion
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
                     Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
                     return (int)this.eフェードアウト完了時の戻り値;
                 }
@@ -383,7 +382,6 @@ namespace DTXMania
 		public bool bフィルイン中;
         public bool bフィルイン終了;
         public bool bサビ区間;
-        private Thread td;
         private CSound rResultSound;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[12]
 		{
@@ -417,12 +415,6 @@ namespace DTXMania
             base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
 
             this.actFOStageClear.tフェードアウト開始();
-
-            if (this.td != null)
-            {
-                this.td.Abort();
-                this.td = null;
-            }
         }
 
 		private bool bフィルイン区間の最後のChipである( CDTX.CChip pChip )
