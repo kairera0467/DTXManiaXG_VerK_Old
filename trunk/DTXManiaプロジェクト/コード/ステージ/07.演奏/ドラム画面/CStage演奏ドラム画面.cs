@@ -107,7 +107,7 @@ namespace DTXMania
 				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums hit-bar.png" ) );
 				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums hit-bar guitar.png" ) );
 				this.txレーンフレームGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums lane parts guitar.png" ) );
-                this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_shutter.png"));
+                this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter.png" ) );
                 this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Stage clear.ogg"));
                 if( this.txレーンフレームGB != null )
 				{
@@ -411,7 +411,6 @@ namespace DTXMania
 		private CTexture txレーンフレームGB;
         public CTexture txシャッター;
         private CTexture txLaneCover;
-        private CTexture txボーナス文字;
 		//-----------------
 
         private void tフェードアウト()
@@ -3091,54 +3090,55 @@ namespace DTXMania
                 pChip.bHit = true;
                 if (((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.bドラムが全部オートプレイである) && configIni.b歓声を発声する && configIni.ボーナス演出を表示する)
                 {
+                    int x = 0;
                     switch (pChip.n整数値)
                     {
-                        case 0x01:
+                        case 0x01: //LC
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x02:
+                        case 0x02: //HH
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x03:
+                        case 0x03: //LP
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x04:
+                        case 0x04: //SD
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x05:
+                        case 0x05: //HT
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x06:
+                        case 0x06: //BD
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x07:
+                        case 0x07: //LT
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x08:
+                        case 0x08: //FT
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x09:
+                        case 0x09: //CY
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
-                        case 0x0A:
+                        case 0x0A: //RD
                             CDTXMania.Skin.sound歓声音.t再生する();
                             CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
@@ -3148,6 +3148,7 @@ namespace DTXMania
                     }
                 }
             }
+
         }
         
 

@@ -430,6 +430,16 @@ namespace DTXMania
 			for( int i = 0; i < 13; i++ )
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
 
+            this.iバー背景 = Image.FromFile(CSkin.Path(@"Graphics\5_barbase.png"), false);
+            this.bバー背景L = new Bitmap(1000, 252);
+            this.GraphicsBarL = Graphics.FromImage(this.bバー背景L);
+            this.GraphicsBarL.DrawImage(this.iバー背景, 0, 0, 1000, 252);
+            this.bバー背景R = new Bitmap(1000, 252);
+            this.GraphicsBarR = Graphics.FromImage(this.bバー背景R);
+            this.GraphicsBarR.DrawImage(this.iバー背景, 0, 0, 1000, 252);
+            this.txバー背景L = new CTexture(CDTXMania.app.Device, this.bバー背景L, CDTXMania.TextureFormat, false);
+            this.txバー背景R = new CTexture(CDTXMania.app.Device, this.bバー背景R, CDTXMania.TextureFormat, false);
+
 			int c = ( CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja" ) ? 0 : 1;
 			#region [ Songs not found画像 ]
 			try
@@ -768,7 +778,17 @@ namespace DTXMania
 
 				return 0;
 			}
-
+            SlimDX.Matrix mat = SlimDX.Matrix.Identity;
+            mat *= SlimDX.Matrix.Translation(-600, 18, 0);
+            mat *= SlimDX.Matrix.Scaling(1.5f, 1.26f, 1.0f);
+            mat *= SlimDX.Matrix.RotationY(0.4f);
+            SlimDX.Matrix mat2 = SlimDX.Matrix.Identity;
+            mat2 *= SlimDX.Matrix.Translation(600, 18, 0);
+            mat2 *= SlimDX.Matrix.Scaling(1.5f, 1.26f, 1.0f);
+            mat2 *= SlimDX.Matrix.RotationY(-0.4f);
+            this.txバー背景L.t3D描画(CDTXMania.app.Device, mat);
+            this.txバー背景R.t3D描画(CDTXMania.app.Device, mat2);
+            //this.txパネル本体.t2D描画(CDTXMania.app.Device, 457, 164);
 			if( !this.b登場アニメ全部完了 )
 			{
 				#region [ (1) 登場アニメフェーズの描画。]
@@ -976,14 +996,18 @@ namespace DTXMania
 			}
 		}
 
-		private struct STバー情報
-		{
-			public CActSelect曲リスト.Eバー種別 eバー種別;
-			public string strタイトル文字列;
-			public CTexture txタイトル名;
-			public STDGBVALUE<int> nスキル値;
-			public Color col文字色;
-		}
+        private struct STバー情報
+        {
+            public CActSelect曲リスト.Eバー種別 eバー種別;
+            public Cスコア cスコア;
+            public string strタイトル文字列;
+            public CTexture txタイトル名;
+            public CTexture txジャケット;
+            public CTexture tx選択曲以外のタイトル名L;
+            public CTexture tx選択曲以外のタイトル名R;
+            public STDGBVALUE<int> nスキル値;
+            public Color col文字色;
+        }
 
 		private struct ST選曲バー
 		{
@@ -1042,6 +1066,15 @@ namespace DTXMania
 		private CTexture txSongNotFound, txEnumeratingSongs;
 		private CTexture txスキル数字;
 		private CTexture txアイテム数数字;
+
+        private CTexture txバー背景L;
+        private CTexture txバー背景R;
+        private Graphics GraphicsBarL;
+        private Graphics GraphicsBarR;
+        private Bitmap bバー背景L;
+        private Bitmap bバー背景R;
+        private Image iバー背景;
+
 		private STバー tx曲名バー;
 		private ST選曲バー tx選曲バー;
 
@@ -1214,8 +1247,8 @@ namespace DTXMania
                     var rc = new Rectangle(0, 48, 128, 48);
                     while (x < 1280)
                     {
-                        if (this.tx曲名バー[(int)type] != null)
-                            this.tx曲名バー[(int)type].t2D描画(CDTXMania.app.Device, x, y, rc);	// 胴体；64pxずつ横につなげていく。
+                        //if (this.tx曲名バー[(int)type] != null)
+                            //this.tx曲名バー[(int)type].t2D描画(CDTXMania.app.Device, x, y, rc);	// 胴体；64pxずつ横につなげていく。
                         x += 128;
                     }
                     //-----------------
@@ -1270,6 +1303,104 @@ namespace DTXMania
 				this.stバー情報[ nバー番号 ].txタイトル名 = null;
 			}
 		}
+
+        private void t選択曲以外の曲名バーの生成L(int nバー番号, string str曲名, Color color)
+        {
+            if (nバー番号 < 0 || nバー番号 > 12)
+                return;
+
+            try
+            {
+                SizeF sz曲名;
+
+                #region [ 曲名表示に必要となるサイズを取得する。]
+                //-----------------
+                using (var bmpDummy = new Bitmap(1, 1))
+                {
+                    var g = Graphics.FromImage(bmpDummy);
+                    g.PageUnit = GraphicsUnit.Pixel;
+                    sz曲名 = g.MeasureString(str曲名, this.ft曲リスト用フォント);
+                }
+                //-----------------
+                #endregion
+
+                int n最大幅px = 392;
+                int height = 25;
+                int width = (int)((sz曲名.Width + 2) * 0.5f);
+                if (width > (CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2))
+                    width = CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2;	// 右端断ち切れ仕方ないよね
+
+                float f拡大率X = (width <= n最大幅px) ? 0.5f : (((float)n最大幅px / (float)width) * 0.5f);	// 長い文字列は横方向に圧縮。
+
+                using (var bmp = new Bitmap(width * 2, height * 2, PixelFormat.Format32bppArgb))		// 2倍（面積4倍）のBitmapを確保。（0.5倍で表示する前提。）
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
+                    float y = (((float)bmp.Height) / 2f) - ((CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2f) / 2f);
+                    g.DrawString(str曲名, this.ft曲リスト用フォント, new SolidBrush(this.color文字影), (float)2f, (float)(y + 2f));
+                    g.DrawString(str曲名, this.ft曲リスト用フォント, new SolidBrush(color), 0f, y);
+
+                    CDTXMania.t安全にDisposeする(ref this.stバー情報[nバー番号].tx選択曲以外のタイトル名L);
+
+                    this.stバー情報[nバー番号].tx選択曲以外のタイトル名L = new CTexture(CDTXMania.app.Device, bmp, CDTXMania.TextureFormat);
+                    this.stバー情報[nバー番号].tx選択曲以外のタイトル名L.vc拡大縮小倍率 = new Vector3(f拡大率X, 0.5f, 1f);
+                }
+            }
+            catch (CTextureCreateFailedException)
+            {
+                Trace.TraceError("曲名テクスチャの作成に失敗しました。[{0}]", str曲名);
+                this.stバー情報[nバー番号].tx選択曲以外のタイトル名L = null;
+            }
+        }
+        private void t選択曲以外の曲名バーの生成R(int nバー番号, string str曲名, Color color)
+        {
+            if (nバー番号 < 0 || nバー番号 > 12)
+                return;
+
+            try
+            {
+                SizeF sz曲名;
+
+                #region [ 曲名表示に必要となるサイズを取得する。]
+                //-----------------
+                using (var bmpDummy = new Bitmap(1, 1))
+                {
+                    var g = Graphics.FromImage(bmpDummy);
+                    g.PageUnit = GraphicsUnit.Pixel;
+                    sz曲名 = g.MeasureString(str曲名, this.ft曲リスト用フォント);
+                }
+                //-----------------
+                #endregion
+
+                int n最大幅px = 392;
+                int height = 25;
+                int width = (int)((sz曲名.Width + 2) * 0.5f);
+                if (width > (CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2))
+                    width = CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2;	// 右端断ち切れ仕方ないよね
+
+                float f拡大率X = (width <= n最大幅px) ? 0.5f : (((float)n最大幅px / (float)width) * 0.5f);	// 長い文字列は横方向に圧縮。
+
+                using (var bmp = new Bitmap(width * 2, height * 2, PixelFormat.Format32bppArgb))		// 2倍（面積4倍）のBitmapを確保。（0.5倍で表示する前提。）
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
+                    float y = (((float)bmp.Height) / 2f) - ((CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2f) / 2f);
+                    g.DrawString(str曲名, this.ft曲リスト用フォント, new SolidBrush(this.color文字影), (float)2f, (float)(y + 2f));
+                    g.DrawString(str曲名, this.ft曲リスト用フォント, new SolidBrush(color), 0f, y);
+
+                    CDTXMania.t安全にDisposeする(ref this.stバー情報[nバー番号].tx選択曲以外のタイトル名R);
+
+                    this.stバー情報[nバー番号].tx選択曲以外のタイトル名R = new CTexture(CDTXMania.app.Device, bmp, CDTXMania.TextureFormat);
+                    this.stバー情報[nバー番号].tx選択曲以外のタイトル名R.vc拡大縮小倍率 = new Vector3(f拡大率X, 0.5f, 1f);
+                }
+            }
+            catch (CTextureCreateFailedException)
+            {
+                Trace.TraceError("曲名テクスチャの作成に失敗しました。[{0}]", str曲名);
+                this.stバー情報[nバー番号].tx選択曲以外のタイトル名R = null;
+            }
+        }
+
 		private void tアイテム数の描画()
 		{
 			string s = nCurrentPosition.ToString() + "/" + nNumOfItems.ToString();

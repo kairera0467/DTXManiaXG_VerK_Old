@@ -118,6 +118,11 @@ namespace DTXMania
 				stパッド状態.n明るさ = 0;
 				this.stパッド状態[ i ] = stパッド状態;
 			}
+            for(int i = 0; i < 9; i++)
+            {
+                this.ct表示用[i] = new CCounter(0, 255, 100, CDTXMania.Timer);
+                this.bボーナス文字[i] = false;
+            }
 			base.On活性化();
 		}
 		public override void OnManagedリソースの作成()
@@ -126,6 +131,7 @@ namespace DTXMania
             {
                 this.txパッド = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_pads.png"));
                 this.tx光るパッド = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayDrums pads flush.png"));
+                this.txボーナス文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Bonus.png" ) );
                 base.OnManagedリソースの作成();
             }
 		}
@@ -135,6 +141,7 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパッド );
 				CDTXMania.tテクスチャの解放( ref this.tx光るパッド );
+                CDTXMania.tテクスチャの解放( ref this.txボーナス文字 );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -312,6 +319,15 @@ namespace DTXMania
                     }
                     #endregion
                 }
+#region[ ボーナス表示 ]
+                /*
+                if (this.bボーナス文字[0] == true && this.ct表示用[0].b終了値に達してない) 
+                {
+                    this.txボーナス文字.t2D描画(CDTXMania.app.Device, 250, 560);
+                    this.txボーナス文字.n透明度 = this.ct表示用[0].n現在の値;
+                }
+                */
+#endregion
             }
 			return 0;
 		}
@@ -355,6 +371,9 @@ namespace DTXMania
 		public readonly ST基本位置[] st基本位置;
 		private CTexture txパッド;
 		private CTexture tx光るパッド;
+        private CTexture txボーナス文字;
+        public bool[] bボーナス文字 = new bool[10];
+        public CCounter[] ct表示用 = new CCounter[10];
 		//-----------------
 		#endregion
 	}

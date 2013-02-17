@@ -362,7 +362,7 @@ namespace DTXMania
                     this.nBGM再生開始時刻 = CSound管理.rc演奏用タイマ.n現在時刻;
                     this.nBGMの総再生時間ms = CDTXMania.Skin.sound曲読込開始音.n長さ・現在のサウンド;
                 }
-                //				this.actFI.tフェードイン開始();							// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
+//				this.actFI.tフェードイン開始();							// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
                 base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                 base.b初めての進行描画 = false;
 
@@ -371,8 +371,6 @@ namespace DTXMania
                 graphicsFilename = Graphics.FromImage(bitmapFilename);
                 graphicsFilename.TextRenderingHint = TextRenderingHint.AntiAlias;
                 ftFilename = new Font("MS PGothic", 24f, FontStyle.Bold, GraphicsUnit.Pixel);
-
-
             }
             //-----------------------------
             #endregion
@@ -417,7 +415,7 @@ namespace DTXMania
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
                 if (!File.Exists(path))
                 {
-                    Trace.TraceWarning("ファイルが存在しません。({0})", new object[] { path });
+                    //Trace.TraceWarning("ファイルが存在しません。({0})", new object[] { path });
                     this.txジャケット = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\5_preimage default.png"));
                 }
                 else
@@ -429,7 +427,6 @@ namespace DTXMania
                 {
                     this.txタイトル.t2D描画(CDTXMania.app.Device, (int)(510 + (this.txタイトル.vc拡大縮小倍率.X)), y);
                     this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
-                    
                 }
                 //this.txジャケット.vc拡大縮小倍率.X = 0.689f;
                 //this.txジャケット.vc拡大縮小倍率.Y = 0.699f;

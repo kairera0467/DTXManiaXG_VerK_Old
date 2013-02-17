@@ -2306,9 +2306,9 @@ namespace DTXMania
 						}
 						break;
 					#endregion
-                    #region [ 4F: フィルイン ]
+                    #region [ 4F: ボーナス ]
 					case 0x4F:	// フィルイン
-						this.t進行描画・チップ・フィルイン( configIni, ref dTX, ref pChip );
+						this.t進行描画・チップ・ボーナス( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
                     #region [ 50: 小節線 ]
