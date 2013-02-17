@@ -948,14 +948,16 @@ namespace DTXMania
                                 this.smallvc = new Vector3(0.2f, 0.2f, 1f);
                             else if(tx描画用.szテクスチャサイズ.Width <= 640)
                                 this.smallvc = new Vector3(0.4f, 0.4f, 1f);
-                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
+                            if (this.txクリップパネル != null)
+                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
                             this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 13, 484);
                             CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, 484);
                         }
                         else
                         {
-                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 112);
+                            if (this.txクリップパネル != null)
+                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 112);
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 860, 140);
                             CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(860, 140);
                         }
@@ -965,7 +967,10 @@ namespace DTXMania
                         if (CDTXMania.ConfigIni.bGraph.Drums == true)
                         {
                             this.smallvc = new Vector3(0.76f, 0.76f, 1f);
-                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
+                            if (this.txクリップパネル != null)
+                            {
+                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
+                            }
                             this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 35, 422);
                         }

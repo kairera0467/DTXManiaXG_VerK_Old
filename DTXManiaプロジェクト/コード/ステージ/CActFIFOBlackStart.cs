@@ -52,20 +52,20 @@ namespace DTXMania
 			// Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
 			if (this.tx黒幕 != null)
 			{
-				//this.tx黒タイル64x64.n透明度 = ( this.mode == EFIFOモード.フェードイン ) ? ( ( ( 100 - this.counter.n現在の値 ) * 0xff ) / 100 ) : ( ( this.counter.n現在の値 * 0xff ) / 100 );
                 this.tx黒幕.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - this.counter.n現在の値) * 0xff) / 100) : ((this.counter.n現在の値 * 0xff) / 100);
-
-                /*
-				for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
-				{
-					for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
-					{
-						this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, i * 64, j * 64 );
-					}
-				}
-                */
                 this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
 			}
+            else if (this.tx黒幕 == null)
+            {
+                this.tx黒タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - this.counter.n現在の値) * 0xff) / 100) : ((this.counter.n現在の値 * 0xff) / 100);
+                for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+                {
+                    for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+                    {
+                        this.tx黒タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                    }
+                }
+            }
 			if( this.counter.n現在の値 != 150 )
 			{
 				return 0;
