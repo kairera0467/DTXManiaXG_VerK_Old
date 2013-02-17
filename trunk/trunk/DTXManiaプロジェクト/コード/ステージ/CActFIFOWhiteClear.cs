@@ -91,27 +91,19 @@ namespace DTXMania
 				return 0;
 			}
 			this.counter.t進行();
-            
-            switch (CDTXMania.stage演奏ドラム画面.nミス数)
+
+            if (CDTXMania.stage演奏ドラム画面.nミス数 == 0)
             {
-                case 0:
-                    {
-                        if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
-                        {
-                            this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
-                            this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
-                        }
-                        else
-                        {
-                            this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
-                            this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
+                if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                {
+                    this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                    this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
+                }
+                else
+                {
+                    this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                    this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
+                }
             }
             if (this.counter.n現在の値 >= 300)
             {

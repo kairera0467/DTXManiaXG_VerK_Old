@@ -2184,7 +2184,7 @@ namespace DTXMania
                         {
                             pChip.bHit = true;
                             this.actPlayInfo.dbBPM = (pChip.n整数値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                            CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 8 * 600.0));
+                            CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13 * 1000.0));
                             CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                         }
                         break;
@@ -2245,7 +2245,7 @@ namespace DTXMania
                             if (dTX.listBPM.ContainsKey(pChip.n整数値・内部番号))
                             {
                                 this.actPlayInfo.dbBPM = (dTX.listBPM[pChip.n整数値・内部番号].dbBPM値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                                CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 8 * 600.0));
+                                CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13 * 1000.0));
                                 CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                             }
                         }
@@ -2304,6 +2304,11 @@ namespace DTXMania
 						{
 							pChip.bHit = true;
 						}
+						break;
+					#endregion
+                    #region [ 4F: フィルイン ]
+					case 0x4F:	// フィルイン
+						this.t進行描画・チップ・フィルイン( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
                     #region [ 50: 小節線 ]
@@ -2844,6 +2849,7 @@ namespace DTXMania
 			t進行描画・チップ・ギターベース・ウェイリング( configIni, ref dTX, ref pChip, E楽器パート.GUITAR );
 		}
 		protected abstract void t進行描画・チップ・フィルイン( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
+        protected abstract void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip);
         protected void t進行描画・フィルインエフェクト()
         {
             this.actFillin.On進行描画();

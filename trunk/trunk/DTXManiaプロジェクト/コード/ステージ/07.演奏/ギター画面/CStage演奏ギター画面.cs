@@ -542,6 +542,13 @@ namespace DTXMania
 #endif
 
 		}
+        protected override void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
+        {
+            if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+            {
+                pChip.bHit = true;
+            }
+        }
 #if false
 		protected override void t進行描画・チップ・ベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{

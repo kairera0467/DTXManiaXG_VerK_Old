@@ -185,7 +185,7 @@ namespace DTXMania
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     int UnitTime;
                     double BPM = CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM;
-                    UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 8 * 600.0));
+                    UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13 * 1000.0));
                     this.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
                     
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -326,8 +326,12 @@ namespace DTXMania
                                 break;
                             }
                     }
-                    Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
-                    return (int)this.eフェードアウト完了時の戻り値;
+
+                    if (!this.rResultSound.b再生中)
+                    {
+                        Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
+                        return (int)this.eフェードアウト完了時の戻り値;
+                    }
                 }
 
                 // もしサウンドの登録/削除が必要なら、実行する
@@ -407,6 +411,7 @@ namespace DTXMania
 		private CTexture txレーンフレームGB;
         public CTexture txシャッター;
         private CTexture txLaneCover;
+        private CTexture txボーナス文字;
 		//-----------------
 
         private void tフェードアウト()
@@ -3078,22 +3083,73 @@ namespace DTXMania
 			}
 		}
 
-        /*
+        
         protected override void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
         {
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
                 pChip.bHit = true;
-                switch (pChip.n整数値)
+                if (((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.bドラムが全部オートプレイである) && configIni.b歓声を発声する && configIni.ボーナス演出を表示する)
                 {
-                    case 0x01:
-                        break;
-                    default:
-                        break;
+                    switch (pChip.n整数値)
+                    {
+                        case 0x01:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x02:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x03:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x04:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x05:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x06:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x07:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x08:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x09:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        case 0x0A:
+                            CDTXMania.Skin.sound歓声音.t再生する();
+                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
         }
-        */
+        
 
 		protected override void t進行描画・チップ・ベース・ウェイリング( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
