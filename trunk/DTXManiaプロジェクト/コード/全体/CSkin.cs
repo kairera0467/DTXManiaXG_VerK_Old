@@ -20,7 +20,7 @@ namespace DTXMania
 		SOUNDカーソル移動音,
 		SOUNDゲーム開始音,
 		SOUNDゲーム終了音,
-		//SOUNDステージクリア音,
+		SOUNDステージクリア音,
 		SOUNDタイトル音,
 		SOUNDフルコンボ音,
 		SOUND歓声音,
@@ -324,7 +324,7 @@ namespace DTXMania
 		public Cシステムサウンド soundカーソル移動音 = null;
 		public Cシステムサウンド soundゲーム開始音 = null;
 		public Cシステムサウンド soundゲーム終了音 = null;
-		//public Cシステムサウンド soundステージクリア音 = null;
+		public Cシステムサウンド soundステージクリア音 = null;
 		public Cシステムサウンド soundタイトル音 = null;
 		public Cシステムサウンド soundフルコンボ音 = null;
 		public Cシステムサウンド sound歓声音 = null;
@@ -366,8 +366,8 @@ namespace DTXMania
 					case Eシステムサウンド.SOUNDゲーム終了音:
 						return this.soundゲーム終了音;
 
-					//case Eシステムサウンド.SOUNDステージクリア音:
-						//return this.soundステージクリア音;
+					case Eシステムサウンド.SOUNDステージクリア音:
+						return this.soundステージクリア音;
 
 					case Eシステムサウンド.SOUNDフルコンボ音:
 						return this.soundフルコンボ音;
@@ -468,8 +468,8 @@ namespace DTXMania
                     case 18:
                         return this.bgm結果画面;
 
-                    //case 20:
-                        //return this.soundステージクリア音;
+                    case 19:
+                        return this.soundステージクリア音;
 				}
 				throw new IndexOutOfRangeException();
 			}
@@ -610,7 +610,7 @@ namespace DTXMania
 			this.soundSTAGEFAILED音		= new Cシステムサウンド( @"Sounds\Stage failed.ogg",	false, true,  true  );
 			this.soundゲーム開始音		= new Cシステムサウンド( @"Sounds\Game start.ogg",		false, false, false );
 			this.soundゲーム終了音		= new Cシステムサウンド( @"Sounds\Game end.ogg",		false, true,  false );
-			//this.soundステージクリア音	= new Cシステムサウンド( @"Sounds\Stage clear.ogg",		false, true,  false );
+			this.soundステージクリア音	= new Cシステムサウンド( @"Sounds\Stage clear.ogg",		false, true,  false );
 			this.soundフルコンボ音		= new Cシステムサウンド( @"Sounds\Full combo.ogg",		false, false, true  );
             this.sound新記録音          = new Cシステムサウンド( @"Sounds\New Record.ogg",      false, false, true  );
             this.soundエクセレント音    = new Cシステムサウンド( @"Sounds\Excellent.ogg",       false, false, true  );

@@ -431,9 +431,11 @@ namespace DTXMania
                     this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
                     
                 }
-                this.txジャケット.vc拡大縮小倍率.X = 0.689f;
-                this.txジャケット.vc拡大縮小倍率.Y = 0.699f;
-                this.txジャケット.t2D描画(CDTXMania.app.Device, 510, 218);
+                //this.txジャケット.vc拡大縮小倍率.X = 0.689f;
+                //this.txジャケット.vc拡大縮小倍率.Y = 0.699f;
+                this.txジャケット.vc拡大縮小倍率.X = 280.0f / this.txジャケット.sz画像サイズ.Width;
+                this.txジャケット.vc拡大縮小倍率.Y = 280.0f / this.txジャケット.sz画像サイズ.Height;
+                this.txジャケット.t2D描画(CDTXMania.app.Device, 508, 218);
                 
                 this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
                 this.nCurrentRISKY = CDTXMania.ConfigIni.nRisky;
@@ -454,7 +456,7 @@ namespace DTXMania
             switch (base.eフェーズID)
             {
                 case CStage.Eフェーズ.共通_フェードイン:
-                    //					if( this.actFI.On進行描画() != 0 )					// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
+                    //if( this.actFI.On進行描画() != 0 )					// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
                     // 必ず一度「CStaeg.Eフェーズ.共通_フェードイン」フェーズを経由させること。
                     // さもないと、曲読み込みが完了するまで、曲読み込み画面が描画されない。
                     base.eフェーズID = CStage.Eフェーズ.NOWLOADING_DTXファイルを読み込む;

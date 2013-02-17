@@ -182,7 +182,7 @@ namespace DTXMania
                     {
                         nAlpha = 255;
                     }
-                        if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF)
+                        //if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF) //2013.02.17 kairera0467 ダークOFF以外でも透明度を有効にした。
                         {
                             this.txLC.n透明度 = nAlpha;
                             this.txLine.n透明度 = nAlpha;
