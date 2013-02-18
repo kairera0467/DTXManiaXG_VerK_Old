@@ -118,11 +118,6 @@ namespace DTXMania
 				stパッド状態.n明るさ = 0;
 				this.stパッド状態[ i ] = stパッド状態;
 			}
-            for(int i = 0; i < 9; i++)
-            {
-                this.ct表示用[i] = new CCounter(0, 255, 100, CDTXMania.Timer);
-                this.bボーナス文字[i] = false;
-            }
 			base.On活性化();
 		}
 		public override void OnManagedリソースの作成()
@@ -320,18 +315,54 @@ namespace DTXMania
                     #endregion
                 }
 #region[ ボーナス表示 ]
-                /*
-                if (this.bボーナス文字[0] == true && this.ct表示用[0].b終了値に達してない) 
+
+
+                for (int i = 0; i < 10; i++)
                 {
-                    this.txボーナス文字.t2D描画(CDTXMania.app.Device, 250, 560);
-                    this.txボーナス文字.n透明度 = this.ct表示用[0].n現在の値;
+                    if (this.stボーナス[i].b使用中)
+                    {
+                        int numf = this.stボーナス[i].ct進行.n現在の値;
+                        this.stボーナス[i].ct進行.t進行();
+                        if (this.stボーナス[i].ct進行.b終了値に達した)
+                        {
+                            this.stボーナス[i].ct進行.t停止();
+                            this.stボーナス[i].b使用中 = false;
+                        }
+                        if (this.txボーナス文字 != null)
+                        {
+                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, 270 + (50 * this.stボーナス[i].nLane), 570);
+                        }
+                    }
                 }
-                */
+                
 #endregion
             }
 			return 0;
 		}
 
+        public void Start(int Lane, bool bボーナス)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                if (this.stボーナス[j].b使用中)
+                {
+                    this.stボーナス[j].ct進行.t停止();
+                    this.stボーナス[j].b使用中 = false;
+                }
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    if (!this.stボーナス[j].b使用中)
+                    {
+                        this.stボーナス[j].b使用中 = true;
+                        this.stボーナス[j].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
+                        break;
+                    }
+                }
+            }
+        }
  
 
 
@@ -361,7 +392,13 @@ namespace DTXMania
 			public int y;
 			public Rectangle rc;
 		}
-
+        [StructLayout(LayoutKind.Sequential)]
+        public struct STボーナス
+        {
+            public bool b使用中;
+            public CCounter ct進行;
+            public int nLane;
+        }
 		private long nY座標制御タイマ;
         private long nY座標制御タイマ2;
 		private long nフラッシュ制御タイマ;
@@ -373,7 +410,7 @@ namespace DTXMania
 		private CTexture tx光るパッド;
         private CTexture txボーナス文字;
         public bool[] bボーナス文字 = new bool[10];
-        public CCounter[] ct表示用 = new CCounter[10];
+        public STボーナス[] stボーナス = new STボーナス[10];
 		//-----------------
 		#endregion
 	}
