@@ -2184,7 +2184,7 @@ namespace DTXMania
                         {
                             pChip.bHit = true;
                             this.actPlayInfo.dbBPM = (pChip.n整数値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                            CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13 * 1000.0));
+                            CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.0 * 1000.0));
                             CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                         }
                         break;
@@ -2245,7 +2245,7 @@ namespace DTXMania
                             if (dTX.listBPM.ContainsKey(pChip.n整数値・内部番号))
                             {
                                 this.actPlayInfo.dbBPM = (dTX.listBPM[pChip.n整数値・内部番号].dbBPM値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                                CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13 * 1000.0));
+                                CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.0 * 1000.0));
                                 CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                             }
                         }

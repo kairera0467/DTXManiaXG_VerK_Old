@@ -85,24 +85,42 @@ namespace DTXMania
 
         
 		public override unsafe int On進行描画()
-		{
-			if( base.b活性化してない || ( this.counter == null ) )
-			{
-				return 0;
-			}
-			this.counter.t進行();
-
-            if (CDTXMania.stage演奏ドラム画面.nミス数 == 0)
+        {
+            if (base.b活性化してない || (this.counter == null))
             {
-                if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                return 0;
+            }
+            this.counter.t進行();
+            if (!CDTXMania.ConfigIni.bドラムが全部オートプレイである)
+            {
+                if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0)
                 {
-                    this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
-                    this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
+                    if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                    {
+                        this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
+                    }
+                    else
+                    {
+                        this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
+                    }
                 }
-                else
+            }
+            else
+            {
+                if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor == 0)
                 {
-                    this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
-                    this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
+                    if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                    {
+                        this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
+                    }
+                    else
+                    {
+                        this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
+                    }
                 }
             }
             if (this.counter.n現在の値 >= 300)
@@ -215,7 +233,7 @@ namespace DTXMania
                 */
 
                 // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
-                
+
                 if (this.sfリザルトAVI画像 == null)
                 {
                     if (this.tx白タイル64x64 != null)
@@ -237,14 +255,14 @@ namespace DTXMania
                         }
                     }
                 }
-                
+
             }
-			if( this.counter.n現在の値 != 400 )
-			{
-				return 0;
-			}
-			return 1;
-		}
+            if (this.counter.n現在の値 != 400)
+            {
+                return 0;
+            }
+            return 1;
+        }
         
 
 
