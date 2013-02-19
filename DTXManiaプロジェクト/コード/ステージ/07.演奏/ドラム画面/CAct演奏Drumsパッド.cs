@@ -315,9 +315,7 @@ namespace DTXMania
                     #endregion
                 }
 #region[ ボーナス表示 ]
-
-
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     if (this.stボーナス[i].b使用中)
                     {
@@ -330,17 +328,16 @@ namespace DTXMania
                         }
                         if (this.txボーナス文字 != null)
                         {
-                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, 270 + (50 * this.stボーナス[i].nLane), 570);
+                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[i].x, 570);
                         }
                     }
                 }
-                
 #endregion
             }
 			return 0;
 		}
 
-        public void Start(int Lane, bool bボーナス)
+        public void Start(int nLane, bool bボーナス)
         {
             for (int j = 0; j < 2; j++)
             {
@@ -350,7 +347,7 @@ namespace DTXMania
                     this.stボーナス[j].b使用中 = false;
                 }
             }
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
@@ -359,6 +356,46 @@ namespace DTXMania
                         this.stボーナス[j].b使用中 = true;
                         this.stボーナス[j].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
                         break;
+                    }
+
+                    switch (nLane)
+                    {
+                        case 0:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 1:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 2:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 3:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 4:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 5:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 6:
+                            this.stボーナス[i].x = 270;
+                            break;
+                        case 7:
+                            this.stボーナス[i].x = 700;
+                            break;
+                        case 8:
+                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                                this.stボーナス[i].x = 740;
+                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                this.stボーナス[i].x = 800;
+                            break;
+                        case 9:
+                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                                this.stボーナス[i].x = 800;
+                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                this.stボーナス[i].x = 740;
+                            break;
                     }
                 }
             }
@@ -397,7 +434,7 @@ namespace DTXMania
         {
             public bool b使用中;
             public CCounter ct進行;
-            public int nLane;
+            public int x;
         }
 		private long nY座標制御タイマ;
         private long nY座標制御タイマ2;
@@ -410,7 +447,7 @@ namespace DTXMania
 		private CTexture tx光るパッド;
         private CTexture txボーナス文字;
         public bool[] bボーナス文字 = new bool[10];
-        public STボーナス[] stボーナス = new STボーナス[10];
+        public STボーナス[] stボーナス = new STボーナス[2];
 		//-----------------
 		#endregion
 	}
