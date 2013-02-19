@@ -466,7 +466,7 @@ namespace DTXMania
 			this.Device.SetRenderState( RenderState.AlphaTestEnable, true );
 			this.Device.SetRenderState( RenderState.AlphaRef, 10 );
 
-            this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
+//			this.Device.SetRenderState( RenderState.MultisampleAntialias, true );
 
 			this.Device.SetRenderState<Compare>( RenderState.AlphaFunc, Compare.Greater );
 			this.Device.SetRenderState( RenderState.AlphaBlendEnable, true );

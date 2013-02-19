@@ -3173,6 +3173,7 @@ namespace DTXMania
                         default:
                             break;
                     }
+                    this.actAVI.Start(bフィルイン中);
                 }
             }
 
