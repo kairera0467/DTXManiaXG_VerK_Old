@@ -1779,7 +1779,6 @@ namespace DTXMania
                             #endregion
 
                         #region [rev030ヒット処理]
-//#if 封印
                         case Eパッド.LP:
                             #region [ LPのヒット処理 ]
                             //-----------------
@@ -2131,7 +2130,6 @@ namespace DTXMania
                             }
                         //-----------------
                             #endregion
-//#endif
 #if 封印
                         case Eパッド.LP:
                             #region [ LPのヒット処理 ]
@@ -3106,7 +3104,7 @@ namespace DTXMania
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
                 pChip.bHit = true;
-                if (((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.bドラムが全部オートプレイである) && configIni.b歓声を発声する && configIni.ボーナス演出を表示する)
+                if (((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.bドラムが全部オートプレイである) && configIni.b歓声を発声する)
                 {
                     switch (pChip.n整数値)
                     {
@@ -3173,7 +3171,8 @@ namespace DTXMania
                         default:
                             break;
                     }
-                    this.actAVI.Start(bフィルイン中);
+                    if(configIni.ボーナス演出を表示する)
+                        this.actAVI.Start(bフィルイン中);
                 }
             }
 

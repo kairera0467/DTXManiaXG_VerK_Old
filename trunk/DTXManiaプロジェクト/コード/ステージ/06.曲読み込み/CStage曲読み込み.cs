@@ -433,7 +433,9 @@ namespace DTXMania
                 this.txジャケット.vc拡大縮小倍率.X = 280.0f / this.txジャケット.sz画像サイズ.Width;
                 this.txジャケット.vc拡大縮小倍率.Y = 280.0f / this.txジャケット.sz画像サイズ.Height;
                 this.txジャケット.t2D描画(CDTXMania.app.Device, 508, 218);
-                
+
+                this.txジャケット.Dispose();
+
                 this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
                 this.nCurrentRISKY = CDTXMania.ConfigIni.nRisky;
                 if (CDTXMania.ConfigIni.nRisky > 10)
