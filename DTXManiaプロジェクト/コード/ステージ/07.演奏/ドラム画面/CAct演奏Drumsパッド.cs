@@ -317,6 +317,7 @@ namespace DTXMania
 #region[ ボーナス表示 ]
                 for (int i = 0; i < 2; i++)
                 {
+                    //アニメーションは仮のもの。後から強化する予定。
                     if (this.stボーナス[i].b使用中)
                     {
                         int numf = this.stボーナス[i].ct進行.n現在の値;
@@ -328,7 +329,12 @@ namespace DTXMania
                         }
                         if (this.txボーナス文字 != null)
                         {
-                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[i].x, 570);
+                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[1].x, 570);
+                            if (this.stボーナス[i].ct進行.n現在の値 >= 765)
+                            {
+                                int n = this.stボーナス[i].ct進行.n現在の値 - 765;
+                                this.txボーナス文字.n透明度 = 255 - n;
+                            }
                         }
                     }
                 }
@@ -354,32 +360,33 @@ namespace DTXMania
                     if (!this.stボーナス[j].b使用中)
                     {
                         this.stボーナス[j].b使用中 = true;
-                        this.stボーナス[j].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
+                        this.stボーナス[j].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
                         break;
                     }
 
                     switch (nLane)
                     {
+                      //2013.02.20.kairera0467 現在はレーンタイプAのみ対応。座標はやや適当。
                         case 0:
                             this.stボーナス[i].x = 270;
                             break;
                         case 1:
-                            this.stボーナス[i].x = 270;
+                            this.stボーナス[i].x = 340;
                             break;
                         case 2:
-                            this.stボーナス[i].x = 270;
+                            this.stボーナス[i].x = 460;
                             break;
                         case 3:
-                            this.stボーナス[i].x = 270;
+                            this.stボーナス[i].x = 565;
                             break;
                         case 4:
-                            this.stボーナス[i].x = 270;
+                            this.stボーナス[i].x = 520;
                             break;
                         case 5:
-                            this.stボーナス[i].x = 270;
+                            this.stボーナス[i].x = 630;
                             break;
                         case 6:
-                            this.stボーナス[i].x = 270;
+                            this.stボーナス[i].x = 680;
                             break;
                         case 7:
                             this.stボーナス[i].x = 700;
