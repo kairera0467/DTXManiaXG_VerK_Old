@@ -186,9 +186,10 @@ namespace DTXMania
 				&& CSkin.bUseBoxDefSkin )
 			{
 				ret = true;
-			}
-			CDTXMania.Skin.SetCurrentSkinSubfolderFullName(
+                // BOXに入るときは、スキン変更発生時のみboxdefスキン設定の更新を行う
+                CDTXMania.Skin.SetCurrentSkinSubfolderFullName(
 				CDTXMania.Skin.GetSkinSubfolderFullNameFromSkinName( CSkin.GetSkinName( this.r現在選択中の曲.strSkinPath ) ), false );
+			}
 
 			if( ( this.r現在選択中の曲.list子リスト != null ) && ( this.r現在選択中の曲.list子リスト.Count > 0 ) )
 			{

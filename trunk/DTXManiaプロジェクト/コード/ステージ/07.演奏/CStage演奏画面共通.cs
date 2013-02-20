@@ -1965,8 +1965,14 @@ namespace DTXMania
                 }
                 if ((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightShift) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftShift)) && keyboard.bキーが押されている(0x3c))
                 {
+                    //SHIFT & F7
                     CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
                     CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                }
+                if ( keyboard.bキーが押された(0x3d))
+                {
+                    //F8キー
+                   
                 }
             }
         }
@@ -2900,11 +2906,21 @@ namespace DTXMania
 					break;
 
 				case CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト:
-					//if ( this.actFOClear.On進行描画() == 0 )
-                    if (this.actFOStageClear.On進行描画() == 0)
-					{
-						break;
-					}
+                    if (!CDTXMania.ConfigIni.bGuitar有効)
+                    {
+                        if (this.actFOStageClear.On進行描画() == 0)
+                        {
+                            break;
+                        }
+                    }
+                    else if (CDTXMania.ConfigIni.bGuitar有効)
+                    {
+                        if ( this.actFOClear.On進行描画() == 0 )
+                        {
+                            break;
+                        }
+                    }
+
 					return true;
 		
 			}
