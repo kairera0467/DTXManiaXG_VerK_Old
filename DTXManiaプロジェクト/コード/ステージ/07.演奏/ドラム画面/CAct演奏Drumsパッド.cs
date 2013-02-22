@@ -330,11 +330,11 @@ namespace DTXMania
                         if (this.txボーナス文字 != null)
                         {
                             this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[1].x, 570);
-                            if (this.stボーナス[i].ct進行.n現在の値 >= 765)
-                            {
-                                int n = this.stボーナス[i].ct進行.n現在の値 - 765;
-                                this.txボーナス文字.n透明度 = 255 - n;
-                            }
+                            //if (this.stボーナス[i].ct進行.n現在の値 >= 765)
+                            //{
+                            //    int n = this.stボーナス[i].ct進行.n現在の値 - 765;
+                            //    this.txボーナス文字.n透明度 = 255 - n;
+                            //}
                         }
                     }
                 }

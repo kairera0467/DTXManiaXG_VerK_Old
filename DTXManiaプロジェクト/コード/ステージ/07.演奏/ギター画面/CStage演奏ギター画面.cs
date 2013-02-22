@@ -77,7 +77,7 @@ namespace DTXMania
 				//this.t背景テクスチャの生成();
 				this.txチップ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Chips_Guitar.png" ) );
                 this.txレーン = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_lanes_Guitar.png") );
-				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayGuitar hit-bar.png" ) );
+                this.txヒットバー = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\ScreenPlayDrums hit-bar.png"));
 				//this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
 				base.OnManagedリソースの作成();
 			}
@@ -140,7 +140,8 @@ namespace DTXMania
 				this.t進行描画・ステータスパネル();
                 this.t進行描画・スコア();
 				this.t進行描画・レーンフラッシュGB();
-				this.t進行描画・ギターベース判定ライン();
+				//this.t進行描画・ギターベース判定ライン();
+                this.t進行描画・判定ライン();
 				this.t進行描画・ゲージ();
 				this.t進行描画・DANGER();
 				this.t進行描画・RGBボタン();
@@ -151,7 +152,7 @@ namespace DTXMania
 				this.t進行描画・チップアニメ();
 				flag = this.t進行描画・チップ(E楽器パート.GUITAR);
 				this.t進行描画・演奏情報();
-				this.t進行描画・Wailing枠();
+				//this.t進行描画・Wailing枠();
 				this.t進行描画・チップファイアGB();
 				this.t進行描画・STAGEFAILED();
 				flag2 = this.t進行描画・フェードイン・アウト();
@@ -510,7 +511,7 @@ namespace DTXMania
 				//}
 				//pChip.bHit = true;
 			}
-			base.t進行描画・チップ・ギター・ウェイリング( configIni, ref dTX, ref pChip );
+			//base.t進行描画・チップ・ギター・ウェイリング( configIni, ref dTX, ref pChip );    //2012.02.21.kairera0467 まだ未対応。
 		}
 		protected override void t進行描画・チップ・フィルイン( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
@@ -729,15 +730,15 @@ namespace DTXMania
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( configIni.eDark != Eダークモード.FULL ) )
 			{
-				int y = configIni.bReverse.Guitar ? ( ( 0x171 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 1 );
-				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 0x199 ) && ( this.txチップ != null ) ) )
+				int y = configIni.bReverse.Guitar ? ( ( 369 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 1 );
+				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 0x1a, y, new Rectangle( 0, 0xeb, 0x68, 1 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 87, y, new Rectangle( 0, 20, 196, 2 ) );
 				}
 				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) - 1 );
 				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 0x199 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 0xeb, 0x68, 1 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 20, 196, 2 ) );
 				}
 			}
 

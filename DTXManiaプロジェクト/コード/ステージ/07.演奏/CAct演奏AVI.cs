@@ -709,28 +709,28 @@ namespace DTXMania
                         }
                     }
                 }
-                
 
-                for (int i = 0; i < 10; i++)
+                if (CDTXMania.ConfigIni.bDrums有効 == true)
                 {
-                    int index = this.n描画順[i];
-                    int y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 482 : 482)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                    int yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 495 : 495)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                    int yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 490 : 490)) - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                    int yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 486 : 486)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                    int yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 470 : 470)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                    if (CDTXMania.ConfigIni.bドラムセットを動かす == false)
+                    for (int i = 0; i < 10; i++)
                     {
-                        y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 482 : 482));
-                        yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 495 : 495));
-                        yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 520 : 520));
-                        yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 486 : 486));
-                        yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 470 : 470));
-                    }
+                        int index = this.n描画順[i];
+                        int y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 482 : 482)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
+                        int yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 495 : 495)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
+                        int yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 490 : 490)) - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
+                        int yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 486 : 486)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
+                        int yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 470 : 470)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
+                        if (CDTXMania.ConfigIni.bドラムセットを動かす == false)
+                        {
+                            y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 482 : 482));
+                            yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 495 : 495));
+                            yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 520 : 520));
+                            yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 486 : 486));
+                            yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 470 : 470));
+                        }
 
-                    #region[動くドラムセット]
-                    if (CDTXMania.ConfigIni.bDrums有効 == true)
-                    {
+                        #region[動くドラムセット]
+
                         if (index == 0)
                         {
                             this.ct左シンバル.t進行();
@@ -777,153 +777,155 @@ namespace DTXMania
                             this.tx右シンバル.t2D描画(CDTXMania.app.Device, 900, 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
                         }
 
-                    #endregion
+                        #endregion
+
+
                     }
+                    this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
+                    this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0);
 
-                }
-                this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
-                this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0);
 
-                if ((CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
-                {
-                    if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
+                    if ((CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
                     {
-
-                        if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
+                        if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
                         {
-                            this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                            if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
+
+                            if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
                             {
+                                this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                                if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
                                 {
-                                    this.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                    this.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 54);
+                                    {
+                                        this.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                        this.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 54);
+                                    }
                                 }
-                            }
-                        }
-                        else
-                        {
-                            this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                        }
-
-                        if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
-                        {
-                            this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                            if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
-                            {
-                                this.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                this.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 908 - (1 * num1), 54);
-                            }
-                        }
-                        else
-                        {
-                            this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                        }
-                    }
-                    else if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.B)
-                    {
-                        this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                    }
-                }
-                if (CDTXMania.ConfigIni.bDrums有効 == true)
-                {
-                    if ( CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D && CDTXMania.ConfigIni.bLivePoint )
-                    {
-                        #region[LivePoint]
-                        if (this.txLivePoint != null)
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, 886, 52, new Rectangle(0, 0, 71, 668));
-                        string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("000");
-                        for (int i = 0; i < 3; i++)
-                        {
-                            Rectangle rectangle;
-                            char ch = str[i];
-                            if (ch.Equals(' '))
-                            {
-                                rectangle = new Rectangle(72, 0, 17, 25);
                             }
                             else
                             {
-                                int num3 = int.Parse(str.Substring(i, 1));
-                                if (num3 < 5)
+                                this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                            }
+
+                            if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
+                            {
+                                this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                                if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
                                 {
-                                    rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                                    this.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                    this.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 908 - (1 * num1), 54);
+                                }
+                            }
+                            else
+                            {
+                                this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                            }
+                        }
+                        else if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.B)
+                        {
+                            this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                        }
+                    }
+                    if (CDTXMania.ConfigIni.bDrums有効 == true)
+                    {
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D && CDTXMania.ConfigIni.bLivePoint)
+                        {
+                            #region[LivePoint]
+                            if (this.txLivePoint != null)
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, 886, 52, new Rectangle(0, 0, 71, 668));
+                            string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("000");
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Rectangle rectangle;
+                                char ch = str[i];
+                                if (ch.Equals(' '))
+                                {
+                                    rectangle = new Rectangle(72, 0, 17, 25);
                                 }
                                 else
                                 {
-                                    rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                                    int num3 = int.Parse(str.Substring(i, 1));
+                                    if (num3 < 5)
+                                    {
+                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                                    }
+                                    else
+                                    {
+                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                                    }
                                 }
-                            }
-                            if (this.txScore != null)
-                            {
-                                this.txLivePoint.t2D描画(CDTXMania.app.Device, 895 + (i * 18), 685, rectangle);
-                            }
-                            #region[箱]
-                            //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                            if (this.LivePoint >= 0)
-                            {
-                                if (this.LivePoint >= 20)
+                                if (this.txScore != null)
                                 {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 626, new Rectangle(71, 536, 46, 44));
+                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 895 + (i * 18), 685, rectangle);
                                 }
-                                if (this.LivePoint >= 40)
+                                #region[箱]
+                                //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
+                                if (this.LivePoint >= 0)
                                 {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 585, new Rectangle(71, 536, 46, 44));
+                                    if (this.LivePoint >= 20)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 626, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 40)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 585, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 60)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 544, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 80)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 503, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 100)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 462, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 120)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 420, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 140)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 379, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 160)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 338, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 180)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 297, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 200)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 256, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 220)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 214, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 240)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 173, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 260)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 132, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 280)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 91, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint >= 300)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 50, new Rectangle(71, 624, 46, 44));
+                                    }
                                 }
-                                if (this.LivePoint >= 60)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 544, new Rectangle(71, 536, 46, 44));
-                                }
-                                if (this.LivePoint >= 80)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 503, new Rectangle(71, 536, 46, 44));
-                                }
-                                if (this.LivePoint >= 100)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 462, new Rectangle(71, 536, 46, 44));
-                                }
-                                if (this.LivePoint >= 120)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 420, new Rectangle(71, 580, 46, 44));
-                                }
-                                if (this.LivePoint >= 140)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 379, new Rectangle(71, 580, 46, 44));
-                                }
-                                if (this.LivePoint >= 160)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 338, new Rectangle(71, 580, 46, 44));
-                                }
-                                if (this.LivePoint >= 180)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 297, new Rectangle(71, 580, 46, 44));
-                                }
-                                if (this.LivePoint >= 200)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 256, new Rectangle(71, 580, 46, 44));
-                                }
-                                if (this.LivePoint >= 220)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 214, new Rectangle(71, 624, 46, 44));
-                                }
-                                if (this.LivePoint >= 240)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 173, new Rectangle(71, 624, 46, 44));
-                                }
-                                if (this.LivePoint >= 260)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 132, new Rectangle(71, 624, 46, 44));
-                                }
-                                if (this.LivePoint >= 280)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 91, new Rectangle(71, 624, 46, 44));
-                                }
-                                if (this.LivePoint >= 300)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 50, new Rectangle(71, 624, 46, 44));
-                                }
+                                #endregion
                             }
                             #endregion
                         }
-                        #endregion
                     }
                 }
 
