@@ -14,6 +14,8 @@ namespace DTXMania
 		{
 			base.b活性化してない = true;
 		}
+        // 2013.02.22 kairera0467
+        // ギターのレーンフラッシュの幅は37。
 
 
 		// CActivity 実装（共通クラスからの差分のみ）
@@ -31,11 +33,11 @@ namespace DTXMania
 						int num2 = CDTXMania.ConfigIni.bLeft[ (int) e楽器パート ] ? 1 : 0;
 						for( int j = 0; j < 3; j++ )
 						{
-							int x = ( ( ( i < 3 ) ? 0x1a : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 0x10 * base.ct進行[ i ].n現在の値 ) / 100 );
-							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 0x37 + ( j * 0x76 ) ) : ( j * 0x76 );
+							int x = ( ( ( i < 3 ) ? 88 : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 16 * base.ct進行[ i ].n現在の値 ) / 100 );
+							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 55 + ( j * 118 ) ) : ( j * 118 );
 							if( texture != null )
 							{
-								texture.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( j * 0x20, 0, ( 0x20 * ( 100 - base.ct進行[ i ].n現在の値 ) ) / 100, 0x76 ) );
+								texture.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( j * 37, 0, ( 37 * ( 100 - base.ct進行[ i ].n現在の値 ) ) / 100, 118 ) );
 							}
 						}
 						base.ct進行[ i ].t進行();
@@ -54,7 +56,7 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private readonly int[,] nRGBのX座標 = new int[ , ] { { 0, 0x24, 0x48, 0, 0x24, 0x48 }, { 0x48, 0x24, 0, 0x48, 0x24, 0 } };
+		private readonly int[,] nRGBのX座標 = new int[ , ] { { 0, 39, 78, 0, 0x24, 0x48 }, { 0x48, 0x24, 0, 0x48, 0x24, 0 } };
 		//-----------------
 		#endregion
 	}

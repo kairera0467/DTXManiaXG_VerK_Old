@@ -292,44 +292,43 @@ namespace DTXMania
                 }
                 if (bIsFinishedFadeout)
                 {
-                    this.nミス数 = base.nヒット数・Auto含まない.Drums.Miss + base.nヒット数・Auto含まない.Drums.Poor;
-                    switch (nミス数)
-                    {
-                        case 0:
-                            {
-                                this.nパフェ数 = base.nヒット数・Auto含まない.Drums.Perfect;
-                                if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
-                                {
-                                    this.nパフェ数 = base.nヒット数・Auto含む.Drums.Perfect;
-                                }
-                                if (nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
-                                #region[ エクセ ]
-                                {
-                                    this.bエクセ = true;
-                                    if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                        this.actScore.n現在の本当のスコア.Drums += 30000;
-                                    break;
-                                }
-                                #endregion
-                                else
-                                #region[ フルコン ]
-                                {
-                                    this.bフルコン = true;
-                                    if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                        this.actScore.n現在の本当のスコア.Drums += 15000;
-                                    break;
-                                }
-                                #endregion
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }
-
                     if (!this.rResultSound.b再生中)
                     {
                         Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
+                        this.nミス数 = base.nヒット数・Auto含まない.Drums.Miss + base.nヒット数・Auto含まない.Drums.Poor;
+                        switch (nミス数)
+                        {
+                            case 0:
+                                {
+                                    this.nパフェ数 = base.nヒット数・Auto含まない.Drums.Perfect;
+                                    if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
+                                    {
+                                        this.nパフェ数 = base.nヒット数・Auto含む.Drums.Perfect;
+                                    }
+                                    if (nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                                    #region[ エクセ ]
+                                    {
+                                        this.bエクセ = true;
+                                        if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                            this.actScore.n現在の本当のスコア.Drums += 30000;
+                                        break;
+                                    }
+                                    #endregion
+                                    else
+                                    #region[ フルコン ]
+                                    {
+                                        this.bフルコン = true;
+                                        if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                            this.actScore.n現在の本当のスコア.Drums += 15000;
+                                        break;
+                                    }
+                                    #endregion
+                                }
+                            default:
+                                {
+                                    break;
+                                }
+                        }
                         return (int)this.eフェードアウト完了時の戻り値;
                     }
                 }
@@ -2181,7 +2180,7 @@ namespace DTXMania
                         {
                             #region [ (B1) 空打ち音が譜面で指定されているのでそれを再生する。]
                             //-----------------
-                            this.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                            this.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                             //-----------------
                             #endregion
                         }
@@ -2406,7 +2405,7 @@ namespace DTXMania
                                                 rChip = (chipBD != null) ? chipBD : chipLBD;
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 break;
 
@@ -2414,7 +2413,7 @@ namespace DTXMania
                                                 rChip = (chipBD != null) ? chipBD : chipLP;
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 break;
 
@@ -2443,7 +2442,7 @@ namespace DTXMania
 
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 #endregion
                                                 break;
@@ -2468,7 +2467,7 @@ namespace DTXMania
                                                 rChip = (chipLP != null) ? chipLP : chipBD;
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 if (CDTXMania.ConfigIni.bTight)
                                                 {
@@ -2502,7 +2501,7 @@ namespace DTXMania
                                                 }
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 if (CDTXMania.ConfigIni.bTight)
                                                 {
@@ -2531,7 +2530,7 @@ namespace DTXMania
                                                 rChip = (chipLBD != null) ? chipLBD : chipBD;
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 if (CDTXMania.ConfigIni.bTight)
                                                 {
@@ -2564,7 +2563,7 @@ namespace DTXMania
                                                 }
                                                 if (rChip != null)
                                                 {
-                                                    base.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                                                 }
                                                 if (CDTXMania.ConfigIni.bTight)
                                                 {
@@ -2591,7 +2590,7 @@ namespace DTXMania
                             if (rChip != null)
                             {
                                 // 空打ち音が見つかったので再生する。
-                                this.tサウンド再生(rChip, CDTXMania.Timer.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                                this.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
                             }
                             //-----------------
                             #endregion
@@ -3172,7 +3171,7 @@ namespace DTXMania
                             break;
                     }
                     if(configIni.ボーナス演出を表示する)
-                        this.actAVI.Start(bフィルイン中);
+                        this.actAVI.Start(true);
                 }
             }
 

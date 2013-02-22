@@ -194,7 +194,7 @@ namespace DTXMania
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.レーン上 ) ? this.stレーンサイズ[ j ].x : 0x163;
+								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.レーン上 ) ? this.stレーンサイズ[ j ].x : 355;
 								num6 = CDTXMania.ConfigIni.bReverse.Bass ? 0x12b : 190;
 							}
 							else if( j == 13 )
@@ -204,7 +204,7 @@ namespace DTXMania
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.レーン上 ) ? this.stレーンサイズ[ j ].x : 0xaf;
+								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.レーン上 ) ? this.stレーンサイズ[ j ].x : 175;
 								num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 0x12b : 190;
 							}
 							int xc = ( ( num5 + base.st状態[ j ].n相対X座標 ) + ( this.stレーンサイズ[ j ].w / 2 ) );

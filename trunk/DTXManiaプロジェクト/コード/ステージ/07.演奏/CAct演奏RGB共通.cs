@@ -9,7 +9,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		protected bool[] b押下状態 = new bool[ 6 ];
+		protected bool[] b押下状態 = new bool[ 10 ];
 		protected CTexture txRGB;
 
 
@@ -33,7 +33,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			for( int i = 0; i < 6; i++ )
+			for( int i = 0; i < 10; i++ )
 			{
 				this.b押下状態[ i ] = false;
 			}
@@ -43,7 +43,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txRGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\num.png" ) );
+                this.txRGB = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_RGB buttons.png"));
 				base.OnManagedリソースの作成();
 			}
 		}

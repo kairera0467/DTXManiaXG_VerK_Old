@@ -95,7 +95,7 @@ namespace DTXMania
             {
                 if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0)
                 {
-                    if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                    if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect == CDTXMania.DTX.n可視チップ数.Drums)
                     {
                         this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
@@ -111,16 +111,8 @@ namespace DTXMania
             {
                 if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor == 0)
                 {
-                    if (CDTXMania.stage演奏ドラム画面.nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
-                    {
                         this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
-                    }
-                    else
-                    {
-                        this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
-                        this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
-                    }
                 }
             }
             if (this.counter.n現在の値 >= 300)

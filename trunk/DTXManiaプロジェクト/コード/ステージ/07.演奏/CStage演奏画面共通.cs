@@ -1682,9 +1682,9 @@ namespace DTXMania
 			}
 
 			this.nInputAdjustTimeMs[ part ] += offset;
-			if ( this.nInputAdjustTimeMs[ part ] > 0 )
+			if ( this.nInputAdjustTimeMs[ part ] > 99 )
 			{
-				this.nInputAdjustTimeMs[ part ] = 0;
+				this.nInputAdjustTimeMs[ part ] = 99;
 			}
 			else if ( this.nInputAdjustTimeMs[ part ] < -99 )
 			{
@@ -2719,19 +2719,19 @@ namespace DTXMania
 //Trace.TraceInformation( "chip={0:x2}, E楽器パート={1}, x={2}", pChip.nチャンネル番号, inst, x );
 							if ( bChipHasR )
 							{
-								this.txチップ.t2D描画( CDTXMania.app.Device, 88, y - chipHeight / 2, rc );
+								this.txチップ.t2D描画( CDTXMania.app.Device, 88, y - chipHeight / 2, new Rectangle(0, 0, 38, 10) );
 							}
 							rc.X += chipTexDeltaX;
 							x += deltaX;
 							if ( bChipHasG )
 							{
-								this.txチップ.t2D描画( CDTXMania.app.Device, 127, y - chipHeight / 2, rc );
+                                this.txチップ.t2D描画( CDTXMania.app.Device, 127, y - chipHeight / 2, new Rectangle(38, 0, 38, 10) );
 							}
 							rc.X += chipTexDeltaX;
 							x += deltaX;
 							if ( bChipHasB )
 							{
-								this.txチップ.t2D描画( CDTXMania.app.Device, 166, y - chipHeight / 2, rc );
+                                this.txチップ.t2D描画( CDTXMania.app.Device, 166, y - chipHeight / 2, new Rectangle(76, 0, 38, 10) );
 							}
 						}
 					}
@@ -2960,11 +2960,22 @@ namespace DTXMania
 
 		protected void t進行描画・判定ライン()
 		{
-			if ( CDTXMania.ConfigIni.eDark != Eダークモード.FULL )
-			{
-                int y = CDTXMania.ConfigIni.bReverse.Drums ? 159 : nJudgeLinePosY;
-                this.txヒットバー.t2D描画(CDTXMania.app.Device, 295, y, new Rectangle(0, 0, 0x22f, 6));
-			}
+            if (CDTXMania.ConfigIni.bDrums有効)
+            {
+                if (CDTXMania.ConfigIni.eDark != Eダークモード.FULL)
+                {
+                    int y = CDTXMania.ConfigIni.bReverse.Drums ? 159 : nJudgeLinePosY;
+                    this.txヒットバー.t2D描画(CDTXMania.app.Device, 295, y, new Rectangle(0, 0, 0x22f, 6));
+                }
+            }
+            else if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                if (CDTXMania.ConfigIni.eDark != Eダークモード.FULL)
+                {
+                    int y = CDTXMania.ConfigIni.bReverse.Drums ? 154 : 153;
+                    this.txヒットバー.t2D描画(CDTXMania.app.Device, 80, y, new Rectangle(0, 0, 204, 6));
+                }
+            }
 		}
 
 		protected void t進行描画・判定文字列()
