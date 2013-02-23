@@ -68,9 +68,6 @@ namespace DTXMania
                     y -= 0x10;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Frame:         {0:####0} fps", CDTXMania.FPS.n現在のFPS));
                     y -= 0x10;
-                    //CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Frame:         {0:####0} fps", CDTXMania.stage演奏ドラム画面.actPad.stボーナス[1].ct進行.n現在の値));
-                    y -= 0x10;
-                    
                     /*
                     if (CDTXMania.ConfigIni.nSoundDeviceType != 0)
                     {
@@ -82,6 +79,7 @@ namespace DTXMania
                         y -= 0x10;
                     }
                     */
+                    
                 }
                 else if (CDTXMania.ConfigIni.nInfoType == 1)
                 {

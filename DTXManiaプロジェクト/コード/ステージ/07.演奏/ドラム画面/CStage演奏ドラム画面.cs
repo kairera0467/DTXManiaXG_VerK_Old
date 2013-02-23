@@ -2864,7 +2864,6 @@ namespace DTXMania
                             {
                                 this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 0x20, new Rectangle(0x16a, 10 + (num9 * 64), 0x26, 0x40));
                                 this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(0x16a, 0, 0x26, 10));
-
                             }
                             break;
 
@@ -2904,6 +2903,33 @@ namespace DTXMania
                                 }
                             }
                             break;
+                            /*
+                        case 0x4F:
+                            if (this.txチップ != null)
+                            {
+                                switch (pChip.n整数値)
+                                {
+                                    case 0x01:
+                                        x = (x + 0x13) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
+                                        if (this.txチップ != null)
+                                        {
+                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 32, new Rectangle(448, 10 + (num9 * 64), 64, 64));
+                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(448, 0, 64, 10));
+
+                                        }
+                                        break;
+                                    case 0x09:
+                                        x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
+                                        if (this.txチップ != null)
+                                        {
+                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 32, new Rectangle(298, 10 + (num9 * 64), 64, 64));
+                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(298, 0, 0x40, 10));
+                                        }
+                                        break;
+                                }
+                            }
+                            break;
+                            */
                     }
                     if (this.txチップ != null)
                     {
@@ -3274,11 +3300,11 @@ namespace DTXMania
 				if ( configIni.b演奏情報を表示する && ( configIni.eDark == Eダークモード.OFF ) )
 				{
 					int n小節番号 = n小節番号plus1 - 1;
-                    CDTXMania.act文字コンソール.tPrint(858, configIni.bReverse.Drums ? ((0x38 + pChip.nバーからの距離dot.Drums) - 0x11) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 0x11), C文字コンソール.Eフォント種別.白, n小節番号.ToString());
+                    CDTXMania.act文字コンソール.tPrint(858, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 0x11) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 0x11), C文字コンソール.Eフォント種別.白, n小節番号.ToString());
 				}
 				if ( ( ( configIni.eDark != Eダークモード.FULL ) && pChip.b可視 ) && ( this.txチップ != null ) )
 				{
-                    this.txチップ.t2D描画(CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ((56 + pChip.nバーからの距離dot.Drums) - 1) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 769, 0x22f, 2));
+                    this.txチップ.t2D描画(CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 769, 0x22f, 2));
 				}
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( configIni.eDark != Eダークモード.FULL ) )
