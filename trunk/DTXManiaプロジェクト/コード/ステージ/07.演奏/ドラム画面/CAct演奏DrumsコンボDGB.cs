@@ -168,7 +168,7 @@ namespace DTXMania
 
             int num1 = this.ctComboBom.n現在の値;
             int x;
-            int y = (CDTXMania.ConfigIni.bReverse.Drums ? 290 : -80 );
+            int y = (CDTXMania.ConfigIni.bReverse.Drums ? 260 : -80 );
             switch (CDTXMania.ConfigIni.ドラムコンボ文字の表示位置)
             {
                 case Eドラムコンボ文字の表示位置.LEFT:
