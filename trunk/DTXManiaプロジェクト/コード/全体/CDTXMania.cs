@@ -1562,7 +1562,7 @@ for (int i = 0; i < 3; i++) {
 		private bool b終了処理完了済み;
 		private static CDTX dtx;
 		private List<CActivity> listトップレベルActivities;
-		private int n進行描画の戻り値;
+		public int n進行描画の戻り値;
         private CTexture txCredit;
         private CTexture txDeclaration;
         private System.Drawing.Font ftDeclaration;

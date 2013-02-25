@@ -30,15 +30,23 @@ namespace DTXMania
 		}
 
 		// CActivity 実装
+        public override void On活性化(Device D3D9Device)
+        {
+            if (this.b活性化してる)
+                return;
 
+            //this.ds背景動画 = DTXMania.CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(DTXMania.CSkin.Path(@"Graphics\7_StageClear.mp4"), DTXMania.CDTXMania.App.hWnd, true);
+
+            base.On活性化(D3D9Device);
+        }
 		public override void On非活性化()
 		{
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.tx白タイル64x64 );
-                CDTXMania.tテクスチャの解放(ref this.txFullCombo);
-                CDTXMania.tテクスチャの解放(ref this.txExcellent);
-                CDTXMania.tテクスチャの解放(ref this.tx黒幕);
+                CDTXMania.tテクスチャの解放( ref this.txFullCombo );
+                CDTXMania.tテクスチャの解放( ref this.txExcellent );
+                CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
                 if (this.avi != null)
                 {
                     this.avi.Dispose();
@@ -56,13 +64,13 @@ namespace DTXMania
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Excellent.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Drums_black.png"));
                 this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenSelect preimage default.png"));
-                //this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
+                this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
                 this.nAVI再生開始時刻 = -1;
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
                 this.pAVIBmp = IntPtr.Zero;
 
-                //this.tリザルト動画の指定があれば構築する();
+                this.tリザルト動画の指定があれば構築する();
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -83,7 +91,74 @@ namespace DTXMania
             base.OnManagedリソースの解放();
         }
 
-        
+        public override int On進行()
+		{
+            if (base.b活性化してない || (this.counter == null))
+				return 0;
+
+			// 進行。
+            this.counter.t進行();
+			#region [ 初めての進行処理。]
+			//-----------------
+			if( this.b初めての進行描画 )
+			{
+				//if( this.ds背景動画 != null )
+				{
+					//this.ds背景動画.bループ再生 = false;
+					//this.ds背景動画.t再生開始();
+				}
+
+				this.b初めての進行描画 = false;
+			}
+			//-----------------
+			#endregion
+
+			//if( this.ds背景動画 != null && !this.ds背景動画.b再生中 )			// 再生完了したらステージ終了。
+            if (this.counter.n現在の値 != 400)
+				return 0;
+
+			return 1;
+		}
+		public override void On描画( Device D3D9Device )
+		{
+			if( this.b活性化してない )
+				return;
+
+			#region [ 背景動画 ]
+			//-----------------
+			//if( this.ds背景動画 != null &&
+			//	this.tx背景動画 != null )
+			{
+
+				//this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景動画 );
+
+				//this.tx背景動画.t2D描画( D3D9Device, 0, 0 );
+			}
+			//-----------------
+			#endregion
+            if (this.counter.n現在の値 >= 300)
+            {
+                if (this.tx白タイル64x64 != null)
+                {
+                    if (this.counter.n現在の値 <= 300)
+                    {
+                        this.tx白タイル64x64.n透明度 = 0;
+                    }
+                    else
+                    {
+                        this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
+                    }
+                    for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+                    {
+                        for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+                        {
+                            this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                        }
+                    }
+                }
+            }
+		}
+
 		public override unsafe int On進行描画()
         {
             if (base.b活性化してない || (this.counter == null))
@@ -206,27 +281,28 @@ namespace DTXMania
                             this.sfリザルトAVI画像.UnlockRectangle();
                             this.b動画フレームを作成した = false;
                         }
-                        using (Surface surface = CDTXMania.app.Device.GetBackBuffer(0, 0))
-                        {
-                            Rectangle sourceRectangle = new Rectangle(0, 0, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height);
-                            if (y < 0)
+                            using (Surface surface = CDTXMania.app.Device.GetBackBuffer(0, 0))
                             {
-                                sourceRectangle.Y += -y;
-                                sourceRectangle.Height -= -y;
-                                y = 0;
+                                Rectangle sourceRectangle = new Rectangle(0, 0, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height);
+                                if (y < 0)
+                                {
+                                    sourceRectangle.Y += -y;
+                                    sourceRectangle.Height -= -y;
+                                    y = 0;
+                                }
+                                if (sourceRectangle.Height > 0)
+                                {
+                                    CDTXMania.app.Device.UpdateSurface(this.sfリザルトAVI画像, sourceRectangle, surface, new Point(x, y));
+                                }
                             }
-                            if (sourceRectangle.Height > 0)
-                            {
-                                CDTXMania.app.Device.UpdateSurface(this.sfリザルトAVI画像, sourceRectangle, surface, new Point(x, y));
-                            }
-                        }
                     }
                 }
+                
                 */
-
                 // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
 
-                if (this.sfリザルトAVI画像 == null)
+                //if (this.sfリザルトAVI画像 == null)
+                //if(this.b動画フレームを作成した == true)
                 {
                     if (this.tx白タイル64x64 != null)
                     {

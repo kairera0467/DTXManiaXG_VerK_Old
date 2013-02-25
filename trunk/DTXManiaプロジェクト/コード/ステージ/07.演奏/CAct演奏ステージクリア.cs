@@ -12,80 +12,91 @@ namespace DTXMania
 {
 	internal class CActStageClear : CActivity
 	{
-		// CActivity 実装
+        public override void On活性化(Device D3D9Device)
+        {
+            if (this.b活性化してる)
+                return;
 
-		public override void On非活性化()
-		{
-            if (this.csStageClear != null)
+            this.ds背景動画 = DTXMania.CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(DTXMania.CSkin.Path(@"Graphics\7_StageClear.mp4"), DTXMania.CDTXMania.App.hWnd, true);
+
+            base.On活性化(D3D9Device);
+        }
+        public override void On非活性化()
+        {
+            C共通.tDisposeする(this.ds背景動画); this.ds背景動画 = null;
+
+            base.On非活性化();
+        }
+        public override void OnManagedリソース作成(Device D3D9Device)
+        {
+            if (this.b活性化してない)
+                return;
+
+            if (this.ds背景動画 != null)
             {
-                this.csStageClear.t再生を停止する();
-                CDTXMania.Sound管理.tサウンドを破棄する(this.csStageClear);
-                this.csStageClear= null;
+                this.tx背景動画 = DTXMania.CDTXMania.tテクスチャを生成する(this.ds背景動画.n幅px, this.ds背景動画.n高さpx);
             }
-		    base.On非活性化();
-		}
-		public override void OnManagedリソースの作成()
-		{
-			if( !base.b活性化してない )
-			{
-				base.OnManagedリソースの作成();
-			}
-		}
-        
-        
+            else
+                this.tx背景動画 = null;
+
+            base.OnManagedリソース作成(D3D9Device);
+        }
         public override void OnManagedリソースの解放()
         {
             if (this.b活性化してない)
                 return;
 
+            C共通.tDisposeする(ref this.tx背景動画);
+
             base.OnManagedリソースの解放();
         }
+        public override int On進行()
+        {
 
-        
-		public override int On進行描画()
-		{
-            if (!base.b活性化してない)
+            // 進行。
+
+            #region [ 初めての進行処理。]
+            //-----------------
+            if (this.b初めての進行描画)
             {
-                if (this.csStageClear != null)
+                if (this.ds背景動画 != null)
                 {
-                    this.csStageClear.t再生を開始する();
+                    this.ds背景動画.bループ再生 = false;
+                    this.ds背景動画.t再生開始();
                 }
-                this.t進行処理・サウンド();
+
+                this.b初めての進行描画 = false;
             }
-            return 0;
+            //-----------------
+            #endregion
+
+            if (this.ds背景動画.b再生中 == true)
+                return (int)DTXMania.CApp.E状態処理結果.NG;
+
+            return (int)DTXMania.CApp.E状態処理結果.OK;
         }
-        
+        public override void On描画(Device D3D9Device)
+        {
+            if (this.b活性化してない)
+                return;
 
+            #region [ 背景動画 ]
+            //-----------------
+            if (this.ds背景動画 != null &&
+                this.tx背景動画 != null)
+            {
 
-		// その他
+                this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx背景動画);
+                this.tx背景動画.t2D描画(D3D9Device, 0, 0);
+            }
+            //-----------------
+            #endregion
+        }
 
-		#region [ private ]
-		//-----------------
-        private CSound csStageClear;
-
-        private void tサウンドの作成()
-		{
-				try
-				{
-					this.csStageClear = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path(@"Sounds\stage clear.ogg") );
-					this.csStageClear.n音量 = 100;
-					this.csStageClear.t再生を開始する( true );
-					Trace.TraceInformation( "サウンドを生成しました。({0})", CSkin.Path(@"Sounds\stage clear.ogg") );
-				}
-				catch
-				{
-					Trace.TraceError( "サウンドの生成に失敗しました。({0})", CSkin.Path(@"Sounds\stage clear.ogg") );
-					if( this.csStageClear != null )
-					{
-						this.csStageClear.Dispose();
-					}
-					this.csStageClear = null;
-				}
-		}
-		private void t進行処理・サウンド()
-		{
-			this.tサウンドの作成();
-		}
+        #region [ protected ]
+        //-----------------
+        protected volatile CDirectShow ds背景動画 = null;
+        protected CTexture tx背景動画 = null;
         //-----------------
         #endregion
     }

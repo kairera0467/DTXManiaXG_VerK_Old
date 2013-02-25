@@ -781,7 +781,10 @@ namespace DTXMania
 
 
                     }
-                    this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
+                    if (CDTXMania.ConfigIni.nMovieAlpha <= 5 || CDTXMania.ConfigIni.nMovieAlpha == 11)
+                    {
+                        this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
+                    }
                     this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0);
 
 

@@ -97,23 +97,29 @@ namespace DTXMania
 
         //------------
 
+        /*
         /// <summary>
         /// <para>進行処理を行う。</para>
         /// <para>ロックを得た進行スレッドにより実行される。</para>
         /// </summary>
         protected override void On進行()
         {
-            switch (this.e現在の状態[THREAD_進行])
+            switch ( CDTXMania.r現在のステージ.eステージID )
             {
+
+                case CStage.Eステージ.演奏:
+                    {
+                        break;
+                    }
                 #region [ default ]
                 //-----------------
                 default:
-                    this.t完了(THREAD_進行);
                     break;
                 //-----------------
                 #endregion
             }
         }
+        */
         public Size LogicalDisplaySize = new Size( 1280, 720 );
         /// <summary>
         /// <para>描画処理を行う。</para>
@@ -287,7 +293,11 @@ namespace DTXMania
             this.t完了(THREAD_進行);
             this.t完了(THREAD_描画);
         }
-        //-----------------
+        //public int n進行描画の戻り値;
+        //private void t現在のステージの進行()
+        //{
+        //
+        //}
         #endregion
     }
 }
