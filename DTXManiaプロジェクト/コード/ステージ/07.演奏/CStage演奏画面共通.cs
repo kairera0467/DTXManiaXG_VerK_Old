@@ -587,7 +587,8 @@ namespace DTXMania
 		protected CActFIFOBlackStart actFI;
 		protected CActFIFOBlack actFO;
 		protected CActFIFOWhite actFOClear;
-        protected CActFIFOWhiteClear actFOStageClear;
+        public CActFIFOWhiteClear actFOStageClear;
+        //protected CActStageClear actStageClear;
 		protected CAct演奏ゲージ共通 actGauge;
         public CAct演奏Drumsフィルインエフェクト actFillin;
 		protected CAct演奏判定文字列共通 actJudgeString;
@@ -601,7 +602,6 @@ namespace DTXMania
 		public CAct演奏ステータスパネル共通 actStatusPanels;
 		protected CAct演奏WailingBonus共通 actWailingBonus;
 		public CAct演奏スクロール速度 act譜面スクロール速度;
-        //protected CAct演奏ステージクリア actStageCleared;
 		protected bool bPAUSE;
 		protected STDGBVALUE<bool> b演奏にMIDI入力を使った;
 		protected STDGBVALUE<bool> b演奏にキーボードを使った;
@@ -2909,6 +2909,7 @@ namespace DTXMania
                     if (!CDTXMania.ConfigIni.bGuitar有効)
                     {
                         if (this.actFOStageClear.On進行描画() == 0)
+                        //if(this.actFOStageClear.On進行() == 0)
                         {
                             break;
                         }

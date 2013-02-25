@@ -491,6 +491,7 @@ namespace DTXMania
                         else
                             CDTXMania.DTX.MIDIレベル = (CDTXMania.stage選曲.r確定された曲.eノード種別 == C曲リストノード.Eノード種別.SCORE_MIDI) ? CDTXMania.stage選曲.n現在選択中の曲の難易度 : 0;
 
+                        Trace.TraceInformation("DTXファイルを読み込みました。");
                         base.eフェーズID = CStage.Eフェーズ.NOWLOADING_WAVファイルを読み込む;
                         timeBeginLoadWAV = DateTime.Now;
                         return 0;
@@ -543,6 +544,7 @@ namespace DTXMania
                             span = (TimeSpan)(DateTime.Now - timeBeginLoadWAV);
                             Trace.TraceInformation("WAV/譜面後処理時間({0,4}): {1}", (CDTXMania.DTX.listBMP.Count + CDTXMania.DTX.listBMPTEX.Count + CDTXMania.DTX.listAVI.Count), span.ToString());
 
+                            Trace.TraceInformation("WAVファイルを読み込みました。");
                             base.eフェーズID = CStage.Eフェーズ.NOWLOADING_BMPファイルを読み込む;
                         }
                         return 0;
@@ -579,6 +581,7 @@ namespace DTXMania
 							ftFilename = null;
 						}
 						CDTXMania.Timer.t更新();
+                        Trace.TraceInformation("BMPファイルを読み込みました。");
 						base.eフェーズID = CStage.Eフェーズ.NOWLOADING_システムサウンドBGMの完了を待つ;
 						return 0;
 					}
@@ -593,6 +596,7 @@ namespace DTXMania
                         if ((nCurrentTime - this.nBGM再生開始時刻) > (this.nBGMの総再生時間ms))	// #27787 2012.3.10 yyagi 1000ms == フェードイン分の時間
                         {
                             this.actFO.tフェードアウト開始();
+                            Trace.TraceInformation("システムサウンドBGMが再生終了しました。");
                             base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
                         }
                         return 0;
@@ -609,6 +613,7 @@ namespace DTXMania
                     {
                         this.sd読み込み音.t解放する();
                     }
+                    Trace.TraceInformation("フェードアウト完了。");
                     return 1;
             }
             return 0;

@@ -181,7 +181,8 @@ namespace DTXMania
                 {
                     //int n逆算Perfect = drums.nPerfect数・Auto含まない / this.n現在演奏されたノーツ数;
                     //int n逆算Great = drums.nGreat数・Auto含まない / this.n現在演奏されたノーツ数;
-                    this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, this.dbグラフ値目標, E楽器パート.DRUMS);
+                    //this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, this.dbグラフ値目標, E楽器パート.DRUMS);
+                    this.dbグラフ値比較 = this.dbグラフ値目標;
                 }
                 else if (CDTXMania.ConfigIni.nSkillMode == 1)
                 {
