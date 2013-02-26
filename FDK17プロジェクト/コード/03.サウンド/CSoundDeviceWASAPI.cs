@@ -120,6 +120,33 @@ namespace FDK
 			n周波数 = 0;			// デフォルトデバイスの周波数 (0="mix format" sample rate)
 			int nチャンネル数 = 0;	// デフォルトデバイスのチャンネル数 (0="mix format" channels)
 			this.tWasapiProc = new WASAPIPROC( this.tWASAPI処理 );		// アンマネージに渡す delegate は、フィールドとして保持しておかないとGCでアドレスが変わってしまう。
+
+			// WASAPIの更新間隔(period)は、バッファサイズにも影響を与える。
+			// 更新間隔を最小にするには、BassWasapi.BASS_WASAPI_GetDeviceInfo( ndevNo ).minperiod の値を使えばよい。
+			// これをやらないと、更新間隔ms=6ms となり、バッファサイズを 6ms x 4 = 24msより小さくできない。
+			#region [ 既定の出力デバイスと設定されているWASAPIデバイスを検索し、更新間隔msを設定できる最小値にする ]
+			int nDevNo = -1;
+			BASS_WASAPI_DEVICEINFO deviceInfo;
+			for ( int n = 0; ( deviceInfo = BassWasapi.BASS_WASAPI_GetDeviceInfo( n ) ) != null; n++ )
+			{
+				if ( deviceInfo.IsDefault )
+				{
+					nDevNo = n;
+					break;
+				}
+			}
+			if ( nDevNo != -1 )
+			{
+				// Trace.TraceInformation( "Selected Default WASAPI Device: {0}", deviceInfo.name );
+				// Trace.TraceInformation( "MinPeriod={0}, DefaultPeriod={1}", deviceInfo.minperiod, deviceInfo.defperiod );
+				n更新間隔ms = (long) ( deviceInfo.minperiod * 1000 );
+			}
+			else
+			{
+				Trace.TraceError( "Error: Default WASAPI Device is not found." );
+			}
+			#endregion
+
 Retry:
 			var flags = ( mode == Eデバイスモード.排他 ) ?BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EXCLUSIVE : BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT;
 			if ( BassWasapi.BASS_WASAPI_Init( nデバイス, n周波数, nチャンネル数, flags, ( n希望バッファサイズms / 1000.0f ), ( n更新間隔ms / 1000.0f ), this.tWasapiProc, IntPtr.Zero ) )
@@ -130,8 +157,8 @@ Retry:
 					//-----------------
 					this.e出力デバイス = ESoundDeviceType.ExclusiveWASAPI;
 
-					int nDevNo = BassWasapi.BASS_WASAPI_GetDevice();
-					var deviceInfo = BassWasapi.BASS_WASAPI_GetDeviceInfo( nDevNo );
+					nDevNo = BassWasapi.BASS_WASAPI_GetDevice();
+					deviceInfo = BassWasapi.BASS_WASAPI_GetDeviceInfo( nDevNo );
 					var wasapiInfo = BassWasapi.BASS_WASAPI_GetInfo();
 					int n1サンプルのバイト数 = 2 * wasapiInfo.chans;	// default;
 					switch( wasapiInfo.format )		// BASS WASAPI で扱うサンプルはすべて 32bit float で固定されているが、デバイスはそうとは限らない。
@@ -154,6 +181,7 @@ Retry:
 						n実バッファサイズms.ToString(),
 						n希望バッファサイズms.ToString(),
 						n更新間隔ms.ToString() );
+					Trace.TraceInformation( "デバイスの最小更新時間={0}ms, 既定の更新時間={1}ms", deviceInfo.minperiod * 1000, deviceInfo.defperiod * 1000 );
 					this.bIsBASSFree = false;
 					//-----------------
 					#endregion
@@ -174,6 +202,7 @@ Retry:
 			}
 			else if ( mode == Eデバイスモード.排他 )
 			{
+				Trace.TraceInformation("Failed to initialize setting BASS (WASAPI) mode [{0}]", Bass.BASS_ErrorGetCode().ToString() );
 				#region [ 排他モードに失敗したのなら共有モードでリトライ。]
 				//-----------------
 				mode = Eデバイスモード.共有;
@@ -209,6 +238,7 @@ Retry:
 				this.bIsBASSFree = true;
 				throw new Exception( string.Format( "BASSミキサの作成に失敗しました。[{0}]", errcode ) );
 			}
+
 
 			// BASS ミキサーの1秒あたりのバイト数を算出。
 
@@ -283,7 +313,7 @@ Retry:
 			// BASSミキサからの出力データをそのまま WASAPI buffer へ丸投げ。
 
 			int num = Bass.BASS_ChannelGetData( this.hMixer, buffer, length );		// num = 実際に転送した長さ
-			if( num == -1 ) num = 0;
+			if ( num == -1 ) num = 0;
 
 
 			// 経過時間を更新。

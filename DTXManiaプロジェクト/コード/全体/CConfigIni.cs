@@ -716,6 +716,7 @@ namespace DTXMania
 		    get;
 		    set;
 		}
+        public bool bTimeStretch;					// #23664 2013.2.24 yyagi ピッチ変更無しで再生速度を変更するかどうか
 		public STAUTOPLAY bAutoPlay;
 		public STRANGE nヒット範囲ms;
 		[StructLayout( LayoutKind.Sequential )]
@@ -1125,10 +1126,11 @@ namespace DTXMania
 			this.bUseBoxDefSkin = true;					// #28195 2012.5.6 yyagi box.defによるスキン切替機能を使用するか否か
             this.bTight = false;                        // #29500 2012.9.11 kairera0467
             this.nSoundDeviceType = (int)ESoundDeviceTypeForConfig.ACM; // #24820 2012.12.23 yyagi 初期値はACM
-            this.nWASAPIBufferSizeMs = 0; // #24820 2013.1.15 yyagi 初期値は0(自動設定)
-            this.nASIODevice = 0; // #24820 2013.1.17 yyagi
-            this.nASIOBufferSizeMs = 0; // #24820 2012.12.25 yyagi 初期値は0(自動設定)
-            this.bDynamicBassMixerManagement = true; //
+            this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
+            this.nASIODevice = 0;                       // #24820 2013.1.17 yyagi
+            this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
+            this.bDynamicBassMixerManagement = true;    //
+            this.bTimeStretch = false;					// #23664 2013.2.24 yyagi 初期値はfalse (再生速度変更を、ピッチ変更にて行う)
 
 		}
 		public CConfigIni( string iniファイル名 )
@@ -1512,14 +1514,23 @@ namespace DTXMania
 			sw.WriteLine( "; Set ON if you'd like to save result screen image automatically");	//
 			sw.WriteLine( "; when you get hiscore/hiskill.");								//
 			sw.WriteLine( "AutoResultCapture={0}", this.bIsAutoResultCapture? 1 : 0 );		//
-			sw.WriteLine();
-			sw.WriteLine( "; 判定タイミング調整(ドラム, ギター, ベース)(-99～0)[ms]" );		// #23580 2011.1.3 yyagi
-			sw.WriteLine("; Revision value to adjust judgement timing for the drums, guitar and bass.");	//
-			sw.WriteLine("InputAdjustTimeDrums={0}", this.nInputAdjustTimeMs.Drums);		//
-			sw.WriteLine("InputAdjustTimeGuitar={0}", this.nInputAdjustTimeMs.Guitar);		//
-			sw.WriteLine("InputAdjustTimeBass={0}", this.nInputAdjustTimeMs.Bass);			//
-			sw.WriteLine();
-			sw.WriteLine( "; LC, HH, SD,...の入力切り捨て下限Velocity値(0～127)" );			// #23857 2011.1.31 yyagi
+            sw.WriteLine();
+            sw.WriteLine("; 再生速度変更を、ピッチ変更で行うかどうか(0:ピッチ変更, 1:タイムストレッチ");	// #23664 2013.2.24 yyagi
+            sw.WriteLine("; (WASAPI/ASIO使用時のみ有効) ");
+            sw.WriteLine("; Set \"0\" if you'd like to use pitch shift with PlaySpeed.");	//
+            sw.WriteLine("; Set \"1\" for time stretch.");								//
+            sw.WriteLine("; (Only available when you're using using WASAPI or ASIO)");	//
+            sw.WriteLine("TimeStretch={0}", this.bTimeStretch ? 1 : 0);					//
+            sw.WriteLine();
+            #region [ InputAdjust ]
+            sw.WriteLine("; 判定タイミング調整(ドラム, ギター, ベース)(-99～0)[ms]");		// #23580 2011.1.3 yyagi
+            sw.WriteLine("; Revision value to adjust judgement timing for the drums, guitar and bass.");	//
+            sw.WriteLine("InputAdjustTimeDrums={0}", this.nInputAdjustTimeMs.Drums);		//
+            sw.WriteLine("InputAdjustTimeGuitar={0}", this.nInputAdjustTimeMs.Guitar);		//
+            sw.WriteLine("InputAdjustTimeBass={0}", this.nInputAdjustTimeMs.Bass);			//
+            sw.WriteLine();
+            #endregion
+            sw.WriteLine( "; LC, HH, SD,...の入力切り捨て下限Velocity値(0～127)" );			// #23857 2011.1.31 yyagi
 			sw.WriteLine( "; Minimum velocity value for LC, HH, SD, ... to accept." );		//
 			sw.WriteLine( "LCVelocityMin={0}", this.nVelocityMin.LC );						//
 			sw.WriteLine("HHVelocityMin={0}", this.nVelocityMin.HH );						//
@@ -2358,6 +2369,10 @@ namespace DTXMania
                                             {
                                                 this.nShowLagType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, this.nShowLagType);
                                             }
+                                            else if ( str3.Equals( "TimeStretch" ) )				// #23664 2013.2.24 yyagi
+											{
+												this.bTimeStretch = C変換.bONorOFF( str4[ 0 ] );
+											}
                                             else if (str3.Equals("AutoResultCapture"))			// #25399 2011.6.9 yyagi
                                             {
                                                 this.bIsAutoResultCapture = C変換.bONorOFF(str4[0]);

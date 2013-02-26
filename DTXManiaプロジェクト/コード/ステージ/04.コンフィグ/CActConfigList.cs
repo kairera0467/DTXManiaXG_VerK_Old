@@ -106,6 +106,16 @@ namespace DTXMania
 				"It changes the song speed.\nFor example, you can play in half\n speed by setting PlaySpeed = 0.500\n for your practice.\nNote: It also changes the songs' pitch." );
 			this.list項目リスト.Add( this.iCommonPlaySpeed );
 
+            this.iSystemTimeStretch = new CItemToggle("TimeStretch", CDTXMania.ConfigIni.bTimeStretch,
+                "演奏速度の変更方式:\n" +
+                "ONにすると、演奏速度の変更を、\n" +
+                "周波数変更ではなく\n" +
+                "タイムストレッチで行います。",
+                "How to change the playing speed:\n" +
+                "Turn ON to use time stretch\n" +
+                "to change the play speed.");
+            this.list項目リスト.Add(this.iSystemTimeStretch);
+
             this.iSystemSkillMode = new CItemList("SkillMode", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nSkillMode,
                 "達成率、スコアの計算方法を変更します。\n"+
                 "CLASSIC:V6までのスコア計算とV8までの\n"+
@@ -1767,7 +1777,9 @@ namespace DTXMania
                 CDTXMania.app.AddSoundTypeToWindowTitle();
             }
             #endregion
-
+            #region [ サウンドのタイムストレッチモード変更 ]
+            FDK.CSound管理.bIsTimeStretch = this.iSystemTimeStretch.bON;
+            #endregion
         }
 		public override void OnManagedリソースの作成()
 		{
@@ -2177,7 +2189,7 @@ namespace DTXMania
         private CItemList iSystemSoundType;         // #24820 2013.1.3 yyagi
         private CItemInteger iSystemWASAPIBufferSizeMs;		// #24820 2013.1.15 yyagi
         private CItemInteger iSystemASIOBufferSizeMs;		// #24820 2013.1.3 yyagi
-        private CItemList iSystemASIODevice;				// $24820 2013.1.17 yyagi
+        private CItemList iSystemASIODevice;				// #24820 2013.1.17 yyagi
         private CItemList iInfoType;
         private CItemToggle iAutoAddGage;
         private CItemList iHidSud;
@@ -2188,7 +2200,8 @@ namespace DTXMania
         private int iSystemWASAPIBufferSizeMs_initial;
         private int iSystemASIOBufferSizeMs_initial;
         private int iSystemASIODevice_initial;
-        
+
+        private CItemToggle iSystemTimeStretch;             // #23664 2013.2.24 yyagi
 
 		private List<CItemBase> list項目リスト;
 		private long nスクロール用タイマ値;
@@ -2413,6 +2426,8 @@ namespace DTXMania
             CDTXMania.ConfigIni.nWASAPIBufferSizeMs = this.iSystemWASAPIBufferSizeMs.n現在の値;				// #24820 2013.1.15 yyagi
             CDTXMania.ConfigIni.nASIOBufferSizeMs = this.iSystemASIOBufferSizeMs.n現在の値; // #24820 2013.1.3 yyagi
             CDTXMania.ConfigIni.nASIODevice = this.iSystemASIODevice.n現在選択されている項目番号;			// #24820 2013.1.17 yyagi
+            CDTXMania.ConfigIni.bTimeStretch = this.iSystemTimeStretch.bON; // #23664 2013.2.24 yyagi
+
 
 //Trace.TraceInformation( "saved" );
 //Trace.TraceInformation( "Skin現在Current : " + CDTXMania.Skin.GetCurrentSkinSubfolderFullName(true) );
