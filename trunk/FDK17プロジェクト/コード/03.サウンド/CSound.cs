@@ -13,6 +13,7 @@ using Un4seen.Bass;
 using Un4seen.BassAsio;
 using Un4seen.BassWasapi;
 using Un4seen.Bass.AddOn.Mix;
+using Un4seen.Bass.AddOn.Fx;
 using DirectShowLib;
 
 namespace FDK
@@ -32,6 +33,7 @@ namespace FDK
 
 		public static IntPtr WindowHandle;
 
+		public static bool bIsTimeStretch = false;
 		public static int nMixing = 0;
 		public int GetMixingStreams()
 		{
@@ -118,12 +120,12 @@ namespace FDK
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="handle"></param>
-        public CSound管理( IntPtr handle )    // #30803 従来のコンストラクタ相当のI/Fを追加。(DTXC用)
-        {
-            WindowHandle = handle;
-            SoundDevice = null;
-            t初期化( ESoundDeviceType.DirectSound, 0, 0, 0 );
-        }
+		public CSound管理( IntPtr handle )	// #30803 従来のコンストラクタ相当のI/Fを追加。(DTXC用)
+		{
+			WindowHandle = handle;
+			SoundDevice = null;
+			t初期化( ESoundDeviceType.DirectSound, 0, 0, 0 );
+		}
 		public CSound管理( IntPtr handle, ESoundDeviceType soundDeviceType, int nSoundDelayExclusiveWASAPI, int nSoundDelayASIO, int nASIODevice )
 		{
 			WindowHandle = handle;
@@ -262,11 +264,10 @@ namespace FDK
 			return SoundDevice.tサウンドを作成する( filename );
 		}
 
-
-        public void t再生中の処理をする( object o ) // #26122 2011.9.1 yyagi; delegate経由の呼び出し用
-        {
-            t再生中の処理をする();
-        }
+		public void t再生中の処理をする( object o )			// #26122 2011.9.1 yyagi; delegate経由の呼び出し用
+		{
+			t再生中の処理をする();
+		}
 		public void t再生中の処理をする()
 		{
 //★★★★★★★★★★★★★★★★★★★★★ダミー★★★★★★★★★★★★★★★★★★
@@ -365,10 +366,10 @@ namespace FDK
 					}
 					else
 					{
-						if ( b再生中 )
-						{
+//						if ( b再生中 )	// #30838 2012.2.24 yyagi (delete b再生中)
+//						{
 							this.Buffer.Frequency = ( int ) ( _db周波数倍率 * _db再生速度 * nオリジナルの周波数 );
-						}
+//						}
 					}
 				}
 			}
@@ -386,20 +387,28 @@ namespace FDK
 					_db再生速度 = value;
 					if ( bBASSサウンドである )
 					{
-						Bass.BASS_ChannelSetAttribute( this.hBassStream, BASSAttribute.BASS_ATTRIB_FREQ, ( float ) ( _db周波数倍率 * _db再生速度 * nオリジナルの周波数 ) );
+						if ( CSound管理.bIsTimeStretch )
+						{
+							Bass.BASS_ChannelSetAttribute( this.hBassStream, BASSAttribute.BASS_ATTRIB_TEMPO, (float) ( db再生速度 * 100 - 100 ) );
+							//double seconds = Bass.BASS_ChannelBytes2Seconds( this.hTempoStream, nBytes );
+							//this.n総演奏時間ms = (int) ( seconds * 1000 );
+						}
+						else
+						{
+							Bass.BASS_ChannelSetAttribute( this.hBassStream, BASSAttribute.BASS_ATTRIB_FREQ, ( float ) ( _db周波数倍率 * _db再生速度 * nオリジナルの周波数 ) );
+						}
 					}
 					else
 					{
-						if ( b再生中 )
-						{
+//						if ( b再生中 )	// #30838 2012.2.24 yyagi (delete b再生中)
+//						{
 							this.Buffer.Frequency = ( int ) ( _db周波数倍率 * _db再生速度 * nオリジナルの周波数 );
-						}
+//						}
 					}
 				}
 			}
 		}
 		#endregion
-
 
 		private STREAMPROC _cbStreamXA;		// make it global, so that the GC can not remove it
 //		private SYNCPROC _cbEndofStream;	// ストリームの終端まで再生されたときに呼び出されるコールバック
@@ -938,19 +947,18 @@ namespace FDK
 		}
 		public void tサウンドを再生する( bool bループする )
 		{
-			if ( this.bBASSサウンドである )			// BASSサウンド時のループ処理は、t再生を開始する()側に実装。
+			if ( this.bBASSサウンドである )			// BASSサウンド時のループ処理は、t再生を開始する()側に実装。ここでは「bループする」は未使用。
 			{
 //Debug.WriteLine( "再生中?: " +  System.IO.Path.GetFileName(this.strファイル名) + " status=" + BassMix.BASS_Mixer_ChannelIsActive( this.hBassStream ) + " current=" + BassMix.BASS_Mixer_ChannelGetPosition( this.hBassStream ) + " nBytes=" + nBytes );
 				bool b = BassMix.BASS_Mixer_ChannelPlay( this.hBassStream );
 				if ( !b )
 				{
-Debug.WriteLine( "再生しようとしたが、Mixerに登録されていなかった: " + Path.GetFileName( this.strファイル名 ) + ", " + hBassStream );
-//Debug.WriteLine( "ErrCode= " +Bass.BASS_ErrorGetCode() );
+Debug.WriteLine( "再生しようとしたが、Mixerに登録されていなかった: " + Path.GetFileName( this.strファイル名 ) + ", ErrCode=" + Bass.BASS_ErrorGetCode() );
 
 					bool bb = tBASSサウンドをミキサーに追加する();
 					if ( !bb )
 					{
-Debug.WriteLine( "Mixerへの登録に失敗: " + Path.GetFileName( this.strファイル名 ) + ": " + Bass.BASS_ErrorGetCode() );
+Debug.WriteLine( "Mixerへの登録に失敗: " + Path.GetFileName( this.strファイル名 ) + ", ErrCode=" + Bass.BASS_ErrorGetCode() );
 					}
 					else
 					{
@@ -961,8 +969,7 @@ Debug.WriteLine( "Mixerへの登録に失敗: " + Path.GetFileName( this.strフ�
 					bool bbb = BassMix.BASS_Mixer_ChannelPlay( this.hBassStream );
 					if (!bbb)
 					{
-						Debug.WriteLine("更に再生に失敗                                 : " + Path.GetFileName(this.strファイル名));
-						Debug.WriteLine("ErrCode= " + Bass.BASS_ErrorGetCode());
+Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイル名) + ", ErrCode=" + Bass.BASS_ErrorGetCode() );
 					}
 					else
 					{
@@ -1022,11 +1029,11 @@ Debug.WriteLine( "Mixerへの登録に失敗: " + Path.GetFileName( this.strフ�
 		{
 			if( this.bBASSサウンドである )
 			{
-				BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms / 1000.0 ), BASSMode.BASS_POS_BYTES );
+				BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hTempoStream, n位置ms / 1000.0 ), BASSMode.BASS_POS_BYTES );
 			}
 			else if( this.bDirectSoundである )
 			{
-				int n位置sample = (int) ( this.Buffer.Format.SamplesPerSecond * n位置ms * 0.001 );
+				int n位置sample = (int) ( this.Buffer.Format.SamplesPerSecond * n位置ms * 0.001 * _db周波数倍率 * _db再生速度 );	// #30839 2013.2.24 yyagi; add _db周波数倍率 and _db再生速度
 				this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
 			}
 		}
@@ -1189,6 +1196,7 @@ Debug.WriteLine( "Mixerへの登録に失敗: " + Path.GetFileName( this.strフ�
 		protected SoundBuffer Buffer = null;			// DirectSound 用
 		protected DirectSound DirectSound;
 		public int hMixer = -1;	// 設計壊してゴメン Mixerに後で登録するときに使う
+		public int hTempoStream;
 		//-----------------
 		#endregion
 
@@ -1305,6 +1313,25 @@ Debug.WriteLine( "Mixerへの登録に失敗: " + Path.GetFileName( this.strフ�
 
 			//			_cbEndofStream = new SYNCPROC( CallbackEndofStream );
 			//			Bass.BASS_ChannelSetSync( hBassStream, BASSSync.BASS_SYNC_END |BASSSync.BASS_SYNC_MIXTIME, 0, _cbEndofStream, IntPtr.Zero );
+
+
+			// the tempo channel
+			// mixerの出力をテンポ変更のストリームに入力する。テンポ変更ストリームの出力を、Mixerに出力する。
+
+			if ( CSound管理.bIsTimeStretch )
+			{
+				this.hTempoStream = BassFx.BASS_FX_TempoCreate( this.hBassStream, BASSFlag.BASS_STREAM_DECODE | BASSFlag.BASS_FX_FREESOURCE );
+				if ( this.hTempoStream == 0 )
+				{
+					hGC.Free();
+					throw new Exception( string.Format( "サウンドストリームの生成に失敗しました。(BASS_FX_TempoCreate)[{0}]", Bass.BASS_ErrorGetCode().ToString() ) );
+				}
+				else
+				{
+					this.hBassStream = this.hTempoStream;
+					Bass.BASS_ChannelSetAttribute( this.hBassStream, BASSAttribute.BASS_ATTRIB_TEMPO_OPTION_USE_QUICKALGO, 1f );	// 高速化(音の品質は少し落ちる)
+				}
+			}
 
 
 			// インスタンスリストに登録。

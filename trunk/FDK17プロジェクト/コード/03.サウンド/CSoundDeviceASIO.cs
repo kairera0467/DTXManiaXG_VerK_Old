@@ -81,7 +81,6 @@ namespace FDK
 			protected set;
 		}
 
-
 		// メソッド
 
 		public CSoundDeviceASIO( long n希望バッファサイズms, int _nASIODevice )
@@ -144,7 +143,6 @@ Debug.WriteLine( "BASS_Init()完了。" );
 			#endregion
 
 			// BASS ASIO の初期化。
-Debug.WriteLine( "Default device no.: " + nASIODevice );
 			BASS_ASIO_INFO asioInfo = null;
 			if ( BassAsio.BASS_ASIO_Init( nASIODevice, BASSASIOInit.BASS_ASIO_THREAD ) )	// 専用スレッドにて起動
 			{
@@ -247,10 +245,11 @@ Debug.WriteLine( "Default device no.: " + nASIODevice );
 
 			if ( this.hMixer == 0 )
 			{
+				BASSError err = Bass.BASS_ErrorGetCode(); 
 				BassAsio.BASS_ASIO_Free();
 				Bass.BASS_Free();
 				this.bIsBASSFree = true;
-				throw new Exception( string.Format( "BASSミキサの作成に失敗しました。[{0}]", Bass.BASS_ErrorGetCode() ) );
+				throw new Exception( string.Format( "BASSミキサの作成に失敗しました。[{0}]", err ) );
 			}
 
 			// BASS ミキサーの1秒あたりのバイト数を算出。
@@ -267,8 +266,7 @@ Debug.WriteLine( "Default device no.: " + nASIODevice );
 			//long nミキサーの1サンプルあたりのバイト数 = /*mixerInfo.chans*/ 2 * nサンプルサイズbyte;
 			long nミキサーの1サンプルあたりのバイト数 = mixerInfo.chans * nサンプルサイズbyte;
 			this.nミキサーの1秒あたりのバイト数 = nミキサーの1サンプルあたりのバイト数 * mixerInfo.freq;
-
-
+		
 			// 出力を開始。
 
 			this.nバッファサイズsample = (int) ( n希望バッファサイズms * this.db周波数 / 1000.0 );
@@ -365,7 +363,8 @@ Debug.WriteLine( "Default device no.: " + nASIODevice );
 			// BASSミキサからの出力データをそのまま ASIO buffer へ丸投げ。
 
 			int num = Bass.BASS_ChannelGetData( this.hMixer, buffer, length );		// num = 実際に転送した長さ
-			if( num == -1 ) num = 0;
+
+			if ( num == -1 ) num = 0;
 
 
 			// 経過時間を更新。

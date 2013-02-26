@@ -847,7 +847,7 @@ namespace DTXMania
                         #region [ ジャケット画像を描画 ]
                         //-----------------
                         this.t選択中の曲以外でプレビュー画像の指定があれば構築する(i);
-                        this.t描画処理・選択曲以外のプレビュー画像(i);
+                        this.t描画処理・選択曲以外のプレビュー画像(n見た目の行番号);
                         //-----------------
                         #endregion
                         #region [ タイトル名テクスチャを描画。]
@@ -1438,7 +1438,7 @@ namespace DTXMania
                 }
                 else
                 {
-                    this.r表示するプレビュー画像 = this.txプレビュー画像がないときの画像;
+                    this.txプレビュー画像 = this.txプレビュー画像がないときの画像;
                 }
             }
             return true;
@@ -1513,7 +1513,6 @@ namespace DTXMania
                     return new CTexture(CDTXMania.app.Device, bmp, CDTXMania.TextureFormat, false);
                 }
             }
-
             return CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"));
         }
         private unsafe void t描画処理・プレビュー画像()
@@ -1537,11 +1536,12 @@ namespace DTXMania
 		}
         private unsafe void t描画処理・選択曲以外のプレビュー画像(int n位置番号)
         {
-            int x = n位置番号 * 100;
+            int x = n位置番号 * 50;
             int y = 200;
 
             SlimDX.Matrix r = SlimDX.Matrix.Identity;
             r *= SlimDX.Matrix.Translation(this.stマトリックス座標[n位置番号].x, 0f, 0f);
+            r *= SlimDX.Matrix.RotationY(this.stマトリックス座標[n位置番号].rotY);
             if (this.r表示するプレビュー画像 != null)
             {
                 int width = this.r表示するプレビュー画像.sz画像サイズ.Width;

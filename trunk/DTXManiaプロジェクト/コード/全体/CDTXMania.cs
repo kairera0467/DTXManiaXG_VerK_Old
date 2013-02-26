@@ -1893,6 +1893,7 @@ for (int i = 0; i < 3; i++) {
                                                 CDTXMania.ConfigIni.nASIODevice
                     );
                     AddSoundTypeToWindowTitle();
+                    FDK.CSound管理.bIsTimeStretch = CDTXMania.ConfigIni.bTimeStretch;
                     Trace.TraceInformation("サウンドデバイスの初期化を完了しました。");
                 }
             }
