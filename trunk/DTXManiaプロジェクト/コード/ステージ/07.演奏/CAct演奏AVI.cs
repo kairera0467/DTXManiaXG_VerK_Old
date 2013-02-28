@@ -785,7 +785,51 @@ namespace DTXMania
                     {
                         this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
-                    this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0);
+                    int n振動x座標 = 0;
+                    if (CDTXMania.stage演奏ドラム画面.bボーナス == true)
+                    { 
+                        for (int n振動回数 = 0; n振動回数 < 20; n振動回数++)
+                        {
+                            switch (n振動回数)
+                            {
+                                case 0:
+                                    n振動x座標 = 20;
+                                    break;
+                                case 2:
+                                    n振動x座標 = -20;
+                                    break;
+                                case 4:
+                                    n振動x座標 = 16;
+                                    break;
+                                case 6:
+                                    n振動x座標 = -16;
+                                    break;
+                                case 8:
+                                    n振動x座標 = 10;
+                                    break;
+                                case 10:
+                                    n振動x座標 = -10;
+                                    break;
+                                case 12:
+                                    n振動x座標 = 8;
+                                    break;
+                                case 14:
+                                    n振動x座標 = -8;
+                                    break;
+                                case 16:
+                                    n振動x座標 = 2;
+                                    break;
+                                case 18:
+                                    n振動x座標 = -2;
+                                    break;
+                                case 20:
+                                    n振動x座標 = 0;
+                                    break;
+                            }
+                        }
+                        CDTXMania.stage演奏ドラム画面.bボーナス = false;
+                    }
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
 
 
                     if ((CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D) && (this.txBPMバー左 != null && this.txBPMバー右 != null))

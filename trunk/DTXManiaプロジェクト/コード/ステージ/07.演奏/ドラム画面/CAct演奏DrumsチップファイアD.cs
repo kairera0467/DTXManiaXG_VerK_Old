@@ -422,6 +422,11 @@ namespace DTXMania
 				{
 					this.tx細波.b加算合成 = true;
 				}
+                this.txボーナス花火 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayDrums chip fire_Bonus.png"));
+                if (this.txボーナス花火 != null)
+                {
+                    this.txボーナス花火.b加算合成 = true;
+                }
                 for (int i = 0; i < 9; i++)
                 {
                     this.txNotes[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
@@ -572,6 +577,8 @@ namespace DTXMania
 						if( this.tx火花[ this.st火花[i].nLane ] != null )
 						{
                             this.tx火花[ this.st火花[i].nLane ].t3D描画(CDTXMania.app.Device, identity);
+                            if(CDTXMania.stage演奏ドラム画面.bサビ区間 == true && this.txボーナス花火 != null)
+                                this.txボーナス花火.t3D描画(CDTXMania.app.Device, identity);
 						}
 					}
 				}
@@ -841,6 +848,7 @@ namespace DTXMania
 		private ST青い星[] st青い星 = new ST青い星[ STAR_MAX ];
         private ST飛び散るチップ[] st飛び散るチップ = new ST飛び散るチップ[ 20 ];
 		private CTexture[] tx火花 = new CTexture[10];
+        private CTexture txボーナス花火;
 		private CTexture tx細波;
 		private CTexture[] tx青い星 = new CTexture[10];
 		private CTexture tx大波;
