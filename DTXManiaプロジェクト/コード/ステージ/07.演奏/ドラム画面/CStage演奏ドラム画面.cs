@@ -103,6 +103,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 this.bサビ区間 = false;
+                this.bボーナス = false;
 				this.txチップ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\7_chips.png" ) );
 				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums hit-bar.png" ) );
 				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums hit-bar guitar.png" ) );
@@ -386,6 +387,7 @@ namespace DTXMania
 		public bool bフィルイン中;
         public bool bフィルイン終了;
         public bool bサビ区間;
+        public bool bボーナス;
         private CSound rResultSound;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[12]
 		{
@@ -3130,6 +3132,7 @@ namespace DTXMania
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
                 pChip.bHit = true;
+                bボーナス = true;
                 if (((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.bドラムが全部オートプレイである) && configIni.b歓声を発声する)
                 {
                     switch (pChip.n整数値)

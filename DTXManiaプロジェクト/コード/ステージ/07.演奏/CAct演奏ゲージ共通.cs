@@ -148,6 +148,7 @@ namespace DTXMania
 			{  0.003f,  0.003f,  0.003f  },
 			{  0.000f,  0.000f,  0.000f  },
 			{ -0.020f, -0.030f,	-0.030f  },
+            //{  0.000f,  0.000f,  0.000f  },
 			{ -0.050f, -0.050f, -0.050f  }
 		};
 		public float[] fDamageLevelFactor = {

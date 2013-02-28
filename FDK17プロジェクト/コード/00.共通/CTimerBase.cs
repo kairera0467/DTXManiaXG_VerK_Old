@@ -26,7 +26,8 @@ namespace FDK
 		}
 		public long n現在時刻
 		{
-			get { return n現在時刻ms; }
+            get { return n現在時刻ms; }
+            set { n現在時刻ms = value; }
 		}
 		public long n前回リセットした時のシステム時刻
 		{
