@@ -450,6 +450,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx細波 );
                 for (int i = 0; i < 9; i++)
                     CDTXMania.tテクスチャの解放( ref this.txNotes[i]);
+                CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
 				base.OnManagedリソースの解放();
 			}
 		}

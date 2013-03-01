@@ -501,7 +501,7 @@ namespace DTXMania
                     {
                         if (nWAVcount == 1 && CDTXMania.DTX.listWAV.Count > 0)			// #28934 2012.7.7 yyagi (added checking Count)
                         {
-                            ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
                         int looptime = (CDTXMania.ConfigIni.b垂直帰線待ちを行う) ? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
                         for (int i = 0; i < looptime && nWAVcount <= CDTXMania.DTX.listWAV.Count; i++)
@@ -514,7 +514,7 @@ namespace DTXMania
                         }
                         if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
                         {
-                            ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
                         if (nWAVcount > CDTXMania.DTX.listWAV.Count)
                         {
@@ -522,11 +522,10 @@ namespace DTXMania
                             Trace.TraceInformation("WAV読込所要時間({0,4}):     {1}", CDTXMania.DTX.listWAV.Count, span.ToString());
                             timeBeginLoadWAV = DateTime.Now;
 
-                            if (CDTXMania.ConfigIni.bDynamicBassMixerManagement)
-                            {
-                                CDTXMania.DTX.PlanToAddMixerChannel();
-                            }
-
+							if ( CDTXMania.ConfigIni.bDynamicBassMixerManagement )
+							{
+								CDTXMania.DTX.PlanToAddMixerChannel();
+							}
                             CDTXMania.DTX.t旧仕様のドコドコチップを振り分ける(E楽器パート.DRUMS, CDTXMania.ConfigIni.bAssignToLBD.Drums);
                             //CDTXMania.DTX.t譜面仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eNumOfLanes.Drums);
                             CDTXMania.DTX.tドコドコ仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eDkdkType.Drums);
