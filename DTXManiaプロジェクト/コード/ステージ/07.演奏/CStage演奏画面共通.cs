@@ -1966,8 +1966,8 @@ namespace DTXMania
                 if ((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightShift) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftShift)) && keyboard.bキーが押されている(0x3c))
                 {
                     //SHIFT & F7
-                    CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
-                    CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                    //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
+                    //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
                 }
                 if ( keyboard.bキーが押された(0x3d))
                 {
