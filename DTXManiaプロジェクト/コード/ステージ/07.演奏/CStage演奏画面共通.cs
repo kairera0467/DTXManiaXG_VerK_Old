@@ -1972,7 +1972,7 @@ namespace DTXMania
                 if ( keyboard.bキーが押された(0x3d))
                 {
                     //F8キー
-                   
+
                 }
             }
         }

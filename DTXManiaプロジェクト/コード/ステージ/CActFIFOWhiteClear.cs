@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.IO;
 using System.Drawing;
 using SlimDX;
@@ -34,7 +35,6 @@ namespace DTXMania
         {
             if (this.b活性化してる)
                 return;
-
             //this.ds背景動画 = DTXMania.CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(DTXMania.CSkin.Path(@"Graphics\7_StageClear.mp4"), DTXMania.CDTXMania.App.hWnd, true);
 
             base.On活性化(D3D9Device);
@@ -63,7 +63,12 @@ namespace DTXMania
                 this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_FullCombo.png"));
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Excellent.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Drums_black.png"));
-                this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenSelect preimage default.png"));
+
+                this.txボーナス花火 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayDrums chip star.png"));
+                if (this.txボーナス花火 != null)
+                {
+                    this.txボーナス花火.b加算合成 = true;
+                }
                 this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
                 this.nAVI再生開始時刻 = -1;
                 this.n前回描画したフレーム番号 = -1;
@@ -85,13 +90,12 @@ namespace DTXMania
                 this.sfリザルトAVI画像.Dispose();
                 this.sfリザルトAVI画像 = null;
             }
-            CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
-            CDTXMania.tテクスチャの解放( ref this.txリザルト画像がないときの画像 );
+            CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
 
             base.OnManagedリソースの解放();
         }
 
-        public override int On進行()
+        public override int On進行描画(Device D3D9Device)
 		{
             if (base.b活性化してない || (this.counter == null))
 				return 0;
@@ -114,15 +118,6 @@ namespace DTXMania
 			#endregion
 
 			//if( this.ds背景動画 != null && !this.ds背景動画.b再生中 )			// 再生完了したらステージ終了。
-            if (this.counter.n現在の値 != 400)
-				return 0;
-
-			return 1;
-		}
-		public override void On描画( Device D3D9Device )
-		{
-			if( this.b活性化してない )
-				return;
 
 			#region [ 背景動画 ]
 			//-----------------
@@ -157,6 +152,11 @@ namespace DTXMania
                     }
                 }
             }
+
+            if (this.counter.n現在の値 != 400)
+				return 0;
+
+			return 1;
 		}
 
 		public override unsafe int On進行描画()
@@ -173,11 +173,133 @@ namespace DTXMania
                     if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect == CDTXMania.DTX.n可視チップ数.Drums)
                     {
                         this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        #region[ 粉エフェクト ]
+                        if ((this.txボーナス花火 != null))
+                        {
+                            for (int i = 0; i < 16; i++)
+                            {
+                                for (int j = 0; j < 240; j++)
+                                {
+                                    if (!this.st青い星[j].b使用中)
+                                    {
+                                        this.st青い星[j].b使用中 = true;
+                                        int n回転初期値 = CDTXMania.Random.Next(360);
+                                        double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
+                                        this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
+                                        this.st青い星[j].fX = 600; //X座標
+
+                                        this.st青い星[j].fY = 350; //Y座標
+                                        this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
+                                        this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0) - 0.2));
+                                        this.st青い星[j].f加速度の加速度X = 0.995f;
+                                        this.st青い星[j].f加速度の加速度Y = 0.995f;
+                                        this.st青い星[j].f重力加速度 = 0.00355f;
+                                        this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
+                                        this.st青い星[j].b使用中 = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        for (int i = 0; i < 240; i++)
+                        {
+                            if (this.st青い星[i].b使用中)
+                            {
+                                this.st青い星[i].n前回のValue = this.st青い星[i].ct進行.n現在の値;
+                                this.st青い星[i].ct進行.t進行();
+                                if (this.st青い星[i].ct進行.b終了値に達した)
+                                {
+                                    this.st青い星[i].ct進行.t停止();
+                                    this.st青い星[i].b使用中 = false;
+                                }
+                                for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
+                                {
+                                    this.st青い星[i].fX += this.st青い星[i].f加速度X;
+                                    this.st青い星[i].fY -= this.st青い星[i].f加速度Y;
+                                    this.st青い星[i].f加速度X *= this.st青い星[i].f加速度の加速度X;
+                                    this.st青い星[i].f加速度Y *= this.st青い星[i].f加速度の加速度Y;
+                                    //this.st青い星[i].f加速度Y -= this.st青い星[i].f重力加速度;
+                                }
+                                Matrix mat = Matrix.Identity;
+
+                                float x = (float)(this.st青い星[i].f半径 * Math.Cos((Math.PI / 2 * this.st青い星[i].ct進行.n現在の値) / 100.0));
+                                mat *= Matrix.Scaling(x, x, 1f);
+                                mat *= Matrix.Translation(this.st青い星[i].fX - SampleFramework.GameWindowSize.Width / 2, -(this.st青い星[i].fY - SampleFramework.GameWindowSize.Height / 2), 0f);
+
+                                if (this.txボーナス花火 != null)
+                                {
+                                    this.txボーナス花火.t3D描画(CDTXMania.app.Device, mat);
+                                }
+                            }
+
+                        }
+                        #endregion
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
                     else
                     {
                         this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        #region[ 粉エフェクト ]
+                        if ((this.txボーナス花火 != null))
+                        {
+                            for (int i = 0; i < 16; i++)
+                            {
+                                for (int j = 0; j < 240; j++)
+                                {
+                                    if (!this.st青い星[j].b使用中)
+                                    {
+                                        this.st青い星[j].b使用中 = true;
+                                        int n回転初期値 = CDTXMania.Random.Next(360);
+                                        double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
+                                        this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
+                                        this.st青い星[j].fX = 600; //X座標
+
+                                        this.st青い星[j].fY = 350; //Y座標
+                                        this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
+                                        this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0) - 0.2));
+                                        this.st青い星[j].f加速度の加速度X = 0.995f;
+                                        this.st青い星[j].f加速度の加速度Y = 0.995f;
+                                        this.st青い星[j].f重力加速度 = 0.00355f;
+                                        this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
+                                        this.st青い星[j].b使用中 = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        for (int i = 0; i < 240; i++)
+                        {
+                            if (this.st青い星[i].b使用中)
+                            {
+                                this.st青い星[i].n前回のValue = this.st青い星[i].ct進行.n現在の値;
+                                this.st青い星[i].ct進行.t進行();
+                                if (this.st青い星[i].ct進行.b終了値に達した)
+                                {
+                                    this.st青い星[i].ct進行.t停止();
+                                    this.st青い星[i].b使用中 = false;
+                                }
+                                for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
+                                {
+                                    this.st青い星[i].fX += this.st青い星[i].f加速度X;
+                                    this.st青い星[i].fY -= this.st青い星[i].f加速度Y;
+                                    this.st青い星[i].f加速度X *= this.st青い星[i].f加速度の加速度X;
+                                    this.st青い星[i].f加速度Y *= this.st青い星[i].f加速度の加速度Y;
+                                    //this.st青い星[i].f加速度Y -= this.st青い星[i].f重力加速度;
+                                }
+                                Matrix mat = Matrix.Identity;
+
+                                float x = (float)(this.st青い星[i].f半径 * Math.Cos((Math.PI / 2 * this.st青い星[i].ct進行.n現在の値) / 100.0));
+                                mat *= Matrix.Scaling(x, x, 1f);
+                                mat *= Matrix.Translation(this.st青い星[i].fX - SampleFramework.GameWindowSize.Width / 2, -(this.st青い星[i].fY - SampleFramework.GameWindowSize.Height / 2), 0f);
+
+                                if (this.txボーナス花火 != null)
+                                {
+                                    this.txボーナス花火.t3D描画(CDTXMania.app.Device, mat);
+                                }
+                            }
+
+                        }
+                        #endregion
                         this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
                 }
@@ -187,6 +309,67 @@ namespace DTXMania
                 if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor == 0)
                 {
                         this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                        #region[ 粉エフェクト ]
+                        if ((this.txボーナス花火 != null))
+                        {
+                            for (int i = 0; i < 16; i++)
+                            {
+                                for (int j = 0; j < 240; j++)
+                                {
+                                    if (!this.st青い星[j].b使用中)
+                                    {
+                                        this.st青い星[j].b使用中 = true;
+                                        int n回転初期値 = CDTXMania.Random.Next(360);
+                                        double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
+                                        this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
+                                        this.st青い星[j].fX = 600; //X座標
+
+                                        this.st青い星[j].fY = 350; //Y座標
+                                        this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
+                                        this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0) - 0.2));
+                                        this.st青い星[j].f加速度の加速度X = 0.995f;
+                                        this.st青い星[j].f加速度の加速度Y = 0.995f;
+                                        this.st青い星[j].f重力加速度 = 0.00355f;
+                                        this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
+                                        this.st青い星[j].b使用中 = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        for (int i = 0; i < 240; i++)
+                        {
+                            if (this.st青い星[i].b使用中)
+                            {
+                                this.st青い星[i].n前回のValue = this.st青い星[i].ct進行.n現在の値;
+                                this.st青い星[i].ct進行.t進行();
+                                if (this.st青い星[i].ct進行.b終了値に達した)
+                                {
+                                    this.st青い星[i].ct進行.t停止();
+                                    this.st青い星[i].b使用中 = false;
+                                }
+                                for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
+                                {
+                                    this.st青い星[i].fX += this.st青い星[i].f加速度X;
+                                    this.st青い星[i].fY -= this.st青い星[i].f加速度Y;
+                                    this.st青い星[i].f加速度X *= this.st青い星[i].f加速度の加速度X;
+                                    this.st青い星[i].f加速度Y *= this.st青い星[i].f加速度の加速度Y;
+                                    //this.st青い星[i].f加速度Y -= this.st青い星[i].f重力加速度;
+                                }
+                                Matrix mat = Matrix.Identity;
+
+                                float x = (float)(this.st青い星[i].f半径 * Math.Cos((Math.PI / 2 * this.st青い星[i].ct進行.n現在の値) / 100.0));
+                                mat *= Matrix.Scaling(x, x, 1f);
+                                mat *= Matrix.Translation(this.st青い星[i].fX - SampleFramework.GameWindowSize.Width / 2, -(this.st青い星[i].fY - SampleFramework.GameWindowSize.Height / 2), 0f);
+
+                                if (this.txボーナス花火 != null)
+                                {
+                                    this.txボーナス花火.t3D描画(CDTXMania.app.Device, mat);
+                                }
+                            }
+
+                        }
+                        #endregion
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
                 }
             }
@@ -345,17 +528,32 @@ namespace DTXMania
         private CTexture txExcellent;
         private CTexture tx黒幕;
         private CTexture tx描画用;
+        private CTexture txボーナス花火;
 
+        [StructLayout(LayoutKind.Sequential)]
+        private struct ST青い星
+        {
+            public int nLane;
+            public bool b使用中;
+            public CCounter ct進行;
+            public int n前回のValue;
+            public float fX;
+            public float fY;
+            public float f加速度X;
+            public float f加速度Y;
+            public float f加速度の加速度X;
+            public float f加速度の加速度Y;
+            public float f重力加速度;
+            public float f半径;
+        }
+        private ST青い星[] st青い星 = new ST青い星[240];
         private CAvi avi;
         private bool b動画フレームを作成した;
         private long nAVI再生開始時刻;
         private int n前回描画したフレーム番号;
         private IntPtr pAVIBmp;
-        private CTexture r表示するリザルト画像;
         private Surface sfリザルトAVI画像;
         private string strAVIファイル名;
-
-        private CTexture txリザルト画像がないときの画像;
 
         private unsafe void tサーフェイスをクリアする(Surface sf)
         {
