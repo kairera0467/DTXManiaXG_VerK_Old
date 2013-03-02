@@ -31,12 +31,11 @@ namespace DTXMania
 		}
 
 		// CActivity 実装
-        public override void On活性化(Device D3D9Device)
+        public override void On活性化( Device D3D9Device )
         {
-            if (this.b活性化してる)
-                return;
-            //this.ds背景動画 = DTXMania.CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(DTXMania.CSkin.Path(@"Graphics\7_StageClear.mp4"), DTXMania.CDTXMania.App.hWnd, true);
-
+            //現時点では生成できずエラーが出る。
+            //おそらくCDTXMania側でOn活性化(this.App.D3D9Device)にして、ここでの生成でhWdPtrにCDTXMania.App.hWdPtrを使用するとエラーが出るのでそれが関係しているのかも。
+            this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), this.pAVIBmp, false);
             base.On活性化(D3D9Device);
         }
 		public override void On非活性化()
@@ -47,6 +46,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txFullCombo );
                 CDTXMania.tテクスチャの解放( ref this.txExcellent );
                 CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
+                C共通.tDisposeする(this.ds背景動画); this.ds背景動画 = null;
                 if (this.avi != null)
                 {
                     this.avi.Dispose();
@@ -59,6 +59,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
+                
 				this.tx白タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile white 64x64.png" ), false );
                 this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_FullCombo.png"));
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Excellent.png"));
@@ -74,8 +75,12 @@ namespace DTXMania
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
                 this.pAVIBmp = IntPtr.Zero;
+                if (this.ds背景動画 != null)
+                {
+                    this.tx描画用 = CDTXMania.tテクスチャを生成する(this.ds背景動画.n幅px, this.ds背景動画.n高さpx);
+                }
 
-                this.tリザルト動画の指定があれば構築する();
+                //this.tリザルト動画の指定があれば構築する();
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -95,7 +100,7 @@ namespace DTXMania
             base.OnManagedリソースの解放();
         }
 
-        public override int On進行描画(Device D3D9Device)
+        public override unsafe int On進行描画(Device D3D9Device)
 		{
             if (base.b活性化してない || (this.counter == null))
 				return 0;
@@ -106,54 +111,38 @@ namespace DTXMania
 			//-----------------
 			if( this.b初めての進行描画 )
 			{
-				//if( this.ds背景動画 != null )
-				{
-					//this.ds背景動画.bループ再生 = false;
-					//this.ds背景動画.t再生開始();
-				}
+                if (this.ds背景動画 != null)
+                {
+                    this.ds背景動画.bループ再生 = false;
+                    this.ds背景動画.t再生開始();
+                    Trace.TraceInformation("DShow動画を再生開始しました。");
+                }
+                else
+                {
+                    //Trace.TraceError("DShow動画がnullになっています。");
+                }
 
 				this.b初めての進行描画 = false;
 			}
 			//-----------------
 			#endregion
 
-			//if( this.ds背景動画 != null && !this.ds背景動画.b再生中 )			// 再生完了したらステージ終了。
+			
 
 			#region [ 背景動画 ]
 			//-----------------
-			//if( this.ds背景動画 != null &&
-			//	this.tx背景動画 != null )
+			if( this.ds背景動画 != null &&
+				this.tx描画用 != null )
 			{
 
-				//this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景動画 );
-
-				//this.tx背景動画.t2D描画( D3D9Device, 0, 0 );
+				this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
+                Trace.TraceInformation("テクスチャにスナップイメージを転写しました。");
+				this.tx描画用.t2D描画( CDTXMania.app.Device, 0, 0 );
 			}
 			//-----------------
 			#endregion
-            if (this.counter.n現在の値 >= 300)
-            {
-                if (this.tx白タイル64x64 != null)
-                {
-                    if (this.counter.n現在の値 <= 300)
-                    {
-                        this.tx白タイル64x64.n透明度 = 0;
-                    }
-                    else
-                    {
-                        this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
-                    }
-                    for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
-                    {
-                        for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
-                        {
-                            this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
-                        }
-                    }
-                }
-            }
 
-            if (this.counter.n現在の値 != 400)
+            if( this.ds背景動画 != null && !this.ds背景動画.b再生中 )			// 再生完了したらステージ終了。
 				return 0;
 
 			return 1;
@@ -166,6 +155,7 @@ namespace DTXMania
                 return 0;
             }
             this.counter.t進行();
+
             if (!CDTXMania.ConfigIni.bドラムが全部オートプレイである)
             {
                 if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0)
@@ -195,7 +185,6 @@ namespace DTXMania
                                         this.st青い星[j].f加速度の加速度Y = 0.995f;
                                         this.st青い星[j].f重力加速度 = 0.00355f;
                                         this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
-                                        this.st青い星[j].b使用中 = false;
                                         break;
                                     }
                                 }
@@ -261,7 +250,7 @@ namespace DTXMania
                                         this.st青い星[j].f加速度の加速度Y = 0.995f;
                                         this.st青い星[j].f重力加速度 = 0.00355f;
                                         this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
-                                        this.st青い星[j].b使用中 = false;
+                                        
                                         break;
                                     }
                                 }
@@ -331,7 +320,7 @@ namespace DTXMania
                                         this.st青い星[j].f加速度の加速度Y = 0.995f;
                                         this.st青い星[j].f重力加速度 = 0.00355f;
                                         this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
-                                        this.st青い星[j].b使用中 = false;
+                                        
                                         break;
                                     }
                                 }
@@ -375,6 +364,11 @@ namespace DTXMania
             }
             if (this.counter.n現在の値 >= 300)
             {
+                if (this.ds背景動画 != null)
+                {
+                    this.ds背景動画.bループ再生 = false;
+                    this.ds背景動画.t再生開始();
+                }
                 int x = 0;
                 int y = 0;
                 /*
@@ -501,10 +495,15 @@ namespace DTXMania
                         {
                             for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
                             {
-                                this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                                //this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
                             }
                         }
                     }
+                }
+                if (this.ds背景動画 != null)
+                {
+                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
+                    this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
                 }
 
             }
@@ -529,6 +528,7 @@ namespace DTXMania
         private CTexture tx黒幕;
         private CTexture tx描画用;
         private CTexture txボーナス花火;
+        private CDirectShow ds背景動画;
 
         [StructLayout(LayoutKind.Sequential)]
         private struct ST青い星

@@ -15,6 +15,7 @@ using FDK;
 using SampleFramework;
 using DTXMania.Properties;
 using System.Reflection;
+using DirectShowLib;
 
 namespace DTXMania
 {
@@ -1041,6 +1042,9 @@ namespace DTXMania
 							CDTXMania.Pad.st検知したデバイス.Clear();	// 入力デバイスフラグクリア(2010.9.11)
 
 							r現在のステージ.On非活性化();
+#if dshow
+                            stage演奏ドラム画面.actFOStageClear.On活性化(this.Device);
+#endif
 							if( !ConfigIni.bギタレボモード )
 							{
 								Trace.TraceInformation( "----------------------" );
