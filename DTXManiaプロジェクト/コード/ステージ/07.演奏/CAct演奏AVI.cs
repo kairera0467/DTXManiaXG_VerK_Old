@@ -1100,7 +1100,7 @@ namespace DTXMania
         private int n表示側開始位置Y;
         private int n表示側終了位置X;
         private int n表示側終了位置Y;
-        private IntPtr pBmp;
+        public IntPtr pBmp;
         private int position;
         private CDTX.CAVI rAVI;
 

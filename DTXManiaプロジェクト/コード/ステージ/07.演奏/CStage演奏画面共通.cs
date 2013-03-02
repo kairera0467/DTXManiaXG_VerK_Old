@@ -2276,6 +2276,31 @@ namespace DTXMania
 					case 0x25:
 					case 0x26:
 					case 0x27:
+
+                    case 0x93:
+                    case 0x94:
+                    case 0x95:
+                    case 0x96:
+                    case 0x97:
+                    case 0x98:
+                    case 0x99:
+                    case 0x9A:
+                    case 0x9B:
+                    case 0x9C:
+                    case 0x9D:
+                    case 0x9E:
+                    case 0x9F:
+                    case 0xA9:
+                    case 0xAA:
+                    case 0xAB:
+                    case 0xAC:
+                    case 0xAD:
+                    case 0xAE:
+                    case 0xAF:
+                    case 0xD0:
+                    case 0xD1:
+                    case 0xD2:
+                    case 0xD3:
 						this.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, E楽器パート.GUITAR );
 						break;
 					#endregion
@@ -2352,7 +2377,6 @@ namespace DTXMania
 					#endregion
 					#region [ 54: 動画再生 ]
 					case 0x54:	// 動画再生
-                    case 0x99:
 						if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
 						{
 							pChip.bHit = true;
@@ -2417,10 +2441,6 @@ namespace DTXMania
 						}
 						break;
 					#endregion
-                    #region [ 93: ボーナス ]
-                    case 0x93:
-                        break;
-                    #endregion
 
                     #region [ 84-89: 仮: override sound ]	// #26338 2011.11.8 yyagi
                     case 0x84:	// HH (HO/HC)
@@ -2477,6 +2497,7 @@ namespace DTXMania
 						break;
 					#endregion
 					#region [ af: ウェイリングサウンド(ベース) ]
+                        /*
 					case 0xaf:	// ウェイリングサウンド(ベース)
 						if ( !pChip.bHit && ( pChip.nバーからの距離dot.Bass < 0 ) )
 						{
@@ -2484,6 +2505,7 @@ namespace DTXMania
 							this.r現在の歓声Chip.Bass = pChip;
 						}
 						break;
+                        */
 					#endregion
 					#region [ b1-b9, bc: 空打ち音設定(ドラム) ]
 					case 0xb1:	// 空打ち音設定(ドラム)
