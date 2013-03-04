@@ -52,6 +52,10 @@ namespace DTXMania
                     this.avi.Dispose();
                     this.avi = null;
                 }
+                for (int i = 0; i < 16; i++)
+                {
+                    this.st青い星[i].ct進行 = null;
+                }
 				base.On非活性化();
 			}
 		}
@@ -72,14 +76,20 @@ namespace DTXMania
                 }
                 this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
                 this.nAVI再生開始時刻 = -1;
-                this.n前回描画したフレーム番号 = -1;
-                this.b動画フレームを作成した = false;
+//              this.n前回描画したフレーム番号 = -1;
+//              this.b動画フレームを作成した = false;
                 this.pAVIBmp = IntPtr.Zero;
                 if (this.ds背景動画 != null)
                 {
                     this.tx描画用 = CDTXMania.tテクスチャを生成する(this.ds背景動画.n幅px, this.ds背景動画.n高さpx);
                 }
 
+                for (int i = 0; i < 16; i++)
+                {
+                    this.st青い星[i] = new ST青い星();
+                    this.st青い星[i].b使用中 = false;
+                    this.st青い星[i].ct進行 = new CCounter();
+                }
                 //this.tリザルト動画の指定があれば構築する();
 				base.OnManagedリソースの作成();
 			}
@@ -312,7 +322,6 @@ namespace DTXMania
                                         double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
                                         this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
                                         this.st青い星[j].fX = 600; //X座標
-
                                         this.st青い星[j].fY = 350; //Y座標
                                         this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
                                         this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0) - 0.2));
@@ -320,7 +329,6 @@ namespace DTXMania
                                         this.st青い星[j].f加速度の加速度Y = 0.995f;
                                         this.st青い星[j].f重力加速度 = 0.00355f;
                                         this.st青い星[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
-                                        
                                         break;
                                     }
                                 }
@@ -495,7 +503,7 @@ namespace DTXMania
                         {
                             for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
                             {
-                                //this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                                this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
                             }
                         }
                     }
@@ -548,9 +556,9 @@ namespace DTXMania
         }
         private ST青い星[] st青い星 = new ST青い星[240];
         private CAvi avi;
-        private bool b動画フレームを作成した;
+//      private bool b動画フレームを作成した;
         private long nAVI再生開始時刻;
-        private int n前回描画したフレーム番号;
+//      private int n前回描画したフレーム番号;
         private IntPtr pAVIBmp;
         private Surface sfリザルトAVI画像;
         private string strAVIファイル名;
@@ -605,8 +613,8 @@ namespace DTXMania
             {
                 this.avi = new CAvi(this.strAVIファイル名);
                 this.nAVI再生開始時刻 = CDTXMania.Timer.n現在時刻;
-                this.n前回描画したフレーム番号 = -1;
-                this.b動画フレームを作成した = false;
+//              this.n前回描画したフレーム番号 = -1;
+//              this.b動画フレームを作成した = false;
                 this.tサーフェイスをクリアする(this.sfリザルトAVI画像);
                 Trace.TraceInformation("リザルト動画を生成しました。({0})", new object[] { this.strAVIファイル名 });
             }
