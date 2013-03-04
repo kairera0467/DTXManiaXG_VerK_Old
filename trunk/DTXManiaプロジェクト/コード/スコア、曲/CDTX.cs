@@ -1312,28 +1312,6 @@ namespace DTXMania
 							chip.rAVI = this.listAVI[ chip.n整数値 ];
 						}
 					}
-                    if (chip.nチャンネル番号 == 0x99)
-                    {
-                        chip.eAVI種別 = EAVI種別.Unknown;
-                        chip.rAVI = null;
-                        chip.rAVIPan = null;
-                        if (this.listAVIPAN.ContainsKey(chip.n整数値))
-                        {
-                            CAVIPAN cavipan = this.listAVIPAN[chip.n整数値];
-                            if (this.listAVI.ContainsKey(cavipan.nAVI番号) && (this.listAVI[cavipan.nAVI番号].avi != null))
-                            {
-                                chip.eAVI種別 = EAVI種別.AVIPAN;
-                                chip.rAVI = this.listAVI[cavipan.nAVI番号];
-                                chip.rAVIPan = cavipan;
-                                continue;
-                            }
-                        }
-                        if (this.listAVI.ContainsKey(chip.n整数値) && (this.listAVI[chip.n整数値].avi != null))
-                        {
-                            chip.eAVI種別 = EAVI種別.AVI;
-                            chip.rAVI = this.listAVI[chip.n整数値];
-                        }
-                    }
 				}
 			}
 		}
@@ -1496,7 +1474,7 @@ namespace DTXMania
 				foreach ( CChip chip in this.listChip )
 				{
 					#region [ BGAPAN/BGA/BMPTEX/BMP ]
-					if ( ( ( ( chip.nチャンネル番号 == 4 ) || ( chip.nチャンネル番号 == 7 ) ) || ( ( chip.nチャンネル番号 >= 0x100 ) && ( chip.nチャンネル番号 <= 0x59 ) ) ) || ( chip.nチャンネル番号 == 0x60 ) )
+					if ( ( ( ( chip.nチャンネル番号 == 4 ) || ( chip.nチャンネル番号 == 7 ) ) || ( ( chip.nチャンネル番号 >= 0x55 ) && ( chip.nチャンネル番号 <= 0x59 ) ) ) || ( chip.nチャンネル番号 == 0x60 ) )
 					{
 						chip.eBGA種別 = EBGA種別.Unknown;
 						chip.rBMP = null;
@@ -1584,13 +1562,6 @@ namespace DTXMania
 				}
 			}
 		}
-		public void tWave再生位置自動補正()
-		{
-			foreach( CWAV cwav in this.listWAV.Values )
-			{
-				this.tWave再生位置自動補正( cwav );
-			}
-		}
         public void t旧仕様のドコドコチップを振り分ける(E楽器パート part, bool bAssignToLBD)
         {
             if (part == E楽器パート.DRUMS && bAssignToLBD)
@@ -1631,14 +1602,14 @@ namespace DTXMania
                 {
                     int num = 0;
                     int index = 0;
-                    int[] numArray = new int[0x3e8];
+                    int[] numArray = new int[1000];
                     int num3 = 0;
                     int num4 = 0;
                     int num5 = -1;
                     int num6 = 0;
                     int num7 = 0;
                     bool flag = false;
-                    for (int i = 0; i < 0x3e8; i++)
+                    for (int i = 0; i < 1000; i++)
                     {
                         numArray[i] = 0;
                     }
@@ -2542,25 +2513,37 @@ namespace DTXMania
 
 
 
-        public void tWave再生位置自動補正(CWAV wc)
-        {
-            if (wc.rSound[0] != null && wc.rSound[0].n総演奏時間ms >= 5000)
-            {
-                for (int i = 0; i < nPolyphonicSounds; i++)
-                {
-                    if ((wc.rSound[i] != null) && (wc.rSound[i].b再生中))
-                    {
-                        long nCurrentTime = CSound管理.rc演奏用タイマ.nシステム時刻ms;
-                        if (nCurrentTime > wc.n再生開始時刻[i])
-                        {
-                            long nAbsTimeFromStartPlaying = nCurrentTime - wc.n再生開始時刻[i];
-                            // wc.rSound[ i ].t再生位置を変更する( wc.rSound[ i ].t時刻から位置を返す( nAbsTimeFromStartPlaying ) );
-                             wc.rSound[i].t再生位置を変更する(nAbsTimeFromStartPlaying);	// WASAPI/ASIO用
-                        }
-                    }
-                }
-            }
-        }
+		public void tWave再生位置自動補正()
+		{
+			foreach( CWAV cwav in this.listWAV.Values )
+			{
+				this.tWave再生位置自動補正( cwav );
+			}
+		}
+		public void tWave再生位置自動補正( CWAV wc )
+		{
+			if ( wc.rSound[ 0 ] != null && wc.rSound[ 0 ].n総演奏時間ms >= 5000 )
+			{
+				for ( int i = 0; i < nPolyphonicSounds; i++ )
+				{
+					if ( ( wc.rSound[ i ] != null ) && ( wc.rSound[ i ].b再生中 ) )
+					{
+						long nCurrentTime = CSound管理.rc演奏用タイマ.nシステム時刻ms;
+						if ( nCurrentTime > wc.n再生開始時刻[ i ] )
+						{
+							long nAbsTimeFromStartPlaying = nCurrentTime - wc.n再生開始時刻[ i ];
+							//Trace.TraceInformation( "再生位置自動補正: {0}, seek先={1}ms, 全音長={2}ms",
+							//    Path.GetFileName( wc.rSound[ 0 ].strファイル名 ),
+							//    nAbsTimeFromStartPlaying,
+							//    wc.rSound[ 0 ].n総演奏時間ms
+							//);
+							// wc.rSound[ i ].t再生位置を変更する( wc.rSound[ i ].t時刻から位置を返す( nAbsTimeFromStartPlaying ) );
+							wc.rSound[ i ].t再生位置を変更する( nAbsTimeFromStartPlaying );	// WASAPI/ASIO用
+						}
+					}
+				}
+			}
+		}
 		public void tWavの再生停止( int nWaveの内部番号 )
 		{
 			if( this.listWAV.ContainsKey( nWaveの内部番号 ) )

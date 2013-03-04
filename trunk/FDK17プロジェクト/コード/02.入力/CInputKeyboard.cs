@@ -243,6 +243,7 @@ namespace FDK
 		private bool[] bKeyState = new bool[ 0x100 ];
 		private Keyboard devKeyboard;
 		//private CTimer timer;
+		//private CTimer ct;
 		//-----------------
 		#endregion
 	}

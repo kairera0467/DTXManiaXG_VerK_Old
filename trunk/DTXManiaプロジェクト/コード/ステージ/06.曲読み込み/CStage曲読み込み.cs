@@ -22,6 +22,8 @@ namespace DTXMania
 			base.b活性化してない = true;
 //			base.list子Activities.Add( this.actFI = new CActFIFOBlack() );	// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
 			base.list子Activities.Add( this.actFO = new CActFIFOBlackStart() );
+
+            #region[ 難易度数字 ]
             ST文字位置[] st文字位置Array2 = new ST文字位置[11];
             ST文字位置 st文字位置12 = new ST文字位置();
             st文字位置12.ch = '0';
@@ -120,13 +122,14 @@ namespace DTXMania
             st文字位置34.pt = new Point(0, 0);
             st文字位置Array3[11] = st文字位置34;
             this.st大文字位置 = st文字位置Array3;
+            #endregion
 
             this.stパネルマップ = null;
             this.stパネルマップ = new STATUSPANEL[12];		// yyagi: 以下、手抜きの初期化でスマン
             string[] labels = new string[12] {
             "DTXMANIA",     //0
             "DEBUT",        //1
-            "NOVICE",        //2
+            "NOVICE",       //2
             "REGULAR",      //3
             "EXPERT",       //4
             "MASTER",       //5
@@ -375,7 +378,7 @@ namespace DTXMania
             //-----------------------------
             #endregion
 
-            #region [ 背景、音符＋タイトル表示 ]
+            #region [ 背景、レベル、タイトル表示 ]
             //-----------------------------
             if (this.tx背景 != null)
                 this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
@@ -448,7 +451,6 @@ namespace DTXMania
                 this.txRISKY.vc拡大縮小倍率.Y = 0.85714285714285714285714285714286f;
                 this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298 , new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
                 this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
-
             //-----------------------------
             #endregion
 
@@ -480,7 +482,7 @@ namespace DTXMania
                         CDTXMania.DTX = new CDTX(str, false, ((double)CDTXMania.ConfigIni.n演奏速度) / 20.0, ini.stファイル.BGMAdjust);
                         Trace.TraceInformation("----曲情報-----------------");
                         Trace.TraceInformation("TITLE: {0}", CDTXMania.DTX.TITLE);
-                        Trace.TraceInformation("FILE: {0}", CDTXMania.DTX.strファイル名の絶対パス);
+                        Trace.TraceInformation("FILE: {0}",  CDTXMania.DTX.strファイル名の絶対パス);
                         Trace.TraceInformation("---------------------------");
 
                         span = (TimeSpan)(DateTime.Now - timeBeginLoad);
@@ -491,7 +493,6 @@ namespace DTXMania
                         else
                             CDTXMania.DTX.MIDIレベル = (CDTXMania.stage選曲.r確定された曲.eノード種別 == C曲リストノード.Eノード種別.SCORE_MIDI) ? CDTXMania.stage選曲.n現在選択中の曲の難易度 : 0;
 
-                        Trace.TraceInformation("DTXファイルを読み込みました。");
                         base.eフェーズID = CStage.Eフェーズ.NOWLOADING_WAVファイルを読み込む;
                         timeBeginLoadWAV = DateTime.Now;
                         return 0;
@@ -540,11 +541,10 @@ namespace DTXMania
                             else
                                 CDTXMania.stage演奏ドラム画面.On活性化();
 
-                            span = (TimeSpan)(DateTime.Now - timeBeginLoadWAV);
-                            Trace.TraceInformation("WAV/譜面後処理時間({0,4}): {1}", (CDTXMania.DTX.listBMP.Count + CDTXMania.DTX.listBMPTEX.Count + CDTXMania.DTX.listAVI.Count), span.ToString());
+							span = (TimeSpan) ( DateTime.Now - timeBeginLoadWAV );
+							Trace.TraceInformation( "WAV/譜面後処理時間({0,4}):  {1}", ( CDTXMania.DTX.listBMP.Count + CDTXMania.DTX.listBMPTEX.Count + CDTXMania.DTX.listAVI.Count ), span.ToString() );
 
-                            Trace.TraceInformation("WAVファイルを読み込みました。");
-                            base.eフェーズID = CStage.Eフェーズ.NOWLOADING_BMPファイルを読み込む;
+							base.eフェーズID = CStage.Eフェーズ.NOWLOADING_BMPファイルを読み込む;
                         }
                         return 0;
                     }
@@ -580,7 +580,6 @@ namespace DTXMania
 							ftFilename = null;
 						}
 						CDTXMania.Timer.t更新();
-                        Trace.TraceInformation("BMPファイルを読み込みました。");
 						base.eフェーズID = CStage.Eフェーズ.NOWLOADING_システムサウンドBGMの完了を待つ;
 						return 0;
 					}
@@ -595,7 +594,6 @@ namespace DTXMania
                         if ((nCurrentTime - this.nBGM再生開始時刻) > (this.nBGMの総再生時間ms))	// #27787 2012.3.10 yyagi 1000ms == フェードイン分の時間
                         {
                             this.actFO.tフェードアウト開始();
-                            Trace.TraceInformation("システムサウンドBGMが再生終了しました。");
                             base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
                         }
                         return 0;
@@ -612,7 +610,6 @@ namespace DTXMania
                     {
                         this.sd読み込み音.t解放する();
                     }
-                    Trace.TraceInformation("フェードアウト完了。");
                     return 1;
             }
             return 0;
@@ -689,7 +686,7 @@ namespace DTXMania
         public int nIndex;
         public STATUSPANEL[] stパネルマップ;
 		//-----------------
-		#endregion
+
         private void t小文字表示(int x, int y, string str)
         {
             this.t小文字表示(x, y, str, false);
@@ -753,5 +750,6 @@ namespace DTXMania
                 }
             }
         }
-	}
+        #endregion
+    }
 }

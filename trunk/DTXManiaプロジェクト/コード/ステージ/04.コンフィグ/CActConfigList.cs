@@ -2254,7 +2254,7 @@ namespace DTXMania
         private CItemToggle iDrumsRide;
 		private CItemToggle iDrumsFloorTom;
         private CItemList iDrumsHHOGraphics;
-		private CItemToggle iDrumsHidden;
+//		private CItemToggle iDrumsHidden;
 		private CItemToggle iDrumsHighTom;
 		private CItemToggle iDrumsHiHat;
         private CItemList iDrumsLaneType;
@@ -2269,7 +2269,7 @@ namespace DTXMania
 		private CItemToggle iDrumsReverse;
 		private CItemInteger iDrumsScrollSpeed;
 		private CItemToggle iDrumsSnare;
-		private CItemToggle iDrumsSudden;
+//		private CItemToggle iDrumsSudden;
 		private CItemToggle iDrumsTight;
 		private CItemToggle iDrumsGraph;        // #24074 2011.01.23 add ikanick
         private CItemToggle iDrumsStageEffect;
@@ -2280,7 +2280,7 @@ namespace DTXMania
         private CItemList iDrumsMirror;
         private CItemList iDrumsRandom;
         private CItemList iDrumsRandomPedal;
-        private CItemList iDrumsNumOfLanes;
+//      private CItemList iDrumsNumOfLanes;
         private CItemList iDrumsDkdkType;
         private CItemToggle iDrumsAssignToLBD;
         private CItemToggle iDrumsHAZARD;
