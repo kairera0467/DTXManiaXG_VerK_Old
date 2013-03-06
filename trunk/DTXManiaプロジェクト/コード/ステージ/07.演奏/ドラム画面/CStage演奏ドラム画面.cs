@@ -227,7 +227,7 @@ namespace DTXMania
                 this.t進行描画・ドラムパッド();
                 this.t進行描画・スコア();
                 this.t進行描画・DANGER();
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
                 {
                     this.t進行描画・パネル文字列();
                 }
@@ -255,9 +255,13 @@ namespace DTXMania
                         this.t進行描画・コンボ();
                 }
                 //XG1
-                if ( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
                     this.t進行描画・ステータスパネル();
+                    this.t進行描画・コンボ();
+                }
+                else
+                {
                     this.t進行描画・コンボ();
                 }
                 this.t進行描画・ゲージ();

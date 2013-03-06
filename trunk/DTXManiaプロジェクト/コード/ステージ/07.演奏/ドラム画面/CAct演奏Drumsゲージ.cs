@@ -53,7 +53,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_gauge_bar.jpg" ) );
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.D)
                 {
                     this.txgbg = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
                     this.txgbar = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
@@ -98,9 +98,11 @@ namespace DTXMania
                 if (base.txgbg != null)
                 {
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.D)
                         {
                             base.txgbg.t2D描画(CDTXMania.app.Device, 294, 626);
+                            base.txハイスピ.vc拡大縮小倍率 = new Vector3(0.76190476190476190476190476190476f, 0.66666666666666666666666666666667f, 1.0f);
+                            base.txハイスピ.t2D描画(CDTXMania.app.Device, 800, 634, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 48, 42, 48));
                         }
                         else
                         {
@@ -113,7 +115,7 @@ namespace DTXMania
                     if (base.dbゲージ値 > 0.0)
                     {
                         base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.D)
                         {
                             if (base.db現在のゲージ値.Drums == 1.0)
                             {
@@ -131,7 +133,7 @@ namespace DTXMania
                         }
                     }
                     base.txgbar.vc拡大縮小倍率.X = 1f;
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.D)
                     {
                         base.txgbar.t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 31, 480, 31));
                     }

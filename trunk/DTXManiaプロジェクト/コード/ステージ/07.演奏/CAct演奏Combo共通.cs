@@ -331,7 +331,7 @@ namespace DTXMania
                     {
                         nコンボx = n表示中央X - ((int)((280 * f拡大率) / 1.8f));
 
-                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 26, nコンボy, new Rectangle(0, 294, 280, 64));
+                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 22, nコンボy, new Rectangle(0, 294, 280, 64));
                         //this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 264, y + 36, new Rectangle(0, 294, 280, 64));
                     }
                     else if (n桁数 == 4)//4ケタの場合

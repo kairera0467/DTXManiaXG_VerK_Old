@@ -119,8 +119,16 @@ namespace DTXMania
 				{
 					rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
 				}
-                this.txNamePlateXG3.t2D描画(CDTXMania.app.Device, 825, 0);
-				this.txPanel.t2D描画( CDTXMania.app.Device, 940, 40, rectangle );
+
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                {
+                    this.txNamePlateXG3.t2D描画(CDTXMania.app.Device, 825, 0);
+                    this.txPanel.t2D描画(CDTXMania.app.Device, 940, 40, rectangle);
+                }
+                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                {
+                    //this.txPanel.t2D描画(CDTXMania.app.Device, 940, 40, rectangle);
+                }
 			}
 			return 0;
 		}
