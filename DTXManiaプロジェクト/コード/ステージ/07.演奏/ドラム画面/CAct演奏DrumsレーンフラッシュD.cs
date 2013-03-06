@@ -177,6 +177,14 @@ namespace DTXMania
                     int xHH = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + 32 ) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nX座標オフセットdot;
                     int xLC = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 32 : 32)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nX座標オフセットdot;
                     int xCY = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 79 : 79)) - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nX座標オフセットdotFLIP;
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                    {
+                        x2 = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + 32);
+                        x3 = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 32 : 32));
+                        xHH = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + 32);
+                        xLC = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 32 : 32));
+                        xCY = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 79 : 79));
+                    }
                     int nAlpha = 249 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 249)) / 10f));
                     if (CDTXMania.ConfigIni.nMovieAlpha == 11)
                     {

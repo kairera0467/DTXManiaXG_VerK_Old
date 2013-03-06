@@ -247,7 +247,7 @@ namespace DTXMania
 			{
 				int x = this.n本体X + pointArray[ i ].X;
 				int y = this.n本体Y + pointArray[ i ].Y;
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                 {
                     this.t特大文字表示(x - 208, y + 230, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[i].db演奏型スキル値 / 100.0));
                     this.t特大文字表示(x - 214, y + 360, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[i].dbゲーム型スキル値));
@@ -263,7 +263,7 @@ namespace DTXMania
                 }
                 if (num >= 0)
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         num11 = 3.48 * (CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値);
                         this.t大文字表示(606, 460, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPerfect数));
@@ -277,7 +277,7 @@ namespace DTXMania
                 }
                 if (num >= 100)
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t大文字表示(750, 460, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGreat数));
                     }
@@ -288,7 +288,7 @@ namespace DTXMania
                 }
                 if (num >= 200)
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t大文字表示(606, 482, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGood数));
                     }
@@ -299,7 +299,7 @@ namespace DTXMania
                 }
                 if (num >= 300)
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t大文字表示(750, 482, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPoor数));
                     }
@@ -310,7 +310,7 @@ namespace DTXMania
                 }
                 if (num >= 400)
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t大文字表示(606, 504, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nMiss数));
                     }
@@ -321,7 +321,7 @@ namespace DTXMania
                 }
 				if( num >= 0 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t小文字表示(660, 459, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率[i]));
                     }
@@ -332,7 +332,7 @@ namespace DTXMania
 				}
 				if( num >= 100 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t小文字表示(805, 459, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率[i]));
                     }
@@ -343,7 +343,7 @@ namespace DTXMania
 				}
 				if( num >= 200 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t小文字表示(660, 481, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率[i]));
                     }
@@ -354,7 +354,7 @@ namespace DTXMania
 				}
 				if( num >= 300 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t小文字表示(805, 481, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率[i]));
                     }
@@ -365,7 +365,7 @@ namespace DTXMania
 				}
 				if( num >= 400 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t小文字表示(660, 502, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率[i]));
                     }
@@ -376,7 +376,7 @@ namespace DTXMania
 				}
 				if( num >= 500 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t大文字表示(706, 504, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録[i].n最大コンボ数));
                         this.t小文字表示(805, 502, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録[i].n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録[i].n全チップ数)) * 100f));
@@ -389,7 +389,7 @@ namespace DTXMania
 				}
 				if( num >= 600 )
 				{
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                     {
                         this.t特大文字表示(x - 274, y + 508, string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[i].nスコア), true);
                     }
@@ -460,7 +460,7 @@ namespace DTXMania
 							{
                                 int num14;
                                 int num15;
-                                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                                if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                                 {
                                     num14 = 650;
                                     num15 = 526;
@@ -512,7 +512,7 @@ namespace DTXMania
 								this.txExcellent.n透明度 = (int) ( 255.0 * num12 );
                                 int num14;
                                 int num15;
-                                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                                if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                                 {
                                     num14 = 600;
                                     num15 = 523;
@@ -541,7 +541,7 @@ namespace DTXMania
 							{
                                 int num14;
                                 int num15;
-                                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                                if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                                 {
                                     num14 = 650;
                                     num15 = 526;
@@ -591,7 +591,7 @@ namespace DTXMania
 								this.txFullCombo.n透明度 = (int) ( 255.0 * num12 );
                                 int num14;
                                 int num15;
-                                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                                if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
                                 {
                                     num14 = 650;
                                     num15 = 526;

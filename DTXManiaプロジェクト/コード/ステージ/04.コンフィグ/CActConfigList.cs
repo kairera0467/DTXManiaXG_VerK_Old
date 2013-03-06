@@ -961,7 +961,7 @@ namespace DTXMania
                 "Type-B: XG1風の表示です。\n" +
                 "Type-C: ver1.60までのXG2風表示です。\n" +
                 "Type-D: XG3風の表示です。(実験的)",
-                new string[] { "Type-A", "Type-B", "Type-C", "Type-D" });
+                new string[] { "Type-A", "Type-B", "Type-C", "Type-D", "Type-E" });
             this.list項目リスト.Add(this.iDrumsNamePlateType);
 
 			this.iDrumsGoToKeyAssign = new CItemBase( "Drums Keys", CItemBase.Eパネル種別.通常,

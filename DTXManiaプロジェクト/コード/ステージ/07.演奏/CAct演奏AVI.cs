@@ -842,7 +842,7 @@ namespace DTXMania
                         this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
 
 
-                    if ((CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
+                    if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
                     {
                         if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
                         {
@@ -884,7 +884,7 @@ namespace DTXMania
                     }
                     if (CDTXMania.ConfigIni.bDrums有効 == true)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D && CDTXMania.ConfigIni.bLivePoint)
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C && CDTXMania.ConfigIni.bLivePoint)
                         {
                             #region[LivePoint]
                             if (this.txLivePoint != null)

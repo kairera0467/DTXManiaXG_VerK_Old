@@ -1717,9 +1717,10 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; ネームプレートタイプ");
             sw.WriteLine("; 0:タイプA XG2風の表示がされます。 ");
-            sw.WriteLine("; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれ、ライブポイントゲージが表示されません。");
+            sw.WriteLine("; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれます。");
             sw.WriteLine("; 2:タイプC ver1.50bまでのXG2風の表示です。");
             sw.WriteLine("; 3:タイプD XG3+αの表示がされます。これが俺の求めていたXG3だ!)");
+            sw.WriteLine("; 4:タイプE GITADORA風の表示です。(実験的)");
             sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate.Drums);
             sw.WriteLine();
             sw.WriteLine("ExplosionFlame={0}", (int)this.nExplosionFrames);
@@ -2613,7 +2614,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("NamePlateType"))
                                             {
-                                                this.eNamePlate.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eNamePlate.Drums);
+                                                this.eNamePlate.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.eNamePlate.Drums);
                                             }
                                             else if (str3.Equals("ExplosionFrames"))
                                             {
