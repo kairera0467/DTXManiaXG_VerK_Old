@@ -11,6 +11,7 @@ using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 using SlimDX;
 using SlimDX.Direct3D9;
+using SlimDX.Windows;
 using FDK;
 using SampleFramework;
 using DTXMania.Properties;
@@ -19,7 +20,7 @@ using DirectShowLib;
 
 namespace DTXMania
 {
-	internal class CDTXMania : Game
+    internal class CDTXMania : Game
 	{
 		// プロパティ
 
@@ -42,7 +43,7 @@ namespace DTXMania
         public static CApp App
         {
             get;
-            protected set;
+            private set;
         }
 		public static C文字コンソール act文字コンソール
 		{ 
@@ -320,7 +321,7 @@ namespace DTXMania
         
         public static void t初期化(CApp app)
         {
-            CDTXMania.App = app;
+            //CDTXMania.App = app;
             //CDTXMania.SoundDevice = null;							// ユーザ依存
             //CDTXMania.rc演奏用タイマ = null;				// Global.Bass 依存（つまりユーザ依存）
         }
@@ -437,9 +438,122 @@ namespace DTXMania
 			return true;
 		}
 		#endregion
+        /// <summary>
+        /// <para>Direct3Dデバイスの生成、変更、リセットを行う。</para>
+        /// <para>新しい設定と現在の設定とを比較し、生成、変更、リセットのいずれかを実行する。</para>
+        /// <para>ウィンドウのクライアントサイズはバックバッファに等しく設定される。</para>
+        /// <para>処理に成功すれば true を返す。処理に失敗すれば、準正常系は false を返し、異常系は例外を発出する。</para>
+        /// </summary>
+        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル, bool bマウスカーソルの表示を制御する)
+        {
+            if (this.Window == null)
+                throw new InvalidOperationException("ウィンドウが未生成のままDirect3D9デバイスを生成しようとしました。");
 
+            //bool b初めての生成 = (this.currentD3DSettings == null);
+            //var oldD3DSettings = (b初めての生成) ? null : this.currentD3DSettings.Clone();
+            bool bウィンドウモードにする = (newD3DSettings.PresentParameters.Windowed);
+            bool b全画面モードにする = !bウィンドウモードにする;
+            //bool b全画面からウィンドウへの切替えである = !b初めての生成 && !oldD3DSettings.PresentParameters.Windowed && bウィンドウモードにする;
+            //bool bウィンドウから全画面への切替えである = (b初めての生成 || oldD3DSettings.PresentParameters.Windowed) && b全画面モードにする;
+            #region [ ウィンドウのクライアントサイズをバックバッファに合わせる。]
+            //-----------------
+            if (this.Window.ClientSize.Width != newD3DSettings.PresentParameters.BackBufferWidth ||
+                this.Window.ClientSize.Height != newD3DSettings.PresentParameters.BackBufferHeight)
+            {
+                this.Window.ClientSize = new Size(newD3DSettings.PresentParameters.BackBufferWidth, newD3DSettings.PresentParameters.BackBufferHeight);
+            }
+            //-----------------
+            #endregion
+            #region [ Win32メッセージをあるだけ処理。]
+            //-----------------
+            CWin32.WindowMessage msg;
+
+            while (CWin32.PeekMessage(out msg, IntPtr.Zero, 0, 0, CWin32.PM_REMOVE))
+            {
+                CWin32.TranslateMessage(ref msg);
+                CWin32.DispatchMessage(ref msg);
+            }
+
+            //-----------------
+            #endregion
+
+            #region [ Direct3D9デバイスをリセットまたは新規生成し、リソースを復元する。]
+            //-----------------
+            //bool bリセットだけでOK = (!b初めての生成 && oldD3DSettings.bデバイスの再生成が不要でリセットだけで済む(newD3DSettings));
+
+            //if (bリセットだけでOK)
+            {
+                #region [ デバイスのリセット ]
+                //-----------------
+                //this.OnUnmanageリソースを解放する();
+
+                //if (this.D3D9Device.Reset(newD3DSettings.PresentParameters) != ResultCode.DeviceLost)
+                {
+                    Trace.TraceInformation("Direct3D9 デバイスをリセットしました。");
+                    //this.OnUnmanageリソースを生成する();
+                    //bリセットだけでOK = true;
+                }
+                //else
+                {
+                    //Trace.TraceWarning("Direct3D9 デバイスのリセットに失敗しました。続けて、デバイスの新規生成を行います。");
+                    //bリセットだけでOK = false;		// 後段で新規生成する
+                }
+                //-----------------
+                #endregion
+            }
+
+            //if (!bリセットだけでOK) // ← "else" にしないこと。前段でリセットに失敗した場合、bリセットでOK = false に変えてここに来るため。
+            {
+                #region [ デバイスの新規生成 ]
+                //-----------------
+                //this.OnManageリソースを解放する();
+                //this.OnUnmanageリソースを解放する();
+                /*
+                C共通.tDisposeする(this.D3D9Device);
+                this.D3D9Device = new Device(		// 失敗したら異常系とみなし、そのまま例外をthrow。
+                    this.Direct3D,
+                    newD3DSettings.nAdaptor,
+                    newD3DSettings.DeviceType,
+                    newD3DSettings.PresentParameters.DeviceWindowHandle,
+                    newD3DSettings.CreateFlags,
+                    newD3DSettings.PresentParameters);
+
+                */
+                Trace.TraceInformation("Direct3D9 デバイスを生成しました。");
+                //this.D3D9Device.SetDialogBoxMode(true);
+
+                //this.OnManageリソースを生成する();
+                //this.OnUnmanageリソースを生成する();
+                //-----------------
+                #endregion
+            }
+            //-----------------
+            #endregion
+
+            //this.currentD3DSettings = newD3DSettings.Clone();	// 成功したので設定を正式に保存する。
+
+            //this.OnD3Dデバイスステータスの初期化();
+
+            return true;
+        }
+        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル)
+        {
+            return this.tDirect3Dデバイスを生成・変更・リセットする(newD3DSettings, sz論理画面, wsウィンドウモード時のウィンドウスタイル, ws全画面モード時のウィンドウスタイル, true);
+        }
+        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings, Size sz論理画面)
+        {
+            return this.tDirect3Dデバイスを生成・変更・リセットする(newD3DSettings, sz論理画面, uint.MaxValue, uint.MaxValue, true);
+        }
+        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings)
+        {
+            return this.tDirect3Dデバイスを生成・変更・リセットする(newD3DSettings, Size.Empty, uint.MaxValue, uint.MaxValue, true);
+        }
+
+        public void tDirect3Dデバイスをクリアする()
+        {
+            //this.D3D9Device.Clear(ClearFlags.Target, this.colorデバイスクリア色, 0.0f, 0);
+        }
 		// Game 実装
-
 		protected override void Initialize()
 		{
 //			new GCBeep();
@@ -1042,9 +1156,9 @@ namespace DTXMania
 							CDTXMania.Pad.st検知したデバイス.Clear();	// 入力デバイスフラグクリア(2010.9.11)
 
 							r現在のステージ.On非活性化();
-#if dshow
-                            stage演奏ドラム画面.actFOStageClear.On活性化(this.Device);
-#endif
+//#if dshow
+                            stage演奏ドラム画面.actFOStageClear.On活性化(CDTXMania.app.Device);
+//#endif
 							if( !ConfigIni.bギタレボモード )
 							{
 								Trace.TraceInformation( "----------------------" );
@@ -1430,6 +1544,112 @@ for (int i = 0; i < 3; i++) {
 				Thread.Sleep( ConfigIni.nフレーム毎スリープms );
 			}
 			#endregion
+		}
+        /// <summary>
+		/// <para>ここには、対応するイベントハンドラのないイベントをハンドルするコードを書く。</para>
+		/// </summary>
+		protected void WndProc( ref Message m )
+		{
+			#region [ WM_COPYDATA: 二重起動された StrokeStyleT.exe からコマンドライン行が送られてきたら、それを取得してアクション実行予約を行う。]
+			//-----------------
+			if( m.Msg == CWin32.WM_COPYDATA )
+			{
+				// コマンドライン行を取得。
+				var copyData = (CWin32.COPYDATA) m.GetLParam( (new CWin32.COPYDATA()).GetType() );
+				
+				// コマンドライン登録（アクション実行予約）
+				//Global.PlayerMode.arrayコマンドライン = null;
+				//if( copyData.cbData > 0 )
+				//	Global.PlayerMode.arrayコマンドライン = copyData.lpData.Split( new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries );
+			}
+			//-----------------
+			#endregion
+			#region [ WM_DSGRAPHNOTIFY: DirectShow グラフからのイベントを受信し、処理を行う。]
+			//-----------------
+			else if( m.Msg == CDirectShow.WM_DSGRAPHNOTIFY )
+			{
+				int nインスタンスID = m.LParam.ToInt32();
+				CDirectShow dsイベント発信者 = null;
+				bool b発信者が背景動画である = false;
+
+				#region [ イベント発信者(CDirectShow) を特定する。]
+				//-----------------
+				// このインスタンスID は、今のところ以下のいずれかである。
+				// ・背景動画
+				// ・仮想ドラムキット
+				// なので、これらを順に見ていって、イベント発信者を特定する。
+					dsイベント発信者 = CDirectShow.tインスタンスを返す( nインスタンスID );
+					b発信者が背景動画である = false;
+				//-----------------
+				#endregion
+
+				if( dsイベント発信者 == null )
+					return;		// 特定に失敗したら無視。
+
+				#region [ イベント発信者からすべてのイベントを受け取り、処理する。]
+				//-----------------
+				IMediaEventEx mediaEventEx = dsイベント発信者.MediaEventEx;
+
+				if( mediaEventEx == null )
+					return;		// 既に DirectShow の終了処理が始まっている場合は何もしない。
+
+				// この辺りの処理の参考URL：
+				// http://msdn.microsoft.com/ja-jp/library/cc370589.aspx
+
+				EventCode eventCode;
+				IntPtr param1, param2;
+				while( mediaEventEx.GetEvent( out eventCode, out param1, out param2, 0 ) == CWin32.S_OK )	// イベントがなくなるまで
+				{
+					// イベント処理。
+
+					if( eventCode == EventCode.Complete )
+					{
+						#region [ 再生完了 ]
+						//-----------------
+						if( dsイベント発信者.bループ再生 )
+						{
+							if( dsイベント発信者.bループ再生 )				// ループ指定ありなら
+								dsイベント発信者.t再生位置を変更( 0.0 );	// すぐ再生開始。
+						}
+						else
+						{
+							if( b発信者が背景動画である )
+							{
+								dsイベント発信者.b再生中 = false;
+								dsイベント発信者.t再生停止();				// 背景動画は終了しても巻き戻さない。
+							}
+							else
+							{
+								dsイベント発信者.b再生中 = false;
+								dsイベント発信者.t再生停止();
+								dsイベント発信者.t再生位置を変更( 0.0 );	// 再生完了しても再生は続くので、先頭に戻して
+								dsイベント発信者.t再生準備開始();			// 次の再生に備えて準備しておく。
+							}
+						}
+						//-----------------
+						#endregion
+					}
+
+					// イベントを解放。
+
+					mediaEventEx.FreeEventParams( eventCode, param1, param2 );
+				}
+				//-----------------
+				#endregion
+			}
+			//-----------------
+			#endregion
+			#region [ WM_CLOSE: 終了指示フラグを立てる。立てるだけ。]
+			//-----------------
+			if( m.Msg == CWin32.WM_CLOSE )
+			{
+				CDTXMania.App.bWM_CLOSEを受け取った = true;
+				return;
+			}
+			//-----------------
+			#endregion
+
+			WndProc( ref m );
 		}
 
 

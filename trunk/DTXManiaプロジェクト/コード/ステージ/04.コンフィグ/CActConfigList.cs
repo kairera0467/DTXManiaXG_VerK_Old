@@ -2235,6 +2235,7 @@ namespace DTXMania
 		private CItemToggle iBassW;							//
 	
 		private CItemToggle iBassHidden;
+        private CItemList iBassHIDSUD;
 		private CItemToggle iBassLeft;
 		private CItemToggle iBassLight;
 		private CItemList iBassPosition;
@@ -2254,7 +2255,7 @@ namespace DTXMania
         private CItemToggle iDrumsRide;
 		private CItemToggle iDrumsFloorTom;
         private CItemList iDrumsHHOGraphics;
-//		private CItemToggle iDrumsHidden;
+		private CItemList iDrumsHIDSUD;
 		private CItemToggle iDrumsHighTom;
 		private CItemToggle iDrumsHiHat;
         private CItemList iDrumsLaneType;
@@ -2269,7 +2270,6 @@ namespace DTXMania
 		private CItemToggle iDrumsReverse;
 		private CItemInteger iDrumsScrollSpeed;
 		private CItemToggle iDrumsSnare;
-//		private CItemToggle iDrumsSudden;
 		private CItemToggle iDrumsTight;
 		private CItemToggle iDrumsGraph;        // #24074 2011.01.23 add ikanick
         private CItemToggle iDrumsStageEffect;
@@ -2295,6 +2295,7 @@ namespace DTXMania
 		private CItemToggle iGuitarW;						//
 
 		private CItemToggle iGuitarHidden;
+        private CItemList iGuitarHIDSUD;
 		private CItemToggle iGuitarLeft;
 		private CItemToggle iGuitarLight;
 		private CItemList iGuitarPosition;

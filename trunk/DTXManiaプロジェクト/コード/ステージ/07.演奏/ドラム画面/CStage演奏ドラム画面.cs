@@ -219,10 +219,10 @@ namespace DTXMania
                     if(this.txLaneCover != null)
                         this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
                 }
-                int num = (int)(base.nShutterInPosY * 7.2);
-                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + num));
-                int num2 = 720 - (int)(base.nShutterOutPosY * 7.2f);
-                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, num2);
+                int nシャッターIN = (int)(base.nShutterInPosY * 7.2);
+                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + nシャッターIN));
+                int nシャッターOUT = 720 - (int)(base.nShutterOutPosY * 7.2f);
+                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, nシャッターOUT);
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
                 this.t進行描画・スコア();
@@ -239,7 +239,10 @@ namespace DTXMania
                    CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                    CDTXMania.ConfigIni.bGraph.Drums == true)
                 {
-                    this.t進行描画・ステータスパネル();
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D)
+                    {
+                        this.t進行描画・ステータスパネル();
+                    }
                     this.t進行描画・コンボ();
                 }
                 //XG2、グラフOFF
@@ -288,9 +291,9 @@ namespace DTXMania
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
                         this.rResultSound.t再生を開始する();
                         this.actFOStageClear.tフェードアウト開始();
-#if dshow
+//#if dshow
                         this.actFOStageClear.On進行描画( CDTXMania.app.Device );
-#endif
+//#endif
                     }
 
                 }

@@ -57,10 +57,12 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                     {
+                        if (this.iNamePlate != null)
                         this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_cls.png"));
                     }
                     else
                     {
+                        if (this.iNamePlate != null)
                         this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate.png"));
                     }
                 }
@@ -74,6 +76,10 @@ namespace DTXMania
                     {
                         this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_XG.png"));
                     }
+                }
+                else
+                {
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 }
                 #endregion
                 this.iDrumspeed = Image.FromFile(CSkin.Path(@"Graphics\\7_panel_icons.jpg"));
