@@ -491,6 +491,13 @@ namespace FDK
 			public uint dwProcessorLevel;
 			public uint dwProcessorRevision;
 		}
+        [StructLayout(LayoutKind.Sequential)]
+        public struct COPYDATA
+        {
+            public int dwData;
+            public int cbData;
+            public string lpData;
+        }
 		//-----------------
 		#endregion
 

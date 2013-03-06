@@ -1864,6 +1864,7 @@ namespace DTXMania
                         this.sw = Stopwatch.StartNew();
                         if (this.nShutterInPosY < 100)
                         {
+                            if(this.nShutterInPosY + this.nShutterOutPosY <= 99)
                             this.nShutterInPosY++;
                         }
                     }
@@ -1878,6 +1879,7 @@ namespace DTXMania
                         }
                         else if (this.nShutterInPosY < 100)
                         {
+                            if (this.nShutterInPosY + this.nShutterOutPosY <= 99)
                             this.nShutterInPosY++;
                         }
                         this.sw.Reset();
@@ -1893,6 +1895,7 @@ namespace DTXMania
                         this.sw = Stopwatch.StartNew();
                         if (this.nShutterOutPosY < 100)
                         {
+                            if (this.nShutterInPosY + this.nShutterOutPosY <= 99)
                             this.nShutterOutPosY++;
                         }
                     }
@@ -1907,6 +1910,7 @@ namespace DTXMania
                         }
                         else if (this.nShutterOutPosY < 100)
                         {
+                            if (this.nShutterInPosY + this.nShutterOutPosY <= 99)
                             this.nShutterOutPosY++;
                         }
                         this.sw.Reset();

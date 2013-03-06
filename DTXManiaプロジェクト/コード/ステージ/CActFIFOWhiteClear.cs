@@ -35,7 +35,7 @@ namespace DTXMania
         {
             //現時点では生成できずエラーが出る。
             //おそらくCDTXMania側でOn活性化(this.App.D3D9Device)にして、ここでの生成でhWdPtrにCDTXMania.App.hWdPtrを使用するとエラーが出るのでそれが関係しているのかも。
-            this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), this.pAVIBmp, false);
+            this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), CDTXMania.app.WindowHandle, false);
             base.On活性化(D3D9Device);
         }
 		public override void On非活性化()
@@ -380,7 +380,10 @@ namespace DTXMania
                 int x = 0;
                 int y = 0;
                 /*
-                this.tx描画用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+                    if (this.tx描画用 == null)
+                    {
+                        this.tx描画用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+                    }
                     if (((this.avi != null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
                     {
                         int time = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));

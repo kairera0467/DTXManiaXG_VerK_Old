@@ -110,7 +110,7 @@ namespace DTXMania
                 this.n表示側終了位置X = n表示側終了位置X;
                 this.n表示側終了位置Y = n表示側終了位置Y;
                 this.n総移動時間ms = n総移動時間ms;
-                this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CDTXMania.Timer.n現在時刻;
+                this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
                 this.n前回表示したフレーム番号 = -1;
                 if ((this.rAVI != null) && (this.rAVI.avi != null))
                 {
@@ -208,7 +208,7 @@ namespace DTXMania
                 this.n表示側終了位置X = n表示側終了位置X;
                 this.n表示側終了位置Y = n表示側終了位置Y;
                 this.n総移動時間ms = n総移動時間ms;
-                this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CDTXMania.Timer.n現在時刻;
+                this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
                 this.n前回表示したフレーム番号 = -1;
                 if ((this.rAVI != null) && (this.rAVI.avi != null))
                 {
@@ -517,7 +517,7 @@ namespace DTXMania
             {
                 if (((this.bFullScreen || this.bWindowMode) && this.tx描画用 != null))
                 {
-                    int time = (int)((CDTXMania.Timer.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
+                    int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
                     {
@@ -546,11 +546,11 @@ namespace DTXMania
                         Point point2 = new Point(this.n画像側終了位置X, this.n画像側終了位置Y);
                         Point point3 = new Point(this.n表示側開始位置X, this.n表示側開始位置Y);
                         Point point4 = new Point(this.n表示側終了位置X, this.n表示側終了位置Y);
-                        if (CDTXMania.Timer.n現在時刻 < this.n移動開始時刻ms)
+                        if (CSound管理.rc演奏用タイマ.n現在時刻 < this.n移動開始時刻ms)
                         {
-                            this.n移動開始時刻ms = CDTXMania.Timer.n現在時刻;
+                            this.n移動開始時刻ms = CSound管理.rc演奏用タイマ.n現在時刻;
                         }
-                        time = (int)((CDTXMania.Timer.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
+                        time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         if (this.n総移動時間ms == 0)
                         {
                             rectangle = new Rectangle(location, size3);
@@ -734,28 +734,34 @@ namespace DTXMania
                         if (index == 0)
                         {
                             this.ct左シンバル.t進行();
+                            if(this.tx左シンバル != null)
                             this.tx左シンバル.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0 + (380 * LCym), 0, 380, 720));
                         }
                         if (index == 2)
                         {
+                            if (this.txスネア != null)
                             this.txスネア.t2D描画(CDTXMania.app.Device, 0, y2);
                         }
                         if (index == 4)
                         {
+                            if (this.txハイタム != null)
                             this.txハイタム.t2D描画(CDTXMania.app.Device, 106, yh);
                         }
                         if (index == 3)
                         {
+                            if (this.txバスドラ != null)
                             this.txバスドラ.t2D描画(CDTXMania.app.Device, 310, yb);
                         }
                         if (index == 5)
                         {
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
                             {
+                                if (this.txロータム != null)
                                 this.txロータム.t2D描画(CDTXMania.app.Device, 817, yl);
                             }
                             else
                             {
+                                if (this.txロータム != null)
                                 this.txロータム.t2D描画(CDTXMania.app.Device, 870, yl);
                             }
                         }
@@ -763,10 +769,12 @@ namespace DTXMania
                         {
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
                             {
+                                if (this.txフロアタム != null)
                                 this.txフロアタム.t2D描画(CDTXMania.app.Device, 996, yf);
                             }
                             else
                             {
+                                if (this.txフロアタム != null)
                                 this.txフロアタム.t2D描画(CDTXMania.app.Device, 1049, yf);
                             }
                         }
@@ -774,6 +782,7 @@ namespace DTXMania
                         if ((index == 7))
                         {
                             this.ct右シンバル.t進行();
+                            if (this.tx右シンバル != null)
                             this.tx右シンバル.t2D描画(CDTXMania.app.Device, 900, 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
                         }
 
@@ -829,6 +838,7 @@ namespace DTXMania
                         }
                         CDTXMania.stage演奏ドラム画面.bボーナス = false;
                     }
+                    if (this.txバートップ != null)
                         this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
 
 
@@ -989,8 +999,10 @@ namespace DTXMania
                     this.vector = this.tx描画用.vc拡大縮小倍率;
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                     this.tx描画用.n透明度 = 0xff;
+                    #region[ ワイドクリップ時の処理 ]
                     if (this.b旧企画クリップである == false)//ワイドクリップ
                     {
+                        #region[ スキルメーター有効 ]
                         if (CDTXMania.ConfigIni.bGraph.Drums == true)
                         {
                             if (tx描画用.szテクスチャサイズ.Width >= 1280)
@@ -1003,6 +1015,8 @@ namespace DTXMania
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 13, 484);
                             CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, 484);
                         }
+                        #endregion
+                        #region[ スキルメーター無効 ]
                         else
                         {
                             if (this.txクリップパネル != null)
@@ -1010,9 +1024,13 @@ namespace DTXMania
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 860, 140);
                             CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(860, 140);
                         }
+                        #endregion
                     }
+                    #endregion
+                    #region[ 旧規格クリップ時の処理 ]
                     else if (this.b旧企画クリップである == true && CDTXMania.ConfigIni.bGraph.Drums)//旧規格
                     {
+                        #region[ スキルメーター有効 ]
                         if (CDTXMania.ConfigIni.bGraph.Drums == true)
                         {
                             this.smallvc = new Vector3(0.76f, 0.76f, 1f);
@@ -1023,10 +1041,12 @@ namespace DTXMania
                             this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 35, 422);
                         }
+                        #endregion
                         else
                         {
                         }
                     }
+                    #endregion
                     this.tx描画用.vc拡大縮小倍率 = this.vector;
 
                 }
