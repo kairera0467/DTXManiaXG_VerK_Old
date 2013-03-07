@@ -311,7 +311,7 @@ namespace DTXMania
                     if (nジャンプインデックス >= 0 && nジャンプインデックス < 180)
                         f拡大率 = 1.0f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
 
-                    if (this.txCOMBOドラム != null)
+                    if (this.txCOMBOドラム != null && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(f拡大率, f拡大率, 1.0f);
                     //-----------------
                     #endregion
@@ -324,21 +324,38 @@ namespace DTXMania
 
                     if (n桁数 == 2)//3ケタ未満の場合
                     {
-                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx, nコンボy, new Rectangle(0, 230, 280, 64));
-                        //this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 162, y + 36 , new Rectangle(0, 230, 160, 64));
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                        {
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx, nコンボy, new Rectangle(0, 230, 280, 64));
+                        }
+                        else
+                        {
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 162, y + 36, new Rectangle(0, 230, 160, 64));
+                        }
                     }
                     else if (n桁数 == 3)//3ケタの場合
                     {
-                        nコンボx = n表示中央X - ((int)((280 * f拡大率) / 1.8f));
-
-                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 22, nコンボy, new Rectangle(0, 294, 280, 64));
-                        //this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 264, y + 36, new Rectangle(0, 294, 280, 64));
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                        {
+                            nコンボx = n表示中央X - ((int)((280 * f拡大率) / 1.8f));
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 22, nコンボy, new Rectangle(0, 294, 280, 64));
+                        }
+                        else
+                        {
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 264, y + 36, new Rectangle(0, 294, 280, 64));
+                        }
                     }
                     else if (n桁数 == 4)//4ケタの場合
                     {
-                        nコンボx = n表示中央X - ((int)((318 * f拡大率) / 3.0f));
-                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy, new Rectangle(0, 357, 318, 64));
-                        //this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 320, y + 36, new Rectangle(0, 357, 318, 63));
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                        {
+                            nコンボx = n表示中央X - ((int)((318 * f拡大率) / 3.0f));
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy, new Rectangle(0, 357, 318, 64));
+                        }
+                        else
+                        {
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 320, y + 36, new Rectangle(0, 357, 318, 63));
+                        }
                     }
                     
                     /*

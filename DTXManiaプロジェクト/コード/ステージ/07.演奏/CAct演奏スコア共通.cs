@@ -130,7 +130,12 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+                if(CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C)
+                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
 				base.OnManagedリソースの作成();
 			}
 		}
