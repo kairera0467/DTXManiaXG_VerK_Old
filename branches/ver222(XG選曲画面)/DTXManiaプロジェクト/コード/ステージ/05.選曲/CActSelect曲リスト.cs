@@ -222,6 +222,9 @@ namespace DTXMania
 			for( int i = 0; i < 13; i++ )
 			{
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
+                this.t選択曲以外の曲名バーの生成L( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色);
+                this.t選択曲以外の曲名バーの生成R( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
+                this.tジャケット画像の生成( i, this.stバー情報[ i ].txジャケット);
 			}
 		}
 		public void t次に移動()
@@ -759,8 +762,7 @@ namespace DTXMania
 
 
 			// 描画。
-
-			if( this.r現在選択中の曲 == null )
+            if ( this.r現在選択中の曲 == null )
 			{
 				#region [ 曲が１つもないなら「Songs not found.」を表示してここで帰れ。]
 				//-----------------
@@ -781,17 +783,17 @@ namespace DTXMania
 
 				return 0;
 			}
-            SlimDX.Matrix mat = SlimDX.Matrix.Identity;
-            mat *= SlimDX.Matrix.Translation(-600, 18, 0);
-            mat *= SlimDX.Matrix.Scaling(1.5f, 1.26f, 1.0f);
-            mat *= SlimDX.Matrix.RotationY(0.4f);
-            SlimDX.Matrix mat2 = SlimDX.Matrix.Identity;
-            mat2 *= SlimDX.Matrix.Translation(600, 18, 0);
-            mat2 *= SlimDX.Matrix.Scaling(1.5f, 1.26f, 1.0f);
-            mat2 *= SlimDX.Matrix.RotationY(-0.4f);
-            this.txバー背景L.t3D描画(CDTXMania.app.Device, mat);
-            this.txバー背景R.t3D描画(CDTXMania.app.Device, mat2);
-            this.txパネル本体.t2D描画(CDTXMania.app.Device, 457, 164);
+            //SlimDX.Matrix mat = SlimDX.Matrix.Identity;
+            //mat *= SlimDX.Matrix.Translation(-600, 18, 0);
+            //mat *= SlimDX.Matrix.Scaling(1.5f, 1.26f, 1.0f);
+            //mat *= SlimDX.Matrix.RotationY(0.4f);
+            //SlimDX.Matrix mat2 = SlimDX.Matrix.Identity;
+            //mat2 *= SlimDX.Matrix.Translation(600, 18, 0);
+            //mat2 *= SlimDX.Matrix.Scaling(1.5f, 1.26f, 1.0f);
+            //mat2 *= SlimDX.Matrix.RotationY(-0.4f);
+            //this.txバー背景L.t3D描画(CDTXMania.app.Device, mat);
+            //this.txバー背景R.t3D描画(CDTXMania.app.Device, mat2);
+            //this.txパネル本体.t2D描画(CDTXMania.app.Device, 457, 164);
 				#region [ 通常フェーズの描画。]
 				//-----------------
 				for( int i = 0; i < 13; i++ )	// パネルは全13枚。
@@ -818,7 +820,7 @@ namespace DTXMania
                         #region [ ジャケット画像を描画 ]
                         //-----------------
                         this.t選択中の曲でプレビュー画像の指定があれば構築する();
-                        this.t描画処理・プレビュー画像();
+                        //this.t描画処理・プレビュー画像();
                         //-----------------
                         #endregion
                         #region [ タイトル名テクスチャを描画。]
@@ -841,13 +843,13 @@ namespace DTXMania
 
 						#region [ バーテクスチャを描画。]
 						//-----------------
-						this.tバーの描画( x, y, this.stバー情報[ nパネル番号 ].eバー種別, false );
+						//this.tバーの描画( x, y, this.stバー情報[ nパネル番号 ].eバー種別, false );
 						//-----------------
 						#endregion
                         #region [ ジャケット画像を描画 ]
                         //-----------------
-                        this.t選択中の曲以外でプレビュー画像の指定があれば構築する(i);
-                        this.t描画処理・選択曲以外のプレビュー画像(n見た目の行番号);
+                        //this.t選択中の曲以外でプレビュー画像の指定があれば構築する(i);
+                        //this.t描画処理・選択曲以外のプレビュー画像(i);
                         //-----------------
                         #endregion
                         #region [ タイトル名テクスチャを描画。]
@@ -1009,44 +1011,24 @@ namespace DTXMania
 		private int n現在の選択行;
 		private int n目標のスクロールカウンタ;
         private readonly Point[] ptバーの基本座標 = new Point[] { new Point(0x2c4, 30), new Point(0x272, 0x51), new Point(0x242, 0x84), new Point(0x222, 0xb7), new Point(0x210, 0xea), new Point(0x1d0, 0x127), new Point(0x224, 0x183), new Point(0x242, 0x1b6), new Point(0x270, 0x1e9), new Point(0x2ae, 540), new Point(0x314, 0x24f), new Point(0x3e4, 0x282), new Point(0x500, 0x2b5) };
+        private readonly Point[] ptジャケットの基本座標 = new Point[] { new Point(0x2c4, 30), new Point(0x272, 0x51), new Point(0x242, 0x84), new Point(0x222, 0xb7), new Point(0x210, 0xea), new Point(0x1d0, 0x127), new Point(0x224, 0x183), new Point(0x242, 0x1b6), new Point(0x270, 0x1e9), new Point(0x2ae, 540), new Point(0x314, 0x24f), new Point(0x3e4, 0x282), new Point(0x500, 0x2b5) };
 		private STバー情報[] stバー情報 = new STバー情報[ 13 ];
 		private CTexture txSongNotFound, txEnumeratingSongs;
 		private CTexture txスキル数字;
 		private CTexture txアイテム数数字;
         private CTexture txパネル本体;
+        protected volatile bool b曲決定 = false;
+		
 
-        //このへんは後から構造体にするかどうにかする。
-        //兎にも角にも
-        protected struct ST中心点
-        {
-            public float x;
-            public float y;
-            public float z;
-            public float rotY;
-        }
-        protected readonly ST中心点[] stマトリックス座標 = new ST中心点[ 13 ] {
-			#region [ 実は円弧配置になってない。射影行列間違ってるよスターレインボウ見せる気かよ… ]
-			//-----------------
-             new ST中心点() { x = -533.8936f, y = 210f, z = -289.5575f, rotY = -0.9279888f },
-             new ST中心点() { x = -533.8936f, y = 210f, z = -289.5575f, rotY = -0.9279888f },
-			 new ST中心点() { x = -533.8936f, y = 210f, z = -289.5575f, rotY = -0.9279888f },
-			 new ST中心点() { x = -423.8936f, y = 210f, z = -169.5575f, rotY = -0.6579891f },
-	    	 new ST中心点() { x = -297.5025f, y = 210f, z = -74.37564f, rotY = -0.4808382f },
-		     new ST中心点() { x = -153.9001f, y = 210f, z = -20.52002f, rotY = -0.2605f },
-			 new ST中心点() { x = 0.00002622683f, y = 210f, z = 0f, rotY = 0f }, 
-			 new ST中心点() { x = 153.9002f, y = 210f, z = -20.52002f, rotY = 0.2605f },
-			 new ST中心点() { x = 297.5025f, y = 210f, z = -74.37564f, rotY = 0.4808382f },
-			 new ST中心点() { x = 423.8936f, y = 210f, z = -169.5575f, rotY = 0.6579891f },
-			 new ST中心点() { x = 533.8936f, y = 210f, z = -289.5575f, rotY = 0.9279888f },
-             new ST中心点() { x = 533.8936f, y = 210f, z = -289.5575f, rotY = 0.9279888f },
-             new ST中心点() { x = 533.8936f, y = 210f, z = -289.5575f, rotY = 0.9279888f }
-            };
-			//-----------------
-			#endregion
+		//-----------------
+		#endregion
 
+
+        #region[ protected ]
         private string str現在のファイル名;
         private CTexture txプレビュー画像;
         private CTexture r表示するプレビュー画像;
+        private CTexture[] r表示する選択曲以外のプレビュー画像 = new CTexture[13];
         private CTexture txプレビュー画像がないときの画像;
 
         private CTexture txバー背景L;
@@ -1184,6 +1166,7 @@ namespace DTXMania
 			for( int i = 0; i < 13; i++ )
 			{
 				this.stバー情報[ i ].strタイトル文字列 = song.strタイトル;
+                this.stバー情報[ i ].txジャケット = song.txジャケット;
 				this.stバー情報[ i ].col文字色 = song.col文字色;
 				this.stバー情報[ i ].eバー種別 = this.e曲のバー種別を返す( song );
 				
@@ -1383,6 +1366,26 @@ namespace DTXMania
             }
         }
 
+        private void tジャケット画像の生成( int nバー番号, CTexture txジャケット )
+		{
+			if( nバー番号 < 0 || nバー番号 > 12 )
+				return;
+
+			try
+			{
+                int width = 400;
+				int height = 400;
+                
+				CDTXMania.t安全にDisposeする( ref this.stバー情報[ nバー番号 ].txジャケット );
+				//this.stバー情報[ nバー番号 ].txジャケット.vc拡大縮小倍率 = new Vector3( 1.0f, 1.0f, 1f );
+			}
+			catch( CTextureCreateFailedException )
+			{
+				Trace.TraceError( "ジャケットテクスチャの作成に失敗しました。[{0}]", txジャケット );
+				this.stバー情報[ nバー番号 ].txジャケット = null;
+			}
+		}
+
 		private void tアイテム数の描画()
 		{
 			string s = nCurrentPosition.ToString() + "/" + nNumOfItems.ToString();
@@ -1443,7 +1446,7 @@ namespace DTXMania
             }
             return true;
         }
-        private bool t選択中の曲以外でプレビュー画像の指定があれば構築する(int n曲番号)
+        private bool t選択中の曲以外でプレビュー画像の指定があれば構築する(int n曲番号, string str画像のパス)
         {
             Cスコア cスコア = this.stバー情報[ n曲番号 ].cスコア;
             if ((cスコア == null) || string.IsNullOrEmpty(cスコア.譜面情報.Preimage))
@@ -1463,11 +1466,11 @@ namespace DTXMania
                 this.stバー情報[n曲番号].txジャケット = CDTXMania.tテクスチャの生成(this.str現在のファイル名, false);
                 if (this.stバー情報[n曲番号].txジャケット != null)
                 {
-                    this.r表示するプレビュー画像 = this.stバー情報[n曲番号].txジャケット;
+                    this.r表示する選択曲以外のプレビュー画像[n曲番号] = this.stバー情報[n曲番号].txジャケット;
                 }
                 else
                 {
-                    this.r表示するプレビュー画像 = this.txプレビュー画像がないときの画像;
+                    this.r表示する選択曲以外のプレビュー画像[n曲番号] = this.txプレビュー画像がないときの画像;
                 }
             }
             return true;
@@ -1534,23 +1537,6 @@ namespace DTXMania
 					this.r表示するプレビュー画像.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, width, height ) );
 				}
 		}
-        private unsafe void t描画処理・選択曲以外のプレビュー画像(int n位置番号)
-        {
-            int x = n位置番号 * 50;
-            int y = 200;
-
-            SlimDX.Matrix r = SlimDX.Matrix.Identity;
-            r *= SlimDX.Matrix.Translation(this.stマトリックス座標[n位置番号].x, 0f, 0f);
-            r *= SlimDX.Matrix.RotationY(this.stマトリックス座標[n位置番号].rotY);
-            if (this.r表示するプレビュー画像 != null)
-            {
-                int width = this.r表示するプレビュー画像.sz画像サイズ.Width;
-                int height = this.r表示するプレビュー画像.sz画像サイズ.Height;
-
-                //this.r表示するプレビュー画像.t2D描画(CDTXMania.app.Device, x, y);
-                this.r表示するプレビュー画像.t3D描画(CDTXMania.app.Device, r);
-            }
-        }
         //-----------------
 		#endregion
 	}
