@@ -3310,7 +3310,7 @@ namespace DTXMania
 			}
 			if ( configIni.bDrums有効 )
 			{
-				if ( configIni.b演奏情報を表示する && ( configIni.eDark == Eダークモード.OFF ) )
+				if ( configIni.b演奏情報を表示する && (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E && CDTXMania.ConfigIni.nInfoType == 1) && ( configIni.eDark == Eダークモード.OFF ) )
 				{
 					int n小節番号 = n小節番号plus1 - 1;
                     CDTXMania.act文字コンソール.tPrint(858, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 0x11) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 0x11), C文字コンソール.Eフォント種別.白, n小節番号.ToString());
