@@ -318,6 +318,11 @@ namespace DTXMania
 			get;
 			set;
 		}
+        public Device D3D9Device
+        {
+            get { return this._D3D9Device; }
+            protected set { this._D3D9Device = value; }
+        }
         
         public static void t初期化(CApp app)
         {
@@ -438,121 +443,7 @@ namespace DTXMania
 			return true;
 		}
 		#endregion
-        /// <summary>
-        /// <para>Direct3Dデバイスの生成、変更、リセットを行う。</para>
-        /// <para>新しい設定と現在の設定とを比較し、生成、変更、リセットのいずれかを実行する。</para>
-        /// <para>ウィンドウのクライアントサイズはバックバッファに等しく設定される。</para>
-        /// <para>処理に成功すれば true を返す。処理に失敗すれば、準正常系は false を返し、異常系は例外を発出する。</para>
-        /// </summary>
-        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル, bool bマウスカーソルの表示を制御する)
-        {
-            if (this.Window == null)
-                throw new InvalidOperationException("ウィンドウが未生成のままDirect3D9デバイスを生成しようとしました。");
 
-            //bool b初めての生成 = (this.currentD3DSettings == null);
-            //var oldD3DSettings = (b初めての生成) ? null : this.currentD3DSettings.Clone();
-            bool bウィンドウモードにする = (newD3DSettings.PresentParameters.Windowed);
-            bool b全画面モードにする = !bウィンドウモードにする;
-            //bool b全画面からウィンドウへの切替えである = !b初めての生成 && !oldD3DSettings.PresentParameters.Windowed && bウィンドウモードにする;
-            //bool bウィンドウから全画面への切替えである = (b初めての生成 || oldD3DSettings.PresentParameters.Windowed) && b全画面モードにする;
-            #region [ ウィンドウのクライアントサイズをバックバッファに合わせる。]
-            //-----------------
-            if (this.Window.ClientSize.Width != newD3DSettings.PresentParameters.BackBufferWidth ||
-                this.Window.ClientSize.Height != newD3DSettings.PresentParameters.BackBufferHeight)
-            {
-                this.Window.ClientSize = new Size(newD3DSettings.PresentParameters.BackBufferWidth, newD3DSettings.PresentParameters.BackBufferHeight);
-            }
-            //-----------------
-            #endregion
-            #region [ Win32メッセージをあるだけ処理。]
-            //-----------------
-            CWin32.WindowMessage msg;
-
-            while (CWin32.PeekMessage(out msg, IntPtr.Zero, 0, 0, CWin32.PM_REMOVE))
-            {
-                CWin32.TranslateMessage(ref msg);
-                CWin32.DispatchMessage(ref msg);
-            }
-
-            //-----------------
-            #endregion
-
-            #region [ Direct3D9デバイスをリセットまたは新規生成し、リソースを復元する。]
-            //-----------------
-            //bool bリセットだけでOK = (!b初めての生成 && oldD3DSettings.bデバイスの再生成が不要でリセットだけで済む(newD3DSettings));
-
-            //if (bリセットだけでOK)
-            {
-                #region [ デバイスのリセット ]
-                //-----------------
-                //this.OnUnmanageリソースを解放する();
-
-                //if (this.D3D9Device.Reset(newD3DSettings.PresentParameters) != ResultCode.DeviceLost)
-                {
-                    Trace.TraceInformation("Direct3D9 デバイスをリセットしました。");
-                    //this.OnUnmanageリソースを生成する();
-                    //bリセットだけでOK = true;
-                }
-                //else
-                {
-                    //Trace.TraceWarning("Direct3D9 デバイスのリセットに失敗しました。続けて、デバイスの新規生成を行います。");
-                    //bリセットだけでOK = false;		// 後段で新規生成する
-                }
-                //-----------------
-                #endregion
-            }
-
-            //if (!bリセットだけでOK) // ← "else" にしないこと。前段でリセットに失敗した場合、bリセットでOK = false に変えてここに来るため。
-            {
-                #region [ デバイスの新規生成 ]
-                //-----------------
-                //this.OnManageリソースを解放する();
-                //this.OnUnmanageリソースを解放する();
-                /*
-                C共通.tDisposeする(this.D3D9Device);
-                this.D3D9Device = new Device(		// 失敗したら異常系とみなし、そのまま例外をthrow。
-                    this.Direct3D,
-                    newD3DSettings.nAdaptor,
-                    newD3DSettings.DeviceType,
-                    newD3DSettings.PresentParameters.DeviceWindowHandle,
-                    newD3DSettings.CreateFlags,
-                    newD3DSettings.PresentParameters);
-
-                */
-                Trace.TraceInformation("Direct3D9 デバイスを生成しました。");
-                //this.D3D9Device.SetDialogBoxMode(true);
-
-                //this.OnManageリソースを生成する();
-                //this.OnUnmanageリソースを生成する();
-                //-----------------
-                #endregion
-            }
-            //-----------------
-            #endregion
-
-            //this.currentD3DSettings = newD3DSettings.Clone();	// 成功したので設定を正式に保存する。
-
-            //this.OnD3Dデバイスステータスの初期化();
-
-            return true;
-        }
-        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル)
-        {
-            return this.tDirect3Dデバイスを生成・変更・リセットする(newD3DSettings, sz論理画面, wsウィンドウモード時のウィンドウスタイル, ws全画面モード時のウィンドウスタイル, true);
-        }
-        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings, Size sz論理画面)
-        {
-            return this.tDirect3Dデバイスを生成・変更・リセットする(newD3DSettings, sz論理画面, uint.MaxValue, uint.MaxValue, true);
-        }
-        public bool tDirect3Dデバイスを生成・変更・リセットする(CD3DSettings newD3DSettings)
-        {
-            return this.tDirect3Dデバイスを生成・変更・リセットする(newD3DSettings, Size.Empty, uint.MaxValue, uint.MaxValue, true);
-        }
-
-        public void tDirect3Dデバイスをクリアする()
-        {
-            //this.D3D9Device.Clear(ClearFlags.Target, this.colorデバイスクリア色, 0.0f, 0);
-        }
 		// Game 実装
 		protected override void Initialize()
 		{
@@ -587,23 +478,25 @@ namespace DTXMania
 				Cursor.Hide();
 				this.bマウスカーソル表示中 = false;
 			}
-			this.Device.SetTransform(TransformState.View, Matrix.LookAtLH(new Vector3(0f, 0f, (float)(-SampleFramework.GameWindowSize.Height / 2 * Math.Sqrt(3.0))), new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f)));
-			this.Device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(C変換.DegreeToRadian((float)60f), ((float)this.Device.Viewport.Width) / ((float)this.Device.Viewport.Height), -100f, 100f));
-			this.Device.SetRenderState(RenderState.Lighting, false);
-			this.Device.SetRenderState( RenderState.ZEnable, false );
-			this.Device.SetRenderState( RenderState.AntialiasedLineEnable, false );
-			this.Device.SetRenderState( RenderState.AlphaTestEnable, true );
-			this.Device.SetRenderState( RenderState.AlphaRef, 10 );
+            this.Device.SetTransform(TransformState.View, Matrix.LookAtLH(new Vector3(0f, 0f, (float)(-SampleFramework.GameWindowSize.Height / 2 * Math.Sqrt(3.0))), new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f)));
+            this.Device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(C変換.DegreeToRadian((float)60f), ((float)this.Device.Viewport.Width) / ((float)this.Device.Viewport.Height), -100f, 100f));
+            this.Device.SetRenderState(RenderState.Lighting, false);
+            this.Device.SetRenderState(RenderState.ZEnable, false);
+            this.Device.SetRenderState(RenderState.AntialiasedLineEnable, false);
+            this.Device.SetRenderState(RenderState.AlphaTestEnable, true);
+            this.Device.SetRenderState(RenderState.AlphaRef, 10);
 
-//			this.Device.SetRenderState( RenderState.MultisampleAntialias, true );
+            this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
+            this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+            this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
 
-			this.Device.SetRenderState<Compare>( RenderState.AlphaFunc, Compare.Greater );
-			this.Device.SetRenderState( RenderState.AlphaBlendEnable, true );
-			this.Device.SetRenderState<Blend>( RenderState.SourceBlend, Blend.SourceAlpha );
-			this.Device.SetRenderState<Blend>( RenderState.DestinationBlend, Blend.InverseSourceAlpha );
-			this.Device.SetTextureStageState( 0, TextureStage.AlphaOperation, TextureOperation.Modulate );
-			this.Device.SetTextureStageState( 0, TextureStage.AlphaArg1, 2 );
-			this.Device.SetTextureStageState( 0, TextureStage.AlphaArg2, 1 );
+            this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
+            this.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            this.Device.SetRenderState<Blend>(RenderState.SourceBlend, Blend.SourceAlpha);
+            this.Device.SetRenderState<Blend>(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
+            this.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Modulate);
+            this.Device.SetTextureStageState(0, TextureStage.AlphaArg1, 2);
+            this.Device.SetTextureStageState(0, TextureStage.AlphaArg2, 1);
 			
 			if( this.listトップレベルActivities != null )
 			{
@@ -671,7 +564,6 @@ namespace DTXMania
 		}
 		protected override void Draw( GameTime gameTime )
 		{
-
 			Sound管理.t再生中の処理をする();
 
 			if( Timer != null )
@@ -1792,6 +1684,7 @@ for (int i = 0; i < 3; i++) {
         private System.Drawing.Font ftDeclaration;
 		private MouseButtons mb = System.Windows.Forms.MouseButtons.Left;
         private string strWindowTitle = "";
+        private volatile Device _D3D9Device = null;
 
 		private void t起動処理()
 		{
@@ -1904,7 +1797,10 @@ for (int i = 0; i < 3; i++) {
 			#endregion
 			#region [ Direct3D9 デバイスの生成 ]
 			//---------------------
+            //2013.03.09.kairera0467
+            //おそらくこれがSSTでいう「tDirect3Dデバイスを生成・変更・リセットする」へ渡す設定に相当しているのだと思われ。
 			DeviceSettings settings = new DeviceSettings();
+            CD3DSettings newD3DSettings = new CD3DSettings();
 #if WindowedFullscreen
             settings.Windowed = true; // #30666 2013.2.2 yyagi: Fullscreenmode is "Maximized window" mode
 #else
@@ -1935,7 +1831,22 @@ for (int i = 0; i < 3; i++) {
 //			base.TargetElapsedTime = TimeSpan.FromTicks( 10000000 / 75 );
 			base.Window.ClientSize = new Size(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);	// #23510 2010.10.31 yyagi: to recover window size. width and height are able to get from Config.ini.
 			base.InactiveSleepTime = TimeSpan.FromMilliseconds((float)(ConfigIni.n非フォーカス時スリープms));	// #23568 2010.11.3 yyagi: to support valiable sleep value when !IsActive
-                                                                                                               // #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
+                                                                                                // #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
+            //CWin32.WindowMessage msg;
+            //while (CWin32.PeekMessage(out msg, IntPtr.Zero, 0, 0, CWin32.PM_REMOVE))
+            //{
+                //CWin32.TranslateMessage(ref msg);
+                //CWin32.DispatchMessage(ref msg);
+            //}
+            //this.Direct3D = new Direct3D();
+            this.D3D9Device = new Device(		// 失敗したら異常系とみなし、そのまま例外をthrow。
+                    new Direct3D(),
+                    newD3DSettings.nAdaptor,
+                    newD3DSettings.DeviceType,
+                    newD3DSettings.PresentParameters.DeviceWindowHandle,
+                    newD3DSettings.CreateFlags,
+                    newD3DSettings.PresentParameters);
+
 #if WindowedFullscreen
             this.t全画面・ウィンドウモード切り替え(); // #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
