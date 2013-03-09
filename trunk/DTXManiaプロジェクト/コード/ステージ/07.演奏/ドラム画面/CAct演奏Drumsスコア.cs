@@ -59,9 +59,13 @@ namespace DTXMania
                             base.txScore.t2D描画(CDTXMania.app.Device, 30 + (i * 34), 40, rectangle);
                         }
                     }
-                } if (base.txScore != null)
+                }
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
                 {
-                    base.txScore.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
+                    if (base.txScore != null)
+                    {
+                        base.txScore.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
+                    }
                 }
             }
             return 0;
