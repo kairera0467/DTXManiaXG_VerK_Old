@@ -135,7 +135,7 @@ namespace DTXMania
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
                     this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbersGD.png"));
 				base.OnManagedリソースの作成();
 			}
 		}
