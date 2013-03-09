@@ -82,6 +82,10 @@ namespace DTXMania
             this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? -24 : base.nJudgeLinePosY - 186);
             base.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY);
 
+            this.nY座標制御タイマ = -1L;
+            this.nY座標オフセットdot = 0;
+            this.nY座標加速度dot = 0;
+
 			if( CDTXMania.bコンパクトモード )
 			{
 				var score = new Cスコア();
@@ -186,9 +190,36 @@ namespace DTXMania
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     int UnitTime;
                     double BPM = CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM;
-                    UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.0 * 1000.0));
+                    UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                     this.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
-                    
+
+                    this.ctコンボ動作タイマ = new CCounter(0, 1, 400, CDTXMania.Timer);
+                    this.nY座標制御タイマ = CDTXMania.Timer.n現在時刻;
+                    long num3 = CDTXMania.Timer.n現在時刻;
+                    if (num3 < this.nY座標制御タイマ)
+                    {
+                        this.nY座標制御タイマ = num3;
+                    }
+                    while ((num3 - this.nY座標制御タイマ) >= 5L)
+                    {
+                            this.nY座標オフセットdot += this.nY座標加速度dot;
+                            if (this.nY座標オフセットdot > 10)
+                            {
+                                this.nY座標オフセットdot = 10;
+                                this.nY座標加速度dot = -1;
+                            }
+                            else if (this.nY座標オフセットdot < 0)
+                            {
+                                this.nY座標オフセットdot = 0;
+                                this.nY座標加速度dot = 0;
+                            }
+                        this.nY座標制御タイマ += 2L;
+                    }
+                    if (this.ctコンボ動作タイマ.b進行中)
+                    {
+                        this.nY座標加速度dot = 2;
+                    }
+
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
@@ -2915,7 +2946,7 @@ namespace DTXMania
                                 }
                             }
                             break;
-                            /*
+                            
                         case 0x4F:
                             if (this.txチップ != null)
                             {
@@ -2925,7 +2956,6 @@ namespace DTXMania
                                         x = (x + 0x13) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
                                         if (this.txチップ != null)
                                         {
-                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 32, new Rectangle(448, 10 + (num9 * 64), 64, 64));
                                             this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(448, 0, 64, 10));
 
                                         }
@@ -2934,14 +2964,13 @@ namespace DTXMania
                                         x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
                                         if (this.txチップ != null)
                                         {
-                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 32, new Rectangle(298, 10 + (num9 * 64), 64, 64));
-                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(298, 0, 0x40, 10));
+                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(338, 535, 0x40, 10));
                                         }
                                         break;
                                 }
                             }
                             break;
-                            */
+                            
                     }
                     if (this.txチップ != null)
                     {

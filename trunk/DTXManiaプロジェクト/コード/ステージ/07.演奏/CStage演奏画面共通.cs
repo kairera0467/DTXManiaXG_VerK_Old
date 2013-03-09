@@ -609,6 +609,12 @@ namespace DTXMania
 		protected STDGBVALUE<bool> b演奏にマウスを使った;
 		protected CCounter ctWailingチップ模様アニメ;
         public CCounter ctBPMバー;
+
+        public CCounter ctコンボ動作タイマ;
+        public long nY座標制御タイマ;
+        public int nY座標オフセットdot;
+        public int nY座標加速度dot;
+
 		protected STDGBVALUE<CCounter> ctチップ模様アニメ;
         protected abstract void tJudgeLineMovingUpandDown();
 		protected E演奏画面の戻り値 eフェードアウト完了時の戻り値;
@@ -2194,7 +2200,7 @@ namespace DTXMania
                         {
                             pChip.bHit = true;
                             this.actPlayInfo.dbBPM = (pChip.n整数値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                            CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.0 * 1000.0));
+                            CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                             CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                         }
                         break;
@@ -2255,7 +2261,7 @@ namespace DTXMania
                             if (dTX.listBPM.ContainsKey(pChip.n整数値・内部番号))
                             {
                                 this.actPlayInfo.dbBPM = (dTX.listBPM[pChip.n整数値・内部番号].dbBPM値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                                CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.0 * 1000.0));
+                                CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                                 CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                             }
                         }
@@ -2909,6 +2915,11 @@ namespace DTXMania
             if (this.ctBPMバー != null)
             {
                 this.ctBPMバー.t進行Loop();
+
+                if (this.ctBPMバー.n現在の値 == 0)
+                {
+                    this.ctコンボ動作タイマ.t進行();
+                }
             }
 		}
 

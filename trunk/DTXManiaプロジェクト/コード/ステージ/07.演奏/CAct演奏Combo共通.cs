@@ -292,6 +292,7 @@ namespace DTXMania
 			int y = ( nY上辺位置px + nドラムコンボの高さ ) - nドラムコンボのCOMBO文字の高さ;
             int y2 = (nY上辺位置px) - nドラムコンボのCOMBO文字の高さ;
 			int nJump = nジャンプインデックス - ( n桁数 );
+            int y動作差分 = CDTXMania.stage演奏ドラム画面.nY座標加速度dot * 4;
             //this.ctコンボ.t進行Loop();
 
             if ((nJump >= 0) && (nJump < 180))
@@ -326,7 +327,7 @@ namespace DTXMania
                     {
                         if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         {
-                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx, nコンボy, new Rectangle(0, 230, 280, 64));
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx, nコンボy + y動作差分, new Rectangle(0, 230, 280, 64));
                         }
                         else
                         {
@@ -338,7 +339,7 @@ namespace DTXMania
                         if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         {
                             nコンボx = n表示中央X - ((int)((280 * f拡大率) / 1.8f));
-                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 22, nコンボy, new Rectangle(0, 294, 280, 64));
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 22, nコンボy + y動作差分, new Rectangle(0, 294, 280, 64));
                         }
                         else
                         {
@@ -350,7 +351,7 @@ namespace DTXMania
                         if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         {
                             nコンボx = n表示中央X - ((int)((318 * f拡大率) / 3.0f));
-                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy, new Rectangle(0, 357, 318, 64));
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy + y動作差分, new Rectangle(0, 357, 318, 64));
                         }
                         else
                         {
