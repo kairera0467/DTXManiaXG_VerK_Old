@@ -53,33 +53,23 @@ namespace DTXMania
                 }
                 this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 #region[ ネームプレート本体 ]
+                this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
                 {
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate.png"));
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                     {
                         if (this.iNamePlate != null)
                         this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_cls.png"));
                     }
-                    else
-                    {
-                        if (this.iNamePlate != null)
-                        this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate.png"));
-                    }
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_XG.png"));
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                     {
                         this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_XG_cls.png"));
                     }
-                    else
-                    {
-                        this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_XG.png"));
-                    }
-                }
-                else
-                {
-                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 }
                 #endregion
                 this.iDrumspeed = Image.FromFile(CSkin.Path(@"Graphics\\7_panel_icons.jpg"));
