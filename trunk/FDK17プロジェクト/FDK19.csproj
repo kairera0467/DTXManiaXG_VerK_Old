@@ -26,7 +26,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>
     </DocumentationFile>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
     <NoWarn>0219</NoWarn>
     <DefineConstants>TRACE;DEBUG;TEST_CancelEnterCodeInAltEnter2 TEST_Direct3D9Ex_</DefineConstants>
     <Optimize>false</Optimize>
