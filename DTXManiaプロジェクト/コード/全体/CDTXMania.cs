@@ -517,11 +517,11 @@ namespace DTXMania
                 Bitmap image = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(image);
                 graphics.PageUnit = GraphicsUnit.Pixel;
-                int width = (int)graphics.MeasureString("DTXManiaXG(verK) ver 2.22     based on DTXMania", this.ftDeclaration).Width;
+                int width = (int)graphics.MeasureString("DTXManiaXG(verK) ver 2.30     based on DTXMania", this.ftDeclaration).Width;
                 graphics.Dispose();
                 Bitmap bitmap2 = new Bitmap(width, this.ftDeclaration.Height);
                 graphics = Graphics.FromImage(bitmap2);
-                graphics.DrawString("DTXManiaXG(verK) ver 2.22     based on DTXMania", this.ftDeclaration, Brushes.White, (float)0f, (float)0f);
+                graphics.DrawString("DTXManiaXG(verK) ver 2.30     based on DTXMania", this.ftDeclaration, Brushes.White, (float)0f, (float)0f);
                 graphics.Dispose();
                 this.txCredit = new CTexture(app.Device, bitmap2, TextureFormat);
                 bitmap2.Dispose();
@@ -1049,7 +1049,7 @@ namespace DTXMania
 
 							r現在のステージ.On非活性化();
 //#if dshow
-                            stage演奏ドラム画面.actFOStageClear.On活性化(CDTXMania.app.Device);
+                            stage演奏ドラム画面.actFOStageClear.On活性化(CDTXMania.app.D3D9Device);
 //#endif
 							if( !ConfigIni.bギタレボモード )
 							{
@@ -1437,112 +1437,6 @@ for (int i = 0; i < 3; i++) {
 			}
 			#endregion
 		}
-        /// <summary>
-		/// <para>ここには、対応するイベントハンドラのないイベントをハンドルするコードを書く。</para>
-		/// </summary>
-		protected void WndProc( ref Message m )
-		{
-			#region [ WM_COPYDATA: 二重起動された StrokeStyleT.exe からコマンドライン行が送られてきたら、それを取得してアクション実行予約を行う。]
-			//-----------------
-			if( m.Msg == CWin32.WM_COPYDATA )
-			{
-				// コマンドライン行を取得。
-				var copyData = (CWin32.COPYDATA) m.GetLParam( (new CWin32.COPYDATA()).GetType() );
-				
-				// コマンドライン登録（アクション実行予約）
-				//Global.PlayerMode.arrayコマンドライン = null;
-				//if( copyData.cbData > 0 )
-				//	Global.PlayerMode.arrayコマンドライン = copyData.lpData.Split( new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries );
-			}
-			//-----------------
-			#endregion
-			#region [ WM_DSGRAPHNOTIFY: DirectShow グラフからのイベントを受信し、処理を行う。]
-			//-----------------
-			else if( m.Msg == CDirectShow.WM_DSGRAPHNOTIFY )
-			{
-				int nインスタンスID = m.LParam.ToInt32();
-				CDirectShow dsイベント発信者 = null;
-				bool b発信者が背景動画である = false;
-
-				#region [ イベント発信者(CDirectShow) を特定する。]
-				//-----------------
-				// このインスタンスID は、今のところ以下のいずれかである。
-				// ・背景動画
-				// ・仮想ドラムキット
-				// なので、これらを順に見ていって、イベント発信者を特定する。
-					dsイベント発信者 = CDirectShow.tインスタンスを返す( nインスタンスID );
-					b発信者が背景動画である = false;
-				//-----------------
-				#endregion
-
-				if( dsイベント発信者 == null )
-					return;		// 特定に失敗したら無視。
-
-				#region [ イベント発信者からすべてのイベントを受け取り、処理する。]
-				//-----------------
-				IMediaEventEx mediaEventEx = dsイベント発信者.MediaEventEx;
-
-				if( mediaEventEx == null )
-					return;		// 既に DirectShow の終了処理が始まっている場合は何もしない。
-
-				// この辺りの処理の参考URL：
-				// http://msdn.microsoft.com/ja-jp/library/cc370589.aspx
-
-				EventCode eventCode;
-				IntPtr param1, param2;
-				while( mediaEventEx.GetEvent( out eventCode, out param1, out param2, 0 ) == CWin32.S_OK )	// イベントがなくなるまで
-				{
-					// イベント処理。
-
-					if( eventCode == EventCode.Complete )
-					{
-						#region [ 再生完了 ]
-						//-----------------
-						if( dsイベント発信者.bループ再生 )
-						{
-							if( dsイベント発信者.bループ再生 )				// ループ指定ありなら
-								dsイベント発信者.t再生位置を変更( 0.0 );	// すぐ再生開始。
-						}
-						else
-						{
-							if( b発信者が背景動画である )
-							{
-								dsイベント発信者.b再生中 = false;
-								dsイベント発信者.t再生停止();				// 背景動画は終了しても巻き戻さない。
-							}
-							else
-							{
-								dsイベント発信者.b再生中 = false;
-								dsイベント発信者.t再生停止();
-								dsイベント発信者.t再生位置を変更( 0.0 );	// 再生完了しても再生は続くので、先頭に戻して
-								dsイベント発信者.t再生準備開始();			// 次の再生に備えて準備しておく。
-							}
-						}
-						//-----------------
-						#endregion
-					}
-
-					// イベントを解放。
-
-					mediaEventEx.FreeEventParams( eventCode, param1, param2 );
-				}
-				//-----------------
-				#endregion
-			}
-			//-----------------
-			#endregion
-			#region [ WM_CLOSE: 終了指示フラグを立てる。立てるだけ。]
-			//-----------------
-			if( m.Msg == CWin32.WM_CLOSE )
-			{
-				CDTXMania.App.bWM_CLOSEを受け取った = true;
-				return;
-			}
-			//-----------------
-			#endregion
-
-			WndProc( ref m );
-		}
 
 
 		// その他
@@ -1811,8 +1705,8 @@ for (int i = 0; i < 3; i++) {
 //			settings.BackBufferCount = 3;
 			settings.EnableVSync = ConfigIni.b垂直帰線待ちを行う;
             // settings.BackBufferFormat = Format.A8R8G8B8;
-	        // settings.MultisampleType = MultisampleType.FourSamples;
-	        // settings.MultisampleQuality = 4;
+	         settings.MultisampleType = MultisampleType.FourSamples;
+	         settings.MultisampleQuality = 4;
 	        // settings.MultisampleType = MultisampleType.None;
 	        // settings.MultisampleQuality = 0;
 
@@ -1832,13 +1726,7 @@ for (int i = 0; i < 3; i++) {
 			base.Window.ClientSize = new Size(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);	// #23510 2010.10.31 yyagi: to recover window size. width and height are able to get from Config.ini.
 			base.InactiveSleepTime = TimeSpan.FromMilliseconds((float)(ConfigIni.n非フォーカス時スリープms));	// #23568 2010.11.3 yyagi: to support valiable sleep value when !IsActive
                                                                                                 // #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
-            //CWin32.WindowMessage msg;
-            //while (CWin32.PeekMessage(out msg, IntPtr.Zero, 0, 0, CWin32.PM_REMOVE))
-            //{
-                //CWin32.TranslateMessage(ref msg);
-                //CWin32.DispatchMessage(ref msg);
-            //}
-            //this.Direct3D = new Direct3D();
+
             this.D3D9Device = new Device(		// 失敗したら異常系とみなし、そのまま例外をthrow。
                     new Direct3D(),
                     newD3DSettings.nAdaptor,
