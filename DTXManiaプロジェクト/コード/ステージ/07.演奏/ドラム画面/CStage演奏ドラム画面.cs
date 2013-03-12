@@ -326,9 +326,9 @@ namespace DTXMania
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
                         this.rResultSound.t再生を開始する();
                         this.actFOStageClear.tフェードアウト開始();
-//#if dshow
+#if dshow
                         this.actFOStageClear.On進行描画( CDTXMania.app.Device );
-//#endif
+#endif
                     }
 
                 }
