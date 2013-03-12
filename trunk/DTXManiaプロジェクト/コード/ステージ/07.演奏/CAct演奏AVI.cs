@@ -539,9 +539,9 @@ namespace DTXMania
                             this.bフレームを作成した = true;
                         }
                         Size size = new Size((int)this.rAVI.avi.nフレーム幅, (int)this.rAVI.avi.nフレーム高さ);
-                        Size size2 = new Size(1280, 720);
-                        Size size3 = new Size(this.n開始サイズW, this.n開始サイズH);
-                        Size size4 = new Size(this.n終了サイズW, this.n終了サイズH);
+                        Size sz720pサイズ = new Size(1280, 720);
+                        Size sz開始サイズ = new Size(this.n開始サイズW, this.n開始サイズH);
+                        Size sz終了サイズ = new Size(this.n終了サイズW, this.n終了サイズH);
                         Point location = new Point(this.n画像側開始位置X, this.n画像側終了位置Y);
                         Point point2 = new Point(this.n画像側終了位置X, this.n画像側終了位置Y);
                         Point point3 = new Point(this.n表示側開始位置X, this.n表示側開始位置Y);
@@ -553,16 +553,16 @@ namespace DTXMania
                         time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         if (this.n総移動時間ms == 0)
                         {
-                            rectangle = new Rectangle(location, size3);
-                            rectangle2 = new Rectangle(point3, size3);
+                            rectangle = new Rectangle(location, sz開始サイズ);
+                            rectangle2 = new Rectangle(point3, sz開始サイズ);
                         }
                         else
                         {
                             double num5 = ((double)time) / ((double)this.n総移動時間ms);
-                            Size size5 = new Size(size3.Width + ((int)((size4.Width - size3.Width) * num5)), size3.Height + ((int)((size4.Height - size3.Height) * num5)));
+                            Size size5 = new Size(sz開始サイズ.Width + ((int)((sz終了サイズ.Width - sz開始サイズ.Width) * num5)), sz開始サイズ.Height + ((int)((sz終了サイズ.Height - sz開始サイズ.Height) * num5)));
                             rectangle = new Rectangle((int)((point2.X - location.X) * num5), (int)((point2.Y - location.Y) * num5), ((int)((point2.X - location.X) * num5)) + size5.Width, ((int)((point2.Y - location.Y) * num5)) + size5.Height);
                             rectangle2 = new Rectangle((int)((point4.X - point3.X) * num5), (int)((point4.Y - point3.Y) * num5), ((int)((point4.X - point3.X) * num5)) + size5.Width, ((int)((point4.Y - point3.Y) * num5)) + size5.Height);
-                            if ((((rectangle.Right <= 0) || (rectangle.Bottom <= 0)) || ((rectangle.Left >= size.Width) || (rectangle.Top >= size.Height))) || (((rectangle2.Right <= 0) || (rectangle2.Bottom <= 0)) || ((rectangle2.Left >= size2.Width) || (rectangle2.Top >= size2.Height))))
+                            if ((((rectangle.Right <= 0) || (rectangle.Bottom <= 0)) || ((rectangle.Left >= size.Width) || (rectangle.Top >= size.Height))) || (((rectangle2.Right <= 0) || (rectangle2.Bottom <= 0)) || ((rectangle2.Left >= sz720pサイズ.Width) || (rectangle2.Top >= sz720pサイズ.Height))))
                             {
                                 goto Label_0A06;
                             }
@@ -610,19 +610,19 @@ namespace DTXMania
                                 rectangle2.Y = 0;
                                 rectangle2.Height -= num11;
                             }
-                            if (rectangle2.Right > size2.Width)
+                            if (rectangle2.Right > sz720pサイズ.Width)
                             {
-                                int num12 = rectangle2.Right - size2.Width;
+                                int num12 = rectangle2.Right - sz720pサイズ.Width;
                                 rectangle.Width -= num12;
                                 rectangle2.Width -= num12;
                             }
-                            if (rectangle2.Bottom > size2.Height)
+                            if (rectangle2.Bottom > sz720pサイズ.Height)
                             {
-                                int num13 = rectangle2.Bottom - size2.Height;
+                                int num13 = rectangle2.Bottom - sz720pサイズ.Height;
                                 rectangle.Height -= num13;
                                 rectangle2.Height -= num13;
                             }
-                            if ((((rectangle.X >= rectangle.Right) || (rectangle.Y >= rectangle.Bottom)) || ((rectangle2.X >= rectangle2.Right) || (rectangle2.Y >= rectangle2.Bottom))) || ((((rectangle.Right < 0) || (rectangle.Bottom < 0)) || ((rectangle.X > size.Width) || (rectangle.Y > size.Height))) || (((rectangle2.Right < 0) || (rectangle2.Bottom < 0)) || ((rectangle2.X > size2.Width) || (rectangle2.Y > size2.Height)))))
+                            if ((((rectangle.X >= rectangle.Right) || (rectangle.Y >= rectangle.Bottom)) || ((rectangle2.X >= rectangle2.Right) || (rectangle2.Y >= rectangle2.Bottom))) || ((((rectangle.Right < 0) || (rectangle.Bottom < 0)) || ((rectangle.X > size.Width) || (rectangle.Y > size.Height))) || (((rectangle2.Right < 0) || (rectangle2.Bottom < 0)) || ((rectangle2.X > sz720pサイズ.Width) || (rectangle2.Y > sz720pサイズ.Height)))))
                             {
                                 goto Label_0A06;
                             }
