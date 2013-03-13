@@ -227,11 +227,6 @@ namespace DTXMania
 					this.pAVIBmp = this.avi.GetFramePtr( frameNoFromTime );
 				}
 			}
-			if( this.ct登場用.b終了値に達した )
-			{
-				//this.n本体X = 4;
-				//this.n本体Y = 0x3f;
-			}
 			int x = this.n本体X;
 			int y = this.n本体Y;
 			if( ( ( this.nAVI再生開始時刻 != -1 ) && ( this.avi != null ) ) && ( this.sfリザルトAVI画像 != null ) )

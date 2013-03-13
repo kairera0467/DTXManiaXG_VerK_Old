@@ -36,10 +36,7 @@ namespace DTXMania
             //現時点では生成できずエラーが出る。
             //おそらくCDTXMania側でOn活性化(this.App.D3D9Device)にして、ここでの生成でhWdPtrにCDTXMania.App.hWdPtrを使用するとエラーが出るのでそれが関係しているのかも。
             this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), CDTXMania.app.WindowHandle, false);
-            //this.nAVI再生開始時刻 = -1;
-            this.n前回描画したフレーム番号 = 0;
-            this.b動画フレームを作成した = false;
-            this.pAVIBmp = IntPtr.Zero;
+
             base.On活性化(D3D9Device);
         }
 		public override void On非活性化()
@@ -78,7 +75,6 @@ namespace DTXMania
                 {
                     this.txボーナス花火.b加算合成 = true;
                 }
-                this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory);
                 this.tx描画用 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
                 if (this.ds背景動画 != null)
                 {
@@ -106,11 +102,6 @@ namespace DTXMania
         {
             if (this.b活性化してない)
                 return;
-            if (this.sfリザルトAVI画像 != null)
-            {
-                this.sfリザルトAVI画像.Dispose();
-                this.sfリザルトAVI画像 = null;
-            }
             if (this.tx描画用 != null)
             {
                 this.tx描画用.Dispose();
@@ -381,7 +372,7 @@ namespace DTXMania
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
                 }
             }
-            if (this.counter.n現在の値 >= 300)
+            //if (this.counter.n現在の値 >= 300)
             {
                 if (this.ds背景動画 != null)
                 {
@@ -393,15 +384,14 @@ namespace DTXMania
 
                     if (((this.avi != null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
                     {
-                        //int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
-                        int time = (int)CSound管理.rc演奏用タイマ.n現在時刻;
+                        int time = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         int frameNoFromTime = this.avi.GetFrameNoFromTime(time);
                         //Trace.TraceInformation("n前回描画したフレーム番号:{0}(正の数なら正常)", new object[] { this.n前回描画したフレーム番号 });
-                        //Trace.TraceInformation("frameNoFromTime:{0}", new object[] { frameNoFromTime });
+                        Trace.TraceInformation("frameNoFromTime:{0}", new object[] { frameNoFromTime });
                         //Trace.TraceInformation("b動画フレームを作成した:{0}", new object[] { this.b動画フレームを作成した });
                         if (frameNoFromTime >= this.avi.GetMaxFrameCount())
                         {
-                            this.nAVI再生開始時刻 = CSound管理.rc演奏用タイマ.n現在時刻;
+                            this.nAVI再生開始時刻 = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         }
                         else if ((this.n前回描画したフレーム番号 != frameNoFromTime) && !this.b動画フレームを作成した)
                         {
@@ -462,7 +452,6 @@ namespace DTXMania
                     }
                 // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
 
-                //if (this.sfリザルトAVI画像 == null)
                 //if(this.b動画フレームを作成した == true)
                 {
                     if (this.tx白タイル64x64 != null)
@@ -536,42 +525,8 @@ namespace DTXMania
         private long nAVI再生開始時刻;
         private int n前回描画したフレーム番号;
         private IntPtr pAVIBmp;
-        private Surface sfリザルトAVI画像;
         private string strAVIファイル名;
 
-        private unsafe void tサーフェイスをクリアする(Surface sf)
-        {
-            DataRectangle rectangle = sf.LockRectangle(LockFlags.None);
-            DataStream data = rectangle.Data;
-            switch ((rectangle.Pitch / sf.Description.Width))
-            {
-                case 4:
-                    {
-                        uint* numPtr = (uint*)data.DataPointer.ToPointer();
-                        for (int i = 0; i < sf.Description.Height; i++)
-                        {
-                            for (int j = 0; j < sf.Description.Width; j++)
-                            {
-                                (numPtr + (i * sf.Description.Width))[j] = 0;
-                            }
-                        }
-                        break;
-                    }
-                case 2:
-                    {
-                        ushort* numPtr2 = (ushort*)data.DataPointer.ToPointer();
-                        for (int k = 0; k < sf.Description.Height; k++)
-                        {
-                            for (int m = 0; m < sf.Description.Width; m++)
-                            {
-                                (numPtr2 + (k * sf.Description.Width))[m] = 0;
-                            }
-                        }
-                        break;
-                    }
-            }
-            sf.UnlockRectangle();
-        }
         private bool tリザルト動画の指定があれば構築する()
         {
             this.strAVIファイル名 = CSkin.Path(@"Graphics\7_StageClear.avi");
@@ -588,15 +543,14 @@ namespace DTXMania
             try
             {
                 this.avi = new CAvi(this.strAVIファイル名);
-                this.nAVI再生開始時刻 = CSound管理.rc演奏用タイマ.n現在時刻;
+                this.nAVI再生開始時刻 = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
-                this.tサーフェイスをクリアする(this.sfリザルトAVI画像);
-                Trace.TraceInformation("リザルト動画を生成しました。({0})", new object[] { this.strAVIファイル名 });
+                Trace.TraceInformation("動画を生成しました。({0})", new object[] { this.strAVIファイル名 });
             }
             catch
             {
-                Trace.TraceError("リザルト動画の生成に失敗しました。({0})", new object[] { this.strAVIファイル名 });
+                Trace.TraceError("動画の生成に失敗しました。({0})", new object[] { this.strAVIファイル名 });
                 this.avi = null;
                 this.nAVI再生開始時刻 = -1;
             }
