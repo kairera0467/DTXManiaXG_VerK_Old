@@ -80,11 +80,12 @@ namespace DTXMania
                 {
                     this.tx描画用 = CDTXMania.tテクスチャを生成する(this.ds背景動画.n幅px, this.ds背景動画.n高さpx);
                 }
-                
+
                 this.nAVI再生開始時刻 = -1;
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
                 this.pAVIBmp = IntPtr.Zero;
+                this.tリザルト動画の指定があれば構築する();
 
                 for (int i = 0; i < 16; i++)
                 {
@@ -92,7 +93,7 @@ namespace DTXMania
                     this.st青い星[i].b使用中 = false;
                     this.st青い星[i].ct進行 = new CCounter();
                 }
-                this.tリザルト動画の指定があれば構築する();
+
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -372,7 +373,7 @@ namespace DTXMania
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
                 }
             }
-            //if (this.counter.n現在の値 >= 300)
+            if (this.counter.n現在の値 >= 300)
             {
                 if (this.ds背景動画 != null)
                 {
@@ -387,11 +388,16 @@ namespace DTXMania
                         int time = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         int frameNoFromTime = this.avi.GetFrameNoFromTime(time);
                         //Trace.TraceInformation("n前回描画したフレーム番号:{0}(正の数なら正常)", new object[] { this.n前回描画したフレーム番号 });
-                        Trace.TraceInformation("frameNoFromTime:{0}", new object[] { frameNoFromTime });
+                        //Trace.TraceInformation("Timer現在時刻:{0}　nAVI再生開始時刻:{1}　time:{2}", new object[] { CDTXMania.Timer.n現在時刻, nAVI再生開始時刻, time });
+                        //Trace.TraceInformation("frameNoFromTime:{0}", new object[] { frameNoFromTime });
                         //Trace.TraceInformation("b動画フレームを作成した:{0}", new object[] { this.b動画フレームを作成した });
                         if (frameNoFromTime >= this.avi.GetMaxFrameCount())
                         {
-                            this.nAVI再生開始時刻 = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
+                            this.nAVI再生開始時刻 = (int)CDTXMania.Timer.n現在時刻 - 300;
+                        }
+                        else if (CDTXMania.Timer.n現在時刻 <= nAVI再生開始時刻)
+                        {
+                            this.nAVI再生開始時刻 = (int)CDTXMania.Timer.n現在時刻 - 300;
                         }
                         else if ((this.n前回描画したフレーム番号 != frameNoFromTime) && !this.b動画フレームを作成した)
                         {
@@ -543,7 +549,7 @@ namespace DTXMania
             try
             {
                 this.avi = new CAvi(this.strAVIファイル名);
-                this.nAVI再生開始時刻 = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
+                this.nAVI再生開始時刻 = CDTXMania.Timer.n現在時刻;
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
                 Trace.TraceInformation("動画を生成しました。({0})", new object[] { this.strAVIファイル名 });
