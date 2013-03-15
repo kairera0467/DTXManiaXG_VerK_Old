@@ -76,7 +76,7 @@ namespace DTXMania
                             int n回転初期値 = CDTXMania.Random.Next(360);
                             double num7 = 0.8 + ( 1 / 100.0); // 拡散の大きさ
                             this.st青い星[j].nLane = (int)lane;
-                            this.st青い星[j].ct進行 = new CCounter(0, 50, 7, CDTXMania.Timer); // カウンタ
+                            this.st青い星[j].ct進行 = new CCounter(0, 40, 7, CDTXMania.Timer); // カウンタ
                             this.st青い星[j].fX = this.nレーンの中央X座標[(int)lane] + 320; //X座標
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                             {
@@ -101,10 +101,10 @@ namespace DTXMania
 
                             this.st青い星[j].fY = ((((float)this.iPosY) + 350 + (((float)Math.Sin((double)this.st青い星[j].f半径)) * this.st青い星[j].f半径)) - 170f); //Y座標
                             this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
-                            this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0)) - 0.2);
-                            this.st青い星[j].f加速度の加速度X = 0.995f;
-                            this.st青い星[j].f加速度の加速度Y = 0.995f;
-                            this.st青い星[j].f重力加速度 = 0.01000f;
+                            this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0)) - 0.1);
+                            this.st青い星[j].f加速度の加速度X = 0.999f;
+                            this.st青い星[j].f加速度の加速度Y = 1.0f;
+                            this.st青い星[j].f重力加速度 = 0.02000f;
                             this.st青い星[j].f半径 = (float)(0.3 + (((double)CDTXMania.Random.Next(30)) / 100.0));
                             break;
                         }
@@ -429,7 +429,7 @@ namespace DTXMania
                 }
                 for (int i = 0; i < 9; i++)
                 {
-                    this.txNotes[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
+                    //this.txNotes[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
                     if (this.txNotes[i] != null)
                     {
                         //this.txNotes.b加算合成 = true;
@@ -442,14 +442,15 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                for (int tx1 = 0; tx1 < 9; tx1++ )
+                for (int tx1 = 0; tx1 < 9; tx1++)
+                {
                     CDTXMania.tテクスチャの解放(ref this.tx火花[tx1]);
-                for (int tx2 = 0; tx2 < 9; tx2++ )
-                    CDTXMania.tテクスチャの解放(ref this.tx青い星[tx2]);
+                    CDTXMania.tテクスチャの解放(ref this.tx青い星[tx1]);
+                }
 				CDTXMania.tテクスチャの解放( ref this.tx大波 );
 				CDTXMania.tテクスチャの解放( ref this.tx細波 );
-                for (int i = 0; i < 9; i++)
-                    CDTXMania.tテクスチャの解放( ref this.txNotes[i]);
+                //for (int i = 0; i < 9; i++)
+                    //CDTXMania.tテクスチャの解放( ref this.txNotes[i]);
                 CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
 				base.OnManagedリソースの解放();
 			}

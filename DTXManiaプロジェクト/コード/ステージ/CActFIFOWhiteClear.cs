@@ -43,11 +43,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				CDTXMania.tテクスチャの解放( ref this.tx白タイル64x64 );
-                CDTXMania.tテクスチャの解放( ref this.txFullCombo );
-                CDTXMania.tテクスチャの解放( ref this.txExcellent );
-                CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
-                C共通.tDisposeする(this.ds背景動画); this.ds背景動画 = null;
+                //C共通.tDisposeする(this.ds背景動画); this.ds背景動画 = null;
                 if (this.avi != null)
                 {
                     this.avi.Dispose();
@@ -109,7 +105,15 @@ namespace DTXMania
                 this.tx描画用 = null;
             }
             CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
-
+            CDTXMania.tテクスチャの解放( ref this.tx白タイル64x64 );
+            CDTXMania.tテクスチャの解放( ref this.txFullCombo );
+            CDTXMania.tテクスチャの解放( ref this.txExcellent );
+            CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
+            if (this.avi != null)
+            {
+                this.avi.Dispose();
+                this.avi = null;
+            }
             base.OnManagedリソースの解放();
         }
 
@@ -393,11 +397,11 @@ namespace DTXMania
                         //Trace.TraceInformation("b動画フレームを作成した:{0}", new object[] { this.b動画フレームを作成した });
                         if (frameNoFromTime >= this.avi.GetMaxFrameCount())
                         {
-                            this.nAVI再生開始時刻 = (int)CDTXMania.Timer.n現在時刻 - 300;
+                            this.nAVI再生開始時刻 = (int)CDTXMania.Timer.n現在時刻 - 150;
                         }
                         else if (CDTXMania.Timer.n現在時刻 <= nAVI再生開始時刻)
                         {
-                            this.nAVI再生開始時刻 = (int)CDTXMania.Timer.n現在時刻 - 300;
+                            this.nAVI再生開始時刻 = (int)CDTXMania.Timer.n現在時刻 - 150;
                         }
                         else if ((this.n前回描画したフレーム番号 != frameNoFromTime) && !this.b動画フレームを作成した)
                         {
@@ -458,7 +462,7 @@ namespace DTXMania
                     }
                 // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
 
-                //if(this.b動画フレームを作成した == true)
+                if(this.avi == null)
                 {
                     if (this.tx白タイル64x64 != null)
                     {
@@ -474,16 +478,16 @@ namespace DTXMania
                         {
                             for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
                             {
-                                //this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                                this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
                             }
                         }
                     }
                 }
-                if (this.ds背景動画 != null)
-                {
-                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
+                //if (this.ds背景動画 != null)
+                //{
+                    //this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
                     //this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
-                }
+                //}
 
             }
             if (this.counter.n現在の値 != 400)

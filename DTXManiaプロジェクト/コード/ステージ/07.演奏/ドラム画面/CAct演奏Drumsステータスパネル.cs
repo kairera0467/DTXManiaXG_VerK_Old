@@ -355,7 +355,6 @@ namespace DTXMania
                     mat *= SlimDX.Matrix.Scaling(0.39f, 0.69f, 1.0f);
                     mat *= SlimDX.Matrix.RotationY(-0.6f);
                     mat *= SlimDX.Matrix.RotationZ(-0.01f);
-                    //this.txScore.fZ軸中心回転 = -0.01f;
                 }
                 //XG2風。ぜんぜんそれっぽくないとか言わない。
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
@@ -379,7 +378,6 @@ namespace DTXMania
                     mat *= SlimDX.Matrix.Scaling(0.55f, 0.85f, 1.0f);
                     mat *= SlimDX.Matrix.RotationY(-0.26f);
                     mat *= SlimDX.Matrix.RotationZ(-0.01f);
-                    //this.txScore.fZ軸中心回転 = -0.01f;
                 }
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
