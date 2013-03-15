@@ -266,8 +266,7 @@ namespace DTXMania
                 //this.t進行描画・ステータスパネル();
                 //this.t進行描画・コンボ();
                 //XG2、グラフON
-                if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A ||
-                   CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
+                if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                    CDTXMania.ConfigIni.bGraph.Drums == true)
                 {
                     if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D)
@@ -277,11 +276,9 @@ namespace DTXMania
                     this.t進行描画・コンボ();
                 }
                 //XG2、グラフOFF
-                if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A ||
-                     CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
+                if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                      CDTXMania.ConfigIni.bGraph.Drums == false)
                 {
-                    //this.t進行描画・ステータスパネル();
                     if (CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 == Eドラムコンボ文字の表示位置.CENTER)
                         this.t進行描画・コンボ();
                 }
@@ -2946,7 +2943,7 @@ namespace DTXMania
                                 }
                             }
                             break;
-                            
+                            /*
                         case 0x4F:
                             if (this.txチップ != null)
                             {
@@ -2970,6 +2967,7 @@ namespace DTXMania
                                 }
                             }
                             break;
+                            */
                             
                     }
                     if (this.txチップ != null)

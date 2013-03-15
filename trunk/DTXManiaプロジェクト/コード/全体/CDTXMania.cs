@@ -486,9 +486,12 @@ namespace DTXMania
             this.Device.SetRenderState(RenderState.AlphaTestEnable, true);
             this.Device.SetRenderState(RenderState.AlphaRef, 10);
 
-            this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
-            this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
-            this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
+            if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
+            {
+                this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
+                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.PyramidalQuad);
+                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.PyramidalQuad);
+            }
 
             this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
             this.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
@@ -612,6 +615,13 @@ namespace DTXMania
 
 
 				CScoreIni scoreIni = null;
+
+                if (Control.IsKeyLocked(Keys.CapsLock)) // #30925 2013.3.11 yyagi; capslock=ON時は、EnumSongsしないようにして、起動負荷とASIOの音切れの関係を確認する
+                {                                       // → songs.db等の書き込み時だと音切れするっぽい
+                    CDTXMania.stage選曲.bIsEnumeratingSongs = false;
+                    actEnumSongs.On非活性化();
+                    EnumSongs.SongListEnumCompletelyDone();
+                }
 
 				#region [ 曲検索スレッドの起動/終了 ]					// ここに"Enumerating Songs..."表示を集約
                 if (!CDTXMania.bコンパクトモード)
@@ -1048,9 +1058,9 @@ namespace DTXMania
 							CDTXMania.Pad.st検知したデバイス.Clear();	// 入力デバイスフラグクリア(2010.9.11)
 
 							r現在のステージ.On非活性化();
-//#if dshow
+#if dshow
                             stage演奏ドラム画面.actFOStageClear.On活性化(CDTXMania.app.D3D9Device);
-//#endif
+#endif
 							if( !ConfigIni.bギタレボモード )
 							{
 								Trace.TraceInformation( "----------------------" );
@@ -1705,8 +1715,8 @@ for (int i = 0; i < 3; i++) {
 //			settings.BackBufferCount = 3;
 			settings.EnableVSync = ConfigIni.b垂直帰線待ちを行う;
             // settings.BackBufferFormat = Format.A8R8G8B8;
-	         settings.MultisampleType = MultisampleType.FourSamples;
-	         settings.MultisampleQuality = 4;
+//	         settings.MultisampleType = MultisampleType.FourSamples;
+	         //settings.MultisampleQuality = 4;
 	        // settings.MultisampleType = MultisampleType.None;
 	        // settings.MultisampleQuality = 0;
 

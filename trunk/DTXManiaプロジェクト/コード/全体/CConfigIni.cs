@@ -475,6 +475,7 @@ namespace DTXMania
         public bool bAutoAddGage; //2012.9.18
 		public bool b歓声を発声する;
 		public bool b垂直帰線待ちを行う;
+        public bool b縮小文字のアンチエイリアスを有効にする;
 		public bool b選曲リストフォントを斜体にする;
 		public bool b選曲リストフォントを太字にする;
 		public bool b全画面モード;
@@ -950,6 +951,7 @@ namespace DTXMania
 			this.str曲データ検索パス = @".\";
 			this.b全画面モード = false;
 			this.b垂直帰線待ちを行う = true;
+            this.b縮小文字のアンチエイリアスを有効にする = false;
             this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
             this.n初期ウィンドウ開始位置Y = 0;
 			this.nウインドウwidth = SampleFramework.GameWindowSize.Width;			// #23510 2010.10.31 yyagi add
@@ -1348,6 +1350,9 @@ namespace DTXMania
 			sw.WriteLine( "Drums={0}", this.bDrums有効 ? 1 : 0 );
 			sw.WriteLine();
             #endregion
+            sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
+            sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする );
+            sw.WriteLine();
 			sw.WriteLine( "; 背景画像の半透明割合(0:透明～255:不透明)" );
 			sw.WriteLine( "; Transparency for background image in playing screen.(0:tranaparent - 255:no transparent)" );
 			sw.WriteLine( "BGAlpha={0}", this.nBGAlpha );
@@ -2206,6 +2211,10 @@ namespace DTXMania
                                             {
                                                 this.bDrums有効 = C変換.bONorOFF(str4[0]);
                                             }
+                                            else if (str3.Equals("Antialias"))
+                                            {
+                                                this.b縮小文字のアンチエイリアスを有効にする = C変換.bONorOFF(str4[0]);
+                                            }
                                             else if (str3.Equals("BGAlpha"))
                                             {
                                                 this.n背景の透過度 = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 0xff, this.n背景の透過度);
@@ -2370,10 +2379,10 @@ namespace DTXMania
                                             {
                                                 this.nShowLagType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, this.nShowLagType);
                                             }
-                                            else if ( str3.Equals( "TimeStretch" ) )				// #23664 2013.2.24 yyagi
-											{
-												this.bTimeStretch = C変換.bONorOFF( str4[ 0 ] );
-											}
+                                            else if (str3.Equals("TimeStretch"))				// #23664 2013.2.24 yyagi
+                                            {
+                                                this.bTimeStretch = C変換.bONorOFF(str4[0]);
+                                            }
                                             else if (str3.Equals("AutoResultCapture"))			// #25399 2011.6.9 yyagi
                                             {
                                                 this.bIsAutoResultCapture = C変換.bONorOFF(str4[0]);
