@@ -2372,7 +2372,7 @@ namespace DTXMania
                         {
                             pChip.bHit = true;
                         }
-                        if ((ePlayMode == E楽器パート.DRUMS) && (configIni.eDark != Eダークモード.FULL) && pChip.b可視 && (this.txチップ != null))
+                        if ((ePlayMode == E楽器パート.DRUMS) && (configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視 && (this.txチップ != null))
                         {
                             this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((0x38 + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
                         }
@@ -3009,7 +3009,7 @@ namespace DTXMania
 		{
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                if (CDTXMania.ConfigIni.eDark != Eダークモード.FULL)
+                if (CDTXMania.ConfigIni.bJudgeLineDisp.Drums == true)
                 {
                     int y = CDTXMania.ConfigIni.bReverse.Drums ? 159 : nJudgeLinePosY;
                     this.txヒットバー.t2D描画(CDTXMania.app.Device, 295, y, new Rectangle(0, 0, 0x22f, 6));

@@ -456,8 +456,7 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsFloorTom );
 
 			this.iDrumsCymbal = new CItemToggle( "    Cymbal", CDTXMania.ConfigIni.bAutoPlay.CY,
-				"右シンバルを自動で\n" +
-				"演奏します。",
+				"右シンバルを自動で演奏します。\n" +
 				"To play both right- and Ride-Cymbal\n" +
 				" automatically." );
 			this.list項目リスト.Add( this.iDrumsCymbal );
@@ -495,7 +494,7 @@ namespace DTXMania
 				"to the hit bar. " );
 			this.list項目リスト.Add( this.iDrumsHidden );
 
-            */
+            
 			this.iCommonDark = new CItemList( "Dark", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eDark,
 				"HALF: 背景、レーン、ゲージが表示\n" +
 				"されなくなります。\n" +
@@ -508,14 +507,7 @@ namespace DTXMania
 				" lines, hit bar, pads are disappeared.",
 				new string[] { "OFF", "HALF", "FULL" } );
 			this.list項目リスト.Add( this.iCommonDark );
-
-
-			this.iDrumsReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Drums,
-				"ドラムチップが譜面の下から上に流\n" +
-				"れるようになります。",
-				"The scroll way is reversed. Drums chips\n"
-				+ "flow from the bottom to the top." );
-			this.list項目リスト.Add( this.iDrumsReverse );
+            */
 
             this.iHidSud = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud,
                 "HIDDEN:チップが途中から見えなくなります。\n"+
@@ -528,6 +520,27 @@ namespace DTXMania
                 " at Autoplay ([Left] is forcely used).",
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
             this.list項目リスト.Add(this.iHidSud);
+
+            this.iDrumsLaneDisp = new CItemList("LaneDisp", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nLaneDisp.Drums,
+                "レーンの縦線と小節線の表示を切り替えます。\n" +
+                "LANE OFF:レーン背景を表示しません。\n"+
+                "LINE OFF:小節線を表示しません。\n"+
+                "OFF:レーン背景、小節線を表示しません。",
+                "",
+                new string[] { "ON", "LANE OFF", "LINE OFF", "OFF"});
+            this.list項目リスト.Add(this.iDrumsLaneDisp);
+
+            this.iDrumsJudgeLineDisp = new CItemToggle("JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Drums,
+                "判定ラインの表示 / 非表示を切り替えます。",
+                "Toggle JudgeLine");
+            this.list項目リスト.Add(this.iDrumsJudgeLineDisp);
+
+			this.iDrumsReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Drums,
+				"ドラムチップが譜面の下から上に流\n" +
+				"れるようになります。",
+				"The scroll way is reversed. Drums chips\n"
+				+ "flow from the bottom to the top." );
+			this.list項目リスト.Add( this.iDrumsReverse );
 
             
 			this.iSystemRisky = new CItemInteger( "Risky", 0, 10, CDTXMania.ConfigIni.nRisky,
@@ -544,7 +557,6 @@ namespace DTXMania
 				" FAILED.\n" +
 				"Set 0 to disable Risky mode." );
 			this.list項目リスト.Add( this.iSystemRisky );
-            
 
 			this.iDrumsTight = new CItemToggle( "Tight", CDTXMania.ConfigIni.bTight,
 				"ドラムチップのないところでパッドを\n" +
@@ -2244,6 +2256,10 @@ namespace DTXMania
 		private CItemToggle iBassReverse;
 		private CItemInteger iBassScrollSpeed;
 		private CItemToggle iBassSudden;
+        private CItemList iBassLaneDisp;
+        private CItemToggle iBassJudgeLineDisp;
+        private CItemToggle iBassLaneFlush;
+
 		private CItemList iCommonDark;
 		private CItemInteger iCommonPlaySpeed;
 //		private CItemBase iCommonReturnToMenu;
@@ -2285,6 +2301,9 @@ namespace DTXMania
         private CItemToggle iDrumsAssignToLBD;
         private CItemToggle iDrumsHAZARD;
         private CItemList iDrumsAttackEffectMode;
+        private CItemList iDrumsLaneDisp;
+        private CItemToggle iDrumsJudgeLineDisp;
+        private CItemToggle iDrumsLaneFlush;
 
 		//private CItemToggle iGuitarAutoPlay;
 		private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2304,6 +2323,10 @@ namespace DTXMania
 		private CItemToggle iGuitarReverse;
 		private CItemInteger iGuitarScrollSpeed;
 		private CItemToggle iGuitarSudden;
+        private CItemList iGuitarLaneDisp;
+        private CItemToggle iGuitarJudgeLineDisp;
+        private CItemToggle iGuitarLaneFlush;
+
 		private CItemInteger iDrumsInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
 		private CItemInteger iGuitarInputAdjustTimeMs;		//
 		private CItemInteger iBassInputAdjustTimeMs;		//
@@ -2495,22 +2518,26 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Drums = this.iSystemMinComboDrums.n現在の値;
 			CDTXMania.ConfigIni.bシンバルフリー = this.iSystemCymbalFree.bON;
             CDTXMania.ConfigIni.eLaneType.Drums = (Eタイプ) this.iDrumsLaneType.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.nLaneDisp.Drums = this.iDrumsLaneDisp.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.bJudgeLineDisp.Drums = this.iDrumsJudgeLineDisp.bON;
             CDTXMania.ConfigIni.eBPMbar = (Eタイプ)this.iDrumsBPMbar.n現在選択されている項目番号;
             CDTXMania.ConfigIni.ボーナス演出を表示する = this.iDrumsStageEffect.bON;
             CDTXMania.ConfigIni.bドラムセットを動かす = this.iDrumsMoveDrumSet.bON;
             CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする = iDrumsClassicNotes.bON;
             CDTXMania.ConfigIni.bMutingLP = this.iMutingLP.bON;
             CDTXMania.ConfigIni.bAssignToLBD.Drums = this.iDrumsAssignToLBD.bON;
+
             CDTXMania.ConfigIni.eRandom.Drums = (Eランダムモード)this.iDrumsRandom.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eRandomPedal.Drums = (Eランダムモード)this.iDrumsRandomPedal.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eMirror.Drums = (Eミラーモード)this.iDrumsMirror.n現在選択されている項目番号;
             //CDTXMania.ConfigIni.eNumOfLanes.Drums = (Eタイプ)this.iDrumsNumOfLanes.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eDkdkType.Drums = (Eタイプ)this.iDrumsDkdkType.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eNamePlate.Drums = (Eタイプ)this.iDrumsNamePlateType.n現在選択されている項目番号;
+
             CDTXMania.ConfigIni.bHAZARD = this.iDrumsHAZARD.bON;
             CDTXMania.ConfigIni.eAttackEffectType = (Eタイプ)this.iDrumsAttackEffectMode.n現在選択されている項目番号;
 
-			CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
+			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;						// #23559 2911.7.27 yyagi
 		}
 		private void tConfigIniへ記録する・Guitar()

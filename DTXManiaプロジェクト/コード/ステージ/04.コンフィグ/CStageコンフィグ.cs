@@ -621,7 +621,7 @@ namespace DTXMania
 		{
 			try
 			{
-				var image = new Bitmap( 500, 0x100 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
+				var image = new Bitmap( 550, 0x100 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
 				var graphics = Graphics.FromImage( image );
 				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 

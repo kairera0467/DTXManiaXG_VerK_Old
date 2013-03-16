@@ -430,7 +430,7 @@ namespace DTXMania
                 if (CDTXMania.ConfigIni.bDrums有効)
                 {
                     #region[ レーン ]
-                    if (CDTXMania.ConfigIni.eDark != Eダークモード.OFF)
+                    if (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3)
                     {
                         this.ilanes = Image.FromFile(CSkin.Path(@"Graphics\7_lanes_dark.png"));
                     }
@@ -441,7 +441,7 @@ namespace DTXMania
                     this.ilanes = Image.FromFile(CSkin.Path(@"Graphics\7_lanes_Guitar.png"));
                 }
 
-                if (CDTXMania.ConfigIni.bDrums有効 && CDTXMania.ConfigIni.eDark != Eダークモード.OFF)
+                if (CDTXMania.ConfigIni.bDrums有効 && (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3))
                 {
                     graphics.DrawImage(this.ilanes, new Rectangle(0, 0, 558, 720), new Rectangle(0, 0, 558, 720), GraphicsUnit.Pixel);
                 }
@@ -450,7 +450,7 @@ namespace DTXMania
                     graphics.DrawImage(this.ilanes, new Rectangle(0, 0, 1280, 720), new Rectangle(0, 0, 1280, 720), GraphicsUnit.Pixel);
                 }
 
-                if (CDTXMania.ConfigIni.eDark != Eダークモード.OFF || (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true))
+                if ((CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3) || (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true))
                 {
                     graphics.Dispose();
                     this.ilanes.Dispose();

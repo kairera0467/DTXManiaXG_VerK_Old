@@ -123,7 +123,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF)
+                if (CDTXMania.ConfigIni.nLaneDisp.Drums == 0 || CDTXMania.ConfigIni.nLaneDisp.Drums == 2)
                 {
                     this.txLC = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Hitted.png"));
                     this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret.png"));
@@ -198,7 +198,7 @@ namespace DTXMania
                         this.txLine.t2D描画(CDTXMania.app.Device, 365, 0, new Rectangle(70, 0, 2, 720)); //左の棒
                     }
 
-                    if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF)
+                    if (CDTXMania.ConfigIni.nLaneDisp.Drums == 0 || CDTXMania.ConfigIni.nLaneDisp.Drums == 2)
                     {
                         if (index == 1) //HH
                         {
