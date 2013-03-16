@@ -245,7 +245,7 @@ namespace DTXMania
                 this.t進行描画・譜面スクロール速度();
                 this.t進行描画・チップアニメ();
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                 {
                     if(this.txLaneCover != null)
                         this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
@@ -324,7 +324,7 @@ namespace DTXMania
                         this.rResultSound.t再生を開始する();
                         this.actFOStageClear.tフェードアウト開始();
 #if dshow
-                        this.actFOStageClear.On進行描画( CDTXMania.app.Device );
+                        this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
 #endif
                     }
 

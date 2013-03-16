@@ -263,6 +263,7 @@ namespace DTXMania
 		}
 		public static CStage r現在のステージ = null;
 		public static CStage r直前のステージ = null;
+        public bool b汎用ムービーである = false;
 		public static string strEXEのあるフォルダ 
 		{
 			get;
@@ -489,8 +490,8 @@ namespace DTXMania
             if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
             {
                 this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
-                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.PyramidalQuad);
-                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.PyramidalQuad);
+                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
             }
 
             this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
@@ -1704,7 +1705,7 @@ for (int i = 0; i < 3; i++) {
             //2013.03.09.kairera0467
             //おそらくこれがSSTでいう「tDirect3Dデバイスを生成・変更・リセットする」へ渡す設定に相当しているのだと思われ。
 			DeviceSettings settings = new DeviceSettings();
-            CD3DSettings newD3DSettings = new CD3DSettings();
+            //CD3DSettings newD3DSettings = new CD3DSettings();
 #if WindowedFullscreen
             settings.Windowed = true; // #30666 2013.2.2 yyagi: Fullscreenmode is "Maximized window" mode
 #else
@@ -1737,6 +1738,7 @@ for (int i = 0; i < 3; i++) {
 			base.InactiveSleepTime = TimeSpan.FromMilliseconds((float)(ConfigIni.n非フォーカス時スリープms));	// #23568 2010.11.3 yyagi: to support valiable sleep value when !IsActive
                                                                                                 // #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
 
+            /*
             this.D3D9Device = new Device(		// 失敗したら異常系とみなし、そのまま例外をthrow。
                     new Direct3D(),
                     newD3DSettings.nAdaptor,
@@ -1744,7 +1746,7 @@ for (int i = 0; i < 3; i++) {
                     newD3DSettings.PresentParameters.DeviceWindowHandle,
                     newD3DSettings.CreateFlags,
                     newD3DSettings.PresentParameters);
-
+            */
 #if WindowedFullscreen
             this.t全画面・ウィンドウモード切り替え(); // #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif

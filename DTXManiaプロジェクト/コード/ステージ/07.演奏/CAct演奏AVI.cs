@@ -194,7 +194,7 @@ namespace DTXMania
             }
             if (nチャンネル番号 == 0x99 && CDTXMania.ConfigIni.bAVI有効)
             {
-                this.rAVI = rAVI;
+                this.rAVI汎用 = rAVI;
                 this.n開始サイズW = n開始サイズW;
                 this.n開始サイズH = n開始サイズH;
                 this.n終了サイズW = n終了サイズW;
@@ -208,14 +208,14 @@ namespace DTXMania
                 this.n表示側終了位置X = n表示側終了位置X;
                 this.n表示側終了位置Y = n表示側終了位置Y;
                 this.n総移動時間ms = n総移動時間ms;
-                this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
+                this.n移動開始時刻ms = CSound管理.rc演奏用タイマ.n現在時刻;
                 this.n前回表示したフレーム番号 = -1;
-                if ((this.rAVI != null) && (this.rAVI.avi != null))
+                if ((this.rAVI汎用 != null) && (this.rAVI汎用.avi != null))
                 {
                     float num2;
                     float num3;
-                    this.framewidth = this.rAVI.avi.nフレーム幅;
-                    this.frameheight = this.rAVI.avi.nフレーム高さ;
+                    this.framewidth = this.rAVI汎用.avi.nフレーム幅;
+                    this.frameheight = this.rAVI汎用.avi.nフレーム高さ;
                     if (this.tx描画用2 == null)
                     {
                         this.tx描画用2 = new CTexture(CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
@@ -361,16 +361,13 @@ namespace DTXMania
         public override void On活性化()
         {
             this.rAVI = null;
+            this.rAVI汎用 = null;
             this.n移動開始時刻ms = -1;
             this.n前回表示したフレーム番号 = -1;
             this.bフレームを作成した = false;
             this.pBmp = IntPtr.Zero;
             this.MovieMode();
-            this.nAlpha = 249 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 249)) / 10f));
-            if (CDTXMania.ConfigIni.nMovieAlpha == 11)
-            {
-                nAlpha = 255;
-            }
+            this.nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
             this.ct右シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
             this.ct左シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
 
@@ -515,7 +512,7 @@ namespace DTXMania
             #region[ムービーのフレーム作成処理]
             if ((!base.b活性化してない))
             {
-                if (((this.bFullScreen || this.bWindowMode) && this.tx描画用 != null))
+                if (((this.bFullScreen || this.bWindowMode) && (this.tx描画用 != null || this.tx描画用2 != null)))
                 {
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
@@ -527,6 +524,10 @@ namespace DTXMania
                     else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount()))
                     {
                         this.n移動開始時刻ms = -1L;
+                        if (CDTXMania.app.b汎用ムービーである)
+                        {
+                            this.n移動開始時刻ms = CSound管理.rc演奏用タイマ.n現在時刻;
+                        }
                     }
                     else
                     {
@@ -642,10 +643,12 @@ namespace DTXMania
                                     {
                                         case 2:
                                             this.rAVI.avi.tBitmap24ToGraphicsStreamR5G6B5(pBITMAPINFOHEADER, data, this.tx描画用.szテクスチャサイズ.Width, this.tx描画用.szテクスチャサイズ.Height);
+                                            //this.rAVI汎用.avi.tBitmap24ToGraphicsStreamR5G6B5(pBITMAPINFOHEADER, data, this.tx描画用2.szテクスチャサイズ.Width, this.tx描画用2.szテクスチャサイズ.Height);
                                             break;
 
                                         case 4:
                                             this.rAVI.avi.tBitmap24ToGraphicsStreamX8R8G8B8(pBITMAPINFOHEADER, data, this.tx描画用.szテクスチャサイズ.Width, this.tx描画用.szテクスチャサイズ.Height);
+                                            //this.rAVI汎用.avi.tBitmap24ToGraphicsStreamX8R8G8B8(pBITMAPINFOHEADER, data, this.tx描画用2.szテクスチャサイズ.Width, this.tx描画用2.szテクスチャサイズ.Height);
                                             break;
                                     }
                                 }
@@ -1123,6 +1126,7 @@ namespace DTXMania
         public IntPtr pBmp;
         private int position;
         private CDTX.CAVI rAVI;
+        private CDTX.CAVI rAVI汎用;
 
         private CTexture txBPMバー左;
         private CTexture txBPMバー右;

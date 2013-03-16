@@ -1351,7 +1351,7 @@ namespace DTXMania
 			sw.WriteLine();
             #endregion
             sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
-            sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする );
+            sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする ? 1 : 0);
             sw.WriteLine();
 			sw.WriteLine( "; 背景画像の半透明割合(0:透明～255:不透明)" );
 			sw.WriteLine( "; Transparency for background image in playing screen.(0:tranaparent - 255:no transparent)" );
@@ -2148,10 +2148,10 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("MovieAlpha"))
                                             {
-                                                this.nMovieAlpha = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 11, this.nMovieAlpha);
-                                                if (this.nMovieAlpha > 11)
+                                                this.nMovieAlpha = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 10, this.nMovieAlpha);
+                                                if (this.nMovieAlpha > 10)
                                                 {
-                                                    this.nMovieAlpha = 11;
+                                                    this.nMovieAlpha = 10;
                                                 }
                                             }
                                             else if (str3.Equals("InfoType"))

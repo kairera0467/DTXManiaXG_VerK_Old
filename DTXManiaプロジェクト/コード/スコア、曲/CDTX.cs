@@ -46,6 +46,7 @@ namespace DTXMania
 				#region [ strAVIファイル名の作成。]
 				//-----------------
 				string strAVIファイル名;
+                strAVIファイル名 = CSkin.Path(@"Graphics\7_Movie.avi");
 				if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
 					strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
 				else
@@ -55,9 +56,17 @@ namespace DTXMania
 
 				if( !File.Exists( strAVIファイル名 ) )
 				{
-					Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
-					this.avi = null;
-					return;
+					//Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
+                    Trace.TraceWarning("ファイルが存在しません。代わりに汎用AVIを再生します。({0})({1})", this.strコメント文, strAVIファイル名);
+					//this.avi = null;
+
+                    CDTXMania.app.b汎用ムービーである = true;
+                    if (!File.Exists(strAVIファイル名))
+                    {
+                        Trace.TraceWarning("汎用AVIファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名);
+                        this.avi = null;
+                        return;
+                    }
 				}
 
 				// AVI の生成。
@@ -66,6 +75,7 @@ namespace DTXMania
 				{
 					this.avi = new CAvi( strAVIファイル名 );
 					Trace.TraceInformation( "動画を生成しました。({0})({1})({2}frames)", this.strコメント文, strAVIファイル名, this.avi.GetMaxFrameCount() );
+                    CDTXMania.app.b汎用ムービーである = false;
 				}
 				catch( Exception e )
 				{
@@ -968,6 +978,7 @@ namespace DTXMania
 			public bool LeftCymbal;
 			public bool OpenGuitar;
 			public bool OpenBass;
+            public bool AVI;
 			
 			public bool this[ int index ]
 			{
@@ -1007,6 +1018,9 @@ namespace DTXMania
 
 						case 10:
 							return this.OpenBass;
+
+                        case 11:
+                            return this.AVI;
 					}
 					throw new IndexOutOfRangeException();
 				}
@@ -1057,6 +1071,10 @@ namespace DTXMania
 						case 10:
 							this.OpenBass = value;
 							return;
+
+                        case 11:
+                            this.AVI = value;
+                            return;
 					}
 					throw new IndexOutOfRangeException();
 				}
@@ -1170,6 +1188,7 @@ namespace DTXMania
 			this.bチップがある.LeftCymbal = false;
 			this.bチップがある.OpenGuitar = false;
 			this.bチップがある.OpenBass = false;
+            this.bチップがある.AVI = false;
 			this.strファイル名 = "";
 			this.strフォルダ名 = "";
 			this.strファイル名の絶対パス = "";
@@ -5955,9 +5974,21 @@ namespace DTXMania
 					this.bチップがある.LeftCymbal = true;
 					break;
 
+                case 0x1b:
+                    this.bチップがある.LP = true;
+                    break;
+
+                case 0x1c:
+                    this.bチップがある.LBD = true;
+                    break;
+
 				case 0x20:
 					this.bチップがある.OpenGuitar = true;
 					break;
+
+                case 0x54:
+                    this.bチップがある.AVI = true;
+                    break;
 
 				case 0xA0:
 					this.bチップがある.OpenBass = true;
