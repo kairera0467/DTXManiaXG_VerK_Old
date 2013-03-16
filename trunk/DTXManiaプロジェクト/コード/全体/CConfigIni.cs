@@ -519,6 +519,10 @@ namespace DTXMania
         public STDGBVALUE<bool> bAssignToLBD;
 		public Eダメージレベル eダメージレベル;
         public CKeyAssign KeyAssign;
+
+        public STDGBVALUE<int> nLaneDisp;
+        public STDGBVALUE<bool> bJudgeLineDisp;
+
 		public int n非フォーカス時スリープms;       // #23568 2010.11.04 ikanick add
 		public int nフレーム毎スリープms;			// #xxxxx 2011.11.27 yyagi add
 		public int n演奏速度;
@@ -1016,6 +1020,13 @@ namespace DTXMania
             this.eRandomPedal.Drums = Eランダムモード.OFF;
             this.eRandomPedal.Guitar = Eランダムモード.OFF;
             this.eRandomPedal.Bass = Eランダムモード.OFF;
+            this.nLaneDisp = new STDGBVALUE<int>();
+            this.nLaneDisp.Drums = 0;
+            this.nLaneDisp.Guitar = 0;
+            this.nLaneDisp.Bass = 0;
+            this.bJudgeLineDisp = new STDGBVALUE<bool>();
+            this.bJudgeLineDisp.Drums = true;
+
             this.bAutoAddGage = false;
 			this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
 			this.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms = 100;
@@ -1741,6 +1752,16 @@ namespace DTXMania
             sw.WriteLine("; 1:EffectOnly 粉を消します。");
             sw.WriteLine("; 2:ALLOFF すべて消します。");
             sw.WriteLine("AttackEffectType={0}", (int)this.eAttackEffectType);
+            sw.WriteLine();
+            sw.WriteLine("; レーン表示");
+            sw.WriteLine("; 0:ALL ON レーン背景、小節線を表示します。");
+            sw.WriteLine("; 1:LANE FF レーン背景を消します。");
+            sw.WriteLine("; 2:LINE OFF 小節線を消します。");
+            sw.WriteLine("; 3:ALL OFF すべて消します。");
+            sw.WriteLine("DrumsLaneDisp={0}", (int)this.nLaneDisp.Drums);
+            sw.WriteLine();
+            sw.WriteLine("; 判定ライン表示");
+            sw.WriteLine("DrumsJudgeLineDisp={0}", this.bJudgeLineDisp.Drums ? 1 : 0);
             #endregion
 
             sw.WriteLine( ";-------------------" );
@@ -2684,6 +2705,14 @@ namespace DTXMania
                                             else if (str3.Equals("AttackEffectType"))
                                             {
                                                 this.eAttackEffectType = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eAttackEffectType);
+                                            }
+                                            else if (str3.Equals("DrumsLaneDisp"))
+                                            {
+                                                this.nLaneDisp.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Drums);
+                                            }
+                                            else if (str3.Equals("DrumsJudgeLineDisp"))
+                                            {
+                                                this.nLaneDisp.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Drums);
                                             }
 											continue;
 										}
