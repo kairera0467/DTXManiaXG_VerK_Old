@@ -97,7 +97,7 @@ namespace DTXMania
             this.iSystemMovieAlpha = new CItemList("LaneAlpha", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nMovieAlpha,
                 "レーンの透明度を指定します。\n0% が完全不透明で、100% が完全透明\nとなります。",
                 "The degree for transparing playing\n Movie.\n\n0%=completely transparent,\n100%=no transparency",
-                new string[] { "1%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%", "0%" });
+                new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"});
             this.list項目リスト.Add(this.iSystemMovieAlpha);
 
 

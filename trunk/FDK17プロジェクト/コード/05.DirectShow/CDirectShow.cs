@@ -1205,7 +1205,7 @@ namespace FDK
 
 		#region [ protected ]
 		//-----------------
-        protected MemoryRenderer memoryRendererObject = new MemoryRenderer();
+		protected MemoryRenderer memoryRendererObject = null;
 		protected IMemoryRenderer memoryRenderer = null;
 		protected IBaseFilter nullRenderer = null;
 		protected int n再生一時停止呼び出しの累積回数 = 0;

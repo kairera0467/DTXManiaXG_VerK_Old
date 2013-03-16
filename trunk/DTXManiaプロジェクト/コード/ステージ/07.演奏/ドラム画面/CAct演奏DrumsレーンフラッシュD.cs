@@ -185,11 +185,7 @@ namespace DTXMania
                         xLC = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 32 : 32));
                         xCY = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 79 : 79));
                     }
-                    int nAlpha = 249 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 249)) / 10f));
-                    if (CDTXMania.ConfigIni.nMovieAlpha == 11)
-                    {
-                        nAlpha = 255;
-                    }
+                    int nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
                         //if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF) //2013.02.17 kairera0467 ダークOFF以外でも透明度を有効にした。
                         {
                             this.txLC.n透明度 = nAlpha;

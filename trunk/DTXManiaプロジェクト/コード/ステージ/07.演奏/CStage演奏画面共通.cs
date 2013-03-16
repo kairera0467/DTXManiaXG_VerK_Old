@@ -2191,6 +2191,13 @@ namespace DTXMania
                             {
                                 dTX.tチップの再生(pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, (int)Eレーン.BGM, dTX.nモニタを考慮した音量(E楽器パート.UNKNOWN));
                             }
+                            if (CDTXMania.DTX.bチップがある.AVI == false)
+                            {
+                                if (configIni.bAVI有効)
+                                {
+                                    this.actAVI.Start(0x54, pChip.rAVI, 1280, 720, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms);
+                                }
+                            }
                         }
                         break;
                     #endregion
@@ -2387,29 +2394,31 @@ namespace DTXMania
 					#endregion
 					#region [ 54: 動画再生 ]
 					case 0x54:	// 動画再生
-						if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
-						{
-							pChip.bHit = true;
-							if ( configIni.bAVI有効 )
-							{
-								switch ( pChip.eAVI種別 )
-								{
-									case EAVI種別.AVI:
-										if ( pChip.rAVI != null )
-										{
-											this.actAVI.Start( pChip.nチャンネル番号, pChip.rAVI, 278, 355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms );
-										}
-										break;
+                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+                        {
+                            pChip.bHit = true;
+                            if (configIni.bAVI有効)
+                            {
+                                switch (pChip.eAVI種別)
+                                {
+                                    case EAVI種別.AVI:
+                                        if (pChip.rAVI != null)
+                                        {
+                                            this.actAVI.Start(pChip.nチャンネル番号, pChip.rAVI, 278, 355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms);
+                                        }
+                                        break;
 
-									case EAVI種別.AVIPAN:
-										if ( pChip.rAVIPan != null )
-										{
-											this.actAVI.Start( pChip.nチャンネル番号, pChip.rAVI, pChip.rAVIPan.sz開始サイズ.Width, pChip.rAVIPan.sz開始サイズ.Height, pChip.rAVIPan.sz終了サイズ.Width, pChip.rAVIPan.sz終了サイズ.Height, pChip.rAVIPan.pt動画側開始位置.X, pChip.rAVIPan.pt動画側開始位置.Y, pChip.rAVIPan.pt動画側終了位置.X, pChip.rAVIPan.pt動画側終了位置.Y, pChip.rAVIPan.pt表示側開始位置.X, pChip.rAVIPan.pt表示側開始位置.Y, pChip.rAVIPan.pt表示側終了位置.X, pChip.rAVIPan.pt表示側終了位置.Y, pChip.n総移動時間, pChip.n発声時刻ms );
-										}
-										break;
-								}
-							}
-						}
+                                    case EAVI種別.AVIPAN:
+                                        if (pChip.rAVIPan != null)
+                                        {
+                                            this.actAVI.Start(pChip.nチャンネル番号, pChip.rAVI, pChip.rAVIPan.sz開始サイズ.Width, pChip.rAVIPan.sz開始サイズ.Height, pChip.rAVIPan.sz終了サイズ.Width, pChip.rAVIPan.sz終了サイズ.Height, pChip.rAVIPan.pt動画側開始位置.X, pChip.rAVIPan.pt動画側開始位置.Y, pChip.rAVIPan.pt動画側終了位置.X, pChip.rAVIPan.pt動画側終了位置.Y, pChip.rAVIPan.pt表示側開始位置.X, pChip.rAVIPan.pt表示側開始位置.Y, pChip.rAVIPan.pt表示側終了位置.X, pChip.rAVIPan.pt表示側終了位置.Y, pChip.n総移動時間, pChip.n発声時刻ms);
+                                        }
+                                        break;
+                                }
+                                Trace.TraceInformation("pChip.rAVI({0})", new object[] { pChip.rAVI });
+                                Trace.TraceInformation("pChip.rAVI({0})", new object[] { pChip.rAVIPan });
+                            }
+                        }
 						break;
 					#endregion
 					#region [ 61-92: 自動再生(BGM, SE) ]
