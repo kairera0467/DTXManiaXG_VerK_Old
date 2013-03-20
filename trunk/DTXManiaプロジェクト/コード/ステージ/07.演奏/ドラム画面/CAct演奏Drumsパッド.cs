@@ -275,21 +275,38 @@ namespace DTXMania
                     int yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 486)) + this.stパッド状態[index].nY座標オフセットdot;
                     int yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 470)) + this.stパッド状態[index].nY座標オフセットdot;
                     #region[レーン切り替え]
-                    if ((index == 2) && ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)))
+                    if ((index == 2) && ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D))
                     {
                         x = this.st基本位置[9].x - 4;
                     }
-                    if ((index == 3) && ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)))
+                    if (index == 3)
                     {
-                        x = this.st基本位置[4].x + 7;
+                        if ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C))
+                        {
+                            x = this.st基本位置[4].x + 7;
+                        }
                     }
-                    if ((index == 4) && ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)))
+                    if (index == 4)
                     {
-                        x = this.st基本位置[3].x + 15;
+                        if ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C))
+                        {
+                            x = this.st基本位置[3].x + 15;
+                        }
+                        else if(CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                        {
+                            x = this.st基本位置[3].x - 108;
+                        }
                     }
-                    if ((index == 9) && (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B))
+                    if (index == 9)
                     {
-                        x = this.st基本位置[2].x + 10;
+                        if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
+                        {
+                            x = this.st基本位置[2].x + 10;
+                        }
+                        else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                        {
+                            x = this.st基本位置[2].x + 50;
+                        }
                     }
                     if ((index == 5) && (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B))
                     {

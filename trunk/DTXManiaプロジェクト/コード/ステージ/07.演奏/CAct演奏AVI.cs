@@ -16,76 +16,7 @@ namespace DTXMania
 
         public CAct演奏AVI()
         {
-            ST基本位置[] st基本位置Array = new ST基本位置[10];
-
-            //LC
-            ST基本位置 st基本位置 = new ST基本位置();
-            st基本位置.x = 263;
-            st基本位置.y = 0;
-            st基本位置.rc = new Rectangle(0, 0, 0x60, 0x60);
-            st基本位置Array[0] = st基本位置;
-
-            //HH
-            ST基本位置 st基本位置2 = new ST基本位置();
-            st基本位置2.x = 336;
-            st基本位置2.y = 10;
-            st基本位置2.rc = new Rectangle(0x60, 0, 0x60, 0x60);
-            st基本位置Array[1] = st基本位置2;
-
-            //SD
-            ST基本位置 st基本位置3 = new ST基本位置();
-            st基本位置3.x = 446;
-            st基本位置3.y = 8;
-            st基本位置3.rc = new Rectangle(192, 0, 0x60, 0x60);
-            st基本位置Array[2] = st基本位置3;
-
-            //BD
-
-            ST基本位置 st基本位置4 = new ST基本位置();
-            st基本位置4.x = 565;
-            st基本位置4.y = 0x1b;
-            st基本位置4.rc = new Rectangle(0, 96, 0x60, 0x60);
-            st基本位置Array[3] = st基本位置4;
-
-            //HT
-            ST基本位置 st基本位置5 = new ST基本位置();
-            st基本位置5.x = 510;
-            st基本位置5.y = -4;
-            st基本位置5.rc = new Rectangle(0x60, 0x60, 0x60, 0x60);
-            st基本位置Array[4] = st基本位置5;
-
-            //LT
-            ST基本位置 st基本位置6 = new ST基本位置();
-            st基本位置6.x = 622;
-            st基本位置6.y = 4;
-            st基本位置6.rc = new Rectangle(192, 96, 0x60, 0x60);
-            st基本位置Array[5] = st基本位置6;
-
-            ST基本位置 st基本位置7 = new ST基本位置();
-            st基本位置7.x = 672;
-            st基本位置7.y = 20;
-            st基本位置7.rc = new Rectangle(0, 0xc0, 0x60, 0x60);
-            st基本位置Array[6] = st基本位置7;
-
-            ST基本位置 st基本位置8 = new ST基本位置();
-            st基本位置8.x = 0x2df;
-            st基本位置8.y = 0;
-            st基本位置8.rc = new Rectangle(0x60, 0xc0, 0x60, 0x60);
-            st基本位置Array[7] = st基本位置8;
-            ST基本位置 st基本位置9 = new ST基本位置();
-            st基本位置9.x = 0x317;
-            st基本位置9.y = 8;
-            st基本位置9.rc = new Rectangle(192, 0xc0, 0x60, 0x60);
-            st基本位置Array[8] = st基本位置9;
-            ST基本位置 st基本位置10 = new ST基本位置();
-            st基本位置10.x = 0x18c;
-            st基本位置10.y = 0x1b;
-            st基本位置10.rc = new Rectangle(288, 0x60, 0x60, 0x60);
-            st基本位置Array[9] = st基本位置10;
-            this.st基本位置 = st基本位置Array;
-
             base.b活性化してない = true;
-
         }
 
 
@@ -223,6 +154,7 @@ namespace DTXMania
                     if ((((float)this.framewidth) / ((float)this.frameheight)) < 1.77f)
                     {
                         //旧企画クリップだった場合
+                        #region[ 旧規格クリップ ]
                         this.ratio1 = 720f / ((float)this.frameheight);
                         this.position = (int)((1280f - (this.framewidth * this.ratio1)) / 2f);
                         int num = (int)(this.framewidth * this.ratio1);
@@ -246,10 +178,12 @@ namespace DTXMania
                         }
                         this.tx描画用2.vc拡大縮小倍率.X = this.ratio1;
                         this.tx描画用2.vc拡大縮小倍率.Y = this.ratio1;
+                        #endregion
                     }
                     else
                     {
                         //ワイドクリップの処理
+                        #region[ ワイドクリップ ]
                         this.ratio1 = 1280f / ((float)this.framewidth);
                         this.position = (int)((720f - (this.frameheight * this.ratio1)) / 2f);
                         this.i1 = (int)(this.framewidth * 0.23046875);
@@ -259,6 +193,7 @@ namespace DTXMania
                         this.rec3 = new Rectangle(this.i1 + this.i2, 0, (((int)this.framewidth) - this.i1) - this.i2, (int)this.frameheight);
                         this.tx描画用2.vc拡大縮小倍率.X = this.ratio1;
                         this.tx描画用2.vc拡大縮小倍率.Y = this.ratio1;
+                        #endregion
                     }
 
 
@@ -715,24 +650,23 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.bDrums有効 == true)
                 {
+                    #region[動くドラムセット]
                     for (int i = 0; i < 10; i++)
                     {
                         int index = this.n描画順[i];
-                        int y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 482 : 482)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                        int yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 495 : 495)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                        int yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 490 : 490)) - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                        int yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 486 : 486)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
-                        int yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 470 : 470)) + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[index].nY座標オフセットdot;
+                        this.y2 = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 2 ].nY座標オフセットdot;
+                        this.yh = 491 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 4 ].nY座標オフセットdot;
+                        this.yb = 517 - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 3 ].nY座標オフセットdot;
+                        this.yl = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 5 ].nY座標オフセットdot;
+                        this.yf = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 6 ].nY座標オフセットdot;
                         if (CDTXMania.ConfigIni.bドラムセットを動かす == false)
                         {
-                            y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 482 : 482));
-                            yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 495 : 495));
-                            yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 520 : 520));
-                            yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 486 : 486));
-                            yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 470 : 470));
+                            y2 = 490;
+                            yh = 491;
+                            yb = 517;
+                            yl = 490;
+                            yf = 490;
                         }
-
-                        #region[動くドラムセット]
 
                         if (index == 0)
                         {
@@ -743,29 +677,29 @@ namespace DTXMania
                         if (index == 2)
                         {
                             if (this.txスネア != null)
-                            this.txスネア.t2D描画(CDTXMania.app.Device, 0, y2);
+                            this.txスネア.t2D描画(CDTXMania.app.Device, 0, this.y2);
                         }
                         if (index == 4)
                         {
                             if (this.txハイタム != null)
-                            this.txハイタム.t2D描画(CDTXMania.app.Device, 106, yh);
+                            this.txハイタム.t2D描画(CDTXMania.app.Device, 106, this.yh);
                         }
                         if (index == 3)
                         {
                             if (this.txバスドラ != null)
-                            this.txバスドラ.t2D描画(CDTXMania.app.Device, 310, yb);
+                            this.txバスドラ.t2D描画(CDTXMania.app.Device, 310, this.yb);
                         }
                         if (index == 5)
                         {
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
                             {
                                 if (this.txロータム != null)
-                                this.txロータム.t2D描画(CDTXMania.app.Device, 817, yl);
+                                this.txロータム.t2D描画(CDTXMania.app.Device, 817, this.yl);
                             }
                             else
                             {
                                 if (this.txロータム != null)
-                                this.txロータム.t2D描画(CDTXMania.app.Device, 870, yl);
+                                this.txロータム.t2D描画(CDTXMania.app.Device, 870, this.yl);
                             }
                         }
                         if (index == 6)
@@ -773,30 +707,29 @@ namespace DTXMania
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
                             {
                                 if (this.txフロアタム != null)
-                                this.txフロアタム.t2D描画(CDTXMania.app.Device, 996, yf);
+                                    this.txフロアタム.t2D描画(CDTXMania.app.Device, 996, this.yf);
                             }
                             else
                             {
                                 if (this.txフロアタム != null)
-                                this.txフロアタム.t2D描画(CDTXMania.app.Device, 1049, yf);
+                                    this.txフロアタム.t2D描画(CDTXMania.app.Device, 1049, this.yf);
                             }
                         }
-
                         if ((index == 7))
                         {
                             this.ct右シンバル.t進行();
                             if (this.tx右シンバル != null)
                             this.tx右シンバル.t2D描画(CDTXMania.app.Device, 900, 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
                         }
-
-                        #endregion
-
-
+                        
                     }
+
+                    #endregion
                     if (CDTXMania.ConfigIni.nMovieAlpha <= 5 || CDTXMania.ConfigIni.nMovieAlpha == 11)
                     {
                         this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
+                    
                     int n振動x座標 = 0;
                     if (CDTXMania.stage演奏ドラム画面.bボーナス == true)
                     { 
@@ -841,8 +774,11 @@ namespace DTXMania
                         }
                         CDTXMania.stage演奏ドラム画面.bボーナス = false;
                     }
+                    
                     if (this.txバートップ != null)
+                    {
                         this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
+                    }
 
 
                     if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
@@ -1062,7 +998,7 @@ namespace DTXMania
         }
         public void Start(bool bフィルイン)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < 1; j++)
             {
                 if (this.stフィルイン[j].b使用中)
                 {
@@ -1072,7 +1008,7 @@ namespace DTXMania
             }
             for (int i = 0; i < 1; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 1; j++)
                 {
                     if (!this.stフィルイン[j].b使用中)
                     {
@@ -1149,6 +1085,11 @@ namespace DTXMania
         private CTexture tx描画用;
         private CTexture tx描画用2;
         private CCounter[] ct箱 = new CCounter[15];
+        private int y2;
+        private int yh;
+        private int yb;
+        private int yl;
+        private int yf;
 
         private float ratio1;
         private Rectangle rec;
@@ -1179,7 +1120,6 @@ namespace DTXMania
         }
         private STパッド状態[] stパッド状態 = new STパッド状態[19];
         private readonly int[] n描画順 = new int[] { 9, 2, 4, 6, 5, 3, 1, 8, 7, 0 };
-        private readonly ST基本位置[] st基本位置;
         public STフィルイン[] stフィルイン = new STフィルイン[2];
         //-----------------
         #endregion
