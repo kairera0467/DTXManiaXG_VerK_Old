@@ -521,6 +521,7 @@ namespace DTXMania
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
             this.list項目リスト.Add(this.iHidSud);
 
+
             this.iDrumsLaneDisp = new CItemList("LaneDisp", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nLaneDisp.Drums,
                 "レーンの縦線と小節線の表示を切り替えます。\n" +
                 "LANE OFF:レーン背景を表示しません。\n"+
@@ -534,6 +535,7 @@ namespace DTXMania
                 "判定ラインの表示 / 非表示を切り替えます。",
                 "Toggle JudgeLine");
             this.list項目リスト.Add(this.iDrumsJudgeLineDisp);
+
 
 			this.iDrumsReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Drums,
 				"ドラムチップが譜面の下から上に流\n" +
@@ -866,7 +868,7 @@ namespace DTXMania
                 "Type-A default\n" +
                 "Type-B Summarized 2 pedals and Toms.\n"+
                 "Type-C Summarized 3 Toms only.",
-                new string[] { "Type-A", "Type-B", "Type-C"});
+                new string[] { "Type-A", "Type-B", "Type-C", "Type-D"});
             this.list項目リスト.Add(this.iDrumsLaneType);
 
 
@@ -2518,8 +2520,10 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Drums = this.iSystemMinComboDrums.n現在の値;
 			CDTXMania.ConfigIni.bシンバルフリー = this.iSystemCymbalFree.bON;
             CDTXMania.ConfigIni.eLaneType.Drums = (Eタイプ) this.iDrumsLaneType.n現在選択されている項目番号;
+            
             CDTXMania.ConfigIni.nLaneDisp.Drums = this.iDrumsLaneDisp.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bJudgeLineDisp.Drums = this.iDrumsJudgeLineDisp.bON;
+
             CDTXMania.ConfigIni.eBPMbar = (Eタイプ)this.iDrumsBPMbar.n現在選択されている項目番号;
             CDTXMania.ConfigIni.ボーナス演出を表示する = this.iDrumsStageEffect.bON;
             CDTXMania.ConfigIni.bドラムセットを動かす = this.iDrumsMoveDrumSet.bON;

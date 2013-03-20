@@ -576,6 +576,17 @@ namespace DTXMania
                                     identity *= Matrix.Translation((this.nレーンの中央X座標C[this.st火花[i].nLane] + (((float)Math.Cos((double)num3)) * num5)) - 320f, -((((float)this.iPosY) + (((float)Math.Sin((double)num3)) * num5)) - 170f), 0f);
                                 }
                             }
+                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            {
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                {
+                                    identity *= Matrix.Transformation((this.nレーンの中央X座標D_改[this.st火花[i].nLane] + (((float)Math.Cos((double)num3)) * num5)) - 320f, -((((float)this.iPosY) + (((float)Math.Sin((double)num3)) * num5)) - 170f), 0f);
+                                }
+                                else
+                                {
+                                    identity *= Matrix.Transformation((this.nレーンの中央X座標D[this.st火花[i].nLane] + (((float)Math.Cos((double)num3)) * num5)) - 320f, -((((float)this.iPosY) + (((float)Math.Sin((double)num3)) * num5)) - 170f), 0f);
+                                }
+                            }
 						if( this.tx火花[ this.st火花[i].nLane ] != null )
 						{
                             this.tx火花[ this.st火花[i].nLane ].t3D描画(CDTXMania.app.Device, identity);
@@ -658,7 +669,17 @@ namespace DTXMania
                                     matrix3 *= Matrix.Translation(this.nレーンの中央X座標C[this.st大波[i].nLane] + 280 - SampleFramework.GameWindowSize.Width / 2, -(iPosY + 200 - SampleFramework.GameWindowSize.Height / 2), 0f);
                                 }
                             }
-
+                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            {
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                {
+                                    matrix3 *= Matrix.Transformation((this.nレーンの中央X座標D_改[this.st大波[i].nLane] + 280 - SampleFramework.GameWindowSize.Width / 2, -(iPosY + 200 - SampleFramework.GameWindowSize.Height / 2), 0f);
+                                }
+                                else
+                                {
+                                    matrix3 *= Matrix.Transformation((this.nレーンの中央X座標D[this.st大波[i].nLane] + 280 - SampleFramework.GameWindowSize.Width / 2, -(iPosY + 200 - SampleFramework.GameWindowSize.Height / 2), 0f);
+                                }
+                            }
 							if( this.tx大波 != null )
 							{
 								this.tx大波.n透明度 = num13;
@@ -723,7 +744,17 @@ namespace DTXMania
                                     matrix4 *= Matrix.Translation(this.nレーンの中央X座標C_改[this.st細波[i].nLane] + 280 - SampleFramework.GameWindowSize.Width / 2, -(iPosY + 200 - SampleFramework.GameWindowSize.Height / 2), 0f);
                                 }
                             }
-
+                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            {
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                {
+                                    matrix4 *= Matrix.Transformation((this.nレーンの中央X座標D_改[this.st細波[i].nLane] + 280 - SampleFramework.GameWindowSize.Width / 2, -(iPosY + 200 - SampleFramework.GameWindowSize.Height / 2), 0f);
+                                }
+                                else
+                                {
+                                    matrix4 *= Matrix.Transformation((this.nレーンの中央X座標D[this.st細波[i].nLane] + 280 - SampleFramework.GameWindowSize.Width / 2, -(iPosY + 200 - SampleFramework.GameWindowSize.Height / 2), 0f);
+                                }
+                            }
 							if (this.tx細波 != null)
 							{
 								this.tx細波.n透明度 = num17;
@@ -841,6 +872,8 @@ namespace DTXMania
         private readonly int[] nレーンの中央X座標B_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 460, 180 };
         private readonly int[] nレーンの中央X座標C = new int[] { 7, 71, 176, 242, 297, 349, 398, 464, 124, 508, 124 };
         private readonly int[] nレーンの中央X座標C_改 = new int[] { 7, 71, 176, 242, 297, 349, 398, 500, 124, 464, 124 };
+        private readonly int[] nレーンの中央X座標D = new int[] { 7, 71, 124, 240, 297, 349, 398, 464, 180, 514, 180 };
+        private readonly int[] nレーンの中央X座標D_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 460, 180 };
         private readonly int[] nノーツの左上X座標 = new int[] { 448, 60, 106, 0, 160, 206, 252, 298, 400, 362, 400 };
         private readonly int[] nノーツの幅 = new int[] { 64, 46, 54, 60, 46, 46, 46, 60, 48, 48, 48 };
 		private const int STAR_MAX = 240;

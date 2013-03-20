@@ -108,12 +108,12 @@ namespace DTXMania
 			{
                 this.bサビ区間 = false;
                 this.bボーナス = false;
-				this.txチップ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\7_chips.png" ) );
-				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums hit-bar.png" ) );
-				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums hit-bar guitar.png" ) );
-				this.txレーンフレームGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenPlayDrums lane parts guitar.png" ) );
+				this.txチップ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_chips.png" ) );
+				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar.png" ) );
+				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar guitar.png" ) );
+				this.txレーンフレームGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums lane parts guitar.png" ) );
                 this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter.png" ) );
-                this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Stage clear.ogg"));
+                //this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Stage clear.ogg"));
                 if( this.txレーンフレームGB != null )
 				{
 					this.txレーンフレームGB.n透明度 = 0xff - CDTXMania.ConfigIni.n背景の透過度;
@@ -168,7 +168,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
                 CDTXMania.tテクスチャの解放( ref this.txLaneCover );
                 CDTXMania.tテクスチャの解放( ref this.txシャッター );
-                this.rResultSound.Dispose();
+                //this.rResultSound.Dispose();
                 
 				base.OnManagedリソースの解放();
 			}
@@ -245,15 +245,37 @@ namespace DTXMania
                 this.t進行描画・譜面スクロール速度();
                 this.t進行描画・チップアニメ();
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                #region[ シャッター ]
+                //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true  )
                 {
-                    if(this.txLaneCover != null)
-                        this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
+                    if (this.txLaneCover != null)
+                    {
+                        //旧画像
+                        //this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
+                        if (CDTXMania.DTX.bチップがある.LeftCymbal == false)
+                        {
+                            this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0, new Rectangle(0, 0, 70, 720));
+                        }
+                        if ((CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false))
+                        {
+                            this.txLaneCover.t2D描画(CDTXMania.app.Device, 416, 0, new Rectangle(124, 0, 54, 720));
+                        }
+                        if (CDTXMania.DTX.bチップがある.FT == false)
+                        {
+                            this.txLaneCover.t2D描画(CDTXMania.app.Device, 690, 0, new Rectangle(71, 0, 52, 720));
+                        }
+                        if (CDTXMania.DTX.bチップがある.Ride == false)
+                        {
+                            this.txLaneCover.t2D描画(CDTXMania.app.Device, 815, 0, new Rectangle(178,  0, 38, 720));
+                        }
+                    }
                 }
                 int nシャッターIN = (int)(base.nShutterInPosY * 7.2);
                 this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + nシャッターIN));
                 int nシャッターOUT = 720 - (int)(base.nShutterOutPosY * 7.2f);
                 this.txシャッター.t2D描画(CDTXMania.app.Device, 295, nシャッターOUT);
+                #endregion
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
                 this.t進行描画・スコア();
@@ -263,9 +285,9 @@ namespace DTXMania
                     this.t進行描画・パネル文字列();
                 }
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
-                //this.t進行描画・ステータスパネル();
-                //this.t進行描画・コンボ();
+
                 //XG2、グラフON
+                #region[ XG2 グラフON ]
                 if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                    CDTXMania.ConfigIni.bGraph.Drums == true)
                 {
@@ -275,6 +297,7 @@ namespace DTXMania
                     }
                     this.t進行描画・コンボ();
                 }
+                #endregion
                 //XG2、グラフOFF
                 if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                      CDTXMania.ConfigIni.bGraph.Drums == false)
@@ -321,7 +344,8 @@ namespace DTXMania
                     {
                         this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-                        this.rResultSound.t再生を開始する();
+                        //this.rResultSound.t再生を開始する();
+                        CDTXMania.Skin.soundステージクリア音.t再生する();
                         this.actFOStageClear.tフェードアウト開始();
 #if dshow
                         this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
@@ -331,7 +355,7 @@ namespace DTXMania
                 }
                 if (bIsFinishedFadeout)
                 {
-                    if (!this.rResultSound.b再生中)
+                    if (!CDTXMania.Skin.soundステージクリア音.b再生中)
                     {
                         Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
                         this.nミス数 = base.nヒット数・Auto含まない.Drums.Miss + base.nヒット数・Auto含まない.Drums.Poor;
@@ -425,7 +449,7 @@ namespace DTXMania
         public bool bフィルイン終了;
         public bool bサビ区間;
         public bool bボーナス;
-        private CSound rResultSound;
+//      private CSound rResultSound;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[12]
 		{
 			Eパッド.HH, Eパッド.SD, Eパッド.BD, Eパッド.HT,
@@ -433,13 +457,13 @@ namespace DTXMania
 			Eパッド.RD, Eパッド.UNKNOWN, Eパッド.UNKNOWN, Eパッド.LC
 		};
         private int[] nチャンネルtoX座標 = new int[] { 370, 470, 582, 527, 645, 748, 694, 373, 815, 298, 419, 419 };
-        private readonly int[] nチャンネルtoX座標B = new int[] { 370, 419, 533, 596, 645, 748, 694, 373, 815, 298, 476, 476 };
-        private readonly int[] nチャンネルtoX座標C = new int[] { 370, 470, 533, 596, 645, 748, 694, 373, 815, 298, 419, 419 };
-        private readonly int[] nチャンネルtoX座標D = new int[] { 370, 470, 583, 527, 645, 748, 694, 373, 815, 298, 419, 419 };
-        private readonly int[] nチャンネルtoX座標改 = new int[] { 370, 470, 582, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
-        private readonly int[] nチャンネルtoX座標B改 = new int[] { 370, 419, 533, 596, 645, 786, 694, 373, 746, 298, 476, 476 };
-        private readonly int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 644, 786, 694, 373, 746, 298, 419, 419 };
-        private readonly int[] nチャンネルtoX座標D改 = new int[] { 370, 470, 583, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
+        private int[] nチャンネルtoX座標B = new int[] { 370, 419, 533, 596, 645, 748, 694, 373, 815, 298, 476, 476 };
+        private int[] nチャンネルtoX座標C = new int[] { 370, 470, 533, 596, 645, 748, 694, 373, 815, 298, 419, 419 };
+        private int[] nチャンネルtoX座標D = new int[] { 370, 419, 582, 476, 649, 748, 694, 373, 815, 298, 526, 526 };
+        private int[] nチャンネルtoX座標改 = new int[] { 370, 470, 582, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
+        private int[] nチャンネルtoX座標B改 = new int[] { 370, 419, 533, 596, 645, 786, 694, 373, 746, 298, 476, 476 };
+        private int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 644, 786, 694, 373, 746, 298, 419, 419 };
+        private int[] nチャンネルtoX座標D改 = new int[] { 370, 419, 582, 476, 645, 786, 694, 373, 746, 298, 526, 526 };
         //HH SD BD HT LT CY FT HHO RD LC LP LBD
         //レーンタイプB
         //LC 298  HH 371 HHO 374  SD 420  LP 477  BD 534  HT 597 LT 646  FT 695  CY 749  RD 815
@@ -773,20 +797,6 @@ namespace DTXMania
 
                 foreach (STInputEvent inputEvent in listInputEvent)
                 {
-                    /*
-                    CDTX.CChip chip28;
-                    CDTX.CChip chip29;
-                    CDTX.CChip chip30;
-                    E判定 e判定25;
-                    E判定 e判定26;
-                    E判定 e判定27;
-                    CDTX.CChip chip32;
-                    CDTX.CChip chip33;
-                    CDTX.CChip chip34;
-                    E判定 e判定28;
-                    E判定 e判定29;
-                    E判定 e判定30;
-                    */
 
                     if (!inputEvent.b押された)
                         continue;
@@ -2169,29 +2179,6 @@ namespace DTXMania
                             }
                         //-----------------
                             #endregion
-#if 封印
-                        case Eパッド.LP:
-                            #region [ LPのヒット処理 ]
-                            //-----------------
-                            if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.LP)
-                                continue;
-                            if (!this.tドラムヒット処理(nTime, Eパッド.LP, this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime), inputEvent.nVelocity))
-                                break;
-                            continue;
-                        //-----------------
-                            #endregion
-
-                        case Eパッド.LBD:
-                            #region [ LBDのヒット処理 ]
-                            //-----------------
-                            if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.LBD)	// #23857 2010.12.12 yyagi: to support VelocityMin
-                                continue;	// 電子ドラムによる意図的なクロストークを無効にする
-                            if (!this.tドラムヒット処理(nTime, Eパッド.LBD, this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime), inputEvent.nVelocity))
-                                break;
-                            continue;
-                        //-----------------
-                            #endregion
-#endif
                         #endregion
 
                     }

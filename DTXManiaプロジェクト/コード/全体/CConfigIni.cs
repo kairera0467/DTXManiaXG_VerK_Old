@@ -2712,7 +2712,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("DrumsJudgeLineDisp"))
                                             {
-                                                this.nLaneDisp.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Drums);
+                                                this.bJudgeLineDisp.Drums = C変換.bONorOFF(str4[0]);
                                             }
 											continue;
 										}
