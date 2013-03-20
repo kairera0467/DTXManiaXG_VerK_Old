@@ -191,15 +191,14 @@ namespace DTXMania
                             this.txLC.n透明度 = nAlpha;
                             this.txLine.n透明度 = nAlpha;
                         }
-                    #region[動くレーン]
-                    if (index == 0) //LC
-                    {
-                        this.txLine.t2D描画(CDTXMania.app.Device, xLC, 0, new Rectangle(0, 0, 70, 720));
-                        this.txLine.t2D描画(CDTXMania.app.Device, 365, 0, new Rectangle(70, 0, 2, 720)); //左の棒
-                    }
-
+                    #region[ 動くレーン ]
                     if (CDTXMania.ConfigIni.nLaneDisp.Drums == 0 || CDTXMania.ConfigIni.nLaneDisp.Drums == 2)
                     {
+                        if (index == 0) //LC
+                        {
+                            this.txLine.t2D描画(CDTXMania.app.Device, xLC, 0, new Rectangle(0, 0, 70, 720));
+                            this.txLine.t2D描画(CDTXMania.app.Device, 365, 0, new Rectangle(70, 0, 2, 720)); //左の棒
+                        }
                         if (index == 1) //HH
                         {
                             this.txLine.t2D描画(CDTXMania.app.Device, 370, 0, new Rectangle(75, 0, 46, 720)); //本体
@@ -359,11 +358,12 @@ namespace DTXMania
                     }
                     else
                     {
-                        this.txLine.t2D描画(CDTXMania.app.Device, 296, 0, new Rectangle(0, 0, 558, 720));
+                        
                         if (index == 0) //LC
                         {
-                            this.txLine.t2D描画(CDTXMania.app.Device, xLC, 0, new Rectangle(0, 0, 70, 720));
-                            this.txLine.t2D描画(CDTXMania.app.Device, 365, 0, new Rectangle(70, 0, 2, 720)); //左の棒
+                            this.txLine.t2D描画(CDTXMania.app.Device, 358, 0, new Rectangle(0, 0, 390, 720));
+                            this.txLine.t2D描画(CDTXMania.app.Device, xLC - 4, 0, new Rectangle(0, 0, 70, 720));
+                            //this.txLine.t2D描画(CDTXMania.app.Device, 365, 0, new Rectangle(70, 0, 2, 720)); //左の棒
                         }
                         if (index == 7) //CY
                         {
@@ -384,7 +384,7 @@ namespace DTXMania
                             }
                             else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                             {
-                                this.txLine.t2D描画(CDTXMania.app.Device, xCY - 124, 0, new Rectangle(520, 0, 38, 720));
+                                this.txLine.t2D描画(CDTXMania.app.Device, xCY - 122, 0, new Rectangle(520, 0, 38, 720));
                             }
                         }
                     }
