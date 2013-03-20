@@ -725,9 +725,19 @@ namespace DTXMania
                     }
 
                     #endregion
-                    if (CDTXMania.ConfigIni.nMovieAlpha <= 5 || CDTXMania.ConfigIni.nMovieAlpha == 11)
+                    if (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3)
                     {
-                        this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
+                        if (CDTXMania.ConfigIni.nMovieAlpha == 0)
+                        {
+                            this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (CDTXMania.ConfigIni.nMovieAlpha <= 5)
+                        {
+                            this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
+                        }
                     }
                     
                     int n振動x座標 = 0;

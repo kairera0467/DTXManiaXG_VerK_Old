@@ -347,9 +347,7 @@ namespace DTXMania
                         //this.rResultSound.t再生を開始する();
                         CDTXMania.Skin.soundステージクリア音.t再生する();
                         this.actFOStageClear.tフェードアウト開始();
-#if dshow
-                        this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
-#endif
+                        //this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
                     }
 
                 }

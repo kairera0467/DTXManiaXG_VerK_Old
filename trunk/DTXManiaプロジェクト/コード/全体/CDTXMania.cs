@@ -24,7 +24,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public static readonly string VERSION = "Ver2.35(130315)";
+		public static readonly string VERSION = "Ver2.36(1303??)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -319,11 +319,11 @@ namespace DTXMania
 			get;
 			set;
 		}
-        public Device D3D9Device
-        {
-            get { return this._D3D9Device; }
-            protected set { this._D3D9Device = value; }
-        }
+        //public Device D3D9Device
+        //{
+        //    get { return this._D3D9Device; }
+        //    protected set { this._D3D9Device = value; }
+        //}
         
         public static void t初期化(CApp app)
         {
@@ -1589,7 +1589,7 @@ for (int i = 0; i < 3; i++) {
         private System.Drawing.Font ftDeclaration;
 		private MouseButtons mb = System.Windows.Forms.MouseButtons.Left;
         private string strWindowTitle = "";
-        private volatile Device _D3D9Device = null;
+        //private volatile Device _D3D9Device = null;
 
 		private void t起動処理()
 		{
