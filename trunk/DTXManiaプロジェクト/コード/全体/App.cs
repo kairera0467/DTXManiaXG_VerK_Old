@@ -32,11 +32,6 @@ namespace DTXMania
         public volatile bool bD3Dデバイスを変更する = false;
         public volatile bool bサウンドデバイスを変更する = false;
 
-        public CApp()
-        {
-            CDTXMania.t初期化(this);		// Program.Main() から参照されるので、先にこれだけ初期化。
-        }
-
 
         // オーバーライドメソッド 
 
