@@ -11,7 +11,6 @@ using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
 using SlimDX;
 using SlimDX.Direct3D9;
-using SlimDX.Windows;
 using FDK;
 using SampleFramework;
 using DTXMania.Properties;
@@ -319,19 +318,7 @@ namespace DTXMania
 			get;
 			set;
 		}
-        //public Device D3D9Device
-        //{
-        //    get { return this._D3D9Device; }
-        //    protected set { this._D3D9Device = value; }
-        //}
-        
-        public static void t初期化(CApp app)
-        {
-            //CDTXMania.App = app;
-            //CDTXMania.SoundDevice = null;							// ユーザ依存
-            //CDTXMania.rc演奏用タイマ = null;				// Global.Bass 依存（つまりユーザ依存）
-        }
-
+        //		public static CTimer ct;
         public IntPtr WindowHandle					// 2012.10.24 yyagi; to add ASIO support
         {
             get { return base.Window.Handle; }
@@ -365,7 +352,7 @@ namespace DTXMania
                     currentClientSize = this.Window.ClientSize;
                     ConfigIni.nウインドウwidth = this.Window.ClientSize.Width;
                     ConfigIni.nウインドウheight = this.Window.ClientSize.Height;
-                    // FDK.CTaskBar.ShowTaskBar( false );
+//                  FDK.CTaskBar.ShowTaskBar( false );
                 }
 #if !WindowedFullscreen
                 base.GraphicsDeviceManager.ChangeDevice(settings);
@@ -388,7 +375,7 @@ namespace DTXMania
 #endif
                     base.Window.ClientSize =
                         new Size(currentClientSize.Width, currentClientSize.Height);
-                    // FDK.CTaskBar.ShowTaskBar( true );
+//                  FDK.CTaskBar.ShowTaskBar( true );
                 }
 #if WindowedFullscreen
 				else 
@@ -487,12 +474,12 @@ namespace DTXMania
             this.Device.SetRenderState(RenderState.AlphaTestEnable, true);
             this.Device.SetRenderState(RenderState.AlphaRef, 10);
 
-            if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
-            {
-                this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
-                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
-                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
-            }
+            //if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
+            //{
+            //    this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
+            //    this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+            //    this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
+            //}
 
             this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
             this.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
@@ -572,7 +559,6 @@ namespace DTXMania
 
 			if( Timer != null )
 				Timer.t更新();
-
             if (CSound管理.rc演奏用タイマ != null)
                 CSound管理.rc演奏用タイマ.t更新();
 
@@ -617,13 +603,12 @@ namespace DTXMania
 
 				CScoreIni scoreIni = null;
 
-                if (Control.IsKeyLocked(Keys.CapsLock)) // #30925 2013.3.11 yyagi; capslock=ON時は、EnumSongsしないようにして、起動負荷とASIOの音切れの関係を確認する
-                {                                       // → songs.db等の書き込み時だと音切れするっぽい
-                    CDTXMania.stage選曲.bIsEnumeratingSongs = false;
-                    actEnumSongs.On非活性化();
-                    EnumSongs.SongListEnumCompletelyDone();
-                }
-
+                //if (Control.IsKeyLocked(Keys.CapsLock)) // #30925 2013.3.11 yyagi; capslock=ON時は、EnumSongsしないようにして、起動負荷とASIOの音切れの関係を確認する
+                //{                                       // → songs.db等の書き込み時だと音切れするっぽい
+                //    CDTXMania.stage選曲.bIsEnumeratingSongs = false;
+                //    actEnumSongs.On非活性化();
+                //    EnumSongs.SongListEnumCompletelyDone();
+                //}
 				#region [ 曲検索スレッドの起動/終了 ]					// ここに"Enumerating Songs..."表示を集約
                 if (!CDTXMania.bコンパクトモード)
                 {
@@ -1059,9 +1044,6 @@ namespace DTXMania
 							CDTXMania.Pad.st検知したデバイス.Clear();	// 入力デバイスフラグクリア(2010.9.11)
 
 							r現在のステージ.On非活性化();
-#if dshow
-                            stage演奏ドラム画面.actFOStageClear.On活性化(CDTXMania.app.D3D9Device);
-#endif
 							if( !ConfigIni.bギタレボモード )
 							{
 								Trace.TraceInformation( "----------------------" );
@@ -1589,7 +1571,6 @@ for (int i = 0; i < 3; i++) {
         private System.Drawing.Font ftDeclaration;
 		private MouseButtons mb = System.Windows.Forms.MouseButtons.Left;
         private string strWindowTitle = "";
-        //private volatile Device _D3D9Device = null;
 
 		private void t起動処理()
 		{
@@ -1696,6 +1677,7 @@ for (int i = 0; i < 3; i++) {
 			base.Window.ResizeEnd += new EventHandler(this.Window_ResizeEnd);						// #23510 2010.11.20 yyagi: to set resized window size in Config.ini
 			base.Window.ApplicationActivated += new EventHandler(this.Window_ApplicationActivated);
 			base.Window.ApplicationDeactivated += new EventHandler( this.Window_ApplicationDeactivated );
+            Trace.TraceInformation("ウィンドウの初期化に成功しました。");
 			//---------------------
 			#endregion
 			#region [ Direct3D9Exを使うかどうか判定 ]
@@ -1705,9 +1687,8 @@ for (int i = 0; i < 3; i++) {
             //2013.03.09.kairera0467
             //おそらくこれがSSTでいう「tDirect3Dデバイスを生成・変更・リセットする」へ渡す設定に相当しているのだと思われ。
 			DeviceSettings settings = new DeviceSettings();
-            //CD3DSettings newD3DSettings = new CD3DSettings();
 #if WindowedFullscreen
-            settings.Windowed = true; // #30666 2013.2.2 yyagi: Fullscreenmode is "Maximized window" mode
+			settings.Windowed = true;								// #30666 2013.2.2 yyagi: Fullscreenmode is "Maximized window" mode
 #else
 			settings.Windowed = ConfigIni.bウィンドウモード;
 #endif
@@ -1715,12 +1696,12 @@ for (int i = 0; i < 3; i++) {
 			settings.BackBufferHeight = SampleFramework.GameWindowSize.Height;
 //			settings.BackBufferCount = 3;
 			settings.EnableVSync = ConfigIni.b垂直帰線待ちを行う;
-            // settings.BackBufferFormat = Format.A8R8G8B8;
-//	         settings.MultisampleType = MultisampleType.FourSamples;
-	         //settings.MultisampleQuality = 4;
-	        // settings.MultisampleType = MultisampleType.None;
-	        // settings.MultisampleQuality = 0;
-
+//			settings.BackBufferFormat = Format.A8R8G8B8;
+//			settings.MultisampleType = MultisampleType.FourSamples;
+//			settings.MultisampleQuality = 4;
+//			settings.MultisampleType = MultisampleType.None;
+//			settings.MultisampleQuality = 0;
+			
 			try
 			{
 				base.GraphicsDeviceManager.ChangeDevice(settings);
@@ -1731,26 +1712,17 @@ for (int i = 0; i < 3; i++) {
 				MessageBox.Show(e.Message + e.ToString(), "DTXMania failed to boot: DirectX9 Initialize Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Environment.Exit(-1);
 			}
-
+			
 			base.IsFixedTimeStep = false;
 //			base.TargetElapsedTime = TimeSpan.FromTicks( 10000000 / 75 );
 			base.Window.ClientSize = new Size(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);	// #23510 2010.10.31 yyagi: to recover window size. width and height are able to get from Config.ini.
 			base.InactiveSleepTime = TimeSpan.FromMilliseconds((float)(ConfigIni.n非フォーカス時スリープms));	// #23568 2010.11.3 yyagi: to support valiable sleep value when !IsActive
-                                                                                                // #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
-
-            /*
-            this.D3D9Device = new Device(		// 失敗したら異常系とみなし、そのまま例外をthrow。
-                    new Direct3D(),
-                    newD3DSettings.nAdaptor,
-                    newD3DSettings.DeviceType,
-                    newD3DSettings.PresentParameters.DeviceWindowHandle,
-                    newD3DSettings.CreateFlags,
-                    newD3DSettings.PresentParameters);
-            */
+																												// #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
 #if WindowedFullscreen
-            this.t全画面・ウィンドウモード切り替え(); // #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
+			this.t全画面・ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
-            actFlushGPU = new CActFlushGPU();
+            Trace.TraceInformation("D3D9デバイスの生成に成功しました。");
+			actFlushGPU = new CActFlushGPU();
 			//---------------------
 			#endregion
 
@@ -1921,7 +1893,7 @@ for (int i = 0; i < 3; i++) {
                             soundDeviceType = ESoundDeviceType.Unknown;
                             break;
                     }
-                    Sound管理 = new CSound管理(base.Window.Handle,
+                    Sound管理 = new CSound管理( base.Window.Handle,
                                                 soundDeviceType,
                                                 CDTXMania.ConfigIni.nWASAPIBufferSizeMs,
                                                 CDTXMania.ConfigIni.nASIOBufferSizeMs,
@@ -1933,14 +1905,14 @@ for (int i = 0; i < 3; i++) {
                 }
             }
             catch (Exception e)
-			{
-                Trace.TraceError("DirectSound の初期化に失敗しました。(" + e.Message + ")");
-				throw;
-			}
-			finally
-			{
-				Trace.Unindent();
-			}
+            {
+                Trace.TraceError(e.Message);
+                throw;
+            }
+            finally
+            {
+                Trace.Unindent();
+            }
 			//---------------------
 			#endregion
 			#region [ Songs管理 の初期化 ]
