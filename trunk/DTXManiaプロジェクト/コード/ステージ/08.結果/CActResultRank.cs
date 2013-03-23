@@ -31,6 +31,11 @@ namespace DTXMania
 		{
 			this.n本体X = 138;
 			this.n本体Y = 8;
+            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+            {
+                this.n本体X = 530;
+                this.n本体Y = 120;
+            }
 			base.On活性化();
 		}
 		public override void On非活性化()

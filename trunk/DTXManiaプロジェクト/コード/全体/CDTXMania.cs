@@ -474,12 +474,12 @@ namespace DTXMania
             this.Device.SetRenderState(RenderState.AlphaTestEnable, true);
             this.Device.SetRenderState(RenderState.AlphaRef, 10);
 
-            //if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
-            //{
-            //    this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
-            //    this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
-            //    this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
-            //}
+            if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
+            {
+                this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
+                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
+            }
 
             this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
             this.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
@@ -1677,7 +1677,6 @@ for (int i = 0; i < 3; i++) {
 			base.Window.ResizeEnd += new EventHandler(this.Window_ResizeEnd);						// #23510 2010.11.20 yyagi: to set resized window size in Config.ini
 			base.Window.ApplicationActivated += new EventHandler(this.Window_ApplicationActivated);
 			base.Window.ApplicationDeactivated += new EventHandler( this.Window_ApplicationDeactivated );
-            Trace.TraceInformation("ウィンドウの初期化に成功しました。");
 			//---------------------
 			#endregion
 			#region [ Direct3D9Exを使うかどうか判定 ]
@@ -1721,7 +1720,6 @@ for (int i = 0; i < 3; i++) {
 #if WindowedFullscreen
 			this.t全画面・ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
-            Trace.TraceInformation("D3D9デバイスの生成に成功しました。");
 			actFlushGPU = new CActFlushGPU();
 			//---------------------
 			#endregion

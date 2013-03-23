@@ -589,7 +589,7 @@ namespace DTXMania
 		protected CActFIFOWhite actFOClear;
         public CActFIFOWhiteClear actFOStageClear;
         //protected CActStageClear actStageClear;
-		protected CAct演奏ゲージ共通 actGauge;
+		public CAct演奏ゲージ共通 actGauge;
         public CAct演奏Drumsフィルインエフェクト actFillin;
 		protected CAct演奏判定文字列共通 actJudgeString;
 		protected CAct演奏DrumsレーンフラッシュD actLaneFlushD;
@@ -1495,7 +1495,6 @@ namespace DTXMania
 						this.actJudgeString.Start( nLane, bIsAutoPlay[ nLane ] ? E判定.Auto : E判定.Miss, 999 );
 					}
 					this.actCombo.n現在のコンボ数.Drums = 0;
-                    this.actCombo.ctComboBom.n現在の値 = 0;
 					return;
 
 				case E楽器パート.GUITAR:
@@ -2952,21 +2951,11 @@ namespace DTXMania
 					break;
 
 				case CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト:
-                    if (!CDTXMania.ConfigIni.bGuitar有効)
+                    if (this.actFOStageClear.On進行描画() == 0)
                     {
-                        if (this.actFOStageClear.On進行描画() == 0)
-                        //if(this.actFOStageClear.On進行() == 0)
-                        {
-                            break;
-                        }
+                        break;
                     }
-                    else if (CDTXMania.ConfigIni.bGuitar有効)
-                    {
-                        if ( this.actFOClear.On進行描画() == 0 )
-                        {
-                            break;
-                        }
-                    }
+
 
 					return true;
 		

@@ -183,8 +183,8 @@ namespace DTXMania
                             }
                             if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != E判定文字表示位置.判定ライン上または横)))
                             {
-                                num5 = 0x198;
-                                num6 = 0x93;
+                                num5 = 408;
+                                num6 = 147;
                             }
                             else
                             {

@@ -350,11 +350,11 @@ namespace DTXMania
                     identity *= SlimDX.Matrix.Translation(-980, 148, 0);
                     identity *= SlimDX.Matrix.Scaling(0.39f, 0.72f, 1f);
                     identity *= SlimDX.Matrix.RotationY(-0.6f);
-                    identity *= SlimDX.Matrix.RotationZ(-0.01f);
+                    //identity *= SlimDX.Matrix.RotationZ(-0.01f);
                     mat *= SlimDX.Matrix.Translation(-1060, 104, 0);
                     mat *= SlimDX.Matrix.Scaling(0.39f, 0.69f, 1.0f);
                     mat *= SlimDX.Matrix.RotationY(-0.6f);
-                    mat *= SlimDX.Matrix.RotationZ(-0.01f);
+                    //mat *= SlimDX.Matrix.RotationZ(-0.01f);
                 }
                 //XG2風。ぜんぜんそれっぽくないとか言わない。
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
@@ -440,10 +440,10 @@ namespace DTXMania
                             }
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                             {
-                                matScoreXG *= SlimDX.Matrix.Translation(-1180 + (i * 30), 46, 0);
-                                matScoreXG *= SlimDX.Matrix.Scaling(0.35f, 0.72f, 1f);
-                                matScoreXG *= SlimDX.Matrix.RotationY(-0.6f);
-                                matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
+                                matScoreXG *= SlimDX.Matrix.Translation(-1284 + (i * 30), 41, 0);
+                                matScoreXG *= SlimDX.Matrix.Scaling(0.32f, 0.72f, 1f);
+                                matScoreXG *= SlimDX.Matrix.RotationY(-0.7f);
+                                //matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
                                 this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
@@ -493,10 +493,10 @@ namespace DTXMania
                             }
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                             {
-                                matScoreXG *= SlimDX.Matrix.Translation(-874 + (i * 30), 46, 0);
-                                matScoreXG *= SlimDX.Matrix.Scaling(0.47f, 0.72f, 1f);
-                                matScoreXG *= SlimDX.Matrix.RotationY(-0.6f);
-                                matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
+                                matScoreXG *= SlimDX.Matrix.Translation(-906 + (i * 30), 42, 0);
+                                matScoreXG *= SlimDX.Matrix.Scaling(0.45f, 0.72f, 1f);
+                                matScoreXG *= SlimDX.Matrix.RotationY(-0.7f);
+                                //matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
                                 this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)

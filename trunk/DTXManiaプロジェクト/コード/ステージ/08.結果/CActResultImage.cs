@@ -38,11 +38,16 @@ namespace DTXMania
             this.nAlbumHeight = 102;
             this.nAlbumWidthXG3 = 128;
             this.nAlbumHeightXG3 = 128;
+
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftSongDifficultyFont = new System.Drawing.Font("Impact", 15f, FontStyle.Regular);
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
             {
                 this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 14f, FontStyle.Regular, GraphicsUnit.Pixel);
+            }
+            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+            {
+                this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
             }
             
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
@@ -279,6 +284,13 @@ namespace DTXMania
                     this.r表示するリザルト画像.vc拡大縮小倍率.Y = ((float)this.nAlbumHeightXG3) / ((float)height);
                     this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 984, 84, new Rectangle(0, 0, width, height));
                 }
+                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                {
+                    this.r表示するリザルト画像.vc拡大縮小倍率.X = 245.0f / ((float)width);
+                    this.r表示するリザルト画像.vc拡大縮小倍率.Y = 245.0f / ((float)height);
+                    this.r表示するリザルト画像.fZ軸中心回転 = 0.3f;
+                    this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, width, height));
+                }
                 else
                 {
                     this.r表示するリザルト画像.vc拡大縮小倍率.X = ((float)this.nAlbumWidth) / ((float)width);
@@ -297,6 +309,12 @@ namespace DTXMania
                 this.txDrumSpeed.vc拡大縮小倍率.X = 0.7619048f;
                 this.txDrumSpeed.vc拡大縮小倍率.Y = 0.6666667f;
                 this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 490, 479);
+            }
+            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+            {
+                this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
+                this.txDrumSpeed.vc拡大縮小倍率 = new Vector3(0.76190476190476190476190476190476f, 0.66666666666666666666666666666667f, 1.0f);
+                this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 800, 634);
             }
             else
             {
