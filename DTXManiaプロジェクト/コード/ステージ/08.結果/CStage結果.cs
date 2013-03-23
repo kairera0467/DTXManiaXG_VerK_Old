@@ -317,7 +317,14 @@ namespace DTXMania
 				if( base.b初めての進行描画 )
 				{
 					this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
-                    this.actFI.tフェードイン開始(false);
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                    {
+                        this.actFI.tフェードイン開始(false);
+                    }
+                    else
+                    {
+                        this.actFI.tフェードイン開始(true);
+                    }
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					if( this.rResultSound != null )
 					{
