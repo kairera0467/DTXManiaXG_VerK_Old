@@ -412,7 +412,7 @@ namespace DTXMania
                             if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
                                 this.stボーナス[i].x = 740;
                             else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                this.stボーナス[i].x = 800;
+                                this.stボーナス[i].x = 780;
                             break;
                         case 9:
                             if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)

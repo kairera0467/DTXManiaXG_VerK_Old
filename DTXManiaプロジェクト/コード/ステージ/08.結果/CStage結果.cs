@@ -317,7 +317,7 @@ namespace DTXMania
 				if( base.b初めての進行描画 )
 				{
 					this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
-					this.actFI.tフェードイン開始();
+                    this.actFI.tフェードイン開始(false);
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					if( this.rResultSound != null )
 					{
@@ -367,11 +367,11 @@ namespace DTXMania
                 {
                     this.bアニメが完了 = false;
                 }
-				if( this.actResultImage.On進行描画() == 0 )
+				if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
 				}
-				if ( this.actParameterPanel.On進行描画() == 0 )
+                if( this.actResultImage.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
 				}

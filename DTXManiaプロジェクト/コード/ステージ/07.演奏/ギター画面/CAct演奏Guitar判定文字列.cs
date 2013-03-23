@@ -14,17 +14,7 @@ namespace DTXMania
 		{
 			this.stレーンサイズ = new STレーンサイズ[ 15 ];
 			STレーンサイズ stレーンサイズ = new STレーンサイズ();
-            int[,] sizeXW = new int[,] 	{
-		
-		{
-			30,
-			36
-		},
-		
-		{
-			71,
-			30
-		},
+            int[,] sizeXW = new int[,] 	{{30, 36},{71, 30},
 		
 		{
 			135,
@@ -204,16 +194,16 @@ namespace DTXMania
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.レーン上 ) ? this.stレーンサイズ[ j ].x : 175;
-								num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 0x12b : 190;
+								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.レーン上 ) ? 130 : 175;
+								num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 450 : 300;
 							}
 							int xc = ( ( num5 + base.st状態[ j ].n相対X座標 ) + ( this.stレーンサイズ[ j ].w / 2 ) );
-							int x = xc - ( (int) ( ( ( 128f * base.st状態[ j ].fX方向拡大率 ) * 0.8 ) / 2.0 ) );
-							int y = ( num6 + base.st状態[ j ].n相対Y座標 ) - ( (int) ( ( ( 43f * base.st状態[ j ].fY方向拡大率 ) * 0.8 ) / 2.0 ) );
+							int x = xc - ( (int) ( ( ( 128f * base.st状態[ j ].fX方向拡大率 ) * 1.0 ) / 2.0 ) );
+							int y = ( num6 + base.st状態[ j ].n相対Y座標 ) - ( (int) ( ( ( 43f * base.st状態[ j ].fY方向拡大率 ) * 1.0 ) / 2.0 ) );
 							if( base.tx判定文字列[ index ] != null )
 							{
 								base.tx判定文字列[ index ].n透明度 = base.st状態[ j ].n透明度;
-								base.tx判定文字列[ index ].vc拡大縮小倍率 = new Vector3( (float) ( base.st状態[ j ].fX方向拡大率 * 0.8 ), (float) ( base.st状態[ j ].fY方向拡大率 * 0.8 ), 1f );
+								base.tx判定文字列[ index ].vc拡大縮小倍率 = new Vector3( (float) ( base.st状態[ j ].fX方向拡大率 * 1.0 ), (float) ( base.st状態[ j ].fY方向拡大率 * 1.0 ), 1f );
 								base.tx判定文字列[ index ].t2D描画( CDTXMania.app.Device, x, y, base.st判定文字列[ (int) base.st状態[ j ].judge ].rc );
 
 								#region [ #25370 2011.6.3 yyagi ShowLag support ]

@@ -74,7 +74,7 @@ namespace DTXMania
                         {
                             this.st青い星[j].b使用中 = true;
                             int n回転初期値 = CDTXMania.Random.Next(360);
-                            double num7 = 0.8 + ( 1 / 100.0); // 拡散の大きさ
+                            double num7 = 0.85 + ( 1 / 100.0); // 拡散の大きさ
                             this.st青い星[j].nLane = (int)lane;
                             this.st青い星[j].ct進行 = new CCounter(0, 40, 7, CDTXMania.Timer); // カウンタ
                             this.st青い星[j].fX = this.nレーンの中央X座標[(int)lane] + 320; //X座標
@@ -102,9 +102,9 @@ namespace DTXMania
                             this.st青い星[j].fY = ((((float)this.iPosY) + 350 + (((float)Math.Sin((double)this.st青い星[j].f半径)) * this.st青い星[j].f半径)) - 170f); //Y座標
                             this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
                             this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0)) - 0.1);
-                            this.st青い星[j].f加速度の加速度X = 0.999f;
+                            this.st青い星[j].f加速度の加速度X = 1.000f;
                             this.st青い星[j].f加速度の加速度Y = 1.0f;
-                            this.st青い星[j].f重力加速度 = 0.02000f;
+                            this.st青い星[j].f重力加速度 = 0.02200f;
                             this.st青い星[j].f半径 = (float)(0.3 + (((double)CDTXMania.Random.Next(30)) / 100.0));
                             break;
                         }
@@ -867,13 +867,13 @@ namespace DTXMania
                                                             //   LC  HH   SD    BD  HT   LT   FT    CY    RD    LP    LP
         private readonly int[] nレーンの中央X座標 = new int[] { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
                                                             //  LC HH  SD   BD   HT    LT   FT   CY   LP   RD   LP
-        private readonly int[] nレーンの中央X座標_改 = new int[] { 7, 71, 176, 293, 230, 349, 398, 498, 124, 460, 124 };
+        private readonly int[] nレーンの中央X座標_改 = new int[] { 7, 71, 176, 293, 230, 349, 398, 498, 124, 448, 124 };
         private readonly int[] nレーンの中央X座標B = new int[] { 7, 71, 124, 240, 297, 349, 398, 464, 180, 514, 180 };
-        private readonly int[] nレーンの中央X座標B_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 460, 180 };
+        private readonly int[] nレーンの中央X座標B_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 448, 180 };
         private readonly int[] nレーンの中央X座標C = new int[] { 7, 71, 176, 242, 297, 349, 398, 464, 124, 508, 124 };
-        private readonly int[] nレーンの中央X座標C_改 = new int[] { 7, 71, 176, 242, 297, 349, 398, 500, 124, 464, 124 };
+        private readonly int[] nレーンの中央X座標C_改 = new int[] { 7, 71, 176, 242, 297, 349, 398, 500, 124, 448, 124 };
         private readonly int[] nレーンの中央X座標D = new int[] { 7, 71, 124, 240, 297, 349, 398, 464, 180, 514, 180 };
-        private readonly int[] nレーンの中央X座標D_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 460, 180 };
+        private readonly int[] nレーンの中央X座標D_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 448, 180 };
         private readonly int[] nノーツの左上X座標 = new int[] { 448, 60, 106, 0, 160, 206, 252, 298, 400, 362, 400 };
         private readonly int[] nノーツの幅 = new int[] { 64, 46, 54, 60, 46, 46, 46, 60, 48, 48, 48 };
 		private const int STAR_MAX = 240;

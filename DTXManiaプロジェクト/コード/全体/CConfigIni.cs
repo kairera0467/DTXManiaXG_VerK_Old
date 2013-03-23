@@ -2640,7 +2640,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("DrumsLaneType"))
                                             {
-                                                this.eLaneType.Drums = (Eタイプ) C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int) this.eLaneType.Drums);
+                                                this.eLaneType.Drums = (Eタイプ) C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int) this.eLaneType.Drums);
                                             }
                                             else if (str3.Equals("NamePlateType"))
                                             {
