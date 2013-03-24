@@ -166,8 +166,7 @@ namespace DTXMania
             }
             this.counter.t進行();
 
-            if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-            {
+
                 if (!CDTXMania.ConfigIni.bドラムが全部オートプレイである)
                 {
                     if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0)
@@ -485,14 +484,6 @@ namespace DTXMania
                     //}
 
                 }
-            }
-            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-            {
-                if (this.counter.n現在の値 >= 300)
-                {
-
-                }
-            }
             if (this.counter.n現在の値 != 400)
             {
                 return 0;

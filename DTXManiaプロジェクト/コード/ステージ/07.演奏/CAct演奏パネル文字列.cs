@@ -165,6 +165,7 @@ namespace DTXMania
 		public override void On活性化()
 		{
             this.ft表示用フォント = new Font("ＤＦＧ平成ゴシック体W7", 38f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
             {
                 this.txNamePlateXG3 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_NamePlate.png"));
@@ -207,6 +208,21 @@ namespace DTXMania
                 {
                     this.txジャケット画像 = CDTXMania.tテクスチャの生成(path);
                 }
+                this.bmSongNameLength = new Bitmap(1, 1);
+                Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
+                graphics.PageUnit = GraphicsUnit.Pixel;
+                this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
+                this.nSongNamePixelLength = (int)graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
+                graphics.Dispose();
+                this.bmSongNameLength.Dispose();
+                Bitmap image = new Bitmap(this.nSongNamePixelLength, (int)Math.Ceiling((double)this.ftSongNameFont.GetHeight()));
+                graphics = Graphics.FromImage(image);
+                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+                graphics.Dispose();
+                this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                image.Dispose();
+                this.ftSongNameFont.Dispose();
+
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -215,6 +231,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txPanel );
+                CDTXMania.tテクスチャの解放( ref this.txSongName );
                 CDTXMania.tテクスチャの解放( ref this.txジャケット画像 );
 				base.OnManagedリソースの解放();
 			}
@@ -252,6 +269,7 @@ namespace DTXMania
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
                 {
+                    this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
                     this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
                     this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
                     this.txジャケット画像.fZ軸中心回転 = 0.3f;
@@ -290,16 +308,21 @@ namespace DTXMania
             public char ch;
             public Point pt;
         }
+        private Bitmap bmSongNameLength;
+        private int nSongNamePixelLength;
 		private CCounter ct進行用;
 		private Font ft表示用フォント;
+        private Font ftSongNameFont;
 		private int n文字列の長さdot;
 		private string strパネル文字列;
+        private string strSongName;
 		private CTexture txPanel;
         private CTexture txNamePlateXG3;
         private CTexture txスキルパネル;
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
         private CTexture[] txパネル文字;
+        private CTexture txSongName;
         private CTexture txジャケット画像;
 
         private void t小文字表示(int x, int y, string str)

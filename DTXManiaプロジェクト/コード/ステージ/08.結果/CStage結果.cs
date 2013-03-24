@@ -235,36 +235,38 @@ namespace DTXMania
 				}
 				//---------------------
 				#endregion
+                if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
+                {
+                    #region [ #RESULTSOUND_xx の再生（あれば）]
+                    //---------------------
+                    int rank = CScoreIni.t総合ランク値を計算して返す(this.st演奏記録.Drums, this.st演奏記録.Guitar, this.st演奏記録.Bass);
 
-				#region [ #RESULTSOUND_xx の再生（あれば）]
-				//---------------------
-				int rank = CScoreIni.t総合ランク値を計算して返す( this.st演奏記録.Drums, this.st演奏記録.Guitar, this.st演奏記録.Bass );
+                    if (rank == 99)	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
+                    {
+                        rank = 6;
+                    }
 
-				if (rank == 99)	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-				{
-					rank = 6;
-				}
-	
-				if( string.IsNullOrEmpty( CDTXMania.DTX.RESULTSOUND[ rank ] ) )
-				{
-					CDTXMania.Skin.bgm結果画面.t再生する();
-					this.rResultSound = null;
-				}
-				else
-				{
-					string str2 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.RESULTSOUND[ rank ];
-					try
-					{
-						this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する( str2 );
-					}
-					catch
-					{
-						Trace.TraceError( "サウンドの生成に失敗しました。({0})", new object[] { str2 } );
-						this.rResultSound = null;
-					}
-				}
-				//---------------------
-				#endregion
+                    if (string.IsNullOrEmpty(CDTXMania.DTX.RESULTSOUND[rank]))
+                    {
+                        CDTXMania.Skin.bgm結果画面.t再生する();
+                        this.rResultSound = null;
+                    }
+                    else
+                    {
+                        string str2 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.RESULTSOUND[rank];
+                        try
+                        {
+                            this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する(str2);
+                        }
+                        catch
+                        {
+                            Trace.TraceError("サウンドの生成に失敗しました。({0})", new object[] { str2 });
+                            this.rResultSound = null;
+                        }
+                    }
+                    //---------------------
+                    #endregion
+                }
 
 				base.On活性化();
 			}
