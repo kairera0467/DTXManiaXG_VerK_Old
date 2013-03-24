@@ -86,69 +86,7 @@ namespace DTXMania
                         {
                             base.st状態[index].ct進行.t停止();
                         }
-                        int num2 = base.st状態[index].ct進行.n現在の値;
-
-
-                        if ((base.st状態[index].judge != E判定.Miss) && (base.st状態[index].judge != E判定.Bad))
-                        {
-                            if (num2 < 50)
-                            {
-                                base.st状態[index].fX方向拡大率 = 1f + (1f * (1f - (((float)num2) / 50f)));
-                                base.st状態[index].fY方向拡大率 = ((float)num2) / 50f;
-                                base.st状態[index].n相対X座標 = 0;
-                                base.st状態[index].n相対Y座標 = 0;
-                                base.st状態[index].n透明度 = 0xff;
-                            }
-                            else if (num2 < 130)
-                            {
-                                base.st状態[index].fX方向拡大率 = 1f;
-                                base.st状態[index].fY方向拡大率 = 1f;
-                                base.st状態[index].n相対X座標 = 0;
-                                base.st状態[index].n相対Y座標 = ((num2 % 6) == 0) ? (CDTXMania.Random.Next(6) - 3) : base.st状態[index].n相対Y座標;
-                                base.st状態[index].n透明度 = 0xff;
-                            }
-                            else if (num2 >= 240)
-                            {
-                                base.st状態[index].fX方向拡大率 = 1f;
-                                base.st状態[index].fY方向拡大率 = 1f - ((1f * (num2 - 240)) / 60f);
-                                base.st状態[index].n相対X座標 = 0;
-                                base.st状態[index].n相対Y座標 = 0;
-                                base.st状態[index].n透明度 = 0xff;
-                            }
-                            else
-                            {
-                                base.st状態[index].fX方向拡大率 = 1f;
-                                base.st状態[index].fY方向拡大率 = 1f;
-                                base.st状態[index].n相対X座標 = 0;
-                                base.st状態[index].n相対Y座標 = 0;
-                                base.st状態[index].n透明度 = 0xff;
-                            }
-                        }
-                        else if (num2 < 50)
-                        {
-                            base.st状態[index].fX方向拡大率 = 1f;
-                            base.st状態[index].fY方向拡大率 = ((float)num2) / 50f;
-                            base.st状態[index].n相対X座標 = 0;
-                            base.st状態[index].n相対Y座標 = 0;
-                            base.st状態[index].n透明度 = 0xff;
-                        }
-                        else if (num2 >= 200)
-                        {
-                            base.st状態[index].fX方向拡大率 = 1f - (((float)(num2 - 200)) / 100f);
-                            base.st状態[index].fY方向拡大率 = 1f - (((float)(num2 - 200)) / 100f);
-                            base.st状態[index].n相対X座標 = 0;
-                            base.st状態[index].n相対Y座標 = 0;
-                            base.st状態[index].n透明度 = 0xff;
-                        }
-                        else
-                        {
-                            base.st状態[index].fX方向拡大率 = 1f;
-                            base.st状態[index].fY方向拡大率 = 1f;
-                            base.st状態[index].n相対X座標 = 0;
-                            base.st状態[index].n相対Y座標 = 0;
-                            base.st状態[index].n透明度 = 0xff;
-                        }
-
+                        base.st状態[index].nRect = base.st状態[index].ct進行.n現在の値;
                     }
                     //#endif
                     index++;
@@ -193,13 +131,31 @@ namespace DTXMania
                             }
                         }
                         int xc = (num5 + base.st状態[j].n相対X座標) + (this.stレーンサイズ[j].w / 2);
-                        int x = xc - ((int)((64f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
-                        int y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((43f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
+                        int x = xc - ((int)((110f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
+                        int y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
                         if (base.tx判定文字列[num4] != null)
                         {
-                            base.tx判定文字列[num4].n透明度 = base.st状態[j].n透明度;
-                            base.tx判定文字列[num4].vc拡大縮小倍率 = new Vector3((float)(base.st状態[j].fX方向拡大率 * ((j < 10) ? 1.0 : 0.7)), (float)(base.st状態[j].fY方向拡大率 * ((j < 10) ? 1.0 : 0.7)), 1f);
-                            base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, base.st判定文字列[(int)base.st状態[j].judge].rc);
+                            if (base.st状態[j].judge == E判定.Perfect || base.st状態[j].judge == E判定.Auto)
+                            {
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 135 * base.st状態[j].nRect, 225, 135));
+                            }
+                            if (base.st状態[j].judge == E判定.Great)
+                            {
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(225, 135 * base.st状態[j].nRect, 225, 135));
+                            }
+                            if (base.st状態[j].judge == E判定.Good)
+                            {
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(450, 135 * base.st状態[j].nRect, 225, 135));
+                            }
+                            if (base.st状態[j].judge == E判定.Poor)
+                            {
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(675, 135 * base.st状態[j].nRect, 225, 135));
+                            }
+                            if (base.st状態[j].judge == E判定.Miss)
+                            {
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(900, 135 * base.st状態[j].nRect, 225, 135));
+                            }
+
 
                             if (base.nShowLagType == (int)EShowLagType.ON ||
                                  ((base.nShowLagType == (int)EShowLagType.GREAT_POOR) && (base.st状態[j].judge != E判定.Perfect)))

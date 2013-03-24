@@ -14,8 +14,6 @@ namespace DTXMania
         public int iP_A;
         public int iP_B;
         public CCounter ctPERFECT;
-        public CCounter ctGOOD;
-        public CCounter ctPOOR;
 		protected STSTATUS[] st状態 = new STSTATUS[ 15 ];
 		[StructLayout( LayoutKind.Sequential )]
 		protected struct STSTATUS
@@ -28,6 +26,7 @@ namespace DTXMania
 			public int n相対Y座標;
 			public int n透明度;
 			public int nLag;								// #25370 2011.2.1 yyagi
+            public int nRect;
 		}
 
 		protected readonly ST判定文字列[] st判定文字列;
@@ -58,36 +57,19 @@ namespace DTXMania
 
 		public CAct演奏判定文字列共通()
 		{
-            this.ctPERFECT = new CCounter(0, 11, 80, CDTXMania.Timer);
-            this.ctGOOD = new CCounter(0, 4, 100, CDTXMania.Timer);
-            this.ctPOOR = new CCounter(0, 7, 100, CDTXMania.Timer);
-            
-            this.ctPERFECT.t進行();
-            this.ctGOOD.t進行();
-            this.ctPOOR.t進行();
+            this.ctPERFECT = new CCounter(0, 11, 8, CDTXMania.Timer);
+
             int iP_A = 390;
             int iP_B = 0x248;
-            int num1 = this.ctPERFECT.n現在の値;
-            int num2 = this.ctGOOD.n現在の値;
 			this.st判定文字列 = new ST判定文字列[ 7 ];
 			Rectangle[] r = new Rectangle[] {
-                //220x220がいいのかも。
-#if 新処理
-				new Rectangle( 0,   0 + (90 * num1), 150, 90 ),		// Perfect
-				new Rectangle( 150, 0 + (90 * num1), 150, 90 ),		// Great
-				new Rectangle( 300, 0 + (90 * num2), 150, 90 ),		// Good
-				new Rectangle( 0, 0,    0x80, 0x2a ),		// Poor
-				new Rectangle( 0, 0x2b, 0x80, 0x2a ),		// Miss
-				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Bad
-				new Rectangle( 0, 0,    0x80, 0x2a )		// Auto
-#endif
-                new Rectangle( 0, 0,    0x80, 0x2a ),		// Perfect
-				new Rectangle( 0, 0x2b, 0x80, 0x2a ),		// Great
-				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Good
-				new Rectangle( 0, 0,    0x80, 0x2a ),		// Poor
-				new Rectangle( 0, 0x2b, 0x80, 0x2a ),		// Miss
-				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Bad
-				new Rectangle( 0, 0,    0x80, 0x2a )		// Auto
+                new Rectangle( 0, 0,    150, 90 ),		// Perfect
+				new Rectangle( 150, 0,    150, 90 ),		// Great
+				new Rectangle( 300, 0,    150, 90 ),		// Good
+				new Rectangle( 450, 0,    150, 90 ),		// Poor
+				new Rectangle( 600, 0,    150, 90 ),		// Miss
+				new Rectangle( 600, 0,    150, 90 ),		// Bad
+				new Rectangle( 0, 0,    150, 90 )		    // Auto
 			};
 
 			for ( int i = 0; i < 7; i++ )
@@ -118,7 +100,7 @@ namespace DTXMania
 			if( ( ( nLane >= 10 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.表示OFF ) ) && ( ( ( nLane != 13 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != E判定文字表示位置.表示OFF ) ) && ( ( nLane != 14 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != E判定文字表示位置.表示OFF ) ) ) )
 			{
 
-				this.st状態[ nLane ].ct進行 = new CCounter( 0, 300, 1, CDTXMania.Timer );
+				this.st状態[ nLane ].ct進行 = new CCounter( 0, 11, 30, CDTXMania.Timer );
 				this.st状態[ nLane ].judge = judge;
 				this.st状態[ nLane ].fX方向拡大率 = 1f;
 				this.st状態[ nLane ].fY方向拡大率 = 1f;
@@ -153,9 +135,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlay judge strings 1.png"));
-                this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlay judge strings 2.png"));
-				this.tx判定文字列[ 2 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 3.png" ) );
+                this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                 this.txlag数値 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lag numbers.png"));
 				base.OnManagedリソースの作成();
 			}
