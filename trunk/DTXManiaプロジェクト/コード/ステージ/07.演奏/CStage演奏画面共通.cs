@@ -1787,12 +1787,9 @@ namespace DTXMania
                                     this.sw2.Reset();
                                 }
                             }
-                            else
+                            else if (this.nJudgeLinePosY > nJudgeLineMinPosY)
                             {
-                                if (this.nJudgeLinePosY > nJudgeLineMinPosY)
-                                {
-                                    this.nJudgeLinePosY--;
-                                }
+                                this.nJudgeLinePosY--;
                             }
                             this.sw.Reset();
                             this.sw.Start();

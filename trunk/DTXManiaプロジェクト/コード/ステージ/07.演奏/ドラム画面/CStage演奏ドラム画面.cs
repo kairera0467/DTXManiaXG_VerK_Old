@@ -153,7 +153,7 @@ namespace DTXMania
                             this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls_RDRC.png"));
                         }
                     }
-
+                    this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls.png"));
                 }
 				base.OnManagedリソースの作成();
 			}
@@ -290,25 +290,22 @@ namespace DTXMania
                 }
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
 
-                //XG2、グラフON
                 #region[ XG2 グラフON ]
                 if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                    CDTXMania.ConfigIni.bGraph.Drums == true)
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.D)
-                    {
-                        this.t進行描画・ステータスパネル();
-                    }
+                    this.t進行描画・ステータスパネル();
                     this.t進行描画・コンボ();
                 }
                 #endregion
-                //XG2、グラフOFF
+                #region[ XG2、グラフOFF ]
                 if ((CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) &&
                      CDTXMania.ConfigIni.bGraph.Drums == false)
                 {
                     if (CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 == Eドラムコンボ文字の表示位置.CENTER)
                         this.t進行描画・コンボ();
                 }
+                #endregion
                 //XG1
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {

@@ -895,6 +895,30 @@ namespace DTXMania
                 "Set up a DrumSet works.");
             this.list項目リスト.Add(this.iDrumsMoveDrumSet);
 
+            this.iDrumsJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine,
+                "演奏時の判定ラインの高さを変更します。\n" +
+                "0～100の間で指定できます。",
+                "To change the judgeLinePosition for the\n" +
+                "You can set it from 0 to 100.\n" +
+                "(ScrollSpeed=x0.5 means half speed)");
+            this.list項目リスト.Add(this.iDrumsJudgeLinePos);
+
+            this.iDrumsShutterInPos = new CItemInteger("ShutterInPos", 0, 100, CDTXMania.ConfigIni.nShutterInSide,
+                "演奏時のノーツが現れる側のシャッターの\n" +
+                "位置を変更します。",
+                "\n" +
+                "\n" +
+                "");
+            this.list項目リスト.Add(this.iDrumsShutterInPos);
+
+            this.iDrumsShutterOutPos = new CItemInteger("ShutterOutPos", 0, 100, CDTXMania.ConfigIni.nShutterOutSide,
+                "演奏時のノーツが消える側のシャッターの\n" +
+                "位置を変更します。",
+                "\n" +
+                "\n" +
+                "");
+            this.list項目リスト.Add(this.iDrumsShutterOutPos);
+
             this.iDrumsClassicNotes = new CItemToggle("CLASSIC Notes", CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする,
                 "CLASSIC譜面の判別の有無を設定します。\n",
                 "Set the presence or absence of a determination of CLASSIC Score.");
@@ -2306,6 +2330,9 @@ namespace DTXMania
         private CItemList iDrumsLaneDisp;
         private CItemToggle iDrumsJudgeLineDisp;
         private CItemToggle iDrumsLaneFlush;
+        private CItemInteger iDrumsJudgeLinePos;
+        private CItemInteger iDrumsShutterInPos;
+        private CItemInteger iDrumsShutterOutPos;
 
 		//private CItemToggle iGuitarAutoPlay;
 		private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2540,6 +2567,9 @@ namespace DTXMania
 
             CDTXMania.ConfigIni.bHAZARD = this.iDrumsHAZARD.bON;
             CDTXMania.ConfigIni.eAttackEffectType = (Eタイプ)this.iDrumsAttackEffectMode.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.nJudgeLine = this.iDrumsJudgeLinePos.n現在の値;
+            CDTXMania.ConfigIni.nShutterInSide = this.iDrumsShutterInPos.n現在の値;
+            CDTXMania.ConfigIni.nShutterOutSide = this.iDrumsShutterOutPos.n現在の値;
 
 			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;						// #23559 2911.7.27 yyagi
