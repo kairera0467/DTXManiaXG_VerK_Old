@@ -53,6 +53,7 @@ namespace DTXMania
 			{
                 
 				this.tx白タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile white 64x64.png" ), false );
+                this.txリザルト画像 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\8_background.jpg"), false );
                 this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_FullCombo.png"));
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Excellent.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Drums_black.png"));
@@ -102,6 +103,7 @@ namespace DTXMania
             }
             CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
             CDTXMania.tテクスチャの解放( ref this.tx白タイル64x64 );
+            CDTXMania.tテクスチャの解放( ref this.txリザルト画像 );
             CDTXMania.tテクスチャの解放( ref this.txFullCombo );
             CDTXMania.tテクスチャの解放( ref this.txExcellent );
             CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
@@ -458,21 +460,36 @@ namespace DTXMania
 
                     if (this.avi == null)
                     {
-                        if (this.tx白タイル64x64 != null)
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
                         {
                             if (this.counter.n現在の値 <= 300)
                             {
-                                this.tx白タイル64x64.n透明度 = 0;
+                                this.txリザルト画像.n透明度 = 0;
                             }
                             else
                             {
-                                this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
+                                this.txリザルト画像.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
+                                this.txリザルト画像.t2D描画(CDTXMania.app.Device, 0, 0);
                             }
-                            for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+                        }
+                        else
+                        {
+                            if (this.tx白タイル64x64 != null)
                             {
-                                for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+                                if (this.counter.n現在の値 <= 300)
                                 {
-                                    this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                                    this.tx白タイル64x64.n透明度 = 0;
+                                }
+                                else
+                                {
+                                    this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
+                                }
+                                for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+                                {
+                                    for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+                                    {
+                                        this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                                    }
                                 }
                             }
                         }
@@ -505,6 +522,7 @@ namespace DTXMania
         private CTexture tx黒幕;
         private CTexture tx描画用;
         private CTexture txボーナス花火;
+        private CTexture txリザルト画像;
         //private CDirectShow ds背景動画;
 
         [StructLayout(LayoutKind.Sequential)]
