@@ -113,48 +113,12 @@ namespace DTXMania
 				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar guitar.png" ) );
 				this.txレーンフレームGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums lane parts guitar.png" ) );
                 this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter.png" ) );
-                //this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する(CSkin.Path(@"Sounds\Stage clear.ogg"));
+                this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls.png"));
                 if( this.txレーンフレームGB != null )
 				{
 					this.txレーンフレームGB.n透明度 = 0xff - CDTXMania.ConfigIni.n背景の透過度;
 				}
-                if ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ((CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false)) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-                {
-                    if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
-                    {
-                        if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                        {
-                            this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls.png"));
-                        }
-                        else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                        {
-                            this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls_RDRC.png"));
-                        }
-                    }
-                    else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
-                    {
-                        if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                        {
-                            this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls_TypeB.png"));
-                        }
-                        else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                        {
-                            this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls_TypeB_RDRC.png"));
-                        }
-                    }
-                    else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
-                    {
-                        if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                        {
-                            this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls.png"));
-                        }
-                        else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                        {
-                            this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls_RDRC.png"));
-                        }
-                    }
-                    this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls.png"));
-                }
+
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -168,7 +132,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
                 CDTXMania.tテクスチャの解放( ref this.txLaneCover );
                 CDTXMania.tテクスチャの解放( ref this.txシャッター );
-                //this.rResultSound.Dispose();
                 
 				base.OnManagedリソースの解放();
 			}
@@ -247,7 +210,7 @@ namespace DTXMania
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true  )
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true )
                 {
                     if (this.txLaneCover != null)
                     {
@@ -259,7 +222,19 @@ namespace DTXMania
                         }
                         if ((CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false))
                         {
-                            this.txLaneCover.t2D描画(CDTXMania.app.Device, 416, 0, new Rectangle(124, 0, 54, 720));
+                            //レーンタイプでの入れ替わりあり
+                            if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
+                            {
+                                this.txLaneCover.t2D描画(CDTXMania.app.Device, 416, 0, new Rectangle(124, 0, 54, 720));
+                            }
+                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
+                            {
+                                this.txLaneCover.t2D描画(CDTXMania.app.Device, 470, 0, new Rectangle(124, 0, 54, 720));
+                            }
+                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            {
+                                this.txLaneCover.t2D描画(CDTXMania.app.Device, 522, 0, new Rectangle(124, 0, 54, 720));
+                            }
                         }
                         if (CDTXMania.DTX.bチップがある.FT == false)
                         {
@@ -267,7 +242,15 @@ namespace DTXMania
                         }
                         if (CDTXMania.DTX.bチップがある.Ride == false)
                         {
-                            this.txLaneCover.t2D描画(CDTXMania.app.Device, 815, 0, new Rectangle(178,  0, 38, 720));
+                            //RDPositionで入れ替わり
+                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                            {
+                                this.txLaneCover.t2D描画(CDTXMania.app.Device, 815, 0, new Rectangle(178, 0, 38, 720));
+                            }
+                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                            {
+                                this.txLaneCover.t2D描画(CDTXMania.app.Device, 743, 0, new Rectangle(178, 0, 38, 720));
+                            }
                         }
                     }
                 }
@@ -281,8 +264,9 @@ namespace DTXMania
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
                 {
                     this.t進行描画・コンボ();
+                    bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
                 }
-                bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
+                
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
                 {
                     if (this.actGauge.IsFailed(E楽器パート.DRUMS))
@@ -343,7 +327,8 @@ namespace DTXMania
                 this.t進行描画・チップファイアGB();
                 this.t進行描画・STAGEFAILED();
                 bすべてのチップが判定された = true;
-
+                if(CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
+                    bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
                 {
 
