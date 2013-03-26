@@ -267,6 +267,7 @@ namespace DTXMania
                     this.txエキサイトゲージ[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
                     this.txエキサイトゲージ[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
                     this.txエキサイトゲージ[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.jpg"));
+                    this.txスコア = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbersGD.png"));
                     this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
                 }
 
@@ -292,6 +293,7 @@ namespace DTXMania
                     CDTXMania.tテクスチャの解放( ref this.txエキサイトゲージ[1] );
                     CDTXMania.tテクスチャの解放( ref this.txエキサイトゲージ[2] );
                     CDTXMania.tテクスチャの解放( ref this.txスキルパネル );
+                    CDTXMania.tテクスチャの解放( ref this.txスコア );
                 }
 				base.OnManagedリソースの解放();
 			}
@@ -710,7 +712,38 @@ namespace DTXMania
                 this.t小文字表示(190, 374, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fGood率[0])));
                 this.t小文字表示(190, 404, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fPoor率[0])));
                 this.t小文字表示(190, 434, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fMiss率[0])));
-                this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.st演奏記録[0].n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録[0].n全チップ数) * 100f));
+                this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
+
+                string str = CDTXMania.stage結果.st演奏記録[0].nスコア.ToString("0000000");
+                for (int i = 0; i < 7; i++)
+                {
+                    Rectangle rectangle;
+                    char ch = str[i];
+                    if (ch.Equals(' '))
+                    {
+                        rectangle = new Rectangle(0, 0, 36, 50);
+                    }
+                    else
+                    {
+                        int num4 = int.Parse(str.Substring(i, 1));
+                        rectangle = new Rectangle(num4 * 36, 0, 36, 50);
+                    }
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                    {
+                        if (this.txスコア != null)
+                        {
+
+                            this.txスコア.t2D描画(CDTXMania.app.Device, 30 + (i * 34), 40, rectangle);
+                        }
+                    }
+                }
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                {
+                    if (this.txスコア != null)
+                    {
+                        this.txスコア.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
+                    }
+                }
 
                 this.txエキサイトゲージ[0].t2D描画(CDTXMania.app.Device, 294, 626);
                 this.txエキサイトゲージ[1].vc拡大縮小倍率.X = (float)CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums;
@@ -782,6 +815,7 @@ namespace DTXMania
         private CTexture[] tx文字;
         private CTexture[] txエキサイトゲージ;
         private CTexture txスキルパネル;
+        private CTexture txスコア;
 
 
         private void t小文字表示(int x, int y, string str)
