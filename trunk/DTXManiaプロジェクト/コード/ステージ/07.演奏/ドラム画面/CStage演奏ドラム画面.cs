@@ -343,10 +343,6 @@ namespace DTXMania
                 this.t進行描画・チップファイアGB();
                 this.t進行描画・STAGEFAILED();
                 bすべてのチップが判定された = true;
-                if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-                {
-                    bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
-                }
 
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
                 {
