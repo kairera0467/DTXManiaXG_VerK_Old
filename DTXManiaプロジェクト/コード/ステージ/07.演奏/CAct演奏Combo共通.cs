@@ -286,7 +286,7 @@ namespace DTXMania
                     }
 					break;
 			}
-			int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 350 : 20;
+			int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 530 : 20;
 			int n数字とCOMBOを合わせた画像の全長px = ( ( nドラムコンボの幅 + nドラムコンボの文字間隔 ) * n桁数 ) ;
 			int x = ( nX中央位置px + ( n数字とCOMBOを合わせた画像の全長px / 2 ) );
 			int y = ( nY上辺位置px + nドラムコンボの高さ ) - nドラムコンボのCOMBO文字の高さ;
