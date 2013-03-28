@@ -261,32 +261,9 @@ namespace DTXMania
                 #endregion
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                {
-                    this.t進行描画・コンボ();
-                    bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
-                }
-                
-                if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                {
-                    if (this.actGauge.IsFailed(E楽器パート.DRUMS))
-                    {
-                        this.actStageFailed.Start();
-                        CDTXMania.DTX.t全チップの再生停止();
-                        base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_FAILED;
-                        this.actFO.tフェードアウト開始();
-                    }
-                    else
-                    {
-                        this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
-                        base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-                        CDTXMania.Skin.soundステージクリア音.t再生する();
-                        this.actFOStageClear.tフェードアウト開始();
-                    }
-                }
                 this.t進行描画・スコア();
                 this.t進行描画・DANGER();
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
                 {
                     this.t進行描画・パネル文字列();
                 }
@@ -327,8 +304,7 @@ namespace DTXMania
                 this.t進行描画・チップファイアGB();
                 this.t進行描画・STAGEFAILED();
                 bすべてのチップが判定された = true;
-                if(CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-                    bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
+                bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
                 {
 
@@ -347,12 +323,9 @@ namespace DTXMania
                     {
                         this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-                        {
-                            CDTXMania.Skin.soundステージクリア音.t再生する();
-                            this.actFOStageClear.tフェードアウト開始();
-                            //this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
-                        }
+                        CDTXMania.Skin.soundステージクリア音.t再生する();
+                        this.actFOStageClear.tフェードアウト開始();
+                        //this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
                     }
                 }
                 if (bIsFinishedFadeout)
@@ -451,7 +424,6 @@ namespace DTXMania
         public bool bフィルイン終了;
         public bool bサビ区間;
         public bool bボーナス;
-//      private CSound rResultSound;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[12]
 		{
 			Eパッド.HH, Eパッド.SD, Eパッド.BD, Eパッド.HT,
