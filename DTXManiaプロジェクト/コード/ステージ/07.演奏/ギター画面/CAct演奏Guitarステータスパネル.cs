@@ -60,7 +60,7 @@ namespace DTXMania
 					}
 					this.tx右パネル.t2D描画( CDTXMania.app.Device, 0x26e, 0x35, new Rectangle( bass * 15, 0, 15, 0xac ) );
 				}
-                this.tx曲名パネル.t2D描画(CDTXMania.app.Device, 515, 521);
+                //this.tx曲名パネル.t2D描画(CDTXMania.app.Device, 515, 521);
 			}
 			return 0;
 		}

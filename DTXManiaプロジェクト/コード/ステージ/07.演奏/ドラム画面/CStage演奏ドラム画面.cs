@@ -210,9 +210,9 @@ namespace DTXMania
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true )
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true && CDTXMania.DTX.bチップがある.FT == false && CDTXMania.DTX.bチップがある.Ride == false && CDTXMania.DTX.bチップがある.LP == false)
                 {
-                    if (this.txLaneCover != null)
+                    if ( this.txLaneCover != null )
                     {
                         //旧画像
                         //this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);

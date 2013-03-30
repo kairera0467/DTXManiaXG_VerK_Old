@@ -2290,6 +2290,7 @@ namespace DTXMania
 					case 0x26:
 					case 0x27:
 
+                        /*
                     case 0x93:
                     case 0x94:
                     case 0x95:
@@ -2314,6 +2315,7 @@ namespace DTXMania
                     case 0xD1:
                     case 0xD2:
                     case 0xD3:
+                         */
 						this.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, E楽器パート.GUITAR );
 						break;
 					#endregion
@@ -2756,19 +2758,40 @@ namespace DTXMania
 //Trace.TraceInformation( "chip={0:x2}, E楽器パート={1}, x={2}", pChip.nチャンネル番号, inst, x );
 							if ( bChipHasR )
 							{
-								this.txチップ.t2D描画( CDTXMania.app.Device, 88, y - chipHeight / 2, new Rectangle(0, 0, 38, 10) );
+                                if (inst == E楽器パート.GUITAR)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 88, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
+                                }
+                                else if (inst == E楽器パート.BASS)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1000, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
+                                }
 							}
 							rc.X += chipTexDeltaX;
 							x += deltaX;
 							if ( bChipHasG )
 							{
-                                this.txチップ.t2D描画( CDTXMania.app.Device, 127, y - chipHeight / 2, new Rectangle(38, 0, 38, 10) );
+                                if (inst == E楽器パート.GUITAR)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 127, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
+                                }
+                                else if(inst == E楽器パート.BASS)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1040, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
+                                }
 							}
 							rc.X += chipTexDeltaX;
 							x += deltaX;
 							if ( bChipHasB )
 							{
-                                this.txチップ.t2D描画( CDTXMania.app.Device, 166, y - chipHeight / 2, new Rectangle(76, 0, 38, 10) );
+                                if (inst == E楽器パート.GUITAR)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 166, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
+                                }
+                                else if (inst == E楽器パート.BASS)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
+                                }
 							}
 						}
 					}
@@ -3299,6 +3322,7 @@ namespace DTXMania
 				{
 					chipWailing.bHit = true;
 					this.actWailingBonus.Start( inst, this.r現在の歓声Chip[ indexInst ] );
+                    this.actAVI.Start(true);
 					//if ( !bIsAutoPlay[indexInst] )
 					if ( !autoW )
 					{

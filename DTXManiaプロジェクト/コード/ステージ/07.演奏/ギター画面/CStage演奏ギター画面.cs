@@ -151,13 +151,14 @@ namespace DTXMania
 				this.t進行描画・チップアニメ();
 				bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.GUITAR);
 				this.t進行描画・演奏情報();
-				//this.t進行描画・Wailing枠();
+				this.t進行描画・Wailing枠();
 				this.t進行描画・チップファイアGB();
 				this.t進行描画・STAGEFAILED();
 				bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
 				if( bIsFinishedPlaying && ( base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
 				{
-                    if (this.actGauge.IsFailed(E楽器パート.DRUMS))
+                    Trace.TraceInformation("演奏終了");
+                    if (this.actGauge.IsFailed(E楽器パート.GUITAR))
                     {
                         this.actStageFailed.Start();
                         CDTXMania.DTX.t全チップの再生停止();
@@ -166,6 +167,7 @@ namespace DTXMania
                     }
                     else
                     {
+                        Trace.TraceInformation("ステージクリア");
                         this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
                         CDTXMania.Skin.soundステージクリア音.t再生する();
@@ -174,6 +176,7 @@ namespace DTXMania
 				}
 				if( bIsFinishedFadeout )
 				{
+                    Trace.TraceInformation("フェードアウト完了");
                     this.nミス数 = base.nヒット数・Auto含まない.Guitar.Miss + base.nヒット数・Auto含まない.Guitar.Poor;
                     switch (nミス数)
                     {
@@ -322,7 +325,7 @@ namespace DTXMania
 					{
 						if ( this.txヒットバー != null )
 						{
-							this.txヒットバー.t2D描画( CDTXMania.app.Device, 0x1dd + ( 0x1c * j ), y, new Rectangle( 0, j * 8, 0x1c, 8 ) );
+							this.txヒットバー.t2D描画( CDTXMania.app.Device, 800 + ( 0x1c * j ), y, new Rectangle( 0, j * 8, 0x1c, 8 ) );
 						}
 					}
 				}
@@ -391,7 +394,7 @@ namespace DTXMania
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
 		{
 			base.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, inst,
-				154, 369, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 919, 1000, 38, 38 );
+				154, 369, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38 );
 		}
 #if false
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )

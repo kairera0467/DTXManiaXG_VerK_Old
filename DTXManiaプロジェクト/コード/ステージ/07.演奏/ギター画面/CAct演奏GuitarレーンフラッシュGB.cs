@@ -34,7 +34,7 @@ namespace DTXMania
 						for( int j = 0; j < 3; j++ )
 						{
 							int x = ( ( ( i < 3 ) ? 88 : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 16 * base.ct進行[ i ].n現在の値 ) / 100 );
-							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 55 + ( j * 118 ) ) : ( j * 118 );
+							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 55 + ( j * 118 ) ) : 100 + ( j * 118 );
 							if( texture != null )
 							{
 								texture.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( j * 37, 0, ( 37 * ( 100 - base.ct進行[ i ].n現在の値 ) ) / 100, 118 ) );

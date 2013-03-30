@@ -139,11 +139,6 @@ namespace DTXMania
 				"Turn ON to use child BOX (subfolders)\n at RANDOM SELECT." );
 			this.list項目リスト.Add( this.iSystemRandomFromSubBox );
 
-            //this.iSystemCredit = new CItemToggle("CREDIT", CDTXMania.ConfigIni.クレジットを表示する,
-            //    "クレジット文字のONOFF \n" +
-            //    "を設定します。");
-            //this.list項目リスト.Add(this.iSystemCredit);
-
             this.iSystemAdjustWaves = new CItemToggle("AdjustWaves", CDTXMania.ConfigIni.bWave再生位置自動調整機能有効,
                 "サウンド再生位置自動補正：\n" +
                 "ハードウェアやOSに起因するサウン\n" +
@@ -478,6 +473,7 @@ namespace DTXMania
 				"(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iDrumsScrollSpeed );
 
+            #region[旧HIDSUD、DARK]
             /*
 			this.iDrumsSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Drums,
 				"ドラムチップが譜面の下の方から表\n" +
@@ -508,6 +504,7 @@ namespace DTXMania
 				new string[] { "OFF", "HALF", "FULL" } );
 			this.list項目リスト.Add( this.iCommonDark );
             */
+            #endregion
 
             this.iHidSud = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud,
                 "HIDDEN:チップが途中から見えなくなります。\n"+
@@ -799,8 +796,7 @@ namespace DTXMania
 				"ドラムの入力タイミングの微調整を\n" +
 				"行います。\n" +
 				"-99 ～ 0ms まで指定可能です。\n" +
-                "値を指定してください。\n" +
-                "※ 設定はアプリ再起動後に有効になります。",
+                "値を指定してください。\n",
 				"To adjust the drums input timing.\n" +
 				"You can set from -99 to 0ms.\n" +
 				"To decrease input lag, set minus value." );
@@ -1062,36 +1058,63 @@ namespace DTXMania
 				"演奏時のギター譜面のスクロールの\n速度を指定します。\nx0.5 ～ x1000.0 までを指定可能です。",
 				"To change the scroll speed for the\nguitar lanes.\nYou can set it from x0.5 to x1000.0.\n(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iGuitarScrollSpeed );
+
 			this.iGuitarSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Guitar,
 				"ギターチップがヒットバー付近にくる\nまで表示されなくなります。",
 				"Guitar chips are disappered until they\ncome near the hit bar, and suddenly\nappears." );
 			this.list項目リスト.Add( this.iGuitarSudden );
+
 			this.iGuitarHidden = new CItemToggle( "Hidden", CDTXMania.ConfigIni.bHidden.Guitar,
 				"ギターチップがヒットバー付近で表示\nされなくなります。",
 				"Guitar chips are hidden by approaching\nto the hit bar. " );
 			this.list項目リスト.Add( this.iGuitarHidden );
+
+            //レーン表示
+
 			this.iGuitarReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Guitar,
 				"ギターチップが譜面の上から下に流\nれるようになります。",
 				"The scroll way is reversed. Guitar chips\nflow from the top to the bottom." );
 			this.list項目リスト.Add( this.iGuitarReverse );
+
+            //コンボ表示
+
+            //RISKY
+
 			this.iGuitarPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.判定文字表示位置.Guitar,
 				"ギターの判定文字の表示位置を指定\nします。\n  P-A: レーン上\n  P-B: COMBO の下\n  OFF: 表示しない",
 				"The position to show judgement mark.\n(Perfect, Great, ...)\n\n P-A: on the lanes.\n P-B: under the COMBO indication.\n OFF: no judgement mark.",
 				new string[] { "P-A", "P-B", "OFF" } );
 			this.list項目リスト.Add( this.iGuitarPosition );
+
+            //実機ではここにオートオプションが入る。
+
+			this.iGuitarLight = new CItemToggle( "Light", CDTXMania.ConfigIni.bLight.Guitar,
+				"ギターチップのないところでピッキン\nグしても BAD になりません。",
+				"Even if you pick without any chips,\nit doesn't become BAD." );
+			this.list項目リスト.Add( this.iGuitarLight );
+
 			this.iGuitarRandom = new CItemList( "Random", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eRandom.Guitar,
 				"ギターのチップがランダムに降ってき\nます。\n  Part: 小節・レーン単位で交換\n  Super: チップ単位で交換\n  Hyper: 全部完全に変更",
 				"Guitar chips come randomly.\n\n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
 				new string[] { "OFF", "Part", "Super", "Hyper" } );
 			this.list項目リスト.Add( this.iGuitarRandom );
-			this.iGuitarLight = new CItemToggle( "Light", CDTXMania.ConfigIni.bLight.Guitar,
-				"ギターチップのないところでピッキン\nグしても BAD になりません。",
-				"Even if you pick without any chips,\nit doesn't become BAD." );
-			this.list項目リスト.Add( this.iGuitarLight );
-			this.iGuitarLeft = new CItemToggle( "Left", CDTXMania.ConfigIni.bLeft.Guitar,
+
+            //NumOfLanes(ここではレーンオ－トに相当する。)
+            //バイブオプション(実装不可)
+            //StageEffect
+            
+            this.iGuitarLeft = new CItemToggle( "Left", CDTXMania.ConfigIni.bLeft.Guitar,
 				"ギターの RGB の並びが左右反転し\nます。（左利きモード）",
 				"Lane order 'R-G-B' becomes 'B-G-R'\nfor lefty." );
 			this.list項目リスト.Add( this.iGuitarLeft );
+
+            //MovieMode(総合で設定するため個別には実装しない。)
+            //SkillMeter(後々実装)
+            //比較対象(そもそも比較グラフさえ完成していない)
+            //シャッタータイプ
+            //シャッターポジション(IN)
+            //シャッターポジション(OUT)
+            //判定ラインポジション
 
 			this.iSystemSoundMonitorGuitar = new CItemToggle( "GuitarMonitor", CDTXMania.ConfigIni.b演奏音を強調する.Guitar,
 			"ギター音モニタ：\nギター音を他の音より大きめの音量\nで発声します。\nただし、オートプレイの場合は通常音\n量で発声されます。",
@@ -1101,7 +1124,6 @@ namespace DTXMania
 				"表示可能な最小コンボ数（ギター）：\n画面に表示されるコンボの最小の数\nを指定します。\n1 ～ 99999 の値が指定可能です。",
 				"Initial number to show the combo\n for the guitar.\nYou can specify from 1 to 99999." );
 			this.list項目リスト.Add( this.iSystemMinComboGuitar );
-
 			
 			// #23580 2011.1.3 yyagi
 			this.iGuitarInputAdjustTimeMs = new CItemInteger( "InputAdjust", -99, 0, CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar,

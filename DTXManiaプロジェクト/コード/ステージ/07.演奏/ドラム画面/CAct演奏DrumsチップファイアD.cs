@@ -74,7 +74,7 @@ namespace DTXMania
                         {
                             this.st青い星[j].b使用中 = true;
                             int n回転初期値 = CDTXMania.Random.Next(360);
-                            double num7 = 0.85 + ( 1 / 100.0); // 拡散の大きさ
+                            double num7 = 0.89 + ( 1 / 100.0); // 拡散の大きさ
                             this.st青い星[j].nLane = (int)lane;
                             this.st青い星[j].ct進行 = new CCounter(0, 40, 7, CDTXMania.Timer); // カウンタ
                             this.st青い星[j].fX = this.nレーンの中央X座標[(int)lane] + 320; //X座標
@@ -103,8 +103,8 @@ namespace DTXMania
                             this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
                             this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0)) - 0.1);
                             this.st青い星[j].f加速度の加速度X = 1.000f;
-                            this.st青い星[j].f加速度の加速度Y = 1.0f;
-                            this.st青い星[j].f重力加速度 = 0.02200f;
+                            this.st青い星[j].f加速度の加速度Y = 0.99999f;
+                            this.st青い星[j].f重力加速度 = 0.02000f;
                             this.st青い星[j].f半径 = (float)(0.3 + (((double)CDTXMania.Random.Next(30)) / 100.0));
                             break;
                         }
