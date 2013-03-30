@@ -106,7 +106,7 @@ namespace DTXMania
                         else
                         {
                             //A～C
-                            base.txgbg.t2D描画(CDTXMania.app.Device, 0x116, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, 0x250, 0x2d));
+                            base.txgbg.t2D描画(CDTXMania.app.Device, 0x102, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, 0x250, 0x2d));
                         }
                     }
 
@@ -128,7 +128,7 @@ namespace DTXMania
                         else
                         {
                             //A～C
-                            base.txgbar.t2D描画(CDTXMania.app.Device, 0x143, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
+                            base.txgbar.t2D描画(CDTXMania.app.Device, 0x12f, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
                         }
                     }
                     base.txgbar.vc拡大縮小倍率.X = 1f;
@@ -138,18 +138,18 @@ namespace DTXMania
                     }
                     else
                     {
-                        base.txgbar2.t2D描画(CDTXMania.app.Device, 0x147, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 0x299), new Rectangle(0, 0x1a, 0x1f8, 0x1a));
+                        base.txgbar2.t2D描画(CDTXMania.app.Device, 0x133, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 0x299), new Rectangle(0, 0x1a, 0x1f8, 0x1a));
                     }
 
                 }
 
                 if (base.db現在のゲージ値.Drums <= 0.3)
                 {
-                    this.txゲージマスク2.t2D描画( CDTXMania.app.Device, 279, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 :652 ));
+                    this.txゲージマスク2.t2D描画( CDTXMania.app.Device, 259, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 :652 ));
                 }
                 if (base.db現在のゲージ値.Drums == 1.0)
                 {
-                    this.txゲージマスク.t2D描画( CDTXMania.app.Device, 279, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652 ));
+                    this.txゲージマスク.t2D描画( CDTXMania.app.Device, 259, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652 ));
                 }
 			}
 			return 0;
@@ -160,18 +160,6 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		[StructLayout( LayoutKind.Sequential )]
-		private struct ST白い星
-		{
-			public int x;
-			public float fScale;
-			public CCounter ct進行;
-		}
-		//private CCounter ct本体振動;
-		//private double dbゲージ値;
-		private const int STAR_MAX = 0x18;
-		private ST白い星[] st白い星 = new ST白い星[ 0x18 ];
-		//private CTexture txゲージ;
 		//-----------------
 		#endregion
 	}

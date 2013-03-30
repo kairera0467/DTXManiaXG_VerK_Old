@@ -10,7 +10,7 @@ namespace DTXMania
 
 		protected override void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス )
 		{
-			int x = 230;
+			int x = 480;
 			int y = CDTXMania.ConfigIni.bReverse.Guitar ? 0x103 : 150;
 			if( base.txCOMBOギター != null )
 			{
@@ -23,7 +23,7 @@ namespace DTXMania
 		}
 		protected override void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{
-			int x = 410;
+			int x = 810;
 			int y = CDTXMania.ConfigIni.bReverse.Bass ? 0x103 : 150;
 			if( base.txCOMBOギター != null )
 			{

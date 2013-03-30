@@ -630,7 +630,7 @@ namespace DTXMania
             this.txCOMBOドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayDrums combo drums.png"));
             this.txComboBom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Combobomb.png"));
             this.txComboBom.b加算合成 = true;
-			this.txCOMBOギター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums combo guitar.png" ) );
+			this.txCOMBOギター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums combo drums.png" ) );
 			base.OnManagedリソースの作成();
 		}
 		public override void OnManagedリソースの解放()
