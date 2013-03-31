@@ -1974,6 +1974,8 @@ namespace DTXMania
                     //SHIFT & F7
                     //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
                     //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                    CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
+                    
                 }
                 if ( keyboard.bキーが押された(0x3d))
                 {
@@ -2975,8 +2977,6 @@ namespace DTXMania
                     {
                         break;
                     }
-
-
 					return true;
 		
 			}

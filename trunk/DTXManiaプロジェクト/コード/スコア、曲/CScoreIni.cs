@@ -1550,12 +1550,9 @@ namespace DTXMania
         {
             if (nTotal == 0)
                 return 0.0;
-
             int nAuto = nTotal - nPerfect;
-            double y = (nPerfect * 0.8 * 100.0) / ((double)nTotal);
+            double y = (nPerfect * 1.0 * 100.0) / ((double)nTotal);
             double ret = (100.0 * ((Math.Pow(1.03, y) - 1.0) / (Math.Pow(1.03, 100.0) - 1.0)));
-
-            ret = ret / db目標スキル;
 
             return ret;
         }

@@ -99,8 +99,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.bIsFinishedPlaying = false;
-                this.bIsFinishedFadeout = false;
+                bool flag = false;
+                bool flag2 = false;
 
 				if( base.b初めての進行描画 )
 				{
@@ -133,13 +133,12 @@ namespace DTXMania
 				this.t進行描画・背景();
                 this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
-				//this.t進行描画・パネル文字列();
-				
+				this.t進行描画・パネル文字列();
 				this.t進行描画・BGA();
 				this.t進行描画・ステータスパネル();
                 this.t進行描画・スコア();
 				this.t進行描画・レーンフラッシュGB();
-				//this.t進行描画・ギターベース判定ライン();
+				this.t進行描画・ギターベース判定ライン();
                 this.t進行描画・判定ライン();
 				this.t進行描画・ゲージ();
 				this.t進行描画・DANGER();
@@ -149,93 +148,46 @@ namespace DTXMania
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
-				bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.GUITAR);
+                flag = this.t進行描画・チップ(E楽器パート.GUITAR);
 				this.t進行描画・演奏情報();
 				this.t進行描画・Wailing枠();
 				this.t進行描画・チップファイアGB();
 				this.t進行描画・STAGEFAILED();
-				bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
-				if( bIsFinishedPlaying && ( base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
+                flag2 = this.t進行描画・フェードイン・アウト();
+                if ( flag && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
+                {
+                    this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
+                    base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
+                    CDTXMania.Skin.soundステージクリア音.t再生する();
+                    this.actFOStageClear.tフェードアウト開始();
+                }
+				if( flag2 )
 				{
-                    Trace.TraceInformation("演奏終了");
-                    if (this.actGauge.IsFailed(E楽器パート.GUITAR))
-                    {
-                        this.actStageFailed.Start();
-                        CDTXMania.DTX.t全チップの再生停止();
-                        base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_FAILED;
-                        this.actFO.tフェードアウト開始();
-                    }
-                    else
-                    {
-                        Trace.TraceInformation("ステージクリア");
-                        this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
-                        base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-                        CDTXMania.Skin.soundステージクリア音.t再生する();
-                        this.actFOStageClear.tフェードアウト開始();
-                    }
-				}
-				if( bIsFinishedFadeout )
-				{
-                    Trace.TraceInformation("フェードアウト完了");
-                    this.nミス数 = base.nヒット数・Auto含まない.Guitar.Miss + base.nヒット数・Auto含まない.Guitar.Poor;
-                    switch (nミス数)
-                    {
-                        case 0:
-                            {
-                                this.nパフェ数 = base.nヒット数・Auto含まない.Guitar.Perfect;
-                                if (CDTXMania.ConfigIni.bギターが全部オートプレイである)
-                                {
-                                    this.nパフェ数 = base.nヒット数・Auto含む.Guitar.Perfect;
-                                }
-                                if (nパフェ数 == CDTXMania.DTX.n可視チップ数.Guitar)
-                                #region[ エクセ ]
-                                {
-                                    this.bエクセ = true;
-                                    if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                        this.actScore.n現在の本当のスコア.Guitar += 30000;
-                                    break;
-                                }
-                                #endregion
-                                else
-                                #region[ フルコン ]
-                                {
-                                    this.bフルコン = true;
-                                    if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                        this.actScore.n現在の本当のスコア.Guitar += 15000;
-                                    break;
-                                }
-                                #endregion
-                            }
-                        default:
-                            {
-                                break;
-                            }
-                    }
 					return (int) this.eフェードアウト完了時の戻り値;
 				}
                 // もしサウンドの登録/削除が必要なら、実行する
-                if (queueMixerSound.Count > 0)
-                {
-                    //Debug.WriteLine( "☆queueLength=" + queueMixerSound.Count );
-                    DateTime dtnow = DateTime.Now;
-                    TimeSpan ts = dtnow - dtLastQueueOperation;
-                    if (ts.Milliseconds > 7)
-                    {
-                        for (int i = 0; i < 2 && queueMixerSound.Count > 0; i++)
-                        {
-                            dtLastQueueOperation = dtnow;
-                            stmixer stm = queueMixerSound.Dequeue();
-                            if (stm.bIsAdd)
-                            {
-                                CDTXMania.Sound管理.AddMixer(stm.csound);
-                            }
-                            else
-                            {
-                                CDTXMania.Sound管理.RemoveMixer(stm.csound);
-                            }
-                        }
-                    }
-                }
+				if ( queueMixerSound.Count > 0 )
+				{
+//Debug.WriteLine( "☆queueLength=" + queueMixerSound.Count );
+					DateTime dtnow = DateTime.Now;
+					TimeSpan ts = dtnow - dtLastQueueOperation;
+					if ( ts.Milliseconds > 7 )
+					{
+						for ( int i = 0; i < 2 && queueMixerSound.Count > 0; i++ )
+						{
+							dtLastQueueOperation = dtnow;
+							stmixer stm = queueMixerSound.Dequeue();
+							if ( stm.bIsAdd )
+							{
+								CDTXMania.Sound管理.AddMixer( stm.csound );
+							}
+							else
+							{
+								CDTXMania.Sound管理.RemoveMixer( stm.csound );
+							}
+						}
+					}
+				}
 
 				// キー入力
 
@@ -252,21 +204,7 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-        public bool bIsFinishedFadeout;
-        public bool bIsFinishedPlaying;
-        public bool bエクセ;
-        public bool bフルコン;
-        public int nミス数;
-        public int nパフェ数;
         private CTexture txレーン;
-
-        private void tフェードアウト()
-        {
-            this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
-            base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-
-            this.actFOStageClear.tフェードアウト開始();
-        }
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
 		{
@@ -526,7 +464,7 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 154, 369 };			// ドラム画面かギター画面かで変わる値
+					int[] y_base = { 40, 369 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
 					const int WailingWidth = 20;		// 4種全て同じ値
@@ -543,7 +481,7 @@ namespace DTXMania
 					if ( ( numB < ( numD + numA ) ) && ( numB > -numA ) )	// 以下のロジックは4種全て同じ
 					{
 						int c = this.ctWailingチップ模様アニメ.n現在の値;
-						Rectangle rect = new Rectangle( baseTextureOffsetX + ( WailingWidth ), baseTextureOffsetY, WailingWidth, WailingHeight );
+						Rectangle rect = new Rectangle( baseTextureOffsetX + ( c * WailingWidth ), baseTextureOffsetY, WailingWidth, WailingHeight );
 						if ( numB < numA )
 						{
 							rect.Y += numA - numB;
@@ -572,7 +510,7 @@ namespace DTXMania
 				//}
 				//pChip.bHit = true;
 			}
-			//base.t進行描画・チップ・ギター・ウェイリング( configIni, ref dTX, ref pChip );    //2012.02.21.kairera0467 まだ未対応。
+			base.t進行描画・チップ・ギター・ウェイリング( configIni, ref dTX, ref pChip );
 		}
 		protected override void t進行描画・チップ・フィルイン( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
@@ -691,7 +629,7 @@ namespace DTXMania
 					{
 						this.actChipFireGB.Start( 5 );
 					}
-					this.tサウンド再生( pChip, CDTXMania.Timer.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.BASS, dTX.nモニタを考慮した音量( E楽器パート.BASS ) );
+					this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.BASS, dTX.nモニタを考慮した音量( E楽器パート.BASS ) );
 					this.r次にくるベースChip = null;
 					this.tチップのヒット処理( pChip.n発声時刻ms, pChip );
 				}
@@ -700,11 +638,11 @@ namespace DTXMania
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Bass < 0 ) )
 			{
 				pChip.bHit = true;
-				this.tサウンド再生( pChip, CDTXMania.Timer.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.BASS, dTX.nモニタを考慮した音量( E楽器パート.BASS ) );
+				this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.BASS, dTX.nモニタを考慮した音量( E楽器パート.BASS ) );
 			}
 		}
 #endif
-		protected override void t進行描画・チップ・ベース・ウェイリング( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
+        protected override void t進行描画・チップ・ベース・ウェイリング( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
 			if ( configIni.bGuitar有効 )
 			{
@@ -722,7 +660,7 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 154, 369 };			// ドラム画面かギター画面かで変わる値
+					int[] y_base = { 40, 369 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
 					const int WailingWidth = 20;		// 4種全て同じ値
@@ -779,27 +717,27 @@ namespace DTXMania
 		}
 		protected override void t進行描画・チップ・小節線( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
-			int n小節番号plus1 = pChip.n発声位置 / 384;
+			int n小節番号plus1 = pChip.n発声位置 / 0x180;
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
 			{
 				pChip.bHit = true;
 				this.actPlayInfo.n小節番号 = n小節番号plus1 - 1;
-                if (configIni.bWave再生位置自動調整機能有効 && bIsDirectSound)
-			    {
+				if ( configIni.bWave再生位置自動調整機能有効 && bIsDirectSound )
+				{
 					dTX.tWave再生位置自動補正();
 				}
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( configIni.eDark != Eダークモード.FULL ) )
 			{
-				int y = configIni.bReverse.Guitar ? ( ( 369 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 1 );
-				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
+				int y = configIni.bReverse.Guitar ? ( ( 0x171 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 40 + pChip.nバーからの距離dot.Guitar ) - 1 );
+				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 0x199 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 87, y, new Rectangle( 0, 20, 196, 2 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 0x1a, y, new Rectangle( 0, 0xeb, 0x68, 1 ) );
 				}
-				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) - 1 );
+				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 40 + pChip.nバーからの距離dot.Bass ) - 1 );
 				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 0x199 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 20, 196, 2 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 0xeb, 0x68, 1 ) );
 				}
 			}
 

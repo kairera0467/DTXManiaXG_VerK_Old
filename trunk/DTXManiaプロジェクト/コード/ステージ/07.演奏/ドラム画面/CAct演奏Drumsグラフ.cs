@@ -145,26 +145,6 @@ namespace DTXMania
 			{
 				if( base.b初めての進行描画 )
 				{
-					for( int k = 0; k < 64; k++ )
-					{
-						this.stキラキラ[ k ].x = 0 + CDTXMania.Random.Next( 8 );
-						this.stキラキラ[ k ].fScale = 1f + ( CDTXMania.Random.Next( 9 ) * 0.2f );
-						this.stキラキラ[ k ].Trans = 0 + CDTXMania.Random.Next( 32 ) ;
-                        if (k < 32)
-                        {
-                            this.stキラキラ[ k ].ct進行 = new CCounter(0, 975, 10 + CDTXMania.Random.Next(20), CDTXMania.Timer);
-                        }
-                        else if (k < 64)
-                        {
-                            this.stキラキラ[ k ].ct進行 = new CCounter(0, 975, 20 + CDTXMania.Random.Next(50), CDTXMania.Timer);
-                        }
-                        this.stキラキラ[ k ].ct進行.n現在の値 = CDTXMania.Random.Next(230);
-					}
-					for( int k = 0; k < 16; k++ )
-					{
-						this.stフラッシュ[ k ].y = -1;
-						this.stフラッシュ[ k ].Trans = 0;
-					}
 					base.b初めての進行描画 = false;
                 }
                 double db1ノーツごとの達成率 = (double)this.dbグラフ値目標 / CDTXMania.DTX.n可視チップ数.Drums;
@@ -181,8 +161,8 @@ namespace DTXMania
                 {
                     //int n逆算Perfect = drums.nPerfect数・Auto含まない / this.n現在演奏されたノーツ数;
                     //int n逆算Great = drums.nGreat数・Auto含まない / this.n現在演奏されたノーツ数;
-                    //this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, this.dbグラフ値目標, E楽器パート.DRUMS);
-                    this.dbグラフ値比較 = this.dbグラフ値目標;
+                    this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, this.dbグラフ値目標, E楽器パート.DRUMS);
+                    //this.dbグラフ値比較 = this.dbグラフ値目標_渡;
                 }
                 else if (CDTXMania.ConfigIni.nSkillMode == 1)
                 {
@@ -272,12 +252,12 @@ namespace DTXMania
                     rectangle = new Rectangle(20, 0, 1, 1);
                     if (this.txグラフ != null)
                     {
-				    	this.stキラキラ[ k ].ct進行.t進行Loop();
+				    	//this.stキラキラ[ k ].ct進行.t進行Loop();
                         int num1 = (int)this.stキラキラ[ k ].x;
-                        int num2 = this.stキラキラ[ k ].ct進行.n現在の値;
+                        //int num2 = this.stキラキラ[ k ].ct進行.n現在の値;
                         //this.txグラフ.vc拡大縮小倍率 = new Vector3(this.stキラキラ[ k ].fScale, this.stキラキラ[ k ].fScale, this.stキラキラ[ k ].fScale);
                         //this.txグラフ.n透明度 = 138 - 2 * this.stキラキラ[ k ].Trans;
-                        if ( num2 < (2.3f * this.dbグラフ値現在_表示) )
+                        //if ( num2 < (2.3f * this.dbグラフ値現在_表示) )
                         {
                             //this.txグラフ.t2D描画(CDTXMania.app.Device, 860+num1, 318-num2, rectangle);
                         }

@@ -168,7 +168,8 @@ namespace DTXMania
             }
             this.counter.t進行();
 
-
+            if (CDTXMania.ConfigIni.bDrums有効 == true)
+            {
                 if (!CDTXMania.ConfigIni.bドラムが全部オートプレイである)
                 {
                     if (CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0)
@@ -373,6 +374,7 @@ namespace DTXMania
                         this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
                 }
+            }
                 if (this.counter.n現在の値 >= 300)
                 {
                     //if (this.ds背景動画 != null)
