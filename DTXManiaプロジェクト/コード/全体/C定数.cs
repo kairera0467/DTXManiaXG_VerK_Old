@@ -77,10 +77,10 @@ namespace DTXMania
 		CY		= 6,
 		Decide	= 6,
 		HHO		= 7,
-        Y       = 7,
+        //Y       = 7,
 		RD		= 8,
 		LC		= 9,
-        P       = 9,
+        //P       = 9,
 		//HP		= 10,	// #27029 2012.1.4 from
 		LP      = 10,
         LBD     = 11,
@@ -132,9 +132,9 @@ namespace DTXMania
 		Decide	= 128,
 		HHO		= 128,
 		RD		= 256,
-        Y       = 256,
+        //Y       = 256,
 		LC		= 512,
-        P       = 512,
+        //P       = 512,
         LP      = 1024,
         LBD     = 2048,
 		UNKNOWN = 4096
@@ -240,15 +240,15 @@ namespace DTXMania
 		GtR,
 		GtG,
 		GtB,
-        GtY,
-        GtP,
+        //GtY,
+        //GtP,
 		GtPick,
 		GtW,
 		BsR,
 		BsG,
 		BsB,
-        BsY,
-        BsP,
+        //BsY,
+        //BsP,
 		BsPick,
 		BsW,
 		MAX,	// 要素数取得のための定義 ("BGM"は使わない前提で)
@@ -526,15 +526,15 @@ namespace DTXMania
 		public bool GtR;		// 11
 		public bool GtG;		// 12
 		public bool GtB;		// 13
-        public bool GtY;
-        public bool GtP;
+        //public bool GtY;
+        //public bool GtP;
 		public bool GtPick;		// 14
 		public bool GtW;		// 15
 		public bool BsR;		// 16
 		public bool BsG;		// 17
 		public bool BsB;		// 18
-        public bool BsY;
-        public bool BsP;
+        //public bool BsY;
+        //public bool BsP;
 		public bool BsPick;		// 19
 		public bool BsW;		// 20
 		public bool this[ int index ]
@@ -569,8 +569,8 @@ namespace DTXMania
                         if (!this.GtR) return false;
                         if (!this.GtG) return false;
                         if (!this.GtB) return false;
-                        if (!this.GtY) return false;
-                        if (!this.GtP) return false;
+                        //if (!this.GtY) return false;
+                        //if (!this.GtP) return false;
                         if (!this.GtPick) return false;
                         if (!this.GtW) return false;
                         return true;
@@ -578,8 +578,8 @@ namespace DTXMania
                         if (!this.BsR) return false;
                         if (!this.BsG) return false;
                         if (!this.BsB) return false;
-                        if (!this.BsY) return false;
-                        if (!this.BsP) return false;
+                        //if (!this.BsY) return false;
+                        //if (!this.BsP) return false;
                         if (!this.BsPick) return false;
                         if (!this.BsW) return false;
                         return true;
@@ -589,10 +589,10 @@ namespace DTXMania
 						return this.GtG;
 					case (int) Eレーン.GtB:
 						return this.GtB;
-                    case (int) Eレーン.GtY:
-                        return this.GtY;
-                    case (int) Eレーン.GtP:
-                        return this.GtP;
+                    //case (int) Eレーン.GtY:
+                    //    return this.GtY;
+                    //case (int) Eレーン.GtP:
+                    //    return this.GtP;
 					case (int) Eレーン.GtPick:
 						return this.GtPick;
 					case (int) Eレーン.GtW:
@@ -603,10 +603,10 @@ namespace DTXMania
 						return this.BsG;
 					case (int) Eレーン.BsB:
 						return this.BsB;
-                    case (int) Eレーン.BsY:
-                        return this.BsY;
-                    case (int) Eレーン.BsP:
-                        return this.BsP;
+                    //case (int) Eレーン.BsY:
+                    //    return this.BsY;
+                    //case (int) Eレーン.BsP:
+                    //    return this.BsP;
 					case (int) Eレーン.BsPick:
 						return this.BsPick;
 					case (int) Eレーン.BsW:
@@ -652,10 +652,12 @@ namespace DTXMania
                         this.LBD = value;
                         return;
                     case (int)Eレーン.Guitar:
-                        this.GtR = this.GtG = this.GtB = this.GtY = this.GtP = this.GtPick = this.GtW = value;
+                        //this.GtR = this.GtG = this.GtB = this.GtY = this.GtP = this.GtPick = this.GtW = value;
+                        this.GtR = this.GtG = this.GtB = this.GtPick = this.GtW = value;
                         return;
                     case (int)Eレーン.Bass:
-                        this.BsR = this.BsG = this.BsB = this.BsY = this.BsP = this.BsPick = this.BsW = value;
+                        //this.BsR = this.BsG = this.BsB = this.BsY = this.BsP = this.BsPick = this.BsW = value;
+                        this.BsR = this.BsG = this.BsB = this.BsPick = this.BsW = value;
                         return;
 					case (int) Eレーン.GtR:
 						this.GtR = value;
@@ -666,12 +668,12 @@ namespace DTXMania
 					case (int) Eレーン.GtB:
 						this.GtB = value;
 						return;
-                    case (int) Eレーン.GtY:
-                        this.GtY = value;
-                        return;
-                    case (int) Eレーン.GtP:
-                        this.GtP = value;
-                        return;
+                    //case (int) Eレーン.GtY:
+                    //    this.GtY = value;
+                    //    return;
+                    //case (int) Eレーン.GtP:
+                    //    this.GtP = value;
+                    //    return;
 					case (int) Eレーン.GtPick:
 						this.GtPick = value;
 						return;
@@ -687,12 +689,12 @@ namespace DTXMania
 					case (int) Eレーン.BsB:
 						this.BsB = value;
 						return;
-                    case (int) Eレーン.BsY:
-                        this.BsY = value;
-                        return;
-                    case (int) Eレーン.BsP:
-                        this.BsP = value;
-                        return;
+                    //case (int) Eレーン.BsY:
+                    //    this.BsY = value;
+                    //    return;
+                    //case (int) Eレーン.BsP:
+                    //    this.BsP = value;
+                    //    return;
 					case (int) Eレーン.BsPick:
 						this.BsPick = value;
 						return;
