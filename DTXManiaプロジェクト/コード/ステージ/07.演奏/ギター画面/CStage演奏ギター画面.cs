@@ -140,17 +140,19 @@ namespace DTXMania
 				this.t進行描画・レーンフラッシュGB();
 				this.t進行描画・ギターベース判定ライン();
                 this.t進行描画・判定ライン();
-				this.t進行描画・ゲージ();
+
 				this.t進行描画・DANGER();
-				this.t進行描画・RGBボタン();
-				this.t進行描画・判定文字列();
+
 				this.t進行描画・コンボ();
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
+				this.t進行描画・判定文字列();
+                this.t進行描画・ゲージ();
+                this.t進行描画・RGBボタン();
 				this.t進行描画・演奏情報();
-				this.t進行描画・Wailing枠();
+				//this.t進行描画・Wailing枠();
 				this.t進行描画・チップファイアGB();
 				this.t進行描画・STAGEFAILED();
                 flag2 = this.t進行描画・フェードイン・アウト();
@@ -163,7 +165,11 @@ namespace DTXMania
                 }
 				if( flag2 )
 				{
-					return (int) this.eフェードアウト完了時の戻り値;
+                    if (!CDTXMania.Skin.soundステージクリア音.b再生中)
+                    {
+                        Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
+                        return (int)this.eフェードアウト完了時の戻り値;
+                    }
 				}
                 // もしサウンドの登録/削除が必要なら、実行する
 				if ( queueMixerSound.Count > 0 )
@@ -236,9 +242,9 @@ namespace DTXMania
 
 		protected override void t進行描画・Wailing枠()
 		{
-			base.t進行描画・Wailing枠( 0x8b, 0x251,
-				CDTXMania.ConfigIni.bReverse.Guitar ? 340 : 11,
-				CDTXMania.ConfigIni.bReverse.Bass ?   340 : 11
+			base.t進行描画・Wailing枠( 292, 0x251,
+				CDTXMania.ConfigIni.bReverse.Guitar ? 340 : 130,
+				CDTXMania.ConfigIni.bReverse.Bass ?   340 : 130
 			);
 		}
 		private void t進行描画・ギターベース判定ライン()	// yyagi: ドラム画面とは座標が違うだけですが、まとめづらかったのでそのまま放置してます。
@@ -247,23 +253,23 @@ namespace DTXMania
 			{
 				if ( CDTXMania.DTX.bチップがある.Guitar )
 				{
-					int y = ( CDTXMania.ConfigIni.bReverse.Guitar ? 0x171 : 154 ) - 3;
+					int y = ( CDTXMania.ConfigIni.bReverse.Guitar ? 611 : 153 );
 					for ( int i = 0; i < 4; i++ )
 					{
 						if ( this.txヒットバー != null )
 						{
-							this.txヒットバー.t2D描画( CDTXMania.app.Device, 0x17 + ( 0x1c * i ), y, new Rectangle( 0, i * 8, 0x1c, 8 ) );
+							this.txヒットバー.t2D描画( CDTXMania.app.Device, 80, y, new Rectangle( 0, i * 6, 252, 6 ) );
 						}
 					}
 				}
 				if ( CDTXMania.DTX.bチップがある.Bass )
 				{
-					int y = ( CDTXMania.ConfigIni.bReverse.Bass ? 0x171 : 154 ) - 3;
+					int y = ( CDTXMania.ConfigIni.bReverse.Bass ? 611 : 153 );
 					for ( int j = 0; j < 4; j++ )
 					{
 						if ( this.txヒットバー != null )
 						{
-							this.txヒットバー.t2D描画( CDTXMania.app.Device, 800 + ( 0x1c * j ), y, new Rectangle( 0, j * 8, 0x1c, 8 ) );
+                            this.txヒットバー.t2D描画(CDTXMania.app.Device, 948, y, new Rectangle(0, j * 6, 252, 6));
 						}
 					}
 				}
@@ -464,24 +470,24 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 40, 369 };			// ドラム画面かギター画面かで変わる値
+					int[] y_base = { 154, 369 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
-					const int WailingWidth = 20;		// 4種全て同じ値
-					const int WailingHeight = 50;		// 4種全て同じ値
-					const int baseTextureOffsetX = 96;	// ドラム画面かギター画面かで変わる値
-					const int baseTextureOffsetY = 0;	// ドラム画面かギター画面かで変わる値
-					const int drawX = 139;				// 4種全て異なる値
+					const int WailingWidth = 54;		// 4種全て同じ値
+					const int WailingHeight = 68;		// 4種全て同じ値
+					const int baseTextureOffsetX = 0;	// ドラム画面かギター画面かで変わる値
+					const int baseTextureOffsetY = 22;	// ドラム画面かギター画面かで変わる値
+					const int drawX = 287;				// 4種全て異なる値
 
-					const int numA = 25;				// 4種全て同じ値;
+					const int numA = 34;				// 4種全て同じ値;
 					int y = configIni.bReverse.Guitar ? ( y_base[ 1 ] - pChip.nバーからの距離dot.Guitar ) : ( y_base[ 0 ] + pChip.nバーからの距離dot.Guitar );
 					int numB = y - offset;				// 4種全て同じ定義
 					int numC = 0;						// 4種全て同じ初期値
-					const int numD = 409;				// ドラム画面かギター画面かで変わる値
+					const int numD = 709;				// ドラム画面かギター画面かで変わる値
 					if ( ( numB < ( numD + numA ) ) && ( numB > -numA ) )	// 以下のロジックは4種全て同じ
 					{
 						int c = this.ctWailingチップ模様アニメ.n現在の値;
-						Rectangle rect = new Rectangle( baseTextureOffsetX + ( c * WailingWidth ), baseTextureOffsetY, WailingWidth, WailingHeight );
+						Rectangle rect = new Rectangle( baseTextureOffsetX, baseTextureOffsetY, WailingWidth, WailingHeight );
 						if ( numB < numA )
 						{
 							rect.Y += numA - numB;
@@ -729,15 +735,15 @@ namespace DTXMania
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( configIni.eDark != Eダークモード.FULL ) )
 			{
-				int y = configIni.bReverse.Guitar ? ( ( 0x171 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 40 + pChip.nバーからの距離dot.Guitar ) - 1 );
-				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 0x199 ) && ( this.txチップ != null ) ) )
+				int y = configIni.bReverse.Guitar ? ( ( 0x171 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 1 );
+				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 0x1a, y, new Rectangle( 0, 0xeb, 0x68, 1 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 88, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
 				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 40 + pChip.nバーからの距離dot.Bass ) - 1 );
-				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 0x199 ) && ( this.txチップ != null ) ) )
+				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 0xeb, 0x68, 1 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 0xeb, 193, 1 ) );
 				}
 			}
 

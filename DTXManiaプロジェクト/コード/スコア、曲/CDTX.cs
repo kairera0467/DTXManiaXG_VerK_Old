@@ -27,7 +27,31 @@ namespace DTXMania
 			Rxx = 4,
 			RxB = 5,
 			RGx = 6,
-			RGB = 7
+			RGB = 7,
+            xxxYx = 10,
+            xxBYx,
+            xGxYx,
+            xGBYx,
+            RxxYx,
+            RxBYx,
+            RGxYx,
+            RGBYx,
+            xxxxP = 20,
+            xxBxP,
+            xGxxP,
+            xGBxP,
+            RxxxP,
+            RxBxP,
+            RGxxP,
+            RGBxP,
+            xxxYP = 30,
+            xxBYP,
+            xGxYP,
+            xGBYP,
+            RxxYP,
+            RxBYP,
+            RGxYP,
+            RGBYP
 		};
 
 
@@ -486,6 +510,21 @@ namespace DTXMania
 						case 0x90:
 						case 0x91:
 						case 0x92:
+
+                        case 147:
+                        case 148:
+                        case 149:
+                        case 150:
+                        case 151:
+                        case 152:
+                        case 153:
+                        case 154:
+                        case 155:
+                        case 156:
+                        case 157:
+                        case 158:
+                        case 159:
+
 						case 0xa0:
 						case 0xa1:
 						case 0xa2:
@@ -494,6 +533,14 @@ namespace DTXMania
 						case 0xa5:
 						case 0xa6:
 						case 0xa7:
+
+                        case 0xa9:
+                        case 0xaa:
+                        case 0xab:
+                        case 0xac:
+                        case 0xad:
+                        case 0xae:
+
 						case 0xaf:
 						case 0xb1:
 						case 0xb2:
@@ -509,6 +556,34 @@ namespace DTXMania
 						case 0xbc:
                         case 0xbd:
                         case 0xbe:
+                        case 197:
+                        case 198:
+                        case 200:
+                        case 201:
+                        case 202:
+                        case 203:
+                        case 204:
+                        case 205:
+                        case 206:
+                        case 207:
+                        case 208:
+                        case 209:
+                        case 210:
+                        case 211:
+                        case 218:
+                        case 219:
+                        case 220:
+                        case 221:
+                        case 222:
+                        case 223:
+                        case 225:
+                        case 226:
+                        case 227:
+                        case 228:
+                        case 229:
+                        case 230:
+                        case 231:
+                        case 232:
 							return true;
 					}
 					return false;
@@ -5962,6 +6037,10 @@ namespace DTXMania
 			}
 			switch( nチャンネル番号 )
 			{
+                case 0x15:
+                    this.bチップがある.FT = true;
+                    break;
+
 				case 0x18:
 					this.bチップがある.HHOpen = true;
 					break;
@@ -6106,14 +6185,14 @@ namespace DTXMania
 				{
 					chip.e楽器パート = E楽器パート.DRUMS;
 				}
-				if( ( nチャンネル番号 >= 0x20 ) && ( nチャンネル番号 <= 0x27 ) )
-				{
-					chip.e楽器パート = E楽器パート.GUITAR;
-				}
-				if( ( nチャンネル番号 >= 160 ) && ( nチャンネル番号 <= 0xA7 ) )
-				{
-					chip.e楽器パート = E楽器パート.BASS;
-				}
+                if (( nチャンネル番号 >= 32 && nチャンネル番号 <= 39) || (147 <= nチャンネル番号 && nチャンネル番号 <= 159) || (169 <= nチャンネル番号 && nチャンネル番号 <= 175) || (208 <= nチャンネル番号 && nチャンネル番号 <= 211))
+                {
+                    chip.e楽器パート = E楽器パート.GUITAR;
+                }
+                if ((nチャンネル番号 >= 160 && nチャンネル番号 <= 167) || (197 <= nチャンネル番号 && nチャンネル番号 <= 198) || (200 <= nチャンネル番号 && nチャンネル番号 <= 207) || (218 <= nチャンネル番号 && nチャンネル番号 <= 223) || (225 <= nチャンネル番号 && nチャンネル番号 <= 232))
+                {
+                    chip.e楽器パート = E楽器パート.BASS;
+                }
 				//-----------------
 				#endregion
 

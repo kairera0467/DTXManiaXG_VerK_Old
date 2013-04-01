@@ -165,7 +165,7 @@ namespace DTXMania
                                 {
                                     base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(675, 135 * base.st状態[j].nRect, 225, 135));
                                 }
-                                if (base.st状態[j].judge == E判定.Miss)
+                                if (base.st状態[j].judge == E判定.Miss || base.st状態[ j ].judge == E判定.Bad)
                                 {
                                     base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(900, 135 * base.st状態[j].nRect, 225, 135));
                                 }

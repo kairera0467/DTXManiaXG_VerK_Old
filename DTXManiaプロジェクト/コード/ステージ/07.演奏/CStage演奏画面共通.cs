@@ -257,7 +257,7 @@ namespace DTXMania
 			this.r現在の空うちベースChip = null;
 			for ( int k = 0; k < 3; k++ )
 			{
-				for ( int n = 0; n < 5; n++ )
+				//for ( int n = 0; n < 5; n++ )
 				{
 					this.nヒット数・Auto含まない[ k ] = new CHITCOUNTOFRANK();
 					this.nヒット数・Auto含む[ k ] = new CHITCOUNTOFRANK();
@@ -905,7 +905,7 @@ namespace DTXMania
 					}
 					continue;	// ほんの僅かながら高速化
 				}
-				else if ( ( ( nChannel == 0x2f ) && ( chip.e楽器パート == E楽器パート.GUITAR ) ) || ( ( ( 0x20 <= nChannel ) && ( nChannel <= 0x28 ) ) && ( chip.nチャンネル番号 == nChannel ) ) )
+				else if ((nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || (((0x20 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
 				{
 					if ( chip.n発声時刻ms > nTime )
 					{
@@ -913,7 +913,7 @@ namespace DTXMania
 					}
 					nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
 				}
-				else if ( ( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) || ( ( ( 0xa0 <= nChannel ) && ( nChannel <= 0xa8 ) ) && ( chip.nチャンネル番号 == nChannel ) ) )
+                else if ((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
 				{
 					if ( chip.n発声時刻ms > nTime )
 					{
@@ -935,15 +935,14 @@ namespace DTXMania
 						break;
 					}
 				}
-				else if ( ( ( nChannel == 0x2f ) && ( chip.e楽器パート == E楽器パート.GUITAR ) ) || ( ( ( 0x20 <= nChannel ) && ( nChannel <= 0x28 ) ) && ( chip.nチャンネル番号 == nChannel ) ) )
+				else if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
 				{
 					if ( ( 0x20 <= chip.nチャンネル番号 ) && ( chip.nチャンネル番号 <= 0x28 ) )
 					{
 						break;
 					}
 				}
-				else if ( ( ( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) || ( ( ( 0xa0 <= nChannel ) && ( nChannel <= 0xa8 ) ) && ( chip.nチャンネル番号 == nChannel ) ) )
-					&& ( ( 0xa0 <= chip.nチャンネル番号 ) && ( chip.nチャンネル番号 <= 0xa8 ) ) )
+				else if (((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)) && ((160 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 168) || (197 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 198) || (200 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 207) || (218 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 223) || (225 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 232)))
 				{
 					break;
 				}
@@ -1554,22 +1553,28 @@ namespace DTXMania
 						}
 						continue;
 					}
-					else if ( ( ( ( nChannel == 0x2f ) && ( chip.e楽器パート == E楽器パート.GUITAR ) ) || ( ( ( 0x20 <= nChannel ) && ( nChannel <= 0x28 ) ) && ( chip.nチャンネル番号 == nChannel ) ) ) )
-					{
-						if ( chip.n発声時刻ms > nTime )
-						{
-							break;
-						}
-						nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
-					}
-					else if ( ( ( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) || ( ( ( 0xa0 <= nChannel ) && ( nChannel <= 0xa8 ) ) && ( chip.nチャンネル番号 == nChannel ) ) ) )
-					{
-						if ( chip.n発声時刻ms > nTime )
-						{
-							break;
-						}
-						nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
-					}
+                    else
+                    {
+                        if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
+                        {
+                            if ((long)chip.n発声時刻ms > nTime)
+                            {
+                                break;
+                            }
+                            nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
+                        }
+                        else
+                        {
+                            if ((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
+                            {
+                                if ((long)chip.n発声時刻ms > nTime)
+                                {
+                                    break;
+                                }
+                                nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
+                            }
+                        }
+                    }
 				}
 //				nIndex_NearestChip_Future++;
 			}
@@ -1578,26 +1583,10 @@ namespace DTXMania
 			for ( ; nIndex_NearestChip_Past >= 0; nIndex_NearestChip_Past-- )
 			{
                 CDTX.CChip chip = listChip[nIndex_NearestChip_Past];
-				if ( (!chip.bHit) &&
-						(
-							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1c ) &&
-								( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
-							)
-							||
-							(
-								( ( nChannel == 0x2f ) && ( chip.e楽器パート == E楽器パート.GUITAR ) ) ||
-								( ( ( nChannel >= 0x20 ) && ( nChannel <= 0x28 ) ) && ( chip.nチャンネル番号 == nChannel ) )
-							)
-							||
-							(
-								( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) ||
-								( ( ( nChannel >= 0xA0 ) && ( nChannel <= 0xa8 ) ) && ( chip.nチャンネル番号 == nChannel ) )
-							)
-						)
-					)
-					{
-						break;
-					}
+                if (!chip.bHit && ((nChannel >= 17 && nChannel <= 26 && (chip.nチャンネル番号 == nChannel || chip.nチャンネル番号 == nChannel + 32)) || (nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel) || (nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)))
+                {
+                    break;
+                }
 //				nIndex_NearestChip_Past--;
 			}
 			if ( ( nIndex_NearestChip_Future >= count ) && ( nIndex_NearestChip_Past < 0 ) )	// 検索対象が過去未来どちらにも見つからなかった場合
@@ -1656,7 +1645,7 @@ namespace DTXMania
 		protected CDTX.CChip r次にくるギターChipを更新して返す()
 		{
 			int nInputAdjustTime = this.bIsAutoPlay.GtPick ? 0 : this.nInputAdjustTimeMs.Guitar;
-            this.r次にくるギターChip = this.r指定時刻に一番近い未ヒットChip(CSound管理.rc演奏用タイマ.n現在時刻, 0x2f, nInputAdjustTime, 500);
+            this.r次にくるギターChip = this.r指定時刻に一番近い未ヒットChip(CSound管理.rc演奏用タイマ.n現在時刻, 47, nInputAdjustTime, 500);
 			return this.r次にくるギターChip;
 		}
 		protected CDTX.CChip r次にくるベースChipを更新して返す()
@@ -1746,6 +1735,7 @@ namespace DTXMania
                 {	// DownArrow (scrollspeed down)
                     ドラムスクロール速度ダウン();
                 }
+
                 else if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.Delete))
                 {	// del (debug info)
                     CDTXMania.ConfigIni.b演奏情報を表示する = !CDTXMania.ConfigIni.b演奏情報を表示する;
@@ -2292,7 +2282,7 @@ namespace DTXMania
 					case 0x26:
 					case 0x27:
 
-                        /*
+                        
                     case 0x93:
                     case 0x94:
                     case 0x95:
@@ -2317,7 +2307,7 @@ namespace DTXMania
                     case 0xD1:
                     case 0xD2:
                     case 0xD3:
-                         */
+                         
 						this.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, E楽器パート.GUITAR );
 						break;
 					#endregion
@@ -2643,20 +2633,325 @@ namespace DTXMania
         private bool bCheckAutoPlay(CDTX.CChip pChip)
         {
             bool bPChipIsAutoPlay = false;
-            bool bGtBsR = ((pChip.nチャンネル番号 & 4) > 0);
-            bool bGtBsG = ((pChip.nチャンネル番号 & 2) > 0);
-            bool bGtBsB = ((pChip.nチャンネル番号 & 1) > 0);
-            bool bGtBsW = ((pChip.nチャンネル番号 & 0x0F) == 0x08);
-            bool bGtBsO = ((pChip.nチャンネル番号 & 0x0F) == 0x00);
-            //if ( (
-            //        ( ( pChip.e楽器パート == E楽器パート.DRUMS ) && bIsAutoPlay[ this.nチャンネル0Atoレーン07[ pChip.nチャンネル番号 - 0x11 ] ] ) ||
-            //        ( ( pChip.e楽器パート == E楽器パート.GUITAR ) && bIsAutoPlay.Guitar ) ) ||
-            //        ( ( pChip.e楽器パート == E楽器パート.BASS ) && bIsAutoPlay.Bass )
-            //  )
-            ////				if ((pChip.e楽器パート == E楽器パート.DRUMS) && bIsAutoPlay[this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11]])
-            //{
-            //    bPChipIsAutoPlay = true;
-            //}
+            bool bGtBsR = false;
+            bool bGtBsG = false;
+            bool bGtBsB = false;
+            bool bGtBsY = false;
+            bool bGtBsP = false;
+            bool bGtBsW = false;
+            bool bGtBsO = false;
+
+            bool flag = false;
+            bool flag2 = false;
+            bool flag3 = false;
+            bool flag4 = false;
+            bool flag5 = false;
+            bool flag6 = false;
+            bool flag7 = false;
+            switch (pChip.nチャンネル番号)
+            {
+                case 32:
+                    flag7 = true;
+                    break;
+                case 33:
+                    flag3 = true;
+                    break;
+                case 34:
+                    flag2 = true;
+                    break;
+                case 35:
+                    flag2 = true;
+                    flag3 = true;
+                    break;
+                case 36:
+                    flag = true;
+                    break;
+                case 37:
+                    flag = true;
+                    flag3 = true;
+                    break;
+                case 38:
+                    flag = true;
+                    flag2 = true;
+                    break;
+                case 39:
+                    flag = true;
+                    flag2 = true;
+                    flag3 = true;
+                    break;
+                case 40:
+                    flag6 = true;
+                    break;
+                default:
+                    switch (pChip.nチャンネル番号)
+                    {
+                        case 147:
+                            flag4 = true;
+                            break;
+                        case 148:
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 149:
+                            flag2 = true;
+                            flag4 = true;
+                            break;
+                        case 150:
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 151:
+                            flag = true;
+                            flag4 = true;
+                            break;
+                        case 152:
+                            flag = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 153:
+                            flag = true;
+                            flag2 = true;
+                            flag4 = true;
+                            break;
+                        case 154:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 155:
+                            flag5 = true;
+                            break;
+                        case 156:
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 157:
+                            flag2 = true;
+                            flag5 = true;
+                            break;
+                        case 158:
+                            flag2 = true;
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 159:
+                            flag = true;
+                            flag5 = true;
+                            break;
+                        case 160:
+                            flag7 = true;
+                            break;
+                        case 161:
+                            flag3 = true;
+                            break;
+                        case 162:
+                            flag2 = true;
+                            break;
+                        case 163:
+                            flag2 = true;
+                            flag3 = true;
+                            break;
+                        case 164:
+                            flag = true;
+                            break;
+                        case 165:
+                            flag = true;
+                            flag3 = true;
+                            break;
+                        case 166:
+                            flag = true;
+                            flag2 = true;
+                            break;
+                        case 167:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            break;
+                        case 168:
+                            flag6 = true;
+                            break;
+                        case 169:
+                            flag = true;
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 170:
+                            flag = true;
+                            flag2 = true;
+                            flag5 = true;
+                            break;
+                        case 171:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 172:
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 173:
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 174:
+                            flag2 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 175:
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 197:
+                            flag4 = true;
+                            break;
+                        case 198:
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 200:
+                            flag2 = true;
+                            flag4 = true;
+                            break;
+                        case 201:
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 202:
+                            flag = true;
+                            flag4 = true;
+                            break;
+                        case 203:
+                            flag = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 204:
+                            flag = true;
+                            flag2 = true;
+                            flag4 = true;
+                            break;
+                        case 205:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 206:
+                            flag5 = true;
+                            break;
+                        case 207:
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 208:
+                            flag = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 209:
+                            flag = true;
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 210:
+                            flag = true;
+                            flag2 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 211:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 218:
+                            flag2 = true;
+                            flag5 = true;
+                            break;
+                        case 219:
+                            flag2 = true;
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 220:
+                            flag = true;
+                            flag5 = true;
+                            break;
+                        case 221:
+                            flag = true;
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 222:
+                            flag = true;
+                            flag2 = true;
+                            flag5 = true;
+                            break;
+                        case 223:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag5 = true;
+                            break;
+                        case 225:
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 226:
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 227:
+                            flag2 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 228:
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 229:
+                            flag = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 230:
+                            flag = true;
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 231:
+                            flag = true;
+                            flag2 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                        case 232:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            flag5 = true;
+                            break;
+                    }
+                    break;
+            }
             if (pChip.e楽器パート == E楽器パート.DRUMS)
             {
                 if (bIsAutoPlay[this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11]])
@@ -2675,9 +2970,11 @@ namespace DTXMania
                     if (bGtBsR == true && bIsAutoPlay[(int)Eレーン.GtR] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsG == true && bIsAutoPlay[(int)Eレーン.GtG] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsB == true && bIsAutoPlay[(int)Eレーン.GtB] == false) bPChipIsAutoPlay = false;
+                    else if (bGtBsY == true && bIsAutoPlay[(int)Eレーン.GtY] == false) bPChipIsAutoPlay = false;
+                    else if (bGtBsP == true && bIsAutoPlay[(int)Eレーン.GtP] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsW == true && bIsAutoPlay[(int)Eレーン.GtW] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsO == true &&
-                        (bIsAutoPlay[(int)Eレーン.GtR] == false || bIsAutoPlay[(int)Eレーン.GtG] == false || bIsAutoPlay[(int)Eレーン.GtB] == false))
+                        (bIsAutoPlay[(int)Eレーン.GtR] == false || bIsAutoPlay[(int)Eレーン.GtG] == false || bIsAutoPlay[(int)Eレーン.GtB] == false || bIsAutoPlay[(int)Eレーン.GtY] == false || bIsAutoPlay[(int)Eレーン.GtP] == false))
                         bPChipIsAutoPlay = false;
                 }
                 //Trace.TraceInformation( "{0:x2}: {1}", pChip.nチャンネル番号, bPChipIsAutoPlay.ToString() );
@@ -2724,11 +3021,319 @@ namespace DTXMania
 				}
 				#endregion
 
-				bool bChipHasR = ( ( pChip.nチャンネル番号 & 4 ) > 0 );
-				bool bChipHasG = ( ( pChip.nチャンネル番号 & 2 ) > 0 );
-				bool bChipHasB = ( ( pChip.nチャンネル番号 & 1 ) > 0 );
-				bool bChipHasW = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x08 );
-				bool bChipIsO = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x00 );
+				bool bChipHasR = false;
+				bool bChipHasG = false;
+				bool bChipHasB = false;
+                bool bChipHasY = false;
+                bool bChipHasP = false;
+				bool bChipHasW = false;
+				bool bChipIsO = false;
+                int nチャンネル番号 = pChip.nチャンネル番号;
+
+                switch (nチャンネル番号)
+                {
+                    case 0x20:
+                        bChipIsO = true;
+                        break;
+                    case 0x21:
+                        bChipHasB = true;
+                        break;
+                    case 0x22:
+                        bChipHasG = true;
+                        break;
+                    case 0x23:
+                        bChipHasG = true;
+                        bChipHasB = true;
+                        break;
+                    case 0x24:
+                        bChipHasR = true;
+                        break;
+                    case 0x25:
+                        bChipHasR = true;
+                        bChipHasB = true;
+                        break;
+                    case 0x26:
+                        bChipHasR = true;
+                        bChipHasG = true;
+                        break;
+                    case 0x27:
+                        bChipHasR = true;
+                        bChipHasG = true;
+                        bChipHasB = true;
+                        break;
+                    case 0x28:
+                        break;
+                    default:
+                        switch (nチャンネル番号)
+                        {
+                            case 0x93:
+                                bChipHasY = true;
+                                break;
+                            case 0x94:
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x95:
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x96:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x97:
+                                bChipHasR = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x98:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x99:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x9a:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 0x9B:
+                                bChipHasP = true;
+                                break;
+                            case 0x9C:
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 0x9D:
+                                bChipHasG = true;
+                                bChipHasP = true;
+                                break;
+                            case 0x9E:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 0x9F:
+                                bChipHasR = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xA0:
+                                bChipIsO = true;
+                                break;
+                            case 0xA1:
+                                bChipHasB = true;
+                                break;
+                            case 0xA2:
+                                bChipHasG = true;
+                                break;
+                            case 0xA3:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                break;
+                            case 0xA4:
+                                bChipHasR = true;
+                                break;
+                            case 0xA5:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                break;
+                            case 0xA6:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                break;
+                            case 0xA7:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                break;
+                            case 0xA8:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                break;
+                            case 0xA9:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xAA:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xAB:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xAC:
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xAD:
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xAE:
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xAF:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xC6:
+                                bChipHasY = true;
+                                break;
+                            case 0xC7:
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 0xC8:
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                break;
+                            case 0xC9:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 202:
+                                bChipHasR = true;
+                                bChipHasY = true;
+                                break;
+                            case 0xCB:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 204:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                break;
+                            case 205:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                break;
+                            case 0xCE:
+                                bChipHasP = true;
+                                break;
+                            case 0xCF:
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD0:
+                                bChipHasR = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD1:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD2:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD3:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD4:
+                                bChipHasG = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD5:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xD6:
+                                bChipHasR = true;
+                                bChipHasP = true;
+                                break;
+                            case 221:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 222:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasP = true;
+                                break;
+                            case 223:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasP = true;
+                                break;
+                            case 225:
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 226:
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 227:
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 228:
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xE5:
+                                bChipHasR = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xE6:
+                                bChipHasR = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xE7:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                            case 0xE8:
+                                bChipHasR = true;
+                                bChipHasG = true;
+                                bChipHasB = true;
+                                bChipHasY = true;
+                                bChipHasP = true;
+                                break;
+                        }
+                        break;
+                }
 
 				#region [ chip描画 ]
 				int OPEN = ( inst == E楽器パート.GUITAR ) ? 10 : 10;
@@ -2740,10 +3345,10 @@ namespace DTXMania
 						if ( this.txチップ != null )
 						{
 							int nアニメカウンタ現在の値 = this.ctチップ模様アニメ[ instIndex ].n現在の値;
-							if ( pChip.nチャンネル番号 == OPEN )
+							if ( bChipIsO )
 							{
-								int xo = ( inst == E楽器パート.GUITAR ) ? openXg : openXb;
-								this.txチップ.t2D描画( CDTXMania.app.Device, xo, y - 2, new Rectangle( rectOpenOffsetX, rectOpenOffsetY, openChipWidth, 10 ) );
+								int xo = ( inst == E楽器パート.GUITAR ) ? 88 : openXb;
+								this.txチップ.t2D描画( CDTXMania.app.Device, xo, y - 2, new Rectangle( 0, 10, 196, 10 ) );
 							}
 							Rectangle rc = new Rectangle( rectOpenOffsetX, chipHeight, chipWidth, 10 );
 							int x;
@@ -2795,6 +3400,32 @@ namespace DTXMania
                                     this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
                                 }
 							}
+                            rc.X += chipTexDeltaX;
+                            x += deltaX;
+                            if ( bChipHasY )
+                            {
+                                if (inst == E楽器パート.GUITAR)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 205, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
+                                }
+                                else if (inst == E楽器パート.BASS)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
+                                }
+                            }
+                            rc.X += chipTexDeltaX;
+                            x += deltaX;
+                            if ( bChipHasP )
+                            {
+                                if (inst == E楽器パート.GUITAR)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 244, y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
+                                }
+                                else if (inst == E楽器パート.BASS)
+                                {
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
+                                }
+                            }
 						}
 					}
 				}
@@ -2802,14 +3433,18 @@ namespace DTXMania
 				//if ( ( configIni.bAutoPlay.Guitar && !pChip.bHit ) && ( pChip.nバーからの距離dot.Guitar < 0 ) )
 				if ( ( !pChip.bHit ) && ( pChip.nバーからの距離dot[ instIndex ] < 0 ) )
 				{
-					int lo = ( inst == E楽器パート.GUITAR ) ? 0 : 3;	// lane offset
+					int lo = ( inst == E楽器パート.GUITAR ) ? 0 : 5;	// lane offset
 					bool autoR = ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtR : bIsAutoPlay.BsR;
 					bool autoG = ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtG : bIsAutoPlay.BsG;
 					bool autoB = ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtB : bIsAutoPlay.BsB;
+                    bool autoY = ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtY : bIsAutoPlay.BsY;
+                    bool autoP = ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtP : bIsAutoPlay.BsP;
 					bool autoPick = ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtPick : bIsAutoPlay.BsPick;
 					bool pushingR = CDTXMania.Pad.b押されている( inst, Eパッド.R );
 					bool pushingG = CDTXMania.Pad.b押されている( inst, Eパッド.G );
 					bool pushingB = CDTXMania.Pad.b押されている( inst, Eパッド.B );
+                    bool pushingY = CDTXMania.Pad.b押されている( inst, Eパッド.Y );
+                    bool pushingP = CDTXMania.Pad.b押されている( inst, Eパッド.P );
 
 					#region [ Chip Fire effects ]
 					bool bSuccessOPEN = bChipIsO && ( autoR || !pushingR ) && ( autoG || !pushingG ) && ( autoB || !pushingB );
@@ -2825,20 +3460,28 @@ namespace DTXMania
 					{
 						this.actChipFireGB.Start( 2 + lo );
 					}
+                    if ( ( bChipHasY && ( autoY || pushingY ) && autoPick ) || bSuccessOPEN )
+					{
+						this.actChipFireGB.Start( 3 + lo );
+					}
+                    if ( ( bChipHasP && ( autoP || pushingP ) && autoPick ) || bSuccessOPEN )
+					{
+						this.actChipFireGB.Start( 4 + lo );
+					}
 					#endregion
 					if ( autoPick )
 					{
 						bool bMiss = true;
-						if ( bChipHasR == autoR && bChipHasG == autoG && bChipHasB == autoB )		// autoレーンとチップレーン一致時はOK
+						if ( bChipHasR == autoR && bChipHasG == autoG && bChipHasB == autoB && bChipHasY == autoY && bChipHasP == autoP )		// autoレーンとチップレーン一致時はOK
 						{																			// この条件を加えないと、同時に非autoレーンを押下している時にNGとなってしまう。
 							bMiss = false;
 						}
-						else if ( ( autoR || ( bChipHasR == pushingR ) ) && ( autoG || ( bChipHasG == pushingG ) ) && ( autoB || ( bChipHasB == pushingB ) ) )
+						else if ( ( autoR || ( bChipHasR == pushingR ) ) && ( autoG || ( bChipHasG == pushingG ) ) && ( autoB || ( bChipHasB == pushingB ) ) && ( autoY || ( bChipHasY == pushingY ) ) && ( autoP || bChipHasP == pushingP ) )
 							// ( bChipHasR == ( pushingR | autoR ) ) && ( bChipHasG == ( pushingG | autoG ) ) && ( bChipHasB == ( pushingB | autoB ) ) )
 						{
 							bMiss = false;
 						}
-						else if ( ( ( bChipIsO == true ) && ( !pushingR | autoR ) && ( !pushingG | autoG ) && ( !pushingB | autoB ) ) )	// OPEN時
+						else if ( ( ( bChipIsO == true ) && ( !pushingR | autoR ) && ( !pushingG | autoG ) && ( !pushingB | autoB ) && ( !pushingY | autoY) && ( !pushingP | autoP) ) )	// OPEN時
 						{
 							bMiss = false;
 						}
@@ -3004,15 +3647,15 @@ namespace DTXMania
 				this.actPlayInfo.t進行描画( x, y );
 			}
 		}
-		protected void t進行描画・背景()
-		{
+        protected void t進行描画・背景()
+        {
 
-				if ( this.tx背景 != null )
-				{
-					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
-				}
-				//CDTXMania.app.Device.Clear( ClearFlags.ZBuffer | ClearFlags.Target, Color.Black, 0f, 0 );
-		}
+            if ( this.tx背景 != null )
+            {
+                this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
+            }
+            //CDTXMania.app.Device.Clear( ClearFlags.ZBuffer | ClearFlags.Target, Color.Black, 0f, 0 );
+        }
 
 		protected void t進行描画・判定ライン()
 		{
@@ -3022,14 +3665,6 @@ namespace DTXMania
                 {
                     int y = CDTXMania.ConfigIni.bReverse.Drums ? 159 : nJudgeLinePosY;
                     this.txヒットバー.t2D描画(CDTXMania.app.Device, 295, y, new Rectangle(0, 0, 0x22f, 6));
-                }
-            }
-            else if (CDTXMania.ConfigIni.bGuitar有効)
-            {
-                if (CDTXMania.ConfigIni.eDark != Eダークモード.FULL)
-                {
-                    int y = CDTXMania.ConfigIni.bReverse.Drums ? 154 : 153;
-                    this.txヒットバー.t2D描画(CDTXMania.app.Device, 80, y, new Rectangle(0, 0, 204, 6));
                 }
             }
 		}
@@ -3173,43 +3808,357 @@ namespace DTXMania
 				return;
 			}
 
-			int R = ( inst == E楽器パート.GUITAR ) ? 0 : 3;
+			int R = ( inst == E楽器パート.GUITAR ) ? 0 : 5;
 			int G = R + 1;
 			int B = R + 2;
+            int Y = R + 3;
+            int P = R + 4;
 			bool autoW =	( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtW : bIsAutoPlay.BsW;
 			bool autoR =	( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtR : bIsAutoPlay.BsR;
 			bool autoG =	( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtG : bIsAutoPlay.BsG;
 			bool autoB =	( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtB : bIsAutoPlay.BsB;
+            bool autoY =    ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtY : bIsAutoPlay.BsY;
+            bool autoP =    ( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtP : bIsAutoPlay.BsP;
 			bool autoPick =	( inst == E楽器パート.GUITAR ) ? bIsAutoPlay.GtPick : bIsAutoPlay.BsPick;
 			int nAutoW = ( autoW ) ? 8 : 0;
 			int nAutoR = ( autoR ) ? 4 : 0;
 			int nAutoG = ( autoG ) ? 2 : 0;
 			int nAutoB = ( autoB ) ? 1 : 0;
-			int nAutoMask = nAutoW | nAutoR | nAutoG | nAutoB;
+            int nAutoY = ( autoY ) ? 16: 0;
+            int nAutoP = ( autoP ) ? 32: 0;
+			int nAutoMask = nAutoW | nAutoR | nAutoG | nAutoB | nAutoY | nAutoP;
 
 //			if ( bIsAutoPlay[ (int) Eレーン.Guitar - 1 + indexInst ] )	// このような、バグの入りやすい書き方(GT/BSのindex値が他と異なる)はいずれ見直したい
 //			{
 			CDTX.CChip chip = this.r次に来る指定楽器Chipを更新して返す(inst);
-			if ( chip != null )	
-			{
-				if ( ( chip.nチャンネル番号 & 4 ) != 0 && autoR )
-				{
-					this.actLaneFlushGB.Start( R );
-					this.actRGB.Push( R );
-				}
-				if ( ( chip.nチャンネル番号 & 2 ) != 0 && autoG )
-				{
-					this.actLaneFlushGB.Start( G );
-					this.actRGB.Push( G );
-				}
-				if ( ( chip.nチャンネル番号 & 1 ) != 0 && autoB )
-				{
-					this.actLaneFlushGB.Start( B );
-					this.actRGB.Push( B );
-				}
-//			}
-
-			}
+            if (chip != null)
+            {
+                bool flag7 = false;
+                bool flag8 = false;
+                bool flag9 = false;
+                bool flag10 = false;
+                bool flag11 = false;
+                int nチャンネル番号 = chip.nチャンネル番号;
+                switch (nチャンネル番号)
+                {
+                    case 32:
+                        break;
+                    case 33:
+                        flag9 = true;
+                        break;
+                    case 34:
+                        flag8 = true;
+                        break;
+                    case 35:
+                        flag8 = true;
+                        flag9 = true;
+                        break;
+                    case 36:
+                        flag7 = true;
+                        break;
+                    case 37:
+                        flag7 = true;
+                        flag9 = true;
+                        break;
+                    case 38:
+                        flag7 = true;
+                        flag8 = true;
+                        break;
+                    case 39:
+                        flag7 = true;
+                        flag8 = true;
+                        flag9 = true;
+                        break;
+                    default:
+                        switch (nチャンネル番号)
+                        {
+                            case 147:
+                                flag10 = true;
+                                break;
+                            case 148:
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 149:
+                                flag8 = true;
+                                flag10 = true;
+                                break;
+                            case 150:
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 151:
+                                flag7 = true;
+                                flag10 = true;
+                                break;
+                            case 152:
+                                flag7 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 153:
+                                flag7 = true;
+                                flag8 = true;
+                                flag10 = true;
+                                break;
+                            case 154:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 155:
+                                flag11 = true;
+                                break;
+                            case 156:
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 157:
+                                flag8 = true;
+                                flag11 = true;
+                                break;
+                            case 158:
+                                flag8 = true;
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 159:
+                                flag7 = true;
+                                flag11 = true;
+                                break;
+                            case 161:
+                                flag9 = true;
+                                break;
+                            case 162:
+                                flag8 = true;
+                                break;
+                            case 163:
+                                flag8 = true;
+                                flag9 = true;
+                                break;
+                            case 164:
+                                flag7 = true;
+                                break;
+                            case 165:
+                                flag7 = true;
+                                flag9 = true;
+                                break;
+                            case 166:
+                                flag7 = true;
+                                flag8 = true;
+                                break;
+                            case 167:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                break;
+                            case 169:
+                                flag7 = true;
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 170:
+                                flag7 = true;
+                                flag8 = true;
+                                flag11 = true;
+                                break;
+                            case 171:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 172:
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 173:
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 174:
+                                flag8 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 175:
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 197:
+                                flag10 = true;
+                                break;
+                            case 198:
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 200:
+                                flag8 = true;
+                                flag10 = true;
+                                break;
+                            case 201:
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 202:
+                                flag7 = true;
+                                flag10 = true;
+                                break;
+                            case 203:
+                                flag7 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 204:
+                                flag7 = true;
+                                flag8 = true;
+                                flag10 = true;
+                                break;
+                            case 205:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                break;
+                            case 206:
+                                flag11 = true;
+                                break;
+                            case 207:
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 208:
+                                flag7 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 209:
+                                flag7 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 210:
+                                flag7 = true;
+                                flag8 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 211:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 218:
+                                flag8 = true;
+                                flag11 = true;
+                                break;
+                            case 219:
+                                flag8 = true;
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 220:
+                                flag7 = true;
+                                flag11 = true;
+                                break;
+                            case 221:
+                                flag7 = true;
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 222:
+                                flag7 = true;
+                                flag8 = true;
+                                flag11 = true;
+                                break;
+                            case 223:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                flag11 = true;
+                                break;
+                            case 225:
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 226:
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 227:
+                                flag8 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 228:
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 229:
+                                flag7 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 230:
+                                flag7 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 231:
+                                flag7 = true;
+                                flag8 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                            case 232:
+                                flag7 = true;
+                                flag8 = true;
+                                flag9 = true;
+                                flag10 = true;
+                                flag11 = true;
+                                break;
+                        }
+                        break;
+                }
+                if (flag7 && autoR)
+                {
+                    this.actLaneFlushGB.Start(R);
+                    this.actRGB.Push(R);
+                }
+                if (flag8 && autoG)
+                {
+                    this.actLaneFlushGB.Start(G);
+                    this.actRGB.Push(G);
+                }
+                if (flag9 && autoB)
+                {
+                    this.actLaneFlushGB.Start(B);
+                    this.actRGB.Push(B);
+                }
+                if (flag10 && autoY)
+                {
+                    this.actLaneFlushGB.Start(Y);
+                    this.actRGB.Push(Y);
+                }
+                if (flag11 && autoP)
+                {
+                    this.actLaneFlushGB.Start(Y);
+                    this.actRGB.Push(Y);
+                }
+            }
 //			else
 			{
 				int pushingR = CDTXMania.Pad.b押されている( inst, Eパッド.R ) ? 4 : 0;
@@ -3218,6 +4167,10 @@ namespace DTXMania
 				this.t入力メソッド記憶( inst );
 				int pushingB = CDTXMania.Pad.b押されている( inst, Eパッド.B ) ? 1 : 0;
 				this.t入力メソッド記憶( inst );
+                int pushingY = CDTXMania.Pad.b押されている( inst, Eパッド.Y ) ? 16: 0;
+                this.t入力メソッド記憶(inst);
+                int pushingP = CDTXMania.Pad.b押されている( inst, Eパッド.P ) ? 32: 0;
+                this.t入力メソッド記憶(inst);
 				int flagRGB = pushingR | pushingG | pushingB;
 				if ( pushingR != 0 )
 				{
@@ -3234,6 +4187,16 @@ namespace DTXMania
 					this.actLaneFlushGB.Start( B );
 					this.actRGB.Push( B );
 				}
+                if ( pushingY != 0 )
+                {
+                    this.actLaneFlushGB.Start( Y );
+                    this.actRGB.Push( Y );
+                }
+                if ( pushingP != 0 )
+                {
+                    this.actLaneFlushGB.Start( P );
+                    this.actRGB.Push( P );
+                }
 				// auto pickだとここから先に行かないので注意
 				List<STInputEvent> events = CDTXMania.Pad.GetEvents( inst, Eパッド.Pick );
 				if ( ( events != null ) && ( events.Count > 0 ) )
@@ -3252,27 +4215,347 @@ namespace DTXMania
 //Trace.TraceInformation("ch={0:x2}, mask1={1:x1}, mask2={2:x2}", pChip.nチャンネル番号,  ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F, ( flagRGB & ~nAutoMask) & 0x0F );
 						if ( ( pChip != null ) && ( ( ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F ) == ( ( flagRGB & ~nAutoMask) & 0x0F ) ) && ( e判定 != E判定.Miss ) )
 						{
-							bool bChipHasR = ( ( pChip.nチャンネル番号 & 4 ) > 0 );
-							bool bChipHasG = ( ( pChip.nチャンネル番号 & 2 ) > 0 );
-							bool bChipHasB = ( ( pChip.nチャンネル番号 & 1 ) > 0 );
+							bool bChipHasR = false;
+							bool bChipHasG = false;
+							bool bChipHasB = false;
+                            bool bChipHasY = false;
+                            bool bChipHasP = false;
 							bool bChipHasW = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x08 );
-							bool bChipIsO = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x00 );
-							bool bSuccessOPEN = bChipIsO && ( autoR || pushingR == 0 ) && ( autoG || pushingG == 0 ) && ( autoB || pushingB == 0 );
-							if ( ( bChipHasR && ( autoR || pushingR != 0 ) ) || bSuccessOPEN )
-							//if ( ( pushingR != 0 ) || autoR || ( flagRGB == 0 ) )
-							{
-								this.actChipFireGB.Start( R );
-							}
-							if ( ( bChipHasG && ( autoG || pushingG != 0 ) ) || bSuccessOPEN )
-							//if ( ( pushingG != 0 ) || autoG || ( flagRGB == 0 ) )
-							{
-								this.actChipFireGB.Start( G );
-							}
-							if ( ( bChipHasB && ( autoB || pushingB != 0 ) ) || bSuccessOPEN )
-							//if ( ( pushingB != 0 ) || autoB || ( flagRGB == 0 ) )
-							{
-								this.actChipFireGB.Start( B );
-							}
+							bool bChipIsO = false;
+                            bool bSuccessOPEN = bChipIsO && (autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
+
+                            if (chip != null)
+                            {
+                                int nチャンネル番号 = chip.nチャンネル番号;
+                                switch (nチャンネル番号)
+                                {
+                                    case 32:
+                                        bChipIsO = true;
+                                        break;
+                                    case 33:
+                                        bChipHasB = true;
+                                        break;
+                                    case 34:
+                                        bChipHasG = true;
+                                        break;
+                                    case 35:
+                                        bChipHasG = true;
+                                        bChipHasB = true;
+                                        break;
+                                    case 36:
+                                        bChipHasR = true;
+                                        break;
+                                    case 37:
+                                        bChipHasR = true;
+                                        bChipHasB = true;
+                                        break;
+                                    case 38:
+                                        bChipHasR = true;
+                                        bChipHasG = true;
+                                        break;
+                                    case 39:
+                                        bChipHasR = true;
+                                        bChipHasG = true;
+                                        bChipHasB = true;
+                                        break;
+                                    case 40:
+                                        break;
+                                    default:
+                                        switch (nチャンネル番号)
+                                        {
+                                            case 147:
+                                                bChipHasY = true;
+                                                break;
+                                            case 148:
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 149:
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 150:
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 151:
+                                                bChipHasR = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 152:
+                                                bChipHasR = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;                
+                                            case 153:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                break;
+                                                
+                                            case 154:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 155:
+                                                bChipHasP = true;
+                                                break;
+                                                /*
+                                            case 156:
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 157:
+                                                flag13 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 158:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 159:
+                                                flag12 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 160:
+                                                flag17 = true;
+                                                break;
+                                            case 161:
+                                                flag14 = true;
+                                                break;
+                                            case 162:
+                                                flag13 = true;
+                                                break;
+                                            case 163:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                break;
+                                            case 164:
+                                                flag12 = true;
+                                                break;
+                                            case 165:
+                                                flag12 = true;
+                                                flag14 = true;
+                                                break;
+                                            case 166:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                break;
+                                            case 167:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag14 = true;
+                                                break;
+                                            case 168:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                break;
+                                            case 169:
+                                                flag12 = true;
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 170:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 171:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 172:
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 173:
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 174:
+                                                flag13 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 175:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 197:
+                                                flag15 = true;
+                                                break;
+                                            case 198:
+                                                flag14 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 200:
+                                                flag13 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 201:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 202:
+                                                flag12 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 203:
+                                                flag12 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 204:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 205:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                break;
+                                            case 206:
+                                                flag16 = true;
+                                                break;
+                                            case 207:
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 208:
+                                                flag12 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 209:
+                                                flag12 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 210:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 211:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 218:
+                                                flag13 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 219:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 220:
+                                                flag12 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 221:
+                                                flag12 = true;
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 222:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 223:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 225:
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 226:
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 227:
+                                                flag13 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 228:
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 229:
+                                                flag12 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 230:
+                                                flag12 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 231:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                            case 232:
+                                                flag12 = true;
+                                                flag13 = true;
+                                                flag14 = true;
+                                                flag15 = true;
+                                                flag16 = true;
+                                                break;
+                                                */
+                                        }
+                                        break;
+                                }
+                            }
+
+                            if ((bChipHasR && (autoR || pushingR != 0)) || bChipHasR)
+                            {
+                                this.actChipFireGB.Start( R );
+                            }
+                            if ((bChipHasG && (autoG || pushingG != 0)) || bChipHasG)
+                            {
+                                this.actChipFireGB.Start( G );
+                            }
+                            if ((bChipHasB && (autoB || pushingB != 0)) || bChipHasB)
+                            {
+                                this.actChipFireGB.Start( B );
+                            }
+                            if ((bChipHasY && (autoY || pushingY != 0)) || bChipHasY)
+                            {
+                                this.actChipFireGB.Start( Y );
+                            }
+                            if ((bChipHasP && (autoP || pushingP != 0)) || bChipHasP)
+                            {
+                                this.actChipFireGB.Start( P );
+                            }
 							this.tチップのヒット処理( nTime, pChip );
 							this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.nシステム時刻, inst, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する[indexInst], e判定 == E判定.Poor );
 							int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 0x28 : 0xA8;
