@@ -67,15 +67,15 @@ namespace DTXMania
 				this.ct本体移動.t進行Loop();
 				this.ct本体振動.t進行Loop();
 
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
                 {
                     #region [ ギターのゲージ ]
-                    if (base.txgbg != null)
+                    if (base.txgbg != null && CDTXMania.DTX.bチップがある.Guitar)
                     {
                         base.txgbg.t2D描画(CDTXMania.app.Device, 76, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
-                            base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
+                            base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Guitar;
                             base.txgbar.t2D描画(CDTXMania.app.Device, 89, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
@@ -84,16 +84,16 @@ namespace DTXMania
                     #endregion
 
                     #region [ ベースのゲージ ]
-                    if (base.txgbg != null)
+                    if (base.txgbg != null && CDTXMania.DTX.bチップがある.Bass)
                     {
-                        base.txgbg.t2D描画(CDTXMania.app.Device, 820, 0, new Rectangle(0, 0, 349, 42));
+                        base.txgbg.t2D描画(CDTXMania.app.Device, 864, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
-                            base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
-                            base.txgbar.t2D描画(CDTXMania.app.Device, 833, 8, new Rectangle(0, 0, 318, 26));
+                            base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
+                            base.txgbar.t2D描画(CDTXMania.app.Device, 877, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 833, 8, new Rectangle(0, 0x1a, 0x1f8, 0x1a));
+                        base.txgbar.t2D描画(CDTXMania.app.Device, 877, 8, new Rectangle(0, 0x1a, 504, 0x1a));
                     }
                     #endregion
                 }

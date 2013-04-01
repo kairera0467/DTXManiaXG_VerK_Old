@@ -48,7 +48,7 @@ namespace DTXMania
 				}
 				if( this.tx右パネル != null )
 				{
-					this.tx右パネル.t2D描画( CDTXMania.app.Device, 0x26e, 0x143, new Rectangle( this.nStatus * 15, 0xb7, 15, 0x49 ) );
+					//this.tx右パネル.t2D描画( CDTXMania.app.Device, 0x26e, 0x143, new Rectangle( this.nStatus * 15, 0xb7, 15, 0x49 ) );
 					int bass = CDTXMania.ConfigIni.n譜面スクロール速度.Bass;
 					if( bass < 0 )
 					{
@@ -58,9 +58,9 @@ namespace DTXMania
 					{
 						bass = 15;
 					}
-					this.tx右パネル.t2D描画( CDTXMania.app.Device, 0x26e, 0x35, new Rectangle( bass * 15, 0, 15, 0xac ) );
+					//this.tx右パネル.t2D描画( CDTXMania.app.Device, 0x26e, 0x35, new Rectangle( bass * 15, 0, 15, 0xac ) );
 				}
-                //this.tx曲名パネル.t2D描画(CDTXMania.app.Device, 515, 521);
+                this.tx曲名パネル.t2D描画(CDTXMania.app.Device, 515, 521);
 			}
 			return 0;
 		}

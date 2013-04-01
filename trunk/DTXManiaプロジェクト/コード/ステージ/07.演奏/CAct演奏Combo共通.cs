@@ -115,11 +115,11 @@ namespace DTXMania
 
 		protected enum EEvent { 非表示, 数値更新, 同一数値, ミス通知 }
 		protected enum EMode { 非表示中, 進行表示中, 残像表示中 }
-		protected const int nギターコンボのCOMBO文字の高さ = 16;
-		protected const int nギターコンボのCOMBO文字の幅 = 45;
-		protected const int nギターコンボの高さ = 35;
-		protected const int nギターコンボの幅 = 23;
-		protected const int nギターコンボの文字間隔 = 1;
+		protected const int nギターコンボのCOMBO文字の高さ = 32;
+		protected const int nギターコンボのCOMBO文字の幅 = 90;
+		protected const int nギターコンボの高さ = 115;
+		protected const int nギターコンボの幅 = 90;
+		protected const int nギターコンボの文字間隔 = -6;
 		protected const int nドラムコンボのCOMBO文字の高さ = 32;
 		protected const int nドラムコンボのCOMBO文字の幅 = 90;
 		protected const int nドラムコンボの高さ = 115;
@@ -469,16 +469,13 @@ namespace DTXMania
 				f拡大率 = 1.0f - ( ( (float) this.nジャンプ差分値[ nジャンプインデックス ] ) / 45.0f );		// f拡大率 = 1.0 → 1.3333... → 1.0
 
 			if( this.txCOMBOギター != null )
-				this.txCOMBOギター.vc拡大縮小倍率 = new Vector3( f拡大率, f拡大率, 1.0f );
+				this.txCOMBOギター.vc拡大縮小倍率 = new Vector3( f拡大率, f拡大率, 0.5f );
 			//-----------------
 			#endregion
 			#region [ "COMBO" 文字を表示。]
 			//-----------------
 			int x = n表示中央X - ( (int) ( ( nギターコンボのCOMBO文字の幅 * f拡大率 ) / 2.0f ) );
 			int y = n表示中央Y;
-			
-			if( this.txCOMBOギター != null )
-				this.txCOMBOギター.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 70, 45, 16 ) );
 			//-----------------
 			#endregion
 
@@ -487,9 +484,9 @@ namespace DTXMania
 			{
 				#region [ 数字の拡大率を設定。]
 				//-----------------
-				f拡大率 = 1.0f;
+				f拡大率 = 0.25f;
 				if( nジャンプインデックス >= 0 && nジャンプインデックス < 180 )
-					f拡大率 = 1.0f - ( ( (float) this.nジャンプ差分値[ nジャンプインデックス ] ) / 45f );		// f拡大率 = 1.0 → 1.3333... → 1.0
+					f拡大率 = 0.25f - ( ( (float) this.nジャンプ差分値[ nジャンプインデックス ] ) / 45f );		// f拡大率 = 1.0 → 1.3333... → 1.0
 
 				if( this.txCOMBOギター != null )
 					this.txCOMBOギター.vc拡大縮小倍率 = new Vector3( f拡大率, f拡大率, 1.0f );
@@ -504,8 +501,8 @@ namespace DTXMania
 				{
 					this.txCOMBOギター.t2D描画(
 						CDTXMania.app.Device,
-						x - ( (int) ( ( ( f拡大率 - 1.0f ) * nギターコンボの幅 ) / 2.0f ) ),
-						y - ( (int) ( ( ( f拡大率 - 1.0f ) * nギターコンボの高さ ) / 2.0f ) ),
+						x - ( (int) ( ( ( f拡大率 - 0.25f ) * nギターコンボの幅 ) / 2.0f ) ),
+						y - ( (int) ( ( ( f拡大率 - 0.25f ) * nギターコンボの高さ ) / 2.0f ) ),
 						new Rectangle( ( n位の数[ i ] % 5 ) * nギターコンボの幅, ( n位の数[ i ] / 5 ) * nギターコンボの高さ, nギターコンボの幅, nギターコンボの高さ ) );
 				}
 				//-----------------
