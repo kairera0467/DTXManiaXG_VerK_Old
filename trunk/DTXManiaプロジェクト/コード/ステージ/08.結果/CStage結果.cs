@@ -325,7 +325,7 @@ namespace DTXMania
                     }
                     else
                     {
-                        this.actFI.tフェードイン開始(true);
+                        this.actFI.tフェードイン開始();
                     }
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					if( this.rResultSound != null )

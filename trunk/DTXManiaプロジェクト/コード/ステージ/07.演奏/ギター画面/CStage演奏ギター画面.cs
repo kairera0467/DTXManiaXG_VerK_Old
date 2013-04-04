@@ -666,24 +666,24 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 40, 369 };			// ドラム画面かギター画面かで変わる値
+					int[] y_base = { 154, 369 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
-					const int WailingWidth = 20;		// 4種全て同じ値
-					const int WailingHeight = 50;		// 4種全て同じ値
-					const int baseTextureOffsetX = 96;	// ドラム画面かギター画面かで変わる値
-					const int baseTextureOffsetY = 0;	// ドラム画面かギター画面かで変わる値
-					const int drawX = 593;				// 4種全て異なる値
+					const int WailingWidth = 54;		// 4種全て同じ値
+					const int WailingHeight = 68;		// 4種全て同じ値
+					const int baseTextureOffsetX = 0;	// ドラム画面かギター画面かで変わる値
+					const int baseTextureOffsetY = 22;	// ドラム画面かギター画面かで変わる値
+					const int drawX = 1155;				// 4種全て異なる値
 
-					const int numA = 25;				// 4種全て同じ値
+					const int numA = 34;				// 4種全て同じ値
 					int y = configIni.bReverse.Bass ? ( y_base[ 1 ] - pChip.nバーからの距離dot.Bass ) : ( y_base[ 0 ] + pChip.nバーからの距離dot.Bass );
 					int numB = y - offset;				// 4種全て同じ定義
 					int numC = 0;						// 4種全て同じ初期値
-					const int numD = 409;				// ドラム画面かギター画面かで変わる値
+					const int numD = 709;				// ドラム画面かギター画面かで変わる値
 					if ( ( numB < ( numD + numA ) ) && ( numB > -numA ) )	// 以下のロジックは4種全て同じ
 					{
 						int c = this.ctWailingチップ模様アニメ.n現在の値;
-						Rectangle rect = new Rectangle( baseTextureOffsetX + ( c * WailingWidth ), baseTextureOffsetY, WailingWidth, WailingHeight );
+                        Rectangle rect = new Rectangle(baseTextureOffsetX, baseTextureOffsetY, WailingWidth, WailingHeight);
 						if ( numB < numA )
 						{
 							rect.Y += numA - numB;
@@ -696,7 +696,7 @@ namespace DTXMania
 						}
 						if ( ( rect.Bottom > rect.Top ) && ( this.txチップ != null ) )
 						{
-							this.txチップ.t2D描画( CDTXMania.app.Device, drawX, ( y - numA ) + numC, rect );
+                            this.txチップ.t2D描画(CDTXMania.app.Device, drawX, (y - numA) + numC, rect);
 						}
 					}
 				}
@@ -740,10 +740,10 @@ namespace DTXMania
 				{
 					this.txチップ.t2D描画( CDTXMania.app.Device, 88, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
-				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 40 + pChip.nバーからの距離dot.Bass ) - 1 );
+				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) - 1 );
 				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
-					this.txチップ.t2D描画( CDTXMania.app.Device, 480, y, new Rectangle( 0, 0xeb, 193, 1 ) );
+					this.txチップ.t2D描画( CDTXMania.app.Device, 959, y, new Rectangle( 0, 20, 193, 1 ) );
 				}
 			}
 

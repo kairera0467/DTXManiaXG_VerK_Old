@@ -62,7 +62,7 @@ namespace DTXMania
 					}
                     if (base.txRGB != null)
                     {
-                        base.txRGB.t2D描画( CDTXMania.app.Device, 992 , 42, new Rectangle(0, 0, 210, 64) );
+                        base.txRGB.t2D描画( CDTXMania.app.Device, 951 , 42, new Rectangle(0, 0, 210, 64) );
                     }
 				}
 				for( int i = 0; i < 10; i++ )

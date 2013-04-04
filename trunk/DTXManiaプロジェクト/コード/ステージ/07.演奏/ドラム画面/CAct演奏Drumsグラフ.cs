@@ -156,20 +156,23 @@ namespace DTXMania
                     CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss;
                 CScoreIni.C演奏記録 drums = new CScoreIni.C演奏記録();
                 
+                double rate =  (double)n現在演奏されたノーツ数 / (double)CDTXMania.DTX.n可視チップ数.Drums;
                 
                 if (CDTXMania.ConfigIni.nSkillMode == 0)
                 {
                     //int n逆算Perfect = drums.nPerfect数・Auto含まない / this.n現在演奏されたノーツ数;
                     //int n逆算Great = drums.nGreat数・Auto含まない / this.n現在演奏されたノーツ数;
-                    this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, this.dbグラフ値目標, E楽器パート.DRUMS);
-                    //this.dbグラフ値比較 = this.dbグラフ値目標_渡;
+                    //this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, drums.nPerfect数, drums.nGreat数, drums.nGood数, drums.nPoor数, drums.nMiss数, E楽器パート.DRUMS) * rate;
+                    //this.dbグラフ値比較 = ((this.dbグラフ値目標_渡) / (double)CDTXMania.DTX.n可視チップ数.Drums) * rate;
+                    this.dbグラフ値比較 = this.dbグラフ値目標_渡;
                 }
                 else if (CDTXMania.ConfigIni.nSkillMode == 1)
                 {
-                    this.dbグラフ値比較 = CScoreIni.tゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, drums.n最大コンボ数, E楽器パート.DRUMS);
+                    //this.dbグラフ値比較 = CScoreIni.tゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.n現在演奏されたノーツ数, drums.n最大コンボ数, E楽器パート.DRUMS);
+                    this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
                 }
                 
-                this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
+                
                 //this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
                 // 背景暗幕
                 Rectangle rectangle = new Rectangle(900, 0, 380, 720);

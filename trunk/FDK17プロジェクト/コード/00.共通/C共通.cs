@@ -112,6 +112,43 @@ namespace FDK
 			return null;	// なかった
 		}
 
+		public static void tXMLファイルを読み込む<T>( string strXMLファイル名, out T xmlObject )
+		{
+			xmlObject = default( T );
+
+			FileStream fs = null;
+			StreamReader sr = null;
+			try
+			{
+				fs = new FileStream( strXMLファイル名, FileMode.Open, FileAccess.Read, FileShare.ReadWrite );	// FileShare を付けとかないと、Close() 後もロックがかかる。
+				sr = new StreamReader( fs, Encoding.UTF8 );
+				var xmlsl = new System.Xml.Serialization.XmlSerializer( typeof( T ) );
+				xmlObject = (T) xmlsl.Deserialize( sr );
+			}
+			finally
+			{
+				if( sr != null )
+					sr.Close();		// fr も一緒にClose()される
+			}
+		}
+		public static void tXMLファイルを保存する<T>( string strXMLファイル名, T xmlObject )
+		{
+			FileStream fs = null;
+			StreamWriter sw = null;
+			try
+			{
+				fs = new FileStream( strXMLファイル名, FileMode.Create, FileAccess.Write, FileShare.ReadWrite );	// FileShare を付けとかないと、Close() 後もロックがかかる。
+				sw = new StreamWriter( fs, Encoding.UTF8 );
+				var xmlsl = new System.Xml.Serialization.XmlSerializer( typeof( T ) );
+				xmlsl.Serialize( sw, xmlObject );
+			}
+			finally
+			{
+				if( sw != null )
+					sw.Close();		// fs も一緒にClose()される
+			}
+		}
+
 
 		// 数学
 

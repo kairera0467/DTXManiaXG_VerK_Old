@@ -9,13 +9,42 @@ namespace DTXMania
 {
 	internal class CAct演奏Guitarステータスパネル : CAct演奏ステータスパネル共通
 	{
+        public override void On活性化()
+        {
+            this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 18f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftNameFont = new Font("Arial", 26f, FontStyle.Bold, GraphicsUnit.Pixel);
+            this.ftLevelFont = new Font("Impact", 26f, FontStyle.Regular);
+            this.ftDifficultyL = new Font("Arial", 30f, FontStyle.Bold);
+            this.ftDifficultyS = new Font("Arial", 20f, FontStyle.Bold);
+            base.On活性化();
+        }
 		public override void OnManagedリソースの作成()
 		{
 			if( !base.b活性化してない )
 			{
+                this.b4font = new Bitmap(1, 1);
+                Graphics graphics = Graphics.FromImage(this.b4font);
+                graphics.PageUnit = GraphicsUnit.Pixel;
+
+                this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
+                this.strGroupName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
+
+                this.bNamePlateL = new Bitmap(0x170, 0x103);
+                graphics = Graphics.FromImage(this.bNamePlateL);
+
+                this.iSongPanel = Image.FromFile(CSkin.Path(@"Graphics\7_songpanel.png"));
+                Graphics gSongPanel = Graphics.FromImage(this.b4font);
+                this.strPanelString = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
+                this.bSongPanel = new Bitmap(250, 112);
+                gSongPanel = Graphics.FromImage(this.bSongPanel);
+                gSongPanel.DrawImage(this.iSongPanel, 0, 0, 250, 112);
+                gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)16f, (float)78f);
+
 				this.tx左パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_nameplate_Guitar.png" ) );
 				this.tx右パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay status panels right.png" ) );
-                this.tx曲名パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_songpanel.png"));
+                //this.tx曲名パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_songpanel.png"));
+                this.tx曲名パネル = new CTexture(CDTXMania.app.Device, this.bSongPanel, CDTXMania.TextureFormat, false);
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -82,6 +111,28 @@ namespace DTXMania
 		private CTexture tx右パネル;
 		private CTexture tx左パネル;
         private CTexture tx曲名パネル;
+        private Bitmap b4font;
+        private Bitmap bNamePlateL;
+        private Bitmap bSongPanel;
+        private Bitmap bDifficulty;
+        private Font ftDifficultyL;
+        private Font ftDifficultyS;
+        private Font ftDisplayFont;
+        private Font ftNameFont;
+        private Font ftGroupFont;
+        private Font ftLevelFont;
+        private string strGroupName;
+        private string strPanelString;
+        private string strPlayerName;
+        private Image iAlbum;
+        private Image iDrumspeed;
+        private Image iRisky;
+        private Image iNamePlate;
+        private Image iSongPanel;
+        private Image iDifficulty;
+        private Image iScore;
+        private CTexture txDummy;
+        private CTexture txDifficulty;
 		//-----------------
 		#endregion
 	}

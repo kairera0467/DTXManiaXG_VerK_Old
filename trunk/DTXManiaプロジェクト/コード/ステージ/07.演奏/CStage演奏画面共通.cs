@@ -1583,7 +1583,7 @@ namespace DTXMania
 			for ( ; nIndex_NearestChip_Past >= 0; nIndex_NearestChip_Past-- )
 			{
                 CDTX.CChip chip = listChip[nIndex_NearestChip_Past];
-                if (!chip.bHit && ((nChannel >= 17 && nChannel <= 26 && (chip.nチャンネル番号 == nChannel || chip.nチャンネル番号 == nChannel + 32)) || (nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel) || (nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)))
+                if (!chip.bHit && ((nChannel >= 0x11 && nChannel <= 0x1c && (chip.nチャンネル番号 == nChannel || chip.nチャンネル番号 == nChannel + 32)) || (nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel) || (nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)))
                 {
                     break;
                 }
@@ -1959,11 +1959,11 @@ namespace DTXMania
                         CDTXMania.ConfigIni.nInfoType = 0;
                     }
                 }
-                if ((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightShift) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftShift)) && keyboard.bキーが押されている(0x3c))
+                if ((keyboard.bキーが押されている(0x3c)))
                 {
                     //SHIFT & F7
-                    //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
-                    //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                    CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
+                    CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
                     CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
                     
                 }
@@ -3371,7 +3371,7 @@ namespace DTXMania
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1000, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 959, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
                                 }
 							}
 							rc.X += chipTexDeltaX;
@@ -3384,7 +3384,7 @@ namespace DTXMania
                                 }
                                 else if(inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1040, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 998, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
                                 }
 							}
 							rc.X += chipTexDeltaX;
@@ -3397,7 +3397,7 @@ namespace DTXMania
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1037, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
                                 }
 							}
                             rc.X += chipTexDeltaX;
@@ -3410,7 +3410,7 @@ namespace DTXMania
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1076, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
                                 }
                             }
                             rc.X += chipTexDeltaX;
@@ -3423,7 +3423,7 @@ namespace DTXMania
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1080, y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1115, y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
                                 }
                             }
 						}
@@ -3634,7 +3634,7 @@ namespace DTXMania
 		}
 		protected void t進行描画・レーンフラッシュGB()
 		{
-			if ( ( CDTXMania.ConfigIni.eDark == Eダークモード.OFF ) && CDTXMania.ConfigIni.bGuitar有効 )
+			if ( CDTXMania.ConfigIni.bGuitar有効 )
 			{
 				this.actLaneFlushGB.On進行描画();
 			}
@@ -4155,8 +4155,8 @@ namespace DTXMania
                 }
                 if (flag11 && autoP)
                 {
-                    this.actLaneFlushGB.Start(Y);
-                    this.actRGB.Push(Y);
+                    this.actLaneFlushGB.Start(P);
+                    this.actRGB.Push(P);
                 }
             }
 //			else
@@ -4171,7 +4171,7 @@ namespace DTXMania
                 this.t入力メソッド記憶(inst);
                 int pushingP = CDTXMania.Pad.b押されている( inst, Eパッド.P ) ? 32: 0;
                 this.t入力メソッド記憶(inst);
-				int flagRGB = pushingR | pushingG | pushingB;
+				int flagRGB = pushingR | pushingG | pushingB | pushingY | pushingP;
 				if ( pushingR != 0 )
 				{
 					this.actLaneFlushGB.Start( R );
@@ -4303,40 +4303,40 @@ namespace DTXMania
                                             case 155:
                                                 bChipHasP = true;
                                                 break;
-                                                /*
                                             case 156:
-                                                flag14 = true;
-                                                flag16 = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
                                                 break;
                                             case 157:
-                                                flag13 = true;
-                                                flag16 = true;
+                                                bChipHasG = true;
+                                                bChipHasP = true;
                                                 break;
                                             case 158:
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag16 = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
                                                 break;
                                             case 159:
-                                                flag12 = true;
-                                                flag16 = true;
+                                                bChipHasR = true;
+                                                bChipHasP = true;
                                                 break;
-                                            case 160:
-                                                flag17 = true;
+                                            case 0xA0:
+                                                bChipIsO = true;
                                                 break;
                                             case 161:
-                                                flag14 = true;
+                                                bChipHasB = true;
                                                 break;
                                             case 162:
-                                                flag13 = true;
+                                                bChipHasG = true;
                                                 break;
                                             case 163:
-                                                flag13 = true;
-                                                flag14 = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
                                                 break;
                                             case 164:
-                                                flag12 = true;
+                                                bChipHasR = true;
                                                 break;
+                                                /*
                                             case 165:
                                                 flag12 = true;
                                                 flag14 = true;
