@@ -143,7 +143,7 @@ namespace DTXMania
 
                 }
 
-                if (base.db現在のゲージ値.Drums <= 0.3)
+                if (base.IsDanger(E楽器パート.DRUMS))
                 {
                     this.txゲージマスク2.t2D描画( CDTXMania.app.Device, 259, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 :652 ));
                 }

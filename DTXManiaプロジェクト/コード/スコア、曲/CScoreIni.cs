@@ -1546,12 +1546,12 @@ namespace DTXMania
             ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
             return ret;
         }
-        internal static double t旧ゴーストスキルを計算して返す(int nTotal, int nPerfect, double db目標スキル, E楽器パート inst)
+        internal static double t旧ゴーストスキルを計算して返す(int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, E楽器パート inst)
         {
             if (nTotal == 0)
                 return 0.0;
-            int nAuto = nTotal - nPerfect;
-            double y = (nPerfect * 1.0 * 100.0) / ((double)nTotal);
+            int nAuto = nTotal - (nPerfect + nGreat + nGood + nPoor + nMiss);
+            double y = ((nPerfect * 1.0 + nGreat * 0.8 + nGood * 0.5 + nPoor * 0.2 + nMiss * 0.0 + nAuto * 0.0) * 100.0) / ((double)nTotal);
             double ret = (100.0 * ((Math.Pow(1.03, y) - 1.0) / (Math.Pow(1.03, 100.0) - 1.0)));
 
             return ret;

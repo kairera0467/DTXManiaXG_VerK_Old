@@ -12,7 +12,7 @@ namespace DTXMania
 		public STDGBVALUE<long> nスコアの増分;
 		public STDGBVALUE<double> n現在の本当のスコア;
 		public STDGBVALUE<long> n現在表示中のスコア;
-		protected long n進行用タイマ;
+		public long n進行用タイマ;
 		protected CTexture txScore;
 
 		

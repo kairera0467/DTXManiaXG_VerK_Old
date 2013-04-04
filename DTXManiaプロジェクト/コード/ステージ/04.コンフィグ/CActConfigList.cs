@@ -604,9 +604,7 @@ namespace DTXMania
 				"  HH-1 ... LC & ( HHC | HHO )\n" +
 				"  HH-2 ... LC | ( HHC & HHO )\n" +
 				"  HH-3 ... LC & HHC & HHO\n" +
-				"\n" +
-				"※BD Group が BD-1 である場合、\n" +
-				"　この項目は変更できません。\n",
+				"\n",
 				"HH-0: LC|HC|HO; all are separated.\n" +
 				"HH-1: LC&(HC|HO);\n" +
 				" HC and HO are separted.\n" +
@@ -615,9 +613,7 @@ namespace DTXMania
 				" LC and HHs are separated.\n" +
 				" HC and HO are grouped.\n" +
 				"HH-3: LC&HC&HO; all are grouped.\n" +
-				"\n" +
-				"* This value cannot be changed while \n" +
-				"  BD Group is set as BD-1.",
+				"\n",
 				new string[] { "HH-0", "HH-1", "HH-2", "HH-3" } );
 			this.list項目リスト.Add( this.iSystemHHGroup );
 
@@ -653,20 +649,7 @@ namespace DTXMania
 				"方法を指定します。\n" +
 				"  BD-0 ... LP | LBD |BD\n" +
 				"  BD-1 ... LP & LBD |BD\n" + 
-				"  BD-2 ... LP & LBD &BD\n" +
-				"注意：HitSound が OFF である場合は\n" + 
-				"不具合が生じます。\n" +
-				"また、BD-1 を選択している間はいくつ\n" + 
-				"かのオプションが変更できなくなります。",
-				"BD-0: HP|BD\n" +
-				" HiHatPedal is HiHat.\n" +
-				"BD-1: HP&BD\n" +
-				" HiHatPedal is Bass.\n" +
-				"\n" +
-				"Warning: You should not use BD-1 with \n" +
-				"HitSound OFF.\n" +
-				"And you cannot change some options \n" +
-				"while using BD-1.",
+				"  BD-2 ... LP & LBD &BD\n",
 				new string[] { "BD-0", "BD-1","BD-2" } );
 			this.list項目リスト.Add( this.iSystemBDGroup );
 

@@ -47,7 +47,7 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-        private readonly Point[] pt中央 = new Point[] { new Point(107, 155), new Point(146, 155), new Point(185, 155), new Point(224, 155), new Point(264, 155), new Point(1020, 155), new Point(1058, 155), new Point(1096, 155), new Point(1136, 155), new Point(1175, 155) };
+        private readonly Point[] pt中央 = new Point[] { new Point(107, 155), new Point(146, 155), new Point(185, 155), new Point(224, 155), new Point(264, 155), new Point(958, 155), new Point(1017, 155), new Point(1056, 155), new Point(1095, 155), new Point(1134, 155) };
 		//-----------------
 		#endregion
 	}

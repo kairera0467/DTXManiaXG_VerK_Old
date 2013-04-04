@@ -49,11 +49,12 @@ namespace DTXMania
                     float f拡大率y;
                     this.framewidth = this.rAVI.avi.nフレーム幅;
                     this.frameheight = this.rAVI.avi.nフレーム高さ;
+                    this.fAVIアスペクト比 = ((float)this.framewidth) / ((float)this.frameheight);       //変更(追加)
                     if (this.tx描画用 == null)
                     {
                         this.tx描画用 = new CTexture(CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                     }
-                    if ((((float)this.framewidth) / ((float)this.frameheight)) < 1.77f)
+                    if (fAVIアスペクト比 < 1.77f)       //変更
                     {
                         //旧企画クリップだった場合
                         this.ratio1 = 720f / ((float)this.frameheight);
@@ -486,9 +487,8 @@ namespace DTXMania
                             
                             if (this.bFullScreen)
                             {
-                                if (((float)this.framewidth / this.frameheight) > 1.77f)
+                                if (fAVIアスペクト比 > 1.77f)       //変更
                                 {
-                                    this.b旧企画クリップである = false;
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
                                     if (this.tx描画用2 != null)
@@ -500,7 +500,6 @@ namespace DTXMania
                                 }
                                 else
                                 {
-                                    this.b旧企画クリップである = true;
                                     this.tx描画用.vc拡大縮小倍率 = this.vclip;
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
                                 }
@@ -841,51 +840,63 @@ namespace DTXMania
                     this.vector = this.tx描画用.vc拡大縮小倍率;
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                     this.tx描画用.n透明度 = 0xff;
-                    #region[ ワイドクリップ時の処理 ]
-                    if (this.b旧企画クリップである == false)//ワイドクリップ
+                    #region[ スキルメーター有効 ]
+                    if (CDTXMania.ConfigIni.bGraph.Drums == true)
                     {
-                        #region[ スキルメーター有効 ]
-                        if (CDTXMania.ConfigIni.bGraph.Drums == true)
+
+                        if (this.fAVIアスペクト比 > (256f / 266f))
                         {
-                            if (tx描画用.szテクスチャサイズ.Width >= 1280)
-                                this.smallvc = new Vector3(0.2f, 0.2f, 1f);
-                            else if(tx描画用.szテクスチャサイズ.Width <= 640)
-                                this.smallvc = new Vector3(0.4f, 0.4f, 1f);
-                            if (this.txクリップパネル != null)
-                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
-                            this.tx描画用.vc拡大縮小倍率 = this.smallvc;
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, 13, 484);
-                            CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, 484);
+                            this.ratio2 = 256f / ((float)this.framewidth);
+                            this.position2 = 422 + (int)((266f - (this.frameheight * this.ratio2)) / 2f);
                         }
-                        #endregion
-                        #region[ スキルメーター無効 ]
                         else
                         {
-                            if (this.txクリップパネル != null)
-                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 112);
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, 860, 140);
-                            CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(860, 140);
+                            this.ratio2 = 266f / ((float)this.frameheight);
+                            this.position2 = 13 + (int)((256 - (this.framewidth * this.ratio2)) / 2f);
                         }
-                        #endregion
+                        if (this.txクリップパネル != null)
+                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
+                        this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
+                        if (this.fAVIアスペクト比 > (256f / 266f))
+                        {
+                            this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
+                            CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, this.position2);
+                        }
+                        else
+                        {
+                            this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 422);
+                            CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 422);
+                        }
                     }
                     #endregion
-                    #region[ 旧規格クリップ時の処理 ]
-                    else if (this.b旧企画クリップである == true && CDTXMania.ConfigIni.bGraph.Drums)//旧規格
+                    #region[ スキルメーター無効 ]
+                    else
                     {
-                        #region[ スキルメーター有効 ]
-                        if (CDTXMania.ConfigIni.bGraph.Drums == true)
                         {
-                            this.smallvc = new Vector3(0.76f, 0.76f, 1f);
-                            if (this.txクリップパネル != null)
+                            if (this.fAVIアスペクト比 > 1.75f)
                             {
-                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
+                                this.ratio2 = 420f / ((float)this.framewidth);
+                                this.position2 = 168 + (int)((240f - (this.frameheight * this.ratio2)) / 2f);
                             }
+                            else
+                            {
+                                this.ratio2 = 240f / ((float)this.frameheight);
+                                this.position2 = 858 + (int)((420f - (this.framewidth * this.ratio2)) / 2f);
+                            }
+                            if (this.txクリップパネル != null)
+                                this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 142);
+                            this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
                             this.tx描画用.vc拡大縮小倍率 = this.smallvc;
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, 35, 422);
-                        }
-                        #endregion
-                        else
-                        {
+                            if (this.fAVIアスペクト比 > 1.75f)
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
+                                CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
+                            }
+                            else
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
+                                CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 168);
+                            }
                         }
                     }
                     #endregion
@@ -936,7 +947,7 @@ namespace DTXMania
         private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
-        public bool b旧企画クリップである = true;
+        public float fAVIアスペクト比;       //変更
         private uint frameheight;
         private uint framewidth;
         private int i1;
@@ -964,6 +975,7 @@ namespace DTXMania
         private int n表示側終了位置Y;
         public IntPtr pBmp;
         private int position;
+        private int position2;      //変更(追加)
         private CDTX.CAVI rAVI;
         private CDTX.CAVI rAVI汎用;
 
@@ -995,6 +1007,7 @@ namespace DTXMania
         private int yf;
 
         private float ratio1;
+        private float ratio2;       //変更(追加)
         private Rectangle rec;
         private Rectangle rec2;
         private Rectangle rec3;

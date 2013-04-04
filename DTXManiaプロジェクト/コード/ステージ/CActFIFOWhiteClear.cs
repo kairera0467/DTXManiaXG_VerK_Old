@@ -189,7 +189,7 @@ namespace DTXMania
                                             this.st青い星[j].b使用中 = true;
                                             int n回転初期値 = CDTXMania.Random.Next(360);
                                             double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
-                                            this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
+                                            this.st青い星[j].ct進行 = new CCounter(0, 100, 20, CDTXMania.Timer);
                                             this.st青い星[j].fX = 600; //X座標
 
                                             this.st青い星[j].fY = 350; //Y座標
@@ -213,7 +213,6 @@ namespace DTXMania
                                     if (this.st青い星[i].ct進行.b終了値に達した)
                                     {
                                         this.st青い星[i].ct進行.t停止();
-                                        this.st青い星[i].b使用中 = false;
                                     }
                                     for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
                                     {
@@ -254,7 +253,7 @@ namespace DTXMania
                                             this.st青い星[j].b使用中 = true;
                                             int n回転初期値 = CDTXMania.Random.Next(360);
                                             double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
-                                            this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
+                                            this.st青い星[j].ct進行 = new CCounter(0, 100, 20, CDTXMania.Timer);
                                             this.st青い星[j].fX = 600; //X座標
 
                                             this.st青い星[j].fY = 350; //Y座標
@@ -279,7 +278,6 @@ namespace DTXMania
                                     if (this.st青い星[i].ct進行.b終了値に達した)
                                     {
                                         this.st青い星[i].ct進行.t停止();
-                                        this.st青い星[i].b使用中 = false;
                                     }
                                     for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
                                     {
@@ -324,7 +322,7 @@ namespace DTXMania
                                         this.st青い星[j].b使用中 = true;
                                         int n回転初期値 = CDTXMania.Random.Next(360);
                                         double num7 = 2.5 + (((double)CDTXMania.Random.Next(40)) / 100.0);
-                                        this.st青い星[j].ct進行 = new CCounter(0, 100, 10, CDTXMania.Timer);
+                                        this.st青い星[j].ct進行 = new CCounter(0, 100, 20, CDTXMania.Timer);
                                         this.st青い星[j].fX = 600; //X座標
                                         this.st青い星[j].fY = 350; //Y座標
                                         this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
@@ -347,7 +345,6 @@ namespace DTXMania
                                 if (this.st青い星[i].ct進行.b終了値に達した)
                                 {
                                     this.st青い星[i].ct進行.t停止();
-                                    this.st青い星[i].b使用中 = false;
                                 }
                                 for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
                                 {

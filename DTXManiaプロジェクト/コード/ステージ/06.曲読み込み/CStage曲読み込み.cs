@@ -150,6 +150,29 @@ namespace DTXMania
             }
 		}
 
+        public void Start()
+		{
+			if(( this.txBall != null ) )
+			{
+				for( int i = 0; i < 8; i++ )
+				{
+					for( int j = 0; j < 8; j++ )
+					{
+						if( !this.st泡[ j ].b使用中 )
+						{
+							this.st泡[ j ].b使用中 = true;
+							int n回転初期値 = CDTXMania.Random.Next( 360 );
+							double num7 = 0.9 + ( ( (double) CDTXMania.Random.Next( 40 ) ) / 100.0 );
+							this.st泡[ j ].ct進行 = new CCounter( 0, 255, 3, CDTXMania.Timer );
+                            this.st泡[ j ].fX = CDTXMania.Random.Next(1280);
+                            this.st泡[ j ].fY = CDTXMania.Random.Next(720);
+							this.st泡[ j ].f半径 = (float) ( 0.5 + ( ( (double) CDTXMania.Random.Next( 30 ) ) / 100.0 ) );
+							break;
+						}
+					}
+				}
+			}
+		}
 
 		// CStage 実装
 
@@ -202,6 +225,12 @@ namespace DTXMania
                 CDTX cdtx = new CDTX(strDTXファイルパス, true);
 				this.str曲タイトル = CDTXMania.stage選曲.r確定された曲.strタイトル;
                 this.strアーティスト名 = cdtx.ARTIST;
+                for (int i = 0; i < 8; i++)
+                {
+                    this.st泡[i] = new ST泡();
+                    this.st泡[i].b使用中 = false;
+                    this.st泡[i].ct進行 = new CCounter();
+                }
 				if( ( ( cdtx.STAGEFILE != null ) && ( cdtx.STAGEFILE.Length > 0 ) ) && ( File.Exists( cdtx.strフォルダ名 + cdtx.STAGEFILE ) && !CDTXMania.ConfigIni.bストイックモード ) )
 				{
 					this.strSTAGEFILE = cdtx.strフォルダ名 + cdtx.STAGEFILE;
@@ -237,6 +266,10 @@ namespace DTXMania
 		{
 			Trace.TraceInformation( "曲読み込みステージを非活性化します。" );
 			Trace.Indent();
+            for (int i = 0; i < 8; i++)
+            {
+                this.st泡[i].ct進行 = null;
+            }
 			try
 			{
 				if( this.ftタイトル表示用フォント != null )
@@ -266,6 +299,7 @@ namespace DTXMania
                 this.txヘッダーパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\6_header panel.png"), false);
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"),false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
+                this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
 
 					try
 					{
@@ -334,6 +368,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txDrumspeed);
                 CDTXMania.tテクスチャの解放( ref this.txLevel);
                 CDTXMania.tテクスチャの解放( ref this.txシンボル );
+                CDTXMania.tテクスチャの解放( ref this.txBall );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -394,6 +429,39 @@ namespace DTXMania
             //-----------------------------
             if (this.tx背景 != null)
                 this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
+                this.Start();
+                for (int i = 0; i < 8; i++)
+                {
+                    if (this.st泡[i].b使用中)
+                    {
+                        this.st泡[i].n前回のValue = this.st泡[i].ct進行.n現在の値;
+                        this.st泡[i].ct進行.t進行();
+                        if (this.st泡[i].ct進行.b終了値に達した)
+                        {
+                            this.st泡[i].ct進行.t停止();
+                            //this.st泡[i].b使用中 = false;
+                        }
+                        for (int n = this.st泡[i].n前回のValue; n < this.st泡[i].ct進行.n現在の値; n++)
+                        {
+                            this.st泡[i].fX += this.st泡[i].f加速度X;
+                            this.st泡[i].fY -= this.st泡[i].f加速度Y;
+                            this.st泡[i].f加速度X *= this.st泡[i].f加速度の加速度X;
+                            this.st泡[i].f加速度Y *= this.st泡[i].f加速度の加速度Y;
+                        }
+                        Matrix mat = Matrix.Identity;
+
+                        float x = (float)(this.st泡[i].ct進行.n現在の値 / 200.0f);
+                        mat *= Matrix.Scaling(x, x, 1f);
+                        mat *= Matrix.Translation(this.st泡[i].fX - SampleFramework.GameWindowSize.Width / 2, -(this.st泡[i].fY - SampleFramework.GameWindowSize.Height / 2), 0f);
+
+                        if (this.txBall != null)
+                        {
+                            this.txBall.t3D描画(CDTXMania.app.Device, mat);
+                            this.txBall.n透明度 = 210 - this.st泡[i].ct進行.n現在の値;
+                        }
+                    }
+
+                }
             this.txシンボル.t2D描画(CDTXMania.app.Device, 422, 128);
 
             this.txベースパネル.t2D描画(CDTXMania.app.Device, 0, 0);
@@ -669,6 +737,20 @@ namespace DTXMania
             public char ch;
             public Point pt;
         }
+        [StructLayout(LayoutKind.Sequential)]
+        private struct ST泡
+        {
+            public bool b使用中;
+            public CCounter ct進行;
+            public int n前回のValue;
+            public float fX;
+            public float fY;
+            public float f加速度X;
+            public float f加速度Y;
+            public float f加速度の加速度X;
+            public float f加速度の加速度Y;
+            public float f半径;
+        }
 //		private CActFIFOBlack actFI;
 		private CActFIFOBlackStart actFO;
 
@@ -692,6 +774,7 @@ namespace DTXMania
         private CTexture txDrumspeed;
         private CTexture txRISKY;
         private CTexture txシンボル;
+        private ST泡[] st泡 = new ST泡[8];
 
 		private DateTime timeBeginLoad;
 		private DateTime timeBeginLoadWAV;
@@ -700,6 +783,7 @@ namespace DTXMania
         private int nCurrentRISKY;
 		private CTexture txFilename;
         private CTexture txLevel;
+        private CTexture txBall;
 
 		private Bitmap bitmapFilename;
 		private Graphics graphicsFilename;
