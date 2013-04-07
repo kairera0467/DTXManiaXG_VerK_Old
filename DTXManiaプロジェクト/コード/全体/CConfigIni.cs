@@ -523,6 +523,7 @@ namespace DTXMania
         public STDGBVALUE<Eタイプ> eLBDGraphics;
         public STDGBVALUE<Eタイプ> eHHOGraphics;
         public ERDPosition eRDPosition;
+        public bool b難易度表示をXG表示にする;
         public int nInfoType;
         public int nSkillMode;
 		public Dictionary<int, string> dicJoystick;
@@ -1059,6 +1060,7 @@ namespace DTXMania
 			this.n手動再生音量 = 100;
 			this.bログ出力 = true;
             this.bドラムセットを動かす = true;
+            this.b難易度表示をXG表示にする = false;
 			this.b演奏音を強調する = new STDGBVALUE<bool>();
 			this.bSudden = new STDGBVALUE<bool>();
 			this.bHidden = new STDGBVALUE<bool>();
@@ -1379,6 +1381,9 @@ namespace DTXMania
             #endregion
             sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
             sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine("; 選曲画面の難易度表示をXG表示にする (0:OFF, 1:ON)");
+            sw.WriteLine("Difficlty={0}", this.b難易度表示をXG表示にする ? 1 : 0);
             sw.WriteLine();
 			sw.WriteLine( "; 背景画像の半透明割合(0:透明～255:不透明)" );
 			sw.WriteLine( "; Transparency for background image in playing screen.(0:tranaparent - 255:no transparent)" );
@@ -2266,6 +2271,10 @@ namespace DTXMania
                                             else if (str3.Equals("Antialias"))
                                             {
                                                 this.b縮小文字のアンチエイリアスを有効にする = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("Difficlty"))
+                                            {
+                                                this.b難易度表示をXG表示にする = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("BGAlpha"))
                                             {

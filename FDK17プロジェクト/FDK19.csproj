@@ -30,6 +30,8 @@
     <NoWarn>0219</NoWarn>
     <DefineConstants>TRACE;DEBUG;TEST_CancelEnterCodeInAltEnter2 TEST_Direct3D9Ex_</DefineConstants>
     <Optimize>false</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>

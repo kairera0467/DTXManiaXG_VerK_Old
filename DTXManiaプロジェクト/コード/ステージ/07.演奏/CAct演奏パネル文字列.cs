@@ -15,110 +15,7 @@ namespace DTXMania
 		// コンストラクタ
 
 		public CAct演奏パネル文字列()
-		{
-            this.txパネル文字 = new CTexture[2];
-            ST文字位置[] st文字位置Array = new ST文字位置[12];
-            ST文字位置 st文字位置 = new ST文字位置();
-            st文字位置.ch = '0';
-            st文字位置.pt = new Point(0, 0);
-            st文字位置Array[0] = st文字位置;
-            ST文字位置 st文字位置2 = new ST文字位置();
-            st文字位置2.ch = '1';
-            st文字位置2.pt = new Point(20, 0);
-            st文字位置Array[1] = st文字位置2;
-            ST文字位置 st文字位置3 = new ST文字位置();
-            st文字位置3.ch = '2';
-            st文字位置3.pt = new Point(40, 0);
-            st文字位置Array[2] = st文字位置3;
-            ST文字位置 st文字位置4 = new ST文字位置();
-            st文字位置4.ch = '3';
-            st文字位置4.pt = new Point(60, 0);
-            st文字位置Array[3] = st文字位置4;
-            ST文字位置 st文字位置5 = new ST文字位置();
-            st文字位置5.ch = '4';
-            st文字位置5.pt = new Point(80, 0);
-            st文字位置Array[4] = st文字位置5;
-            ST文字位置 st文字位置6 = new ST文字位置();
-            st文字位置6.ch = '5';
-            st文字位置6.pt = new Point(100, 0);
-            st文字位置Array[5] = st文字位置6;
-            ST文字位置 st文字位置7 = new ST文字位置();
-            st文字位置7.ch = '6';
-            st文字位置7.pt = new Point(120, 0);
-            st文字位置Array[6] = st文字位置7;
-            ST文字位置 st文字位置8 = new ST文字位置();
-            st文字位置8.ch = '7';
-            st文字位置8.pt = new Point(140, 0);
-            st文字位置Array[7] = st文字位置8;
-            ST文字位置 st文字位置9 = new ST文字位置();
-            st文字位置9.ch = '8';
-            st文字位置9.pt = new Point(160, 0);
-            st文字位置Array[8] = st文字位置9;
-            ST文字位置 st文字位置10 = new ST文字位置();
-            st文字位置10.ch = '9';
-            st文字位置10.pt = new Point(180, 0);
-            st文字位置Array[9] = st文字位置10;
-            ST文字位置 st文字位置11 = new ST文字位置();
-            st文字位置11.ch = '.';
-            st文字位置11.pt = new Point(200, 0);
-            st文字位置Array[10] = st文字位置11;
-            ST文字位置 st文字位置12 = new ST文字位置();
-            st文字位置12.ch = '%';
-            st文字位置12.pt = new Point(200, 0);
-            st文字位置Array[11] = st文字位置12;
-            this.st大文字位置 = st文字位置Array;
-
-            ST文字位置[] st文字位置Array2 = new ST文字位置[12];
-            ST文字位置 st文字位置13 = new ST文字位置();
-            st文字位置13.ch = '0';
-            st文字位置13.pt = new Point(0, 0);
-            st文字位置Array2[0] = st文字位置13;
-            ST文字位置 st文字位置14 = new ST文字位置();
-            st文字位置14.ch = '1';
-            st文字位置14.pt = new Point(20, 0);
-            st文字位置Array2[1] = st文字位置14;
-            ST文字位置 st文字位置15 = new ST文字位置();
-            st文字位置15.ch = '2';
-            st文字位置15.pt = new Point(40, 0);
-            st文字位置Array2[2] = st文字位置15;
-            ST文字位置 st文字位置16 = new ST文字位置();
-            st文字位置16.ch = '3';
-            st文字位置16.pt = new Point(60, 0);
-            st文字位置Array2[3] = st文字位置16;
-            ST文字位置 st文字位置17 = new ST文字位置();
-            st文字位置17.ch = '4';
-            st文字位置17.pt = new Point(80, 0);
-            st文字位置Array2[4] = st文字位置17;
-            ST文字位置 st文字位置18 = new ST文字位置();
-            st文字位置18.ch = '5';
-            st文字位置18.pt = new Point(100, 0);
-            st文字位置Array2[5] = st文字位置18;
-            ST文字位置 st文字位置19 = new ST文字位置();
-            st文字位置19.ch = '6';
-            st文字位置19.pt = new Point(120, 0);
-            st文字位置Array2[6] = st文字位置19;
-            ST文字位置 st文字位置20 = new ST文字位置();
-            st文字位置20.ch = '7';
-            st文字位置20.pt = new Point(140, 0);
-            st文字位置Array2[7] = st文字位置20;
-            ST文字位置 st文字位置21 = new ST文字位置();
-            st文字位置21.ch = '8';
-            st文字位置21.pt = new Point(160, 0);
-            st文字位置Array2[8] = st文字位置21;
-            ST文字位置 st文字位置22 = new ST文字位置();
-            st文字位置22.ch = '9';
-            st文字位置22.pt = new Point(180, 0);
-            st文字位置Array2[9] = st文字位置22;
-            ST文字位置 st文字位置23 = new ST文字位置();
-            st文字位置23.ch = '%';
-            st文字位置23.pt = new Point(200, 0);
-            st文字位置Array2[10] = st文字位置23;
-            ST文字位置 st文字位置24 = new ST文字位置();
-            st文字位置24.ch = '.';
-            st文字位置24.pt = new Point(210, 0);
-            st文字位置Array2[11] = st文字位置24;
-            this.st小文字位置 = st文字位置Array2;
-
+        {
 			base.b活性化してない = true;
 			this.strパネル文字列 = "";
 		}
@@ -169,12 +66,6 @@ namespace DTXMania
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
             {
                 this.txNamePlateXG3 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_NamePlate.png"));
-                
-            }
-            else
-            {
-                this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
-                this.txパネル文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_s.png"));
             }
 			this.n文字列の長さdot = 0;
 			this.txPanel = null;
@@ -188,9 +79,7 @@ namespace DTXMania
 				this.ft表示用フォント.Dispose();
 				this.ft表示用フォント = null;
 			}
-			CDTXMania.tテクスチャの解放( ref this.txPanel );
             CDTXMania.tテクスチャの解放( ref this.txNamePlateXG3 );
-            CDTXMania.tテクスチャの解放( ref this.txスキルパネル );
 			this.ct進行用 = null;
 			base.On非活性化();
 		}
@@ -199,15 +88,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.SetPanelString( this.strパネル文字列 );
-                string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
-                if (!File.Exists(path))
-                {
-                    this.txジャケット画像 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"));
-                }
-                else
-                {
-                    this.txジャケット画像 = CDTXMania.tテクスチャの生成(path);
-                }
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -219,7 +99,6 @@ namespace DTXMania
                 graphics = Graphics.FromImage(image);
                 graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
                 graphics.Dispose();
-                this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
 
@@ -231,8 +110,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txPanel );
-                CDTXMania.tテクスチャの解放( ref this.txSongName );
-                CDTXMania.tテクスチャの解放( ref this.txジャケット画像 );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -267,32 +144,6 @@ namespace DTXMania
                     this.txNamePlateXG3.t2D描画(CDTXMania.app.Device, 825, 0);
                     this.txPanel.t2D描画(CDTXMania.app.Device, 940, 40, rectangle);
                 }
-                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                {
-                    this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
-                    this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
-                    this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
-                    this.txジャケット画像.fZ軸中心回転 = 0.3f;
-                    this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
-                    if (CDTXMania.ConfigIni.nInfoType == 1)
-                    {
-                        this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
-                        this.t小文字表示(100, 314, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect));
-                        this.t小文字表示(100, 344, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great));
-                        this.t小文字表示(100, 374, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good));
-                        this.t小文字表示(100, 404, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor));
-                        this.t小文字表示(100, 434, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss));
-                        this.t小文字表示(100, 464, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値));
-
-
-                        this.t小文字表示(190, 314, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect) / CDTXMania.DTX.n可視チップ数.Drums)));
-                        this.t小文字表示(190, 344, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great / CDTXMania.DTX.n可視チップ数.Drums))));
-                        this.t小文字表示(190, 374, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good / CDTXMania.DTX.n可視チップ数.Drums))));
-                        this.t小文字表示(190, 404, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor / CDTXMania.DTX.n可視チップ数.Drums))));
-                        this.t小文字表示(190, 434, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss / CDTXMania.DTX.n可視チップ数.Drums))));
-                        this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値 / CDTXMania.DTX.n可視チップ数.Drums))));
-                    }
-                }
 			}
 			return 0;
 		}
@@ -302,12 +153,6 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ST文字位置
-        {
-            public char ch;
-            public Point pt;
-        }
         private Bitmap bmSongNameLength;
         private int nSongNamePixelLength;
 		private CCounter ct進行用;
@@ -318,32 +163,6 @@ namespace DTXMania
         private string strSongName;
 		private CTexture txPanel;
         private CTexture txNamePlateXG3;
-        private CTexture txスキルパネル;
-        private readonly ST文字位置[] st小文字位置;
-        private readonly ST文字位置[] st大文字位置;
-        private CTexture[] txパネル文字;
-        private CTexture txSongName;
-        private CTexture txジャケット画像;
-
-        private void t小文字表示(int x, int y, string str)
-        {
-            foreach (char ch in str)
-            {
-                for (int i = 0; i < this.st小文字位置.Length; i++)
-                {
-                    if (this.st小文字位置[i].ch == ch)
-                    {
-                        Rectangle rectangle = new Rectangle(this.st小文字位置[i].pt.X, this.st小文字位置[i].pt.Y, 20, 26);
-                        if (this.txパネル文字[0] != null)
-                        {
-                            this.txパネル文字[0].t2D描画(CDTXMania.app.Device, x, y, rectangle);
-                        }
-                        break;
-                    }
-                }
-                x += 20;
-            }
-        }
 
 		//-----------------
 		#endregion

@@ -1045,7 +1045,7 @@ namespace DTXMania
 
 							r現在のステージ.On非活性化();
 
-                            #region [ ESC押下時は、曲の読み込みを中止して選曲画面に戻る ]
+							#region [ ESC押下時は、曲の読み込みを中止して選曲画面に戻る ]
 							if ( this.n進行描画の戻り値 == (int) E曲読込画面の戻り値.読込中止 )
 							{
 								//DTX.t全チップの再生停止();
@@ -1066,6 +1066,7 @@ namespace DTXMania
 								break;
 							}
 							#endregion
+
 
 							if( !ConfigIni.bギタレボモード )
 							{

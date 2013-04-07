@@ -611,9 +611,6 @@ namespace DTXMania
         public CCounter ctBPMバー;
 
         public CCounter ctコンボ動作タイマ;
-        public long nY座標制御タイマ;
-        public int nY座標オフセットdot;
-        public int nY座標加速度dot;
 
 		protected STDGBVALUE<CCounter> ctチップ模様アニメ;
         protected abstract void tJudgeLineMovingUpandDown();
@@ -2197,6 +2194,7 @@ namespace DTXMania
                             this.actPlayInfo.dbBPM = (pChip.n整数値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
                             CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                             CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
+                            CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1, 16, (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
                         }
                         break;
                     #endregion
@@ -2258,6 +2256,7 @@ namespace DTXMania
                                 this.actPlayInfo.dbBPM = (dTX.listBPM[pChip.n整数値・内部番号].dbBPM値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
                                 CDTXMania.stage演奏ドラム画面.UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                                 CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
+                                CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1, 16, (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
                             }
                         }
                         break;
@@ -3588,11 +3587,7 @@ namespace DTXMania
             if (this.ctBPMバー != null)
             {
                 this.ctBPMバー.t進行Loop();
-
-                if (this.ctBPMバー.n現在の値 == 0)
-                {
-                    this.ctコンボ動作タイマ.t進行();
-                }
+                this.ctコンボ動作タイマ.t進行Loop();
             }
 		}
 
@@ -4336,20 +4331,21 @@ namespace DTXMania
                                             case 164:
                                                 bChipHasR = true;
                                                 break;
-                                                /*
+                                                
                                             case 165:
-                                                flag12 = true;
-                                                flag14 = true;
+                                                bChipHasR = true;
+                                                bChipHasB = true;
                                                 break;
                                             case 166:
-                                                flag12 = true;
-                                                flag13 = true;
+                                                bChipHasR = true;
+                                                bChipHasG = true;
                                                 break;
                                             case 167:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
                                                 break;
+                                            /*
                                             case 168:
                                                 flag13 = true;
                                                 flag14 = true;
@@ -4610,7 +4606,7 @@ namespace DTXMania
 					if ( !autoW )
 					{
 						int nCombo = ( this.actCombo.n現在のコンボ数[ indexInst ] < 500 ) ? this.actCombo.n現在のコンボ数[ indexInst ] : 500;
-						this.actScore.Add( inst, bIsAutoPlay, nCombo * 3000L );		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
+						this.actScore.Add( inst, bIsAutoPlay, nCombo * (CDTXMania.ConfigIni.nSkillMode == 0 ? 3000L : 100L) );		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
 					}
 				}
 			}

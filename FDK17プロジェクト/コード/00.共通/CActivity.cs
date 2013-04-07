@@ -203,8 +203,8 @@ namespace FDK
 
             // 自身のリソースを作成する。
 
-            this.OnManagedリソース作成(D3D9Device);
-            this.OnUnmanagedリソース作成(D3D9Device);
+            this.OnManagedリソースの作成(D3D9Device);
+            this.OnUnmanagedリソースの作成(D3D9Device);
 
 
             // すべての子Activityを活性化する。
@@ -218,39 +218,39 @@ namespace FDK
             this.b初めての進行描画 = true;
         }
 
-        /// <summary>
-        /// <para>Managed リソースの作成を行う。</para>
-        /// <para>Direct3D デバイスが作成された直後に呼び出されるので、自分が活性化している時に限り、Managed リソースを作成（または再構築）すること。</para>
-        /// <para>いつどのタイミングで呼び出されるか（いつDirect3Dが再作成されるか）分からないので、いつ何時呼び出されても問題無いようにコーディングしておくこと。</para>
-        /// </summary>
-        public virtual void OnManagedリソース作成(SlimDX.Direct3D9.Device D3D9Device)
-        {
-            if (this.b活性化してない)
-                return;
+		/// <summary>
+		/// <para>Managed リソースの作成を行う。</para>
+		/// <para>Direct3D デバイスが作成された直後に呼び出されるので、自分が活性化している時に限り、Managed リソースを作成（または再構築）すること。</para>
+		/// <para>いつどのタイミングで呼び出されるか（いつDirect3Dが再作成されるか）分からないので、いつ何時呼び出されても問題無いようにコーディングしておくこと。</para>
+		/// </summary>
+		public virtual void OnManagedリソースの作成( SlimDX.Direct3D9.Device D3D9Device )
+		{
+			if( this.b活性化してない )
+				return;
 
 
-            // すべての 子Activity の Managed リソースを作成する。
+			// すべての 子Activity の Managed リソースを作成する。
+			
+			foreach( CActivity activity in this.list子Activities )
+				activity.OnManagedリソースの作成( D3D9Device );
+		}
 
-            foreach (CActivity activity in this.list子Activities)
-                activity.OnManagedリソース作成(D3D9Device);
-        }
-
-        /// <summary>
-        /// <para>Unmanaged リソースの作成を行う。</para>
-        /// <para>Direct3D デバイスが作成またはリセットされた直後に呼び出されるので、自分が活性化している時に限り、Unmanaged リソースを作成（または再構築）すること。</para>
-        /// <para>いつどのタイミングで呼び出されるか（いつDirect3Dが再作成またはリセットされるか）分からないので、いつ何時呼び出されても問題無いようにコーディングしておくこと。</para>
-        /// </summary>
-        public virtual void OnUnmanagedリソース作成(SlimDX.Direct3D9.Device D3D9Device)
-        {
-            if (this.b活性化してない)
-                return;
+		/// <summary>
+		/// <para>Unmanaged リソースの作成を行う。</para>
+		/// <para>Direct3D デバイスが作成またはリセットされた直後に呼び出されるので、自分が活性化している時に限り、Unmanaged リソースを作成（または再構築）すること。</para>
+		/// <para>いつどのタイミングで呼び出されるか（いつDirect3Dが再作成またはリセットされるか）分からないので、いつ何時呼び出されても問題無いようにコーディングしておくこと。</para>
+		/// </summary>
+		public virtual void OnUnmanagedリソースの作成( SlimDX.Direct3D9.Device D3D9Device )
+		{
+			if( this.b活性化してない )
+				return;
 
 
-            // すべての 子Activity の Unmanaged リソースを作成する。
+			// すべての 子Activity の Unmanaged リソースを作成する。
 
-            foreach (CActivity activity in this.list子Activities)
-                activity.OnUnmanagedリソース作成(D3D9Device);
-        }
+			foreach( CActivity activity in this.list子Activities )
+				activity.OnUnmanagedリソースの作成( D3D9Device );
+		}
 
         /// <summary>
         /// <para>進行のみ行う。描画は行わない。</para>
