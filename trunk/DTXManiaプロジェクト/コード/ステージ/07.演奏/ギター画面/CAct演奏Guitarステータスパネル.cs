@@ -37,6 +37,7 @@ namespace DTXMania
                 Graphics gSongPanel = Graphics.FromImage(this.b4font);
                 this.strPanelString = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
                 this.bSongPanel = new Bitmap(250, 112);
+                gSongPanel.Dispose();
                 gSongPanel = Graphics.FromImage(this.bSongPanel);
                 gSongPanel.DrawImage(this.iSongPanel, 0, 0, 250, 112);
                 gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)16f, (float)78f);
@@ -45,6 +46,13 @@ namespace DTXMania
 				this.tx右パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay status panels right.png" ) );
                 //this.tx曲名パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_songpanel.png"));
                 this.tx曲名パネル = new CTexture(CDTXMania.app.Device, this.bSongPanel, CDTXMania.TextureFormat, false);
+
+                gSongPanel.Dispose();
+                this.iSongPanel.Dispose();
+
+                this.ftDisplayFont.Dispose();
+                this.ftNameFont.Dispose();
+
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -55,6 +63,10 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx左パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx右パネル );
                 CDTXMania.tテクスチャの解放( ref this.tx曲名パネル );
+
+                this.ftDisplayFont.Dispose();
+                this.ftNameFont.Dispose();
+                this.ftLevelFont.Dispose();
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -113,8 +125,9 @@ namespace DTXMania
         private CTexture tx曲名パネル;
         private Bitmap b4font;
         private Bitmap bNamePlateL;
+        //private Bitmap bNamePlateR;
         private Bitmap bSongPanel;
-        private Bitmap bDifficulty;
+        //private Bitmap bDifficulty;
         private Font ftDifficultyL;
         private Font ftDifficultyS;
         private Font ftDisplayFont;
@@ -124,15 +137,15 @@ namespace DTXMania
         private string strGroupName;
         private string strPanelString;
         private string strPlayerName;
-        private Image iAlbum;
-        private Image iDrumspeed;
-        private Image iRisky;
-        private Image iNamePlate;
+        //private Image iAlbum;
+        //private Image iDrumspeed;
+        //private Image iRisky;
+        //private Image iNamePlate;
         private Image iSongPanel;
-        private Image iDifficulty;
-        private Image iScore;
-        private CTexture txDummy;
-        private CTexture txDifficulty;
+        //private Image iDifficulty;
+        //private Image iScore;
+        //private CTexture txDummy;
+        //private CTexture txDifficulty;
 		//-----------------
 		#endregion
 	}

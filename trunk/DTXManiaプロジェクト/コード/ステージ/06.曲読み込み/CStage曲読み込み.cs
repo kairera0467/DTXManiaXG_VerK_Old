@@ -163,7 +163,7 @@ namespace DTXMania
 							this.st泡[ j ].b使用中 = true;
 							int n回転初期値 = CDTXMania.Random.Next( 360 );
 							double num7 = 0.9 + ( ( (double) CDTXMania.Random.Next( 40 ) ) / 100.0 );
-							this.st泡[ j ].ct進行 = new CCounter( 0, 255, 3, CDTXMania.Timer );
+							this.st泡[ j ].ct進行 = new CCounter( 0, 200, 3, CDTXMania.Timer );
                             this.st泡[ j ].fX = CDTXMania.Random.Next(1280);
                             this.st泡[ j ].fY = CDTXMania.Random.Next(720);
 							this.st泡[ j ].f半径 = (float) ( 0.5 + ( ( (double) CDTXMania.Random.Next( 30 ) ) / 100.0 ) );
@@ -457,7 +457,7 @@ namespace DTXMania
                         if (this.txBall != null)
                         {
                             this.txBall.t3D描画(CDTXMania.app.Device, mat);
-                            this.txBall.n透明度 = 210 - this.st泡[i].ct進行.n現在の値;
+                            this.txBall.n透明度 = 200 - this.st泡[i].ct進行.n現在の値;
                         }
                     }
 

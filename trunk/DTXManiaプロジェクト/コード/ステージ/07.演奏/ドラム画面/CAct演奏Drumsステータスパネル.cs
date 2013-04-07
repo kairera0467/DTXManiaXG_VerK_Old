@@ -195,7 +195,7 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
                     {
-                        graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)66f);
+                        graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)65f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
                             graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)54f, (float)136f);

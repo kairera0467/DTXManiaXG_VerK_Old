@@ -82,10 +82,6 @@ namespace DTXMania
             this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? -24 : base.nJudgeLinePosY - 186);
             base.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY);
 
-            this.nY座標制御タイマ = -1L;
-            this.nY座標オフセットdot = 0;
-            this.nY座標加速度dot = 0;
-
 			if( CDTXMania.bコンパクトモード )
 			{
 				var score = new Cスコア();
@@ -156,32 +152,7 @@ namespace DTXMania
                     UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                     this.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
 
-                    this.ctコンボ動作タイマ = new CCounter(0, 1, 400, CDTXMania.Timer);
-                    this.nY座標制御タイマ = CDTXMania.Timer.n現在時刻;
-                    long num3 = CDTXMania.Timer.n現在時刻;
-                    if (num3 < this.nY座標制御タイマ)
-                    {
-                        this.nY座標制御タイマ = num3;
-                    }
-                    while ((num3 - this.nY座標制御タイマ) >= 5L)
-                    {
-                            this.nY座標オフセットdot += this.nY座標加速度dot;
-                            if (this.nY座標オフセットdot > 10)
-                            {
-                                this.nY座標オフセットdot = 10;
-                                this.nY座標加速度dot = -1;
-                            }
-                            else if (this.nY座標オフセットdot < 0)
-                            {
-                                this.nY座標オフセットdot = 0;
-                                this.nY座標加速度dot = 0;
-                            }
-                        this.nY座標制御タイマ += 2L;
-                    }
-                    if (this.ctコンボ動作タイマ.b進行中)
-                    {
-                        this.nY座標加速度dot = 2;
-                    }
+                    this.ctコンボ動作タイマ = new CCounter(1, 16, (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -314,8 +285,9 @@ namespace DTXMania
                         this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
                         CDTXMania.Skin.soundステージクリア音.t再生する();
+                        this.actFOStageClear.On活性化( CDTXMania.app.Device );
                         this.actFOStageClear.tフェードアウト開始();
-                        //this.actFOStageClear.On進行描画( CDTXMania.app.D3D9Device );
+                        //this.actFOStageClear.On進行描画( CDTXMania.app.Device );
                     }
                 }
                 if (bIsFinishedFadeout)
@@ -2458,7 +2430,7 @@ namespace DTXMania
                                 case Eパッド.LP:
                                     #region [ *** ]
                                     //-----------------------------
-                                    /*{
+                                    {
                                         CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime);
                                         CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime);
                                         CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime);
@@ -2576,7 +2548,6 @@ namespace DTXMania
                                         }
                                         rChip = chipLBD;
                                     }
-                                      */
                                     #endregion
                                     break;
 
@@ -3138,69 +3109,53 @@ namespace DTXMania
                     {
                         case 0x01: //LC
                             this.actPad.Start(0, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x02: //HH
                             this.actPad.Start(1, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x03: //LP
                             this.actPad.Start(2, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x04: //SD
                             this.actPad.Start(3, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x05: //HT
                             this.actPad.Start(4, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x06: //BD
                             this.actPad.Start(5, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x07: //LT
                             this.actPad.Start(6, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x08: //FT
                             this.actPad.Start(7, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x09: //CY
                             this.actPad.Start(8, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         case 0x0A: //RD
                             this.actPad.Start(9, true);
-                            CDTXMania.Skin.sound歓声音.t再生する();
-                            CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             break;
 
                         default:
                             break;
                     }
                     if(configIni.ボーナス演出を表示する)
+                    {
                         this.actAVI.Start(true);
+                        CDTXMania.Skin.sound歓声音.t再生する();
+                        CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
+                    }
                 }
             }
 

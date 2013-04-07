@@ -126,6 +126,11 @@ namespace DTXMania
                 new string[] { "CLASSIC", "XG" });
             this.list項目リスト.Add(this.iSystemSkillMode);
 
+            this.iSystemDifficlty = new CItemToggle("Difficlty", CDTXMania.ConfigIni.b難易度表示をXG表示にする,
+                "選曲画面での難易度表示方法を変更します。\nON でXG風3ケタ、\nOFF で従来の2ケタ表示になります。",
+                "");
+            this.list項目リスト.Add(this.iSystemDifficlty);
+
 			this.iSystemFullscreen = new CItemToggle( "Fullscreen", CDTXMania.ConfigIni.b全画面モード,
 				"画面モード設定：\nON で全画面モード、OFF でウィンド\nウモードになります。",
 				"Fullscreen mode or window mode." );
@@ -464,9 +469,9 @@ namespace DTXMania
             this.list項目リスト.Add(this.iDrumsRide);
 
 			this.iDrumsScrollSpeed = new CItemInteger( "ScrollSpeed", 0, 0x7cf, CDTXMania.ConfigIni.n譜面スクロール速度.Drums,
-				"演奏時のドラム譜面のスクロールの\n" +
-				"速度を指定します。\n" +
-				"x0.5 ～ x1000.0 を指定可能です。",
+				"ノーツの流れるスピードを変更します。\n" +
+				"数字が大きくなるほどスピードが速くなり、\n" +
+				"ノーツの間隔が広がります。",
 				"To change the scroll speed for the\n" +
 				"drums lanes.\n" +
 				"You can set it from x0.5 to x1000.0.\n" +
@@ -506,7 +511,7 @@ namespace DTXMania
             */
             #endregion
 
-            this.iHidSud = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud,
+            this.iDrumsHIDSUD = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud,
                 "HIDDEN:チップが途中から見えなくなります。\n"+
                 "SUDDEN:チップが途中まで見えません。\n"+
                 "HID-SUD:HIDDEN、SUDDENの両方が適用\n"+
@@ -516,8 +521,7 @@ namespace DTXMania
                 "Note that it doesn't take effect\n" +
                 " at Autoplay ([Left] is forcely used).",
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
-            this.list項目リスト.Add(this.iHidSud);
-
+            this.list項目リスト.Add(this.iDrumsHIDSUD);
 
             this.iDrumsLaneDisp = new CItemList("LaneDisp", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nLaneDisp.Drums,
                 "レーンの縦線と小節線の表示を切り替えます。\n" +
@@ -533,22 +537,26 @@ namespace DTXMania
                 "Toggle JudgeLine");
             this.list項目リスト.Add(this.iDrumsJudgeLineDisp);
 
+            this.iDrumsReverse = new CItemToggle("Reverse", CDTXMania.ConfigIni.bReverse.Drums,
+                "ONにすると判定ラインが上になり、\n" +
+                "ノーツが下から上に流れます。",
+                "The scroll way is reversed. Drums chips\n"
+                + "flow from the bottom to the top.");
+            this.list項目リスト.Add(this.iDrumsReverse);
 
-			this.iDrumsReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Drums,
-				"ドラムチップが譜面の下から上に流\n" +
-				"れるようになります。",
-				"The scroll way is reversed. Drums chips\n"
-				+ "flow from the bottom to the top." );
-			this.list項目リスト.Add( this.iDrumsReverse );
+            this.iDrumsComboPosition = new CItemList("ComboPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.ドラムコンボ文字の表示位置,
+                "演奏時のドラムコンボ文字列の位置\n" +
+                "を指定します。OFFにするとゲーム中の\n" +
+                "コンボ数が非表示になります。",
+                "The display position for Drums Combo.\n" +
+                "Note that it doesn't take effect\n" +
+                " at Autoplay ([Left] is forcely used).",
+                new string[] { "Left", "Center", "Right", "OFF" });
+            this.list項目リスト.Add(this.iDrumsComboPosition);
 
-            
 			this.iSystemRisky = new CItemInteger( "Risky", 0, 10, CDTXMania.ConfigIni.nRisky,
-				"Riskyモードの設定:\n" +
-				"1以上の値にすると、その回数分の\n" +
-				"Poor/MissでFAILEDとなります。\n" +
-				"0にすると無効になり、\n" +
-				"DamageLevelに従ったゲージ増減と\n" +
-				"なります。\n" +
+				"設定した回数分ミスをすると、強制的に\n" +
+				"STAGE FAILEDになります。\n" +
 				"StageFailedの設定と併用できます。",
 				"Risky mode:\n" +
 				"Set over 1, in case you'd like to specify\n" +
@@ -564,21 +572,7 @@ namespace DTXMania
 				" chip." );
 			this.list項目リスト.Add( this.iDrumsTight );
 
-            this.iDrumsHAZARD = new CItemToggle("HAZARD", CDTXMania.ConfigIni.bHAZARD,
-                "RISKY時にGREAT以下の判定でも回数が減ります。",
-                "Turn ON to let HH chips be muted\n" +
-                "by LP chips.");
-            this.list項目リスト.Add(this.iDrumsHAZARD);
-
-			this.iDrumsComboPosition = new CItemList( "ComboPosition", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.ドラムコンボ文字の表示位置,
-				"演奏時のドラムコンボ文字列の位置\n" +
-				"を指定します。",
-				"The display position for Drums Combo.\n" +
-				"Note that it doesn't take effect\n" +
-				" at Autoplay ([Left] is forcely used).",
-				new string[] { "Left", "Center", "Right", "OFF" } );
-			this.list項目リスト.Add( this.iDrumsComboPosition );
-
+            
 			this.iDrumsPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.判定文字表示位置.Drums,
 				"ドラムの判定文字の表示位置を指定\n" +
 				"します。\n" +
@@ -594,6 +588,11 @@ namespace DTXMania
 				new string[] { "P-A", "P-B", "OFF" } );
 			this.list項目リスト.Add( this.iDrumsPosition );
 
+            this.iDrumsHAZARD = new CItemToggle("HAZARD", CDTXMania.ConfigIni.bHAZARD,
+                "RISKY時にGREAT以下の判定でも回数が減ります。",
+                "Turn ON to let HH chips be muted\n" +
+                "by LP chips.");
+            this.list項目リスト.Add(this.iDrumsHAZARD);
 
 			this.iSystemHHGroup = new CItemList( "HH Group", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eHHGroup,
 				"ハイハットレーン打ち分け設定：\n" +
@@ -1061,6 +1060,11 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iGuitarHidden );
 
             //レーン表示
+
+            this.iGuitarJudgeLineDisp = new CItemToggle( "JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Guitar,
+                "判定ラインの表示 / 非表示を切り替えます。",
+                "Toggle JudgeLine");
+            this.list項目リスト.Add( this.iGuitarJudgeLineDisp );
 
 			this.iGuitarReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Guitar,
 				"ギターチップが譜面の上から下に流\nれるようになります。",
@@ -2291,8 +2295,8 @@ namespace DTXMania
         private CItemList iSystemASIODevice;				// #24820 2013.1.17 yyagi
         private CItemList iInfoType;
         private CItemToggle iAutoAddGage;
-        private CItemList iHidSud;
         private CItemList iSystemSkillMode;
+        private CItemToggle iSystemDifficlty;
         private CItemToggle iMutingLP;
 
         private int iSystemSoundType_initial;
@@ -2545,6 +2549,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.nASIOBufferSizeMs = this.iSystemASIOBufferSizeMs.n現在の値; // #24820 2013.1.3 yyagi
             CDTXMania.ConfigIni.nASIODevice = this.iSystemASIODevice.n現在選択されている項目番号;			// #24820 2013.1.17 yyagi
             CDTXMania.ConfigIni.bTimeStretch = this.iSystemTimeStretch.bON; // #23664 2013.2.24 yyagi
+            CDTXMania.ConfigIni.b難易度表示をXG表示にする = this.iSystemDifficlty.bON;
 
 
 //Trace.TraceInformation( "saved" );
@@ -2594,7 +2599,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums = this.iDrumsInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
 			CDTXMania.ConfigIni.bGraph.Drums = this.iDrumsGraph.bON;// #24074 2011.01.23 add ikanick
-            CDTXMania.ConfigIni.nHidSud = this.iHidSud.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.nHidSud = this.iDrumsHIDSUD.n現在選択されている項目番号;
 
 			CDTXMania.ConfigIni.eHHGroup = (EHHGroup) this.iSystemHHGroup.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.eFTGroup = (EFTGroup) this.iSystemFTGroup.n現在選択されている項目番号;
