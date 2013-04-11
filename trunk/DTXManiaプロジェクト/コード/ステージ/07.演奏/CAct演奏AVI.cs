@@ -204,6 +204,7 @@ namespace DTXMania
             this.nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
             this.ct右シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
             this.ct左シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
+            this.ds汎用 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_Movie.mp4"), CDTXMania.app.WindowHandle, true);
 
             base.On活性化();
         }
@@ -220,6 +221,7 @@ namespace DTXMania
                 this.txフロアタム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_FloorTom.png"));
                 this.txバスドラ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_BassDrum.png"));
                 this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
+                this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
                 if (CDTXMania.ConfigIni.bGraph.Drums == true)
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelB.png"));
@@ -228,7 +230,7 @@ namespace DTXMania
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanel.png"));
                 }
-                
+                this.tx描画用2 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                 this.txLivePoint = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_LivePointGauge.png"));
                 this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_score numbers.png"));
                 string pathBPMFL = CSkin.Path(@"Graphics\7_BPMbar_Flush_L.png");
@@ -298,11 +300,17 @@ namespace DTXMania
                     this.tx描画用.Dispose();
                     this.tx描画用 = null;
                 }
+                if (this.tx描画用2 != null)
+                {
+                    this.tx描画用2.Dispose();
+                    this.tx描画用2 = null;
+                }
                 if (this.txlanes != null)
                 {
                     this.txlanes.Dispose();
                     this.txlanes = null;
                 }
+                CDTXMania.t安全にDisposeする(ref this.ds汎用);
                 //テクスチャ 17枚
                 CDTXMania.tテクスチャの解放(ref this.txScore);
                 CDTXMania.tテクスチャの解放(ref this.txLivePoint);
@@ -315,12 +323,13 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txハイタム);
                 CDTXMania.tテクスチャの解放(ref this.txロータム);
                 CDTXMania.tテクスチャの解放(ref this.txフロアタム);
-                CDTXMania.tテクスチャの解放(ref this.txバスドラ);
-                CDTXMania.tテクスチャの解放(ref this.txバートップ);
-                CDTXMania.tテクスチャの解放(ref this.txクリップパネル);
-                CDTXMania.tテクスチャの解放(ref this.txフィルインエフェクト);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバーフラッシュ左);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバーフラッシュ右);
+                CDTXMania.tテクスチャの解放( ref this.txバスドラ );
+                CDTXMania.tテクスチャの解放( ref this.txバートップ );
+                CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
+                CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ左 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ右 );
+                CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
                 base.OnManagedリソースの解放();
             }
         }
@@ -341,8 +350,26 @@ namespace DTXMania
             #region[ムービーのフレーム作成処理]
             if ((!base.b活性化してない))
             {
-                if (((this.bFullScreen || this.bWindowMode) && (this.tx描画用 != null || this.tx描画用2 != null)))
+                if (this.tx描画用2 != null)
                 {
+                    if (this.ds汎用 != null)
+                    {
+                        if (this.tx描画用2 != null)
+                        {
+                            this.tx描画用2.vc拡大縮小倍率 = new Vector3(
+                                ((float)1280 / (float)this.ds汎用.n幅px),
+                                ((float)720 / (float)this.ds汎用.n高さpx),
+                                1.0f);
+                        }
+                        this.ds汎用.t再生開始();
+                        this.ds汎用.bループ再生 = true;
+                        this.ds汎用.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用2);
+                        this.tx描画用2.t2D描画(CDTXMania.app.Device, 0, 0);
+                    }
+                }
+                if (((this.bFullScreen || this.bWindowMode) && (this.tx描画用 != null)))
+                {
+  
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
@@ -457,7 +484,7 @@ namespace DTXMania
                                 goto Label_0A06;
                             }
                         }
-                        
+
                         if ((this.tx描画用 != null) && (this.n総移動時間ms != -1))
                         {
                             if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
@@ -484,7 +511,7 @@ namespace DTXMania
                                 this.tx描画用.texture.UnlockRectangle(0);
                                 this.bフレームを作成した = false;
                             }
-                            
+
                             if (this.bFullScreen)
                             {
                                 if (fAVIアスペクト比 > 1.77f)       //変更
@@ -493,8 +520,8 @@ namespace DTXMania
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
                                     if (this.tx描画用2 != null)
                                     {
-                                        this.tx描画用2.t2D描画(CDTXMania.app.Device, this.position, 0);
-                                        this.tx描画用2.t2D描画(CDTXMania.app.Device, 0, this.position);
+                                        //this.tx描画用2.t2D描画(CDTXMania.app.Device, this.position, 0);
+                                        //this.tx描画用2.t2D描画(CDTXMania.app.Device, 0, this.position);
                                     }
 
                                 }
@@ -505,6 +532,7 @@ namespace DTXMania
                                 }
                             }
                         }
+
                     }
                 }
 
@@ -539,7 +567,6 @@ namespace DTXMania
                         }
                     }
                 }
-
                 if (CDTXMania.ConfigIni.bDrums有効 == true)
                 {
                     #region[動くドラムセット]
@@ -676,7 +703,26 @@ namespace DTXMania
                         }
                         CDTXMania.stage演奏ドラム画面.bボーナス = false;
                     }
-                    
+                    #region [ Failed(RISKY1)時の背景 ]
+                    if(CDTXMania.ConfigIni.bDrums有効 == true)
+                    {
+                        if ( CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums <= 0.0 )
+                        {
+                            this.tx黒幕.t2D描画( CDTXMania.app.Device, 0, 0 );
+                        }
+                    }
+                    else if(CDTXMania.ConfigIni.bGuitar有効 == true)
+                    {
+                        if ( CDTXMania.stage演奏ギター画面.actGauge.db現在のゲージ値.Guitar <= 0.0 )
+                        {
+     
+                        }
+                        else if ( CDTXMania.stage演奏ギター画面.actGauge.db現在のゲージ値.Bass <= 0.0 )
+                        {
+    
+                        }
+                    }
+                    #endregion
                     if (this.txバートップ != null)
                     {
                         this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
@@ -978,7 +1024,11 @@ namespace DTXMania
         private int position2;      //変更(追加)
         private CDTX.CAVI rAVI;
         private CDTX.CAVI rAVI汎用;
+        private CDirectShow ds汎用;
 
+        public CAct演奏Dshow actDshow;
+
+        private CTexture tx黒幕;
         private CTexture txBPMバー左;
         private CTexture txBPMバー右;
         private CTexture txBPMバーフラッシュ左;
@@ -1020,13 +1070,6 @@ namespace DTXMania
         {
             public int nY座標オフセットdot;
             public int nY座標加速度dot;
-        }
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ST基本位置
-        {
-            public int x;
-            public int y;
-            public Rectangle rc;
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct STフィルイン
