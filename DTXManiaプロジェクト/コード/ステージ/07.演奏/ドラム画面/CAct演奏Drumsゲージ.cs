@@ -143,9 +143,9 @@ namespace DTXMania
 
                 }
 
-                if (base.IsDanger(E楽器パート.DRUMS))
+                if (base.IsDanger(E楽器パート.DRUMS) && base.db現在のゲージ値.Drums >= 0.0)
                 {
-                    this.txゲージマスク2.t2D描画( CDTXMania.app.Device, 259, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 :652 ));
+                    this.txゲージマスク2.t2D描画( CDTXMania.app.Device, 259, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652 ));
                 }
                 if (base.db現在のゲージ値.Drums == 1.0)
                 {

@@ -60,18 +60,6 @@ namespace DTXMania
         }
 
 		// CActivity 実装
-
-        public override void On活性化( Device D3D9Device )
-		{
-			if( this.b活性化してる )
-				return;
-
-			this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\7_StageClear.mp4" ), CDTXMania.app.WindowHandle, false );
-
-
-			base.On活性化( D3D9Device );
-		}
-
         public override void On活性化()
         {
             this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), CDTXMania.app.WindowHandle, false);
@@ -171,7 +159,6 @@ namespace DTXMania
                 this.avi.Dispose();
                 this.avi = null;
             }
-            C共通.tDisposeする(ref this.tx背景動画);
             CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
             CDTXMania.tテクスチャの解放( ref this.tx白タイル64x64 );
             CDTXMania.tテクスチャの解放( ref this.txリザルト画像 );
@@ -200,7 +187,6 @@ namespace DTXMania
                         {
                             this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
                             #region[ 粉エフェクト ]
-                            this.Start();
                             for (int i = 0; i < 240; i++)
                             {
                                 if (this.st青い星[i].b使用中)
@@ -209,6 +195,7 @@ namespace DTXMania
                                     this.st青い星[i].ct進行.t進行();
                                     if (this.st青い星[i].ct進行.b終了値に達した)
                                     {
+                                        this.st青い星[ i ].b使用中 = false;
                                         this.st青い星[i].ct進行.t停止();
                                     }
                                     for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
@@ -230,8 +217,8 @@ namespace DTXMania
                                         this.txボーナス花火.t3D描画(CDTXMania.app.Device, mat);
                                     }
                                 }
-
                             }
+                            this.Start();
                             #endregion
                             this.txExcellent.t2D描画(CDTXMania.app.Device, 0, 0);
                         }
@@ -239,7 +226,6 @@ namespace DTXMania
                         {
                             this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
                             #region[ 粉エフェクト ]
-                            this.Start();
                             for (int i = 0; i < 240; i++)
                             {
                                 if (this.st青い星[i].b使用中)
@@ -248,6 +234,7 @@ namespace DTXMania
                                     this.st青い星[i].ct進行.t進行();
                                     if (this.st青い星[i].ct進行.b終了値に達した)
                                     {
+                                        this.st青い星[ i ].b使用中 = false;
                                         this.st青い星[i].ct進行.t停止();
                                     }
                                     for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
@@ -269,8 +256,8 @@ namespace DTXMania
                                         this.txボーナス花火.t3D描画(CDTXMania.app.Device, mat);
                                     }
                                 }
-
                             }
+                            this.Start();
                             #endregion
                             this.txFullCombo.t2D描画(CDTXMania.app.Device, 0, 0);
                         }
@@ -291,6 +278,7 @@ namespace DTXMania
                                 this.st青い星[i].ct進行.t進行();
                                 if (this.st青い星[i].ct進行.b終了値に達した)
                                 {
+                                    this.st青い星[ i ].b使用中 = false;
                                     this.st青い星[i].ct進行.t停止();
                                 }
                                 for (int n = this.st青い星[i].n前回のValue; n < this.st青い星[i].ct進行.n現在の値; n++)
@@ -329,7 +317,21 @@ namespace DTXMania
                     int x = 0;
                     int y = 0;
 
-                    if (((this.avi != null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
+                    if (this.ds背景動画 != null)
+                    {
+                        this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
+                        //if (this.ds背景動画.b上下反転)
+                        {
+                            this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 0, 0);
+                        }
+                        //else
+                            //this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
+                            if (this.ds背景動画.b再生中 == false)
+                            {
+                                return 0;
+                            }
+                    }
+                    else if (((this.avi != null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
                     {
                         int time = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         int frameNoFromTime = this.avi.GetFrameNoFromTime(time);
@@ -401,6 +403,10 @@ namespace DTXMania
                             }
                         }
                         this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
+                        if (this.counter.n現在の値 != 400)
+                        {
+                            return 0;
+                        }
                     }
                     // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
 
@@ -424,18 +430,12 @@ namespace DTXMania
                                 }
                             }
                         }
+                        if (this.counter.n現在の値 != 400)
+                        {
+                            return 0;
+                        }
                     }
-                    if (this.ds背景動画 != null)
-                    {
-                        this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
-                        this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
-                    }
-
                 }
-            if (this.counter.n現在の値 != 400)
-            {
-                return 0;
-            }
             return 1;
         }
         

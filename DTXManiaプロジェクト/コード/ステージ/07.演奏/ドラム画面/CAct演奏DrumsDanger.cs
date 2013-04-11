@@ -62,6 +62,7 @@ namespace DTXMania
                     int num2 = num;
                     for (int i = 0; i < 2; i++)
                     {
+                        if(CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums >= 0.0)
                         this.tx黒.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
                 
