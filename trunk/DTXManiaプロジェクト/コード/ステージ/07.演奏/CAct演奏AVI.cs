@@ -230,7 +230,7 @@ namespace DTXMania
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanel.png"));
                 }
-                this.tx描画用2 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+                this.txDShow汎用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                 this.txLivePoint = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_LivePointGauge.png"));
                 this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_score numbers.png"));
                 string pathBPMFL = CSkin.Path(@"Graphics\7_BPMbar_Flush_L.png");
@@ -305,6 +305,11 @@ namespace DTXMania
                     this.tx描画用2.Dispose();
                     this.tx描画用2 = null;
                 }
+                if (this.txDShow汎用 != null)
+                {
+                    this.txDShow汎用.Dispose();
+                    this.txDShow汎用 = null;
+                }
                 if (this.txlanes != null)
                 {
                     this.txlanes.Dispose();
@@ -346,27 +351,29 @@ namespace DTXMania
             {
                 num1 = CDTXMania.stage演奏ギター画面.ctBPMバー.n現在の値;
             }
-
+            if (this.txDShow汎用 != null)
+            {
+                if (this.ds汎用 != null)
+                {
+                    if (this.txDShow汎用 != null)
+                    {
+                        this.txDShow汎用.vc拡大縮小倍率 = new Vector3(
+                            ((float)1280 / (float)this.ds汎用.n幅px),
+                            ((float)720 / (float)this.ds汎用.n高さpx),
+                            1.0f);
+                    }
+                    this.ds汎用.bループ再生 = true;
+                    this.ds汎用.t再生開始();
+                    this.ds汎用.t現時点における最新のスナップイメージをTextureに転写する(this.txDShow汎用);
+                    if ( this.ds汎用.b上下反転 )
+                        this.txDShow汎用.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                    else
+                        this.txDShow汎用.t2D描画( CDTXMania.app.Device, 0, 0 );
+                }
+            }
             #region[ムービーのフレーム作成処理]
             if ((!base.b活性化してない))
             {
-                if (this.tx描画用2 != null)
-                {
-                    if (this.ds汎用 != null)
-                    {
-                        if (this.tx描画用2 != null)
-                        {
-                            this.tx描画用2.vc拡大縮小倍率 = new Vector3(
-                                ((float)1280 / (float)this.ds汎用.n幅px),
-                                ((float)720 / (float)this.ds汎用.n高さpx),
-                                1.0f);
-                        }
-                        this.ds汎用.t再生開始();
-                        this.ds汎用.bループ再生 = true;
-                        this.ds汎用.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用2);
-                        this.tx描画用2.t2D描画(CDTXMania.app.Device, 0, 0);
-                    }
-                }
                 if (((this.bFullScreen || this.bWindowMode) && (this.tx描画用 != null)))
                 {
   
@@ -1049,6 +1056,7 @@ namespace DTXMania
         private CTexture txロータム;
         private CTexture tx描画用;
         private CTexture tx描画用2;
+        private CTexture txDShow汎用;
         private CCounter[] ct箱 = new CCounter[15];
         private int y2;
         private int yh;

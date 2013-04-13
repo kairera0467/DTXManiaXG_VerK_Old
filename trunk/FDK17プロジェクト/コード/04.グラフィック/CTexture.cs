@@ -493,7 +493,7 @@ namespace FDK
 				#endregion
 			}
 		}
-        public void t2D上下反転描画( Device device, int x, int y )
+		public void t2D上下反転描画( Device device, int x, int y )
 		{
 			this.t2D上下反転描画( device, x, y, 1f, this.rc全画像 );
 		}
@@ -508,8 +508,8 @@ namespace FDK
 
 			this.tレンダリングステートの設定( device );
 
-			float fx = -0.5f;	// -0.5 は座標とピクセルの誤差を吸収するための座標補正値。(MSDN参照)
-			float fy = -0.5f;	//
+			float fx = x * CTexture.f画面比率 + CTexture.rc物理画面描画領域.X - 0.5f;	// -0.5 は座標とピクセルの誤差を吸収するための座標補正値。(MSDN参照)
+			float fy = y * CTexture.f画面比率 + CTexture.rc物理画面描画領域.Y - 0.5f;	//
 			float w = rc画像内の描画領域.Width * this.vc拡大縮小倍率.X * CTexture.f画面比率;
 			float h = rc画像内の描画領域.Height * this.vc拡大縮小倍率.Y * CTexture.f画面比率;
 			float f左U値 = ( (float) rc画像内の描画領域.Left ) / ( (float) this.szテクスチャサイズ.Width );
@@ -519,10 +519,10 @@ namespace FDK
 			this.color4.Alpha = ( (float) this._透明度 ) / 255f;
 			int color = this.color4.ToArgb();
 
-			// 以下、マネージドオブジェクトの量産を抑えるため new は使わない。
+            if( this.cvTransformedColoredVertexies == null )
+			    this.cvTransformedColoredVertexies = new TransformedColoredTexturedVertex[ 4 ];
 
-            if (this.cvTransformedColoredVertexies == null)
-                this.cvTransformedColoredVertexies = new TransformedColoredTexturedVertex[4];
+			// 以下、マネージドオブジェクトの量産を抑えるため new は使わない。
 
 			this.cvTransformedColoredVertexies[ 0 ].TextureCoordinates.X = f左U値;	// 左上	→ 左下
 			this.cvTransformedColoredVertexies[ 0 ].TextureCoordinates.Y = f下V値;
@@ -687,7 +687,13 @@ namespace FDK
 		private int _透明度;
 		private bool bDispose完了済み;
 		private PositionColoredTexturedVertex[] cvPositionColoredVertexies;
-		private TransformedColoredTexturedVertex[] cvTransformedColoredVertexies;
+        protected TransformedColoredTexturedVertex[] cvTransformedColoredVertexies = new TransformedColoredTexturedVertex[]
+		{
+			new TransformedColoredTexturedVertex(),
+			new TransformedColoredTexturedVertex(),
+			new TransformedColoredTexturedVertex(),
+			new TransformedColoredTexturedVertex(),
+		};
 		private const Pool poolvar =												// 2011.4.25 yyagi
 #if TEST_Direct3D9Ex
 			Pool.Default;
