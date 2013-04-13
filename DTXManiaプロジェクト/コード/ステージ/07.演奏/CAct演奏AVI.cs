@@ -16,6 +16,7 @@ namespace DTXMania
 
         public CAct演奏AVI()
         {
+            this.list子Activities.Add(this.actDshow = new CAct演奏Dshow());
             base.b活性化してない = true;
         }
 
@@ -376,7 +377,10 @@ namespace DTXMania
             {
                 if (((this.bFullScreen || this.bWindowMode) && (this.tx描画用 != null)))
                 {
-  
+                    if (this.actDshow.ds背景動画 == null)
+                    {
+                    //    this.actDshow.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + this.rAVI.strファイル名, CDTXMania.app.WindowHandle, true);
+                    }
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
@@ -525,6 +529,7 @@ namespace DTXMania
                                 {
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
+                                    //this.actDshow.t進行描画(0, 0);
                                     if (this.tx描画用2 != null)
                                     {
                                         //this.tx描画用2.t2D描画(CDTXMania.app.Device, this.position, 0);

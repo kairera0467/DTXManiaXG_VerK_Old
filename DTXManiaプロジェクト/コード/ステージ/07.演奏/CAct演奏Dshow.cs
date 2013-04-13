@@ -17,29 +17,42 @@ namespace DTXMania
     {
         public override void On活性化()
         {
-            this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(C共通.t指定した拡張子を持つファイルを検索し最初に見つけたファイルの絶対パスを返す(Path.GetDirectoryName(CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス), new List<string>() { ".avi", ".flv", ".mp4", ".wmv", ".mpg", ".mpeg" }), CDTXMania.app.WindowHandle, true);
-
             base.On活性化();
         }
         public override void On非活性化()
         {
+            this.ds背景動画.Dispose();
             base.On非活性化();
         }
         public override void OnManagedリソースの作成()
         {
-            this.txBGV = new CTexture(CDTXMania.app.Device, this.ds背景動画.n幅px, this.ds背景動画.n高さpx, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+            this.txBGV = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
             base.OnManagedリソースの作成();
         }
         public override void OnManagedリソースの解放()
         {
+            CDTXMania.tテクスチャの解放( ref this.txBGV );
             base.OnManagedリソースの解放();
+        }
+        public unsafe int t進行描画(int x, int y)
+        {
+            this.ds背景動画.t再生開始();
+            this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.txBGV);
+
+            if (this.ds背景動画.b上下反転)
+                this.txBGV.t2D上下反転描画(CDTXMania.app.Device, x, y);
+            else
+                this.txBGV.t2D描画(CDTXMania.app.Device, x, y);
+
+                return 0;
         }
         public override int On進行描画()
         {
             return 0;
         }
 
-        protected CDirectShow ds背景動画;
+        public CDirectShow ds背景動画;
         protected CTexture txBGV;
+        public string str動画のパス;
     }
 }
