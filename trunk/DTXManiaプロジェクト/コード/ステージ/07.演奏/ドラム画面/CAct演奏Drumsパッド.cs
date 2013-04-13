@@ -400,13 +400,13 @@ namespace DTXMania
                             this.stボーナス[i].x = 520;
                             break;
                         case 5:
-                            this.stボーナス[i].x = 630;
+                            this.stボーナス[i].x = 580;
                             break;
                         case 6:
-                            this.stボーナス[i].x = 680;
+                            this.stボーナス[i].x = 630;
                             break;
                         case 7:
-                            this.stボーナス[i].x = 700;
+                            this.stボーナス[i].x = 660;
                             break;
                         case 8:
                             if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
