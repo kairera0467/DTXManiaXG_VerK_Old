@@ -320,16 +320,10 @@ namespace DTXMania
                     if (this.ds背景動画 != null)
                     {
                         this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
-                        //if (this.ds背景動画.b上下反転)
-                        {
+                        if (this.ds背景動画.b上下反転)
                             this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 0, 0);
-                        }
-                        //else
-                            //this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
-                            if (this.ds背景動画.b再生中 == false)
-                            {
-                                return 0;
-                            }
+                        else
+                            this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
                     else if (((this.avi != null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
                     {
