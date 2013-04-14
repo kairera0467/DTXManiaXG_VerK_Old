@@ -241,7 +241,7 @@ namespace DTXMania
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
 
                 #region[ XG2 ]
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C) //変更(ここから)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
                 {
                     this.t進行描画・ステータスパネル();
                     if (CDTXMania.ConfigIni.bGraph.Drums == true || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT)

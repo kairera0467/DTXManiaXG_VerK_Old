@@ -21,7 +21,10 @@ namespace DTXMania
         }
         public override void On非活性化()
         {
-            this.ds背景動画.Dispose();
+            if (this.ds背景動画 != null)
+            {
+                this.ds背景動画.Dispose();
+            }
             base.On非活性化();
         }
         public override void OnManagedリソースの作成()
@@ -53,6 +56,5 @@ namespace DTXMania
 
         public CDirectShow ds背景動画;
         protected CTexture txBGV;
-        public string str動画のパス;
     }
 }

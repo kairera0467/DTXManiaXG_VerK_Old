@@ -50,12 +50,12 @@ namespace DTXMania
                     float f拡大率y;
                     this.framewidth = this.rAVI.avi.nフレーム幅;
                     this.frameheight = this.rAVI.avi.nフレーム高さ;
-                    this.fAVIアスペクト比 = ((float)this.framewidth) / ((float)this.frameheight);       //変更(追加)
+                    this.fAVIアスペクト比 = ((float)this.framewidth) / ((float)this.frameheight);
                     if (this.tx描画用 == null)
                     {
                         this.tx描画用 = new CTexture(CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                     }
-                    if (fAVIアスペクト比 < 1.77f)       //変更
+                    if (fAVIアスペクト比 < 1.77f)
                     {
                         //旧企画クリップだった場合
                         this.ratio1 = 720f / ((float)this.frameheight);
@@ -886,10 +886,9 @@ namespace DTXMania
                 }
 
                 //コンボ、ネームプレート
+                //グラフ無効&ネームプレートA,C
                 if (CDTXMania.ConfigIni.bGraph.Drums == false && (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C))
                 {
-                    CDTXMania.stage演奏ドラム画面.actStatusPanels.On進行描画();
-                    if(CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.CENTER)
                     CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 }
 
@@ -1005,7 +1004,7 @@ namespace DTXMania
         //private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
-        public float fAVIアスペクト比;       //変更
+        public float fAVIアスペクト比;
         private uint frameheight;
         private uint framewidth;
         private int i1;
@@ -1033,7 +1032,7 @@ namespace DTXMania
         private int n表示側終了位置Y;
         public IntPtr pBmp;
         private int position;
-        private int position2;      //変更(追加)
+        private int position2;
         private CDTX.CAVI rAVI;
         private CDTX.CAVI rAVI汎用;
         private CDirectShow ds汎用;
@@ -1070,7 +1069,7 @@ namespace DTXMania
         private int yf;
 
         private float ratio1;
-        private float ratio2;       //変更(追加)
+        private float ratio2;
         private Rectangle rec;
         private Rectangle rec2;
         private Rectangle rec3;
