@@ -572,7 +572,15 @@ namespace DTXMania
         public bool bCLASSIC譜面判別を有効にする;
         public bool bMutingLP;
         public bool bLivePoint;
-		public int	nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
+
+        #region[ 画像関連 ]
+        public int nJudgeFrames;
+        public int nJudgeInterval;
+        public int nJudgeWidgh;
+        public int nJudgeHeight;
+        #endregion
+
+        public int	nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
         public int nHidSud;
         public bool bIsAutoResultCapture;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能のON/OFF制御
 		public int nPoliphonicSounds;				// #28228 2012.5.1 yyagi レーン毎の最大同時発音数
@@ -1039,6 +1047,11 @@ namespace DTXMania
             this.nLaneDisp.Bass = 0;
             this.bJudgeLineDisp = new STDGBVALUE<bool>();
             this.bJudgeLineDisp.Drums = true;
+
+            this.nJudgeFrames = 12;
+            this.nJudgeInterval = 24;
+            this.nJudgeWidgh = 225;
+            this.nJudgeHeight = 135;
 
             this.bAutoAddGage = false;
 			this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
@@ -1784,9 +1797,19 @@ namespace DTXMania
             sw.WriteLine("DrumsJudgeLineDisp={0}", this.bJudgeLineDisp.Drums ? 1 : 0);
             #endregion
 
-            sw.WriteLine( ";-------------------" );
+            //sw.WriteLine( ";-------------------" );
 			#endregion
-
+            #region[ 画像周り ]
+            sw.WriteLine( ";判定画像のフレーム数" );
+            sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
+            sw.WriteLine( ";判定画像の1コマのフレーム数" );
+            sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
+            sw.WriteLine( ";判定画像の1コマの高さ" );
+            sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
+            sw.WriteLine( ";判定画像の1コマの幅" );
+            sw.WriteLine( "JudheHeight={0}", this.nJudgeHeight );
+            sw.WriteLine( ";-------------------" );
+            #endregion
 			#region [ AutoPlay ]
 			sw.WriteLine( "[AutoPlay]" );
 			sw.WriteLine();
@@ -1828,8 +1851,8 @@ namespace DTXMania
 			sw.WriteLine( ";-------------------" );
 			#endregion
 
-			#region [ HitRange ]
-			sw.WriteLine( "[HitRange]" );
+            #region [ HitRange ]
+            sw.WriteLine( "[HitRange]" );
 			sw.WriteLine();
 			sw.WriteLine( "; Perfect～Poor とみなされる範囲[ms]" );
 			sw.WriteLine( "Perfect={0}", this.nヒット範囲ms.Perfect );
@@ -2754,6 +2777,22 @@ namespace DTXMania
                                             {
                                                 this.bJudgeLineDisp.Drums = C変換.bONorOFF(str4[0]);
                                             }
+                                            else if (str3.Equals("JudgeFrames"))
+                                            {
+                                                this.nJudgeFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeFrames );
+                                            }
+                                            else if ( str3.Equals( "JudgeInterval" ))
+                                            {
+                                                this.nJudgeInterval = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeInterval );
+                                            }
+                                            else if ( str3.Equals( "JudgeWidgh" ))
+                                            {
+                                                this.nJudgeWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeWidgh );
+                                            }
+                                            else if ( str3.Equals( "JudgeHeight" ))
+                                            {
+                                                this.nJudgeHeight = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeHeight );
+                                            }
 											continue;
 										}
 									//-----------------------------
@@ -2874,8 +2913,8 @@ namespace DTXMania
 									//-----------------------------
 									#endregion
 
-									#region [ [HitRange] ]
-									//-----------------------------
+                                    #region [ [HitRange] ]
+                                    //-----------------------------
 									case Eセクション種別.HitRange:
 										if( str3.Equals( "Perfect" ) )
 										{

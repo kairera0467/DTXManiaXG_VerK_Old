@@ -130,34 +130,40 @@ namespace DTXMania
                                 num6 = CDTXMania.ConfigIni.bReverse.Guitar ? (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == E判定文字表示位置.レーン上) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == E判定文字表示位置.レーン上) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
                             }
                         }
+
+                        int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
+                        int nRectY = CDTXMania.ConfigIni.nJudgeHeight;
+
                         int xc = (num5 + base.st状態[j].n相対X座標) + (this.stレーンサイズ[j].w / 2);
-                        int x = xc - ((int)((110f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
-                        int y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
+                        int x = (xc - ((int)((110f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)))) - (nRectX - 225) ;
+                        int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0))) - (nRectY - 135);
+
+
                         if (base.tx判定文字列[num4] != null)
                         {
                             if (base.st状態[j].judge == E判定.Perfect)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 135 * base.st状態[j].nRect, 225, 135));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Great)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(225, 135 * base.st状態[j].nRect, 225, 135));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(225, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Good)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(450, 135 * base.st状態[j].nRect, 225, 135));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(450, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Poor)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(675, 135 * base.st状態[j].nRect, 225, 135));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(675, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Miss)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(900, 135 * base.st状態[j].nRect, 225, 135));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(900, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Auto)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(1125, 135 * base.st状態[j].nRect, 225, 135));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(1125, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
 
 

@@ -97,7 +97,7 @@ namespace DTXMania
 			if( ( ( nLane >= 10 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.表示OFF ) ) && ( ( ( nLane != 13 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != E判定文字表示位置.表示OFF ) ) && ( ( nLane != 14 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != E判定文字表示位置.表示OFF ) ) ) )
 			{
 
-				this.st状態[ nLane ].ct進行 = new CCounter( 0, 11, 24, CDTXMania.Timer );
+				this.st状態[ nLane ].ct進行 = new CCounter( 1, CDTXMania.ConfigIni.nJudgeFrames, CDTXMania.ConfigIni.nJudgeInterval, CDTXMania.Timer );
 				this.st状態[ nLane ].judge = judge;
 				this.st状態[ nLane ].fX方向拡大率 = 1f;
 				this.st状態[ nLane ].fY方向拡大率 = 1f;
