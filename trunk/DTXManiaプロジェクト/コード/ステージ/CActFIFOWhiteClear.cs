@@ -93,7 +93,6 @@ namespace DTXMania
 
 			if( this.ds背景動画 != null )
 			{
-				//this.tx背景動画 = CDTXMania.tテクスチャを生成する( this.ds背景動画.n幅px, this.ds背景動画.n高さpx );
                 this.tx背景動画 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
 
 				if( this.tx背景動画 != null )
@@ -374,27 +373,6 @@ namespace DTXMania
 
                             this.tx描画用.texture.UnlockRectangle(0);
                             this.b動画フレームを作成した = false;
-                        }
-                        else
-                        {
-                            if (this.tx白タイル64x64 != null)
-                            {
-                                if (this.counter.n現在の値 <= 300)
-                                {
-                                    this.tx白タイル64x64.n透明度 = 0;
-                                }
-                                else
-                                {
-                                    this.tx白タイル64x64.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - (this.counter.n現在の値 - 300)) * 0xff) / 100) : (((this.counter.n現在の値 - 300) * 255) / 100);
-                                }
-                                for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
-                                {
-                                    for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
-                                    {
-                                        //this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
-                                    }
-                                }
-                            }
                         }
                         this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
                         if (this.counter.n現在の値 != 400)
