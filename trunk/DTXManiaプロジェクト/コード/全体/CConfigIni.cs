@@ -1049,7 +1049,7 @@ namespace DTXMania
             this.bJudgeLineDisp.Drums = true;
 
             this.nJudgeFrames = 12;
-            this.nJudgeInterval = 24;
+            this.nJudgeInterval = 30;
             this.nJudgeWidgh = 225;
             this.nJudgeHeight = 135;
 
@@ -1804,10 +1804,10 @@ namespace DTXMania
             sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
             sw.WriteLine( ";判定画像の1コマのフレーム数" );
             sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
-            sw.WriteLine( ";判定画像の1コマの高さ" );
-            sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
             sw.WriteLine( ";判定画像の1コマの幅" );
-            sw.WriteLine( "JudheHeight={0}", this.nJudgeHeight );
+            sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
+            sw.WriteLine( ";判定画像の1コマの高さ" );
+            sw.WriteLine( "JudgeHeight={0}", this.nJudgeHeight );
             sw.WriteLine( ";-------------------" );
             #endregion
 			#region [ AutoPlay ]

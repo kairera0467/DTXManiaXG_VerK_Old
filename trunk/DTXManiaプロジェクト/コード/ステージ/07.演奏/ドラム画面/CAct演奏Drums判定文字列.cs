@@ -147,23 +147,23 @@ namespace DTXMania
                             }
                             if (base.st状態[j].judge == E判定.Great)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(225, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Good)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(450, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Poor)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(675, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Miss)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(900, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
                             if (base.st状態[j].judge == E判定.Auto)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(1125, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                             }
 
 
