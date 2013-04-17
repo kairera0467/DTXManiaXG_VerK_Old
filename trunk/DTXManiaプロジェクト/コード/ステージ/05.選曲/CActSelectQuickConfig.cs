@@ -354,6 +354,22 @@ namespace DTXMania
 						Eダークモード d = (Eダークモード) GetIndex( (int) EOrder.Dark );
 						CDTXMania.ConfigIni.eDark = d;
 						SetValueToAllTarget( (int) EOrder.Dark, (int) d );		// 全楽器で共有する値のため、全targetに値を展開する
+
+                        if (d == Eダークモード.FULL)
+                        {
+                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 1;
+                            CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
+                        }
+                        else if (d == Eダークモード.HALF)
+                        {
+                            CDTXMania.ConfigIni.nLaneDisp[ nCurrentTarget ] = 1;
+                            CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = true;
+                        }
+                        else
+                        {
+                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 0;
+                            CDTXMania.ConfigIni.bJudgeLineDisp[nCurrentTarget] = true;
+                        }
 					}
 					break;
 				case (int) EOrder.Risky:
