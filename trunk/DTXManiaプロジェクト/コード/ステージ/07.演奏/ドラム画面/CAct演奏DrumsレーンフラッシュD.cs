@@ -268,7 +268,7 @@ namespace DTXMania
                             {
                                 //this.txLine.t2D描画(CDTXMania.app.Device, x2 - 16, 0, new Rectangle(230, 0, 26, 720));
                                 //this.txLine.t2D描画(CDTXMania.app.Device, x3 - 37, 0, new Rectangle(255, 0, 26, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 16, 0, new Rectangle(232, 0, 27, 720));
+                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 16, 0, new Rectangle(232, 0, 26, 720));
                                 this.txLine.t2D描画(CDTXMania.app.Device, x2 - 18, 0, new Rectangle(229, 0, 3, 720));
                                 this.txLine.t2D描画(CDTXMania.app.Device, x3 + 8, 0, new Rectangle(255, 0, 26, 720));
                             }
@@ -277,13 +277,13 @@ namespace DTXMania
                                 //this.txLC.t2D描画(CDTXMania.app.Device, x2 + 51, 0);
                                 //this.txLC.t2D描画(CDTXMania.app.Device, x3 + 53, 0);
 
-                                this.txLine.t2D描画(CDTXMania.app.Device, x2 + 51, 0, new Rectangle(232, 0, 27, 720));
+                                this.txLine.t2D描画(CDTXMania.app.Device, x2 + 51, 0, new Rectangle(232, 0, 26, 720));
                                 this.txLine.t2D描画(CDTXMania.app.Device, x2 + 51, 0, new Rectangle(229, 0, 3, 720));
                                 this.txLine.t2D描画(CDTXMania.app.Device, x3 + 77, 0, new Rectangle(255, 0, 26, 720));
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
                             {
-                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 66, 0, new Rectangle(232, 0, 27, 720));
+                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 66, 0, new Rectangle(232, 0, 26, 720));
                                 this.txLine.t2D描画(CDTXMania.app.Device, x2 - 69, 0, new Rectangle(229, 0, 3, 720));
                                 this.txLine.t2D描画(CDTXMania.app.Device, x3 - 43, 0, new Rectangle(255, 0, 26, 720)); 
                             }
@@ -509,6 +509,7 @@ namespace DTXMania
 		private CTexture[] txFlush = new CTexture[ 0x16 ];
         private CTexture txLC;
         private CTexture txLine;
+        private CTexture txBass;
 		//-----------------
 		#endregion
 	}

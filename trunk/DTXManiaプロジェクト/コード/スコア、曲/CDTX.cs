@@ -3023,7 +3023,7 @@ namespace DTXMania
 					}
 				}
 			}
-		}
+        }
 		public void t全チップの再生再開()
 		{
 			foreach( CWAV cwav in this.listWAV.Values )
