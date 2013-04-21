@@ -124,7 +124,8 @@ namespace DTXMania
                 {
                     this.txボーナス花火.b加算合成 = true;
                 }
-                this.tx描画用 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
+                if(this.ds背景動画 != null)
+                    this.tx描画用 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
                 //this.tx背景動画 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                 this.nAVI再生開始時刻 = -1;
                 this.n前回描画したフレーム番号 = -1;
@@ -323,8 +324,13 @@ namespace DTXMania
                             this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 0, 0);
                         else
                             this.tx描画用.t2D描画(CDTXMania.app.Device, 0, 0);
+
+                        if (this.counter.n現在の値 != 400)
+                        {
+                            return 0;
+                        }
                     }
-                    else if (((this.avi != null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
+                    else if (((this.avi != null && this.ds背景動画 == null) && (this.tx描画用 != null)) && (this.nAVI再生開始時刻 != -1))
                     {
                         int time = (int)((CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                         int frameNoFromTime = this.avi.GetFrameNoFromTime(time);
@@ -348,7 +354,7 @@ namespace DTXMania
                         }
                     }
                     //Trace.TraceInformation("b動画フレームを作成した2:{0}(trueがあれば正常)", new object[] { this.b動画フレームを作成した });
-                    if ((this.tx描画用 != null))
+                    if ((this.tx描画用 != null) && this.ds背景動画 == null)
                     {
                         if (this.b動画フレームを作成した && (this.pAVIBmp != IntPtr.Zero))
                         {
@@ -382,7 +388,7 @@ namespace DTXMania
                     }
                     // Size clientSize = CDTXMania.app.Window.ClientSize;	// #23510 2010.10.31 yyagi: delete as of no one use this any longer.
 
-                    if (this.avi == null)
+                    if (this.avi == null && this.ds背景動画 == null)
                     {
                         if (this.tx白タイル64x64 != null)
                         {
@@ -472,6 +478,7 @@ namespace DTXMania
                 this.nAVI再生開始時刻 = CDTXMania.Timer.n現在時刻;
                 this.n前回描画したフレーム番号 = -1;
                 this.b動画フレームを作成した = false;
+                this.tx描画用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                 Trace.TraceInformation("動画を生成しました。({0})", new object[] { this.strAVIファイル名 });
             }
             catch
