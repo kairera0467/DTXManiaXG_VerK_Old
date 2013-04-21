@@ -196,7 +196,7 @@ namespace DTXMania
         public override void On活性化()
         {
             this.rAVI = null;
-            this.rAVI汎用 = null;
+            //this.rAVI汎用 = null;
             this.n移動開始時刻ms = -1;
             this.n前回表示したフレーム番号 = -1;
             this.bフレームを作成した = false;
@@ -1034,7 +1034,7 @@ namespace DTXMania
         private int position;
         private int position2;
         private CDTX.CAVI rAVI;
-        private CDTX.CAVI rAVI汎用;
+        //private CDTX.CAVI rAVI汎用;
         private CDirectShow ds汎用;
 
         public CAct演奏Dshow actDshow;

@@ -545,6 +545,7 @@ namespace DTXMania
 
         public STDGBVALUE<int> nLaneDisp;
         public STDGBVALUE<bool> bJudgeLineDisp;
+        public STDGBVALUE<bool> bLaneFlush;
 
 		public int n非フォーカス時スリープms;       // #23568 2010.11.04 ikanick add
 		public int nフレーム毎スリープms;			// #xxxxx 2011.11.27 yyagi add
@@ -1047,6 +1048,9 @@ namespace DTXMania
             this.nLaneDisp.Bass = 0;
             this.bJudgeLineDisp = new STDGBVALUE<bool>();
             this.bJudgeLineDisp.Drums = true;
+            this.bJudgeLineDisp.Guitar = true;
+            this.bLaneFlush = new STDGBVALUE<bool>();
+            this.bLaneFlush.Drums = true;
 
             this.nJudgeFrames = 12;
             this.nJudgeInterval = 30;
@@ -1795,6 +1799,9 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; 判定ライン表示");
             sw.WriteLine("DrumsJudgeLineDisp={0}", this.bJudgeLineDisp.Drums ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine("; レーンフラッシュ表示");
+            sw.WriteLine("DrumsLaneFlush={0}", this.bLaneFlush.Drums ? 1 : 0);
             #endregion
 
             //sw.WriteLine( ";-------------------" );
@@ -2776,6 +2783,10 @@ namespace DTXMania
                                             else if (str3.Equals("DrumsJudgeLineDisp"))
                                             {
                                                 this.bJudgeLineDisp.Drums = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("DrumsLaneFlush"))
+                                            {
+                                                this.bLaneFlush.Drums = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("JudgeFrames"))
                                             {

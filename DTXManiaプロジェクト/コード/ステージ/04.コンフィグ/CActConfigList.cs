@@ -496,20 +496,6 @@ namespace DTXMania
 				"Drums chips are hidden by approaching\n" +
 				"to the hit bar. " );
 			this.list項目リスト.Add( this.iDrumsHidden );
-
-            
-			this.iCommonDark = new CItemList( "Dark", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eDark,
-				"HALF: 背景、レーン、ゲージが表示\n" +
-				"されなくなります。\n" +
-				"FULL: さらに小節線、拍線、判定ラ\n" +
-				"イン、パッドも表示されなくなります。",
-				"OFF: all display parts are shown.\n" +
-				"HALF: wallpaper, lanes and gauge are\n" +
-				" disappeared.\n" +
-				"FULL: additionaly to HALF, bar/beat\n" +
-				" lines, hit bar, pads are disappeared.",
-				new string[] { "OFF", "HALF", "FULL" } );
-			this.list項目リスト.Add( this.iCommonDark );
             */
             #endregion
 
@@ -525,6 +511,15 @@ namespace DTXMania
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
             this.list項目リスト.Add(this.iDrumsHIDSUD);
 
+            this.iDrumsDark = new CItemList("       Dark", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eDark,
+                "レーン表示のオプションをまとめて切り替えます。\n"+
+                "HALF: レーンが表示されな\nくなります。\n"+
+                "FULL: さらに小節線、拍線、判定ラ\n"+
+                "インも表示されなくなります。",
+                "OFF: all display parts are shown.\nHALF: lanes and gauge are\n disappeared.\nFULL: additionaly to HALF, bar/beat\n lines, hit bar are disappeared.",
+                new string[] { "OFF", "HALF", "FULL" });
+            this.list項目リスト.Add(this.iDrumsDark);
+
             this.iDrumsLaneDisp = new CItemList("LaneDisp", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nLaneDisp.Drums,
                 "レーンの縦線と小節線の表示を切り替えます。\n" +
                 "LANE OFF:レーン背景を表示しません。\n"+
@@ -538,6 +533,21 @@ namespace DTXMania
                 "判定ラインの表示 / 非表示を切り替えます。",
                 "Toggle JudgeLine");
             this.list項目リスト.Add(this.iDrumsJudgeLineDisp);
+
+            this.iDrumsLaneFlush = new CItemToggle("LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Drums,
+                "レーンフラッシュの表示 / 非表示を切り替えます。",
+                "Toggle LaneFlush");
+            this.list項目リスト.Add(this.iDrumsLaneFlush);
+
+            this.iDrumsAttackEffectMode = new CItemList("AttackEffectType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAttackEffectType,
+                "アタックエフェクトの表示方法を設定します。\n" +
+                "ALL ON: すべて表示\n" +
+                "EffectOnly: エフェクト画像のみ表示\n" +
+                "ALL OFF: すべて消す",
+                "\n" +
+                "",
+                new string[] { "ALL ON", "EffectOnly", "ALL OFF" });
+            this.list項目リスト.Add(this.iDrumsAttackEffectMode);
 
             this.iDrumsReverse = new CItemToggle("Reverse", CDTXMania.ConfigIni.bReverse.Drums,
                 "ONにすると判定ラインが上になり、\n" +
@@ -743,16 +753,11 @@ namespace DTXMania
 				"のみ）。\n" +
 				"DTX の音色で演奏したい場合などに\n" +
 				"OFF にします。\n" + 
-				"\n" +
-				"注意：BD Group が BD-1 である場合\n" +
-				"は不具合が生じます。\n",
+				"\n",
 				"Turn OFF if you don't want to play\n" +
 				" hitting chip sound.\n" +
 				"It is useful to play with real/electric\n" +
-				" drums kit.\n" + 
-				"\n" +
-				"Warning: You should not use BD Group \n" + 
-				"BD-1 with HitSound OFF.\n" );
+				" drums kit.\n");
 			this.list項目リスト.Add( this.iSystemHitSound );
 
 			this.iSystemSoundMonitorDrums = new CItemToggle( "DrumsMonitor", CDTXMania.ConfigIni.b演奏音を強調する.Drums,
@@ -817,16 +822,6 @@ namespace DTXMania
                 new string[] { "Type A", "Type B" });
             this.list項目リスト.Add(this.iDrumsLBDGraphics);
 
-            this.iDrumsAttackEffectMode = new CItemList("AttackEffectType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAttackEffectType,
-                "アタックエフェクトの表示方法を設定します。\n" +
-                "ALL ON: すべて表示\n" +
-                "EffectOnly: エフェクト画像のみ表示\n" +
-                "ALL OFF: すべて消す",
-                "\n" +
-                "",
-                new string[] { "ALL ON", "EffectOnly","ALL OFF" });
-            this.list項目リスト.Add(this.iDrumsAttackEffectMode);
-
             this.iDrumsRDPosition = new CItemList("RDPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRDPosition,
                 "ライドシンバルレーンの表示\n" +
                 "位置を変更します。\n"+
@@ -842,12 +837,14 @@ namespace DTXMania
                 "Type-A 通常の設定です。\n"+
                 "Type-B 2ペダルとタムをそれぞれま\n"+
                 "とめた表示です。\n"+
-                "Type-C 3タムのみをまとめた表示です。\n",
+                "Type-C 3タムのみをまとめた表示です。\n"+
+                "Type-D 現在製作中です・・・・",
                 "To change the displaying position of\n" +
                 "Drum Lanes.\n"+
                 "Type-A default\n" +
                 "Type-B Summarized 2 pedals and Toms.\n"+
-                "Type-C Summarized 3 Toms only.",
+                "Type-C Summarized 3 Toms only.\n"+
+                "Type-D Work In Progress....",
                 new string[] { "Type-A", "Type-B", "Type-C", "Type-D"});
             this.list項目リスト.Add(this.iDrumsLaneType);
 
@@ -1528,6 +1525,26 @@ namespace DTXMania
 					}
 				}
 				#endregion
+                #region [ ダーク ]
+                else if (this.list項目リスト[this.n現在の選択項目] == this.iDrumsDark)					// #27029 2012.1.4 from
+                {
+                    if (this.iDrumsDark.n現在選択されている項目番号 == (int)Eダークモード.FULL)
+                    {
+                        this.iDrumsLaneDisp.n現在選択されている項目番号 = 3;
+                        this.iDrumsJudgeLineDisp.bON = false;
+                    }
+                    else if (iDrumsDark.n現在選択されている項目番号 == (int)Eダークモード.HALF)
+                    {
+                        this.iDrumsLaneDisp.n現在選択されている項目番号 = 1;
+                        this.iDrumsJudgeLineDisp.bON = true;
+                    }
+                    else
+                    {
+                        this.iDrumsLaneDisp.n現在選択されている項目番号 = 0;
+                        this.iDrumsJudgeLineDisp.bON = true;
+                    }
+                }
+                #endregion
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemUseBoxDefSkin )			// #28195 2012.5.6 yyagi
 				{
 					CSkin.bUseBoxDefSkin = this.iSystemUseBoxDefSkin.bON;
@@ -2351,6 +2368,7 @@ namespace DTXMania
 		private CItemToggle iBassReverse;
 		private CItemInteger iBassScrollSpeed;
 		private CItemToggle iBassSudden;
+        private CItemList iBassDark;
         private CItemList iBassLaneDisp;
         private CItemToggle iBassJudgeLineDisp;
         private CItemToggle iBassLaneFlush;
@@ -2396,6 +2414,7 @@ namespace DTXMania
         private CItemToggle iDrumsAssignToLBD;
         private CItemToggle iDrumsHAZARD;
         private CItemList iDrumsAttackEffectMode;
+        private CItemList iDrumsDark;
         private CItemList iDrumsLaneDisp;
         private CItemToggle iDrumsJudgeLineDisp;
         private CItemToggle iDrumsLaneFlush;
@@ -2423,6 +2442,7 @@ namespace DTXMania
 		private CItemToggle iGuitarReverse;
 		private CItemInteger iGuitarScrollSpeed;
 		private CItemToggle iGuitarSudden;
+        private CItemList iGuitarDark;
         private CItemList iGuitarLaneDisp;
         private CItemToggle iGuitarJudgeLineDisp;
         private CItemToggle iGuitarLaneFlush;
@@ -2622,6 +2642,7 @@ namespace DTXMania
             
             CDTXMania.ConfigIni.nLaneDisp.Drums = this.iDrumsLaneDisp.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bJudgeLineDisp.Drums = this.iDrumsJudgeLineDisp.bON;
+            CDTXMania.ConfigIni.bLaneFlush.Drums = this.iDrumsLaneFlush.bON;
 
             CDTXMania.ConfigIni.eBPMbar = (Eタイプ)this.iDrumsBPMbar.n現在選択されている項目番号;
             CDTXMania.ConfigIni.ボーナス演出を表示する = this.iDrumsStageEffect.bON;
@@ -2643,8 +2664,8 @@ namespace DTXMania
             CDTXMania.ConfigIni.nShutterInSide = this.iDrumsShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide = this.iDrumsShutterOutPos.n現在の値;
 
-			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
-			CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;						// #23559 2911.7.27 yyagi
+			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;     // ダークはプリセット切り替えとして使うため、保存はしない。
+			CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;						// #23559 2011.7.27 yyagi
 		}
 		private void tConfigIniへ記録する・Guitar()
 		{
