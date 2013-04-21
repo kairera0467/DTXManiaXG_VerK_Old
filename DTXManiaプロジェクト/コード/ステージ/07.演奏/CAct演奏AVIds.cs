@@ -16,7 +16,7 @@ namespace DTXMania
 
         public CAct演奏AVI()
         {
-            //this.list子Activities.Add(this.actDshow = new CAct演奏Dshow());
+            this.list子Activities.Add(this.actDshow = new CAct演奏Dshow());
             base.b活性化してない = true;
         }
 
@@ -162,20 +162,6 @@ namespace DTXMania
             {
                 this.n移動開始時刻ms = -1;
             }
-        }
-        public void tDShow動画の一時停止()
-        {
-            if(this.ds背景動画 != null)
-                this.ds背景動画.t再生一時停止();
-            if(this.ds汎用 != null)
-                this.ds汎用.t再生一時停止();
-        }
-        public void tDShow動画の再開()
-        {
-            if(this.ds背景動画 != null)
-                this.ds背景動画.t再生開始();
-            if(this.ds汎用 != null)
-                this.ds汎用.t再生開始();
         }
         public void MovieMode()
         {
@@ -569,12 +555,7 @@ namespace DTXMania
                                 }
                                 else
                                 {
-
-                                    //if (this.ds背景動画.b上下反転)
-                                    //    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 882, 0);
-                                    //else
-                                    //    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
-                                    if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
+                                    //if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
                                     {
                                         DataRectangle rectangle3 = this.tx描画用.texture.LockRectangle(0, LockFlags.None);
                                         DataStream data = rectangle3.Data;
@@ -1102,10 +1083,9 @@ namespace DTXMania
         private CDTX.CAVI rAVI汎用;
         private CDirectShow ds汎用;
 
-        //public CAct演奏Dshow actDshow;
+        public CAct演奏Dshow actDshow;
 
         public CDirectShow ds背景動画;
-        protected CTexture txBGV;
 
         private CTexture tx黒幕;
         private CTexture txBPMバー左;
