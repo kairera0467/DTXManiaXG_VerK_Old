@@ -231,8 +231,7 @@ namespace DTXMania
         }
         public override void On非活性化()
         {
-            if(this.ds背景動画 != null)
-                this.ds背景動画.Dispose();
+            C共通.tDisposeする( ref this.ds背景動画 );
             base.On非活性化();
         }
         public override void OnManagedリソースの作成()
@@ -545,12 +544,13 @@ namespace DTXMania
                                 this.tx描画用.texture.UnlockRectangle(0);
                                 this.bフレームを作成した = false;
                             }
-                            this.ds背景動画.t再生開始();
-                            this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
+
                             if (this.bFullScreen)
                             {
                                 if (fAVIアスペクト比 > 1.77f)       //変更
                                 {
+                                    this.ds背景動画.t再生開始();
+                                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
                                     //this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
                                     //this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
                                     //this.actDshow.t進行描画(0, 0);
@@ -569,12 +569,35 @@ namespace DTXMania
                                 }
                                 else
                                 {
-                                    this.tx描画用.vc拡大縮小倍率 = this.vclip;
-                                    //this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
-                                    if (this.ds背景動画.b上下反転)
-                                        this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, x, y);
-                                    else
-                                        this.tx描画用.t2D描画(CDTXMania.app.Device, x, y);
+
+                                    //if (this.ds背景動画.b上下反転)
+                                    //    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 882, 0);
+                                    //else
+                                    //    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                    if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
+                                    {
+                                        DataRectangle rectangle3 = this.tx描画用.texture.LockRectangle(0, LockFlags.None);
+                                        DataStream data = rectangle3.Data;
+                                        int num14 = rectangle3.Pitch / this.tx描画用.szテクスチャサイズ.Width;
+                                        BitmapUtil.BITMAPINFOHEADER* pBITMAPINFOHEADER = (BitmapUtil.BITMAPINFOHEADER*)this.pBmp.ToPointer();
+                                        if (pBITMAPINFOHEADER->biBitCount == 0x18)
+                                        {
+                                            switch (num14)
+                                            {
+                                                case 2:
+                                                    this.rAVI.avi.tBitmap24ToGraphicsStreamR5G6B5(pBITMAPINFOHEADER, data, this.tx描画用.szテクスチャサイズ.Width, this.tx描画用.szテクスチャサイズ.Height);
+                                                    break;
+
+                                                case 4:
+                                                    this.rAVI.avi.tBitmap24ToGraphicsStreamX8R8G8B8(pBITMAPINFOHEADER, data, this.tx描画用.szテクスチャサイズ.Width, this.tx描画用.szテクスチャサイズ.Height);
+                                                    break;
+                                            }
+                                        }
+                                        this.tx描画用.texture.UnlockRectangle(0);
+                                        this.bフレームを作成した = false;
+                                        this.tx描画用.vc拡大縮小倍率 = this.vclip;
+                                        this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                    }
                                 }
                             }
                         }

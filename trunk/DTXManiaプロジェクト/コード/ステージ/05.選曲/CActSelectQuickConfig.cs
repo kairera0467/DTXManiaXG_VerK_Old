@@ -357,7 +357,7 @@ namespace DTXMania
 
                         if (d == Eダークモード.FULL)
                         {
-                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 1;
+                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 3;
                             CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
                         }
                         else if (d == Eダークモード.HALF)
