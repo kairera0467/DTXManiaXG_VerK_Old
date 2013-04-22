@@ -6037,7 +6037,7 @@ namespace DTXMania
 			}
 			switch( nチャンネル番号 )
 			{
-                case 0x15:
+                case 0x17:
                     this.bチップがある.FT = true;
                     break;
 

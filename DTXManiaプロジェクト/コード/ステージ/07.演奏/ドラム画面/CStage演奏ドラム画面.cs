@@ -152,7 +152,7 @@ namespace DTXMania
                     UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
                     this.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
 
-                    this.ctコンボ動作タイマ = new CCounter(1, 16, (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
+                    this.ctコンボ動作タイマ = new CCounter(0, 15, (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -181,17 +181,17 @@ namespace DTXMania
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true && CDTXMania.DTX.bチップがある.FT == false && CDTXMania.DTX.bチップがある.Ride == false && CDTXMania.DTX.bチップがある.LP == false)
+                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false )))
                 {
                     if ( this.txLaneCover != null )
                     {
                         //旧画像
                         //this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
-                        if (CDTXMania.DTX.bチップがある.LeftCymbal == false)
+                        //if (CDTXMania.DTX.bチップがある.LeftCymbal == false)
                         {
                             this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0, new Rectangle(0, 0, 70, 720));
                         }
-                        if ((CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false))
+                        //if ((CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false))
                         {
                             //レーンタイプでの入れ替わりあり
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
@@ -207,11 +207,11 @@ namespace DTXMania
                                 this.txLaneCover.t2D描画(CDTXMania.app.Device, 522, 0, new Rectangle(124, 0, 54, 720));
                             }
                         }
-                        if (CDTXMania.DTX.bチップがある.FT == false)
+                        //if (CDTXMania.DTX.bチップがある.FT == false)
                         {
                             this.txLaneCover.t2D描画(CDTXMania.app.Device, 690, 0, new Rectangle(71, 0, 52, 720));
                         }
-                        if (CDTXMania.DTX.bチップがある.Ride == false)
+                        //if (CDTXMania.DTX.bチップがある.Ride == false)
                         {
                             //RDPositionで入れ替わり
                             if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
@@ -393,11 +393,11 @@ namespace DTXMania
         private int[] nチャンネルtoX座標 = new int[] { 370, 470, 582, 527, 645, 748, 694, 373, 815, 298, 419, 419 };
         private int[] nチャンネルtoX座標B = new int[] { 370, 419, 533, 596, 645, 748, 694, 373, 815, 298, 476, 476 };
         private int[] nチャンネルtoX座標C = new int[] { 370, 470, 533, 596, 645, 748, 694, 373, 815, 298, 419, 419 };
-        private int[] nチャンネルtoX座標D = new int[] { 370, 419, 582, 476, 649, 748, 694, 373, 815, 298, 526, 526 };
+        private int[] nチャンネルtoX座標D = new int[] { 370, 419, 582, 476, 645, 748, 694, 373, 815, 298, 527, 527 };
         private int[] nチャンネルtoX座標改 = new int[] { 370, 470, 582, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
         private int[] nチャンネルtoX座標B改 = new int[] { 370, 419, 533, 596, 645, 786, 694, 373, 746, 298, 476, 476 };
         private int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 644, 786, 694, 373, 746, 298, 419, 419 };
-        private int[] nチャンネルtoX座標D改 = new int[] { 370, 419, 582, 476, 645, 786, 694, 373, 746, 298, 526, 526 };
+        private int[] nチャンネルtoX座標D改 = new int[] { 370, 419, 582, 476, 645, 786, 694, 373, 746, 298, 527, 527 };
         //HH SD BD HT LT CY FT HHO RD LC LP LBD
         //レーンタイプB
         //LC 298  HH 371 HHO 374  SD 420  LP 477  BD 534  HT 597 LT 646  FT 695  CY 749  RD 815
