@@ -1718,8 +1718,10 @@ namespace DTXMania
 			sw.WriteLine();
 
             // #24074 2011.01.23 add ikanick
-			sw.WriteLine( "; ドラムグラフ表示(0:OFF, 1:ON)" );
+			sw.WriteLine( "; グラフ表示(0:OFF, 1:ON)" );
 			sw.WriteLine( "DrumsGraph={0}", this.bGraph.Drums ? 1 : 0 );
+            sw.WriteLine( "GuitarGraph={0}", this.bGraph.Guitar ? 1 : 0);
+            sw.WriteLine( "BassGraph={0}", this.bGraph.Bass ? 1 : 0);
 			sw.WriteLine();
 
             #region[DTXManiaXG追加オプション]
@@ -2592,6 +2594,14 @@ namespace DTXMania
 											{
 												this.bGraph.Drums = C変換.bONorOFF( str4[ 0 ] );
 											}
+                                            else if (str3.Equals( "GuitarGraph" ))  // #24074 2011.01.23 addikanick
+                                            {
+                                                this.bGraph.Guitar = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals( "BassGraph" ))  // #24074 2011.01.23 addikanick
+                                            {
+                                                this.bGraph.Bass = C変換.bONorOFF(str4[0]);
+                                            }
 											else if( str3.Equals( "DrumsSudden" ) )
 											{
 												this.bSudden.Drums = C変換.bONorOFF( str4[ 0 ] );

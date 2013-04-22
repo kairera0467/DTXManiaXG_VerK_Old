@@ -302,11 +302,11 @@ namespace DTXMania
 
             if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 4 == 0 )
             {
-                y動作差分 = 6;
+                y動作差分 = 4;
             }
-            else if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 16 == 0 )
+            else if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 15 == 1 )
             {
-                y動作差分 = 10;
+                y動作差分 = 8;
             }
 
 	        // "COMBO" を表示。

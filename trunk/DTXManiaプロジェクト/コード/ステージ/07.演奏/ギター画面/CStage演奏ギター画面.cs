@@ -24,6 +24,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actDANGER = new CAct演奏GuitarDanger() );
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
 			base.list子Activities.Add( this.actBGA = new CAct演奏BGA() );
+            base.list子Activities.Add( this.actGraph = new CAct演奏Guitarグラフ() );
 			base.list子Activities.Add( this.actPanel = new CAct演奏パネル文字列() );
 			base.list子Activities.Add( this.act譜面スクロール速度 = new CAct演奏スクロール速度() );
 			base.list子Activities.Add( this.actStatusPanels = new CAct演奏Guitarステータスパネル() );
@@ -69,6 +70,16 @@ namespace DTXMania
 		public override void On活性化()
 		{
             dtLastQueueOperation = DateTime.MinValue;
+            if (CDTXMania.bコンパクトモード)
+            {
+                var score = new Cスコア();
+                CDTXMania.Songs管理.tScoreIniを読み込んで譜面情報を設定する(CDTXMania.strコンパクトモードファイル + ".score.ini", ref score);
+                this.actGraph.dbグラフ値目標_渡G = score.譜面情報.最大スキル[1];
+            }
+            else
+            {
+                this.actGraph.dbグラフ値目標_渡G = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[1];	// #24074 2011.01.23 add ikanick
+            }
 			base.On活性化();
 		}
 		public override void OnManagedリソースの作成()
@@ -132,7 +143,7 @@ namespace DTXMania
 					}
 				}
 				this.t進行描画・背景();
-                this.t進行描画・AVI();
+                //this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
 				this.t進行描画・パネル文字列();
 				this.t進行描画・BGA();
@@ -144,6 +155,8 @@ namespace DTXMania
 
 				this.t進行描画・DANGER();
 
+                this.t進行描画・グラフ();
+
 				this.t進行描画・コンボ();
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
@@ -154,7 +167,8 @@ namespace DTXMania
                 this.t進行描画・RGBボタン();
 				this.t進行描画・演奏情報();
 				//this.t進行描画・Wailing枠();
-				this.t進行描画・チップファイアGB();
+
+                this.t進行描画・チップファイアGB();
 				this.t進行描画・STAGEFAILED();
                 flag2 = this.t進行描画・フェードイン・アウト();
                 if ( flag && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
@@ -203,6 +217,7 @@ namespace DTXMania
 					this.tキー入力();
 				}
 			}
+            base.sw.Stop();
 			return 0;
 		}
 
@@ -212,10 +227,19 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private CTexture txレーン;
+        public CAct演奏Guitarグラフ actGraph;
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
 		{
 			E判定 eJudgeResult = tチップのヒット処理( nHitTime, pChip, E楽器パート.GUITAR, bCorrectLane );
+            if (CDTXMania.ConfigIni.nSkillMode == 0)
+            {
+                this.actGraph.dbグラフ値現在_渡G = CScoreIni.t旧演奏型スキルを計算して返す(CDTXMania.DTX.n可視チップ数.Guitar, this.nヒット数・Auto含まない.Drums.Perfect, this.nヒット数・Auto含まない.Drums.Great, this.nヒット数・Auto含まない.Drums.Good, this.nヒット数・Auto含まない.Drums.Poor, this.nヒット数・Auto含まない.Drums.Miss, E楽器パート.DRUMS, bIsAutoPlay);
+            }
+            else if (CDTXMania.ConfigIni.nSkillMode == 1)
+            {
+                this.actGraph.dbグラフ値現在_渡G = CScoreIni.t演奏型スキルを計算して返す(CDTXMania.DTX.n可視チップ数.Guitar, this.nヒット数・Auto含まない.Drums.Perfect, this.nヒット数・Auto含まない.Drums.Great, this.nヒット数・Auto含まない.Drums.Good, this.nヒット数・Auto含まない.Drums.Poor, this.nヒット数・Auto含まない.Drums.Miss, this.actCombo.n現在のコンボ数.Drums最高値, E楽器パート.DRUMS, bIsAutoPlay);
+            }
 			return eJudgeResult;
 		}
 		protected override void tチップのヒット処理・BadならびにTight時のMiss( E楽器パート part )
@@ -229,7 +253,7 @@ namespace DTXMania
 
 		protected override void t進行描画・AVI()
 		{
-		    base.t進行描画・AVI( 0, 0 );
+		    //base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
@@ -240,7 +264,14 @@ namespace DTXMania
 			//this.actDANGER.t進行描画( false, this.actGauge.db現在のゲージ値.Guitar < 0.3, this.actGauge.db現在のゲージ値.Bass < 0.3 );
 			this.actDANGER.t進行描画( false, this.actGauge.IsDanger(E楽器パート.GUITAR), this.actGauge.IsDanger(E楽器パート.BASS) );
 		}
-
+        private void t進行描画・グラフ()
+        {
+            if ( CDTXMania.ConfigIni.bGraph.Guitar )
+            {
+                this.actGraph.On進行描画();
+                this.actGraph.db現在の判定数合計G = this.nヒット数・Auto含む.Guitar.Perfect + this.nヒット数・Auto含む.Guitar.Great + this.nヒット数・Auto含む.Guitar.Good + this.nヒット数・Auto含む.Guitar.Miss + this.nヒット数・Auto含む.Guitar.Poor;
+            }
+        }
 		protected override void t進行描画・Wailing枠()
 		{
 			base.t進行描画・Wailing枠( 292, 0x251,

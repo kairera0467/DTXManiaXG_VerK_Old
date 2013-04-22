@@ -1104,6 +1104,14 @@ namespace DTXMania
 
             //MovieMode(総合で設定するため個別には実装しない。)
             //SkillMeter(後々実装)
+            this.iGuitarGraph = new CItemToggle("Graph", CDTXMania.ConfigIni.bGraph.Guitar,
+                "最高スキルと比較できるグラフを\n" +
+                "表示します。\n" +
+                "オートプレイだと表示されません。",
+                "To draw Graph \n" +
+                " or not.");
+            this.list項目リスト.Add(this.iGuitarGraph);
+
             //比較対象(そもそも比較グラフさえ完成していない)
             //シャッタータイプ
             //シャッターポジション(IN)
@@ -2438,6 +2446,7 @@ namespace DTXMania
 		private CItemToggle iGuitarLight;
 		private CItemList iGuitarPosition;
 		private CItemList iGuitarRandom;
+        private CItemToggle iGuitarGraph;
 		private CItemBase iGuitarReturnToMenu;
 		private CItemToggle iGuitarReverse;
 		private CItemInteger iGuitarScrollSpeed;
@@ -2684,6 +2693,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bLight.Guitar = this.iGuitarLight.bON;
 			CDTXMania.ConfigIni.bLeft.Guitar = this.iGuitarLeft.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar = this.iGuitarInputAdjustTimeMs.n現在の値;	// #23580 2011.1.3 yyagi
+            CDTXMania.ConfigIni.bGraph.Guitar = this.iGuitarGraph.bON;
 
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Guitar = this.iSystemMinComboGuitar.n現在の値;
 			CDTXMania.ConfigIni.b演奏音を強調する.Guitar = this.iSystemSoundMonitorGuitar.bON;
