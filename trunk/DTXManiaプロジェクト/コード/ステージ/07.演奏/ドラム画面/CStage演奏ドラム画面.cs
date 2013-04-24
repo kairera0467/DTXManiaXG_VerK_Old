@@ -393,11 +393,11 @@ namespace DTXMania
         private int[] nチャンネルtoX座標 = new int[] { 370, 470, 582, 527, 645, 748, 694, 373, 815, 298, 419, 419 };
         private int[] nチャンネルtoX座標B = new int[] { 370, 419, 533, 596, 645, 748, 694, 373, 815, 298, 476, 476 };
         private int[] nチャンネルtoX座標C = new int[] { 370, 470, 533, 596, 645, 748, 694, 373, 815, 298, 419, 419 };
-        private int[] nチャンネルtoX座標D = new int[] { 370, 419, 582, 476, 645, 748, 694, 373, 815, 298, 527, 527 };
+        private int[] nチャンネルtoX座標D = new int[] { 370, 420, 582, 477, 645, 748, 694, 373, 815, 298, 527, 527 };
         private int[] nチャンネルtoX座標改 = new int[] { 370, 470, 582, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
         private int[] nチャンネルtoX座標B改 = new int[] { 370, 419, 533, 596, 645, 786, 694, 373, 746, 298, 476, 476 };
         private int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 644, 786, 694, 373, 746, 298, 419, 419 };
-        private int[] nチャンネルtoX座標D改 = new int[] { 370, 419, 582, 476, 645, 786, 694, 373, 746, 298, 527, 527 };
+        private int[] nチャンネルtoX座標D改 = new int[] { 370, 420, 582, 477, 645, 786, 694, 373, 746, 298, 527, 527 };
         //HH SD BD HT LT CY FT HHO RD LC LP LBD
         //レーンタイプB
         //LC 298  HH 371 HHO 374  SD 420  LP 477  BD 534  HT 597 LT 646  FT 695  CY 749  RD 815
@@ -1804,12 +1804,43 @@ namespace DTXMania
                                 {
                                     case EBDGroup.左右ペダルのみ打ち分ける:
                                         #region[ LPのヒット処理]
-                                        if ( e判定LP != E判定.Miss )
+                                        if (e判定LP != E判定.Miss && e判定LBD != E判定.Miss)
                                         {
-                                            this.tドラムヒット処理( nTime, Eパッド.LP, chipLP, inputEvent.nVelocity );
+                                            if (chipLP.n発声位置 < chipLBD.n発声位置)
+                                            {
+                                                this.tドラムヒット処理(nTime, Eパッド.LP, chipLP, inputEvent.nVelocity);
+                                            }
+                                            else
+                                            {
+                                                if (chipLP.n発声位置 > chipLBD.n発声位置)
+                                                {
+                                                    this.tドラムヒット処理(nTime, Eパッド.LP, chipLBD, inputEvent.nVelocity);
+                                                }
+                                                else
+                                                {
+                                                    this.tドラムヒット処理(nTime, Eパッド.LP, chipLP, inputEvent.nVelocity);
+                                                    this.tドラムヒット処理(nTime, Eパッド.LP, chipLBD, inputEvent.nVelocity);
+                                                }
+                                            }
                                             bHitted = true;
                                         }
-                                        if ( bHitted )
+                                        else
+                                        {
+                                            if (e判定LP != E判定.Miss)
+                                            {
+                                                this.tドラムヒット処理(nTime, Eパッド.LP, chipLP, inputEvent.nVelocity);
+                                                bHitted = true;
+                                            }
+                                            else
+                                            {
+                                                if (e判定LBD != E判定.Miss)
+                                                {
+                                                    this.tドラムヒット処理(nTime, Eパッド.LP, chipLBD, inputEvent.nVelocity);
+                                                    bHitted = true;
+                                                }
+                                            }
+                                        }
+                                        if (bHitted)
                                         {
                                             continue;
                                         }
@@ -1961,10 +1992,41 @@ namespace DTXMania
                                 {
                                     case EBDGroup.左右ペダルのみ打ち分ける:
                                         #region[ LPのヒット処理]
-                                        if (e判定LBD != E判定.Miss)
+                                        if (e判定LP != E判定.Miss && e判定LBD != E判定.Miss)
                                         {
-                                            this.tドラムヒット処理(nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity);
+                                            if (chipLP.n発声位置 < chipLBD.n発声位置)
+                                            {
+                                                this.tドラムヒット処理(nTime, Eパッド.LBD, chipLP, inputEvent.nVelocity);
+                                            }
+                                            else
+                                            {
+                                                if (chipLP.n発声位置 > chipLBD.n発声位置)
+                                                {
+                                                    this.tドラムヒット処理(nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity);
+                                                }
+                                                else
+                                                {
+                                                    this.tドラムヒット処理(nTime, Eパッド.LBD, chipLP, inputEvent.nVelocity);
+                                                    this.tドラムヒット処理(nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity);
+                                                }
+                                            }
                                             bHitted = true;
+                                        }
+                                        else
+                                        {
+                                            if (e判定LP != E判定.Miss)
+                                            {
+                                                this.tドラムヒット処理(nTime, Eパッド.LBD, chipLP, inputEvent.nVelocity);
+                                                bHitted = true;
+                                            }
+                                            else
+                                            {
+                                                if (e判定LBD != E判定.Miss)
+                                                {
+                                                    this.tドラムヒット処理(nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity);
+                                                    bHitted = true;
+                                                }
+                                            }
                                         }
                                         if (bHitted)
                                         {

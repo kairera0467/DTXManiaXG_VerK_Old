@@ -1698,16 +1698,16 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.t一時停止();
                     CDTXMania.Timer.t一時停止();
                     CDTXMania.DTX.t全チップの再生一時停止();
-                    //if ( this.actAVI.ds背景動画 != null )
-                        //this.actAVI.tDShow動画の一時停止();
+                    if ( this.actAVI.ds背景動画 != null )
+                        this.actAVI.ds背景動画.t再生一時停止();
                 }
                 else
                 {
                     CSound管理.rc演奏用タイマ.t再開();
                     CDTXMania.Timer.t再開();
                     CDTXMania.DTX.t全チップの再生再開();
-                    //if ( this.actAVI.ds背景動画 != null )
-                        //this.actAVI.tDShow動画の再開();
+                    if ( this.actAVI.ds背景動画 != null )
+                        this.actAVI.ds背景動画.t再生開始();
                 }
             }
             if (((base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED)) && (base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト))

@@ -246,7 +246,7 @@ namespace DTXMania
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                     graphics2.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, (float)(18f + width), (float)164f);
                     else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                        graphics2.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, (float)(24f + width), (float)168f);
+                        graphics2.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, (float)(24f + width), (float)158f);
                     else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
                         graphics2.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, (float)(18f + width), (float)164f);
                 }
@@ -291,6 +291,7 @@ namespace DTXMania
                 {
                     this.iAlbum = Image.FromFile(path);
                 }
+
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
                     graphics.DrawImage(this.iAlbum, new Rectangle(7, 0x11, 0x45, 0x4b), new Rectangle(0, 0, this.iAlbum.Width, this.iAlbum.Height), GraphicsUnit.Pixel);

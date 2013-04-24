@@ -271,11 +271,13 @@ namespace DTXMania
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
                             {
-                                this.txLine.t2D描画(CDTXMania.app.Device, 576, 0, new Rectangle(281, 0, 3, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 18, 0, new Rectangle(284, 0, 22, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, 601, 0, new Rectangle(306, 0, 22, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, x3 + 26, 0, new Rectangle(328, 0, 22, 720));
-                                 
+                                //this.txLine.t2D描画(CDTXMania.app.Device, 576, 0, new Rectangle(281, 0, 3, 720));
+                                //this.txLine.t2D描画(CDTXMania.app.Device, x2 - 18, 0, new Rectangle(284, 0, 22, 720));
+                                //this.txLine.t2D描画(CDTXMania.app.Device, 601, 0, new Rectangle(306, 0, 22, 720));
+                                //this.txLine.t2D描画(CDTXMania.app.Device, x3 + 26, 0, new Rectangle(328, 0, 22, 720));
+                                this.txLine.t2D描画(CDTXMania.app.Device, 576, 0, new Rectangle(281, 0, 6, 720));
+                                this.txBass.t2D描画(CDTXMania.app.Device, 579 + (int)(6 * (CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[3].nX座標オフセットdot * 0.08f)), 0, new Rectangle(284, 0, 66, 720));
+                                this.txBass.vc拡大縮小倍率.X = 1.0f - (CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[3].nX座標オフセットdot * 0.01f);
                             }
                         }
                         if (index == 4) //HT
@@ -307,9 +309,11 @@ namespace DTXMania
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
                             {
-                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 66, 0, new Rectangle(232, 0, 26, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, x2 - 69, 0, new Rectangle(229, 0, 3, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, x3 - 43, 0, new Rectangle(255, 0, 26, 720)); 
+                                //this.txLine.t2D描画(CDTXMania.app.Device, x2 - 66, 0, new Rectangle(232, 0, 26, 720));
+                                //this.txLine.t2D描画(CDTXMania.app.Device, x2 - 69, 0, new Rectangle(229, 0, 3, 720));
+                                //this.txLine.t2D描画(CDTXMania.app.Device, x3 - 43, 0, new Rectangle(255, 0, 26, 720)); 
+                                this.txHitom.t2D描画(CDTXMania.app.Device, 475 + (int)(6 * (CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[4].nX座標オフセットdot * 0.1f)), 0, new Rectangle(229, 0, 52, 720));
+                                this.txHitom.vc拡大縮小倍率.X = 1.0f - (CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[4].nX座標オフセットdot * 0.01f);
                             }
                         }
 
