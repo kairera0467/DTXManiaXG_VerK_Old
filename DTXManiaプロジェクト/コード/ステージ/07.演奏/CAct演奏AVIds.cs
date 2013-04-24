@@ -208,9 +208,17 @@ namespace DTXMania
             this.ds汎用 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_Movie.mp4"), CDTXMania.app.WindowHandle, true);
             if (this.ds背景動画 == null)
             {
-                if (CDTXMania.DTX.listAVI.Count != 0)
+                int n = CDTXMania.DTX.listAVI.Count;
+                if (n >= 1)
                 {
-                    this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + CDTXMania.DTX.listAVI[1].strファイル名, CDTXMania.app.WindowHandle, true);
+                    for (int bgv = 0; bgv >= n; bgv++ )
+                    {
+                        //this.dsBGV = new CDirectShow[n];
+                    }
+                    if (CDTXMania.DTX.listAVI[1].avi != null)
+                    {
+                        this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + CDTXMania.DTX.listAVI[1].strファイル名, CDTXMania.app.WindowHandle, true);
+                    }
                 }
             }
             base.On活性化();
@@ -504,7 +512,7 @@ namespace DTXMania
                             }
                         }
 
-                        if ((this.tx描画用 != null) && (this.n総移動時間ms != -1))
+                        if ((this.tx描画用 != null) && (this.n総移動時間ms != -1) && this.ds背景動画 != null)
                         {
                             if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
                             {
@@ -589,7 +597,7 @@ namespace DTXMania
 
             #endregion
 
-                //if (this.b旧企画クリップである == true)
+                if ( CDTXMania.DTX.listBGA.Count >= 1)
                 {
                     CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
                 }
@@ -930,7 +938,7 @@ namespace DTXMania
                         CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 }
 
-                if ((((this.n移動開始時刻ms != -1L) && (this.rAVI != null)) && (this.rAVI.avi != null)) && (this.bWindowMode) && (CDTXMania.ConfigIni.bAVI有効))
+                if ((((this.n移動開始時刻ms != -1L) && (this.rAVI != null )) && (this.rAVI.avi != null)) && (this.bWindowMode) && (CDTXMania.ConfigIni.bAVI有効) && this.ds背景動画 != null)
                 {
                     this.vector = this.tx描画用.vc拡大縮小倍率;
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
@@ -954,13 +962,21 @@ namespace DTXMania
                         this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
                         if (this.fAVIアスペクト比 > (256f / 266f))
                         {
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
-                            CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, this.position2);
+                            //this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
+                            //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, this.position2);
+                            if (this.ds背景動画.b上下反転)
+                                this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 13, this.position2);
+                            else
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
                         }
                         else
                         {
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 422);
-                            CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 422);
+                            //this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 422);
+                            //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 422);
+                            if (this.ds背景動画.b上下反転)
+                                this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 13, this.position2);
+                            else
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
                         }
                     }
                     #endregion
@@ -989,7 +1005,7 @@ namespace DTXMania
                                     this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 858, this.position2);
                                 else
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
-                                CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
+                                //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
                             }
                             else
                             {
@@ -998,7 +1014,7 @@ namespace DTXMania
                                     this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, this.position2, 168);
                                 else
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
-                                CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 168);
+                                //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 168);
                             }
                         }
                     }
@@ -1008,8 +1024,8 @@ namespace DTXMania
                 }
             }
         Label_0A06:
-            if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
-                this.txlanes.t2D描画(CDTXMania.app.Device, 0, 0);
+            //if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                //this.txlanes.t2D描画(CDTXMania.app.Device, 0, 0);
 
             return 0;
         }
@@ -1085,6 +1101,7 @@ namespace DTXMania
 
         public CAct演奏Dshow actDshow;
 
+        public CDirectShow[] dsBGV;
         public CDirectShow ds背景動画;
 
         private CTexture tx黒幕;
