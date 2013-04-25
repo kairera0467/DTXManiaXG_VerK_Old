@@ -469,7 +469,6 @@ namespace DTXMania
 #endif
 		public int nBGAlpha;
         public int nMovieAlpha;
-        public int nExplosionFrames;
 		public bool bAVI有効;
 		public bool bBGA有効;
 		public bool bBGM音を発声する;
@@ -579,6 +578,8 @@ namespace DTXMania
         public int nJudgeInterval;
         public int nJudgeWidgh;
         public int nJudgeHeight;
+        public int nExplosionFrames;
+        public int nExplosionInterval;
         #endregion
 
         public int	nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
@@ -997,7 +998,6 @@ namespace DTXMania
             this.nJudgeLine = 0;
             this.nShutterInSide = 0;
             this.nShutterOutSide = 0;
-            this.nExplosionFrames = 0;
 			this.nフレーム毎スリープms = -1;			// #xxxxx 2011.11.27 yyagi add
 			this.n非フォーカス時スリープms = 1;			// #23568 2010.11.04 ikanick add
 			this._bGuitar有効 = false;
@@ -1056,6 +1056,9 @@ namespace DTXMania
             this.nJudgeInterval = 30;
             this.nJudgeWidgh = 225;
             this.nJudgeHeight = 135;
+
+            this.nExplosionFrames = 1;
+            this.nExplosionInterval = 50;
 
             this.bAutoAddGage = false;
 			this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
@@ -1778,8 +1781,6 @@ namespace DTXMania
             sw.WriteLine("; 3:タイプD XG3+αの表示がされます。これが俺の求めていたXG3だ!)");
             sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate.Drums);
             sw.WriteLine();
-            sw.WriteLine("ExplosionFlame={0}", (int)this.nExplosionFrames);
-            sw.WriteLine();
             sw.WriteLine("; CLASSIC譜面判別");
             sw.WriteLine("CLASSIC={0}", this.bCLASSIC譜面判別を有効にする ? 1 : 0);
             sw.WriteLine();
@@ -1809,7 +1810,7 @@ namespace DTXMania
             //sw.WriteLine( ";-------------------" );
 			#endregion
             #region[ 画像周り ]
-            sw.WriteLine( ";判定画像のフレーム数" );
+            sw.WriteLine( ";判定画像のコマ数" );
             sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
             sw.WriteLine( ";判定画像の1コマのフレーム数" );
             sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
@@ -1817,6 +1818,10 @@ namespace DTXMania
             sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
             sw.WriteLine( ";判定画像の1コマの高さ" );
             sw.WriteLine( "JudgeHeight={0}", this.nJudgeHeight );
+            sw.WriteLine( ";アタックエフェクトのコマ数" );
+            sw.WriteLine( "ExplosionFrames={0}", (int)this.nExplosionFrames );
+            sw.WriteLine( ";アタックエフェクトの1コマのフレーム数" );
+            sw.WriteLine( "ExplosionInterval={0}", (int)this.nExplosionInterval );
             sw.WriteLine( ";-------------------" );
             #endregion
 			#region [ AutoPlay ]
@@ -2726,10 +2731,6 @@ namespace DTXMania
                                             {
                                                 this.eNamePlate.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eNamePlate.Drums);
                                             }
-                                            else if (str3.Equals("ExplosionFrames"))
-                                            {
-                                                this.nExplosionFrames = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.nExplosionFrames);
-                                            }
                                             else if (str3.Equals("RDPosition"))
                                             {
                                                 this.eRDPosition = (ERDPosition)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eRDPosition);
@@ -2813,6 +2814,14 @@ namespace DTXMania
                                             else if ( str3.Equals( "JudgeHeight" ))
                                             {
                                                 this.nJudgeHeight = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeHeight );
+                                            }
+                                            else if ( str3.Equals( "ExplosionFrames" ))
+                                            {
+                                                this.nExplosionFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nExplosionFrames );
+                                            }
+                                            else if ( str3.Equals( "ExplosionInterval" ))
+                                            {
+                                                this.nExplosionInterval = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nExplosionInterval );
                                             }
 											continue;
 										}
