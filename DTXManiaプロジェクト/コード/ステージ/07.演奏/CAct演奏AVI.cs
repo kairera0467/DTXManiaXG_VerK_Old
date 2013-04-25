@@ -551,7 +551,7 @@ namespace DTXMania
 
             #endregion
 
-                //if (this.b旧企画クリップである == true)
+                if( CDTXMania.DTX.listBGA.Count >= 1)
                 {
                     CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
                 }
@@ -947,12 +947,12 @@ namespace DTXMania
                             if (this.fAVIアスペクト比 > 1.75f)
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
-                                CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
+                                //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
                             }
                             else
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
-                                CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 168);
+                                //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 168);
                             }
                         }
                     }
