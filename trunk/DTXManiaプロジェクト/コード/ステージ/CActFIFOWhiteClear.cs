@@ -64,7 +64,7 @@ namespace DTXMania
         {
             this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), CDTXMania.app.WindowHandle, false);
             if(this.ds背景動画 != null)
-                Trace.TraceInformation("DShow動画を生成しました。");
+                Trace.TraceInformation("StageClear動画をDirectShowで生成しました。");
             base.On活性化();
         }
 		public override void On非活性化()

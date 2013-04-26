@@ -134,6 +134,14 @@ namespace DTXMania
         public CCounter ctコンボ;
         public CCounter ctComboBom;
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ST爆発
+        {
+            public bool b使用中;
+            public CCounter ct進行;
+        }
+        public ST爆発[] st爆発 = new ST爆発[2];
+
 		// 内部クラス
 
 		protected class CSTATUS
@@ -206,6 +214,7 @@ namespace DTXMania
 
 
 		// メソッド
+
         protected virtual void tコンボ表示・ドラム(int nCombo値, int nジャンプインデックス)
         {
             this.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, 1122, 132);
@@ -300,11 +309,11 @@ namespace DTXMania
                 y += this.nジャンプ差分値[nJump];
             }
 
-            if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 4 == 0 )
+            if ( (CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 4) != 0 )
             {
-                y動作差分 = 4;
+                y動作差分 = 2;
             }
-            else if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 15 == 1 )
+            else if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 15 != 1.0 )
             {
                 y動作差分 = 8;
             }
