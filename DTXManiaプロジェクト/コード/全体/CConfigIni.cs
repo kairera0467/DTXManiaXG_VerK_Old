@@ -499,6 +499,7 @@ namespace DTXMania
         public bool b縮小文字のアンチエイリアスを有効にする;
 		public bool b選曲リストフォントを斜体にする;
 		public bool b選曲リストフォントを太字にする;
+        public bool bDirectShowMode;
 		public bool b全画面モード;
         public int n初期ウィンドウ開始位置X; // #30675 2013.02.04 ikanick add
 	    public int n初期ウィンドウ開始位置Y;
@@ -991,6 +992,7 @@ namespace DTXMania
             this.b縮小文字のアンチエイリアスを有効にする = false;
             this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
             this.n初期ウィンドウ開始位置Y = 0;
+            this.bDirectShowMode = false;
 			this.nウインドウwidth = SampleFramework.GameWindowSize.Width;			// #23510 2010.10.31 yyagi add
 			this.nウインドウheight = SampleFramework.GameWindowSize.Height;			// 
             this.nMovieMode = 1;
@@ -1401,6 +1403,9 @@ namespace DTXMania
             #endregion
             sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
             sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine("; DirectShowでのワイドクリップ再生 (0:OFF, 1:ON)");
+            sw.WriteLine( "DirectShowMode={0}", this.bDirectShowMode ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; 選曲画面の難易度表示をXG表示にする (0:OFF, 1:ON)");
             sw.WriteLine("Difficlty={0}", this.b難易度表示をXG表示にする ? 1 : 0);
@@ -2308,6 +2313,10 @@ namespace DTXMania
                                             else if (str3.Equals("Antialias"))
                                             {
                                                 this.b縮小文字のアンチエイリアスを有効にする = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("DirectShowMode"))
+                                            {
+                                                this.bDirectShowMode = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("Difficlty"))
                                             {

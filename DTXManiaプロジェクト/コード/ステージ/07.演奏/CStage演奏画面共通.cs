@@ -648,6 +648,7 @@ namespace DTXMania
         protected volatile Queue<stmixer> queueMixerSound; // #24820 2013.1.21 yyagi まずは単純にAdd/Removeを1個のキューでまとめて管理するやり方で設計する
         protected DateTime dtLastQueueOperation; //
         protected bool bIsDirectSound; //
+        protected double db再生速度;
 	
 		protected STDGBVALUE<Queue<CDTX.CChip>> queWailing;
 		protected STDGBVALUE<CDTX.CChip> r現在の歓声Chip;
@@ -1963,9 +1964,9 @@ namespace DTXMania
                 if ((keyboard.bキーが押されている(0x3c)))
                 {
                     //SHIFT & F7
-                    CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
-                    CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
-                    CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
+                    //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
+                    //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                    //CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
                     
                 }
                 if ( keyboard.bキーが押された(0x3d))
@@ -2184,7 +2185,7 @@ namespace DTXMania
                             {
                                 if (configIni.bAVI有効)
                                 {
-                                    this.actAVI.Start(0x54, pChip.rAVI, 1280, 720, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms);
+                                    this.actAVI.Start(0x54, pChip.rAVI, pChip.rDShow, 1280, 720, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms);
                                 }
                             }
                         }
@@ -2397,19 +2398,17 @@ namespace DTXMania
                                     case EAVI種別.AVI:
                                         if (pChip.rAVI != null)
                                         {
-                                            this.actAVI.Start(pChip.nチャンネル番号, pChip.rAVI, 278, 355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms);
+                                            this.actAVI.Start(pChip.nチャンネル番号, pChip.rAVI, pChip.rDShow, 278, 355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms);
                                         }
                                         break;
 
                                     case EAVI種別.AVIPAN:
                                         if (pChip.rAVIPan != null)
                                         {
-                                            this.actAVI.Start(pChip.nチャンネル番号, pChip.rAVI, pChip.rAVIPan.sz開始サイズ.Width, pChip.rAVIPan.sz開始サイズ.Height, pChip.rAVIPan.sz終了サイズ.Width, pChip.rAVIPan.sz終了サイズ.Height, pChip.rAVIPan.pt動画側開始位置.X, pChip.rAVIPan.pt動画側開始位置.Y, pChip.rAVIPan.pt動画側終了位置.X, pChip.rAVIPan.pt動画側終了位置.Y, pChip.rAVIPan.pt表示側開始位置.X, pChip.rAVIPan.pt表示側開始位置.Y, pChip.rAVIPan.pt表示側終了位置.X, pChip.rAVIPan.pt表示側終了位置.Y, pChip.n総移動時間, pChip.n発声時刻ms);
+                                            this.actAVI.Start(pChip.nチャンネル番号, pChip.rAVI, pChip.rDShow, pChip.rAVIPan.sz開始サイズ.Width, pChip.rAVIPan.sz開始サイズ.Height, pChip.rAVIPan.sz終了サイズ.Width, pChip.rAVIPan.sz終了サイズ.Height, pChip.rAVIPan.pt動画側開始位置.X, pChip.rAVIPan.pt動画側開始位置.Y, pChip.rAVIPan.pt動画側終了位置.X, pChip.rAVIPan.pt動画側終了位置.Y, pChip.rAVIPan.pt表示側開始位置.X, pChip.rAVIPan.pt表示側開始位置.Y, pChip.rAVIPan.pt表示側終了位置.X, pChip.rAVIPan.pt表示側終了位置.Y, pChip.n総移動時間, pChip.n発声時刻ms);
                                         }
                                         break;
                                 }
-                                Trace.TraceInformation("pChip.rAVI({0})", new object[] { pChip.rAVI });
-                                Trace.TraceInformation("pChip.rAVI({0})", new object[] { pChip.rAVIPan });
                             }
                         }
 						break;

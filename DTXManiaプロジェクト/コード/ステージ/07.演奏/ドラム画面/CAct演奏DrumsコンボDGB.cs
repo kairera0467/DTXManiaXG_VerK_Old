@@ -12,10 +12,32 @@ namespace DTXMania
 		// CAct演奏Combo共通 実装
         public override void On活性化()
         {
-            this.ctComboBom = new CCounter(0, 13, 20, CDTXMania.Timer);
             base.On活性化();
         }
-        
+
+        public void Start()
+        {
+            for (int j = 0; j < 1; j++)
+            {
+                if (this.st爆発[j].b使用中)
+                {
+                    this.st爆発[j].ct進行.t停止();
+                    this.st爆発[j].b使用中 = false;
+                }
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 1; j++)
+                {
+                    if (!this.st爆発[j].b使用中)
+                    {
+                        this.st爆発[j].b使用中 = true;
+                        this.st爆発[j].ct進行 = new CCounter(0, 13, 20, CDTXMania.Timer);
+                        break;
+                    }
+                }
+            }
+        }
 
 		protected override void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス )
 		{
@@ -42,13 +64,13 @@ namespace DTXMania
 		}
 		protected override void tコンボ表示・ドラム( int nCombo値, int nジャンプインデックス )
 		{
-            this.ctComboBom.t進行();
 			base.tコンボ表示・ドラム( nCombo値, nジャンプインデックス );
 
             if (nCombo値 % 100 == 0)
-                this.ctComboBom.n現在の値 = 0;
+            {
+                this.Start();
+            }
 
-            int num1 = this.ctComboBom.n現在の値;
             int x;
             int y = (CDTXMania.ConfigIni.bReverse.Drums ? 440 : -80 );
             switch (CDTXMania.ConfigIni.ドラムコンボ文字の表示位置)
@@ -66,11 +88,27 @@ namespace DTXMania
                     x = 1300;
                     break;
             }
-
             if (nCombo値 >= 100)
             {
-                this.txComboBom.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, (340 * num1), 360, 340));
+                for (int i = 0; i < 1; i++)
+                {
+                    if (this.st爆発[i].b使用中)
+                    {
+                        int num1 = this.st爆発[i].ct進行.n現在の値;
+                        this.st爆発[i].ct進行.t進行();
+                        if (this.st爆発[i].ct進行.b終了値に達した)
+                        {
+                            this.st爆発[i].ct進行.t停止();
+                            this.st爆発[i].b使用中 = false;
+                        }
+                        if (this.txComboBom != null)
+                        {
+                            this.txComboBom.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, (340 * num1), 360, 340));
+                        }
+                    }
+                }
             }
+
 		}
 		protected override void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{
