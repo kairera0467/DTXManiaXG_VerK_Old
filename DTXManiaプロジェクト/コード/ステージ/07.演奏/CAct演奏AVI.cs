@@ -526,7 +526,6 @@ namespace DTXMania
                         }
                         if (this.bFullScreen)
                         {
-
                             if (fAVIアスペクト比 > 1.77f)       //変更
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
@@ -556,12 +555,6 @@ namespace DTXMania
                                     this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, this.position, y);
                                 else
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, x, y);
-                                if (this.tx描画用2 != null)
-                                {
-                                    //this.tx描画用2.t2D描画(CDTXMania.app.Device, this.position, 0);
-                                    //this.tx描画用2.t2D描画(CDTXMania.app.Device, 0, this.position);
-                                }
-
                             }
                             else
                             {

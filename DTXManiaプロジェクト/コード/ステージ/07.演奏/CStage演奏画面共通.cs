@@ -298,36 +298,36 @@ namespace DTXMania
             queueMixerSound = new Queue<stmixer>(64);
             bIsDirectSound = (CDTXMania.Sound管理.GetCurrentSoundDeviceType() == "DirectSound");
 
-            #region [ 演奏開始前にmixer登録しておくべきサウンド(開幕してすぐに鳴らすことになるチップ音)を登録しておく ]
-            foreach (CDTX.CChip pChip in listChip)
-            {
-                //				Debug.WriteLine( "CH=" + pChip.nチャンネル番号.ToString( "x2" ) + ", 整数値=" + pChip.n整数値 +  ", time=" + pChip.n発声時刻ms );
-                if (pChip.n発声時刻ms <= 0)
-                {
-                    if (pChip.nチャンネル番号 == 0xDA)
-                    {
-                        pChip.bHit = true;
-                        //						Debug.WriteLine( "first [DA] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値 + ", time=" + pChip.n発声時刻ms );
-                        if (listWAV.ContainsKey(pChip.n整数値・内部番号)) // 参照が遠いので後日最適化する
-                        {
-                            CDTX.CWAV wc = listWAV[pChip.n整数値・内部番号];
-                            for (int i = 0; i < nPolyphonicSounds; i++)
-                            {
-                                if (wc.rSound[i] != null)
-                                {
-                                    CDTXMania.Sound管理.AddMixer(wc.rSound[i]);
-                                    //AddMixer( wc.rSound[ i ] ); // 最初はqueueを介さず直接ミキサー登録する
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-            #endregion
+			#region [ 演奏開始前にmixer登録しておくべきサウンド(開幕してすぐに鳴らすことになるチップ音)を登録しておく ]
+			foreach ( CDTX.CChip pChip in listChip )
+			{
+//				Debug.WriteLine( "CH=" + pChip.nチャンネル番号.ToString( "x2" ) + ", 整数値=" + pChip.n整数値 +  ", time=" + pChip.n発声時刻ms );
+				if ( pChip.n発声時刻ms <= 0 )
+				{
+					if ( pChip.nチャンネル番号 == 0xDA )
+					{
+						pChip.bHit = true;
+//						Debug.WriteLine( "first [DA] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値 + ", time=" + pChip.n発声時刻ms );
+						if ( listWAV.ContainsKey( pChip.n整数値・内部番号 ) )
+						{
+							CDTX.CWAV wc = listWAV[ pChip.n整数値・内部番号 ];
+							for ( int i = 0; i < nPolyphonicSounds; i++ )
+							{
+								if ( wc.rSound[ i ] != null )
+								{
+									CDTXMania.Sound管理.AddMixer( wc.rSound[ i ], db再生速度 );
+									//AddMixer( wc.rSound[ i ] );		// 最初はqueueを介さず直接ミキサー登録する
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+			#endregion
 			if ( CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.24 yyagi Gt/Bsの譜面情報入れ替え
 			{
 				CDTXMania.DTX.SwapGuitarBassInfos();
@@ -1067,23 +1067,6 @@ namespace DTXMania
                                     break;
                             }
 
-#if 封印
-                            if (index == 0 || index == 7 || index == 0x20 || index == 0x27)			// #23921 HOまたは不可視HO演奏時はそのチップ番号をストックしておく
-                            {																			// #24772 HC, 不可視HCも消音キューに追加
-                                if (this.L最後に再生したHHの実WAV番号.Count >= 16)	// #23921 ただしストック数が16以上になるようなら、頭の1個を削って常に16未満に抑える
-                                {													// (ストックが増えてList<>のrealloc()が発生するのを予防する)
-                                    this.L最後に再生したHHの実WAV番号.RemoveAt(0);
-                                }
-                                if (!this.L最後に再生したHHの実WAV番号.Contains(pChip.n整数値・内部番号))	// チップ音がまだストックされてなければ
-                                {
-                                    this.L最後に再生したHHの実WAV番号.Add(pChip.n整数値・内部番号);			// ストックする
-                                }
-                            }
-                            if (overwrite)
-                            {
-                                CDTXMania.DTX.tWavの再生停止(this.n最後に再生した実WAV番号[index]);
-                            }
-#endif
                             CDTXMania.DTX.tチップの再生(pChip, n再生開始システム時刻ms, nLane, n音量, bモニタ);
                             this.n最後に再生した実WAV番号[nLane] = pChip.n整数値・内部番号;		// nLaneでなくindexにすると、LC(1A-11=09)とギター(enumで09)がかぶってLC音が消されるので注意
                             return;

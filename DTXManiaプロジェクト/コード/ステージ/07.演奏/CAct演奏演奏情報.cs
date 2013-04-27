@@ -83,6 +83,7 @@ namespace DTXMania
                 }
                 else if (CDTXMania.ConfigIni.nInfoType == 1 && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
                 {
+                    /*
                     y += 0x153;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Shutter OUT:   {0:####0}", CDTXMania.stage演奏ドラム画面.nShutterOutPosY));
                     y -= 0x10;
@@ -102,6 +103,7 @@ namespace DTXMania
                     y -= 0x10;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("PREFECT:       {0:###0}", this.nPERFECT数));
                     y -= 0x10;
+                    */
                 }
 			}
 		}

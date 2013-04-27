@@ -183,8 +183,24 @@ namespace DTXMania
                 }
 
                 this.t小文字表示(1170, 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
-                this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 200, new Rectangle(336, 0, 162, 60));
-                this.t小文字表示(1150, 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                if (CDTXMania.ConfigIni.nInfoType == 0)
+                {
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 200, new Rectangle(336, 0, 162, 60));
+                    this.t小文字表示(1150, 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                }
+                else if (CDTXMania.ConfigIni.nInfoType == 1)
+                {
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 200, new Rectangle(336, 205, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 280, new Rectangle(336, 265, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 360, new Rectangle(336, 325, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 440, new Rectangle(336, 385, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 520, new Rectangle(336, 445, 162, 60));
+                    this.t小文字表示(1150, 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect));
+                    this.t小文字表示(1150, 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great));
+                    this.t小文字表示(1150, 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good));
+                    this.t小文字表示(1150, 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor));
+                    this.t小文字表示(1150, 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss));
+                }
 
                 // 基準線
                 rectangle = new Rectangle(78, 0, 60, 3);
