@@ -253,7 +253,7 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iSystemAutoResultCapture );
 
             this.iAutoAddGage = new CItemToggle("AutoAddGage", CDTXMania.ConfigIni.bAutoAddGage,
-                "AUTO判定でのゲージ加算の有無\n" +
+                "AUTO判定でのゲージ加算の有無:\n" +
                 "ONの場合、AUTO判定もゲージに加算\n" +
                 "されます。",
                 "If ON, will be added to the judgment also gauge AUTO.\n" +
@@ -489,7 +489,7 @@ namespace DTXMania
 				"(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iDrumsScrollSpeed );
 
-            #region[旧HIDSUD、DARK]
+            #region[旧HIDSUD]
             /*
 			this.iDrumsSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Drums,
 				"ドラムチップが譜面の下の方から表\n" +
