@@ -23,7 +23,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public static readonly string VERSION = "Ver2.41(130417)";
+		public static readonly string VERSION = "Ver2.42(130427)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -500,19 +500,20 @@ namespace DTXMania
 				Directory.SetCurrentDirectory( st.strプラグインフォルダ );
 				st.plugin.OnUnmanagedリソースの作成();
 				Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
-			}
+            }
 
+            #region[ クレジット表記 ]
             if (ConfigIni.クレジットを表示する == true)
             {
                 this.ftDeclaration = new System.Drawing.Font("Arial", 13f, FontStyle.Regular, GraphicsUnit.Pixel);
                 Bitmap image = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(image);
                 graphics.PageUnit = GraphicsUnit.Pixel;
-                int width = (int)graphics.MeasureString("DTXManiaXG(verK) ver 2.40     based on DTXMania", this.ftDeclaration).Width;
+                int width = (int)graphics.MeasureString("DTXManiaXG(verK) ver 2.42     based on DTXMania", this.ftDeclaration).Width;
                 graphics.Dispose();
                 Bitmap bitmap2 = new Bitmap(width, this.ftDeclaration.Height);
                 graphics = Graphics.FromImage(bitmap2);
-                graphics.DrawString("DTXManiaXG(verK) ver 2.40     based on DTXMania", this.ftDeclaration, Brushes.White, (float)0f, (float)0f);
+                graphics.DrawString("DTXManiaXG(verK) ver 2.42     based on DTXMania", this.ftDeclaration, Brushes.White, (float)0f, (float)0f);
                 graphics.Dispose();
                 this.txCredit = new CTexture(app.Device, bitmap2, TextureFormat);
                 bitmap2.Dispose();
@@ -527,8 +528,8 @@ namespace DTXMania
                 this.txDeclaration = new CTexture(app.Device, bitmap2, TextureFormat);
                 bitmap2.Dispose();
             }
-
-		}
+            #endregion
+        }
 		protected override void UnloadContent()
 		{
 			if( this.listトップレベルActivities != null )

@@ -590,7 +590,7 @@ namespace DTXMania
 
             #endregion
 
-                if ( CDTXMania.DTX.listBGA.Count >= 1)
+                if ( CDTXMania.DTX.listBMP.Count >= 1 && CDTXMania.ConfigIni.bBGA有効 == true)
                 {
                     CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
                 }
@@ -1054,7 +1054,7 @@ namespace DTXMania
                 {
                     if (bToggle == false)
                     {
-                        if(this.dsBGV.dshow != null)
+                        if(this.dsBGV != null)
                             this.dsBGV.dshow.t再生一時停止();
                         if (this.ds汎用 != null)
                             this.ds汎用.t再生一時停止();
@@ -1062,7 +1062,7 @@ namespace DTXMania
                     }
                     else if(bToggle == true)
                     {
-                        if(this.dsBGV.dshow != null)
+                        if(this.dsBGV != null)
                             this.dsBGV.dshow.t再生開始();
                         if (this.ds汎用 != null)
                             this.ds汎用.t再生開始();
