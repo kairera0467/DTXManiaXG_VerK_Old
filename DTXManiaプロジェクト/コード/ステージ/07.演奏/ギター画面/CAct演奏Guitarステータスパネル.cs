@@ -30,19 +30,34 @@ namespace DTXMania
                 this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
                 this.strGroupName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
 
-                this.bNamePlateL = new Bitmap(0x170, 0x103);
-                graphics = Graphics.FromImage(this.bNamePlateL);
+                //ギターベースの有無を判断する仕様を考えて、生成などは分けておく。
+
+                #region[ ギターNamePlate ]
+                this.iNamePlateGt = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar.png"));
+                Graphics gNamePlateGt = Graphics.FromImage(this.b4font);
+                this.bNamePlateL = new Bitmap(250, 266);
+                gNamePlateGt = Graphics.FromImage(this.bNamePlateL);
+                gNamePlateGt.Dispose();
+                gNamePlateGt = Graphics.FromImage(this.bNamePlateL);
+                gNamePlateGt.DrawImage(this.iNamePlateGt, 0, 0, 250, 266);
+                gNamePlateGt.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)48f, (float)57f);
+
+                gNamePlateGt.Dispose();
+                this.iNamePlateGt.Dispose();
+                #endregion
 
                 this.iSongPanel = Image.FromFile(CSkin.Path(@"Graphics\7_songpanel.png"));
                 Graphics gSongPanel = Graphics.FromImage(this.b4font);
                 this.strPanelString = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
                 this.bSongPanel = new Bitmap(250, 112);
+
                 gSongPanel.Dispose();
                 gSongPanel = Graphics.FromImage(this.bSongPanel);
                 gSongPanel.DrawImage(this.iSongPanel, 0, 0, 250, 112);
                 gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)16f, (float)78f);
 
-				this.tx左パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_nameplate_Guitar.png" ) );
+				//this.tx左パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_nameplate_Guitar.png" ) );
+                this.tx左パネル = new CTexture(CDTXMania.app.Device, this.bNamePlateL, CDTXMania.TextureFormat, false);
 				this.tx右パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay status panels right.png" ) );
                 //this.tx曲名パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_songpanel.png"));
                 this.tx曲名パネル = new CTexture(CDTXMania.app.Device, this.bSongPanel, CDTXMania.TextureFormat, false);
@@ -140,7 +155,8 @@ namespace DTXMania
         //private Image iAlbum;
         //private Image iDrumspeed;
         //private Image iRisky;
-        //private Image iNamePlate;
+        private Image iNamePlateGt;
+        //private Image iNamePlateBs;
         private Image iSongPanel;
         //private Image iDifficulty;
         //private Image iScore;

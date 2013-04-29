@@ -42,39 +42,39 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_score numbers.png"));
+                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Difficulty_XG.png"));
+                    this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Difficulty_XG.png"));
                 }
                 else
                 {
-                    this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Difficulty.png"));
+                    this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Difficulty.png"));
                 }
                 this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 #region[ ネームプレート本体 ]
                 this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
                 {
-                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate.png"));
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate.png"));
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                     {
                         if (this.iNamePlate != null)
-                        this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_cls.png"));
+                        this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_cls.png"));
                     }
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_XG.png"));
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_XG.png"));
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                     {
-                        this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\\7_nameplate_XG_cls.png"));
+                        this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_XG_cls.png"));
                     }
                 }
                 #endregion
-                this.iDrumspeed = Image.FromFile(CSkin.Path(@"Graphics\\7_panel_icons.jpg"));
-                this.iRisky = Image.FromFile(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"));
-                this.iScore = Image.FromFile(CSkin.Path(@"Graphics\\ScreenPlay score numbers.png"));
+                this.iDrumspeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
+                this.iRisky = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons2.jpg"));
+                this.iScore = Image.FromFile(CSkin.Path(@"Graphics\ScreenPlay score numbers.png"));
                 this.b4font = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.b4font);
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -135,7 +135,7 @@ namespace DTXMania
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.LightYellow,             Color.FromArgb(255, 245, 201), LinearGradientMode.Vertical );
                         break;
                     case 12:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 216, 0),   Color.FromArgb(255, 238, 153), LinearGradientMode.Vertical );
+                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 216, 0),   Color.FromArgb(255, 238, 182), LinearGradientMode.Horizontal );
                         break;
                     case 13:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(0, 255, 33),    Color.FromArgb(153, 255, 164), LinearGradientMode.Vertical);

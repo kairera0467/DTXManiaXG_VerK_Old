@@ -1054,10 +1054,10 @@ namespace DTXMania
             this.bLaneFlush = new STDGBVALUE<bool>();
             this.bLaneFlush.Drums = true;
 
-            this.nJudgeFrames = 12;
-            this.nJudgeInterval = 30;
-            this.nJudgeWidgh = 225;
-            this.nJudgeHeight = 135;
+            this.nJudgeFrames = 24;
+            this.nJudgeInterval = 14;
+            this.nJudgeWidgh = 250;
+            this.nJudgeHeight = 170;
 
             this.nExplosionFrames = 1;
             this.nExplosionInterval = 50;

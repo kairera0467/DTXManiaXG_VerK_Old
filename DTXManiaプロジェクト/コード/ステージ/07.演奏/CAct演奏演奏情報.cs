@@ -81,7 +81,7 @@ namespace DTXMania
                     */
                     
                 }
-                else if (CDTXMania.ConfigIni.nInfoType == 1 && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
+                else if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
                     /*
                     y += 0x153;
