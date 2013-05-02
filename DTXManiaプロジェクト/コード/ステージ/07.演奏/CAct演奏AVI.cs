@@ -538,7 +538,7 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && (this.n総移動時間ms != -1) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
                         if (this.bFullScreen)
                         {
@@ -1143,7 +1143,6 @@ namespace DTXMania
         private int position;
         private int position2;
         private CDTX.CAVI rAVI;
-        private CDTX.CAVI rAVI汎用;
         private CDirectShow ds汎用;
 
         public CAct演奏Dshow actDshow;

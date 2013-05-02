@@ -132,7 +132,6 @@ namespace DTXMania
         protected CTexture txComboBom;
         public float nUnitTime;
         public CCounter ctコンボ;
-        public CCounter ctComboBom;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct ST爆発

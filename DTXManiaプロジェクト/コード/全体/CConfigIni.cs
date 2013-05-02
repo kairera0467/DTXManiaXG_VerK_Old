@@ -581,6 +581,8 @@ namespace DTXMania
         public int nJudgeHeight;
         public int nExplosionFrames;
         public int nExplosionInterval;
+        public int nExplosionWidgh;
+        public int nExplosionHeight;
         #endregion
 
         public int	nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
@@ -1061,6 +1063,8 @@ namespace DTXMania
 
             this.nExplosionFrames = 1;
             this.nExplosionInterval = 50;
+            this.nExplosionWidgh = 0;
+            this.nExplosionHeight = 0;
 
             this.bAutoAddGage = false;
 			this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
@@ -1827,6 +1831,10 @@ namespace DTXMania
             sw.WriteLine( "ExplosionFrames={0}", (int)this.nExplosionFrames );
             sw.WriteLine( ";アタックエフェクトの1コマのフレーム数" );
             sw.WriteLine( "ExplosionInterval={0}", (int)this.nExplosionInterval );
+            sw.WriteLine( ";アタックエフェクトの1コマの幅" );
+            sw.WriteLine( "ExplosionWidgh={0}", this.nExplosionWidgh );
+            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
+            sw.WriteLine( "ExplosionHeight={0}", this.nExplosionHeight );
             sw.WriteLine( ";-------------------" );
             #endregion
 			#region [ AutoPlay ]
@@ -2831,6 +2839,14 @@ namespace DTXMania
                                             else if ( str3.Equals( "ExplosionInterval" ))
                                             {
                                                 this.nExplosionInterval = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nExplosionInterval );
+                                            }
+                                            else if ( str3.Equals( "ExplosionWidgh" ))
+                                            {
+                                                this.nExplosionWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)this.nExplosionWidgh);
+                                            }
+                                            else if ( str3.Equals( "ExplosionHeight" ))
+                                            {
+                                                this.nExplosionHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)this.nExplosionHeight);
                                             }
 											continue;
 										}

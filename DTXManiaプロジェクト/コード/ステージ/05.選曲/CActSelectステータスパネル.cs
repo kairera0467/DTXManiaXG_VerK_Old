@@ -314,18 +314,18 @@ namespace DTXMania
                             }
                             if(CDTXMania.ConfigIni.b難易度表示をXG表示にする == true)
                             {
-                                if (nLevel < 100)
+                                if (this.n現在選択中の曲のレベル[i] < 100)
                                 {
                                     dbLevel = this.n現在選択中の曲のレベル[i] / 10;
                                     rect百の位 = this.rc数字[ (int)dbLevel ];
                                     rect十の位 = this.rc数字[ nLevel % 10  ];
                                     rect一の位 = this.rc数字[ nLevel / 100 ];
                                 }
-                                else if (nLevel > 100)
+                                else if (this.n現在選択中の曲のレベル[i] > 100)
                                 {
-                                    rect百の位 = this.rc数字[ nLevel / 100 ];
-                                    rect十の位 = this.rc数字[ ((nLevel / 10) - ((nLevel / 100) * 10)) ];
-                                    rect一の位 = this.rc数字[ (nLevel % 10) ];
+                                    rect百の位 = this.rc数字[ nLevel / 10 ];
+                                    rect十の位 = this.rc数字[ (nLevel % 10) ];
+                                    rect一の位 = this.rc数字[ this.n現在選択中の曲のレベル[i] - (nLevel * 10)];
                                 }
                             }
 						}

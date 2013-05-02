@@ -2391,7 +2391,6 @@ namespace DTXMania
         private CItemToggle iBassJudgeLineDisp;
         private CItemToggle iBassLaneFlush;
 
-		private CItemList iCommonDark;
 		private CItemInteger iCommonPlaySpeed;
 //		private CItemBase iCommonReturnToMenu;
 

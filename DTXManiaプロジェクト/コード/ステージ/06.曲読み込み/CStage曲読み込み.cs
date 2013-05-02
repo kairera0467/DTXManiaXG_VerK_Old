@@ -476,6 +476,17 @@ namespace DTXMania
             double DTXLevel = cdtx.LEVEL.Drums / 10;
             double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL.Drums);
 
+            if (cdtx.LEVEL.Drums > 100)
+            {
+                DTXLevel = cdtx.LEVEL.Drums / 100;
+                DTXLevelDeci = (cdtx.LEVEL.Drums - (DTXLevel * 100));
+            }
+            else
+            {
+                DTXLevel = cdtx.LEVEL.Drums / 10;
+                DTXLevelDeci = ( cdtx.LEVEL.Drums - DTXLevel * 10 );
+            }
+
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
             {
             }
@@ -491,8 +502,15 @@ namespace DTXMania
                 {
                     this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
                     this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
-                    this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
+                    if (cdtx.LEVEL.Drums > 100)
+                    {
+                        this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
+                    }
+                    else
+                    {
+                        this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
+                    }
                 }
             }
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
@@ -819,7 +837,7 @@ namespace DTXMania
                         break;
                     }
                 }
-                x += 0;
+                x += 12;
             }
         }
         private void t大文字表示(int x, int y, string str)
