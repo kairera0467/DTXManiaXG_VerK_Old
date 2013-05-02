@@ -125,7 +125,14 @@ namespace DTXMania
 			{
 				if ( !bRisky)
 				{
-					this.db現在のゲージ値[ i ] = GAUGE_INITIAL;
+                    if (CDTXMania.ConfigIni.nSkillMode == 0)
+                    {
+                        this.db現在のゲージ値[i] = GAUGE_INITIAL;
+                    }
+                    else
+                    {
+                        this.db現在のゲージ値[i] = 0.71;
+                    }
 				}
 				else if ( nRiskyTimes_InitialVal == 1 )
 				{
@@ -144,11 +151,10 @@ namespace DTXMania
 		// ----------------------------------
 		public float[ , ] fDamageGaugeDelta = {			// #23625 2011.1.10 ickw_284: tuned damage/recover factors
 			// drums,   guitar,  bass
-			{  0.0054f,  0.006f,  0.006f  },
-			{  0.003f,  0.003f,  0.003f  },
+			{  0.004f, 0.006f,  0.006f  },
+			{  0.002f,  0.003f,  0.003f  },
 			{  0.000f,  0.000f,  0.000f  },
 			{ -0.020f, -0.030f,	-0.030f  },
-            //{  0.000f,  0.000f,  0.000f  },
 			{ -0.050f, -0.050f, -0.050f  }
 		};
 		public float[] fDamageLevelFactor = {
@@ -165,10 +171,24 @@ namespace DTXMania
 #if true	// DAMAGELEVELTUNING
 			switch ( e今回の判定 )
 			{
-				case E判定.Perfect:
-                    fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
+                case E判定.Perfect:
+                    {
+                        if (CDTXMania.ConfigIni.nSkillMode == 0)
+                        {
+                            this.fDamageGaugeDelta[ 0, 0 ] = 0.004f;
+                            this.fDamageGaugeDelta[ 1, 0 ] = 0.002f;
+                        }
+                        else if (CDTXMania.ConfigIni.nSkillMode == 1)
+                        {
+                            this.fDamageGaugeDelta[ 0, 0 ] =  0.0025f;
+                            this.fDamageGaugeDelta[ 1, 0 ] =  0.001f;
+                            this.fDamageGaugeDelta[ 4, 0 ] = -0.040f;
+                        }
 
-                    break;
+                        fDamage = bRisky ? 0 : fDamageGaugeDelta[(int)e今回の判定, (int)part];
+
+                        break;
+                    }
 				case E判定.Great:
                     fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
                     if (bHAZARD)

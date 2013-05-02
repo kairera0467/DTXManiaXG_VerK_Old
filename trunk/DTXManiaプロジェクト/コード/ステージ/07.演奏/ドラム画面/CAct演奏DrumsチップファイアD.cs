@@ -124,7 +124,7 @@ namespace DTXMania
             {
                 for (int i = 0; i < 1; i++)
                 {
-                    for (int j = 0; j < 40; j++)
+                    for (int j = 0; j < 20; j++)
                     {
                         if (!this.st飛び散るチップ[j].b使用中)
                         {
@@ -133,10 +133,11 @@ namespace DTXMania
                             double num7 = 0.9 + (1 / 100.0); // 拡散の大きさ
                             this.st飛び散るチップ[j].nLane = (int)lane;
                             this.st飛び散るチップ[j].ct進行 = new CCounter(0, 40, 10, CDTXMania.Timer); // カウンタ
-                            this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標[(int)lane] + 312; //X座標
-                            this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標[(int)lane] + 312; //X座標
+
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                             {
+                                this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標[(int)lane] + this.nノーツの幅[(int)lane] + 312; //X座標
+                                this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標[(int)lane] + this.nノーツの幅[(int)lane] + 312; //X座標
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
                                     this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標_改[(int)lane] + this.nノーツの幅[(int)lane] + 312;
