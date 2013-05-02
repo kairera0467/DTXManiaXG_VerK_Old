@@ -1414,7 +1414,7 @@ namespace DTXMania
             }
             return (int)ERANK.E;
         }
-        internal static double tゲーム型スキルを計算して返す(int nLevel, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        internal static double tゲーム型スキルを計算して返す(double dbLevel, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
         {
             //こちらはプレイヤースキル・全曲スキルに加算される得点。いわゆる曲別スキル。
             double dbPERFECT率 = (100.0 * nPerfect / nTotal);
@@ -1426,7 +1426,16 @@ namespace DTXMania
             if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
                 ret = 0.0;
 
-            ret = ((dbRate * (nLevel / 10.0) * 0.2));
+            if (dbLevel > 100)
+            {
+                dbLevel = dbLevel / 100.0;
+            }
+            else if (dbLevel < 100)
+            {
+                dbLevel = dbLevel / 10.0;
+            }
+
+            ret = ((dbRate * dbLevel * 0.2));
             ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
             if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
             {
@@ -1519,13 +1528,18 @@ namespace DTXMania
             }
             return (int)ERANK.E;
         }
-        internal static double t旧ゲーム型スキルを計算して返す(int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        internal static double t旧ゲーム型スキルを計算して返す(double dbLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
         {
             double ret;
             if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
                 ret = 0.0;
 
-            ret = ((nLevel * ((nPerfect * 0.8 + nCombo * 0.2) / ((double)nTotal))) / 2.0);
+            if (dbLevel >= 100)
+            {
+                dbLevel = dbLevel / 10;
+            }
+
+            ret = ((dbLevel * ((nPerfect * 0.8 + nCombo * 0.2) / ((double)nTotal))) / 2.0);
             ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
             if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
             {

@@ -130,9 +130,9 @@ namespace DTXMania
                         {
                             this.st飛び散るチップ[j].b使用中 = true;
                             int n回転初期値 = 1;
-                            double num7 = 0.8 + (1 / 100.0); // 拡散の大きさ
+                            double num7 = 0.9 + (1 / 100.0); // 拡散の大きさ
                             this.st飛び散るチップ[j].nLane = (int)lane;
-                            this.st飛び散るチップ[j].ct進行 = new CCounter(0, 60, 8, CDTXMania.Timer); // カウンタ
+                            this.st飛び散るチップ[j].ct進行 = new CCounter(0, 40, 10, CDTXMania.Timer); // カウンタ
                             this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標[(int)lane] + 312; //X座標
                             this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標[(int)lane] + 312; //X座標
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
@@ -158,16 +158,43 @@ namespace DTXMania
                             {
                                 this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標C[(int)lane] + this.nノーツの幅[(int)lane] + 312;
                                 this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標C[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                {
+                                    this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標C_改[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                    this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標C_改[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                }
+                            }
+                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            {
+                                this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標D[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標D[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                {
+                                    this.st飛び散るチップ[j].fXL = this.nレーンの中央X座標D_改[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                    this.st飛び散るチップ[j].fXR = this.nレーンの中央X座標D_改[(int)lane] + this.nノーツの幅[(int)lane] + 312;
+                                }
                             }
                             this.st飛び散るチップ[j].fY = ((((float)this.iPosY) + 359 + (((float)Math.Sin((double)this.st青い星[j].f半径)) * this.st青い星[j].f半径)) - 170f);
-                            this.st飛び散るチップ[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
+                            this.st飛び散るチップ[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0) + 0.3);
                             this.st飛び散るチップ[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0) - 0.8));
                             this.st飛び散るチップ[j].f加速度の加速度X = 0.995f;
                             this.st飛び散るチップ[j].f加速度の加速度Y = 0.995f;
-                            this.st飛び散るチップ[j].f重力加速度 = 0.01000f;
+                            this.st飛び散るチップ[j].f重力加速度 = 0.03100f;
                             this.st飛び散るチップ[j].f回転単位 = C変換.DegreeToRadian((float)(n回転初期値 + (i * 90f)));
                             this.st飛び散るチップ[j].f回転方向 = (i < 4) ? 1f : -2f;
                             this.st飛び散るチップ[j].f半径 = (float)(0.5 + (((double)CDTXMania.Random.Next(30)) / 100.0));
+                            if (this.st飛び散るチップ[j].nLane == 0 || this.st飛び散るチップ[j].nLane == 3 || this.st飛び散るチップ[j].nLane == 7)
+                            {
+
+                            }
+                            else if (this.st飛び散るチップ[j].nLane == 1)
+                            {
+                                this.st飛び散るチップ[j].fXL += 20f;
+                            }
+                            else
+                            {
+                                this.st飛び散るチップ[j].fXL += 10f;
+                            }
                             break;
                         }
                     }
@@ -461,12 +488,12 @@ namespace DTXMania
                 {
                     this.txボーナス花火.b加算合成 = true;
                 }
-                for (int i = 0; i < 9; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     this.txNotes[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
                     if (this.txNotes[i] != null)
                     {
-                        this.txNotes[i].n透明度 = 100;
+                        this.txNotes[i].n透明度 = 120;
                         this.txNotes[i].b加算合成 = true;
                     }
                 }
@@ -545,37 +572,52 @@ namespace DTXMania
                         {
                             //これは物理放物線を利用する。
                             //θ=角度　角度は大体60度ぐらいかな。
-                            //X方向はX=(初速度 * cos(θ) t)
-                            //Y方向はY =(初速度 * sin(θ)t - ((重力加速度 * t)2乗) / 2)
-                            //a = 加速度 = 
+                            //(注:ここでMath.Cosで使用する値はラジアンなので、角度 * Math.PI / 180をする必要がある。)
+                            //X方向は加速度を加算しない。
+                            //Y方向はY = (初速度 * sin(θ) * 定数 - ((重力加速度 * 定数)2乗) / 2)
+                            //Y座標の加速度は重力加速度を使って加算していく。
 
-                            this.st飛び散るチップ[i].fXL += (float)((this.st飛び散るチップ[i].f加速度X * Math.Cos(2.20)) * 3.8);
-                            this.st飛び散るチップ[i].fXR += (float)((this.st飛び散るチップ[i].f加速度X * Math.Cos(0.80)) * 3.8);
-                            this.st飛び散るチップ[i].fY -= (float)((this.st飛び散るチップ[i].f加速度Y * Math.Sin(0.60)) * 6 - Math.Exp(this.st飛び散るチップ[i].f重力加速度 * 5) / 2);
+                            this.st飛び散るチップ[i].fXL += (float)((this.st飛び散るチップ[i].f加速度X * Math.Cos((120.0 * Math.PI / 180.0))) * 5);
+                            this.st飛び散るチップ[i].fXR += (float)((this.st飛び散るチップ[i].f加速度X * Math.Cos((60.0 * Math.PI / 180.0))) * 5);
+
+                            this.st飛び散るチップ[i].fY += (float)((this.st飛び散るチップ[i].f加速度Y * Math.Sin((60.0 * Math.PI / 180.0))) * 10 - Math.Exp(this.st飛び散るチップ[i].f重力加速度 * 2) / 2);
                             this.st飛び散るチップ[i].f加速度X *= this.st飛び散るチップ[i].f加速度の加速度X;
                             //this.st飛び散るチップ[i].fY *= this.st飛び散るチップ[i].f加速度Y;
-                            //this.st飛び散るチップ[i].f加速度Y -= this.st飛び散るチップ[i].f重力加速度;
-                            if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 0 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 4)
+                            this.st飛び散るチップ[i].f加速度Y += this.st飛び散るチップ[i].f重力加速度;
+                            /*
+                            if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 0 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 2)
                             {
                                 this.st飛び散るチップ[i].fY -= 1f;
+                            }
+                            if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 2 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 4)
+                            {
+                                this.st飛び散るチップ[i].fY -= 3f;
                             }
                             if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 4 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 8)
                             {
-                                this.st飛び散るチップ[i].fY -= 5f;
+                                this.st飛び散るチップ[i].fY -= 7f;
                             }
                             else if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 8 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 20)
                             {
-                                this.st飛び散るチップ[i].fY -= 7f;
+                                this.st飛び散るチップ[i].fY -= 9f;
                             }
                             else if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 20 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 24)
                             {
-                                this.st飛び散るチップ[i].fY -= 5f;
+                                this.st飛び散るチップ[i].fY -= 7f;
                             }
-                            else if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 24 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 28)
+                            else if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 24 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 26)
+                            {
+                                this.st飛び散るチップ[i].fY -= 3f;
+                            }
+                            else if (this.st飛び散るチップ[i].ct進行.n現在の値 >= 26 && this.st飛び散るチップ[i].ct進行.n現在の値 <= 28)
                             {
                                 this.st飛び散るチップ[i].fY -= 1f;
                             }
+                            */
                         }
+
+
+
                         Matrix mat = Matrix.Identity;
                         Matrix mat2 = Matrix.Identity;
 
@@ -669,7 +711,6 @@ namespace DTXMania
                         else
                         {
                             Matrix identity = Matrix.Identity;
-                            identity *= Matrix.Scaling(1.0f, 1.0f, 1f);
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
@@ -716,10 +757,10 @@ namespace DTXMania
                             }
                             if (this.tx火花2 != null)
                             {
-                                int n幅 = (this.tx火花2.sz画像サイズ.Width / CDTXMania.ConfigIni.nExplosionFrames);
-                                int n高さ = (this.tx火花2.sz画像サイズ.Height / 11);
+                                int n幅 = CDTXMania.ConfigIni.nExplosionWidgh;
+                                int n高さ = CDTXMania.ConfigIni.nExplosionHeight;
 
-                                this.tx火花2.t3D描画(CDTXMania.app.Device, identity, new Rectangle(this.st火花[i].ct進行.n現在の値 * n幅, this.st火花[i].nLane * n高さ, n幅, n高さ));
+                                this.tx火花2.t3D描画(CDTXMania.app.Device, identity, new Rectangle( n幅 * this.st火花[i].ct進行.n現在の値, this.st火花[i].nLane * n高さ, n幅, n高さ));
                                 if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true && this.txボーナス花火 != null)
                                     this.tx火花2.t3D描画(CDTXMania.app.Device, identity, new Rectangle(this.st火花[i].ct進行.n現在の値 * n幅, 10 * n高さ, n幅, n高さ));
                             }
@@ -1004,6 +1045,7 @@ namespace DTXMania
         private readonly float[] fY波の最大仰角 = new float[] { 70f, 72f, 77f, 84f, 89f, 91f, 99f, 107f, 117f, 112f, 112f };
                                                             //   LC  HH   SD    BD  HT   LT   FT    CY    RD    LP    LP
         private readonly int[] nレーンの中央X座標 = new int[] { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
+        private readonly int[] nチップエフェクト用X座標 = new int[] { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
                                                             //  LC HH  SD   BD   HT    LT   FT   CY   LP   RD   LP
         private int[] nレーンの中央X座標_改 =  new int[] { 7, 71, 176, 293, 230, 349, 398, 498, 124, 448, 124 };
         private int[] nレーンの中央X座標B =    new int[] { 7, 71, 124, 240, 297, 349, 398, 464, 180, 514, 180 };
