@@ -1268,6 +1268,7 @@ namespace DTXMania
 		public bool MIDINOTE;
 		public int MIDIレベル;
 		public STLANEINT n可視チップ数;
+        public int nボーナスチップ数;
 		public const int n最大音数 = 4;
 		public const int n小節の解像度 = 384;
 		public string PANEL;
@@ -3625,6 +3626,10 @@ namespace DTXMania
 							{
 								this.n可視チップ数.Bass++;
 							}
+                            if ( c == 0x4F )
+                            {
+                                this.nボーナスチップ数++;
+                            }
 						}
 						#endregion
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );

@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Threading;
 using SlimDX;
 using SlimDX.Direct3D9;
+using DirectShowLib;
 using FDK;
 
 namespace DTXMania
@@ -1287,7 +1288,7 @@ namespace DTXMania
                         {
                             if (nCombos < nComboMax)
                             {
-                                nScoreDelta = 1000000.0f / 50.0f / (nComboMax - 24.5f);
+                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数 ) / 50.0f / (nComboMax - 24.5f);
                             }
                             //1000000÷50÷(その曲のMAXCOMBO-24.5)
                             else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
@@ -1335,7 +1336,7 @@ namespace DTXMania
                         {
                             if (nCombos < nComboMax)
                             {
-                                nScoreDelta = 1000000.0f / 50.0f / (nComboMax - 24.5f);
+                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / 50.0f / (nComboMax - 24.5f);
                             }
                             //1000000÷50÷(その曲のMAXCOMBO-24.5)
                             else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
