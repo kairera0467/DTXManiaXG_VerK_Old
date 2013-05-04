@@ -845,7 +845,7 @@ namespace DTXMania
                             #region[LivePoint]
                             if (this.txLivePoint != null)
                                 this.txLivePoint.t2D描画(CDTXMania.app.Device, 886, 52, new Rectangle(0, 0, 71, 668));
-                            string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("000");
+                            string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.Drums.ToString("000");
                             for (int i = 0; i < 3; i++)
                             {
                                 Rectangle rectangle;
@@ -872,65 +872,65 @@ namespace DTXMania
                                 }
                                 #region[箱]
                                 //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                                if (this.LivePoint >= 0)
+                                if (this.LivePoint.Drums >= 0)
                                 {
-                                    if (this.LivePoint >= 20)
+                                    if (this.LivePoint.Drums >= 20)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 626, new Rectangle(71, 536, 46, 44));
                                     }
-                                    if (this.LivePoint >= 40)
+                                    if (this.LivePoint.Drums >= 40)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 585, new Rectangle(71, 536, 46, 44));
                                     }
-                                    if (this.LivePoint >= 60)
+                                    if (this.LivePoint.Drums >= 60)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 544, new Rectangle(71, 536, 46, 44));
                                     }
-                                    if (this.LivePoint >= 80)
+                                    if (this.LivePoint.Drums >= 80)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 503, new Rectangle(71, 536, 46, 44));
                                     }
-                                    if (this.LivePoint >= 100)
+                                    if (this.LivePoint.Drums >= 100)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 462, new Rectangle(71, 536, 46, 44));
                                     }
-                                    if (this.LivePoint >= 120)
+                                    if (this.LivePoint.Drums >= 120)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 420, new Rectangle(71, 580, 46, 44));
                                     }
-                                    if (this.LivePoint >= 140)
+                                    if (this.LivePoint.Drums >= 140)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 379, new Rectangle(71, 580, 46, 44));
                                     }
-                                    if (this.LivePoint >= 160)
+                                    if (this.LivePoint.Drums >= 160)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 338, new Rectangle(71, 580, 46, 44));
                                     }
-                                    if (this.LivePoint >= 180)
+                                    if (this.LivePoint.Drums >= 180)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 297, new Rectangle(71, 580, 46, 44));
                                     }
-                                    if (this.LivePoint >= 200)
+                                    if (this.LivePoint.Drums >= 200)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 256, new Rectangle(71, 580, 46, 44));
                                     }
-                                    if (this.LivePoint >= 220)
+                                    if (this.LivePoint.Drums >= 220)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 214, new Rectangle(71, 624, 46, 44));
                                     }
-                                    if (this.LivePoint >= 240)
+                                    if (this.LivePoint.Drums >= 240)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 173, new Rectangle(71, 624, 46, 44));
                                     }
-                                    if (this.LivePoint >= 260)
+                                    if (this.LivePoint.Drums >= 260)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 132, new Rectangle(71, 624, 46, 44));
                                     }
-                                    if (this.LivePoint >= 280)
+                                    if (this.LivePoint.Drums >= 280)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 91, new Rectangle(71, 624, 46, 44));
                                     }
-                                    if (this.LivePoint >= 300)
+                                    if (this.LivePoint.Drums >= 300)
                                     {
                                         this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 50, new Rectangle(71, 624, 46, 44));
                                     }
@@ -1160,7 +1160,7 @@ namespace DTXMania
         private int i2;
         public CCounter ct右シンバル;
         public CCounter ct左シンバル;
-        public double LivePoint;
+        public STDGBVALUE<double> LivePoint;
         //private Image ilanes;
         private int nAlpha;
         private int nCurrentMovieMode;

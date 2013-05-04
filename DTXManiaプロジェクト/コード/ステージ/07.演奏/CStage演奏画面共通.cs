@@ -1419,38 +1419,43 @@ namespace DTXMania
             #region[LivePoint]
             if (pChip.e楽器パート != E楽器パート.UNKNOWN)
             {
-                double dbLPDelta = 0;
-                double db1打あたりのLP = 300.0 / (CDTXMania.DTX.n可視チップ数.Drums * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
-                if (eJudgeResult == E判定.Perfect)
+                for (int i = 0; i < 3; i++)
                 {
-                    dbLPDelta = db1打あたりのLP * 1.0;
-                }
-                else if (eJudgeResult == E判定.Great)
-                {
-                    dbLPDelta = db1打あたりのLP * 1.0;
-                }
-                else if (eJudgeResult == E判定.Good)
-                {
-                    dbLPDelta = db1打あたりのLP * 1.0;
-                }
-                else if (eJudgeResult == E判定.Poor)
-                {
-                    if (this.actAVI.LivePoint >= 1)
-                        dbLPDelta = -1.0;
-                }
-                else if (eJudgeResult == E判定.Miss)
-                {
-                    if (this.actAVI.LivePoint >= 2)
-                        dbLPDelta = -2.0;
-                }
-                else if (eJudgeResult == E判定.Auto)
-                {
-                    dbLPDelta = 0;
-                }
+                    STDGBVALUE<double> dbLPDelta = new STDGBVALUE<double>();
+                    double db1打あたりのLP = 300.0 / (CDTXMania.DTX.n可視チップ数[i] * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
+                    if (eJudgeResult == E判定.Perfect)
+                    {
+                        dbLPDelta[i] = db1打あたりのLP * 1.0;
+                    }
+                    else if (eJudgeResult == E判定.Great)
+                    {
+                        dbLPDelta[i] = db1打あたりのLP * 1.0;
+                    }
+                    else if (eJudgeResult == E判定.Good)
+                    {
+                        dbLPDelta[i] = db1打あたりのLP * 1.0;
+                    }
+                    else if (eJudgeResult == E判定.Poor)
+                    {
+                        if (this.actAVI.LivePoint[i] >= 1)
+                        {
+                            dbLPDelta[i] = -1.0;
+                        }
+                    }
+                    else if (eJudgeResult == E判定.Miss)
+                    {
+                        if (this.actAVI.LivePoint[i] >= 2)
+                            dbLPDelta[i] = -2.0;
+                    }
+                    else if (eJudgeResult == E判定.Auto)
+                    {
+                        dbLPDelta[i] = 0;
+                    }
 
-                if (this.actAVI.LivePoint <= 300)
-                {
-                    this.actAVI.LivePoint += dbLPDelta;
+                    if (this.actAVI.LivePoint[i] <= 300)
+                    {
+                        this.actAVI.LivePoint[i] += dbLPDelta[i];
+                    }
                 }
             }
             #endregion
