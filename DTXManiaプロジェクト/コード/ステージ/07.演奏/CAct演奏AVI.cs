@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using SlimDX;
 using SlimDX.Direct3D9;
+using DirectShowLib;
 using FDK;
 
 namespace DTXMania
@@ -387,6 +388,7 @@ namespace DTXMania
                 {
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
+                    this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition,out this.lStopPosition );
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
                     {
                         this.n総移動時間ms = 0;
@@ -399,6 +401,14 @@ namespace DTXMania
                         {
                             this.n移動開始時刻ms = CSound管理.rc演奏用タイマ.n現在時刻;
                         }
+                    }
+                    else if(this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    {
+                            this.dsBGV.dshow.MediaSeeking.SetPositions(
+                            DsLong.FromInt64((long)(0)),
+                            AMSeekingSeekingFlags.AbsolutePositioning,
+                            null,
+                            AMSeekingSeekingFlags.NoPositioning);
                     }
                     else
                     {
@@ -538,8 +548,9 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && (this.n総移動時間ms != -1) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && (this.n移動開始時刻ms != -1) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
+
                         if (this.bFullScreen)
                         {
                             if (fAVIアスペクト比 > 1.77f)       //変更
@@ -581,6 +592,7 @@ namespace DTXMania
                                     this.bフレームを作成した = false;
                                     this.tx描画用.vc拡大縮小倍率 = this.vclip;
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+
                                 }
                             }
                         }
@@ -778,7 +790,13 @@ namespace DTXMania
                     {
                         this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
                     }
-
+                    long lPos = 0;
+                    if (this.dsBGV != null)
+                    {
+                        //this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
+                        //CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
+                        //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
+                    }
 
                     if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
                     {
@@ -1050,22 +1068,44 @@ namespace DTXMania
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
                 bool bToggle = false;
+                long l汎用ムービー再生位置 = 0;
+                long lムービー再生位置 = 0;
                 if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))
                 {
                     if (bToggle == false)
                     {
-                        if(this.dsBGV != null)
-                            this.dsBGV.dshow.t再生一時停止();
+                        if (this.dsBGV != null)
+                        {
+                            this.dsBGV.dshow.MediaCtrl.Pause();
+                            this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lムービー再生位置);
+                        }
                         if (this.ds汎用 != null)
-                            this.ds汎用.t再生一時停止();
+                        {
+                            this.ds汎用.MediaCtrl.Pause();
+                            this.ds汎用.MediaSeeking.GetCurrentPosition(out l汎用ムービー再生位置);
+                        }
                         bToggle = true;
                     }
                     else if(bToggle == true)
                     {
-                        if(this.dsBGV != null)
-                            this.dsBGV.dshow.t再生開始();
+                        if (this.dsBGV != null)
+                        {
+                            this.dsBGV.dshow.MediaCtrl.Run();
+                            this.dsBGV.dshow.MediaSeeking.SetPositions(
+                            DsLong.FromInt64((long)(0)),
+                            AMSeekingSeekingFlags.AbsolutePositioning,
+                            null,
+                            AMSeekingSeekingFlags.NoPositioning);
+                        }
                         if (this.ds汎用 != null)
-                            this.ds汎用.t再生開始();
+                        {
+                            this.ds汎用.MediaCtrl.Run();
+                            this.ds汎用.MediaSeeking.SetPositions(
+                            DsLong.FromInt64((long)(l汎用ムービー再生位置)),
+                            AMSeekingSeekingFlags.AbsolutePositioning,
+                            null,
+                            AMSeekingSeekingFlags.NoPositioning);
+                        }
                         bToggle = false;
                     }
                 }
@@ -1139,6 +1179,8 @@ namespace DTXMania
         private int n表示側開始位置Y;
         private int n表示側終了位置X;
         private int n表示側終了位置Y;
+        private long lDshowPosition;
+        private long lStopPosition;
         public IntPtr pBmp;
         private int position;
         private int position2;

@@ -723,6 +723,11 @@ namespace DTXMania
 			IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
 			if 	( keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape ) )		// escape (exit)
 			{
+                if (CDTXMania.ConfigIni.bギタレボモード)
+                    CDTXMania.stage演奏ギター画面.On非活性化();
+                else
+                    CDTXMania.stage演奏ドラム画面.On非活性化();
+                
 				return true;
 			}
 			return false;

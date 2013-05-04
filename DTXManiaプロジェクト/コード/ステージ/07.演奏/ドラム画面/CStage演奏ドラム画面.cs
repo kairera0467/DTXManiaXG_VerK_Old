@@ -3127,8 +3127,8 @@ namespace DTXMania
                                 CDTXMania.Skin.sound歓声音.t再生する();
                                 CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             }
-                            //if (CDTXMania.ConfigIni.nSkillMode == 1)
-                            //this.actScore.n現在の本当のスコア.Drums += 500;
+                            if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                this.actScore.n現在の本当のスコア.Drums += 500;
                         }
                         break;
                     case 0x06:
@@ -3148,8 +3148,8 @@ namespace DTXMania
                                 CDTXMania.Skin.sound歓声音.t再生する();
                                 CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             }
-                            //if(CDTXMania.ConfigIni.nSkillMode == 1)
-                            //this.actScore.n現在の本当のスコア.Drums += 500;
+                            if(CDTXMania.ConfigIni.nSkillMode == 1)
+                                this.actScore.n現在の本当のスコア.Drums += 500;
                         }
                         break;
 				}
@@ -3216,6 +3216,8 @@ namespace DTXMania
                         CDTXMania.Skin.sound歓声音.t再生する();
                         CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                     }
+                    if (CDTXMania.ConfigIni.nSkillMode == 1)
+                        this.actScore.n現在の本当のスコア.Drums += 500;
                 }
             }
 
