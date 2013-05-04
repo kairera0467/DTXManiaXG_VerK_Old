@@ -145,7 +145,7 @@ namespace DTXMania
                 {
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
-                    this.actAVI.LivePoint = 0;
+                    this.actAVI.LivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     int UnitTime;
                     double BPM = CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM;
