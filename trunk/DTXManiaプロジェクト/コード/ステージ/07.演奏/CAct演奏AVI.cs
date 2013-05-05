@@ -164,6 +164,14 @@ namespace DTXMania
                 this.n移動開始時刻ms = -1;
                 if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                 {
+                    if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    {
+                        this.dsBGV.dshow.MediaSeeking.SetPositions(
+                        DsLong.FromInt64((long)(-1)),
+                        AMSeekingSeekingFlags.AbsolutePositioning,
+                        null,
+                        AMSeekingSeekingFlags.NoPositioning);
+                    }
                     this.dsBGV.dshow.t再生停止();
                 }
             }
@@ -393,23 +401,18 @@ namespace DTXMania
                     {
                         this.n総移動時間ms = 0;
                         this.n移動開始時刻ms = -1L;
+ 
                     }
                     else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount()))
                     {
                         this.n移動開始時刻ms = -1L;
-                        if (CDTXMania.app.b汎用ムービーである)
-                        {
-                            this.n移動開始時刻ms = CSound管理.rc演奏用タイマ.n現在時刻;
-                        }
-                    }
-                    else if(this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
-                    {
                             this.dsBGV.dshow.MediaSeeking.SetPositions(
-                            DsLong.FromInt64((long)(0)),
+                            DsLong.FromInt64((long)(-1)),
                             AMSeekingSeekingFlags.AbsolutePositioning,
                             null,
                             AMSeekingSeekingFlags.NoPositioning);
                     }
+
                     else
                     {
                         Rectangle rectangle;
@@ -419,6 +422,14 @@ namespace DTXMania
                             this.pBmp = this.rAVI.avi.GetFramePtr(frameNoFromTime);
                             this.n前回表示したフレーム番号 = frameNoFromTime;
                             this.bフレームを作成した = true;
+                        }
+                        if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
+                        {
+                            this.dsBGV.dshow.MediaSeeking.SetPositions(
+                            DsLong.FromInt64((long)(0)),
+                            AMSeekingSeekingFlags.AbsolutePositioning,
+                            null,
+                            AMSeekingSeekingFlags.NoPositioning);
                         }
                         Size size = new Size((int)this.rAVI.avi.nフレーム幅, (int)this.rAVI.avi.nフレーム高さ);
                         Size sz720pサイズ = new Size(1280, 720);
@@ -548,12 +559,11 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && (this.n移動開始時刻ms != -1) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
-
                         if (this.bFullScreen)
                         {
-                            if (fAVIアスペクト比 > 1.77f)       //変更
+                            if (fAVIアスペクト比 > 1.77f && (this.n総移動時間ms != -1))
                             {
                                 this.dsBGV.dshow.t再生開始();
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
@@ -654,7 +664,7 @@ namespace DTXMania
                         {
                             this.ct左シンバル.t進行();
                             if(this.tx左シンバル != null)
-                            this.tx左シンバル.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0 + (380 * LCym), 0, 380, 720));
+                            this.tx左シンバル.t2D描画(CDTXMania.app.Device, -120 + (CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 * 10), 0, new Rectangle(0 + (380 * LCym), 0, 380, 720));
                         }
                         if (index == 2)
                         {
@@ -701,7 +711,7 @@ namespace DTXMania
                         {
                             this.ct右シンバル.t進行();
                             if (this.tx右シンバル != null)
-                            this.tx右シンバル.t2D描画(CDTXMania.app.Device, 900, 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
+                                this.tx右シンバル.t2D描画(CDTXMania.app.Device, 1020 - (CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 * 10), 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
                         }
                         
                     }
@@ -788,17 +798,19 @@ namespace DTXMania
                     #endregion
                     if (this.txバートップ != null)
                     {
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
+                        //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2), 0, new Rectangle(0, 0, 640, 720));
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2), 0, new Rectangle(640, 0, 640, 720));
                     }
                     long lPos = 0;
                     if (this.dsBGV != null)
                     {
-                        //this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
-                        //CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
-                        //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
+                        this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
+                        CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
+                        CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
                     }
 
-                    if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null))
+                    if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null) && CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 >= 11)
                     {
                         if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
                         {
@@ -989,21 +1001,21 @@ namespace DTXMania
                         }
                         else
                         {
-                            if ( CDTXMania.ConfigIni.bDirectShowMode == false )
+                            //if ( CDTXMania.ConfigIni.bDirectShowMode == false )
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 422);
                                 //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 422);
                             }
-                            else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+                            //else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
                             {
-                                if (this.dsBGV.dshow.b上下反転)
-                                {
-                                    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 13, this.position2);
-                                }
-                                else
-                                {
-                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
-                                }
+                                //if (this.dsBGV.dshow.b上下反転)
+                                //{
+                                //    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 13, this.position2);
+                                //}
+                                //else
+                                //{
+                                //    this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
+                                //}
                             }
                         }
                     }

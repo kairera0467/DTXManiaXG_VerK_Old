@@ -724,9 +724,15 @@ namespace DTXMania
 			if 	( keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape ) )		// escape (exit)
 			{
                 if (CDTXMania.ConfigIni.bギタレボモード)
-                    CDTXMania.stage演奏ギター画面.On非活性化();
+                {
+                    if (CDTXMania.stage演奏ギター画面.b活性化してる == true)
+                        CDTXMania.stage演奏ギター画面.On非活性化();
+                }
                 else
-                    CDTXMania.stage演奏ドラム画面.On非活性化();
+                {
+                    if(CDTXMania.stage演奏ドラム画面.b活性化してる == true)
+                        CDTXMania.stage演奏ドラム画面.On非活性化();
+                }
                 
 				return true;
 			}
