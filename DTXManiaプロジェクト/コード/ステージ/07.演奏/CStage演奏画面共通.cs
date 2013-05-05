@@ -610,7 +610,7 @@ namespace DTXMania
 		protected STDGBVALUE<bool> b演奏にマウスを使った;
 		protected CCounter ctWailingチップ模様アニメ;
         public CCounter ctBPMバー;
-
+        public CCounter ct登場用;
         public CCounter ctコンボ動作タイマ;
 
 		protected STDGBVALUE<CCounter> ctチップ模様アニメ;
@@ -3581,6 +3581,7 @@ namespace DTXMania
                 this.ctBPMバー.t進行Loop();
                 this.ctコンボ動作タイマ.t進行Loop();
             }
+            this.ct登場用.t進行();
 		}
 
 		protected bool t進行描画・フェードイン・アウト()

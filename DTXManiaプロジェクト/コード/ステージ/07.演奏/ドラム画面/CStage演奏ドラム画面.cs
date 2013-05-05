@@ -78,6 +78,7 @@ namespace DTXMania
 			this.bフィルイン中 = false;
 			base.On活性化();
             Cスコア cスコア = CDTXMania.stage選曲.r確定されたスコア;
+            this.ct登場用 = new CCounter(0, 12, 16, CDTXMania.Timer);
 
             this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? -24 : base.nJudgeLinePosY - 186);
             base.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY);
@@ -159,8 +160,10 @@ namespace DTXMania
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                     this.actFI.tフェードイン開始();
+                    this.ct登場用.t進行();
                     base.b初めての進行描画 = false;
                 }
+
                 if ((CDTXMania.ConfigIni.bSTAGEFAILED有効 && this.actGauge.IsFailed(E楽器パート.DRUMS)) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                 {
                     this.actStageFailed.Start();
@@ -3127,8 +3130,6 @@ namespace DTXMania
                                 CDTXMania.Skin.sound歓声音.t再生する();
                                 CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             }
-                            if (CDTXMania.ConfigIni.nSkillMode == 1)
-                                this.actScore.n現在の本当のスコア.Drums += 500;
                         }
                         break;
                     case 0x06:
@@ -3148,8 +3149,6 @@ namespace DTXMania
                                 CDTXMania.Skin.sound歓声音.t再生する();
                                 CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                             }
-                            if(CDTXMania.ConfigIni.nSkillMode == 1)
-                                this.actScore.n現在の本当のスコア.Drums += 500;
                         }
                         break;
 				}
