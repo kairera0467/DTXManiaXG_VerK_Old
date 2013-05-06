@@ -125,14 +125,7 @@ namespace DTXMania
 			{
 				if ( !bRisky)
 				{
-                    if (CDTXMania.ConfigIni.nSkillMode == 0)
-                    {
-                        this.db現在のゲージ値[i] = GAUGE_INITIAL;
-                    }
-                    else
-                    {
-                        this.db現在のゲージ値[i] = 0.71;
-                    }
+                    this.db現在のゲージ値[i] = GAUGE_INITIAL;
 				}
 				else if ( nRiskyTimes_InitialVal == 1 )
 				{
@@ -173,20 +166,7 @@ namespace DTXMania
 			{
                 case E判定.Perfect:
                     {
-                        if (CDTXMania.ConfigIni.nSkillMode == 0)
-                        {
-                            this.fDamageGaugeDelta[ 0, 0 ] = 0.004f;
-                            this.fDamageGaugeDelta[ 1, 0 ] = 0.002f;
-                        }
-                        else if (CDTXMania.ConfigIni.nSkillMode == 1)
-                        {
-                            this.fDamageGaugeDelta[ 0, 0 ] =  0.0025f;
-                            this.fDamageGaugeDelta[ 1, 0 ] =  0.001f;
-                            this.fDamageGaugeDelta[ 4, 0 ] = -0.040f;
-                        }
-
                         fDamage = bRisky ? 0 : fDamageGaugeDelta[(int)e今回の判定, (int)part];
-
                         break;
                     }
 				case E判定.Great:
