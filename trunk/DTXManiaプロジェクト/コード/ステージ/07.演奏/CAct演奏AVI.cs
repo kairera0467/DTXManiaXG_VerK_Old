@@ -123,6 +123,10 @@ namespace DTXMania
                     {
                         f拡大率y= f拡大率x;
                     }
+                    if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f)
+                    {
+                        this.dsBGV.dshow.t再生開始();
+                    }
                     this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
                 }
@@ -369,7 +373,7 @@ namespace DTXMania
             {
                 num1 = CDTXMania.stage演奏ギター画面.ctBPMバー.n現在の値;
             }
-            if (this.txDShow汎用 != null)
+            if (this.txDShow汎用 != null && CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した)
             {
                 if (this.ds汎用 != null)
                 {
@@ -547,7 +551,7 @@ namespace DTXMania
                         }
                         if (this.bFullScreen)
                         {
-                            if (fAVIアスペクト比 > 1.77f)       //変更
+                            if (fAVIアスペクト比 > 1.77f)
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
@@ -559,13 +563,12 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && this.dsBGV != null && this.dsBGV.dshow.b再生中 == true && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
                         if (this.bFullScreen)
                         {
                             if (fAVIアスペクト比 > 1.77f && (this.n総移動時間ms != -1))
                             {
-                                this.dsBGV.dshow.t再生開始();
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
                                 //this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
                                 //this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
@@ -577,6 +580,7 @@ namespace DTXMania
                                 else
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, x, y);
                             }
+                                
                             else
                             {
                                 if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
@@ -605,6 +609,7 @@ namespace DTXMania
 
                                 }
                             }
+                            
                         }
                     }
                 }
@@ -805,9 +810,9 @@ namespace DTXMania
                     long lPos = 0;
                     if (this.dsBGV != null)
                     {
-                        this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
-                        CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
-                        CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
+                        //this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
+                        //CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
+                        //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
                     }
 
                     if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null) && CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 >= 11)
@@ -1043,7 +1048,7 @@ namespace DTXMania
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
                             }
-                            else
+                            else if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                             {
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
                                 if (this.dsBGV.dshow.b上下反転)
