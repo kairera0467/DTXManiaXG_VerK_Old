@@ -3158,6 +3158,7 @@ namespace DTXMania
         
         protected override void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
         {
+            bool bPChipIsAutoPlay = bCheckAutoPlay(pChip);
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
                 pChip.bHit = true;
@@ -3215,7 +3216,7 @@ namespace DTXMania
                         CDTXMania.Skin.sound歓声音.t再生する();
                         CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                     }
-                    if (CDTXMania.ConfigIni.nSkillMode == 1)
+                    if (CDTXMania.ConfigIni.nSkillMode == 1 && (!bPChipIsAutoPlay || CDTXMania.ConfigIni.bAutoAddGage))
                         this.actScore.n現在の本当のスコア.Drums += 500;
                 }
             }

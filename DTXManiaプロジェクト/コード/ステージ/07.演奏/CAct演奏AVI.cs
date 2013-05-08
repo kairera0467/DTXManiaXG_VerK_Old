@@ -563,7 +563,7 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && this.dsBGV != null && this.dsBGV.dshow.b再生中 == true && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && (this.n総移動時間ms != -1) && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
                         if (this.bFullScreen)
                         {
@@ -579,8 +579,7 @@ namespace DTXMania
                                     this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, this.position, y);
                                 else
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, x, y);
-                            }
-                                
+                            }               
                             else
                             {
                                 if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
@@ -605,9 +604,8 @@ namespace DTXMania
                                     this.tx描画用.texture.UnlockRectangle(0);
                                     this.bフレームを作成した = false;
                                     this.tx描画用.vc拡大縮小倍率 = this.vclip;
-                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
-
                                 }
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
                             }
                             
                         }
