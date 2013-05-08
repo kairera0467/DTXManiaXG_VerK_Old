@@ -2621,7 +2621,7 @@ namespace DTXMania
 			return false;
 		}
 
-        private bool bCheckAutoPlay(CDTX.CChip pChip)
+        public bool bCheckAutoPlay(CDTX.CChip pChip)
         {
             bool bPChipIsAutoPlay = false;
             bool bGtBsR = false;
