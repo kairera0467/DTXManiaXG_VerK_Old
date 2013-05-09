@@ -1502,7 +1502,8 @@ for (int i = 0; i < 3; i++) {
 		}
 		public static void tテクスチャの解放( ref CTexture tx )
 		{
-			CDTXMania.t安全にDisposeする( ref tx );
+            if( tx != null )
+			    CDTXMania.t安全にDisposeする( ref tx );
 		}
 
 		public static CTexture tテクスチャの生成( byte[] txData )
