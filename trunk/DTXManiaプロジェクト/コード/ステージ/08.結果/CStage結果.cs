@@ -290,8 +290,56 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_background.jpg" ) );
+                switch (CDTXMania.stage結果.n総合ランク値)
+                {
+                    case 0:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankSS.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankSS.png"));
+                        }
+                        break;
+                    case 1:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankS.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankS.png"));
+                        }
+                        break;
+                    case 2:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankA.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankA.png"));
+                        }
+                        break;
+                    case 3:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankB.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankB.png"));
+                        }
+                        break;
+                    case 4:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankC.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankC.png"));
+                        }
+                        break;
+                    case 5:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankD.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankD.png"));
+                        }
+                        break;
+                    case 6:
+                    case 99:
+                        if (File.Exists(CSkin.Path(@"Graphics\8_background rankE.png")))
+                        {
+                            this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_background rankE.png"));
+                        }
+                        break;
+                }
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_header panel.png" ), true );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_footer panel.png" ), true );
+                this.tx中央パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_center panel.png"));
+                this.txリザルトパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_result panel.png"));
 				//this.txオプションパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen option panels.png" ) );
 				base.OnManagedリソースの作成();
 			}
@@ -307,8 +355,10 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
-				//CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
-				base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
+                CDTXMania.tテクスチャの解放( ref this.txリザルトパネル );
+                //CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
+                base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
@@ -319,14 +369,7 @@ namespace DTXMania
 				if( base.b初めての進行描画 )
 				{
 					this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                    {
-                        this.actFI.tフェードイン開始(false);
-                    }
-                    else
-                    {
-                        this.actFI.tフェードイン開始();
-                    }
+                    this.actFI.tフェードイン開始();
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					if( this.rResultSound != null )
 					{
@@ -376,6 +419,10 @@ namespace DTXMania
                 {
                     this.bアニメが完了 = false;
                 }
+                if( this.tx中央パネル != null )
+                    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
+                if( this.txリザルトパネル != null )
+                    this.txリザルトパネル.t2D描画( CDTXMania.app.Device, 453, 11 );
 				if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
@@ -545,6 +592,8 @@ namespace DTXMania
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
+        private CTexture txリザルトパネル;
+        private CTexture tx中央パネル;
 
 		#region [ #24609 リザルト画像をpngで保存する ]		// #24609 2011.3.14 yyagi; to save result screen in case BestRank or HiSkill.
 		/// <summary>
