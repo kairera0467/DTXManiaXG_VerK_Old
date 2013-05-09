@@ -17,7 +17,6 @@ namespace DTXMania
 
         public CAct演奏AVI()
         {
-            this.list子Activities.Add(this.actDshow = new CAct演奏Dshow());
             base.b活性化してない = true;
         }
 
@@ -176,7 +175,7 @@ namespace DTXMania
                         null,
                         AMSeekingSeekingFlags.NoPositioning);
                     }
-                    this.dsBGV.dshow.t再生停止();
+                    this.dsBGV.dshow.MediaCtrl.Stop();
                 }
             }
         }
@@ -410,11 +409,7 @@ namespace DTXMania
                     else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount()))
                     {
                         this.n移動開始時刻ms = -1L;
-                            this.dsBGV.dshow.MediaSeeking.SetPositions(
-                            DsLong.FromInt64((long)(-1)),
-                            AMSeekingSeekingFlags.AbsolutePositioning,
-                            null,
-                            AMSeekingSeekingFlags.NoPositioning);
+                        this.dsBGV.dshow.MediaCtrl.Stop();
                     }
 
                     else
@@ -1201,8 +1196,6 @@ namespace DTXMania
         private int position2;
         private CDTX.CAVI rAVI;
         private CDirectShow ds汎用;
-
-        public CAct演奏Dshow actDshow;
 
         public CDTX.CDirectShow dsBGV;
 

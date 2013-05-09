@@ -13,7 +13,7 @@ using FDK;
 
 namespace DTXMania
 {
-    internal class CAct演奏Dshow : CActivity
+    internal class CAct演奏XBattleメイン : CActivity
     {
         public override void On活性化()
         {

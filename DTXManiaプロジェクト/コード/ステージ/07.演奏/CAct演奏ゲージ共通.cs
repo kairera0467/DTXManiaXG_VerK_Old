@@ -162,6 +162,13 @@ namespace DTXMania
 			double fDamage;
 
 #if true	// DAMAGELEVELTUNING
+            if (CDTXMania.ConfigIni.nSkillMode == 1)
+            {
+                fDamageGaugeDelta[0, 0] =  0.015f;
+                fDamageGaugeDelta[1, 0] =  0.01f;
+                fDamageGaugeDelta[3, 0] = -0.017f;
+                fDamageGaugeDelta[4, 0] = -0.041f;
+            }
 			switch ( e今回の判定 )
 			{
                 case E判定.Perfect:
