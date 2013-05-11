@@ -630,16 +630,8 @@ namespace DTXMania
 								{
 									case 0:		// 何もない
 										//if ( CDTXMania.stage選曲.bIsEnumeratingSongs )
-										if ( !CDTXMania.stage選曲.bIsPlayingPremovie )
-										{
-											EnumSongs.Resume();						// #27060 2012.2.6 yyagi 中止していたバックグランド曲検索を再開
-											EnumSongs.IsSlowdown = false;
-										}
-										else
-										{
-											// EnumSongs.Suspend();					// #27060 2012.3.2 yyagi #PREMOVIE再生中は曲検索を低速化
-											EnumSongs.IsSlowdown = true;
-										}
+										EnumSongs.Resume();						// #27060 2012.2.6 yyagi 中止していたバックグランド曲検索を再開
+										EnumSongs.IsSlowdown = false;
 										actEnumSongs.On活性化();
 										break;
 

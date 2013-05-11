@@ -111,7 +111,8 @@ namespace DTXMania
 				"Note: It also changes the songs' pitch." ) );
 			#endregion
 			#region [ 個別 Sud/Hid ]
-			l.Add( new CItemList( "Hid/Sud", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nHidSud, "", "", new string[] { "OFF", "HIDDEN", "SUDDEN", "HID/SUD","STEALTH" } ) );
+			l.Add( new CItemList( "HID/SUD", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nHidSud, "", "", new string[] { "OFF", "HIDDEN", "SUDDEN", "HID/SUD","STEALTH" } ) );
+            //ドラム、ギター、ベースでのHIDDEN/SUDDENの設定の分離を考えなければならない。
 			#endregion
 			#region [ 共通 SET切り替え/More/Return ]
 			l.Add( new CSwitchItemList( "Config Set", CItemBase.Eパネル種別.通常, nCurrentConfigSet, "", "", new string[] { "SET-1", "SET-2", "SET-3" } ) );
@@ -353,6 +354,22 @@ namespace DTXMania
 						Eダークモード d = (Eダークモード) GetIndex( (int) EOrder.Dark );
 						CDTXMania.ConfigIni.eDark = d;
 						SetValueToAllTarget( (int) EOrder.Dark, (int) d );		// 全楽器で共有する値のため、全targetに値を展開する
+
+                        if (d == Eダークモード.FULL)
+                        {
+                            //CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 3;
+                            //CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
+                        }
+                        else if (d == Eダークモード.HALF)
+                        {
+                            //CDTXMania.ConfigIni.nLaneDisp[ nCurrentTarget ] = 1;
+                            //CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = true;
+                        }
+                        else
+                        {
+                            //CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 0;
+                            //CDTXMania.ConfigIni.bJudgeLineDisp[nCurrentTarget] = true;
+                        }
 					}
 					break;
 				case (int) EOrder.Risky:

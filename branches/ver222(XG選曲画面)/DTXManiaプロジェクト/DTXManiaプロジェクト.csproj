@@ -202,9 +202,6 @@
     <Compile Include="コード\全体\CPad.cs" />
     <Compile Include="コード\全体\CSkin.cs" />
     <Compile Include="コード\ステージ\07.演奏\Cクリアステージ.cs" />
-    <Compile Include="コード\全体\Cメインウィンドウ.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="コード\全体\C定数.cs" />
     <Compile Include="コード\全体\C文字コンソール.cs" />
     <Compile Include="コード\全体\Folder.cs">

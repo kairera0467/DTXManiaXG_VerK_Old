@@ -29,9 +29,9 @@ namespace DTXMania
 					{
 						nLevel = 0;
 					}
-					if( nLevel > 99 )
+					if( nLevel > 999 )
 					{
-						nLevel = 99;
+						nLevel = 999;
 					}
 					this.n現在選択中の曲のレベル[ i ] = nLevel;
 					this.n現在選択中の曲の最高ランク[ i ] = cスコア.譜面情報.最大ランク[ i ];
@@ -267,18 +267,20 @@ namespace DTXMania
 					for( int i = 0; i < 3; i++ )
 					{
 						int[,] nDispPosYOffset = { { 0, 31, 0x3f }, { 0, 0x3f, 0x1f} };	// #24063 2011.1.27 yyagi
+                        Rectangle rect百の位;
 						Rectangle rect十の位;
 						Rectangle rect一の位;
 						int nDispPosX = this.n本体X + 0x8e;
 						int nDispPosY = this.n本体Y + 0x4e + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass? 1 : 0), i ];
 						int nLevel = this.n現在選択中の曲のレベル[ i ];
+                        double dbLevel = this.n現在選択中の曲のレベル[ i ] / 100;
 						if( nLevel < 0 )
 						{
 							nLevel = 0;
 						}
-						else if( nLevel > 99 )
+						else if( nLevel > 999 )
 						{
-							nLevel = 99;
+							nLevel = 999;
 						}
 						// Lv25刻みで、白→オレンジ→黄色→赤、と色を変える
 						// 
@@ -286,25 +288,69 @@ namespace DTXMania
 						int nRectOffsetY = ( ( ( nLevel / 25 ) % 2 ) == 0 ) ? 64 : 0;
 						if( nLevel == 0 )
 						{
+                            rect百の位 = this.rc数字[ 11 ];
 							rect十の位 = this.rc数字[ 11 ];		// "--"
 							rect一の位 = this.rc数字[ 11 ];		// "-- "
 						}
 						else if( cスコア.譜面情報.レベルを非表示にする )
 						{
+                            rect百の位 = this.rc数字[ 10 ];
 							rect十の位 = this.rc数字[ 10 ];		// "?"
 							rect一の位 = this.rc数字[ 10 ];		// "?"
 						}
 						else
 						{
-							rect十の位 = this.rc数字[ nLevel / 10 ];
-							rect一の位 = this.rc数字[ nLevel % 10 ];
+                            rect百の位 = this.rc数字[( nLevel / 100 )];
+                            if (nLevel > 100)
+                            {
+                                nLevel = nLevel / 10;
+                                rect十の位 = this.rc数字[nLevel / 10];
+                                rect一の位 = this.rc数字[nLevel % 10];
+                            }
+                            else
+                            {
+							    rect十の位 = this.rc数字[ nLevel / 10 ];
+							    rect一の位 = this.rc数字[ nLevel % 10 ];
+                            }
+                            /*
+                            if(CDTXMania.ConfigIni.b難易度表示をXG表示にする == true)
+                            {
+                                if (this.n現在選択中の曲のレベル[i] < 100)
+                                {
+                                    dbLevel = this.n現在選択中の曲のレベル[i] / 10;
+                                    rect百の位 = this.rc数字[ (int)dbLevel ];
+                                    rect十の位 = this.rc数字[ nLevel % 10  ];
+                                    rect一の位 = this.rc数字[ nLevel / 100 ];
+                                }
+                                else if (this.n現在選択中の曲のレベル[i] > 100)
+                                {
+                                    rect百の位 = this.rc数字[ nLevel / 10 ];
+                                    rect十の位 = this.rc数字[ (nLevel % 10) ];
+                                    rect一の位 = this.rc数字[ this.n現在選択中の曲のレベル[i] - (nLevel * 10)];
+                                }
+                            }
+                            */
 						}
+                        rect百の位.X += nRectOffsetX;
+                        rect百の位.Y += nRectOffsetY;
 						rect十の位.X += nRectOffsetX;
 						rect十の位.Y += nRectOffsetY;
 						rect一の位.X += nRectOffsetX;
 						rect一の位.Y += nRectOffsetY;
-						this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX,      nDispPosY, rect十の位 );
-						this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 13, nDispPosY, rect一の位 );
+                        /*
+                        if(CDTXMania.ConfigIni.b難易度表示をXG表示にする == true)
+                        {
+                            this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 13, nDispPosY, rect百の位 );
+                            this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 4,  nDispPosY + 2, new Rectangle(42, 128, 14, 19));
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 5,  nDispPosY, rect十の位 );
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 18, nDispPosY, rect一の位 );
+                        }
+                        else
+                        */
+                        {
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX,      nDispPosY, rect十の位 );
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 13, nDispPosY, rect一の位 );
+                        }
 					}
 				}
 

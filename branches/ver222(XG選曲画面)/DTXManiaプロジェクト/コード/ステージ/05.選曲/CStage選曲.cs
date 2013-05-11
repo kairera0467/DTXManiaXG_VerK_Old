@@ -37,13 +37,6 @@ namespace DTXMania
 				act曲リスト.bIsEnumeratingSongs = value;
 			}
 		}
-		public bool bIsPlayingPremovie
-		{
-			get
-			{
-				return this.actPreimageパネル.bIsPlayingPremovie;
-			}
-		}
 		public bool bスクロール中
 		{
 			get
@@ -66,11 +59,6 @@ namespace DTXMania
 			get;
 			private set;
 		}
-        /// <summary>
-        /// <para>現在演奏中の曲のスコアに対応する背景動画。</para>
-        /// <para>r現在演奏中の曲のスコア の読み込み時に、自動検索・抽出・生成される。</para>
-        /// </summary>
-        public CDirectShow r現在演奏中のスコアの背景動画 = null;
 		public int n現在選択中の曲の難易度
 		{
 			get
@@ -233,7 +221,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.t安全にDisposeする( ref this.r現在演奏中のスコアの背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
@@ -272,7 +259,7 @@ namespace DTXMania
 				if( this.tx背景 != null )
 					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 
-			//	this.actPreimageパネル.On進行描画();
+				this.actPreimageパネル.On進行描画();
 			//	this.bIsEnumeratingSongs = !this.actPreimageパネル.bIsPlayingPremovie;				// #27060 2011.3.2 yyagi: #PREMOVIE再生中は曲検索を中断する
 
 				this.act曲リスト.On進行描画();
@@ -284,20 +271,20 @@ namespace DTXMania
 					y = ( (int) ( this.tx上部パネル.sz画像サイズ.Height * dbY表示割合 ) ) - this.tx上部パネル.sz画像サイズ.Height;
 				}
 				if( this.tx上部パネル != null )
-				//		this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0, y );
+						//this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0, y );
 
-				//this.actInformation.On進行描画();
+				this.actInformation.On進行描画();
 				if( this.tx下部パネル != null )
-				//	this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
+					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
-				//this.actステータスパネル.On進行描画();
-				//this.act演奏履歴パネル.On進行描画();
+				this.actステータスパネル.On進行描画();
+				this.act演奏履歴パネル.On進行描画();
 				this.actPresound.On進行描画();
 				if( this.txコメントバー != null )
 				{
-                //    this.txコメントバー.t2D描画(CDTXMania.app.Device, 484, 342);
+                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 484, 342);
 				}
-				//this.actArtistComment.On進行描画();
+				this.actArtistComment.On進行描画();
 				//this.actオプションパネル.On進行描画();
 				if ( this.txFLIP != null && CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.16 yyagi
 				{
@@ -405,7 +392,7 @@ namespace DTXMania
 						if ( this.act曲リスト.r現在選択中の曲 != null )
 						{
 							#region [ Decide ]
-							if ( ( CDTXMania.Pad.b押されたDGB( Eパッド.Decide ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.CY ) ) ||
+							if ( ( CDTXMania.Pad.b押されたDGB( Eパッド.Decide ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || 
 								( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) )
 							{
 								if ( this.act曲リスト.r現在選択中の曲 != null )
@@ -591,12 +578,12 @@ namespace DTXMania
 							}
 							#endregion
 							#region [ BD HT Drums: ソート画面 ]
-							if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.HT ) )
+							if ( CDTXMania.Pad.b押されている( E楽器パート.DRUMS, Eパッド.BD ) && CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.HT ) )
 							{	// [BD]+[HT] 未使用
 								//
-								CommandHistory.Add( E楽器パート.DRUMS, EパッドFlag.HT );
-								EパッドFlag[] comSort = new EパッドFlag[] { EパッドFlag.BD, EパッドFlag.HT };
-								if ( CommandHistory.CheckCommand( comSort, E楽器パート.DRUMS ) )
+								//CommandHistory.Add( E楽器パート.DRUMS, EパッドFlag.HT );
+								//EパッドFlag[] comSort = new EパッドFlag[] { EパッドFlag.BD, EパッドFlag.HT };
+								//if ( CommandHistory.CheckCommand( comSort, E楽器パート.DRUMS ) )
 								{
 									CDTXMania.Skin.sound変更音.t再生する();
 									this.actSortSongs.tActivatePopupMenu( E楽器パート.DRUMS, ref this.act曲リスト );
@@ -682,12 +669,12 @@ namespace DTXMania
 		private CActFIFOBlack actFIfrom結果画面;
 //		private CActFIFOBlack actFOtoNowLoading;	// #27787 2012.3.10 yyagi 曲決定時の画面フェードアウトの省略
 		private CActSelectInformation actInformation;
-		private CActSelectPreimageパネル actPreimageパネル;
+		public CActSelectPreimageパネル actPreimageパネル;
 		private CActSelectPresound actPresound;
 		private CActオプションパネル actオプションパネル;
 		public CActSelectステータスパネル actステータスパネル;
 		private CActSelect演奏履歴パネル act演奏履歴パネル;
-		private CActSelect曲リスト act曲リスト;
+		public CActSelect曲リスト act曲リスト;
 		private CActSelectShowCurrentPosition actShowCurrentPosition;
 
 		private CActSortSongs actSortSongs;
