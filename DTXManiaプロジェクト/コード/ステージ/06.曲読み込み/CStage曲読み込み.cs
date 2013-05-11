@@ -209,8 +209,13 @@ namespace DTXMania
 				this.str曲タイトル = "";
                 this.strアーティスト名 = "";
 				this.strSTAGEFILE = "";
-                this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 36f, FontStyle.Bold, GraphicsUnit.Pixel);
-                this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 36f, FontStyle.Bold, GraphicsUnit.Pixel);
+
+                //2013.05.10.kairera0467.曲選択から持ってきた。
+                if (CDTXMania.ConfigIni.b選曲リストフォントを斜体にする) regular |= FontStyle.Italic;
+                if (CDTXMania.ConfigIni.b選曲リストフォントを太字にする) regular |= FontStyle.Bold;
+                this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
+                this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
+
 				this.nBGM再生開始時刻 = -1L;
 				this.nBGMの総再生時間ms = 0;
 				if( this.sd読み込み音 != null )
@@ -320,7 +325,7 @@ namespace DTXMania
                             if (string.IsNullOrEmpty(this.strアーティスト名))       //2012.02.11.kairera0467 アーティスト名が無かった場合の処理。
                                 image2 = new Bitmap( size.Width, size.Height );
                             else
-                                image2 = new Bitmap(size2.Width, size2.Height);
+                                image2 = new Bitmap( size2.Width, size2.Height );
 
 							graphics = Graphics.FromImage( image );
 							graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -331,9 +336,9 @@ namespace DTXMania
                             graphics2.DrawString( this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
 							graphics.Dispose();
 							this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
-							this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
+							this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.42f, 0.5f, 1f );
                             this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
-                            this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
+                            this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.42f, 0.5f, 1f);
 							image.Dispose();
 						}
 						else

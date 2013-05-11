@@ -384,6 +384,7 @@ namespace DTXMania
                     switch (nLane)
                     {
                       //2013.02.20.kairera0467 現在はレーンタイプAのみ対応。座標はやや適当。
+                      //2013.05.10.kairera0467 やっとこさレーンタイプBに正式対応。
                         case 0:
                             this.stボーナス[i].x = 270;
                             break;
@@ -391,16 +392,28 @@ namespace DTXMania
                             this.stボーナス[i].x = 340;
                             break;
                         case 2:
-                            this.stボーナス[i].x = 460;
+                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                                this.stボーナス[i].x = 410;
+                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                                this.stボーナス[i].x = 470;
                             break;
                         case 3:
-                            this.stボーナス[i].x = 565;
+                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                                this.stボーナス[i].x = 460;
+                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                                this.stボーナス[i].x = 410;
                             break;
                         case 4:
-                            this.stボーナス[i].x = 520;
+                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                                this.stボーナス[i].x = 520;
+                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                                this.stボーナス[i].x = 590;
                             break;
                         case 5:
-                            this.stボーナス[i].x = 580;
+                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                                this.stボーナス[i].x = 580;
+                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                                this.stボーナス[i].x = 530;
                             break;
                         case 6:
                             this.stボーナス[i].x = 630;
