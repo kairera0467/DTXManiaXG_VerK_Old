@@ -338,7 +338,7 @@ namespace DTXMania
 							this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
 							this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.42f, 0.5f, 1f );
                             this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
-                            this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.42f, 0.5f, 1f);
+                            this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
 							image.Dispose();
 						}
 						else
