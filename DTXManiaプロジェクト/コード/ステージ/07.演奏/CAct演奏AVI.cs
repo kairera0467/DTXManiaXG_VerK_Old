@@ -1021,7 +1021,7 @@ namespace DTXMania
                     #region[ スキルメーター無効 ]
                     else
                     {
-                        if (this.fAVIアスペクト比 > 1.75f)
+                        if (this.fAVIアスペクト比 > (256f / 266f))
                         {
                             this.ratio2 = 420f / ((float)this.framewidth);
                             this.position2 = 168 + (int)((240f - (this.frameheight * this.ratio2)) / 2f);
@@ -1035,7 +1035,7 @@ namespace DTXMania
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 142);
                         this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
                         this.tx描画用.vc拡大縮小倍率 = this.smallvc;
-                        if ( this.fAVIアスペクト比 > 1.75f )
+                        if (this.fAVIアスペクト比 > (256f / 266f))
                         {
                             if ( CDTXMania.ConfigIni.bDirectShowMode == false )
                             {
@@ -1057,19 +1057,7 @@ namespace DTXMania
                         }
                         else
                         {
-                            if ( this.dsBGV == null )
-                            {
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
-                            }
-                            else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
-                            {
-                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
-                                if (this.dsBGV.dshow.b上下反転)
-                                    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, this.position2, 168);
-                                else
-                                    this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
-                            }
-                            //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 168);
+                            this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
                         }
                     }
                     #endregion
