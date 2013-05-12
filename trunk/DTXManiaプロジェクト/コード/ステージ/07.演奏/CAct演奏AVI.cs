@@ -217,6 +217,7 @@ namespace DTXMania
             this.n移動開始時刻ms = -1;
             this.n前回表示したフレーム番号 = -1;
             this.bフレームを作成した = false;
+            this.b再生トグル = false;
             this.pBmp = IntPtr.Zero;
             this.MovieMode();
             this.nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
@@ -1065,46 +1066,31 @@ namespace DTXMania
 
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
-                bool bToggle = false;
-                long l汎用ムービー再生位置 = 0;
-                long lムービー再生位置 = 0;
                 if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))
                 {
-                    if (bToggle == false)
+                    if (this.b再生トグル == false)
                     {
                         if (this.dsBGV != null)
                         {
                             this.dsBGV.dshow.MediaCtrl.Pause();
-                            this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lムービー再生位置);
                         }
                         if (this.ds汎用 != null)
                         {
                             this.ds汎用.MediaCtrl.Pause();
-                            this.ds汎用.MediaSeeking.GetCurrentPosition(out l汎用ムービー再生位置);
                         }
-                        bToggle = true;
+                        this.b再生トグル = true;
                     }
-                    else if(bToggle == true)
+                    else if(this.b再生トグル == true)
                     {
                         if (this.dsBGV != null)
                         {
                             this.dsBGV.dshow.MediaCtrl.Run();
-                            this.dsBGV.dshow.MediaSeeking.SetPositions(
-                            DsLong.FromInt64((long)(0)),
-                            AMSeekingSeekingFlags.AbsolutePositioning,
-                            null,
-                            AMSeekingSeekingFlags.NoPositioning);
                         }
                         if (this.ds汎用 != null)
                         {
                             this.ds汎用.MediaCtrl.Run();
-                            this.ds汎用.MediaSeeking.SetPositions(
-                            DsLong.FromInt64((long)(l汎用ムービー再生位置)),
-                            AMSeekingSeekingFlags.AbsolutePositioning,
-                            null,
-                            AMSeekingSeekingFlags.NoPositioning);
                         }
-                        bToggle = false;
+                        this.b再生トグル = false;
                     }
                 }
             }
@@ -1151,6 +1137,7 @@ namespace DTXMania
         //private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
+        private bool b再生トグル;
         public float fAVIアスペクト比;
         private uint frameheight;
         private uint framewidth;

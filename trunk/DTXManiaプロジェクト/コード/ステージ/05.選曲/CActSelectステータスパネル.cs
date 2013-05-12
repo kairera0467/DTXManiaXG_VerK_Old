@@ -165,7 +165,7 @@ namespace DTXMania
                         }
                         this.n選択中の曲のレベル難易度毎[i] = nLevel;
                         this.db現在選択中の曲の最高スキル値難易度毎[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大スキル.Drums;
-
+                        this.db現在選択中の曲の曲別スキル値難易度毎[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大曲別スキル.Drums;
                     }
                     else
                     {
@@ -209,6 +209,7 @@ namespace DTXMania
 				this.str難易度ラベル[ j ] = "";
                 this.n選択中の曲のレベル難易度毎[ j ] = 0;
                 this.db現在選択中の曲の最高スキル値難易度毎[j] = 0.0;
+                this.db現在選択中の曲の曲別スキル値難易度毎[j] = 0.0;
 			}
 			this.n難易度開始文字位置 = 0;
 			this.r直前の曲 = null;
@@ -365,10 +366,16 @@ namespace DTXMania
                             n難易度小数[i] = (n選択中の曲のレベル難易度毎[i] - (n難易度整数[i] * 10)) * 10;
                         }
 
-                        if (this.str難易度ラベル[i] != null)
+                        if (this.str難易度ラベル[i] != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 != C曲リストノード.Eノード種別.RANDOM)
                         {
                             this.t大文字表示(419 + (i * 143), 62 - y差分[i], string.Format("{0:0}", n難易度整数[i]));
                             this.t小文字表示(448 + (i * 143), 80 - y差分[i], string.Format("{0,2:00}", n難易度小数[i]));
+                            this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
+                        }
+                        else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM)
+                        {
+                            this.t大文字表示(419 + (i * 143), 62 - y差分[i], ("-"));
+                            this.t小文字表示(448 + (i * 143), 80 - y差分[i], ("--"));
                             this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
                         }
 					}
@@ -392,11 +399,34 @@ namespace DTXMania
 
                     CDTXMania.act文字コンソール.tPrint(420, 580, C文字コンソール.Eフォント種別.白, string.Format("BPM:{0:####0}", this.n現在選択中の曲のBPM));
                 }
-
-
-
 				//-----------------
 				#endregion
+                #region [ 選択曲の 曲別スキルの描画 ]
+                //-----------------
+                for (int i = 0; i < 5; i++)
+                {
+                    if (this.str難易度ラベル[i] != null)
+                    {
+                        double[] db現在の曲のレベルXG = new double[5];
+                        if (this.n選択中の曲のレベル難易度毎[i] < 100)
+                        {
+                           db現在の曲のレベルXG[i] = this.n選択中の曲のレベル難易度毎[i] / 10.0;
+                        }
+                        else
+                        {
+                           db現在の曲のレベルXG[i] = this.n選択中の曲のレベル難易度毎[i] / 100.0;
+                        }
+
+                        double db1 = Math.Max(this.db現在選択中の曲の最高スキル値難易度毎[0] * db現在の曲のレベルXG[0] * 20, this.db現在選択中の曲の曲別スキル値難易度毎[1] * db現在の曲のレベルXG[1] * 20);
+                        double db2 = Math.Max(this.db現在選択中の曲の曲別スキル値難易度毎[2] * db現在の曲のレベルXG[2] * 20, this.db現在選択中の曲の曲別スキル値難易度毎[3] * db現在の曲のレベルXG[3] * 20);
+                        double dbA = Math.Max(db1, db2);
+                        double db曲別スキル = Math.Max(dbA, this.db現在選択中の曲の曲別スキル値難易度毎[4] * db現在の曲のレベルXG[4] * 20);
+
+                        //this.t達成率表示(250, 120, string.Format("{0,6:##0.00}", db曲別スキル));
+                    }
+                }
+                //-----------------
+                #endregion
 				#region [ 選択曲の 最高スキル値ゲージ＋数値の描画 ]
 				//-----------------
 				for( int i = 0; i < 5; i++ )
@@ -489,6 +519,7 @@ namespace DTXMania
 		private CCounter ct難易度矢印用;
 		private STDGBVALUE<double> db現在選択中の曲の最高スキル値;
         private double[] db現在選択中の曲の最高スキル値難易度毎 = new double[5];
+        private double[] db現在選択中の曲の曲別スキル値難易度毎 = new double[5];
         private STDGBVALUE<double> db現在選択中の曲の曲別スキル;
 		private STDGBVALUE<int> n現在選択中の曲のレベル;
         private int[] n選択中の曲のレベル難易度毎 = new int[5];
