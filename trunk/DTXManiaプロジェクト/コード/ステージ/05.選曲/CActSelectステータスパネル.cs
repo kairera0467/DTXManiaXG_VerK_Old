@@ -141,6 +141,14 @@ namespace DTXMania
 					this.b現在選択中の曲がフルコンボ[ i ] = cスコア.譜面情報.フルコンボ[ i ];
 					this.db現在選択中の曲の最高スキル値[ i ] = cスコア.譜面情報.最大スキル[ i ];
                     this.db現在選択中の曲の曲別スキル[i] = cスコア.譜面情報.最大曲別スキル[i];
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (c曲リストノード.arスコア[j] != null)
+                        {
+                            this.n現在選択中の曲の最高ランク難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.最大ランク[i];
+                            this.b現在選択中の曲がフルコンボ難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.フルコンボ[i];
+                        }
+                    }
 				}
 				for( int i = 0; i < 5; i++ )
 				{
@@ -157,7 +165,7 @@ namespace DTXMania
                         }
                         this.n選択中の曲のレベル難易度毎[i] = nLevel;
                         this.db現在選択中の曲の最高スキル値難易度毎[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大スキル.Drums;
-                        //this.n現在選択中の曲の最高ランク[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大ランク.Drums;
+
                     }
                     else
                     {
@@ -190,13 +198,17 @@ namespace DTXMania
 				this.n現在選択中の曲の最高ランク[ i ] = (int)CScoreIni.ERANK.UNKNOWN;
 				this.b現在選択中の曲がフルコンボ[ i ] = false;
 				this.db現在選択中の曲の最高スキル値[ i ] = 0.0;
+                for (int j = 0; j < 5; j++)
+                {
+                    this.n現在選択中の曲の最高ランク難易度毎[j][i] = (int)CScoreIni.ERANK.UNKNOWN;
+                    this.b現在選択中の曲がフルコンボ難易度毎[j][i] = false;
+                }
 			}
 			for( int j = 0; j < 5; j++ )
 			{
 				this.str難易度ラベル[ j ] = "";
                 this.n選択中の曲のレベル難易度毎[ j ] = 0;
                 this.db現在選択中の曲の最高スキル値難易度毎[j] = 0.0;
-                this.n現在選択中の曲の最高ランク難易度毎[ j ] = (int)CScoreIni.ERANK.UNKNOWN;
 			}
 			this.n難易度開始文字位置 = 0;
 			this.r直前の曲 = null;
@@ -389,7 +401,6 @@ namespace DTXMania
 				//-----------------
 				for( int i = 0; i < 5; i++ )
 				{
-					//int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
 					if ( this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[ i ] != 0.00 )
 					{
                         this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i]));
@@ -401,7 +412,7 @@ namespace DTXMania
 				//-----------------
 				for( int i = 0; i < 5; i++ )
 				{
-					int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[ i ];
+					int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[ i ].Drums;
 					if( nMaxRank != 99 )
 					{
 						if ( nMaxRank < 0 )
@@ -412,9 +423,9 @@ namespace DTXMania
 						{
 							nMaxRank = 6;
 						}
-						if( this.txゲージ用数字他 != null )
+						if( this.txゲージ用数字他 != null && this.str難易度ラベル[ i ] != null)
 						{
-							this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, 353 + ( i * 143 ), 103 - y差分[i], new Rectangle(42, 0 + nMaxRank * 32, 32, 32) );
+							this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, (353 + ( i * 143 )), 104 - y差分[ i ], new Rectangle(42 + nMaxRank * 32 , 0 , 32, 32) );
 						}
 					}
 				}
@@ -423,19 +434,18 @@ namespace DTXMania
 				#region [ 選択曲の FullCombo の 描画 ]
 				//-----------------
 				//Rectangle rectFullCombo = new Rectangle( 60, 0x30, 60, 0x18 );
-				//for( int i = 0; i < 5; i++ )
-				//{
-					if( this.b現在選択中の曲がフルコンボ[ 0 ] )
+				for( int i = 0; i < 5; i++ )
+				{
+					if( this.b現在選択中の曲がフルコンボ難易度毎[ i ].Drums )
 					{
 						//int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
-						int x = 376 + (this.n現在選択中の曲の難易度 * 143);
-						int y = 106;
+						int x = 386 + ( i  * 143);
 						if( this.txゲージ用数字他 != null )
 						{
-							//this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, x, y - y差分[this.n現在選択中の曲の難易度], rectFullCombo );
+							this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, x, 106 - y差分[ i ], new Rectangle(0, 0, 42, 32) );
 						}
 					}
-				//}
+				}
 				//-----------------
 				#endregion
 			}
@@ -473,6 +483,7 @@ namespace DTXMania
         private readonly ST文字位置[] st大文字位置;
 
 		private STDGBVALUE<bool> b現在選択中の曲がフルコンボ;
+        private STDGBVALUE<bool>[] b現在選択中の曲がフルコンボ難易度毎 = new STDGBVALUE<bool>[5];
 		private CCounter ct登場アニメ用;
 		private CCounter ct難易度スクロール用;
 		private CCounter ct難易度矢印用;
@@ -483,7 +494,7 @@ namespace DTXMania
         private int[] n選択中の曲のレベル難易度毎 = new int[5];
         private double n現在選択中の曲のBPM;
 		private STDGBVALUE<int> n現在選択中の曲の最高ランク;
-        private int[] n現在選択中の曲の最高ランク難易度毎 = new int[ 5 ];
+        private STDGBVALUE<int>[] n現在選択中の曲の最高ランク難易度毎 = new STDGBVALUE<int>[5];
 		private int n現在選択中の曲の難易度;
 		private int n難易度開始文字位置;
 		private const int n難易度表示可能文字数 = 0x24;
