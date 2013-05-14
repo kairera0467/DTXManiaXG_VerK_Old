@@ -125,6 +125,7 @@ namespace DTXMania
                     if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f)
                     {
                         this.dsBGV.dshow.t再生開始();
+                        this.bDShowクリップを再生している = true;
                     }
                     this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
@@ -169,13 +170,14 @@ namespace DTXMania
                 {
                     if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
-                        this.dsBGV.dshow.MediaSeeking.SetPositions(
-                        DsLong.FromInt64((long)(-1)),
-                        AMSeekingSeekingFlags.AbsolutePositioning,
-                        null,
-                        AMSeekingSeekingFlags.NoPositioning);
+                        //this.dsBGV.dshow.MediaSeeking.SetPositions(
+                        //DsLong.FromInt64((long)(-1)),
+                        //AMSeekingSeekingFlags.AbsolutePositioning,
+                        //null,
+                        //AMSeekingSeekingFlags.NoPositioning);
                     }
                     this.dsBGV.dshow.MediaCtrl.Stop();
+                    this.bDShowクリップを再生している = false;
                 }
             }
         }
@@ -218,6 +220,7 @@ namespace DTXMania
             this.n前回表示したフレーム番号 = -1;
             this.bフレームを作成した = false;
             this.b再生トグル = false;
+            this.bDShowクリップを再生している = false;
             this.pBmp = IntPtr.Zero;
             this.MovieMode();
             this.nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
@@ -411,6 +414,7 @@ namespace DTXMania
                     {
                         this.n移動開始時刻ms = -1L;
                         this.dsBGV.dshow.MediaCtrl.Stop();
+                        this.bDShowクリップを再生している = false;
                     }
 
                     else
@@ -559,7 +563,7 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && (this.n総移動時間ms != -1) && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && (this.bDShowクリップを再生している == true) && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
                         if (this.bFullScreen)
                         {
@@ -1138,6 +1142,7 @@ namespace DTXMania
         public bool bWindowMode;
         private bool bフレームを作成した;
         private bool b再生トグル;
+        private bool bDShowクリップを再生している;
         public float fAVIアスペクト比;
         private uint frameheight;
         private uint framewidth;
