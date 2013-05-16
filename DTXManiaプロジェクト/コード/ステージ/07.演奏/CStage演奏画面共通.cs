@@ -3581,7 +3581,8 @@ namespace DTXMania
                 this.ctBPMバー.t進行Loop();
                 this.ctコンボ動作タイマ.t進行Loop();
             }
-            this.ct登場用.t進行();
+            if(CDTXMania.ConfigIni.bDrums有効)  //2013.05.16.kairera0467 ギター側のアニメーションは未実装なのでとりあえず。
+                this.ct登場用.t進行();
 		}
 
 		protected bool t進行描画・フェードイン・アウト()
