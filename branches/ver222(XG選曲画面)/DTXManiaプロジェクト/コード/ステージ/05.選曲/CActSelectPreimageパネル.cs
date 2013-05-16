@@ -111,7 +111,8 @@ namespace DTXMania
 				}
 				this.t描画処理・パネル本体();
 				this.t描画処理・ジャンル文字列();
-				this.t描画処理・プレビュー画像();
+				//this.t描画処理・プレビュー画像();
+                this.t描画処理・サムネイル画像();
 				this.t描画処理・センサ光();
 				this.t描画処理・センサ本体();
 			}
@@ -207,18 +208,19 @@ namespace DTXMania
 			}
 			sf.UnlockRectangle();
 		}
-        private void tプレビュー画像・動画の変更()
+        public void tプレビュー画像・動画の変更()
         {
             //if (!CDTXMania.ConfigIni.bストイックモード)
             {
                 for (int i = 0; i < 13; i++)
                 {
-                    this.t指定された曲からプレビュー画像を構築する(CDTXMania.stage選曲.act曲リスト.stバー情報[CDTXMania.stage選曲.act曲リスト.nパネル番号].cScore, i);
+                    //ここでは変更が効くが、どうやらstバー情報が更新されないようだ。なんてこった・・・・・
+                    this.t指定された曲からプレビュー画像を構築する(CDTXMania.stage選曲.act曲リスト.stバー情報[i].cScore, i);
                     //{
                         //if (i == 13)
                         //    return;
                         //else
-                            continue;
+                            //continue;
                     //}
                     //else
                     //{
@@ -265,12 +267,13 @@ namespace DTXMania
 			}
 			return true;
 		}
-        private bool t指定された曲からプレビュー画像を構築する(Cスコア cスコア, int nバー番号)
+        public bool t指定された曲からプレビュー画像を構築する(Cスコア cスコア, int nバー番号)
         {
             //Cスコア cスコア = CDTXMania.stage選曲.r現在選択中のスコア;
             //cスコア = CDTXMania.stage選曲.r現在選択中のスコア;
 
             #region[選択中のやつ]
+            /*
             if (nバー番号 == 5)
             {
                 cスコア = CDTXMania.stage選曲.r現在選択中のスコア;
@@ -306,16 +309,19 @@ namespace DTXMania
                     }
                 }
             }
+            */
             #endregion
-            else
+            //else
             {
                 if ((cスコア == null) || string.IsNullOrEmpty(cスコア.譜面情報.Preimage))
                 {
+                    this.r表示するプレビュー画像[nバー番号] = this.txプレビュー画像がないときの画像;
                     return false;
                 }
                 string str = cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Preimage;
                 if (!str.Equals(this.str現在のファイル名[nバー番号]))
                 {
+                    //現状バー情報が変わらないため、この分岐文に突入できていない。
                     Trace.TraceInformation("-----------------------------------------");
                     CDTXMania.tテクスチャの解放(ref this.txサムネイル画像[nバー番号]);
                     this.str現在のファイル名[nバー番号] = str;
@@ -574,65 +580,22 @@ namespace DTXMania
                 }
 			}
 		}
-        public unsafe void t描画処理・サムネイル画像(int nバー番号)
+        public unsafe void t描画処理・サムネイル画像()
         {
-            #region[ 2D描画 ]
-            /*
-            if ( !CDTXMania.stage選曲.bスクロール中 && !this.b新しいプレビューファイルをまだ読み込んでいない ) 
-			{
-                int x = this.n本体X + 0x24;
-                int y = this.n本体Y + 0x18;
-				float num3 = ( (float) this.ct遅延表示.n現在の値 ) / 100f;
-				float num4 = 0.9f + ( 0.1f * num3 );
-				if( this.r表示するプレビュー画像 != null )
-				{
-					int width = this.txサムネイル画像[nバー番号].sz画像サイズ.Width;
-					int height = this.txサムネイル画像[nバー番号].sz画像サイズ.Height;
-					if( width > 0x198 )
-					{
-						width = 0x198;
-					}
-					if( height > 0x194 )
-					{
-						height = 0x194;
-					}
-                    x += (400 - ((int)(width)) / 2);
-                    y += (400 - ((int)(height)) / 2);
-					this.txサムネイル画像[nバー番号].n透明度 = (int) ( 255f * num3 );
-					this.txサムネイル画像[nバー番号].t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, width, height ) );
-				}
-            }
-            */
-            #endregion
             #region[ 3D描画 ]
-            if (nバー番号 == 5)
+            for (int n = 0; n < 13; n++ )
             {
-                if (this.r表示するプレビュー画像[5] != null)
+                if (this.r表示するプレビュー画像[n] != null)
                 {
                     var mat = SlimDX.Matrix.Identity;
                     mat *= SlimDX.Matrix.Scaling(0.3f * CTexture.f画面比率, 0.3f * CTexture.f画面比率, 1.0f);
-                    mat *= SlimDX.Matrix.RotationY(this.stマトリクス座標[5].rotY + (this.stマトリクス座標[5].rotY - this.stマトリクス座標[5].rotY) * 0.4f);
+                    mat *= SlimDX.Matrix.RotationY(this.stマトリクス座標[n].rotY + (this.stマトリクス座標[n].rotY - this.stマトリクス座標[n].rotY) * 0.4f);
                     mat *= SlimDX.Matrix.Translation(
-                        (this.stマトリクス座標[5].x + (int)((this.stマトリクス座標[5].x - this.stマトリクス座標[5].x) * 1.0f)) * CTexture.f画面比率,
-                        (this.stマトリクス座標[5].y + (int)((this.stマトリクス座標[5].y - this.stマトリクス座標[5].y) * 1.0f)) * CTexture.f画面比率,
-                        (this.stマトリクス座標[5].z + (int)((this.stマトリクス座標[5].z - this.stマトリクス座標[5].z) * 1.0f)) * CTexture.f画面比率);
+                        (this.stマトリクス座標[n].x + (int)((this.stマトリクス座標[n].x - this.stマトリクス座標[n].x) * 1.0f)) * CTexture.f画面比率,
+                        (this.stマトリクス座標[n].y + (int)((this.stマトリクス座標[n].y - this.stマトリクス座標[n].y) * 1.0f)) * CTexture.f画面比率,
+                        (this.stマトリクス座標[n].z + (int)((this.stマトリクス座標[n].z - this.stマトリクス座標[n].z) * 1.0f)) * CTexture.f画面比率);
 
-                    this.r表示するプレビュー画像[5].t3D描画(CDTXMania.app.Device, mat);
-                }
-            }
-            else
-            {
-                if (this.r表示するプレビュー画像[nバー番号] != null)
-                {
-                    var mat = SlimDX.Matrix.Identity;
-                    mat *= SlimDX.Matrix.Scaling(0.3f * CTexture.f画面比率, 0.3f * CTexture.f画面比率, 1.0f);
-                    mat *= SlimDX.Matrix.RotationY(this.stマトリクス座標[nバー番号].rotY + (this.stマトリクス座標[nバー番号].rotY - this.stマトリクス座標[nバー番号].rotY) * 0.4f);
-                    mat *= SlimDX.Matrix.Translation(
-                        (this.stマトリクス座標[nバー番号].x + (int)((this.stマトリクス座標[nバー番号].x - this.stマトリクス座標[nバー番号].x) * 1.0f)) * CTexture.f画面比率,
-                        (this.stマトリクス座標[nバー番号].y + (int)((this.stマトリクス座標[nバー番号].y - this.stマトリクス座標[nバー番号].y) * 1.0f)) * CTexture.f画面比率,
-                        (this.stマトリクス座標[nバー番号].z + (int)((this.stマトリクス座標[nバー番号].z - this.stマトリクス座標[nバー番号].z) * 1.0f)) * CTexture.f画面比率);
-
-                    this.r表示するプレビュー画像[nバー番号].t3D描画(CDTXMania.app.Device, mat);
+                    this.r表示するプレビュー画像[n].t3D描画(CDTXMania.app.Device, mat);
                 }
             }
             #endregion

@@ -219,10 +219,12 @@ namespace DTXMania
 		}
 		public void t現在選択中の曲を元に曲バーを再構成する()
 		{
+            //ここではプレビュー画像の生成が無効になる?
 			this.tバーの初期化();
 			for( int i = 0; i < 13; i++ )
 			{
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
+                CDTXMania.stage選曲.actPreimageパネル.t選択曲が変更された();
 			}
 		}
 		public void t次に移動()
@@ -793,7 +795,6 @@ namespace DTXMania
 							int x = 410 - ( (int) ( width * db回転率 ) );
 							int y = 300;
 							this.tバーの描画( 410, 270, this.stバー情報[ nパネル番号 ].eバー種別, true );
-                            CDTXMania.stage選曲.actPreimageパネル.t描画処理・サムネイル画像( 5 );
 							//-----------------
 							#endregion
 							#region [ タイトル名テクスチャを描画。]
@@ -826,7 +827,7 @@ namespace DTXMania
 							if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
 								this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 88 , y + 6 );
 
-                            CDTXMania.stage選曲.actPreimageパネル.t描画処理・サムネイル画像(i);
+
 							//-----------------
 							#endregion
 							#region [ スキル値を描画。]
@@ -865,7 +866,6 @@ namespace DTXMania
 						#region [ バーテクスチャを描画。]
 						//-----------------
 						this.tバーの描画( 410, 270, this.stバー情報[ nパネル番号 ].eバー種別, true );
-                        CDTXMania.stage選曲.actPreimageパネル.t描画処理・サムネイル画像(5);
 						//-----------------
 						#endregion
 						#region [ タイトル名テクスチャを描画。]
@@ -894,7 +894,6 @@ namespace DTXMania
 						//-----------------
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
 							this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 0x58, y + 6 );
-                        CDTXMania.stage選曲.actPreimageパネル.t描画処理・サムネイル画像( i );
 						//-----------------
 						#endregion
 						#region [ スキル値を描画。]
@@ -903,12 +902,14 @@ namespace DTXMania
 							//this.tスキル値の描画( x + 34, y + 18, this.stバー情報[ nパネル番号 ].nスキル値[ (int) this.e楽器パート ] );
 						//-----------------
 						#endregion
+
 					}
                    CDTXMania.act文字コンソール.tPrint(x + 34, y + 18, C文字コンソール.Eフォント種別.白, string.Format("i:{0:#0}", i));
                    CDTXMania.act文字コンソール.tPrint(x + 34, y + 36, C文字コンソール.Eフォント種別.白, string.Format("n:{0:#0}", nパネル番号));
 				}
 				//-----------------
 				#endregion
+
 			}
 			#region [ スクロール地点の計算(描画はCActSelectShowCurrentPositionにて行う) #27648 ]
 			int py;
@@ -1181,6 +1182,7 @@ namespace DTXMania
 			for( int i = 0; i < 13; i++ )
 			{
 				this.stバー情報[ i ].strタイトル文字列 = song.strタイトル;
+                CDTXMania.stage選曲.actPreimageパネル.t指定された曲からプレビュー画像を構築する(this.stバー情報[i].cScore, i);
 				this.stバー情報[ i ].col文字色 = song.col文字色;
 				this.stバー情報[ i ].eバー種別 = this.e曲のバー種別を返す( song );
                 this.stバー情報[ i ].cScore = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song) ];
@@ -1190,6 +1192,7 @@ namespace DTXMania
 
 				song = this.r次の曲( song );
 			}
+            //CDTXMania.stage選曲.actPreimageパネル.tプレビュー画像・動画の変更();
 
 			this.n現在の選択行 = 5;
 		}
