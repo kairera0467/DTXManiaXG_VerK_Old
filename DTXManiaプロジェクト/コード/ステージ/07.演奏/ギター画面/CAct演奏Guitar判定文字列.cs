@@ -144,34 +144,38 @@ namespace DTXMania
 								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.レーン上 ) ? 80 : 175;
 								num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 450 : 300;
 							}
-							int xc = ( ( num5 + base.st状態[ j ].n相対X座標 ) + ( this.stレーンサイズ[ j ].w / 2 ) );
-							int x = xc - ( (int) ( ( ( 128f * base.st状態[ j ].fX方向拡大率 ) * 1.0 ) / 2.0 ) );
-							int y = ( num6 + base.st状態[ j ].n相対Y座標 ) - ( (int) ( ( ( 43f * base.st状態[ j ].fY方向拡大率 ) * 1.0 ) / 2.0 ) );
-							if( base.tx判定文字列[ index ] != null )
-							{
+
+                            int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
+                            int nRectY = CDTXMania.ConfigIni.nJudgeHeight;
+
+                            int xc = (num5 + base.st状態[j].n相対X座標) + (this.stレーンサイズ[j].w / 2);
+                            int x = (xc - ((int)((110f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)))) - ((nRectX - 225) / 2);
+                            int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0))) - ((nRectY - 135) / 2);
+                            if (base.tx判定文字列[ index ] != null)
+                            {
                                 if (base.st状態[j].judge == E判定.Perfect)
                                 {
-                                    base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 135 * base.st状態[j].nRect, 225, 135));
+                                    base.tx判定文字列[ index ].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                 }
                                 if (base.st状態[j].judge == E判定.Great)
                                 {
-                                    base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(225, 135 * base.st状態[j].nRect, 225, 135));
+                                    base.tx判定文字列[ index ].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                 }
                                 if (base.st状態[j].judge == E判定.Good)
                                 {
-                                    base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(450, 135 * base.st状態[j].nRect, 225, 135));
+                                    base.tx判定文字列[ index ].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                 }
                                 if (base.st状態[j].judge == E判定.Poor)
                                 {
-                                    base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(675, 135 * base.st状態[j].nRect, 225, 135));
+                                    base.tx判定文字列[ index ].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                 }
-                                if (base.st状態[j].judge == E判定.Miss || base.st状態[ j ].judge == E判定.Bad)
+                                if (base.st状態[j].judge == E判定.Miss)
                                 {
-                                    base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(900, 135 * base.st状態[j].nRect, 225, 135));
+                                    base.tx判定文字列[ index ].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                 }
                                 if (base.st状態[j].judge == E判定.Auto)
                                 {
-                                    base.tx判定文字列[index].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(1125, 135 * base.st状態[j].nRect, 225, 135));
+                                    base.tx判定文字列[ index ].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                 }
 								#region [ #25370 2011.6.3 yyagi ShowLag support ]
 								if ( base.nShowLagType  == (int) EShowLagType.ON ||
