@@ -282,7 +282,7 @@ namespace DTXMania
                 this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Fillin Effect.png"));
 
                 //レーン周りの処理。つーか何でbitmapなんだ?
-                /*
+                
                 this.blanes = new Bitmap(558, 720);
                 if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
                 {
@@ -294,15 +294,11 @@ namespace DTXMania
                     this.ilanes = Image.FromFile(CSkin.Path(@"Graphics\7_lanes_Guitar.png"));
                 }
 
-                if (CDTXMania.ConfigIni.bDrums有効 && (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3))
-                {
-                    graphics.DrawImage(this.ilanes, new Rectangle(0, 0, 558, 720), new Rectangle(0, 0, 558, 720), GraphicsUnit.Pixel);
-                }
-                else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
                 {
                     graphics.DrawImage(this.ilanes, new Rectangle(0, 0, 1280, 720), new Rectangle(0, 0, 1280, 720), GraphicsUnit.Pixel);
                 }
-*/
+
                 if ((CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true))
                 {
                     //graphics.Dispose();
@@ -734,50 +730,49 @@ namespace DTXMania
                             this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                         }
                     }
-                    
-                    int n振動x座標 = 0;
-                    if (CDTXMania.stage演奏ドラム画面.bボーナス == true)
-                    { 
-                        for (int n振動回数 = 0; n振動回数 < 20; n振動回数++)
+
+                    this.n振動x座標 = 0;
+                    for (int i = 0; i < 1; i++)
+                    {
+                        if (this.stフィルイン[i].b使用中)
                         {
-                            switch (n振動回数)
+                            switch (this.stフィルイン[i].ct進行.n現在の値)
                             {
                                 case 0:
-                                    n振動x座標 = 20;
+                                    this.n振動x座標 = 5;
                                     break;
                                 case 2:
-                                    n振動x座標 = -20;
+                                    this.n振動x座標 = -5;
                                     break;
                                 case 4:
-                                    n振動x座標 = 16;
+                                    this.n振動x座標 = 4;
                                     break;
                                 case 6:
-                                    n振動x座標 = -16;
+                                    n振動x座標 = -4;
                                     break;
                                 case 8:
-                                    n振動x座標 = 10;
+                                    this.n振動x座標 = 3;
                                     break;
                                 case 10:
-                                    n振動x座標 = -10;
+                                    this.n振動x座標 = -3;
                                     break;
                                 case 12:
-                                    n振動x座標 = 8;
+                                    this.n振動x座標 = 2;
                                     break;
                                 case 14:
-                                    n振動x座標 = -8;
+                                    this.n振動x座標 = -2;
                                     break;
                                 case 16:
-                                    n振動x座標 = 2;
+                                    this.n振動x座標 = 2;
                                     break;
                                 case 18:
-                                    n振動x座標 = -2;
+                                    this.n振動x座標 = -2;
                                     break;
                                 case 20:
-                                    n振動x座標 = 0;
+                                    this.n振動x座標 = 0;
                                     break;
                             }
                         }
-                        CDTXMania.stage演奏ドラム画面.bボーナス = false;
                     }
                     #region [ Failed(RISKY1)時の背景 ]
                     if(CDTXMania.ConfigIni.bDrums有効 == true)
@@ -802,8 +797,8 @@ namespace DTXMania
                     if (this.txバートップ != null)
                     {
                         //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2), 0, new Rectangle(0, 0, 640, 720));
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2), 0, new Rectangle(640, 0, 640, 720));
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
                     }
                     long lPos = 0;
                     if (this.dsBGV != null)
@@ -1099,8 +1094,8 @@ namespace DTXMania
                 }
             }
         Label_0A06:
-            //if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
-                //this.txlanes.t2D描画(CDTXMania.app.Device, 0, 0);
+            if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                this.txlanes.t2D描画(CDTXMania.app.Device, 0, 0);
 
             return 0;
         }
@@ -1138,7 +1133,7 @@ namespace DTXMania
         #region [ private ]
         //-----------------
         private bool bFullScreen;
-        //private Bitmap blanes;
+        private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
         private bool b再生トグル;
@@ -1151,7 +1146,7 @@ namespace DTXMania
         public CCounter ct右シンバル;
         public CCounter ct左シンバル;
         public STDGBVALUE<double> LivePoint;
-        //private Image ilanes;
+        private Image ilanes;
         private int nAlpha;
         private int nCurrentMovieMode;
         private long n移動開始時刻ms;
@@ -1176,6 +1171,8 @@ namespace DTXMania
         private int position2;
         private CDTX.CAVI rAVI;
         private CDirectShow ds汎用;
+
+        public int n振動x座標;
 
         public CDTX.CDirectShow dsBGV;
 

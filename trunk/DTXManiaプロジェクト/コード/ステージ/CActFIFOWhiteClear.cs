@@ -62,7 +62,7 @@ namespace DTXMania
 		// CActivity 実装
         public override void On活性化()
         {
-            this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), CDTXMania.app.WindowHandle, false);
+            this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_StageClear.mp4"), CDTXMania.app.WindowHandle, true);
             if(this.ds背景動画 != null)
                 Trace.TraceInformation("StageClear動画をDirectShowで生成しました。");
             base.On活性化();

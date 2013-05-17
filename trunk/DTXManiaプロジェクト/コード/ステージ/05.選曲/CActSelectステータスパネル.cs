@@ -470,7 +470,7 @@ namespace DTXMania
 				//Rectangle rectFullCombo = new Rectangle( 60, 0x30, 60, 0x18 );
 				for( int i = 0; i < 5; i++ )
 				{
-					if( this.b現在選択中の曲がフルコンボ難易度毎[ i ].Drums )
+					if( this.b現在選択中の曲がフルコンボ難易度毎[ i ].Drums && this.str難易度ラベル[i] != null )
 					{
 						//int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
 						int x = 386 + ( i  * 143);
