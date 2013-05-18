@@ -734,7 +734,7 @@ namespace DTXMania
                     this.n振動x座標 = 0;
                     for (int i = 0; i < 1; i++)
                     {
-                        if (this.stフィルイン[i].b使用中)
+                        if (this.stフィルイン[i].b使用中 && CDTXMania.ConfigIni.ボーナス演出を表示する == true)
                         {
                             switch (this.stフィルイン[i].ct進行.n現在の値)
                             {
@@ -763,10 +763,10 @@ namespace DTXMania
                                     this.n振動x座標 = -2;
                                     break;
                                 case 16:
-                                    this.n振動x座標 = 2;
+                                    this.n振動x座標 = 1;
                                     break;
                                 case 18:
-                                    this.n振動x座標 = -2;
+                                    this.n振動x座標 = -1;
                                     break;
                                 case 20:
                                     this.n振動x座標 = 0;

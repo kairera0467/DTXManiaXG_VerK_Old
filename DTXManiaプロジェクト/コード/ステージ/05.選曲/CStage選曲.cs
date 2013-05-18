@@ -710,7 +710,7 @@ namespace DTXMania
 			public EパッドFlag ePad;		// 押されたコマンド(同時押しはOR演算で列挙する)
 			public long time;				// コマンド入力時刻
 		}
-		private class CCommandHistory		// #24063 2011.1.16 yyagi コマンド入力履歴を保持・確認するクラス
+		public class CCommandHistory		// #24063 2011.1.16 yyagi コマンド入力履歴を保持・確認するクラス
 		{
 			readonly int buffersize = 16;
 			private List<STCommandTime> stct;
@@ -792,7 +792,7 @@ namespace DTXMania
 				return true;
 			}
 		}
-		private CCommandHistory CommandHistory;
+		public CCommandHistory CommandHistory;
 
 		private void tカーソルを下へ移動する()
 		{
