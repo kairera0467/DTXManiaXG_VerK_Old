@@ -114,6 +114,12 @@ namespace DTXMania
 		public virtual void tCancel()
 		{
 		}
+        /// <summary>
+        /// BD二回入力時の追加処理があれば、継承先で記述する。
+        /// </summary>
+        public virtual void tBDContinuity()
+        {
+        }
 		/// <summary>
 		/// 追加の描画処理。必要に応じて、継承先で記述する。
 		/// </summary>
@@ -252,6 +258,19 @@ namespace DTXMania
 						this.bIsActivePopupMenu = false;
 					}
 					#endregion
+                    #region [ BD二回: キャンセル ]
+                    else if (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.BD))
+                    {	// キャンセル
+                        CDTXMania.stage選曲.CommandHistory.Add(E楽器パート.DRUMS, EパッドFlag.BD);
+                        EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.BD, EパッドFlag.BD };
+                        if (CDTXMania.stage選曲.CommandHistory.CheckCommand(comChangeScrollSpeed, E楽器パート.DRUMS))
+                        {
+                            CDTXMania.Skin.sound変更音.t再生する();
+                            tBDContinuity();
+                            this.bIsActivePopupMenu = false;
+                        }
+                    }
+                    #endregion
 
 					#region [ キー入力: 決定 ]
 					// E楽器パート eInst = E楽器パート.UNKNOWN;

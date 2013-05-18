@@ -412,6 +412,12 @@ namespace DTXMania
 			// Autoの設定値保持のロジックを書くこと！
 			// (Autoのパラメータ切り替え時は実際に値設定していないため、キャンセルまたはRetern, More...時に値設定する必要有り)
 		}
+        public override void tBDContinuity()
+        {
+            SetAutoParameters();
+            // Autoの設定値保持のロジックを書くこと！
+            // (Autoのパラメータ切り替え時は実際に値設定していないため、キャンセルまたはRetern, More...時に値設定する必要有り)
+        }
 
 		/// <summary>
 		/// 1つの値を、全targetに適用する。RiskyやDarkなど、全tatgetで共通の設定となるもので使う。
