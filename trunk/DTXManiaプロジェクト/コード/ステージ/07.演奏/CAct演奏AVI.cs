@@ -559,11 +559,11 @@ namespace DTXMania
                             }
                         }
                     }
-                    else if ((this.tx描画用 != null) && (this.bDShowクリップを再生している == true) && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    else if ((this.tx描画用 != null) && CDTXMania.ConfigIni.bDirectShowMode == true)
                     {
                         if (this.bFullScreen)
                         {
-                            if (fAVIアスペクト比 > 1.77f && (this.n総移動時間ms != -1))
+                            if (fAVIアスペクト比 > 1.77f && (this.bDShowクリップを再生している == true))
                             {
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
                                 //this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
