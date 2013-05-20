@@ -368,7 +368,6 @@ namespace DTXMania
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
                             {
-                                //473
                                 this.txLine.t2D描画(CDTXMania.app.Device, x2 + 45, 0, new Rectangle(121, 0, 51, 720));
                                 //this.txLine.t2D描画(CDTXMania.app.Device, 524, 0, new Rectangle(278, 0, 6, 720));
                             }
