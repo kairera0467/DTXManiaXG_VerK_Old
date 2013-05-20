@@ -231,7 +231,7 @@ namespace DTXMania
                                 this.txLine.t2D描画(CDTXMania.app.Device, x2 - 59, 0, new Rectangle(175, 0, 54, 720));
 
                                 this.txLine.t2D描画(CDTXMania.app.Device, xHH - 62, 0, new Rectangle(172, 0, 3, 720));//左の棒
-                                this.txLine.t2D描画(CDTXMania.app.Device, x3 - 4, 0, new Rectangle(229, 0, 3, 720));
+                                this.txLine.t2D描画(CDTXMania.app.Device, x3 - 4, 0, new Rectangle(229, 0, 2, 720));
                                 //this.txLine.t2D描画(CDTXMania.app.Device, 473, 0, new Rectangle(229, 0, 3, 720));
                             }
                         }
