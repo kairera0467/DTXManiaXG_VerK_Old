@@ -422,7 +422,13 @@ namespace DTXMania
                 if( this.tx中央パネル != null )
                     this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
                 if( this.txリザルトパネル != null )
+                {
                     this.txリザルトパネル.t2D描画( CDTXMania.app.Device, 453, 11 );
+                    if ( CDTXMania.ConfigIni.bGuitar有効 )
+                    {
+                        this.txリザルトパネル.t2D描画(CDTXMania.app.Device, 106, 430);
+                    }
+                }
 				if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;

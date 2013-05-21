@@ -2605,6 +2605,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.BsR = this.iBassR.bON;
 			CDTXMania.ConfigIni.bAutoPlay.BsG = this.iBassG.bON;
 			CDTXMania.ConfigIni.bAutoPlay.BsB = this.iBassB.bON;
+            CDTXMania.ConfigIni.bAutoPlay.BsY = this.iBassY.bON;
+            CDTXMania.ConfigIni.bAutoPlay.BsP = this.iBassP.bON;
 			CDTXMania.ConfigIni.bAutoPlay.BsPick = this.iBassPick.bON;
 			CDTXMania.ConfigIni.bAutoPlay.BsW = this.iBassW.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Bass = this.iBassScrollSpeed.n現在の値;
@@ -2692,6 +2694,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.GtR = this.iGuitarR.bON;
 			CDTXMania.ConfigIni.bAutoPlay.GtG = this.iGuitarG.bON;
 			CDTXMania.ConfigIni.bAutoPlay.GtB = this.iGuitarB.bON;
+            CDTXMania.ConfigIni.bAutoPlay.GtY = this.iGuitarY.bON;
+            CDTXMania.ConfigIni.bAutoPlay.GtP = this.iGuitarP.bON;
 			CDTXMania.ConfigIni.bAutoPlay.GtPick = this.iGuitarPick.bON;
 			CDTXMania.ConfigIni.bAutoPlay.GtW = this.iGuitarW.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Guitar = this.iGuitarScrollSpeed.n現在の値;
