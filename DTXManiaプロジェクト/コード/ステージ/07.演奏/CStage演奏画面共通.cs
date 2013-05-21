@@ -934,7 +934,7 @@ namespace DTXMania
 						break;
 					}
 				}
-				else if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
+				else if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((0x20 <= nChannel && nChannel <= 0x28) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
 				{
 					if ( ( 0x20 <= chip.nチャンネル番号 ) && ( chip.nチャンネル番号 <= 0x28 ) )
 					{
@@ -1422,18 +1422,21 @@ namespace DTXMania
                 for (int i = 0; i < 3; i++)
                 {
                     STDGBVALUE<double> dbLPDelta = new STDGBVALUE<double>();
-                    double db1打あたりのLP = 300.0 / (CDTXMania.DTX.n可視チップ数[i] * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
+                    double[] db1打あたりのLP = new Double[3]; 
+                    db1打あたりのLP[0] = 300.0 / (CDTXMania.DTX.n可視チップ数.Drums * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
+                    db1打あたりのLP[1] = 300.0 / (CDTXMania.DTX.n可視チップ数.Guitar * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
+                    db1打あたりのLP[2] = 300.0 / (CDTXMania.DTX.n可視チップ数.Bass * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
                     if (eJudgeResult == E判定.Perfect)
                     {
-                        dbLPDelta[i] = db1打あたりのLP * 1.0;
+                        dbLPDelta[i] = db1打あたりのLP[i] * 1.0;
                     }
                     else if (eJudgeResult == E判定.Great)
                     {
-                        dbLPDelta[i] = db1打あたりのLP * 1.0;
+                        dbLPDelta[i] = db1打あたりのLP[i] * 1.0;
                     }
                     else if (eJudgeResult == E判定.Good)
                     {
-                        dbLPDelta[i] = db1打あたりのLP * 1.0;
+                        dbLPDelta[i] = db1打あたりのLP[i] * 1.0;
                     }
                     else if (eJudgeResult == E判定.Poor)
                     {
@@ -1688,16 +1691,12 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.t一時停止();
                     CDTXMania.Timer.t一時停止();
                     CDTXMania.DTX.t全チップの再生一時停止();
-                    //if ( this.actAVI.ds背景動画 != null )
-                    //    this.actAVI.ds背景動画.t再生一時停止();
                 }
                 else
                 {
                     CSound管理.rc演奏用タイマ.t再開();
                     CDTXMania.Timer.t再開();
                     CDTXMania.DTX.t全チップの再生再開();
-                    //if ( this.actAVI.ds背景動画 != null )
-                    //    this.actAVI.ds背景動画.t再生開始();
                 }
             }
             if (((base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED)) && (base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト))
@@ -2670,8 +2669,8 @@ namespace DTXMania
                     flag2 = true;
                     flag3 = true;
                     break;
-                case 40:
-                    flag6 = true;
+                case 0x28:
+                    bGtBsW = true;
                     break;
                 default:
                     switch (pChip.nチャンネル番号)
@@ -3488,7 +3487,7 @@ namespace DTXMania
 							pChip.nLag = 0;		// tチップのヒット処理()の引数最後がfalseの時はpChip.nLagを計算しないため、ここでAutoPickかつMissのLag=0を代入
 							this.tチップのヒット処理( pChip.n発声時刻ms, pChip, false );
 						}
-						int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 290 : 168;
+						int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 0x29 : 0xA8;
 						CDTX.CChip item = this.r指定時刻に一番近い未ヒットChip( pChip.n発声時刻ms, chWailingChip, this.nInputAdjustTimeMs[ instIndex ], 140 );
 						if ( item != null && !bMiss )
 						{
@@ -3538,7 +3537,7 @@ namespace DTXMania
 					//    this.actWailingBonus.Start( inst, this.r現在の歓声Chip[indexInst] );
 					// #23886 2012.5.22 yyagi; To support auto Wailing; Don't do wailing for ALL wailing chips. Do wailing for queued wailing chip.
 					// wailing chips are queued when 1) manually wailing and not missed at that time 2) AutoWailing=ON and not missed at that time
-						long nTimeStamp_Wailed = pChip.n発声時刻ms + CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
+                        long nTimeStamp_Wailed = pChip.n発声時刻ms + CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
 						DoWailingFromQueue( inst, nTimeStamp_Wailed, autoW );
 					}
 				}
@@ -3830,30 +3829,30 @@ namespace DTXMania
                 int nチャンネル番号 = chip.nチャンネル番号;
                 switch (nチャンネル番号)
                 {
-                    case 32:
+                    case 0x20:
                         break;
-                    case 33:
+                    case 0x21:
                         flag9 = true;
                         break;
-                    case 34:
+                    case 0x22:
                         flag8 = true;
                         break;
-                    case 35:
+                    case 0x23:
                         flag8 = true;
                         flag9 = true;
                         break;
-                    case 36:
+                    case 0x24:
                         flag7 = true;
                         break;
-                    case 37:
+                    case 0x25:
                         flag7 = true;
                         flag9 = true;
                         break;
-                    case 38:
+                    case 0x26:
                         flag7 = true;
                         flag8 = true;
                         break;
-                    case 39:
+                    case 0x27:
                         flag7 = true;
                         flag8 = true;
                         flag9 = true;
@@ -4218,16 +4217,16 @@ namespace DTXMania
                                 int nチャンネル番号 = chip.nチャンネル番号;
                                 switch (nチャンネル番号)
                                 {
-                                    case 32:
+                                    case 0x20:
                                         bChipIsO = true;
                                         break;
-                                    case 33:
+                                    case 0x21:
                                         bChipHasB = true;
                                         break;
-                                    case 34:
+                                    case 0x22:
                                         bChipHasG = true;
                                         break;
-                                    case 35:
+                                    case 0x23:
                                         bChipHasG = true;
                                         bChipHasB = true;
                                         break;
@@ -4242,24 +4241,24 @@ namespace DTXMania
                                         bChipHasR = true;
                                         bChipHasG = true;
                                         break;
-                                    case 39:
+                                    case 0x27:
                                         bChipHasR = true;
                                         bChipHasG = true;
                                         bChipHasB = true;
                                         break;
-                                    case 40:
+                                    case 0x28:
                                         break;
                                     default:
                                         switch (nチャンネル番号)
                                         {
-                                            case 147:
+                                            case 0x93:
                                                 bChipHasY = true;
                                                 break;
-                                            case 148:
+                                            case 0x94:
                                                 bChipHasB = true;
                                                 bChipHasY = true;
                                                 break;
-                                            case 149:
+                                            case 0x95:
                                                 bChipHasG = true;
                                                 bChipHasY = true;
                                                 break;
@@ -4339,87 +4338,91 @@ namespace DTXMania
                                                 bChipHasG = true;
                                                 bChipHasB = true;
                                                 break;
-                                            /*
-                                            case 168:
-                                                flag13 = true;
-                                                flag14 = true;
+                                            
+                                            case 0xA8:
+                                                bChipHasG = true;
+                                                bChipHasB = true;
                                                 break;
-                                            case 169:
+                                            case 0xA9:
+                                                bChipHasR = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xAA:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasP = true;
+                                                break;
+                                            
+                                            case 0xAB:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xAC:
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xAD:
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xAE:
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xAF:
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+
+                                                //ベース
+                                            case 0xC5:
+                                                bChipHasY = true;
+                                                break;
+                                            
+                                            case 0xC6:
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 0xC8:
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 0xC9:
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 0xCA:
+                                                bChipHasR = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 0xCB:
+                                                bChipHasR = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                break;
+                                            case 0xCC:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                break;/*
+                                            case 0xCD:
                                                 flag12 = true;
-                                                flag14 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 170:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 171:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 172:
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 173:
-                                                flag14 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 174:
-                                                flag13 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 175:
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 197:
-                                                flag15 = true;
-                                                break;
-                                            case 198:
-                                                flag14 = true;
-                                                flag15 = true;
-                                                break;
-                                            case 200:
-                                                flag13 = true;
-                                                flag15 = true;
-                                                break;
-                                            case 201:
                                                 flag13 = true;
                                                 flag14 = true;
                                                 flag15 = true;
                                                 break;
-                                            case 202:
-                                                flag12 = true;
-                                                flag15 = true;
-                                                break;
-                                            case 203:
-                                                flag12 = true;
-                                                flag14 = true;
-                                                flag15 = true;
-                                                break;
-                                            case 204:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag15 = true;
-                                                break;
-                                            case 205:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag15 = true;
-                                                break;
-                                            case 206:
+                                            case 0xCE:
                                                 flag16 = true;
                                                 break;
-                                            case 207:
+                                            case 0xCF:
                                                 flag14 = true;
                                                 flag16 = true;
                                                 break;
@@ -4465,55 +4468,55 @@ namespace DTXMania
                                                 flag14 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 222:
+                                            case 0xDE:
                                                 flag12 = true;
                                                 flag13 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 223:
+                                            case 0xDF:
                                                 flag12 = true;
                                                 flag13 = true;
                                                 flag14 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 225:
+                                            case 0xE1:
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 226:
+                                            case 0xE2:
                                                 flag14 = true;
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 227:
+                                            case 0xE3:
                                                 flag13 = true;
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 228:
+                                            case 0xE4:
                                                 flag13 = true;
                                                 flag14 = true;
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 229:
+                                            case 0xE5:
                                                 flag12 = true;
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 230:
+                                            case 0xE6:
                                                 flag12 = true;
                                                 flag14 = true;
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 231:
+                                            case 0xE7:
                                                 flag12 = true;
                                                 flag13 = true;
                                                 flag15 = true;
                                                 flag16 = true;
                                                 break;
-                                            case 232:
+                                            case 0xE8:
                                                 flag12 = true;
                                                 flag13 = true;
                                                 flag14 = true;
@@ -4526,23 +4529,23 @@ namespace DTXMania
                                 }
                             }
 
-                            if ((bChipHasR && (autoR || pushingR != 0)) || bChipHasR)
+                            if ((bChipHasR && (autoR || pushingR != 0)) || bChipHasR )
                             {
                                 this.actChipFireGB.Start( R );
                             }
-                            if ((bChipHasG && (autoG || pushingG != 0)) || bChipHasG)
+                            if ((bChipHasG && (autoG || pushingG != 0)) || bChipHasG )
                             {
                                 this.actChipFireGB.Start( G );
                             }
-                            if ((bChipHasB && (autoB || pushingB != 0)) || bChipHasB)
+                            if ((bChipHasB && (autoB || pushingB != 0)) || bChipHasB )
                             {
                                 this.actChipFireGB.Start( B );
                             }
-                            if ((bChipHasY && (autoY || pushingY != 0)) || bChipHasY)
+                            if ((bChipHasY && (autoY || pushingY != 0)) || bChipHasY )
                             {
                                 this.actChipFireGB.Start( Y );
                             }
-                            if ((bChipHasP && (autoP || pushingP != 0)) || bChipHasP)
+                            if ((bChipHasP && (autoP || pushingP != 0)) || bChipHasP )
                             {
                                 this.actChipFireGB.Start( P );
                             }
