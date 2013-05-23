@@ -130,7 +130,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txBGAバックパネル = new CTexture( CDTXMania.app.Device, 278, 355, Format.X8R8G8B8, Pool.Managed, Usage.None);
+                this.txBGAバックパネル = new CTexture(CDTXMania.app.Device, 278, 355, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
 				using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
 				{
 					this.sfBackBuffer = Surface.CreateOffscreenPlain( CDTXMania.app.Device, surface.Description.Width, surface.Description.Height, surface.Description.Format, Pool.SystemMemory );

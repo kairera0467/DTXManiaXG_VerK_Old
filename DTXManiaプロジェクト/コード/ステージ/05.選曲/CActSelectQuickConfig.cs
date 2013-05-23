@@ -191,20 +191,20 @@ namespace DTXMania
 			{
 				automode = 0;	// All Auto
 			}
-			else if (	CDTXMania.ConfigIni.bAutoPlay.GtR == true && CDTXMania.ConfigIni.bAutoPlay.GtB == true &&
-						CDTXMania.ConfigIni.bAutoPlay.GtB == true && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
+			else if (	CDTXMania.ConfigIni.bAutoPlay.GtR == true && CDTXMania.ConfigIni.bAutoPlay.GtG == true &&
+                        CDTXMania.ConfigIni.bAutoPlay.GtB == true && CDTXMania.ConfigIni.bAutoPlay.GtY == true && CDTXMania.ConfigIni.bAutoPlay.GtP == true && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
 						CDTXMania.ConfigIni.bAutoPlay.GtW == false )
 			{
 				automode = 1;	// Auto Neck
 			}
-			else if (	CDTXMania.ConfigIni.bAutoPlay.GtR == false && CDTXMania.ConfigIni.bAutoPlay.GtB == false &&
-						CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == true &&
+			else if (	CDTXMania.ConfigIni.bAutoPlay.GtR == false && CDTXMania.ConfigIni.bAutoPlay.GtG == false &&
+                        CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtY == false && CDTXMania.ConfigIni.bAutoPlay.GtP == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == true &&
 						CDTXMania.ConfigIni.bAutoPlay.GtW == false )
 			{
 				automode = 2;	// Auto Pick
 			}
 			else if	(	CDTXMania.ConfigIni.bAutoPlay.GtR == false && CDTXMania.ConfigIni.bAutoPlay.GtB == false &&
-						CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
+                        CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtY == false && CDTXMania.ConfigIni.bAutoPlay.GtP == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
 						CDTXMania.ConfigIni.bAutoPlay.GtW == false )
 			{
 				automode = 4;	// OFF
@@ -300,7 +300,7 @@ namespace DTXMania
 					break;
 				case (int) E楽器パート.GUITAR:
 				case (int) E楽器パート.BASS:
-					header = "RGBPW";
+					header = "RGBYPPW";
 					break;
 				default:
 					break;
@@ -502,13 +502,13 @@ namespace DTXMania
 					switch ( lci[ nCurrentConfigSet ][ target ][ (int) EOrder.AutoMode ].GetIndex() )
 					{
 						case 0:	// All Auto
-							s = "AAAAA";
+							s = "AAAAAAA";
 							break;
 						case 1:	// Auto Neck
-							s = "AAA__";
+							s = "AAAAA__";
 							break;
 						case 2:	// Auto Pick
-							s = "___A_";
+							s = "_____A_";
 							break;
 						case 3:	// Custom
 							int p = (target == (int) E楽器パート.GUITAR ) ? (int) Eレーン.GtR : (int) Eレーン.BsR;
@@ -519,7 +519,7 @@ namespace DTXMania
 							}
 							break;
 						case 4:	// OFF
-							s = "_____";
+							s = "_______";
 							break;
 						default:
 							throw new ArgumentOutOfRangeException();

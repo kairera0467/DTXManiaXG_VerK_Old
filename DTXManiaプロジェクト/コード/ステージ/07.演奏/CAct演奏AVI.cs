@@ -575,8 +575,8 @@ namespace DTXMania
                                     this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, this.position, y);
                                 else
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, x, y);
-                            }               
-                            else
+                            }
+                            else if (fAVIアスペクト比 < 1.77f)
                             {
                                 if (this.bフレームを作成した && (this.pBmp != IntPtr.Zero))
                                 {
@@ -856,6 +856,108 @@ namespace DTXMania
                             if (this.txLivePoint != null)
                                 this.txLivePoint.t2D描画(CDTXMania.app.Device, 886, 52, new Rectangle(0, 0, 71, 668));
                             string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.Drums.ToString("000");
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Rectangle rectangle;
+                                char ch = str[i];
+                                if (ch.Equals(' '))
+                                {
+                                    rectangle = new Rectangle(72, 0, 17, 25);
+                                }
+                                else
+                                {
+                                    int num3 = int.Parse(str.Substring(i, 1));
+                                    if (num3 < 5)
+                                    {
+                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                                    }
+                                    else
+                                    {
+                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                                    }
+                                }
+                                if (this.txScore != null)
+                                {
+                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 895 + (i * 18), 685, rectangle);
+                                }
+                                #region[箱]
+                                //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
+                                if (this.LivePoint.Drums >= 0)
+                                {
+                                    if (this.LivePoint.Drums >= 20)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 626, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 40)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 585, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 60)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 544, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 80)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 503, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 100)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 462, new Rectangle(71, 536, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 120)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 420, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 140)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 379, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 160)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 338, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 180)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 297, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 200)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 256, new Rectangle(71, 580, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 220)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 214, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 240)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 173, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 260)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 132, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 280)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 91, new Rectangle(71, 624, 46, 44));
+                                    }
+                                    if (this.LivePoint.Drums >= 300)
+                                    {
+                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 50, new Rectangle(71, 624, 46, 44));
+                                    }
+                                }
+                                #endregion
+                            }
+                            #endregion
+                        }
+                    }
+                    else if (CDTXMania.ConfigIni.bGuitar有効 && CDTXMania.ConfigIni.bDrums有効 == false)
+                    {
+                        if (CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C && CDTXMania.ConfigIni.bLivePoint)
+                        {
+                            #region[LivePoint]
+                            if (this.txLivePoint != null)
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, 2, 52, new Rectangle(0, 0, 71, 668));
+                            string str = CDTXMania.stage演奏ギター画面.actAVI.LivePoint.Guitar.ToString("000");
                             for (int i = 0; i < 3; i++)
                             {
                                 Rectangle rectangle;
