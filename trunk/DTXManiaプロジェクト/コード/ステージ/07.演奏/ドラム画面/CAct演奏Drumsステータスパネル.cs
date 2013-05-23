@@ -169,11 +169,11 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)68f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)38f, (float)136f);
+                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)42f, (float)136f);
                         }
                         else
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, namecolor, (float)38f, (float)136f);
+                            graphics.DrawString(this.strPlayerName, this.ftNameFont, namecolor, (float)42f, (float)136f);
                         }
                         graphics.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, (float)54f, (float)105f);
                     }
@@ -198,11 +198,11 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)65f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)38f, (float)136f);
+                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)42f, (float)136f);
                         }
                         else
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, namecolor, (float)38f, (float)136f);
+                            graphics.DrawString(this.strPlayerName, this.ftNameFont, namecolor, (float)42f, (float)136f);
                         }
                         graphics.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, (float)54f, (float)105f);
                     }
@@ -423,10 +423,8 @@ namespace DTXMania
                     graphics.Dispose();
                     this.txNamePlate.Dispose();
                     this.txNamePlate = new CTexture(CDTXMania.app.Device, this.bNamePlate, CDTXMania.TextureFormat, false);
-                    this.txNamePlate.n透明度 = 128;
                 }
                 this.nCurrentScore = (long)CDTXMania.stage演奏ドラム画面.actScore.n現在表示中のスコア.Drums;
-                int y差分 = (int)CDTXMania.stage演奏ドラム画面.actScore.n進行用タイマ;
                 if (CDTXMania.ConfigIni.nSkillMode == 0)
                 {
                     string str = this.nCurrentScore.ToString("0000000000");

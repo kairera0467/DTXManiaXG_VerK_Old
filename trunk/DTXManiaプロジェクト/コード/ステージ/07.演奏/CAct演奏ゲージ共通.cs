@@ -50,11 +50,6 @@ namespace DTXMania
 			get;
 			private set;
 		}
-        public bool bHAZARD							// HAZARDモード判別
-		{
-			get;
-			private set;
-		}
 		public int nRiskyTimes_Initial				// Risky初期値
 		{
 			get;
@@ -71,7 +66,7 @@ namespace DTXMania
             {
 				return ( nRiskyTimes <= 0 );
 			}
-            if (bHAZARD)
+            if (CDTXMania.ConfigIni.bHAZARD)
             {
                 return ( nRiskyTimes <= 0);
             }
@@ -164,8 +159,8 @@ namespace DTXMania
 #if true	// DAMAGELEVELTUNING
             if (CDTXMania.ConfigIni.nSkillMode == 1)
             {
-                fDamageGaugeDelta[0, 0] =  0.015f;
-                fDamageGaugeDelta[1, 0] =  0.01f;
+                fDamageGaugeDelta[0, 0] =  0.005f;
+                fDamageGaugeDelta[1, 0] =  0.001f;
                 fDamageGaugeDelta[3, 0] = -0.017f;
                 fDamageGaugeDelta[4, 0] = -0.041f;
             }
@@ -177,19 +172,41 @@ namespace DTXMania
                         break;
                     }
 				case E判定.Great:
-                    fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
-                    if (bHAZARD)
+
+                    if (CDTXMania.ConfigIni.bHAZARD)
                     {
-                        fDamage = (nRiskyTimes == 1) ? 0 : -GAUGE_MAX / (nRiskyTimes_Initial - 1);	// Risky=1のときは1Miss即閉店なのでダメージ計算しない
-                        if (nRiskyTimes >= 0) nRiskyTimes--;		// 念のため-1未満には減らないようにしておく
+                        if (bRisky)
+                        {
+                            fDamage = (nRiskyTimes == 1) ? 0 : -GAUGE_MAX / (nRiskyTimes_Initial - 1);	// Risky=1のときは1Miss即閉店なのでダメージ計算しない
+                            if (nRiskyTimes >= 0) nRiskyTimes--;		// 念のため-1未満には減らないようにしておく
+                        }
+                        else
+                        {
+                            fDamage = fDamageGaugeDelta[(int)4, (int)part];
+                        }
+                    }
+                    else
+                    {
+                        fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
                     }
                     break;
 				case E判定.Good:
-					fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
-                    if (bHAZARD)
+
+                    if (CDTXMania.ConfigIni.bHAZARD)
                     {
-                        fDamage = (nRiskyTimes == 1) ? 0 : -GAUGE_MAX / (nRiskyTimes_Initial - 1);	// Risky=1のときは1Miss即閉店なのでダメージ計算しない
-                        if (nRiskyTimes >= 0) nRiskyTimes--;		// 念のため-1未満には減らないようにしておく
+                        if (bRisky)
+                        {
+                            fDamage = (nRiskyTimes == 1) ? 0 : -GAUGE_MAX / (nRiskyTimes_Initial - 1);	// Risky=1のときは1Miss即閉店なのでダメージ計算しない
+                            if (nRiskyTimes >= 0) nRiskyTimes--;		// 念のため-1未満には減らないようにしておく
+                        }
+                        else
+                        {
+                            fDamage = fDamageGaugeDelta[(int)4, (int)part];
+                        }
+                    }
+                    else
+                    {
+    					fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
                     }
 					break;
 				case E判定.Poor:
