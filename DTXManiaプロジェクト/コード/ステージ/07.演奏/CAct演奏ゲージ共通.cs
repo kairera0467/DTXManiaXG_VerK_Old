@@ -66,10 +66,6 @@ namespace DTXMania
             {
 				return ( nRiskyTimes <= 0 );
 			}
-            if (CDTXMania.ConfigIni.bHAZARD)
-            {
-                return ( nRiskyTimes <= 0);
-            }
 			return this.db現在のゲージ値[ (int) part ] <= GAUGE_MIN;
 		}
 		public bool IsDanger( E楽器パート part )	// DANGERかどうか

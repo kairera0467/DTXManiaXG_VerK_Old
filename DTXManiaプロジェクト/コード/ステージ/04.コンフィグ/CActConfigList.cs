@@ -96,12 +96,18 @@ namespace DTXMania
                 new string[] { "Off", "Full Screen", "Window Mode", "Both" });
             this.list項目リスト.Add(this.iSystemMovieMode);
 
+            /*
             this.iSystemMovieAlpha = new CItemList("LaneAlpha", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nMovieAlpha,
                 "レーンの透明度を指定します。\n0% が完全不透明で、100% が完全透明\nとなります。",
                 "The degree for transparing playing\n Movie.\n\n0%=completely transparent,\n100%=no transparency",
                 new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"});
             this.list項目リスト.Add(this.iSystemMovieAlpha);
-
+            */
+            this.iSystemMovieAlpha = new CItemList("LaneAlpha", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nMovieAlpha,
+                "レーンの透明度を指定します。\n0% が完全不透明で、100% が完全透明\nとなります。",
+                "The degree for transparing playing\n Movie.\n\n0%=completely transparent,\n100%=no transparency",
+                new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" });
+            this.list項目リスト.Add(this.iSystemMovieAlpha);
 
 			this.iCommonPlaySpeed = new CItemInteger("PlaySpeed", 5, 40, CDTXMania.ConfigIni.n演奏速度,
 				"曲の演奏速度を、速くしたり遅くした\nりすることができます。\n（※一部のサウンドカードでは正しく\n 再生できない可能性があります。）",
@@ -467,7 +473,7 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsFloorTom );
 
 			this.iDrumsCymbal = new CItemToggle( "    Cymbal", CDTXMania.ConfigIni.bAutoPlay.CY,
-				"右シンバルを自動で演奏します。\n" +
+				"右シンバルを自動で演奏します。",
 				"To play both right- and Ride-Cymbal\n" +
 				" automatically." );
 			this.list項目リスト.Add( this.iDrumsCymbal );
@@ -592,7 +598,6 @@ namespace DTXMania
 				"It becomes MISS to hit pad without\n" +
 				" chip." );
 			this.list項目リスト.Add( this.iDrumsTight );
-
             
 			this.iDrumsPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.判定文字表示位置.Drums,
 				"ドラムの判定文字の表示位置を指定\n" +
@@ -610,7 +615,8 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsPosition );
 
             this.iDrumsHAZARD = new CItemToggle("HAZARD", CDTXMania.ConfigIni.bHAZARD,
-                "RISKY時にGREAT以下の判定でも回数が減ります。",
+                "ドSハザードモード\n" +
+                "GREAT以下の判定でも回数が減ります。",
                 "Turn ON to let HH chips be muted\n" +
                 "by LP chips.");
             this.list項目リスト.Add(this.iDrumsHAZARD);
@@ -664,8 +670,8 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iSystemCYGroup );
 
 			this.iSystemBDGroup = new CItemList( "BD Group", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eBDGroup,		// #27029 2012.1.4 from
-				"バス数設定：\n" +
-				"ハイハットペダルをバスとして利用する\n" +
+				"フットペダル打ち分け設定：\n" +
+				"左ペダル、左バスドラ、右バスドラの打ち分け\n" +
 				"方法を指定します。\n" +
 				"  BD-0 ... LP | LBD |BD\n" +
 				"  BD-1 ... LP & LBD |BD\n" + 
@@ -752,8 +758,6 @@ namespace DTXMania
 				"To show bursting effects at the fill-in\n" +
 				" zone or not." );
 			this.list項目リスト.Add( this.iSystemFillIn );
-
-
 
 			this.iSystemHitSound = new CItemToggle( "HitSound", CDTXMania.ConfigIni.bドラム打音を発声する,
 				"打撃音の再生：\n" +
