@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Drawing.Text;
-
+using SlimDX.Direct3D9;
 using SlimDX;
 using FDK;
 
@@ -224,7 +224,8 @@ namespace DTXMania
 			for( int i = 0; i < 13; i++ )
 			{
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
-                CDTXMania.stage選曲.actPreimageパネル.t選択曲が変更された();
+                this.tサムネイルの生成(i, this.stバー情報[i].cScore, this.stバー情報[i].col文字色);
+                //CDTXMania.stage選曲.actPreimageパネル.t選択曲が変更された();
 			}
 		}
 		public void t次に移動()
@@ -233,6 +234,7 @@ namespace DTXMania
 			{
 				this.n目標のスクロールカウンタ += 100;
 			}
+            this.t現在選択中の曲を元に曲バーを再構成する();
 		}
 		public void t前に移動()
 		{
@@ -240,6 +242,7 @@ namespace DTXMania
 			{
 				this.n目標のスクロールカウンタ -= 100;
 			}
+            this.t現在選択中の曲を元に曲バーを再構成する();
 		}
 		public void t難易度レベルをひとつ進める()
 		{
@@ -389,7 +392,7 @@ namespace DTXMania
 			FontStyle regular = FontStyle.Regular;
 			if( CDTXMania.ConfigIni.b選曲リストフォントを斜体にする ) regular |= FontStyle.Italic;
 			if( CDTXMania.ConfigIni.b選曲リストフォントを太字にする ) regular |= FontStyle.Bold;
-			this.ft曲リスト用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, (float) ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2 ), regular, GraphicsUnit.Pixel );
+			this.ft曲リスト用フォント = new System.Drawing.Font( CDTXMania.ConfigIni.str選曲リストフォント, (float) ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2 ), regular, GraphicsUnit.Pixel );
 			
 
 			// 現在選択中の曲がない（＝はじめての活性化）なら、現在選択中の曲をルートの先頭ノードに設定する。
@@ -430,8 +433,14 @@ namespace DTXMania
 			this.tx選曲バー.Box = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_bar box selected.png" ), false );
 			this.tx選曲バー.Other = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_bar other selected.png" ), false );
             this.txスキル数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenSelect skill number on list.png"), false);
+
 			for( int i = 0; i < 13; i++ )
+            {
+                this.stバー情報[ i ].txジャケット = new CTexture(CDTXMania.app.Device, 400, 400, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
+                this.tサムネイルの生成( i, this.stバー情報[ i ].cScore, this.stバー情報[ i ].col文字色 );
+                //CDTXMania.stage選曲.actPreimageパネル.t指定された曲からプレビュー画像を構築する(this.stバー情報[ i ].cScore, i);
+            }
 
 			int c = ( CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja" ) ? 0 : 1;
 			#region [ Songs not found画像 ]
@@ -498,7 +507,10 @@ namespace DTXMania
 			CDTXMania.t安全にDisposeする( ref this.txアイテム数数字 );
 
 			for( int i = 0; i < 13; i++ )
+            {
 				CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txタイトル名 );
+                CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txジャケット );
+            }
 
 			CDTXMania.t安全にDisposeする( ref this.txスキル数字 );
 			CDTXMania.t安全にDisposeする( ref this.txEnumeratingSongs );
@@ -854,6 +866,7 @@ namespace DTXMania
 						continue;
 
 					this.nパネル番号 = ( ( ( this.n現在の選択行 - 5 ) + i ) + 13 ) % 13;
+
 					int n見た目の行番号 = i;
 					int n次のパネル番号 = ( this.n現在のスクロールカウンタ <= 0 ) ? ( ( i + 1 ) % 13 ) : ( ( ( i - 1 ) + 13 ) % 13 );
 					int x = this.ptバーの基本座標[ n見た目の行番号 ].X + ( (int) ( ( this.ptバーの基本座標[ n次のパネル番号 ].X - this.ptバーの基本座標[ n見た目の行番号 ].X ) * ( ( (double) Math.Abs( this.n現在のスクロールカウンタ ) ) / 100.0 ) ) );
@@ -868,8 +881,8 @@ namespace DTXMania
 						this.tバーの描画( 410, 270, this.stバー情報[ nパネル番号 ].eバー種別, true );
 						//-----------------
 						#endregion
-						#region [ タイトル名テクスチャを描画。]
-						//-----------------
+                        #region [ タイトル名テクスチャを描画。]
+                        //-----------------
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
 							this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, 530, 300 );
 						//-----------------
@@ -890,10 +903,28 @@ namespace DTXMania
 						this.tバーの描画( x, y, this.stバー情報[ nパネル番号 ].eバー種別, false );
 						//-----------------
 						#endregion
+                        #region [ ジャケット画像を描画 ]
+                        //-----------------
+                        if (this.stバー情報[ nパネル番号 ].txジャケット != null)
+                        {
+                            var mat = SlimDX.Matrix.Identity;
+                            mat *= SlimDX.Matrix.Scaling(0.3f * CTexture.f画面比率, 0.3f * CTexture.f画面比率, 1.0f);
+                            mat *= SlimDX.Matrix.RotationY(this.stマトリクス座標[nパネル番号].rotY + (this.stマトリクス座標[nパネル番号].rotY - this.stマトリクス座標[nパネル番号].rotY) * 0.4f);
+                            mat *= SlimDX.Matrix.Translation(
+                                (this.stマトリクス座標[nパネル番号].x + (int)((this.stマトリクス座標[nパネル番号].x - this.stマトリクス座標[nパネル番号].x) * 1.0f)),
+                                (this.stマトリクス座標[nパネル番号].y + (int)((this.stマトリクス座標[nパネル番号].y - this.stマトリクス座標[nパネル番号].y) * 1.0f)),
+                                (this.stマトリクス座標[nパネル番号].z + (int)((this.stマトリクス座標[nパネル番号].z - this.stマトリクス座標[nパネル番号].z) * 1.0f)));
+
+                            this.stバー情報[ nパネル番号 ].txジャケット.t3D描画(CDTXMania.app.Device, mat);
+                        }
+                        //-----------------
+                        #endregion
 						#region [ タイトル名テクスチャを描画。]
 						//-----------------
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
+                        {
 							this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 0x58, y + 6 );
+                        }
 						//-----------------
 						#endregion
 						#region [ スキル値を描画。]
@@ -909,8 +940,8 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
-
 			}
+            //CDTXMania.stage選曲.actPreimageパネル.t描画処理・サムネイル画像();
 			#region [ スクロール地点の計算(描画はCActSelectShowCurrentPositionにて行う) #27648 ]
 			int py;
 			double d = 0;
@@ -992,6 +1023,7 @@ namespace DTXMania
 			public CActSelect曲リスト.Eバー種別 eバー種別;
 			public string strタイトル文字列;
 			public CTexture txタイトル名;
+            public CTexture txジャケット;
 			public STDGBVALUE<int> nスキル値;
 			public Color col文字色;
             public Cスコア cScore;
@@ -1039,12 +1071,34 @@ namespace DTXMania
 				}
 			}
 		}
+        private struct ST中心点
+        {
+            public float x;
+            public float y;
+            public float z;
+            public float rotY;
+        }
+        private ST中心点[] stマトリクス座標 = new ST中心点[13]{
+             new ST中心点() { x = -533.8936f, y = 50f, z = -289.5575f, rotY = -0.9279888f},
+             new ST中心点() { x = -533.8936f, y = 50f, z = -289.5575f, rotY = -0.9279888f},
+             new ST中心点() { x = -423.8936f, y = 50f, z = -169.5575f, rotY = -0.6579891f},
+             new ST中心点() { x = -297.5025f, y = 50f, z = -74.37564f, rotY = -0.4808382f},
+             new ST中心点() { x = -153.9001f, y = 50f, z = -20.52002f, rotY = -0.2605f },
+             new ST中心点() { x = 0.00002622683f, y = 50f, z = 0f, rotY = 0f },
+             new ST中心点() { x = 153.9002f, y = 50f, z = -20.52002f, rotY = 0.2605f },
+             new ST中心点() { x = 297.5025f, y = 50f, z = -74.37564f, rotY = 0.4808382f },
+             new ST中心点() { x = 423.8936f, y = 50f, z = -169.5575f, rotY = 0.6579891f },
+             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
+             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
+             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
+             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
+        };
 
 		private bool b登場アニメ全部完了;
 		private Color color文字影 = Color.FromArgb( 0x40, 10, 10, 10 );
 		private CCounter[] ct登場アニメ用 = new CCounter[ 13 ];
 		private E楽器パート e楽器パート;
-		private Font ft曲リスト用フォント;
+		private System.Drawing.Font ft曲リスト用フォント;
 		private long nスクロールタイマ;
         public int nパネル番号;
 		private int n現在のスクロールカウンタ;
@@ -1182,7 +1236,7 @@ namespace DTXMania
 			for( int i = 0; i < 13; i++ )
 			{
 				this.stバー情報[ i ].strタイトル文字列 = song.strタイトル;
-                CDTXMania.stage選曲.actPreimageパネル.t指定された曲からプレビュー画像を構築する(this.stバー情報[i].cScore, i);
+                //CDTXMania.stage選曲.actPreimageパネル.t指定された曲からプレビュー画像を構築する(this.stバー情報[i].cScore, i);
 				this.stバー情報[ i ].col文字色 = song.col文字色;
 				this.stバー情報[ i ].eバー種別 = this.e曲のバー種別を返す( song );
                 this.stバー情報[ i ].cScore = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song) ];
@@ -1284,6 +1338,29 @@ namespace DTXMania
 			{
 				Trace.TraceError( "曲名テクスチャの作成に失敗しました。[{0}]", str曲名 );
 				this.stバー情報[ nバー番号 ].txタイトル名 = null;
+			}
+		}
+        private void tサムネイルの生成( int nバー番号, Cスコア cスコア, Color color )
+		{
+			if( nバー番号 < 0 || nバー番号 > 12 )
+				return;
+
+			try
+			{
+                if( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Score )
+                {
+				    this.stバー情報[ nバー番号 ].txジャケット = CDTXMania.tテクスチャの生成( cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Preimage );
+                }
+                else if( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Box )
+                {
+                    this.stバー情報[ nバー番号 ].txジャケット = CDTXMania.tテクスチャの生成( cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Preimage );
+                }
+				//this.stバー情報[ nバー番号 ].txジャケット.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
+			}
+			catch( CTextureCreateFailedException )
+			{
+				//Trace.TraceError( "サムネイルテクスチャの作成に失敗しました。[{0}]", nバー番号 );
+				this.stバー情報[ nバー番号 ].txジャケット = null;
 			}
 		}
 		private void tアイテム数の描画()

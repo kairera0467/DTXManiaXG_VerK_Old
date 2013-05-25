@@ -61,7 +61,10 @@ namespace DTXMania
 				this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
 				this.txプレビュー画像 = null;
                 for (int i = 0; i < 13; i++)
-                    this.txサムネイル画像[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
+                {
+                    //this.txサムネイル画像[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
+                    this.txサムネイル画像[i] = new CTexture();
+                }
 				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
 				this.tプレビュー画像・動画の変更();
 				base.OnManagedリソースの作成();
@@ -112,7 +115,7 @@ namespace DTXMania
 				this.t描画処理・パネル本体();
 				this.t描画処理・ジャンル文字列();
 				//this.t描画処理・プレビュー画像();
-                this.t描画処理・サムネイル画像();
+                //this.t描画処理・サムネイル画像();
 				this.t描画処理・センサ光();
 				this.t描画処理・センサ本体();
 			}
@@ -140,28 +143,7 @@ namespace DTXMania
 		private CTexture txプレビュー画像;
         private CTexture[] txサムネイル画像 = new CTexture[13];
 		private CTexture txプレビュー画像がないときの画像;
-        private struct ST中心点
-        {
-            public float x;
-            public float y;
-            public float z;
-            public float rotY;
-        }
-        private ST中心点[] stマトリクス座標 = new ST中心点[13]{
-             new ST中心点() { x = -533.8936f, y = 50f, z = -289.5575f, rotY = -0.9279888f},
-             new ST中心点() { x = -533.8936f, y = 50f, z = -289.5575f, rotY = -0.9279888f},
-             new ST中心点() { x = -423.8936f, y = 50f, z = -169.5575f, rotY = -0.6579891f},
-             new ST中心点() { x = -297.5025f, y = 50f, z = -74.37564f, rotY = -0.4808382f},
-             new ST中心点() { x = -153.9001f, y = 50f, z = -20.52002f, rotY = -0.2605f },
-             new ST中心点() { x = 0.00002622683f, y = 50f, z = 0f, rotY = 0f },
-             new ST中心点() { x = 153.9002f, y = 50f, z = -20.52002f, rotY = 0.2605f },
-             new ST中心点() { x = 297.5025f, y = 50f, z = -74.37564f, rotY = 0.4808382f },
-             new ST中心点() { x = 423.8936f, y = 50f, z = -169.5575f, rotY = 0.6579891f },
-             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
-             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
-             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
-             new ST中心点() { x = 533.8936f, y = 50f, z = -289.5575f, rotY = 0.9279888f },
-        };
+
 		private bool b新しいプレビューファイルを読み込んだ;
 		private bool b新しいプレビューファイルをまだ読み込んでいない
 		{
@@ -215,7 +197,7 @@ namespace DTXMania
                 for (int i = 0; i < 13; i++)
                 {
                     //ここでは変更が効くが、どうやらstバー情報が更新されないようだ。なんてこった・・・・・
-                    this.t指定された曲からプレビュー画像を構築する(CDTXMania.stage選曲.act曲リスト.stバー情報[i].cScore, i);
+                    //this.t指定された曲からプレビュー画像を構築する(CDTXMania.stage選曲.act曲リスト.stバー情報[i].cScore, i);
                     //{
                         //if (i == 13)
                         //    return;
@@ -321,7 +303,6 @@ namespace DTXMania
                 string str = cスコア.ファイル情報.フォルダの絶対パス + cスコア.譜面情報.Preimage;
                 if (!str.Equals(this.str現在のファイル名[nバー番号]))
                 {
-                    //現状バー情報が変わらないため、この分岐文に突入できていない。
                     Trace.TraceInformation("-----------------------------------------");
                     CDTXMania.tテクスチャの解放(ref this.txサムネイル画像[nバー番号]);
                     this.str現在のファイル名[nバー番号] = str;
@@ -345,6 +326,10 @@ namespace DTXMania
                             Trace.TraceWarning("テクスチャがありませんでした。デフォルト指定のものを使います。");
                         }
                     }
+                }
+                else
+                {
+                    //this.r表示するプレビュー画像[nバー番号] = this.txプレビュー画像がないときの画像;
                 }
             }
             return true;
@@ -583,6 +568,7 @@ namespace DTXMania
         public unsafe void t描画処理・サムネイル画像()
         {
             #region[ 3D描画 ]
+            /*
             for (int n = 0; n < 13; n++ )
             {
                 if (this.r表示するプレビュー画像[n] != null)
@@ -598,6 +584,7 @@ namespace DTXMania
                     this.r表示するプレビュー画像[n].t3D描画(CDTXMania.app.Device, mat);
                 }
             }
+            */
             #endregion
         }
 		//-----------------
