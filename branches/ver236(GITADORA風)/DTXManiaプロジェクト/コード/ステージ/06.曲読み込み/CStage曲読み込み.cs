@@ -259,14 +259,10 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 this.txベースパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base panel.png"), false);
-                this.txシンボル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_Symbol.png"), false);
-                this.txLevel = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_LevelNumber.png"), false);
                 this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_background.jpg"), false);
-                this.tx難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_difficulty panel.png"), false);
                 this.txヘッダーパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_header panel.png"), false);
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"), false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
-                this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
 
                 try
                 {
@@ -331,11 +327,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txタイトル);
                 CDTXMania.tテクスチャの解放(ref this.txアーティスト);
                 CDTXMania.tテクスチャの解放(ref this.txRISKY);
-                CDTXMania.tテクスチャの解放(ref this.tx難易度パネル);
                 CDTXMania.tテクスチャの解放(ref this.txDrumspeed);
-                CDTXMania.tテクスチャの解放(ref this.txLevel);
-                CDTXMania.tテクスチャの解放(ref this.txシンボル);
-                CDTXMania.tテクスチャの解放(ref this.txBall);
                 base.OnManagedリソースの解放();
             }
         }
@@ -721,12 +713,10 @@ namespace DTXMania
         private CTexture txアーティスト;
         private CTexture txベースパネル;
         private CTexture txヘッダーパネル;
-        private CTexture tx難易度パネル;
         private CTexture txジャケット;
         private CTexture tx背景;
         private CTexture txDrumspeed;
         private CTexture txRISKY;
-        private CTexture txシンボル;
         private ST泡[] st泡 = new ST泡[8];
 
         private DateTime timeBeginLoad;
@@ -734,7 +724,6 @@ namespace DTXMania
         private int nWAVcount;
         private CTexture txFilename;
         private CTexture txLevel;
-        private CTexture txBall;
 
         private Bitmap bitmapFilename;
         private Graphics graphicsFilename;

@@ -34,7 +34,6 @@ namespace DTXMania
                 this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 this.iDrumspeed = Image.FromFile(CSkin.Path(@"Graphics\\7_panel_icons.jpg"));
                 this.iRisky = Image.FromFile(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"));
-                this.iScore = Image.FromFile(CSkin.Path(@"Graphics\\ScreenPlay score numbers.png"));
                 this.b4font = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.b4font);
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -84,7 +83,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txScore);
                 this.iDrumspeed.Dispose();
                 this.iRisky.Dispose();
-                this.iScore.Dispose();
                 this.iDifficulty.Dispose();
 
                 this.ftDifficultyS.Dispose();

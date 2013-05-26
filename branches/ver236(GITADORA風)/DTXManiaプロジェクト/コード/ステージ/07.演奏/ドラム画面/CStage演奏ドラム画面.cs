@@ -235,6 +235,7 @@ namespace DTXMania
                 #endregion
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
+                this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
                 this.t進行描画・コンボ();
                 bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
@@ -254,7 +255,6 @@ namespace DTXMania
                     }
                 }
                 this.t進行描画・スコア();
-                this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
                 this.t進行描画・ゲージ();
                 this.t進行描画・パネル文字列();
                 this.t進行描画・演奏情報();
@@ -265,7 +265,6 @@ namespace DTXMania
                 this.t進行描画・チップファイアGB();
                 this.t進行描画・STAGEFAILED();
                 bすべてのチップが判定された = true;
-                bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
                 if (bIsFinishedFadeout)
                 {
                     if (!CDTXMania.Skin.soundステージクリア音.b再生中 && !CDTXMania.Skin.soundSTAGEFAILED音.b再生中)

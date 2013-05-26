@@ -301,6 +301,8 @@ namespace DTXMania
                     this.t小文字表示(190, 404, string.Format("{0,3:##0}%", dbPOOR率));
                     this.t小文字表示(190, 434, string.Format("{0,3:##0}%", dbMISS率));
                     this.t小文字表示(190, 464, string.Format("{0,3:##0}%", dbMAXCOMBO率));
+                    this.t大文字表示(82, 518, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
+                    this.t大文字表示(114, 590, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL.Drums / 10.0) * 0.2)));
                 }
             }
             return 0;
@@ -361,7 +363,7 @@ namespace DTXMania
                     if (this.st大文字位置[i].ch == ch)
                     {
                         Rectangle rectangle = new Rectangle(this.st大文字位置[i].pt.X, this.st大文字位置[i].pt.Y, 28, 42);
-                        if (ch == '%')
+                        if (ch == '.')
                         {
                             rectangle.Width -= 18;
                         }
@@ -372,7 +374,7 @@ namespace DTXMania
                         break;
                     }
                 }
-                x += 20;
+                x += (ch == '.' ? 8 : 29);
             }
         }
 
