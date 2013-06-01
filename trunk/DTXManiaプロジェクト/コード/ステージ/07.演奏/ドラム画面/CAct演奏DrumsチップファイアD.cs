@@ -69,7 +69,7 @@ namespace DTXMania
 					}
 				}
 			}
-            if ((this.tx青い星 != null)&& CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
+            if ((this.tx青い星 != null) && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
             {
                 for (int i = 0; i < 16; i++)
                 {
@@ -247,9 +247,9 @@ namespace DTXMania
                             this.st青い星[ j ].fY = ((((float)this.iPosY) + 350 + (((float)Math.Sin((double)this.st青い星[j].f半径)) * this.st青い星[j].f半径)) - 170f);
 							this.st青い星[ j ].f加速度X = (float) ( num7 * Math.Cos( ( Math.PI * 2 * n回転初期値 ) / 360.0 ) );
 							this.st青い星[ j ].f加速度Y = (float) ( num7 * ( Math.Sin( ( Math.PI * 2 * n回転初期値 ) / 360.0 ) - 0.2 ) );
-							this.st青い星[ j ].f加速度の加速度X = 2.995f;
+							this.st青い星[ j ].f加速度の加速度X = 0.995f;
 							this.st青い星[ j ].f加速度の加速度Y = 0.995f;
-							this.st青い星[ j ].f重力加速度 = 0.02355f;
+							this.st青い星[ j ].f重力加速度 = 0.00355f;
 							this.st青い星[ j ].f半径 = (float) ( 0.5 + ( ( (double) CDTXMania.Random.Next( 30 ) ) / 100.0 ) );
 							break;
 						}
