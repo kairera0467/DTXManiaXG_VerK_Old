@@ -27,20 +27,20 @@ namespace DTXMania
             stレーンサイズ3.w = 0x36;
             stレーンサイズArray[2] = stレーンサイズ3;
             STレーンサイズ stレーンサイズ4 = new STレーンサイズ();
-            stレーンサイズ4.x = 0x246;
+            stレーンサイズ4.x = 582;
             stレーンサイズ4.w = 60;
             stレーンサイズArray[3] = stレーンサイズ4;
             STレーンサイズ stレーンサイズ5 = new STレーンサイズ();
-            stレーンサイズ5.x = 0x210;
-            stレーンサイズ5.w = 0x2e;
+            stレーンサイズ5.x = 527;
+            stレーンサイズ5.w = 46;
             stレーンサイズArray[4] = stレーンサイズ5;
             STレーンサイズ stレーンサイズ6 = new STレーンサイズ();
             stレーンサイズ6.x = 0x285;
-            stレーンサイズ6.w = 0x2e;
+            stレーンサイズ6.w = 46;
             stレーンサイズArray[5] = stレーンサイズ6;
             STレーンサイズ stレーンサイズ7 = new STレーンサイズ();
             stレーンサイズ7.x = 0x2b6;
-            stレーンサイズ7.w = 0x2e;
+            stレーンサイズ7.w = 46;
             stレーンサイズArray[6] = stレーンサイズ7;
             STレーンサイズ stレーンサイズ8 = new STレーンサイズ();
             stレーンサイズ8.x = 0x2ec;
@@ -231,15 +231,8 @@ namespace DTXMania
                             {
                                 if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                                 {
-                                    //this.txLine.t2D描画(CDTXMania.app.Device, 576, 0, new Rectangle(281, 0, 3, 720));
-                                    //this.txLine.t2D描画(CDTXMania.app.Device, x2 - 18, 0, new Rectangle(284, 0, 22, 720));
-                                    //this.txLine.t2D描画(CDTXMania.app.Device, 601, 0, new Rectangle(306, 0, 22, 720));
-                                    //this.txLine.t2D描画(CDTXMania.app.Device, x3 + 26, 0, new Rectangle(328, 0, 22, 720));
-
-                                    this.txLine.t2D描画(CDTXMania.app.Device, 576, 0, new Rectangle(281, 0, 6, 720));
-                                    this.txLine.t2D描画(CDTXMania.app.Device, 585, 0, new Rectangle(284, 0, 66, 720));
-
-                                    //this.txLine.t2D描画(CDTXMania.app.Device, 573, 0, new Rectangle(278, 0, 6, 720));
+                                    this.txLine.t2D描画(CDTXMania.app.Device, 575, 0, new Rectangle(281, 0, 6, 720));
+                                    this.txLine.t2D描画(CDTXMania.app.Device, 579, 0, new Rectangle(284, 0, 66, 720));
                                 }
                                 else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
                                 {
@@ -280,7 +273,7 @@ namespace DTXMania
                                     //this.txLine.t2D描画(CDTXMania.app.Device, x2 - 15, 0, new Rectangle(232, 0, 25, 720));
                                     //this.txLine.t2D描画(CDTXMania.app.Device, x3 + 10, 0, new Rectangle(249, 0, 24, 720));
 
-                                    this.txLine.t2D描画(CDTXMania.app.Device, 530, 0, new Rectangle(229, 0, 52, 720));
+                                    this.txLine.t2D描画(CDTXMania.app.Device, 524, 0, new Rectangle(229, 0, 52, 720));
                                 }
                                 else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                                 {
@@ -348,7 +341,7 @@ namespace DTXMania
                             {
                                 if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                                 {
-                                    this.txLine.t2D描画(CDTXMania.app.Device, x2 - 11, 0, new Rectangle(121, 0, 51, 720));
+                                    this.txLine.t2D描画(CDTXMania.app.Device, x2 - 12, 0, new Rectangle(121, 0, 51, 720));
                                 }
                                 else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
                                 {

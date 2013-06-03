@@ -259,10 +259,10 @@ namespace DTXMania
 			for ( int k = 0; k < 3; k++ )
 			{
 				//for ( int n = 0; n < 5; n++ )
-				{
+				//{
 					this.nヒット数・Auto含まない[ k ] = new CHITCOUNTOFRANK();
 					this.nヒット数・Auto含む[ k ] = new CHITCOUNTOFRANK();
-				}
+				//}
 				this.queWailing[ k ] = new Queue<CDTX.CChip>();
 				this.r現在の歓声Chip[ k ] = null;
 			}
@@ -2639,34 +2639,34 @@ namespace DTXMania
             bool flag7 = false;
             switch (pChip.nチャンネル番号)
             {
-                case 32:
-                    flag7 = true;
+                case 0x20:
+                    bGtBsO = true;
                     break;
-                case 33:
-                    flag3 = true;
+                case 0x21:
+                    bGtBsB = true;
                     break;
-                case 34:
-                    flag2 = true;
+                case 0x22:
+                    bGtBsG = true;
                     break;
-                case 35:
-                    flag2 = true;
-                    flag3 = true;
+                case 0x23:
+                    bGtBsG = true;
+                    bGtBsB = true;
                     break;
-                case 36:
-                    flag = true;
+                case 0x24:
+                    bGtBsR = true;
                     break;
-                case 37:
-                    flag = true;
-                    flag3 = true;
+                case 0x25:
+                    bGtBsR = true;
+                    bGtBsB = true;
                     break;
-                case 38:
-                    flag = true;
-                    flag2 = true;
+                case 0x26:
+                    bGtBsR = true;
+                    bGtBsG = true;
                     break;
-                case 39:
-                    flag = true;
-                    flag2 = true;
-                    flag3 = true;
+                case 0x27:
+                    bGtBsR = true;
+                    bGtBsG = true;
+                    bGtBsB = true;
                     break;
                 case 0x28:
                     bGtBsW = true;
@@ -2674,7 +2674,7 @@ namespace DTXMania
                 default:
                     switch (pChip.nチャンネル番号)
                     {
-                        case 147:
+                        case 0x93:
                             flag4 = true;
                             break;
                         case 148:
@@ -2932,11 +2932,11 @@ namespace DTXMania
                             flag5 = true;
                             break;
                         case 232:
-                            flag = true;
-                            flag2 = true;
-                            flag3 = true;
-                            flag4 = true;
-                            flag5 = true;
+                            bGtBsR = true;
+                            bGtBsG = true;
+                            bGtBsB = true;
+                            bGtBsY = true;
+                            bGtBsP = true;
                             break;
                     }
                     break;
@@ -4597,12 +4597,11 @@ namespace DTXMania
 				{
 					chipWailing.bHit = true;
 					this.actWailingBonus.Start( inst, this.r現在の歓声Chip[ indexInst ] );
-                    this.actAVI.Start(true);
 					//if ( !bIsAutoPlay[indexInst] )
 					if ( !autoW )
 					{
 						int nCombo = ( this.actCombo.n現在のコンボ数[ indexInst ] < 500 ) ? this.actCombo.n現在のコンボ数[ indexInst ] : 500;
-						this.actScore.Add( inst, bIsAutoPlay, nCombo * (CDTXMania.ConfigIni.nSkillMode == 0 ? 3000L : 100L) );		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
+						this.actScore.Add( inst, bIsAutoPlay, nCombo * 3000L );		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
 					}
 				}
 			}

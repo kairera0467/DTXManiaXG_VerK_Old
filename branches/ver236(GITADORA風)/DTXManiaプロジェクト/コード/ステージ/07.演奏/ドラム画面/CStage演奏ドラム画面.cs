@@ -2134,29 +2134,6 @@ namespace DTXMania
                             }
                         //-----------------
                             #endregion
-#if 封印
-                        case Eパッド.LP:
-                            #region [ LPのヒット処理 ]
-                            //-----------------
-                            if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.LP)
-                                continue;
-                            if (!this.tドラムヒット処理(nTime, Eパッド.LP, this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime), inputEvent.nVelocity))
-                                break;
-                            continue;
-                        //-----------------
-                            #endregion
-
-                        case Eパッド.LBD:
-                            #region [ LBDのヒット処理 ]
-                            //-----------------
-                            if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.LBD)	// #23857 2010.12.12 yyagi: to support VelocityMin
-                                continue;	// 電子ドラムによる意図的なクロストークを無効にする
-                            if (!this.tドラムヒット処理(nTime, Eパッド.LBD, this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime), inputEvent.nVelocity))
-                                break;
-                            continue;
-                        //-----------------
-                            #endregion
-#endif
                         #endregion
 
                     }
@@ -2908,31 +2885,6 @@ namespace DTXMania
                                 }
                             }
                             break;
-                            /*
-                        case 0x4F:
-                            if (this.txチップ != null)
-                            {
-                                switch (pChip.n整数値)
-                                {
-                                    case 0x01:
-                                        x = (x + 0x13) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
-                                        if (this.txチップ != null)
-                                        {
-                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(448, 0, 64, 10));
-
-                                        }
-                                        break;
-                                    case 0x09:
-                                        x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
-                                        if (this.txチップ != null)
-                                        {
-                                            this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(338, 535, 0x40, 10));
-                                        }
-                                        break;
-                                }
-                            }
-                            break;
-                            */
                             
                     }
                     if (this.txチップ != null)

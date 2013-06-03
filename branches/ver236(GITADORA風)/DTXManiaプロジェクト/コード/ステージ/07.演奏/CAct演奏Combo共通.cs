@@ -329,6 +329,10 @@ namespace DTXMania
                     if (nジャンプインデックス >= 0 && nジャンプインデックス < 180)
                         f拡大率 = 1.0f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
 
+                    if ( this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
+                    {
+                        f拡大率 = 1.22f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
+                    }
                         this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(f拡大率, f拡大率, 1.0f);
                     //-----------------
                     #endregion
@@ -336,25 +340,28 @@ namespace DTXMania
                     //-----------------
                     int nコンボx = n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
                     int nコンボy = n表示中央Y;
+                    if ( this.n現在のコンボ数.Drums % 100 == 0 )
+                    {
+                        nコンボx += n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
+                        nコンボy += 30;
+                    }
                     //-----------------
                     #endregion
 
                     if (n桁数 == 2)//3ケタ未満の場合
                     {
-
-                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx, nコンボy + y動作差分, new Rectangle(0, 230, 280, 64));
+                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx, nコンボy + y動作差分, new Rectangle(0, 230, 280, 64));
                     }
                     else if (n桁数 == 3)//3ケタの場合
                     {
-
-                            nコンボx = n表示中央X - ((int)((280 * f拡大率) / 1.8f));
+                        nコンボx = n表示中央X - ((int)((280 * f拡大率) / 1.8f));
                         this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 22, nコンボy + y動作差分, new Rectangle(0, 294, 280, 64));
                     }
                     else if (n桁数 == 4)//4ケタの場合
                     {
 
-                            nコンボx = n表示中央X - ((int)((318 * f拡大率) / 3.0f));
-                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy + y動作差分, new Rectangle(0, 357, 318, 64));
+                        nコンボx = n表示中央X - ((int)((318 * f拡大率) / 3.0f));
+                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy + y動作差分, new Rectangle(0, 357, 318, 64));
                     }
                 }
                 else
@@ -378,9 +385,15 @@ namespace DTXMania
 
 			for( int i = 0; i < n桁数; i++ )
 			{
-                if (this.txCOMBOドラム != null)
+                if (this.txCOMBOドラム != null && this.n現在のコンボ数.Drums % 100 != 0)
+                {
+                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
                     this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
-				x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
+                }
+                else if (this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
+                {
+                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 14;
+                }
 				y = nY上辺位置px;
 
 				nJump = nジャンプインデックス - ( ( ( n桁数 - i ) - 1 ));

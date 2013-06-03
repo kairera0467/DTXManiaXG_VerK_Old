@@ -265,12 +265,12 @@ namespace DTXMania
             this.t小文字表示(100, 464, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].n最大コンボ数));
 
 
-            this.t小文字表示(190, 314, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fPerfect率[0])));
-            this.t小文字表示(190, 344, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fGreat率[0])));
-            this.t小文字表示(190, 374, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fGood率[0])));
-            this.t小文字表示(190, 404, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fPoor率[0])));
-            this.t小文字表示(190, 434, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fMiss率[0])));
-            this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
+            this.t小文字表示(190, 314, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPerfect率[0])));
+            this.t小文字表示(190, 344, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGreat率[0])));
+            this.t小文字表示(190, 374, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGood率[0])));
+            this.t小文字表示(190, 404, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPoor率[0])));
+            this.t小文字表示(190, 434, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fMiss率[0])));
+            this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
 
             this.t大文字表示(82, 518, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].db演奏型スキル値));
             this.t大文字表示(114, 590, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
