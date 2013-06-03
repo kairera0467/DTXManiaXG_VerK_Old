@@ -497,7 +497,7 @@ namespace DTXMania
             }
             else
             {
-                if (this.nIndex == 6 || this.nIndex == 7 || this.nIndex == 8)
+                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
                 {
                     DTXLevel = cdtx.LEVEL.Drums;
                     this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
@@ -548,10 +548,8 @@ namespace DTXMania
                 {
                     nCurrentRISKY = 0;
                 }
-                this.txDrumspeed.vc拡大縮小倍率.X = 0.85714285714285714285714285714286f;
-                this.txDrumspeed.vc拡大縮小倍率.Y = 0.85714285714285714285714285714286f;
-                this.txRISKY.vc拡大縮小倍率.X = 0.85714285714285714285714285714286f;
-                this.txRISKY.vc拡大縮小倍率.Y = 0.85714285714285714285714285714286f;
+                this.txDrumspeed.vc拡大縮小倍率 = new Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
+                this.txRISKY.vc拡大縮小倍率 = new Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
                 this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298 , new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
                 this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
             //-----------------------------
@@ -605,7 +603,7 @@ namespace DTXMania
                     {
                         if (nWAVcount == 1 && CDTXMania.DTX.listWAV.Count > 0)			// #28934 2012.7.7 yyagi (added checking Count)
                         {
-                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
                         int looptime = (CDTXMania.ConfigIni.b垂直帰線待ちを行う) ? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
                         for (int i = 0; i < looptime && nWAVcount <= CDTXMania.DTX.listWAV.Count; i++)
@@ -618,7 +616,7 @@ namespace DTXMania
                         }
                         if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
                         {
-                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
                         if (nWAVcount > CDTXMania.DTX.listWAV.Count)
                         {
