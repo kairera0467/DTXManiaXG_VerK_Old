@@ -20,6 +20,8 @@ namespace DTXCreator.譜面
 			GtR,
 			GtG,
 			GtB,
+            GtY,
+            GtP,
 			GtW,
 			BsV,
 			BsR,
