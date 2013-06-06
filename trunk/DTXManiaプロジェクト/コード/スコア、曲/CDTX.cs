@@ -2653,24 +2653,24 @@ namespace DTXMania
         {
             switch (nランダム化前チャンネル番号)
             {
-                case 17:
-                case 24:
-                    chip.nチャンネル番号 = n乱数排列数列[0] + 17;
+                case 0x11:
+                case 0x18:
+                    chip.nチャンネル番号 = n乱数排列数列[0] + 0x11;
                     return;
-                case 18:
-                    chip.nチャンネル番号 = n乱数排列数列[1] + 17;
+                case 0x12:
+                    chip.nチャンネル番号 = n乱数排列数列[1] + 0x11;
                     return;
-                case 19:
-                case 23:
+                case 0x13:
+                case 0x17:
                     break;
-                case 20:
-                    chip.nチャンネル番号 = n乱数排列数列[2] + 17;
+                case 0x14:
+                    chip.nチャンネル番号 = n乱数排列数列[2] + 0x11;
                     return;
-                case 21:
-                    chip.nチャンネル番号 = n乱数排列数列[3] + 17;
+                case 0x15:
+                    chip.nチャンネル番号 = n乱数排列数列[3] + 0x11;
                     return;
-                case 22:
-                    chip.nチャンネル番号 = n乱数排列数列[4] + 17;
+                case 0x16:
+                    chip.nチャンネル番号 = n乱数排列数列[4] + 0x11;
                     break;
                 default:
                     return;

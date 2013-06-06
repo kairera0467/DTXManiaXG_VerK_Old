@@ -492,32 +492,38 @@ namespace DTXMania
                 DTXLevelDeci = ( cdtx.LEVEL.Drums - DTXLevel * 10 );
             }
 
-            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
             {
+                DTXLevel = cdtx.LEVEL.Drums;
+                this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
             }
             else
             {
-                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
+                this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
+                this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                if (cdtx.LEVEL.Drums > 100)
                 {
-                    DTXLevel = cdtx.LEVEL.Drums;
-                    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
-                    //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                    this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
                 }
                 else
                 {
-                    this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
-                    if (cdtx.LEVEL.Drums > 100)
-                    {
-                        this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
-                    }
-                    else
-                    {
-                        this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
-                        this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
-                    }
+                    this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
+                    this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
                 }
             }
+            if (CDTXMania.ConfigIni.bSkillModeを自動切換えする == true)
+            {
+                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
+                {
+                    CDTXMania.ConfigIni.nSkillMode = 0;
+                }
+                else
+                {
+                    CDTXMania.ConfigIni.nSkillMode = 1;
+                }
+            }
+
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
                 if (!File.Exists(path))
                 {
@@ -629,7 +635,7 @@ namespace DTXMania
 								CDTXMania.DTX.PlanToAddMixerChannel();
 							}
                             CDTXMania.DTX.t旧仕様のドコドコチップを振り分ける(E楽器パート.DRUMS, CDTXMania.ConfigIni.bAssignToLBD.Drums);
-                            //CDTXMania.DTX.t譜面仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eNumOfLanes.Drums);
+                            CDTXMania.DTX.t譜面仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eNumOfLanes.Drums);
                             CDTXMania.DTX.tドコドコ仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eDkdkType.Drums);
                             CDTXMania.DTX.tドラムのミラー化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eMirror.Drums);
                             CDTXMania.DTX.tドラムのランダム化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eRandom.Drums);

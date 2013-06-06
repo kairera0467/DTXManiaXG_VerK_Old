@@ -2675,43 +2675,43 @@ namespace DTXMania
                     switch (pChip.nチャンネル番号)
                     {
                         case 0x93:
-                            flag4 = true;
+                            bGtBsY = true;
                             break;
-                        case 148:
-                            flag3 = true;
-                            flag4 = true;
+                        case 0x94:
+                            bGtBsB = true;
+                            bGtBsY = true;
                             break;
-                        case 149:
+                        case 0x95:
                             flag2 = true;
                             flag4 = true;
                             break;
-                        case 150:
-                            flag2 = true;
-                            flag3 = true;
-                            flag4 = true;
-                            break;
-                        case 151:
-                            flag = true;
-                            flag4 = true;
-                            break;
-                        case 152:
-                            flag = true;
-                            flag3 = true;
-                            flag4 = true;
-                            break;
-                        case 153:
-                            flag = true;
-                            flag2 = true;
-                            flag4 = true;
-                            break;
-                        case 154:
-                            flag = true;
+                        case 0x96:
                             flag2 = true;
                             flag3 = true;
                             flag4 = true;
                             break;
-                        case 155:
-                            flag5 = true;
+                        case 0x97:
+                            flag = true;
+                            flag4 = true;
+                            break;
+                        case 0x98:
+                            flag = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 0x99:
+                            flag = true;
+                            flag2 = true;
+                            flag4 = true;
+                            break;
+                        case 0x9A:
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                            flag4 = true;
+                            break;
+                        case 0x9B:
+                            bGtBsP = true;
                             break;
                         case 156:
                             flag3 = true;
@@ -2730,8 +2730,8 @@ namespace DTXMania
                             flag = true;
                             flag5 = true;
                             break;
-                        case 160:
-                            flag7 = true;
+                        case 0xA0:
+                            bGtBsO = true;
                             break;
                         case 161:
                             flag3 = true;
@@ -2908,30 +2908,30 @@ namespace DTXMania
                             flag4 = true;
                             flag5 = true;
                             break;
-                        case 228:
-                            flag2 = true;
-                            flag3 = true;
-                            flag4 = true;
-                            flag5 = true;
+                        case 0xE4:
+                            bGtBsG = true;
+                            bGtBsB = true;
+                            bGtBsY = true;
+                            bGtBsP = true;
                             break;
-                        case 229:
-                            flag = true;
-                            flag4 = true;
-                            flag5 = true;
+                        case 0xE5:
+                            bGtBsR = true;
+                            bGtBsY = true;
+                            bGtBsP = true;
                             break;
-                        case 230:
-                            flag = true;
-                            flag3 = true;
-                            flag4 = true;
-                            flag5 = true;
+                        case 0xE6:
+                            bGtBsR = true;
+                            bGtBsB = true;
+                            bGtBsY = true;
+                            bGtBsP = true;
                             break;
-                        case 231:
-                            flag = true;
-                            flag2 = true;
-                            flag4 = true;
-                            flag5 = true;
+                        case 0xE7:
+                            bGtBsR = true;
+                            bGtBsG = true;
+                            bGtBsY = true;
+                            bGtBsP = true;
                             break;
-                        case 232:
+                        case 0xE8:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsB = true;
@@ -3524,7 +3524,7 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && ( pChip.nバーからの距離dot[indexInst] < 0 ) )
 				{
-					if ( pChip.nバーからの距離dot[indexInst] < -234 )	// #25253 2011.5.29 yyagi: Don't set pChip.bHit=true for wailing at once. It need to 1sec-delay (234pix per 1sec). 
+					if ( pChip.nバーからの距離dot[indexInst] < -351 )	// #25253 2011.5.29 yyagi: Don't set pChip.bHit=true for wailing at once. It need to 1sec-delay (234pix per 1sec). 
 					{
 						pChip.bHit = true;
 					}

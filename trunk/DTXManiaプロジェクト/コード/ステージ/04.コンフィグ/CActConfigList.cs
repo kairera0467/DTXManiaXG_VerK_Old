@@ -938,22 +938,24 @@ namespace DTXMania
                 "lane",
                 new string[] {"L R","R L","R Only"});
             this.list項目リスト.Add(this.iDrumsDkdkType);
+            
             /*
             this.iDrumsNumOfLanes = new CItemList("NumOfLanes", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNumOfLanes.Drums,
                 "10レーン譜面の仕様を変更する。\n"+
-                "A: デフォルト10レーン\n  B: XG仕様9レーン\n  C: CLASSIC仕様6レーン", "To change the number of lanes.\n  10: default 10 lanes\n  9: XG style 9 lanes\n  6: classic style 6 lanes", 
+                "A: デフォルト10レーン\n"+
+                "B: XG仕様9レーン\n"+
+                "C: CLASSIC仕様6レーン",
+
+                "To change the number of lanes.\n"+
+                "10: default 10 lanes\n"+
+                "9: XG style 9 lanes\n"+
+                "6: classic style 6 lanes", 
                 new string[]{"10","9","6"});
             this.list項目リスト.Add(this.iDrumsNumOfLanes);
             */
+            
             this.iDrumsRandom = new CItemList("Random", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandom.Drums, "ドラムのパッドチップがランダムに\n降ってきます。\n  Part: レーン単位で交換\n  Super: 小節単位で交換\n  Hyper: 四分の一小節単位で交換\n  Master: 死ぬがよい\n  Another: チップを丁度良くバラける", "Drums chips (pads) come randomly.\n  Part: swapping lanes randomly\n  Super: swapping for each measure\n  Hyper: swapping for each 1/4 measure\n  Master: game over...\n  Another: moderately swapping each\n  chip randomly", new string[]
-	{
-		"OFF",
-		"Part",
-		"Super",
-		"Hyper",
-		"Master",
-		"Another"
-	});
+	            {"OFF", "Part", "Super", "Hyper", "Master", "Another"});
             this.list項目リスト.Add(this.iDrumsRandom);
             this.iDrumsRandomPedal = new CItemList("RandomPedal", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandomPedal.Drums, "ドラムの足チップがランダムに\n降ってきます。\n  Part: レーン単位で交換\n  Super: 小節単位で交換\n  Hyper: 四分の一小節単位で交換\n  Master: 死ぬがよい\n  Another: チップを丁度良くバラける", "Drums chips (pedals) come randomly.\n  Part: swapping lanes randomly\n  Super: swapping for each measure\n  Hyper: swapping for each 1/4 measure\n  Master: game over...\n  Another: moderately swapping each\n  chip randomly", new string[]
 	{
@@ -2430,7 +2432,7 @@ namespace DTXMania
         private CItemList iDrumsMirror;
         private CItemList iDrumsRandom;
         private CItemList iDrumsRandomPedal;
-//      private CItemList iDrumsNumOfLanes;
+        private CItemList iDrumsNumOfLanes;
         private CItemList iDrumsDkdkType;
         private CItemToggle iDrumsAssignToLBD;
         private CItemToggle iDrumsHAZARD;

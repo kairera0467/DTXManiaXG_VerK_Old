@@ -320,15 +320,18 @@ namespace DTXMania
                 {
                     int x = this.n本体X + pointArray[i].X;
                     int y = this.n本体Y + pointArray[i].Y;
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                    {
-                        this.t特大文字表示(x - 208, y + 230, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[i].db演奏型スキル値 / 100.0));
-                        this.t特大文字表示(x - 214, y + 360, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[i].dbゲーム型スキル値));
-                    }
-                    else
+                    if (CDTXMania.ConfigIni.bDrums有効)
                     {
                         this.t特大文字表示(x - 438, y - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[i].db演奏型スキル値 / 100.0));
                         this.t特大文字表示(x - 248, y - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[i].dbゲーム型スキル値));
+                    }
+                    else if (CDTXMania.ConfigIni.bGuitar有効)
+                    {
+                        this.t特大文字表示(x - 438, y - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[1].db演奏型スキル値 / 100.0));
+                        this.t特大文字表示(x - 248, y - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[1].dbゲーム型スキル値));
+
+                        this.t特大文字表示(x - 784, y + 416, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[2].db演奏型スキル値 / 100.0));
+                        this.t特大文字表示(x - 594, y + 416, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[2].dbゲーム型スキル値));
                     }
                     if (CDTXMania.stage結果.b新記録スキル[i])
                     {
@@ -449,12 +452,7 @@ namespace DTXMania
                     }
                     if (num >= 500)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            this.t大文字表示(706, 504, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録[i].n最大コンボ数));
-                            this.t小文字表示(805, 502, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録[i].n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録[i].n全チップ数)) * 100f));
-                        }
-                        else
+                        if (CDTXMania.ConfigIni.bDrums有効)
                         {
                             this.t大文字表示(x - 0x2c, y + 0x7d, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録[i].n最大コンボ数));
                             this.t小文字表示(x + 0x40, y + 0x7d, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録[i].n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録[i].n全チップ数)) * 100f));
@@ -677,103 +675,6 @@ namespace DTXMania
                                     this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
                                 }
                             }
-                        }
-                    }
-
-                }
-            }
-            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-            {
-                if (base.b活性化してない)
-                {
-                    return 0;
-                }
-                if (base.b初めての進行描画)
-                {
-                    this.ct表示用 = new CCounter(0, 999, 3, CDTXMania.Timer);
-                    base.b初めての進行描画 = false;
-                }
-                this.ct表示用.t進行();
-                double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値);
-                int num = this.ct表示用.n現在の値;
-                Point[] pointArray = new Point[] { new Point(960, 46), new Point(2000, 0x29), new Point(2000, 0x29) };
-
-                this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
-                this.t小文字表示(100, 314, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPerfect数・Auto含まない));
-                this.t小文字表示(100, 344, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGreat数・Auto含まない));
-                this.t小文字表示(100, 374, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGood数・Auto含まない));
-                this.t小文字表示(100, 404, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPoor数・Auto含まない));
-                this.t小文字表示(100, 434, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nMiss数・Auto含まない));
-                this.t小文字表示(100, 464, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].n最大コンボ数));
-
-
-                this.t小文字表示(190, 314, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fPerfect率[0])));
-                this.t小文字表示(190, 344, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fGreat率[0])));
-                this.t小文字表示(190, 374, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fGood率[0])));
-                this.t小文字表示(190, 404, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fPoor率[0])));
-                this.t小文字表示(190, 434, string.Format("{0,3:##0}%", (int)(CDTXMania.stage結果.fMiss率[0])));
-                this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
-
-                string str = CDTXMania.stage結果.st演奏記録[0].nスコア.ToString("0000000");
-                for (int i = 0; i < 7; i++)
-                {
-                    Rectangle rectangle;
-                    char ch = str[i];
-                    if (ch.Equals(' '))
-                    {
-                        rectangle = new Rectangle(0, 0, 36, 50);
-                    }
-                    else
-                    {
-                        int num4 = int.Parse(str.Substring(i, 1));
-                        rectangle = new Rectangle(num4 * 36, 0, 36, 50);
-                    }
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                    {
-                        if (this.txスコア != null)
-                        {
-
-                            this.txスコア.t2D描画(CDTXMania.app.Device, 30 + (i * 34), 40, rectangle);
-                        }
-                    }
-                }
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                {
-                    if (this.txスコア != null)
-                    {
-                        this.txスコア.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
-                    }
-                }
-
-                this.txエキサイトゲージ[0].t2D描画(CDTXMania.app.Device, 294, 626);
-                this.txエキサイトゲージ[1].vc拡大縮小倍率.X = (float)CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums;
-                if (CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums == 1.0)
-                {
-                    this.txエキサイトゲージ[2].t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 0, 480, 31));
-                }
-                else
-                {
-                    this.txエキサイトゲージ[1].t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 0, 480, 31));
-                }
-
-                for (int i = 0; i < 1; i++)
-                {
-                    if (CDTXMania.stage結果.b新記録スキル[i])
-                    {
-
-                    }
-                }
-                if (this.ct表示用.n現在の値 >= 900)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        if (CDTXMania.stage結果.st演奏記録[0].nPerfect数 == CDTXMania.stage結果.st演奏記録[0].n全チップ数)
-                        {
-                            //えくせ
-                        }
-                        else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[0].nPerfect数 != CDTXMania.stage結果.st演奏記録[0].n全チップ数)
-                        {
-                            //ふるこん
                         }
                     }
 

@@ -808,10 +808,18 @@ namespace DTXCreator.譜面
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "S32", 0x92, 0x92, false, Color.FromArgb( alpha, 160, 160, 160 ), 0, 0, Cレーン.ELaneType.SE6_32, false ) );
 
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtV, "GtV", 0,    0,    true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+            /*
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtR, "GtR", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtG, "GtG", 0,    0,    false, Color.FromArgb( alpha, 0, 0xff, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtB, "GtB", 0,    0,    false, Color.FromArgb( alpha, 0, 0x80, 0xff ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+            */
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.GtR, "GtR", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtG, "GtG", 0,    0,    false, Color.FromArgb( alpha, 0, 0xff, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtB, "GtB", 0,    0,    false, Color.FromArgb( alpha, 0, 0x80, 0xff ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.GtG, "GtY", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtB, "GtP", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0x9f, 0xcf ), 0, width, Cレーン.ELaneType.Guitar, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtW, "GtW", 0x28, 0x28, true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
+
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsV, "BsV", 0,    0,    true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Bass, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsR, "BsR", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Bass, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsG, "BsG", 0,    0,    false, Color.FromArgb( alpha, 0, 0xff, 0 ), 0, width, Cレーン.ELaneType.Bass, true ) );

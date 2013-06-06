@@ -573,6 +573,7 @@ namespace DTXMania
         public bool bCLASSIC譜面判別を有効にする;
         public bool bMutingLP;
         public bool bLivePoint;
+        public bool bSkillModeを自動切換えする;
 
         #region[ 画像関連 ]
         public int nJudgeFrames;
@@ -1112,6 +1113,7 @@ namespace DTXMania
 			}
 			this.n演奏速度 = 20;
             this.bCLASSIC譜面判別を有効にする = false;
+            this.bSkillModeを自動切換えする = false;
             this.bMutingLP = true;
             #region [ AutoPlay ]
             this.bAutoPlay = new STAUTOPLAY();
@@ -1737,9 +1739,9 @@ namespace DTXMania
 			sw.WriteLine();
 
             #region[DTXManiaXG追加オプション]
-            sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
-            sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
-            sw.WriteLine();
+            //sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
+            //sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
+            //sw.WriteLine();
             sw.WriteLine("; dkdk仕様変更(0:デフォルト, 1:始動足変更, 2:dkdk1レーン化)");
             sw.WriteLine("DkdkType={0}", (int)this.eDkdkType.Drums);
             sw.WriteLine();
@@ -1795,6 +1797,9 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; スキルモード(0:旧仕様, 1:XG仕様)");
             sw.WriteLine("SkillMode={0}", (int)this.nSkillMode);
+            sw.WriteLine();
+            sw.WriteLine("; スキルモードの自動切換え(0:OFF, 1:ON)");
+            sw.WriteLine("SwitchSkillMode={0}", this.bSkillModeを自動切換えする ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; アタックエフェクトタイプ");
             sw.WriteLine("; 0:ALL 粉と爆発エフェクトを表示します。");
@@ -2780,6 +2785,10 @@ namespace DTXMania
                                             {
                                                 this.nSkillMode = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 1, (int)this.nSkillMode);
                                             }
+                                            else if (str3.Equals("SwitchSkillMode"))
+                                            {
+                                                this.bSkillModeを自動切換えする = C変換.bONorOFF(str4[0]);
+                                            }
                                             else if (str3.Equals("NumOfLanes"))
                                             {
                                                 this.eNumOfLanes.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eNumOfLanes.Drums);
@@ -2816,7 +2825,7 @@ namespace DTXMania
                                             {
                                                 this.bLaneFlush.Drums = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("JudgeFrames"))
+                                            else if (str3.Equals( "JudgeFrames"))
                                             {
                                                 this.nJudgeFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeFrames );
                                             }

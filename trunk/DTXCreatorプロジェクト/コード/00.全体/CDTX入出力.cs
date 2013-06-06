@@ -994,7 +994,7 @@ namespace DTXCreator
 				this.dic小節長倍率.Add( nBar, (float)dBarLength );
 				return true;
 			}
-			if( ( nCh >= 0x20 ) && ( nCh <= 0x27 ) )
+            if (( nCh >= 32 && nCh <= 39) || ( nCh >= 147 && nCh <= 159) || ( nCh >= 169 && nCh <= 175) || ( nCh >= 208 && nCh <= 211))
 			{
 				C小節 c小節 = this.tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( nBar );
 				int startIndex = 0;
@@ -1006,123 +1006,599 @@ namespace DTXCreator
 				for( int i = 0; i < nChips; i++ )
 				{
 					int nChipNo = C変換.n36進数2桁の文字列を数値に変換して返す( strパラメータ.Substring( i * 2, 2 ) );
-					if( nChipNo != 0 )
-					{
-						int nLaneGtV = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "GtV" );
-						int nLaneGtR = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "GtR" );
-						int nLaneGtG = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "GtG" );
-						int nLaneGtB = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "GtB" );
-						Cチップ item = new Cチップ();
-						item.nレーン番号0to = nLaneGtV;
-						item.n位置grid = i;
-						item.n値・整数1to1295 = nChipNo;
-						item.n読み込み時の解像度 = nChips;
-						c小節.listチップ.Add( item );
-						switch( nCh )
-						{
-							case 0x20:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtR;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 2;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                    if (nChipNo != 0)
+                    {
+                        int nLaneGtV = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す("GtV");
+                        int nLaneGtR = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す("GtR");
+                        int nLaneGtG = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す("GtG");
+                        int nLaneGtB = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す("GtB");
+                        int nLaneGtY = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す("GtY");
+                        int nLaneGtP = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す("GtP");
+                        Cチップ item = new Cチップ();
+                        item.nレーン番号0to = nLaneGtV;
+                        item.n位置grid = i;
+                        item.n値・整数1to1295 = nChipNo;
+                        item.n読み込み時の解像度 = nChips;
+                        c小節.listチップ.Add(item);
+                        switch (nCh)
+                        {
+                            case 0x20:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtR;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 2;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x21:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtB;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                            case 0x21:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtB;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x22:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtG;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                            case 0x22:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtG;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x23:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtG;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtB;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                            case 0x23:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtG;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtB;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x24:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtR;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                            case 0x24:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtR;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x25:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtR;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtB;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                            case 0x25:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtR;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtB;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x26:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtR;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtG;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
+                            case 0x26:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtR;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtG;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
 
-							case 0x27:
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtR;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtG;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								item = new Cチップ();
-								item.nレーン番号0to = nLaneGtB;
-								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
-								item.n読み込み時の解像度 = nChips;
-								c小節.listチップ.Add( item );
-								break;
-						}
-					}
+                            case 0x27:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtR;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtG;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtB;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                        }
+                        switch ( nCh )
+                        {
+                            case 147:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtY;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 148:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtB;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtY;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 149:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtG;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtY;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 150:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtG;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtB;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtY;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 151:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtR;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nLaneGtY;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 152:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to2;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new item();
+                                item.nレーン番号0to = nレーン番号0to4;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to5;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 153:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to2;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to3;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to5;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 154:
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to2;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to3;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to4;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                item = new Cチップ();
+                                item.nレーン番号0to = nレーン番号0to5;
+                                item.n位置grid = i;
+                                item.n値・整数1to1295 = 1;
+                                item.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(item);
+                                break;
+                            case 155:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 156:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to4;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 157:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to3;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 158:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to3;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to4;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 159:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to2;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 160:
+                            case 161:
+                            case 162:
+                            case 163:
+                            case 164:
+                            case 165:
+                            case 166:
+                            case 167:
+                            case 168:
+                                break;
+                            case 169:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to2;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to4;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 170:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to2;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to3;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 171:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to2;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to3;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to4;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 172:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to5;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 173:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to4;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to5;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 174:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to3;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to5;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            case 175:
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to3;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to4;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to6;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                cチップ = new Cチップ();
+                                cチップ.nレーン番号0to = nレーン番号0to5;
+                                cチップ.n位置grid = i;
+                                cチップ.n値・整数1to1295 = 1;
+                                cチップ.n読み込み時の解像度 = nChips;
+                                c小節.listチップ.Add(cチップ);
+                                break;
+                            default:
+                                switch (num5)
+                                {
+                                    case 208:
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to2;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to6;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to5;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        break;
+                                    case 209:
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to2;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to4;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to6;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to5;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        break;
+                                    case 210:
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to2;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to3;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to6;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to5;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        break;
+                                    case 211:
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to2;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to3;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to4;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to6;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        cチップ = new Cチップ();
+                                        cチップ.nレーン番号0to = nレーン番号0to5;
+                                        cチップ.n位置grid = i;
+                                        cチップ.n値・整数1to1295 = 1;
+                                        cチップ.n読み込み時の解像度 = nChips;
+                                        c小節.listチップ.Add(cチップ);
+                                        break;
+                                }
+                                break;
+                        }
+                    }
 				}
 				return true;
 			}
