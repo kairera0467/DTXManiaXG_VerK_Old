@@ -259,17 +259,6 @@ namespace DTXMania
                 this.txNewRecord = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_New Record.png"));
                 this.txWhite = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\Tile white 64x64.png"));
                 this.tx達成率ゲージ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_gauge.jpg"));
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                {
-                    this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
-                    this.tx文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_s.png"));
-                    this.txエキサイトゲージ = new CTexture[3];
-                    this.txエキサイトゲージ[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
-                    this.txエキサイトゲージ[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
-                    this.txエキサイトゲージ[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.jpg"));
-                    this.txスコア = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbersGD.png"));
-                    this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
-                }
 
                 base.OnManagedリソースの作成();
 			}
@@ -300,8 +289,6 @@ namespace DTXMania
 		}
         public override int On進行描画()
         {
-            if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-            {
                 if (base.b活性化してない)
                 {
                     return 0;
@@ -322,8 +309,16 @@ namespace DTXMania
                     int y = this.n本体Y + pointArray[i].Y;
                     if (CDTXMania.ConfigIni.bDrums有効)
                     {
-                        this.t特大文字表示(x - 438, y - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[i].db演奏型スキル値 / 100.0));
-                        this.t特大文字表示(x - 248, y - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[i].dbゲーム型スキル値));
+                        if ( CDTXMania.stage結果.st演奏記録[0].nPerfect数 == CDTXMania.stage結果.st演奏記録[0].n全チップ数 )
+                        {
+                            this.txNewRecord.t2D描画(CDTXMania.app.Device, 527, 40, new Rectangle(0, 12, 72, 26));
+                            this.t特大文字表示(x - 248, y - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
+                        }
+                        else
+                        {
+                            this.t特大文字表示(x - 438, y - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[0].db演奏型スキル値 / 100.0));
+                            this.t特大文字表示(x - 248, y - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
+                        }
                     }
                     else if (CDTXMania.ConfigIni.bGuitar有効)
                     {
@@ -335,7 +330,7 @@ namespace DTXMania
                     }
                     if (CDTXMania.stage結果.b新記録スキル[i])
                     {
-                        this.txNewRecord.t2D描画(CDTXMania.app.Device, 469, 67);
+                        this.txNewRecord.t2D描画(CDTXMania.app.Device, 469, 67, new Rectangle(0, 0, 111, 12));
                     }
                     if (num >= 0)
                     {
@@ -679,7 +674,6 @@ namespace DTXMania
                     }
 
                 }
-            }
             if (!this.ct表示用.b終了値に達した)
             {
                 return 0;
