@@ -879,7 +879,7 @@ namespace DTXMania
             this.iDrumsMoveDrumSet = new CItemToggle("DrumSetMove", CDTXMania.ConfigIni.bドラムセットを動かす,
                 "ドラムセットが動くかを設定します。\n" +
                 "",
-                "Set up a DrumSet works.");
+                "Set up a DrumSet Moves.");
             this.list項目リスト.Add(this.iDrumsMoveDrumSet);
 
             this.iDrumsJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine,
@@ -990,15 +990,11 @@ namespace DTXMania
             this.iDrumsNamePlateType = new CItemList("NamePlateType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNamePlate.Drums,
                 "演奏画面の構成を変更します。\n" +
                 "Type-A: XG2風の表示です。\n" +
-                "Type-B: XG1風の表示です。\n" +
-                "Type-C: ver1.60までのXG2風表示です。\n"+
-                "Type-D: XG3風の表示です。(実験的)",
+                "Type-B: XG1風の表示です。\n",
                 "演奏画面の構成を変更します。\n" +
                 "Type-A: XG2風の表示です。\n" +
-                "Type-B: XG1風の表示です。\n" +
-                "Type-C: ver1.60までのXG2風表示です。\n" +
-                "Type-D: XG3風の表示です。(実験的)",
-                new string[] { "Type-A", "Type-B", "Type-C", "Type-D" });
+                "Type-B: XG1風の表示です。\n",
+                new string[] { "Type-A", "Type-B" });
             this.list項目リスト.Add(this.iDrumsNamePlateType);
 
 			this.iDrumsGoToKeyAssign = new CItemBase( "Drums Keys", CItemBase.Eパネル種別.通常,
@@ -1451,18 +1447,6 @@ namespace DTXMania
 			#endregion
 			else
 			{
-		 		// #27029 2012.1.5 from
-				if( ( this.iSystemBDGroup.n現在選択されている項目番号 == (int) EBDGroup.どっちもBD ) &&
-					( ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemHHGroup ) || ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemHitSoundPriorityHH ) ) )
-				{
-					// 変更禁止（何もしない）
-				}
-				else
-				{
-					// 変更許可
-					this.list項目リスト[ this.n現在の選択項目 ].tEnter押下();
-				}
-
 
 				// Enter押下後の後処理
 
@@ -1521,38 +1505,6 @@ namespace DTXMania
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassReturnToMenu )		// #24525 2011.3.15 yyagi
 				{
 					t項目リストの設定・Bass();
-				}
-				#endregion
-				#region [ BDGroup #27029 2012.1.4 from ]
-				else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemBDGroup )					// #27029 2012.1.4 from
-				{
-					if( this.iSystemBDGroup.n現在選択されている項目番号 == (int) EBDGroup.どっちもBD )
-					{/*
-						// #27029 2012.1.5 from: 変更前の状態をバックアップする。
-						CDTXMania.ConfigIni.BackupOf1BD = new CConfigIni.CBackupOf1BD() {
-							eHHGroup = (EHHGroup) this.iSystemHHGroup.n現在選択されている項目番号,
-							eHitSoundPriorityHH = (E打ち分け時の再生の優先順位) this.iSystemHitSoundPriorityHH.n現在選択されている項目番号,
-						};
-                     */
-
-						// HH Group ... HH-0 → HH-2 / HH-1 → HH-3 / HH-2 → 変更なし / HH-3 → 変更なし
-						if( this.iSystemHHGroup.n現在選択されている項目番号 == (int) EHHGroup.全部打ち分ける )
-							this.iSystemHHGroup.n現在選択されている項目番号 = (int) EHHGroup.左シンバルのみ打ち分ける;
-						if( this.iSystemHHGroup.n現在選択されている項目番号 == (int) EHHGroup.ハイハットのみ打ち分ける )
-							this.iSystemHHGroup.n現在選択されている項目番号 = (int) EHHGroup.全部共通;
-
-						// HH Priority ... C>P → 変更なし / P>C → C>P
-						if( this.iSystemHitSoundPriorityHH.n現在選択されている項目番号 == (int) E打ち分け時の再生の優先順位.PadがChipより優先 )
-							this.iSystemHitSoundPriorityHH.n現在選択されている項目番号 = (int) E打ち分け時の再生の優先順位.ChipがPadより優先;
-					}
-					else
-					{
-						// #27029 2012.1.5 from: 変更前の状態に戻す。
-						//this.iSystemHHGroup.n現在選択されている項目番号 = (int) CDTXMania.ConfigIni.BackupOf1BD.eHHGroup;
-						//this.iSystemHitSoundPriorityHH.n現在選択されている項目番号 = (int) CDTXMania.ConfigIni.BackupOf1BD.eHitSoundPriorityHH;
-						
-						//CDTXMania.ConfigIni.BackupOf1BD = null;
-					}
 				}
 				#endregion
                 #region [ ダーク ]
@@ -1937,6 +1889,9 @@ namespace DTXMania
 			this.tx通常項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_itembox.png" ), false );
 			this.txその他項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_itembox other.png" ), false );
 			this.tx三角矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_triangle arrow.png" ), false );
+            this.tx判定ライン = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar.png"));
+            this.txレーン = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Paret.png"));
+            this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_shutter.png"));
 			this.txSkinSample1 = null;		// スキン選択時に動的に設定するため、ここでは初期化しない
 			base.OnManagedリソースの作成();
 		}
@@ -1949,7 +1904,9 @@ namespace DTXMania
 			CDTXMania.tテクスチャの解放( ref this.tx通常項目行パネル );
 			CDTXMania.tテクスチャの解放( ref this.txその他項目行パネル );
 			CDTXMania.tテクスチャの解放( ref this.tx三角矢印 );
-		
+            CDTXMania.tテクスチャの解放( ref this.txレーン );
+            CDTXMania.tテクスチャの解放( ref this.tx判定ライン );
+            CDTXMania.tテクスチャの解放( ref this.txシャッター );
 			base.OnManagedリソースの解放();
 		}
 		public override int On進行描画()
@@ -2167,6 +2124,20 @@ namespace DTXMania
 						{
 							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 19, ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値.ToString(), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
 						}
+
+                        if (this.list項目リスト[this.n現在の選択項目] == this.iDrumsJudgeLinePos || this.list項目リスト[this.n現在の選択項目] == this.iDrumsShutterInPos || this.list項目リスト[this.n現在の選択項目] == this.iDrumsShutterOutPos)
+                        {
+                            if (this.tx判定ライン != null)
+                            {
+                                int nシャッターIN = (int)(this.iDrumsShutterInPos.n現在の値 * 7.2);
+                                int nシャッターOUT = 720 - (int)(this.iDrumsShutterOutPos.n現在の値 * 7.2f);
+                                this.txレーン.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 70, 720));
+                                if(this.iDrumsJudgeLineDisp.bON == true)
+                                    this.tx判定ライン.t2D描画(CDTXMania.app.Device, 0, CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561 - this.iDrumsJudgeLinePos.n現在の値, new Rectangle(0, 0, 70, 8));
+                                this.txシャッター.t2D描画(CDTXMania.app.Device, 0, (int)(-720 + nシャッターIN), new Rectangle(0, 0, 70, 720));
+                                this.txシャッター.t2D描画(CDTXMania.app.Device, 0, nシャッターOUT, new Rectangle(0, 0, 70, 720));
+                            }
+                        }
 						break;
 						//-----------------
 						#endregion
@@ -2371,6 +2342,10 @@ namespace DTXMania
 		private string skinSubFolder_org;			//
 		private int nSkinSampleIndex;				//
 		private int nSkinIndex;						//
+
+        private CTexture txレーン;
+        private CTexture tx判定ライン;
+        private CTexture txシャッター;
 
 		private CItemBase iDrumsGoToKeyAssign;
 		private CItemBase iGuitarGoToKeyAssign;
