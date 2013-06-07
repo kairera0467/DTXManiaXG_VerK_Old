@@ -64,72 +64,22 @@ namespace DTXMania
             this.st大文字位置 = st文字位置Array;
 
             ST文字位置[] st文字位置Array2 = new ST文字位置[11];
-            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-            {
-                ST文字位置 st文字位置12 = new ST文字位置();
-                st文字位置12.ch = '0';
-                st文字位置12.pt = new Point(0, 0);
-                st文字位置Array2[0] = st文字位置12;
-                ST文字位置 st文字位置13 = new ST文字位置();
-                st文字位置13.ch = '1';
-                st文字位置13.pt = new Point(20, 0);
-                st文字位置Array2[1] = st文字位置13;
-                ST文字位置 st文字位置14 = new ST文字位置();
-                st文字位置14.ch = '2';
-                st文字位置14.pt = new Point(40, 0);
-                st文字位置Array2[2] = st文字位置14;
-                ST文字位置 st文字位置15 = new ST文字位置();
-                st文字位置15.ch = '3';
-                st文字位置15.pt = new Point(60, 0);
-                st文字位置Array2[3] = st文字位置15;
-                ST文字位置 st文字位置16 = new ST文字位置();
-                st文字位置16.ch = '4';
-                st文字位置16.pt = new Point(80, 0);
-                st文字位置Array2[4] = st文字位置16;
-                ST文字位置 st文字位置17 = new ST文字位置();
-                st文字位置17.ch = '5';
-                st文字位置17.pt = new Point(100, 0);
-                st文字位置Array2[5] = st文字位置17;
-                ST文字位置 st文字位置18 = new ST文字位置();
-                st文字位置18.ch = '6';
-                st文字位置18.pt = new Point(120, 0);
-                st文字位置Array2[6] = st文字位置18;
-                ST文字位置 st文字位置19 = new ST文字位置();
-                st文字位置19.ch = '7';
-                st文字位置19.pt = new Point(140, 0);
-                st文字位置Array2[7] = st文字位置19;
-                ST文字位置 st文字位置20 = new ST文字位置();
-                st文字位置20.ch = '8';
-                st文字位置20.pt = new Point(160, 0);
-                st文字位置Array2[8] = st文字位置20;
-                ST文字位置 st文字位置21 = new ST文字位置();
-                st文字位置21.ch = '9';
-                st文字位置21.pt = new Point(180, 0);
-                st文字位置Array2[9] = st文字位置21;
-                ST文字位置 st文字位置22 = new ST文字位置();
-                st文字位置22.ch = '%';
-                st文字位置22.pt = new Point(200, 0);
-                st文字位置Array2[10] = st文字位置22;
-                this.st小文字位置 = st文字位置Array2;
-            }
-            else
-            {
-                ST文字位置 st文字位置12 = new ST文字位置();
-                st文字位置12.ch = '0';
-                st文字位置12.pt = new Point(0, 0x24);
-                st文字位置Array2[0] = st文字位置12;
-                ST文字位置 st文字位置13 = new ST文字位置();
-                st文字位置13.ch = '1';
-                st文字位置13.pt = new Point(14, 0x24);
-                st文字位置Array2[1] = st文字位置13;
-                ST文字位置 st文字位置14 = new ST文字位置();
-                st文字位置14.ch = '2';
-                st文字位置14.pt = new Point(0x1c, 0x24);
-                st文字位置Array2[2] = st文字位置14;
-                ST文字位置 st文字位置15 = new ST文字位置();
-                st文字位置15.ch = '3';
-                st文字位置15.pt = new Point(0x2a, 0x24);
-                st文字位置Array2[3] = st文字位置15;
+            ST文字位置 st文字位置12 = new ST文字位置();
+            st文字位置12.ch = '0';
+            st文字位置12.pt = new Point(0, 0x24);
+            st文字位置Array2[0] = st文字位置12;
+            ST文字位置 st文字位置13 = new ST文字位置();
+            st文字位置13.ch = '1';
+            st文字位置13.pt = new Point(14, 0x24);
+            st文字位置Array2[1] = st文字位置13;
+            ST文字位置 st文字位置14 = new ST文字位置();
+            st文字位置14.ch = '2';
+            st文字位置14.pt = new Point(0x1c, 0x24);
+            st文字位置Array2[2] = st文字位置14;
+            ST文字位置 st文字位置15 = new ST文字位置();
+            st文字位置15.ch = '3';
+            st文字位置15.pt = new Point(0x2a, 0x24);
+            st文字位置Array2[3] = st文字位置15;
                 ST文字位置 st文字位置16 = new ST文字位置();
                 st文字位置16.ch = '4';
                 st文字位置16.pt = new Point(0x38, 0x24);
@@ -159,7 +109,6 @@ namespace DTXMania
                 st文字位置22.pt = new Point(70, 0x36);
                 st文字位置Array2[10] = st文字位置22;
                 this.st小文字位置 = st文字位置Array2;
-            }
             ST文字位置[] st文字位置Array3 = new ST文字位置[12];
             ST文字位置 st文字位置23 = new ST文字位置();
             st文字位置23.ch = '0';
