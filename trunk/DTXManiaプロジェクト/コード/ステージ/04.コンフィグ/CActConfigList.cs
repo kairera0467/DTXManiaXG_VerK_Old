@@ -418,6 +418,7 @@ namespace DTXMania
 				"Return to left menu." );
 			this.list項目リスト.Add( this.iDrumsReturnToMenu );
 
+            //----------AutoPlay----------
 			this.iDrumsAutoPlayAll = new CItemThreeState( "AutoPlay (All)", CItemThreeState.E状態.不定,
 				"全パッドの自動演奏の ON/OFF を\n" +
 				"まとめて切り替えます。",
@@ -485,6 +486,8 @@ namespace DTXMania
                 " automatically.");
             this.list項目リスト.Add(this.iDrumsRide);
 
+            //----------StandardOption----------
+
 			this.iDrumsScrollSpeed = new CItemInteger( "ScrollSpeed", 0, 0x7cf, CDTXMania.ConfigIni.n譜面スクロール速度.Drums,
 				"ノーツの流れるスピードを変更します。\n" +
 				"数字が大きくなるほどスピードが速くなり、\n" +
@@ -525,6 +528,8 @@ namespace DTXMania
                 " at Autoplay ([Left] is forcely used).",
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
             this.list項目リスト.Add(this.iDrumsHIDSUD);
+
+            //----------DisplayOption----------
 
             this.iDrumsDark = new CItemList("       Dark", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eDark,
                 "レーン表示のオプションをまとめて切り替えます。\n"+
@@ -571,6 +576,21 @@ namespace DTXMania
                 + "flow from the bottom to the top.");
             this.list項目リスト.Add(this.iDrumsReverse);
 
+            this.iDrumsPosition = new CItemList("Position", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.判定文字表示位置.Drums,
+                "ドラムの判定文字の表示位置を指定\n" +
+                "します。\n" +
+                "  P-A: レーン上\n" +
+                "  P-B: 判定ライン下\n" +
+                "  OFF: 表示しない",
+                "The position to show judgement mark.\n" +
+                "(Perfect, Great, ...)\n" +
+                "\n" +
+                " P-A: on the lanes.\n" +
+                " P-B: under the hit bar.\n" +
+                " OFF: no judgement mark.",
+                new string[] { "P-A", "P-B", "OFF" });
+            this.list項目リスト.Add(this.iDrumsPosition);
+
             this.iDrumsComboPosition = new CItemList("ComboPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.ドラムコンボ文字の表示位置,
                 "演奏時のドラムコンボ文字列の位置\n" +
                 "を指定します。OFFにするとゲーム中の\n" +
@@ -580,6 +600,24 @@ namespace DTXMania
                 " at Autoplay ([Left] is forcely used).",
                 new string[] { "Left", "Center", "Right", "OFF" });
             this.list項目リスト.Add(this.iDrumsComboPosition);
+
+            this.iDrumsLaneType = new CItemList("LaneType", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eLaneType.Drums,
+                "ドラムのレーンの配置を変更します。\n" +
+                "Type-A 通常の設定です。\n"+
+                "Type-B 2ペダルとタムをそれぞれま\n"+
+                "とめた表示です。\n"+
+                "Type-C 3タムのみをまとめた表示です。\n"+
+                "Type-D 現在製作中です・・・・",
+                "To change the displaying position of\n" +
+                "Drum Lanes.\n"+
+                "Type-A default\n" +
+                "Type-B Summarized 2 pedals and Toms.\n"+
+                "Type-C Summarized 3 Toms only.\n"+
+                "Type-D Work In Progress....",
+                new string[] { "Type-A", "Type-B", "Type-C", "Type-D"});
+            this.list項目リスト.Add(this.iDrumsLaneType);
+
+            //----------SpecialOption----------
 
 			this.iSystemRisky = new CItemInteger( "Risky", 0, 10, CDTXMania.ConfigIni.nRisky,
 				"設定した回数分ミスをすると、強制的に\n" +
@@ -598,21 +636,6 @@ namespace DTXMania
 				"It becomes MISS to hit pad without\n" +
 				" chip." );
 			this.list項目リスト.Add( this.iDrumsTight );
-            
-			this.iDrumsPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.判定文字表示位置.Drums,
-				"ドラムの判定文字の表示位置を指定\n" +
-				"します。\n" +
-				"  P-A: レーン上\n" +
-				"  P-B: 判定ライン下\n" +
-				"  OFF: 表示しない",
-				"The position to show judgement mark.\n" +
-				"(Perfect, Great, ...)\n" +
-				"\n" +
-				" P-A: on the lanes.\n" +
-				" P-B: under the hit bar.\n" +
-				" OFF: no judgement mark.",
-				new string[] { "P-A", "P-B", "OFF" } );
-			this.list項目リスト.Add( this.iDrumsPosition );
 
             this.iDrumsHAZARD = new CItemToggle("HAZARD", CDTXMania.ConfigIni.bHAZARD,
                 "ドSハザードモード\n" +
@@ -804,15 +827,6 @@ namespace DTXMania
 				"To decrease input lag, set minus value." );
 			this.list項目リスト.Add( this.iDrumsInputAdjustTimeMs );
 
-			// #24074 2011.01.23 add ikanick
-			this.iDrumsGraph = new CItemToggle( "Graph", CDTXMania.ConfigIni.bGraph.Drums,
-				"最高スキルと比較できるグラフを\n" +
-				"表示します。\n" +
-				"オートプレイだと表示されません。",
-				"To draw Graph \n" +
-				" or not." );
-			this.list項目リスト.Add( this.iDrumsGraph );
-
             this.iDrumsHHOGraphics = new CItemList("HHOGraphics", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eHHOGraphics.Drums,
                 "オープンハイハットの表示画像を\n変更します。\n" +
                 "A: DTXMania元仕様\n" +
@@ -844,23 +858,6 @@ namespace DTXMania
                 "the ride cymbal.",
                 new string[] { "RD RC", "RC RD" });
             this.list項目リスト.Add(this.iDrumsRDPosition);
-
-            this.iDrumsLaneType = new CItemList("LaneType", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eLaneType.Drums,
-                "ドラムのレーンの配置を変更します。\n" +
-                "Type-A 通常の設定です。\n"+
-                "Type-B 2ペダルとタムをそれぞれま\n"+
-                "とめた表示です。\n"+
-                "Type-C 3タムのみをまとめた表示です。\n"+
-                "Type-D 現在製作中です・・・・",
-                "To change the displaying position of\n" +
-                "Drum Lanes.\n"+
-                "Type-A default\n" +
-                "Type-B Summarized 2 pedals and Toms.\n"+
-                "Type-C Summarized 3 Toms only.\n"+
-                "Type-D Work In Progress....",
-                new string[] { "Type-A", "Type-B", "Type-C", "Type-D"});
-            this.list項目リスト.Add(this.iDrumsLaneType);
-
 
             this.iDrumsBPMbar = new CItemList("BPMBar", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eBPMbar,
                 "左右のBPMに連動して動くバーの表示\n" +
@@ -979,6 +976,16 @@ namespace DTXMania
                 "All: all pads and pedals",
                 new string[] {"OFF","Pad","Pedal","All"});
             this.list項目リスト.Add(this.iDrumsMirror);
+
+
+            // #24074 2011.01.23 add ikanick
+            this.iDrumsGraph = new CItemToggle("Graph", CDTXMania.ConfigIni.bGraph.Drums,
+                "最高スキルと比較できるグラフを\n" +
+                "表示します。\n" +
+                "オートプレイだと表示されません。",
+                "To draw Graph \n" +
+                " or not.");
+            this.list項目リスト.Add(this.iDrumsGraph);
 
             this.iDrumsNamePlateType = new CItemList("NamePlateType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNamePlate.Drums,
                 "演奏画面の構成を変更します。\n" +
