@@ -1449,7 +1449,7 @@ namespace DTXMania
 			{
 
 				// Enter押下後の後処理
-
+                this.list項目リスト[this.n現在の選択項目].tEnter押下();
 				if( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemFullscreen )
 				{
 					CDTXMania.app.b次のタイミングで全画面・ウィンドウ切り替えを行う = true;
