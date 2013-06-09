@@ -89,6 +89,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
+                CDTXMania.act文字コンソール.tPrint(0, 100, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", CDTXMania.stage演奏ギター画面.bブーストボーナス ? 1 : 0));
 				if( this.tx左パネル != null )
 				{
 			        this.tx左パネル.t2D描画( CDTXMania.app.Device, (CDTXMania.ConfigIni.bGraph.Guitar ? 650 : 337), 211);

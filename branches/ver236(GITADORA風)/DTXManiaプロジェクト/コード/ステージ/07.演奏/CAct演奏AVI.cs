@@ -390,6 +390,19 @@ namespace DTXMania
                         this.txDShow汎用.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
                     else
                         this.txDShow汎用.t2D描画( CDTXMania.app.Device, 0, 0 );
+
+                    long l汎用位置;
+                    long l汎用終了位置;
+
+                    this.ds汎用.MediaSeeking.GetPositions(out l汎用位置, out l汎用終了位置);
+                    if (l汎用位置 == l汎用終了位置)
+                    {
+                        this.ds汎用.MediaSeeking.SetPositions(
+                        DsLong.FromInt64((long)(0)),
+                        AMSeekingSeekingFlags.AbsolutePositioning,
+                        0,
+                        AMSeekingSeekingFlags.NoPositioning);
+                    }
                 }
             }
             #region[ムービーのフレーム作成処理]

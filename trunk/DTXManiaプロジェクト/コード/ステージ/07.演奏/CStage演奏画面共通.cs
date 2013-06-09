@@ -272,6 +272,7 @@ namespace DTXMania
 				this.b演奏にジョイパッドを使った[ i ] = false;
 				this.b演奏にMIDI入力を使った[ i ] = false;
 				this.b演奏にマウスを使った[ i ] = false;
+                this.ctタイマー[i] = null;//new CCounter(0, 3000, 1, CDTXMania.Timer);
 			}
 			this.bAUTOでないチップが１つでもバーを通過した = false;
 			base.On活性化();
@@ -332,7 +333,9 @@ namespace DTXMania
 			if ( CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.24 yyagi Gt/Bsの譜面情報入れ替え
 			{
 				CDTXMania.DTX.SwapGuitarBassInfos();
-			}
+			} 
+
+            this.bブーストボーナス = false;
 			this.sw = new Stopwatch();
 			this.sw2 = new Stopwatch();
 //			this.gclatencymode = GCSettings.LatencyMode;
@@ -367,6 +370,7 @@ namespace DTXMania
 				this.t背景テクスチャの生成();
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
+
 
 				base.OnManagedリソースの作成();
 			}
@@ -650,6 +654,9 @@ namespace DTXMania
         protected DateTime dtLastQueueOperation; //
         protected bool bIsDirectSound; //
         protected double db再生速度;
+
+        private CCounter[] ctタイマー = new CCounter[3];
+        public bool bブーストボーナス = false;
 	
 		protected STDGBVALUE<Queue<CDTX.CChip>> queWailing;
 		protected STDGBVALUE<CDTX.CChip> r現在の歓声Chip;
@@ -1272,10 +1279,26 @@ namespace DTXMania
                 default:
                     break;
             }
+            for (int i = 0; i < 3; i++)
+            {
+                if (this.ctタイマー[i] != null)
+                {
+                    if (!this.ctタイマー[i].b停止中)
+                    {
+                        if (this.ctタイマー[i].b終了値に達した)
+                        {
+                            this.bブーストボーナス = false;
+                            this.ctタイマー[i].t停止();
+
+                        }
+                    }
+                }
+            }
             #region[スコア]
             //!bPChipIsAutoPlayを入れるとオート時にスコアを加算しなくなる。
             if (CDTXMania.ConfigIni.nSkillMode == 1)
             {
+                int nRate = this.bブーストボーナス == true ? 2 : 1;
                 if (CDTXMania.ConfigIni.bAutoAddGage == true)
                 {
                     if (((pChip.e楽器パート != E楽器パート.UNKNOWN)) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
@@ -1367,8 +1390,8 @@ namespace DTXMania
                             nScoreDelta = nScoreDelta * 50;
                         }
 
-                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta);
-                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta;
+                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta * nRate);
+                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta * nRate;
 
                         //return eJudgeResult;
                     }
@@ -3486,7 +3509,7 @@ namespace DTXMania
 							pChip.nLag = 0;		// tチップのヒット処理()の引数最後がfalseの時はpChip.nLagを計算しないため、ここでAutoPickかつMissのLag=0を代入
 							this.tチップのヒット処理( pChip.n発声時刻ms, pChip, false );
 						}
-						int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 0x29 : 0xA8;
+						int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 0x28 : 0xA8;
 						CDTX.CChip item = this.r指定時刻に一番近い未ヒットChip( pChip.n発声時刻ms, chWailingChip, this.nInputAdjustTimeMs[ instIndex ], 140 );
 						if ( item != null && !bMiss )
 						{
@@ -3524,7 +3547,7 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && ( pChip.nバーからの距離dot[indexInst] < 0 ) )
 				{
-					if ( pChip.nバーからの距離dot[indexInst] < -351 )	// #25253 2011.5.29 yyagi: Don't set pChip.bHit=true for wailing at once. It need to 1sec-delay (234pix per 1sec). 
+					if ( pChip.nバーからの距離dot[indexInst] < -234 )	// #25253 2011.5.29 yyagi: Don't set pChip.bHit=true for wailing at once. It need to 1sec-delay (234pix per 1sec). 
 					{
 						pChip.bHit = true;
 					}
@@ -3536,7 +3559,7 @@ namespace DTXMania
 					//    this.actWailingBonus.Start( inst, this.r現在の歓声Chip[indexInst] );
 					// #23886 2012.5.22 yyagi; To support auto Wailing; Don't do wailing for ALL wailing chips. Do wailing for queued wailing chip.
 					// wailing chips are queued when 1) manually wailing and not missed at that time 2) AutoWailing=ON and not missed at that time
-                        long nTimeStamp_Wailed = pChip.n発声時刻ms + CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
+						long nTimeStamp_Wailed = pChip.n発声時刻ms + CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
 						DoWailingFromQueue( inst, nTimeStamp_Wailed, autoW );
 					}
 				}
@@ -4600,12 +4623,42 @@ namespace DTXMania
 					//if ( !bIsAutoPlay[indexInst] )
 					if ( !autoW )
 					{
-						int nCombo = ( this.actCombo.n現在のコンボ数[ indexInst ] < 500 ) ? this.actCombo.n現在のコンボ数[ indexInst ] : 500;
-						this.actScore.Add( inst, bIsAutoPlay, nCombo * 3000L );		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
+                        if (CDTXMania.ConfigIni.nSkillMode == 0)
+                        {
+                            int nCombo = ( this.actCombo.n現在のコンボ数[ indexInst ] < 500 ) ? this.actCombo.n現在のコンボ数[ indexInst ] : 500;
+						    this.actScore.Add( inst, bIsAutoPlay, nCombo * 3000L );		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
+                        }
+                        else
+                        {
+                            int nAddScore = this.actCombo.n現在のコンボ数[indexInst] > 500 ? 50000 : this.actCombo.n現在のコンボ数[indexInst] * 100;
+                            this.actScore.Add(inst, bIsAutoPlay, nAddScore);		// #24245 2011.1.26 yyagi changed DRUMS->BASS, add nCombo conditions
+
+                            this.tブーストボーナス();
+                        }
 					}
 				}
 			}
 		}
+
+        private void tブーストボーナス()
+        {
+
+            for (int i = 0; i < 3; i++)
+            {
+                this.ctタイマー[i] = new CCounter(0, 3000, 1, CDTXMania.Timer);
+                if (!this.ctタイマー[i].b停止中)
+                {
+                    this.bブーストボーナス = true;
+                    this.ctタイマー[i].t進行();
+                    if(this.ctタイマー[i].b終了値に達した)
+                    {
+                        this.ctタイマー[i].t停止();
+                        this.bブーストボーナス = false;
+                    }
+                }
+            }
+        }
+
         #endregion
 	}
 }

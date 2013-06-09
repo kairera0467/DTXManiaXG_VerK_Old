@@ -120,7 +120,6 @@ namespace DTXMania
         private Image iDrumspeed;
         private Image iRisky;
         private Image iDifficulty;
-        private Image iScore;
         private int nCurrentDrumspeed;
         private int nStrlengthbydot;
         private string strGroupName;

@@ -283,17 +283,8 @@ namespace DTXMania
                     }
                     if (num >= 0)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            num11 = 3.48 * (CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値);
-                            this.t大文字表示(606, 460, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPerfect数));
-                            this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, 493, 304, new Rectangle(0, 0, (int)num11, 8));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x, y, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPerfect数));
-                            this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, 466, 81, new Rectangle(0, 0, (int)num11, 56));
-                        }
+                        this.t大文字表示(x, y, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPerfect数));
+                        this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, 466, 81, new Rectangle(0, 0, (int)num11, 56));
                     }
                     if (num >= 100)
                     {

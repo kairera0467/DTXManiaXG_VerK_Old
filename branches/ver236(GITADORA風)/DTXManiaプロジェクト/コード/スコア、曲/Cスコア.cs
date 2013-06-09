@@ -69,6 +69,7 @@ namespace DTXMania
 			public CDTX.E種別 曲種別;
 			public double Bpm;
 			public int Duration;
+            public STDGBVALUE<bool> b完全にCLASSIC譜面である;
 
 			[Serializable]
 			[StructLayout( LayoutKind.Sequential )]
@@ -275,6 +276,7 @@ namespace DTXMania
 			this.譜面情報.曲種別 = CDTX.E種別.DTX;
 			this.譜面情報.Bpm = 120.0;
 			this.譜面情報.Duration = 0;
+            this.譜面情報.b完全にCLASSIC譜面である.Drums = false;
 		}
 	}
 }

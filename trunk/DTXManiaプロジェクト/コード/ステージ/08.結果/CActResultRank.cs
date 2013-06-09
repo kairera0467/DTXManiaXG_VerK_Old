@@ -194,7 +194,7 @@ namespace DTXMania
                 }
                 if ( this.txランク文字2P != null )
                 {
-                    this.txランク文字2P.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y, new Rectangle(0, 0, (int)((double)txランク文字.sz画像サイズ.Width * num2), this.txランク文字.sz画像サイズ.Height));
+                    this.txランク文字2P.t2D描画(CDTXMania.app.Device, 850, 420, new Rectangle(0, 0, (int)((double)txランク文字.sz画像サイズ.Width * num2), this.txランク文字.sz画像サイズ.Height));
                 }
 			}
 			if( !this.ctランク表示.b終了値に達した )
