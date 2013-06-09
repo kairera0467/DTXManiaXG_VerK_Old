@@ -145,7 +145,7 @@ namespace DTXMania
                     {
                         if (c曲リストノード.arスコア[j] != null)
                         {
-                            this.n現在選択中の曲のレベル難易度毎DGB[j][i] = 0;
+                            this.n現在選択中の曲のレベル難易度毎DGB[j][i] = c曲リストノード.arスコア[j].譜面情報.レベル[i];
                             this.n現在選択中の曲の最高ランク難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.最大ランク[i];
                             this.b現在選択中の曲がフルコンボ難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.フルコンボ[i];
                         }
@@ -411,7 +411,7 @@ namespace DTXMania
                             else if (n選択中の曲のレベル難易度毎[i] < 100)
                             {
                                 n難易度整数[i] = (int)this.n現在選択中の曲のレベル難易度毎DGB[i].Guitar / 10;
-                                n難易度小数[i] = (n選択中の曲のレベル難易度毎[i] - (n難易度整数[i] * 10)) * 10;
+                                n難易度小数[i] = (this.n現在選択中の曲のレベル難易度毎DGB[i].Guitar - (n難易度整数[i] * 10)) * 10;
                             }
 
                             if (this.str難易度ラベル[i] != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 != C曲リストノード.Eノード種別.RANDOM)

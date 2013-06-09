@@ -88,7 +88,7 @@ namespace DTXMania
 						if( ( this.ct進行用[ (int) e楽器パート2, m ] != null ) && !this.ct進行用[ (int) e楽器パート2, m ].b停止中 )
 						{
                             //XGではレーン自体の幅が40pxほど。
-							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 283 : 480 ) + 0x71;
+							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 180 : 1050 ) + 0x71;
 							int num6 = 0;
 							int num7 = 0;
 							int num8 = this.ct進行用[ (int) e楽器パート2, m ].n現在の値;
@@ -110,7 +110,7 @@ namespace DTXMania
 							}
 							if( CDTXMania.ConfigIni.bReverse[ (int) e楽器パート2 ] )
 							{
-								num6 = ( 0x199 - num6 ) - 0xf4;
+								num6 = ( 409 - num6 ) - 0xf4;
 							}
 							Rectangle rectangle = new Rectangle( 0, 0, 0x1a, 0x7a );
 							if( ( 0x199 - num6 ) < rectangle.Bottom )
@@ -129,7 +129,7 @@ namespace DTXMania
 							}
 							num7 = 0;
 							rectangle = new Rectangle( 0x1a, 0, 0x1a, 0x7a );
-							if( ( 0x199 - ( num6 + 0x7a ) ) < rectangle.Bottom )
+							if( ( 409 - ( num6 + 0x7a ) ) < rectangle.Bottom )
 							{
 								rectangle.Height = ( 0x199 - ( num6 + 0x7a ) ) - rectangle.Top;
 							}

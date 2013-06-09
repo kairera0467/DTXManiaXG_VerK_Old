@@ -17,13 +17,28 @@ namespace DTXMania
         // 2013.02.22 kairera0467
         // ギターのレーンフラッシュの幅は37。
 
-
 		// CActivity 実装（共通クラスからの差分のみ）
+
+        public override void OnManagedリソースの作成()
+        {
+            this.txレーン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar.png"));
+            base.OnManagedリソースの作成();
+        }
+        public override void OnManagedリソースの解放()
+        {
+            CDTXMania.tテクスチャの解放( ref this.txレーン );
+            base.OnManagedリソースの解放();
+        }
 
 		public override int On進行描画()
 		{
 			if( !base.b活性化してない )
 			{
+
+                this.txレーン.t2D描画(CDTXMania.app.Device, 86, 104, new Rectangle(0, 0, 246, 566));
+                this.txレーン.t2D描画(CDTXMania.app.Device, 67, 670, new Rectangle(0, 567, 265, 50));
+                this.txレーン.t2D描画(CDTXMania.app.Device, 288, 42, new Rectangle(0, 618, 48, 62));
+
 				for( int i = 0; i < 10; i++ )
 				{
 					if( !base.ct進行[ i ].b停止中 )
@@ -58,6 +73,8 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
 		private readonly int[,] nRGBのX座標 = new int[ , ] { { 0, 39, 78, 117, 156, 0, 39, 78, 117, 156 }, { 156, 117, 78, 39, 0, 156, 117, 78, 39, 0 } };
+
+        private CTexture txレーン;
 		//-----------------
 		#endregion
 	}

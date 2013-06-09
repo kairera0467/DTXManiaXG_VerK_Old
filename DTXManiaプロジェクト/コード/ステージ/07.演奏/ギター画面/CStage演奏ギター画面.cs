@@ -143,7 +143,7 @@ namespace DTXMania
 					}
 				}
 				this.t進行描画・背景();
-                //this.t進行描画・AVI();
+                this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
 				this.t進行描画・パネル文字列();
 				this.t進行描画・BGA();
@@ -777,7 +777,7 @@ namespace DTXMania
 				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
                     if( CDTXMania.ConfigIni.bJudgeLineDisp.Bass )
-					    this.txチップ.t2D描画( CDTXMania.app.Device, 959, y, new Rectangle( 0, 20, 193, 1 ) );
+					    this.txチップ.t2D描画( CDTXMania.app.Device, 959, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
 			}
 

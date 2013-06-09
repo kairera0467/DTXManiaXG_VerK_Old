@@ -326,21 +326,26 @@ namespace DTXMania
                     #region [ "COMBO" の拡大率を設定。]
                     //-----------------
                     float f拡大率 = 1.0f;
-                    if ((nジャンプインデックス >= 0 && nジャンプインデックス < 180))
+                    if (nジャンプインデックス >= 0 && nジャンプインデックス < 180)
                         f拡大率 = 1.0f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
-                    if (this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180) && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                     {
-                        f拡大率 = 1.22f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
-                        this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(f拡大率, f拡大率, 1.0f);
+                        if (this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
+                        {
+                            f拡大率 = 1.22f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
+                        }
+
+                        if (this.txCOMBOドラム != null)
+                            this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(f拡大率, f拡大率, 1.0f);
                     }
-                    if (this.txCOMBOドラム != null && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                        this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(f拡大率, f拡大率, 1.0f);
                     //-----------------
                     #endregion
                     #region [ "COMBO" 文字を表示。]
                     //-----------------
                     int nコンボx = n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
                     int nコンボy = n表示中央Y;
+
                     if (this.n現在のコンボ数.Drums % 100 == 0 && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                     {
                         nコンボx += n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
@@ -431,28 +436,35 @@ namespace DTXMania
 
 			for( int i = 0; i < n桁数; i++ )
 			{
-                if (this.txCOMBOドラム != null && this.n現在のコンボ数.Drums % 100 != 0)
+                if (this.txCOMBOドラム != null)
                 {
-                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
-                    this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
-                }
-                else if (this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180) && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                {
-                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 14;
-                }
-				y = nY上辺位置px;
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                    {
+                        if (this.n現在のコンボ数.Drums % 100 != 0)
+                        {
+                            x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
+                            this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
+                        }
+                        else if (this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
+                        {
+                            x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 14;
+                        }
+                    }
+                    else
+                    {
+                        this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
+                        x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
+                    }
+                    y = nY上辺位置px;
 
-				nJump = nジャンプインデックス - ( ( ( n桁数 - i ) - 1 ));
-                if ((nJump >= 0) && (nJump < 180))
-                {
-                    y += this.nジャンプ差分値[nJump];
+                    nJump = nジャンプインデックス - (((n桁数 - i) - 1));
+                    if ((nJump >= 0) && (nJump < 180))
+                    {
+                        y += this.nジャンプ差分値[nJump];
+                    }
+                    this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x, y + y動作差分,
+                       new Rectangle((n位の数[i] % 5) * nドラムコンボの幅, (n位の数[i] / 5) * nドラムコンボの高さ, nドラムコンボの幅, nドラムコンボの高さ));
                 }
-
-				if( this.txCOMBOドラム != null )
-				{
-					this.txCOMBOドラム.t2D描画( CDTXMania.app.Device, x, y + y動作差分,
-						new Rectangle( ( n位の数[ i ] % 5 ) * nドラムコンボの幅, ( n位の数[ i ] / 5 ) * nドラムコンボの高さ, nドラムコンボの幅, nドラムコンボの高さ ) );
-				}
 			}
 
 
