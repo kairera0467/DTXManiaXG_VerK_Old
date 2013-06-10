@@ -37,7 +37,7 @@ namespace DTXMania
 		public override void On活性化()
 		{
 			this.n本体X = 8;
-			this.n本体Y = 58;
+			this.n本体Y = 57;
 			this.r表示するプレビュー画像 = this.txプレビュー画像がないときの画像;
 			this.str現在のファイル名 = "";
 			this.b新しいプレビューファイルを読み込んだ = false;
@@ -477,7 +477,7 @@ namespace DTXMania
 		private void t描画処理・センサ本体()
 		{
 			int x = this.n本体X + 410;
-			int y = 78;
+			int y = this.n本体Y - 6;
 			if( this.txセンサ != null )
 			{
 				this.txセンサ.t2D描画( CDTXMania.app.Device, x, y, this.rcセンサ本体上半分 );
@@ -490,14 +490,14 @@ namespace DTXMania
 			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
 			{
 				this.n本体X = 0x10;
-				this.n本体Y = 136;
+				this.n本体Y = 0x56;
 			}
 			else
 			{
 				double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 				double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
 				this.n本体X = 0x10;
-				this.n本体Y = 136 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
+				this.n本体Y = 0x56 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 			}
 			if( this.txパネル本体 != null )
 			{
@@ -508,8 +508,8 @@ namespace DTXMania
 		{
 			if( !CDTXMania.stage選曲.bスクロール中 && ( ( ( this.ct遅延表示 != null ) && ( this.ct遅延表示.n現在の値 > 0 ) ) && !this.b新しいプレビューファイルをまだ読み込んでいない ) )
 			{
-                int x = 52;
-                int y = 160;
+                int x = this.n本体X + 0x24;
+                int y = this.n本体Y + 0x18;
 				float num3 = ( (float) this.ct遅延表示.n現在の値 ) / 100f;
 				float num4 = 0.9f + ( 0.1f * num3 );
 				if( ( this.nAVI再生開始時刻 != -1 ) && ( this.sfAVI画像 != null ) )
