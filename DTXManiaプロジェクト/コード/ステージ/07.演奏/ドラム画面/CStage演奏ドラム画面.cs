@@ -76,9 +76,10 @@ namespace DTXMania
 		public override void On活性化()
 		{
 			this.bフィルイン中 = false;
+            this.ct登場用 = new CCounter(0, 12, 16, CDTXMania.Timer);
 			base.On活性化();
             Cスコア cスコア = CDTXMania.stage選曲.r確定されたスコア;
-            this.ct登場用 = new CCounter(0, 12, 16, CDTXMania.Timer);
+
 
             this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? -24 : base.nJudgeLinePosY - 186);
             base.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY);
@@ -146,6 +147,12 @@ namespace DTXMania
                 {
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
+
+                    this.actChipFireD.Start(Eレーン.HH); // #31554 2013.6.12 yyagi
+                    // 初チップヒット時のもたつき回避。最初にactChipFireD.Start()するときにJITが掛かって？
+                    // ものすごく待たされる(2回目以降と比べると2,3桁tick違う)。そこで最初の画面フェードインの間に
+                    // 一発Start()を掛けてJITの結果を生成させておく。
+
                     this.actAVI.LivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     int UnitTime;
@@ -158,6 +165,9 @@ namespace DTXMania
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
+
+
+
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                     this.actFI.tフェードイン開始();
                     this.ct登場用.t進行();
