@@ -380,19 +380,8 @@ namespace DTXMania
                     mat *= SlimDX.Matrix.RotationY(-0.60f);
                     //mat *= SlimDX.Matrix.RotationZ(-0.01f);
                 }
-                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
-                {
-                    identity *= SlimDX.Matrix.Translation(-760, 190, 0);
-                    identity *= SlimDX.Matrix.Scaling(0.55f, 0.85f, 1.0f);
-                    identity *= SlimDX.Matrix.RotationY(-0.26f);
-                    identity *= SlimDX.Matrix.RotationZ(-0.01f);
-                    mat *= SlimDX.Matrix.Translation(-860, 130, 0);
-                    mat *= SlimDX.Matrix.Scaling(0.55f, 0.85f, 1.0f);
-                    mat *= SlimDX.Matrix.RotationY(-0.26f);
-                    mat *= SlimDX.Matrix.RotationZ(-0.01f);
-                }
 
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                 {
                     this.txNamePlate.t3D描画(CDTXMania.app.Device, identity);
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
