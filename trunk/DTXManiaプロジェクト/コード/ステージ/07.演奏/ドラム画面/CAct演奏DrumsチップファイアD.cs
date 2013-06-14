@@ -432,10 +432,6 @@ namespace DTXMania
                 this.tx青い星[1] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip star_HH.png" ) );
 				if( this.tx青い星[1] != null )
 				{
-                    if (CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した)
-                        this.tx青い星[1].n透明度 = 255;
-                    else
-                        this.tx青い星[1].n透明度 = 0;
 					this.tx青い星[1].b加算合成 = true;
 				}
                 this.tx青い星[2] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip star_SD.png" ) );
@@ -498,10 +494,7 @@ namespace DTXMania
                     this.txNotes[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
                     if (this.txNotes[i] != null)
                     {
-                        if(CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した)
-                            this.txNotes[i].n透明度 = 120;
-                        else
-                            this.txNotes[i].n透明度 = 0;
+                        this.txNotes[i].n透明度 = 120;
                         this.txNotes[i].b加算合成 = true;
                     }
                 }
