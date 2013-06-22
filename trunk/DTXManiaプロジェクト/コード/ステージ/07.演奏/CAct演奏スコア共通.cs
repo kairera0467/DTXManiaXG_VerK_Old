@@ -10,6 +10,7 @@ namespace DTXMania
 		// プロパティ
 
 		public STDGBVALUE<long> nスコアの増分;
+        public STDGBVALUE<int>[] x位置 = new STDGBVALUE<int>[10];
 		public STDGBVALUE<double> n現在の本当のスコア;
 		public STDGBVALUE<long> n現在表示中のスコア;
 		public long n進行用タイマ;
@@ -130,10 +131,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if(CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C)
-                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
-                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
-                    this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
 				base.OnManagedリソースの作成();
 			}
 		}
