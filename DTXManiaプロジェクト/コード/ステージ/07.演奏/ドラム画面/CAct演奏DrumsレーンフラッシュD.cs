@@ -125,14 +125,12 @@ namespace DTXMania
 			{
                 if (CDTXMania.ConfigIni.nLaneDisp.Drums == 0 || CDTXMania.ConfigIni.nLaneDisp.Drums == 2)
                 {
-                    this.txLC = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Hitted.png"));
                     this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret.png"));
                     this.txBass = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret.png"));
                     this.txHitom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret.png"));
                 }
                 else
                 {
-                    this.txLC = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Hitted_Dark.png"));
                     this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Dark.png"));
                     this.txBass = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Dark.png"));
                     this.txHitom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Dark.png"));
@@ -187,7 +185,6 @@ namespace DTXMania
                     int nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
                         //if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF) //2013.02.17 kairera0467 ダークOFF以外でも透明度を有効にした。
                         {
-                            this.txLC.n透明度 = nAlpha;
                             this.txLine.n透明度 = nAlpha;
                             this.txBass.n透明度 = nAlpha;
                             this.txHitom.n透明度 = nAlpha;

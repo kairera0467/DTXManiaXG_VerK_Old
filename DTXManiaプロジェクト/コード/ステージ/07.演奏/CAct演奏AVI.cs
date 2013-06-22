@@ -280,33 +280,6 @@ namespace DTXMania
                     this.stフィルイン[i].b使用中 = false;
                 }
                 this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Fillin Effect.png"));
-
-                //レーン周りの処理。つーか何でbitmapなんだ?
-                
-                this.blanes = new Bitmap(558, 720);
-                if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
-                {
-                    this.blanes = new Bitmap(1280, 720);
-                }
-                Graphics graphics = Graphics.FromImage(this.blanes);
-                if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true && this.ilanes != null)
-                {
-                    this.ilanes = Image.FromFile(CSkin.Path(@"Graphics\7_lanes_Guitar.png"));
-                }
-
-                if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true && this.ilanes != null)
-                {
-                    graphics.DrawImage(this.ilanes, new Rectangle(0, 0, 1280, 720), new Rectangle(0, 0, 1280, 720), GraphicsUnit.Pixel);
-                }
-
-                if ((CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true))
-                {
-                    //graphics.Dispose();
-                    //this.ilanes.Dispose();
-                    //this.txlanes = new CTexture(CDTXMania.app.Device, this.blanes, CDTXMania.TextureFormat, false);
-                    this.txlanes = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Guitar.png"));
-                    //this.blanes.Dispose();
-                }
                 
                 base.OnManagedリソースの作成();
             }
@@ -470,7 +443,6 @@ namespace DTXMania
                             rectangle2 = new Rectangle((int)((point4.X - point3.X) * num5), (int)((point4.Y - point3.Y) * num5), ((int)((point4.X - point3.X) * num5)) + size5.Width, ((int)((point4.Y - point3.Y) * num5)) + size5.Height);
                             if ((((rectangle.Right <= 0) || (rectangle.Bottom <= 0)) || ((rectangle.Left >= size.Width) || (rectangle.Top >= size.Height))) || (((rectangle2.Right <= 0) || (rectangle2.Bottom <= 0)) || ((rectangle2.Left >= sz720pサイズ.Width) || (rectangle2.Top >= sz720pサイズ.Height))))
                             {
-                                goto Label_0A06;
                             }
                             if (rectangle.X < 0)
                             {
@@ -530,7 +502,6 @@ namespace DTXMania
                             }
                             if ((((rectangle.X >= rectangle.Right) || (rectangle.Y >= rectangle.Bottom)) || ((rectangle2.X >= rectangle2.Right) || (rectangle2.Y >= rectangle2.Bottom))) || ((((rectangle.Right < 0) || (rectangle.Bottom < 0)) || ((rectangle.X > size.Width) || (rectangle.Y > size.Height))) || (((rectangle2.Right < 0) || (rectangle2.Bottom < 0)) || ((rectangle2.X > sz720pサイズ.Width) || (rectangle2.Y > sz720pサイズ.Height)))))
                             {
-                                goto Label_0A06;
                             }
                         }
                     }
@@ -1083,7 +1054,7 @@ namespace DTXMania
                     if (CDTXMania.ConfigIni.bGraph.Drums == true)
                     {
 
-                        if (this.fAVIアスペクト比 > (256f / 266f))
+                        if ( this.fAVIアスペクト比 > 1.77f )
                         {
                             this.ratio2 = 256f / ((float)this.framewidth);
                             this.position2 = 422 + (int)((266f - (this.frameheight * this.ratio2)) / 2f);
@@ -1096,7 +1067,7 @@ namespace DTXMania
                         if (this.txクリップパネル != null)
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
                         this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
-                        if (this.fAVIアスペクト比 > (256f / 266f))
+                        if ( this.fAVIアスペクト比 > 1.77f )
                         {
                             if ( CDTXMania.ConfigIni.bDirectShowMode == false )
                             {
@@ -1136,7 +1107,7 @@ namespace DTXMania
                     #region[ スキルメーター無効 ]
                     else
                     {
-                        if (this.fAVIアスペクト比 > (256f / 266f))
+                        if ( this.fAVIアスペクト比 > 1.77f )
                         {
                             this.ratio2 = 420f / ((float)this.framewidth);
                             this.position2 = 168 + (int)((240f - (this.frameheight * this.ratio2)) / 2f);
@@ -1150,7 +1121,7 @@ namespace DTXMania
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 142);
                         this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
                         this.tx描画用.vc拡大縮小倍率 = this.smallvc;
-                        if (this.fAVIアスペクト比 > (256f / 266f))
+                        if ( this.fAVIアスペクト比 > 1.77f )
                         {
                             if ( CDTXMania.ConfigIni.bDirectShowMode == false )
                             {
@@ -1208,9 +1179,6 @@ namespace DTXMania
                     }
                 }
             }
-        Label_0A06:
-            if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
-                this.txlanes.t2D描画(CDTXMania.app.Device, 0, 0);
 
             return 0;
         }

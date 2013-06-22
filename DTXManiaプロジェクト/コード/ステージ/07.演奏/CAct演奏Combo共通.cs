@@ -449,6 +449,11 @@ namespace DTXMania
                         {
                             x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 14;
                         }
+                        else
+                        {
+                            x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
+                            this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
+                        }
                     }
                     else
                     {

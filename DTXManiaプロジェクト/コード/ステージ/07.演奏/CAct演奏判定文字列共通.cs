@@ -68,6 +68,18 @@ namespace DTXMania
 				new Rectangle( 600, 0,    150, 90 ),		// Bad
 				new Rectangle( 0, 0,    150, 90 )		    // Auto
 			};
+            if (CDTXMania.ConfigIni.nJudgeFrames == 0)
+            {
+                r = new Rectangle[] {
+				new Rectangle( 0, 0,    0x80, 0x2a ),		// Perfect
+				new Rectangle( 0, 0x2b, 0x80, 0x2a ),		// Great
+				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Good
+				new Rectangle( 0, 0,    0x80, 0x2a ),		// Poor
+				new Rectangle( 0, 0x2b, 0x80, 0x2a ),		// Miss
+				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Bad
+				new Rectangle( 0, 0,    0x80, 0x2a )		// Auto
+			};
+            }
 
 			for ( int i = 0; i < 7; i++ )
 			{
@@ -96,8 +108,14 @@ namespace DTXMania
 			}
 			if( ( ( nLane >= 10 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.表示OFF ) ) && ( ( ( nLane != 13 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != E判定文字表示位置.表示OFF ) ) && ( ( nLane != 14 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != E判定文字表示位置.表示OFF ) ) ) )
 			{
-
-				this.st状態[ nLane ].ct進行 = new CCounter( 0, CDTXMania.ConfigIni.nJudgeFrames - 1, CDTXMania.ConfigIni.nJudgeInterval, CDTXMania.Timer );
+                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                {
+                    this.st状態[nLane].ct進行 = new CCounter(0, CDTXMania.ConfigIni.nJudgeFrames - 1, CDTXMania.ConfigIni.nJudgeInterval, CDTXMania.Timer);
+                }
+                else
+                {
+                    this.st状態[nLane].ct進行 = new CCounter(0, 300, 1, CDTXMania.Timer);
+                }
 				this.st状態[ nLane ].judge = judge;
 				this.st状態[ nLane ].fX方向拡大率 = 1f;
 				this.st状態[ nLane ].fY方向拡大率 = 1f;
@@ -132,9 +150,19 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
-                this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
-                this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                {
+                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    //this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    //this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                }
+                else
+                {
+                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlay judge strings 1.png"));
+                    this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlay judge strings 2.png"));
+                    this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlay judge strings 3.png"));
+                }
+
                 this.txlag数値 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lag numbers.png"));
 				base.OnManagedリソースの作成();
 			}
