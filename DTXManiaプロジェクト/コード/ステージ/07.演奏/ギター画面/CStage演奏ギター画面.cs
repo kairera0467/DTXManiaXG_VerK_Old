@@ -288,7 +288,7 @@ namespace DTXMania
 					int y = ( CDTXMania.ConfigIni.bReverse.Guitar ? 611 : 153 );
 					for ( int i = 0; i < 4; i++ )
 					{
-						if ( this.txヒットバー != null )
+						if ( this.txヒットバー != null && CDTXMania.ConfigIni.bJudgeLineDisp.Guitar )
 						{
 							this.txヒットバー.t2D描画( CDTXMania.app.Device, 80, y, new Rectangle( 0, i * 6, 252, 6 ) );
 						}
@@ -299,7 +299,7 @@ namespace DTXMania
 					int y = ( CDTXMania.ConfigIni.bReverse.Bass ? 611 : 153 );
 					for ( int j = 0; j < 4; j++ )
 					{
-						if ( this.txヒットバー != null )
+						if ( this.txヒットバー != null && CDTXMania.ConfigIni.bJudgeLineDisp.Bass )
 						{
                             this.txヒットバー.t2D描画(CDTXMania.app.Device, 948, y, new Rectangle(0, j * 6, 252, 6));
 						}

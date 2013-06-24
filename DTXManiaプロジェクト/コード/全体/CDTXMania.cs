@@ -1932,7 +1932,8 @@ for (int i = 0; i < 3; i++) {
                     Sound管理 = new CSound管理( base.Window.Handle,
                                                 soundDeviceType,
                                                 CDTXMania.ConfigIni.nWASAPIBufferSizeMs,
-                                                CDTXMania.ConfigIni.nASIOBufferSizeMs,
+                                                //CDTXMania.ConfigIni.nASIOBufferSizeMs,
+                                                0,
                                                 CDTXMania.ConfigIni.nASIODevice
                     );
                     AddSoundTypeToWindowTitle();

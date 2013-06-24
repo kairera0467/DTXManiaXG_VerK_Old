@@ -22,6 +22,7 @@ namespace DTXMania
         public override void OnManagedリソースの作成()
         {
             this.txレーン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar.png"));
+
             base.OnManagedリソースの作成();
         }
         public override void OnManagedリソースの解放()
@@ -54,6 +55,7 @@ namespace DTXMania
 							if( texture != null )
 							{
                                 texture.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(j * 37, 0, 37, 118));
+                                
 							}
 						}
 						base.ct進行[ i ].t進行();
