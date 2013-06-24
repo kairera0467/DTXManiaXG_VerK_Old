@@ -511,7 +511,7 @@ namespace DTXMania
         public bool bHAZARD;
         public int nSoundDeviceType; // #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
         public int nWASAPIBufferSizeMs; // #24820 2013.1.15 yyagi WASAPIのバッファサイズ
-        public int nASIOBufferSizeMs; // #24820 2012.12.28 yyagi ASIOのバッファサイズ
+        //public int nASIOBufferSizeMs; // #24820 2012.12.28 yyagi ASIOのバッファサイズ
         public int nASIODevice; // #24820 2013.1.17 yyagi ASIOデバイス
         public bool bDynamicBassMixerManagement; // #24820
         public Eタイプ eBPMbar;
@@ -565,7 +565,6 @@ namespace DTXMania
         public string strGroupName;
 		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
 		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
-		public STDGBVALUE<int> nInputAdjustTimeMs;	// #23580 2011.1.3 yyagi タイミングアジャスト機能
         public int nMovieMode;
         public int nJudgeLine;
         public int nShutterInSide;
@@ -586,7 +585,9 @@ namespace DTXMania
         public int nExplosionHeight;
         #endregion
 
-        public int	nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
+        public STDGBVALUE<int> nInputAdjustTimeMs;	// #23580 2011.1.3 yyagi タイミングアジャスト機能
+        public STDGBVALUE<int> nJudgeLinePosOffset; // #31602 2013.6.23 yyagi 判定ライン表示位置のオフセット
+        public int nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
         public int nHidSud;
         public bool bIsAutoResultCapture;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能のON/OFF制御
 		public int nPoliphonicSounds;				// #28228 2012.5.1 yyagi レーン毎の最大同時発音数
@@ -1098,6 +1099,7 @@ namespace DTXMania
 			this.判定文字表示位置 = new STDGBVALUE<E判定文字表示位置>();
 			this.n譜面スクロール速度 = new STDGBVALUE<int>();
 			this.nInputAdjustTimeMs = new STDGBVALUE<int>();	// #23580 2011.1.3 yyagi
+            this.nJudgeLinePosOffset = new STDGBVALUE<int>(); // #31602 2013.6.23 yyagi
 			for ( int i = 0; i < 3; i++ )
 			{
 				this.b演奏音を強調する[ i ] = true;
@@ -1110,6 +1112,7 @@ namespace DTXMania
 				this.判定文字表示位置[ i ] = E判定文字表示位置.レーン上;
 				this.n譜面スクロール速度[ i ] = 1;
 				this.nInputAdjustTimeMs[ i ] = 0;
+                this.nJudgeLinePosOffset[i] = 0;
 			}
 			this.n演奏速度 = 20;
             this.bCLASSIC譜面判別を有効にする = false;
@@ -1187,7 +1190,7 @@ namespace DTXMania
             this.nSoundDeviceType = (int)ESoundDeviceTypeForConfig.ACM; // #24820 2012.12.23 yyagi 初期値はACM
             this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
             this.nASIODevice = 0;                       // #24820 2013.1.17 yyagi
-            this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
+            //this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
             this.bDynamicBassMixerManagement = true;    //
             this.bTimeStretch = false;					// #23664 2013.2.24 yyagi 初期値はfalse (再生速度変更を、ピッチ変更にて行う)
 
@@ -1383,12 +1386,12 @@ namespace DTXMania
             sw.WriteLine("ASIODevice={0}", (int)this.nASIODevice);
             sw.WriteLine();
 
-			sw.WriteLine( "; ASIO使用時のサウンドバッファサイズ" );
-			sw.WriteLine( "; (0=デバイスに設定されている値を使用, 1～9999=バッファサイズ(単位:ms)の手動指定" );
-			sw.WriteLine( "; ASIO Sound Buffer Size." );
-			sw.WriteLine( "; (0=Use the value specified to the device, 1-9999=specify the buffer size(ms) by yourself)" );
-			sw.WriteLine( "ASIOBufferSizeMs={0}", (int) this.nASIOBufferSizeMs );
-			sw.WriteLine();
+			//sw.WriteLine( "; ASIO使用時のサウンドバッファサイズ" );
+			//sw.WriteLine( "; (0=デバイスに設定されている値を使用, 1～9999=バッファサイズ(単位:ms)の手動指定" );
+			//sw.WriteLine( "; ASIO Sound Buffer Size." );
+			//sw.WriteLine( "; (0=Use the value specified to the device, 1-9999=specify the buffer size(ms) by yourself)" );
+			//sw.WriteLine( "ASIOBufferSizeMs={0}", (int) this.nASIOBufferSizeMs );
+			//sw.WriteLine();
 
             //sw.WriteLine("; Bass.Mixの制御を動的に行うか否か。");
             //sw.WriteLine("; ONにすると、ギター曲などチップ音の多い曲も再生できますが、画面が少しがたつきます。");
@@ -1590,12 +1593,19 @@ namespace DTXMania
             sw.WriteLine("; (Only available when you're using using WASAPI or ASIO)");	//
             sw.WriteLine("TimeStretch={0}", this.bTimeStretch ? 1 : 0);					//
             sw.WriteLine();
-            #region [ InputAdjust ]
+            #region [ Adjust ]
             sw.WriteLine("; 判定タイミング調整(ドラム, ギター, ベース)(-99～0)[ms]");		// #23580 2011.1.3 yyagi
             sw.WriteLine("; Revision value to adjust judgement timing for the drums, guitar and bass.");	//
             sw.WriteLine("InputAdjustTimeDrums={0}", this.nInputAdjustTimeMs.Drums);		//
             sw.WriteLine("InputAdjustTimeGuitar={0}", this.nInputAdjustTimeMs.Guitar);		//
             sw.WriteLine("InputAdjustTimeBass={0}", this.nInputAdjustTimeMs.Bass);			//
+            sw.WriteLine();
+
+            sw.WriteLine("; 判定ラインの表示位置調整(ドラム, ギター, ベース)(-99～99)[px]"); // #31602 2013.6.23 yyagi 判定ラインの表示位置オフセット
+            sw.WriteLine("; Offset value to adjust displaying judgement line for the drums, guitar and bass."); //
+            sw.WriteLine("JudgeLinePosOffsetDrums={0}", this.nJudgeLinePosOffset.Drums); //
+            sw.WriteLine("JudgeLinePosOffsetGuitar={0}", this.nJudgeLinePosOffset.Guitar); //
+            sw.WriteLine("JudgeLinePosOffsetBass={0}", this.nJudgeLinePosOffset.Bass); //
             sw.WriteLine();
             #endregion
             sw.WriteLine( "; LC, HH, SD,...の入力切り捨て下限Velocity値(0～127)" );			// #23857 2011.1.31 yyagi
@@ -2295,10 +2305,10 @@ namespace DTXMania
                                                 string[] asiodev = CEnumerateAllAsioDevices.GetAllASIODevices();
                                                 this.nASIODevice = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, asiodev.Length - 1, this.nASIODevice);
                                             }
-                                            else if (str3.Equals("ASIOBufferSizeMs"))
-                                            {
-                                                this.nASIOBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9999, this.nASIOBufferSizeMs);
-                                            }
+                                            //else if (str3.Equals("ASIOBufferSizeMs"))
+                                            //{
+                                            //    this.nASIOBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9999, this.nASIOBufferSizeMs);
+                                            //}
                                             //else if (str3.Equals("DynamicBassMixerManagement"))
                                             //{
                                             //    this.bDynamicBassMixerManagement = C変換.bONorOFF(str4[0]);
@@ -2507,18 +2517,32 @@ namespace DTXMania
                                             {
                                                 this.bIsAutoResultCapture = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("InputAdjustTimeDrums"))		// #23580 2011.1.3 yyagi
+                                            #region [ AdjustTime ]
+                                            else if ( str3.Equals( "InputAdjustTimeDrums" ) )		// #23580 2011.1.3 yyagi
                                             {
                                                 this.nInputAdjustTimeMs.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, -99, 0, this.nInputAdjustTimeMs.Drums);
                                             }
-                                            else if (str3.Equals("InputAdjustTimeGuitar"))	// #23580 2011.1.3 yyagi
+                                            else if ( str3.Equals( "InputAdjustTimeGuitar" ) )	// #23580 2011.1.3 yyagi
                                             {
                                                 this.nInputAdjustTimeMs.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, -99, 0, this.nInputAdjustTimeMs.Guitar);
                                             }
-                                            else if (str3.Equals("InputAdjustTimeBass"))		// #23580 2011.1.3 yyagi
+                                            else if ( str3.Equals( "InputAdjustTimeBass" ) )		// #23580 2011.1.3 yyagi
                                             {
                                                 this.nInputAdjustTimeMs.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, -99, 0, this.nInputAdjustTimeMs.Bass);
                                             }
+                                            else if ( str3.Equals( "JudgeLinePosOffsetDrums" ) ) // #31602 2013.6.23 yyagi
+                                            {
+                                                this.nJudgeLinePosOffset.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -99, 99, this.nJudgeLinePosOffset.Drums );
+                                            }
+                                            else if ( str3.Equals( "JudgeLinePosOffsetGuitar" ) ) // #31602 2013.6.23 yyagi
+                                            {
+                                                this.nJudgeLinePosOffset.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -99, 99, this.nJudgeLinePosOffset.Guitar );
+                                            }
+                                            else if ( str3.Equals( "JudgeLinePosOffsetBass" ) ) // #31602 2013.6.23 yyagi
+                                            {
+                                                this.nJudgeLinePosOffset.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -99, 99, this.nJudgeLinePosOffset.Bass );
+                                            }
+                                            #endregion
                                             else if (str3.Equals("BufferedInput"))
                                             {
                                                 this.bバッファ入力を行う = C変換.bONorOFF(str4[0]);

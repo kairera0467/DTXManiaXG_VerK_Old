@@ -72,20 +72,95 @@ namespace DTXMania
                 }
 
                 int index = 0;
-                while (index < 12)
+                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
                 {
-                    if (!base.st状態[index].ct進行.b停止中)
+                    for (int i = 0; i < 12; i++)
                     {
-                        //#if 旧判定アニメ
-                        base.st状態[index].ct進行.t進行();
-                        if (base.st状態[index].ct進行.b終了値に達した)
+                        if (!base.st状態[i].ct進行.b停止中)
                         {
-                            base.st状態[index].ct進行.t停止();
+                            base.st状態[i].ct進行.t進行();
+                            if (base.st状態[i].ct進行.b終了値に達した)
+                            {
+                                base.st状態[i].ct進行.t停止();
+                            }
+                            base.st状態[i].nRect = base.st状態[i].ct進行.n現在の値;
                         }
-                        base.st状態[index].nRect = base.st状態[index].ct進行.n現在の値;
+                        index++;
                     }
-                    //#endif
-                    index++;
+                }
+                else
+                {
+                    for (int i = 0; i < 12; i++)
+                    {
+                        if (!base.st状態[i].ct進行.b停止中)
+                        {
+                            base.st状態[i].ct進行.t進行();
+                            if (base.st状態[i].ct進行.b終了値に達した)
+                            {
+                                base.st状態[i].ct進行.t停止();
+                            }
+                            int num2 = base.st状態[i].ct進行.n現在の値;
+                            if ((base.st状態[i].judge != E判定.Miss) && (base.st状態[i].judge != E判定.Bad))
+                            {
+                                if (num2 < 50)
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f + (1f * (1f - (((float)num2) / 50f)));
+                                    base.st状態[i].fY方向拡大率 = ((float)num2) / 50f;
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0xff;
+                                }
+                                else if (num2 < 130)
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f;
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = ((num2 % 6) == 0) ? (CDTXMania.Random.Next(6) - 3) : base.st状態[i].n相対Y座標;
+                                    base.st状態[i].n透明度 = 0xff;
+                                }
+                                else if (num2 >= 240)
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f - ((1f * (num2 - 240)) / 60f);
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0xff;
+                                }
+                                else
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f;
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0xff;
+                                }
+                            }
+                            else if (num2 < 50)
+                            {
+                                base.st状態[i].fX方向拡大率 = 1f;
+                                base.st状態[i].fY方向拡大率 = ((float)num2) / 50f;
+                                base.st状態[i].n相対X座標 = 0;
+                                base.st状態[i].n相対Y座標 = 0;
+                                base.st状態[i].n透明度 = 0xff;
+                            }
+                            else if (num2 >= 200)
+                            {
+                                base.st状態[i].fX方向拡大率 = 1f - (((float)(num2 - 200)) / 100f);
+                                base.st状態[i].fY方向拡大率 = 1f - (((float)(num2 - 200)) / 100f);
+                                base.st状態[i].n相対X座標 = 0;
+                                base.st状態[i].n相対Y座標 = 0;
+                                base.st状態[i].n透明度 = 0xff;
+                            }
+                            else
+                            {
+                                base.st状態[i].fX方向拡大率 = 1f;
+                                base.st状態[i].fY方向拡大率 = 1f;
+                                base.st状態[i].n相対X座標 = 0;
+                                base.st状態[i].n相対Y座標 = 0;
+                                base.st状態[i].n透明度 = 0xff;
+                            }
+                        }
+                    }
                 }
                         
                 for (int j = 0; j < 12; j++)
@@ -104,7 +179,7 @@ namespace DTXMania
                         {
                             if (CDTXMania.ConfigIni.判定文字表示位置.Bass == E判定文字表示位置.表示OFF)
                             {
-                                goto Label_09F4;
+                                continue;
                             }
                             num5 = this.stレーンサイズ[j].x;
                             num6 = CDTXMania.ConfigIni.bReverse.Bass ? (((CDTXMania.ConfigIni.判定文字表示位置.Bass == E判定文字表示位置.レーン上) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Bass == E判定文字表示位置.レーン上) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
@@ -113,7 +188,7 @@ namespace DTXMania
                         {
                             if (CDTXMania.ConfigIni.判定文字表示位置.Guitar == E判定文字表示位置.表示OFF)
                             {
-                                goto Label_09F4;
+                                continue;
                             }
                             if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != E判定文字表示位置.判定ライン上または横)))
                             {
@@ -134,32 +209,43 @@ namespace DTXMania
                         int x = (xc - ((int)((110f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)))) - (( nRectX - 225 ) / 2) ;
                         int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0))) - (( nRectY - 135 ) / 2);
 
-
                         if (base.tx判定文字列[num4] != null)
                         {
-                            if (base.st状態[j].judge == E判定.Perfect)
+                            if (CDTXMania.ConfigIni.nJudgeFrames > 1)
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                if (base.st状態[j].judge == E判定.Perfect)
+                                {
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Great)
+                                {
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Good)
+                                {
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Poor)
+                                {
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Miss)
+                                {
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Auto)
+                                {
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                }
                             }
-                            if (base.st状態[j].judge == E判定.Great)
+                            else
                             {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                            }
-                            if (base.st状態[j].judge == E判定.Good)
-                            {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                            }
-                            if (base.st状態[j].judge == E判定.Poor)
-                            {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                            }
-                            if (base.st状態[j].judge == E判定.Miss)
-                            {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                            }
-                            if (base.st状態[j].judge == E判定.Auto)
-                            {
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                x = xc - ((int)((64f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
+                                y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((43f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
+
+                                base.tx判定文字列[num4].n透明度 = base.st状態[j].n透明度;
+                                base.tx判定文字列[num4].vc拡大縮小倍率 = new Vector3((float)(base.st状態[j].fX方向拡大率 * ((j < 10) ? 1.0 : 0.7)), (float)(base.st状態[j].fY方向拡大率 * ((j < 10) ? 1.0 : 0.7)), 1f);
+                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, base.st判定文字列[(int)base.st状態[j].judge].rc);
                             }
 
 
@@ -187,7 +273,6 @@ namespace DTXMania
                             }
 
                         }
-                    Label_09F4: ;
                     }
                 }
             }

@@ -79,6 +79,7 @@ namespace DTXMania
 				{
 					this.tx火花[ 4 ].b加算合成 = true;
 				}
+                this.txレーンの線 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_7_guitar line.png"));
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -91,6 +92,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx火花[ 2 ] );
                 CDTXMania.tテクスチャの解放( ref this.tx火花[ 3 ] );
                 CDTXMania.tテクスチャの解放( ref this.tx火花[ 4 ] );
+                CDTXMania.tテクスチャの解放( ref this.txレーンの線 );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -130,6 +132,7 @@ namespace DTXMania
 		private CCounter[] ct進行 = new CCounter[ 10 ];
 		private Point[] pt中央位置 = new Point[ 10 ];
 		private CTexture[] tx火花 = new CTexture[ 5 ];
+        private CTexture txレーンの線;
 		//-----------------
 		#endregion
 	}

@@ -254,10 +254,17 @@ namespace DTXMania
                 }
 
                 this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
-                this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
-                this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
-                this.txジャケット画像.fZ軸中心回転 = 0.3f;
-                this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
+                //this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
+                //this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
+                //this.txジャケット画像.fZ軸中心回転 = 0.3f;
+                //this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
+                Matrix mat = Matrix.Identity;
+                mat *= Matrix.Scaling(245.0f / this.txジャケット画像.sz画像サイズ.Width, 245.0f / this.txジャケット画像.sz画像サイズ.Height, 1f);
+                mat *= Matrix.Translation(440f, -335f, 0f);
+                mat *= Matrix.RotationZ(0.3f);
+
+                this.txジャケット画像.t3D描画(CDTXMania.app.Device, mat);
+
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
                     this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);

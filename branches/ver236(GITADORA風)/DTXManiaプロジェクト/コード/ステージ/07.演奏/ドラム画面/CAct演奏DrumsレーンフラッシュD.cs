@@ -125,12 +125,10 @@ namespace DTXMania
 			{
                 if (CDTXMania.ConfigIni.nLaneDisp.Drums == 0 || CDTXMania.ConfigIni.nLaneDisp.Drums == 2)
                 {
-                    this.txLC = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Hitted.png"));
                     this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret.png"));
                 }
                 else
                 {
-                    this.txLC = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Hitted_Dark.png"));
                     this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Dark.png"));
                 }
 
@@ -149,7 +147,6 @@ namespace DTXMania
 				{
 					CDTXMania.tテクスチャの解放( ref this.txFlush[ i ] );
 				}
-                CDTXMania.tテクスチャの解放(ref this.txLC);
                 CDTXMania.tテクスチャの解放(ref this.txLine);
 				base.OnManagedリソースの解放();
 			}
@@ -181,7 +178,6 @@ namespace DTXMania
                     int nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
                         //if (CDTXMania.ConfigIni.eDark == Eダークモード.OFF) //2013.02.17 kairera0467 ダークOFF以外でも透明度を有効にした。
                         {
-                            this.txLC.n透明度 = nAlpha;
                             this.txLine.n透明度 = nAlpha;
                         }
                         #region[ 動くレーン ]
@@ -513,7 +509,6 @@ namespace DTXMania
 		private readonly STレーンサイズ[] stレーンサイズ;
         private readonly int[] n描画順 = new int[] { 9, 2, 4, 6, 5, 3, 1, 8, 7, 0};
 		private CTexture[] txFlush = new CTexture[ 0x16 ];
-        private CTexture txLC;
         private CTexture txLine;
 		//-----------------
 		#endregion

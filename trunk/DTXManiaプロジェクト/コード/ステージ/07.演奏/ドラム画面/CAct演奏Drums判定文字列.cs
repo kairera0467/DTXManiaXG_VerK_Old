@@ -167,7 +167,7 @@ namespace DTXMania
                 {
                     if (!base.st状態[j].ct進行.b停止中)
                     {
-                        int num4 = base.st判定文字列[(int)base.st状態[j].judge].n画像番号;
+                        int num4 = CDTXMania.ConfigIni.nJudgeFrames > 1 ? 0 : base.st判定文字列[(int)base.st状態[j].judge].n画像番号;
                         int num5 = 0;
                         int num6 = 0;
                         if (j < 10)
@@ -213,7 +213,6 @@ namespace DTXMania
                         {
                             if (CDTXMania.ConfigIni.nJudgeFrames > 1)
                             {
-                                num4 = 0;
                                 if (base.st状態[j].judge == E判定.Perfect)
                                 {
                                     base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));

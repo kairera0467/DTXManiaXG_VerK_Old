@@ -108,7 +108,7 @@ namespace DTXMania
 				double num2 = ( (double) ( this.ctランク表示.n現在の値 - 500 ) ) / 500.0;
                 if (this.txランク文字 != null)
                 {
-                    this.txランク文字.t2D描画(CDTXMania.app.Device, 560, this.n本体Y, new Rectangle(0, 0, (int)((double)txランク文字.sz画像サイズ.Width * num2), this.txランク文字.sz画像サイズ.Height));
+                    this.txランク文字.t2D描画(CDTXMania.app.Device, 500, this.n本体Y, new Rectangle(0, 0, (int)((double)txランク文字.sz画像サイズ.Width * num2), this.txランク文字.sz画像サイズ.Height));
                 }
 			}
 			if( !this.ctランク表示.b終了値に達した )

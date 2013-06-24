@@ -450,21 +450,18 @@ namespace DTXMania
                 //this.txタイトル.t2D描画(CDTXMania.app.Device, (int)(510 + (this.txタイトル.vc拡大縮小倍率.X)), y);
                 //this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
             }
-            this.txジャケット.vc拡大縮小倍率.X = 384.0f / this.txジャケット.sz画像サイズ.Width;
-            this.txジャケット.vc拡大縮小倍率.Y = 384.0f / this.txジャケット.sz画像サイズ.Height;
-            this.txジャケット.fZ軸中心回転 = 0.28f;
-            this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
+            //this.txジャケット.vc拡大縮小倍率.X = 384.0f / this.txジャケット.sz画像サイズ.Width;
+            //this.txジャケット.vc拡大縮小倍率.Y = 384.0f / this.txジャケット.sz画像サイズ.Height;
+            //this.txジャケット.fZ軸中心回転 = 0.28f;
+            Matrix mat = Matrix.Identity;
+            mat *= Matrix.Scaling(384.0f / this.txジャケット.sz画像サイズ.Width, 384.0f / this.txジャケット.sz画像サイズ.Height, 1f);
+            mat *= Matrix.Translation(206f, 66f, 0f);
+            mat *= Matrix.RotationZ(0.28f);
+
+            //this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
+            this.txジャケット.t3D描画(CDTXMania.app.Device, mat);
 
             this.txジャケット.Dispose();
-
-            //this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
-            //this.nCurrentRISKY = CDTXMania.ConfigIni.nRisky;
-            //this.txDrumspeed.vc拡大縮小倍率.X = 0.85714285714285714285714285714286f;
-            //this.txDrumspeed.vc拡大縮小倍率.Y = 0.85714285714285714285714285714286f;
-            //this.txRISKY.vc拡大縮小倍率.X = 0.85714285714285714285714285714286f;
-            //this.txRISKY.vc拡大縮小倍率.Y = 0.85714285714285714285714285714286f;
-            //this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298, new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
-            //this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
             //-----------------------------
             #endregion
 

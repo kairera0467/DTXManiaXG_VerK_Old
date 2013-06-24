@@ -226,7 +226,10 @@ namespace DTXMania
             this.nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
             this.ct右シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
             this.ct左シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
-            this.ds汎用 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_Movie.mp4"), CDTXMania.app.WindowHandle, true);
+            if (File.Exists(CSkin.Path(@"Graphics\7_Movie.mp4")))
+            {
+                this.ds汎用 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_Movie.mp4"), CDTXMania.app.WindowHandle, true);
+            }
             base.On活性化();
         }
         public override void On非活性化()
