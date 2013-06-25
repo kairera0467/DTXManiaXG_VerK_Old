@@ -420,29 +420,8 @@ namespace DTXMania
                     }
                 }
 
-                // もしサウンドの登録/削除が必要なら、実行する
-                if (queueMixerSound.Count > 0)
-                {
-                    //Debug.WriteLine( "☆queueLength=" + queueMixerSound.Count );
-                    DateTime dtnow = DateTime.Now;
-                    TimeSpan ts = dtnow - dtLastQueueOperation;
-                    if (ts.Milliseconds > 7)
-                    {
-                        for (int i = 0; i < 2 && queueMixerSound.Count > 0; i++)
-                        {
-                            dtLastQueueOperation = dtnow;
-                            stmixer stm = queueMixerSound.Dequeue();
-                            if (stm.bIsAdd)
-                            {
-                                CDTXMania.Sound管理.AddMixer(stm.csound);
-                            }
-                            else
-                            {
-                                CDTXMania.Sound管理.RemoveMixer(stm.csound);
-                            }
-                        }
-                    }
-                }
+                ManageMixerQueue();
+
                 // キー入力
 
                 if (CDTXMania.act現在入力を占有中のプラグイン == null)
@@ -2590,7 +2569,7 @@ namespace DTXMania
                                         {
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 #region[左右ペダル]
-                                                rChip = (chipLP != null) ? chipLP : chipBD;
+                                                rChip = (chipLP != null) ? chipLP : chipLBD;
                                                 if (rChip != null)
                                                 {
                                                     base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);

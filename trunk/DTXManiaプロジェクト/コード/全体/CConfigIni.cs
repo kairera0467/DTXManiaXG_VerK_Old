@@ -1656,17 +1656,11 @@ namespace DTXMania
 			sw.WriteLine( "; DARKモード(0:OFF, 1:HALF, 2:FULL)" );
 			sw.WriteLine( "Dark={0}", (int) this.eDark );
 			sw.WriteLine();
-			sw.WriteLine( "; ドラムSUDDENモード(0:OFF, 1:ON)" );
-			sw.WriteLine( "DrumsSudden={0}", this.bSudden.Drums ? 1 : 0 );
-			sw.WriteLine();
 			sw.WriteLine( "; ギターSUDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarSudden={0}", this.bSudden.Guitar ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; ベースSUDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassSudden={0}", this.bSudden.Bass ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ドラムHIDDENモード(0:OFF, 1:ON)" );
-			sw.WriteLine( "DrumsHidden={0}", this.bHidden.Drums ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; ギターHIDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarHidden={0}", this.bHidden.Guitar ? 1 : 0 );
@@ -1798,8 +1792,6 @@ namespace DTXMania
             sw.WriteLine("; ネームプレートタイプ");
             sw.WriteLine("; 0:タイプA XG2風の表示がされます。 ");
             sw.WriteLine("; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれます。");
-            sw.WriteLine("; 2:タイプC ver1.50bまでのXG2風の表示です。");
-            sw.WriteLine("; 3:タイプD XG3+αの表示がされます。これが俺の求めていたXG3だ!)");
             sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate.Drums);
             sw.WriteLine();
             sw.WriteLine("; CLASSIC譜面判別");
@@ -2653,10 +2645,6 @@ namespace DTXMania
                                             {
                                                 this.bGraph.Bass = C変換.bONorOFF(str4[0]);
                                             }
-											else if( str3.Equals( "DrumsSudden" ) )
-											{
-												this.bSudden.Drums = C変換.bONorOFF( str4[ 0 ] );
-											}
 											else if( str3.Equals( "GuitarSudden" ) )
 											{
 												this.bSudden.Guitar = C変換.bONorOFF( str4[ 0 ] );
@@ -2664,10 +2652,6 @@ namespace DTXMania
 											else if( str3.Equals( "BassSudden" ) )
 											{
 												this.bSudden.Bass = C変換.bONorOFF( str4[ 0 ] );
-											}
-											else if( str3.Equals( "DrumsHidden" ) )
-											{
-												this.bHidden.Drums = C変換.bONorOFF( str4[ 0 ] );
 											}
 											else if( str3.Equals( "GuitarHidden" ) )
 											{

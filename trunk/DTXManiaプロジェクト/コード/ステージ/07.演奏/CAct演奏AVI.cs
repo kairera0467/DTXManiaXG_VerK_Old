@@ -795,7 +795,7 @@ namespace DTXMania
                         //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
                     }
 
-                    if ((CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C) && (this.txBPMバー左 != null && this.txBPMバー右 != null) && CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 >= 11)
+                    if ((this.txBPMバー左 != null && this.txBPMバー右 != null) && CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 >= 11)
                     {
                         if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
                         {
@@ -835,9 +835,9 @@ namespace DTXMania
                             this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
                         }
                     }
-                    if (CDTXMania.ConfigIni.bDrums有効 == true)
+                    if (CDTXMania.ConfigIni.bLivePoint)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C && CDTXMania.ConfigIni.bLivePoint)
+                        if (CDTXMania.ConfigIni.bDrums有効 == true)
                         {
                             #region[LivePoint]
                             if (this.txLivePoint != null)
@@ -936,10 +936,7 @@ namespace DTXMania
                             }
                             #endregion
                         }
-                    }
-                    else if (CDTXMania.ConfigIni.bGuitar有効 && CDTXMania.ConfigIni.bDrums有効 == false)
-                    {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums <= Eタイプ.C && CDTXMania.ConfigIni.bLivePoint)
+                        else if (CDTXMania.ConfigIni.bGuitar有効 && CDTXMania.ConfigIni.bDrums有効 == false)
                         {
                             #region[LivePoint]
                             if (this.txLivePoint != null)
@@ -1043,7 +1040,7 @@ namespace DTXMania
 
                 //コンボ、ネームプレート
                 //グラフ無効&ネームプレートA,C
-                if (CDTXMania.ConfigIni.bGraph.Drums == false && (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C))
+                if (CDTXMania.ConfigIni.bGraph.Drums == false && (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A))
                 {
                         CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 }
