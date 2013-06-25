@@ -1274,13 +1274,13 @@ namespace DTXMania
 		private void tアイテム数の描画()
 		{
 			string s = nCurrentPosition.ToString() + "/" + nNumOfItems.ToString();
-			int x = 1820 - 8 - 12;
+			int x = 1280 - 8 - 12;
 			int y = 500;
 
 			for ( int p = s.Length - 1; p >= 0; p-- )
 			{
 				tアイテム数の描画・１桁描画( x, y, s[ p ] );
-				x -= 8;
+				x -= 10;
 			}
 		}
 		private void tアイテム数の描画・１桁描画( int x, int y, char s数値 )
@@ -1288,7 +1288,7 @@ namespace DTXMania
 			int dx, dy;
 			if ( s数値 == '/' )
 			{
-				dx = 48;
+				dx = 96;
 				dy = 0;
 			}
 			else

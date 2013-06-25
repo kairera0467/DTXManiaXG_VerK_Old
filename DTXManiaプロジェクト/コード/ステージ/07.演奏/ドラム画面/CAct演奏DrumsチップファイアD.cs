@@ -40,6 +40,7 @@ namespace DTXMania
         {
 			if (( this.tx火花 != null ) && CDTXMania.ConfigIni.eAttackEffectType != Eタイプ.C)
 			{
+                nJudgeLinePosY_delta_Drums = _nJudgeLinePosY_delta_Drums;
 				for ( int j = 0; j < FIRE_MAX; j++ )
 				{
 					if ( this.st火花[ j ].b使用中 && this.st火花[ j ].nLane == (int) lane )		// yyagi 負荷軽減のつもり・・・だが、あまり効果なさげ
@@ -720,44 +721,44 @@ namespace DTXMania
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標B_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標B_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation((this.nレーンの中央X座標B[this.st火花[i].nLane]) - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation((this.nレーンの中央X座標B[this.st火花[i].nLane]) - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標C_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標C_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標C[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標C[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標D_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標D_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標D[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標D[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             if (this.tx火花2 != null)
