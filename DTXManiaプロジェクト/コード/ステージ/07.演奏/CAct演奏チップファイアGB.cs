@@ -79,7 +79,7 @@ namespace DTXMania
 				{
 					this.tx火花[ 4 ].b加算合成 = true;
 				}
-                this.txレーンの線 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_7_guitar line.png"));
+                this.txレーンの線 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_guitar line.png"));
 				base.OnManagedリソースの作成();
 			}
 		}
