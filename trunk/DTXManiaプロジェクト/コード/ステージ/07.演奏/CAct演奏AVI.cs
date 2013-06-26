@@ -282,7 +282,7 @@ namespace DTXMania
                     this.stフィルイン[i].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
                     this.stフィルイン[i].b使用中 = false;
                 }
-                this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_Fillin Effect.png"));
+                this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Fillin Effect.png"));
                 
                 base.OnManagedリソースの作成();
             }
@@ -393,7 +393,6 @@ namespace DTXMania
                     {
                         this.n総移動時間ms = 0;
                         this.n移動開始時刻ms = -1L;
- 
                     }
                     else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount()))
                     {
@@ -552,7 +551,9 @@ namespace DTXMania
                         {
                             if (fAVIアスペクト比 > 1.77f && (this.bDShowクリップを再生している == true))
                             {
+                                //this.rAVI.avi.Dispose(); //2013.06.26.kairera0467 DShow時にAVIをメモリから外すことで軽くしたいが、エラーを吐くため保留。
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
+
                                 //this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
                                 //this.tx描画用.t2D描画(CDTXMania.app.Device, 0, this.position);
                                 //this.actDshow.t進行描画(0, 0);
