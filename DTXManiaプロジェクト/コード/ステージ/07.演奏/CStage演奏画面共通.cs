@@ -607,7 +607,7 @@ namespace DTXMania
 		protected CAct演奏レーンフラッシュGB共通 actLaneFlushGB;
 		protected CAct演奏パネル文字列 actPanel;
 		protected CAct演奏演奏情報 actPlayInfo;
-		protected CAct演奏RGB共通 actRGB;
+		public CAct演奏RGB共通 actRGB;
 		public CAct演奏スコア共通 actScore;
 		protected CAct演奏ステージ失敗 actStageFailed;
 		public CAct演奏ステータスパネル共通 actStatusPanels;
@@ -3421,8 +3421,6 @@ namespace DTXMania
                                     this.txチップ.t2D描画(CDTXMania.app.Device, 959, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
                                 }
 							}
-							rc.X += chipTexDeltaX;
-							x += deltaX;
 							if ( bChipHasG )
 							{
                                 if (inst == E楽器パート.GUITAR)
@@ -3434,8 +3432,6 @@ namespace DTXMania
                                     this.txチップ.t2D描画(CDTXMania.app.Device, 998, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
                                 }
 							}
-							rc.X += chipTexDeltaX;
-							x += deltaX;
 							if ( bChipHasB )
 							{
                                 if (inst == E楽器パート.GUITAR)
@@ -3444,11 +3440,9 @@ namespace DTXMania
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1037, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1036, y - chipHeight / 2, new Rectangle(76, 0, 38, 10));
                                 }
 							}
-                            rc.X += chipTexDeltaX;
-                            x += deltaX;
                             if ( bChipHasY )
                             {
                                 if (inst == E楽器パート.GUITAR)
@@ -3460,8 +3454,6 @@ namespace DTXMania
                                     this.txチップ.t2D描画(CDTXMania.app.Device, 1076, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
                                 }
                             }
-                            rc.X += chipTexDeltaX;
-                            x += deltaX;
                             if ( bChipHasP )
                             {
                                 if (inst == E楽器パート.GUITAR)
@@ -4181,28 +4173,28 @@ namespace DTXMania
                 }
                 if (flag7 && autoR)
                 {
-                    this.actLaneFlushGB.Start(R);
-                    this.actRGB.Push(R);
+                    this.actLaneFlushGB.Start( R );
+                    this.actRGB.Push( R );
                 }
                 if (flag8 && autoG)
                 {
-                    this.actLaneFlushGB.Start(G);
-                    this.actRGB.Push(G);
+                    this.actLaneFlushGB.Start( G );
+                    this.actRGB.Push( G );
                 }
                 if (flag9 && autoB)
                 {
-                    this.actLaneFlushGB.Start(B);
-                    this.actRGB.Push(B);
+                    this.actLaneFlushGB.Start( B );
+                    this.actRGB.Push( B );
                 }
                 if (flag10 && autoY)
                 {
-                    this.actLaneFlushGB.Start(Y);
-                    this.actRGB.Push(Y);
+                    this.actLaneFlushGB.Start( Y );
+                    this.actRGB.Push( Y );
                 }
                 if (flag11 && autoP)
                 {
-                    this.actLaneFlushGB.Start(P);
-                    this.actRGB.Push(P);
+                    this.actLaneFlushGB.Start( P );
+                    this.actRGB.Push( P );
                 }
             }
 //			else
@@ -4346,23 +4338,23 @@ namespace DTXMania
                                                 bChipHasB = true;
                                                 bChipHasY = true;
                                                 break;
-                                            case 155:
+                                            case 0x9B:
                                                 bChipHasP = true;
                                                 break;
-                                            case 156:
+                                            case 0x9C:
                                                 bChipHasB = true;
                                                 bChipHasP = true;
                                                 break;
-                                            case 157:
+                                            case 0x9D:
                                                 bChipHasG = true;
                                                 bChipHasP = true;
                                                 break;
-                                            case 158:
+                                            case 0x9E:
                                                 bChipHasG = true;
                                                 bChipHasB = true;
                                                 bChipHasP = true;
                                                 break;
-                                            case 159:
+                                            case 0x9F:
                                                 bChipHasR = true;
                                                 bChipHasP = true;
                                                 break;
@@ -4470,118 +4462,119 @@ namespace DTXMania
                                                 bChipHasR = true;
                                                 bChipHasG = true;
                                                 bChipHasY = true;
-                                                break;/*
+                                                break;
                                             case 0xCD:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag15 = true;
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
                                                 break;
                                             case 0xCE:
-                                                flag16 = true;
+                                                bChipHasP = true;
                                                 break;
                                             case 0xCF:
-                                                flag14 = true;
-                                                flag16 = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
                                                 break;
-                                            case 208:
+                                                /*
+                                            case 0xD0:
                                                 flag12 = true;
                                                 flag15 = true;
-                                                flag16 = true;
+                                                bChipHasP = true;
                                                 break;
-                                            case 209:
-                                                flag12 = true;
-                                                flag14 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 210:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 211:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 218:
-                                                flag13 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 219:
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 220:
-                                                flag12 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 221:
-                                                flag12 = true;
-                                                flag14 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xDE:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xDF:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xE1:
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xE2:
-                                                flag14 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xE3:
-                                                flag13 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xE4:
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xE5:
-                                                flag12 = true;
-                                                flag15 = true;
-                                                flag16 = true;
-                                                break;
-                                            case 0xE6:
+                                            case 0xD1:
                                                 flag12 = true;
                                                 flag14 = true;
                                                 flag15 = true;
-                                                flag16 = true;
+                                                bChipHasP = true;
                                                 break;
-                                            case 0xE7:
+                                            case 0xD2:
                                                 flag12 = true;
                                                 flag13 = true;
                                                 flag15 = true;
-                                                flag16 = true;
+                                                bChipHasP = true;
                                                 break;
-                                            case 0xE8:
+                                            case 0xD3:
                                                 flag12 = true;
                                                 flag13 = true;
                                                 flag14 = true;
                                                 flag15 = true;
-                                                flag16 = true;
+                                                bChipHasP = true;
                                                 break;
                                                 */
+                                            case 0xDA:
+                                                bChipHasG = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xDB:
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xDC:
+                                                bChipHasR = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xDD:
+                                                bChipHasR = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xDE:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xDF:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE1:
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE2:
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE3:
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE4:
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE5:
+                                                bChipHasR = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE6:
+                                                bChipHasR = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE7:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
+                                            case 0xE8:
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
+                                                bChipHasP = true;
+                                                break;
                                         }
                                         break;
                                 }

@@ -843,14 +843,14 @@ namespace DTXMania
                             #region[LivePoint]
                             if (this.txLivePoint != null)
                                 this.txLivePoint.t2D描画(CDTXMania.app.Device, 886, 52, new Rectangle(0, 0, 71, 668));
-                            string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.Drums.ToString("000");
+                            string str = string.Format("{0,3:##0}", CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.Drums);
                             for (int i = 0; i < 3; i++)
                             {
                                 Rectangle rectangle;
                                 char ch = str[i];
                                 if (ch.Equals(' '))
                                 {
-                                    rectangle = new Rectangle(72, 0, 17, 25);
+                                    rectangle = new Rectangle(72, 250, 17, 25);
                                 }
                                 else
                                 {
@@ -868,7 +868,8 @@ namespace DTXMania
                                 {
                                     this.txLivePoint.t2D描画(CDTXMania.app.Device, 895 + (i * 18), 685, rectangle);
                                 }
-                                #region[箱]
+                            }
+                            #region[箱]
                                 //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
                                 if (this.LivePoint.Drums >= 0)
                                 {
@@ -934,7 +935,6 @@ namespace DTXMania
                                     }
                                 }
                                 #endregion
-                            }
                             #endregion
                         }
                         else if (CDTXMania.ConfigIni.bGuitar有効 && CDTXMania.ConfigIni.bDrums有効 == false)

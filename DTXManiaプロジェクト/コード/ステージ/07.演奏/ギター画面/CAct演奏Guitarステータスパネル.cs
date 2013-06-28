@@ -106,6 +106,7 @@ namespace DTXMania
 				if( this.tx右パネル != null )
 				{
 					//this.tx右パネル.t2D描画( CDTXMania.app.Device, 0x26e, 0x143, new Rectangle( this.nStatus * 15, 0xb7, 15, 0x49 ) );
+                    //this.tx左パネル.t2D描画(CDTXMania.app.Device, (CDTXMania.ConfigIni.bGraph.Guitar ? 0 : 693), 211);
 					int bass = CDTXMania.ConfigIni.n譜面スクロール速度.Bass;
 					if( bass < 0 )
 					{
