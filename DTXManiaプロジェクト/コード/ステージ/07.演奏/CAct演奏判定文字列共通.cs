@@ -60,17 +60,6 @@ namespace DTXMania
             int iP_B = 0x248;
 			this.st判定文字列 = new ST判定文字列[ 7 ];
 			Rectangle[] r = new Rectangle[] {
-                new Rectangle( 0, 0,    150, 90 ),		// Perfect
-				new Rectangle( 150, 0,    150, 90 ),		// Great
-				new Rectangle( 300, 0,    150, 90 ),		// Good
-				new Rectangle( 450, 0,    150, 90 ),		// Poor
-				new Rectangle( 600, 0,    150, 90 ),		// Miss
-				new Rectangle( 600, 0,    150, 90 ),		// Bad
-				new Rectangle( 0, 0,    150, 90 )		    // Auto
-			};
-            if (CDTXMania.ConfigIni.nJudgeFrames == 0)
-            {
-                r = new Rectangle[] {
 				new Rectangle( 0, 0,    0x80, 0x2a ),		// Perfect
 				new Rectangle( 0, 0x2b, 0x80, 0x2a ),		// Great
 				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Good
@@ -79,7 +68,6 @@ namespace DTXMania
 				new Rectangle( 0, 0x56, 0x80, 0x2a ),		// Bad
 				new Rectangle( 0, 0,    0x80, 0x2a )		// Auto
 			};
-            }
 
 			for ( int i = 0; i < 7; i++ )
 			{
