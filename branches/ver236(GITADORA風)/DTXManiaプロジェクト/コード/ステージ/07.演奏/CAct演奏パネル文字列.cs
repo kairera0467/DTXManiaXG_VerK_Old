@@ -208,7 +208,11 @@ namespace DTXMania
                 this.bmSongNameLength.Dispose();
                 Bitmap image = new Bitmap(this.nSongNamePixelLength, (int)Math.Ceiling((double)this.ftSongNameFont.GetHeight()));
                 graphics = Graphics.FromImage(image);
+
+                float y = (((float)image.Height) / 2f) - (this.ftSongNameFont.Size / 2f);
+                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.Black, (float)2f, (float)(y + 2f));
                 graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+
                 graphics.Dispose();
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();

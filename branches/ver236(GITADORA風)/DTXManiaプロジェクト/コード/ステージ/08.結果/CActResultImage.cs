@@ -36,8 +36,6 @@ namespace DTXMania
             this.n本体Y = 0x11b;
             this.nAlbumWidth = 102;
             this.nAlbumHeight = 102;
-            this.nAlbumWidthXG3 = 128;
-            this.nAlbumHeightXG3 = 128;
 
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftSongDifficultyFont = new System.Drawing.Font("Impact", 15f, FontStyle.Regular);
@@ -309,8 +307,6 @@ namespace DTXMania
         private Image iDrumSpeed;
         private int nAlbumHeight;
         private int nAlbumWidth;
-        private int nAlbumHeightXG3;
-        private int nAlbumWidthXG3;
         private long nAVI再生開始時刻;
         private int nSongNamePixelLength;
         private int n前回描画したフレーム番号;

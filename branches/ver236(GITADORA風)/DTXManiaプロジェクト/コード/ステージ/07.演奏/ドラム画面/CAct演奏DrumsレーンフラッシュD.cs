@@ -387,107 +387,113 @@ namespace DTXMania
                 }
                 for (int j = 0; j < 11; j++)
                 {
-                    if (!this.ct進行[j].b停止中)
+                    if (CDTXMania.ConfigIni.bLaneFlush.Drums != false)
                     {
-                        int x = this.stレーンサイズ[j].x;
-                        int w = this.stレーンサイズ[j].w;
-                        #region[レーン切り替え関連]
-                        if (j == 2)
+                        if (CDTXMania.ConfigIni.bLaneFlush.Drums != false)
                         {
-                            //SD
-                            if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            if (!this.ct進行[j].b停止中)
                             {
-                                x = this.stレーンサイズ[9].x - 396;
-                            }
-                        }
-                        if (j == 3)
-                        {
-                            //BD
-                            if ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C))
-                            {
-                                x = this.stレーンサイズ[4].x + 6;
-                            }
-                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
-                            {
-                                x = this.stレーンサイズ[4].x + 54;
-                            }
-                        }
+                                int x = this.stレーンサイズ[j].x;
+                                int w = this.stレーンサイズ[j].w;
+                                #region[レーン切り替え関連]
+                                if (j == 2)
+                                {
+                                    //SD
+                                    if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    {
+                                        x = this.stレーンサイズ[9].x - 396;
+                                    }
+                                }
+                                if (j == 3)
+                                {
+                                    //BD
+                                    if ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C))
+                                    {
+                                        x = this.stレーンサイズ[4].x + 6;
+                                    }
+                                    else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    {
+                                        x = this.stレーンサイズ[4].x + 54;
+                                    }
+                                }
 
-                        if (j == 4)
-                        {
-                            //HT
-                            if ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C))
-                            {
-                                x = this.stレーンサイズ[3].x + 13;
-                            }
-                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
-                            {
-                                x = this.stレーンサイズ[3].x - 106;
+                                if (j == 4)
+                                {
+                                    //HT
+                                    if ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C))
+                                    {
+                                        x = this.stレーンサイズ[3].x + 13;
+                                    }
+                                    else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    {
+                                        x = this.stレーンサイズ[3].x - 106;
+                                    }
+                                }
+
+                                if (j == 7)
+                                {
+                                    if ((CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC))
+                                    {
+                                        x = this.stレーンサイズ[9].x - 29;
+                                    }
+                                }
+
+                                if (j == 9)
+                                {
+                                    if ((CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC))
+                                    {
+                                        x = this.stレーンサイズ[7].x;
+                                    }
+                                }
+
+                                if ((j == 8) || (j == 10))
+                                {
+                                    if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
+                                    {
+                                        x = this.stレーンサイズ[2].x + 5;
+                                    }
+                                    else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    {
+                                        x = this.stレーンサイズ[2].x + 56;
+                                    }
+
+                                }
+                                #endregion
+                                for (int k = 0; k < 3; k++)
+                                {
+                                    if (CDTXMania.ConfigIni.bReverse.Drums)
+                                    {
+                                        int y = (k * 0x80) + ((this.ct進行[j].n現在の値 * 384) / 100);
+                                        for (int m = 0; m < w; m += 42)
+                                        {
+                                            if (this.txFlush[j + 11] != null)
+                                            {
+                                                this.txFlush[j + 11].t2D描画(CDTXMania.app.Device, x + m, y, new Rectangle((k * 42) + 2, 0, ((w - m) < 0x2a) ? (w - m) : 0x2a, 128));
+                                            }
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        int num8 = (200 + (500)) - ((this.ct進行[j].n現在の値 * 740) / 100);
+                                        if (num8 < 720)
+                                        {
+                                            for (int n = 0; n < w; n += 42)
+                                            {
+                                                if (this.txFlush[j] != null)
+                                                {
+                                                    this.txFlush[j].n透明度 = (num8);
+                                                    this.txFlush[j].t2D描画(CDTXMania.app.Device, x + n, num8, new Rectangle(k * 42, 0, ((w - n) < 42) ? (w - n) : 42, 128));
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
                             }
                         }
-
-                        if (j == 7)
-                        {
-                            if ((CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC))
-                            {
-                                x = this.stレーンサイズ[9].x - 29;
-                            }
-                        }
-
-                        if (j == 9)
-                        {
-                            if ((CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC))
-                            {
-                                x = this.stレーンサイズ[7].x;
-                            }
-                        }
-
-                        if ((j == 8) || (j == 10))
-                        {
-                            if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
-                            {
-                                x = this.stレーンサイズ[2].x + 5;
-                            }
-                            else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
-                            {
-                                x = this.stレーンサイズ[2].x + 56;
-                            }
-
-                        }
-                        #endregion
-                        for ( int k = 0; k < 3; k++ )
-						{
-							if( CDTXMania.ConfigIni.bReverse.Drums )
-							{
-								int y = ( k * 0x80 ) + ( ( this.ct進行[ j ].n現在の値 * 384 ) / 100 );
-								for( int m = 0; m < w; m += 42 )
-								{
-									if( this.txFlush[ j + 11 ] != null )
-									{
-										this.txFlush[ j + 11 ].t2D描画( CDTXMania.app.Device, x + m, y, new Rectangle( ( k * 42 ) + 2, 0, ( ( w - m ) < 0x2a ) ? ( w - m ) : 0x2a, 128 ) );
-									}
-								}
-							}
-                            
-							else
-							{
-								int num8 = ( 200 + (  500 ) ) - ( ( this.ct進行[ j ].n現在の値 * 740 ) / 100 );
-								if( num8 < 720 )
-								{
-									for( int n = 0; n < w; n += 42 )
-									{
-										if( this.txFlush[ j ] != null )
-										{
-                                            this.txFlush[ j ].n透明度 = ( num8 );
-											this.txFlush[ j ].t2D描画( CDTXMania.app.Device, x + n, num8, new Rectangle( k * 42, 0, ( ( w - n ) < 42 ) ? ( w - n ) : 42, 128 ) );
-										}
-									}
-								}
-							}
-                            
-						}
-					}
-				}
+                    }
+                }
 			}
 			return 0;
 		}

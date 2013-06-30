@@ -344,27 +344,6 @@ namespace DTXMania
                 "     the setting take effect.",
                 asiodevs);
             this.list項目リスト.Add(this.iSystemASIODevice);
-            // #24820 2013.1.3 yyagi
-            this.iSystemASIOBufferSizeMs = new CItemInteger("ASIOBuffSize", 0, 99999, CDTXMania.ConfigIni.nASIOBufferSizeMs,
-                "ASIO使用時のバッファサイズ:\n" +
-                "0～99999ms を指定可能です。\n" +
-                "0を指定すると、サウンドデバイスに\n" +
-                "指定されている設定値を使用します。\n" +
-                "値を小さくするほど発音ラグが\n" +
-                "減少しますが、音割れや異常動作を\n" +
-                "引き起こす場合があります。\n" +
-                "※ 設定はCONFIGURATION画面の\n" +
-                "　終了時に有効になります。",
-                "Sound buffer size for ASIO:\n" +
-                "You can set from 0 to 99999ms.\n" +
-                "Set 0 to use a default value already\n" +
-                "specified to the sound device.\n" +
-                "Smaller value makes smaller lag,\n" +
-                "but it may cause sound troubles.\n" +
-                "\n" +
-                "Note: Exit CONFIGURATION to make\n" +
-                " the setting take effect.");
-            this.list項目リスト.Add(this.iSystemASIOBufferSizeMs);
 
             this.iSystemSkinSubfolder = new CItemList("Skin (General)", CItemBase.Eパネル種別.通常, nSkinIndex,
                 "スキン切替：スキンを切り替えます。\n" +
@@ -2596,7 +2575,6 @@ namespace DTXMania
 
             CDTXMania.ConfigIni.nSoundDeviceType = this.iSystemSoundType.n現在選択されている項目番号; // #24820 2013.1.3 yyagi
             CDTXMania.ConfigIni.nWASAPIBufferSizeMs = this.iSystemWASAPIBufferSizeMs.n現在の値;				// #24820 2013.1.15 yyagi
-            CDTXMania.ConfigIni.nASIOBufferSizeMs = this.iSystemASIOBufferSizeMs.n現在の値; // #24820 2013.1.3 yyagi
             CDTXMania.ConfigIni.nASIODevice = this.iSystemASIODevice.n現在選択されている項目番号;			// #24820 2013.1.17 yyagi
             CDTXMania.ConfigIni.bTimeStretch = this.iSystemTimeStretch.bON; // #23664 2013.2.24 yyagi
             CDTXMania.ConfigIni.b難易度表示をXG表示にする = this.iSystemDifficlty.bON;

@@ -40,6 +40,7 @@ namespace DTXMania
         {
 			if (( this.tx火花 != null ) && CDTXMania.ConfigIni.eAttackEffectType != Eタイプ.C)
 			{
+                nJudgeLinePosY_delta_Drums = _nJudgeLinePosY_delta_Drums;
 				for ( int j = 0; j < FIRE_MAX; j++ )
 				{
 					if ( this.st火花[ j ].b使用中 && this.st火花[ j ].nLane == (int) lane )		// yyagi 負荷軽減のつもり・・・だが、あまり効果なさげ
@@ -123,8 +124,8 @@ namespace DTXMania
                     }
                 }
             }
-            
-            if (this.txNotes != null)
+
+            if (this.txNotes != null && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
             {
                 for (int i = 0; i < 1; i++)
                 {
@@ -341,8 +342,6 @@ namespace DTXMania
 				this.st細波[ i ].ct進行 = new CCounter();
 			}
             int iPosY = 0x177;
-            {
-            }
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -493,14 +492,11 @@ namespace DTXMania
                 {
                     this.txボーナス花火.b加算合成 = true;
                 }
-                for (int i = 0; i < 10; i++)
+                this.txNotes = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
+                if (this.txNotes != null)
                 {
-                    this.txNotes[i] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
-                    if (this.txNotes[i] != null)
-                    {
-                        this.txNotes[i].n透明度 = 120;
-                        this.txNotes[i].b加算合成 = true;
-                    }
+                    this.txNotes.n透明度 = 120;
+                    this.txNotes.b加算合成 = true;
                 }
 				base.OnManagedリソースの作成();
 			}
@@ -516,8 +512,7 @@ namespace DTXMania
                 }
 				CDTXMania.tテクスチャの解放( ref this.tx大波 );
 				CDTXMania.tテクスチャの解放( ref this.tx細波 );
-                for (int i = 0; i < 9; i++)
-                    CDTXMania.tテクスチャの解放( ref this.txNotes[i]);
+                CDTXMania.tテクスチャの解放( ref this.txNotes);
                 CDTXMania.tテクスチャの解放( ref this.txボーナス花火 );
                 if (this.tx火花2 != null)
                     CDTXMania.tテクスチャの解放( ref this.tx火花2 );
@@ -633,10 +628,10 @@ namespace DTXMania
                         mat2 *= Matrix.Translation((this.st飛び散るチップ[i].fXR - 50f) - SampleFramework.GameWindowSize.Width / 2, -(this.st飛び散るチップ[i].fY + nJudgeLinePosY_delta_Drums - SampleFramework.GameWindowSize.Height / 2), 0f);
                         //mat *= Matrix.Translation(this.st飛び散るチップ[i].fX - SampleFramework.GameWindowSize.Width / 2, -(this.st青い星[i].fY - SampleFramework.GameWindowSize.Height / 2), 0f);
 
-                        if (this.txNotes[st飛び散るチップ[i].nLane] != null)
+                        if (this.txNotes != null)
                         {
-                            this.txNotes[st飛び散るチップ[i].nLane].t3D描画(CDTXMania.app.Device, mat, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane] ), 0, nノーツの幅[this.st飛び散るチップ[i].nLane] / 2, 10));
-                            this.txNotes[st飛び散るチップ[i].nLane].t3D描画(CDTXMania.app.Device, mat2, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane]), 0, nノーツの幅[this.st飛び散るチップ[i].nLane] / 2, 10));
+                            this.txNotes.t3D描画(CDTXMania.app.Device, mat, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane] ), 0, nノーツの幅[this.st飛び散るチップ[i].nLane] / 2, 10));
+                            this.txNotes.t3D描画(CDTXMania.app.Device, mat2, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane]), 0, nノーツの幅[this.st飛び散るチップ[i].nLane] / 2, 10));
                         }
                     }
 
@@ -720,44 +715,44 @@ namespace DTXMania
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標B_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標B_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation((this.nレーンの中央X座標B[this.st火花[i].nLane]) - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation((this.nレーンの中央X座標B[this.st火花[i].nLane]) - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標C_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標C_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標C[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標C[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標D_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標D_改[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                                 else
                                 {
-                                    identity *= Matrix.Translation(this.nレーンの中央X座標D[this.st火花[i].nLane] - 320f, -(((float)this.iPosY) - 170f), 0f);
+                                    identity *= Matrix.Translation(this.nレーンの中央X座標D[this.st火花[i].nLane] - 320f, -(((float)this.iPosY + nJudgeLinePosY_delta_Drums) - 170f), 0f);
                                 }
                             }
                             if (this.tx火花2 != null)
@@ -1073,7 +1068,7 @@ namespace DTXMania
 		private CTexture tx細波;
 		private CTexture[] tx青い星 = new CTexture[10];
 		private CTexture tx大波;
-        private CTexture[] txNotes = new CTexture[10];
+        private CTexture txNotes;
         private int nJudgeLinePosY_delta_Drums;
 		//-----------------
 		#endregion

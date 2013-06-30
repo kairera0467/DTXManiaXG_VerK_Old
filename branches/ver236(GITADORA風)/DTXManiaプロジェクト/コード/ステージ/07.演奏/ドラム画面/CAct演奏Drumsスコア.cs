@@ -36,7 +36,7 @@ namespace DTXMania
                     }
                     base.n進行用タイマ += 10;
                 }
-                string str = this.n現在表示中のスコア.Drums.ToString("0000000");
+                string str = string.Format("{0,7:######0}", this.n現在の本当のスコア.Drums);
                 //string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("0000000");
                 for (int i = 0; i < 7; i++)
                 {
@@ -44,7 +44,7 @@ namespace DTXMania
                     char ch = str[i];
                     if (ch.Equals(' '))
                     {
-                        rectangle = new Rectangle(0, 0, 36, 50);
+                        rectangle = new Rectangle(0, 0, 0, 0);
                     }
                     else
                     {
