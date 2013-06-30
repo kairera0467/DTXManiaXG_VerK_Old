@@ -312,7 +312,7 @@ namespace DTXMania
 //				Debug.WriteLine( "CH=" + pChip.nチャンネル番号.ToString( "x2" ) + ", 整数値=" + pChip.n整数値 +  ", time=" + pChip.n発声時刻ms );
 				if ( pChip.n発声時刻ms <= 0 )
 				{
-					if ( pChip.nチャンネル番号 == 0xDA )
+					if ( pChip.nチャンネル番号 == 0xFA )
 					{
 						pChip.bHit = true;
 //						Debug.WriteLine( "first [DA] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値 + ", time=" + pChip.n発声時刻ms );
@@ -2544,6 +2544,31 @@ namespace DTXMania
 					case 0xa5:
 					case 0xa6:
 					case 0xa7:
+
+                    case 197:
+                    case 198:
+                    case 200:
+                    case 201:
+                    case 202:
+                    case 203:
+                    case 204:
+                    case 205:
+                    case 206:
+                    case 207:
+                    case 218:
+                    case 219:
+                    case 220:
+                    case 221:
+                    case 222:
+                    case 223:
+                    case 225:
+                    case 226:
+                    case 227:
+                    case 228:
+                    case 229:
+                    case 230:
+                    case 231:
+                    case 232:
 						this.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, E楽器パート.BASS );
 						break;
 					#endregion
@@ -2623,7 +2648,7 @@ namespace DTXMania
 						break;
 					#endregion
                     #region [ da: ミキサーへチップ音追加 ]
-                    case 0xDA:
+                    case 0xFA:
                         if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
                         {
                             //Debug.WriteLine("[DA(AddMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString("x2") + ", wav=" + pChip.n整数値.ToString("x2") + ", time=" + pChip.n発声時刻ms);
@@ -2644,7 +2669,7 @@ namespace DTXMania
                         break;
                     #endregion
                     #region [ db: ミキサーからチップ音削除 ]
-                    case 0xDB:
+                    case 0xFB:
                         if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
                         {
                             //Debug.WriteLine("[DB(RemoveMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString("x2") + ", wav=" + pChip.n整数値.ToString("x2") + ", time=" + pChip.n発声時刻ms);
@@ -2952,9 +2977,9 @@ namespace DTXMania
                             flag3 = true;
                             flag5 = true;
                             break;
-                        case 225:
-                            flag4 = true;
-                            flag5 = true;
+                        case 0xE1:
+                            bGtBsY = true;
+                            bGtBsP = true;
                             break;
                         case 226:
                             flag3 = true;
@@ -3036,8 +3061,10 @@ namespace DTXMania
                     else if (bGtBsG == true && bIsAutoPlay[(int)Eレーン.BsG] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsB == true && bIsAutoPlay[(int)Eレーン.BsB] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsW == true && bIsAutoPlay[(int)Eレーン.BsW] == false) bPChipIsAutoPlay = false;
+                    else if (bGtBsY == true && bIsAutoPlay[(int)Eレーン.BsY] == false) bPChipIsAutoPlay = false;
+                    else if (bGtBsP == true && bIsAutoPlay[(int)Eレーン.BsP] == false) bPChipIsAutoPlay = false;
                     else if (bGtBsO == true &&
-                        (bIsAutoPlay[(int)Eレーン.BsR] == false || bIsAutoPlay[(int)Eレーン.BsG] == false || bIsAutoPlay[(int)Eレーン.BsB] == false))
+                        (bIsAutoPlay[(int)Eレーン.BsR] == false || bIsAutoPlay[(int)Eレーン.BsG] == false || bIsAutoPlay[(int)Eレーン.BsB] == false || bIsAutoPlay[(int)Eレーン.BsY] == false || bIsAutoPlay[(int)Eレーン.BsP] == false))
                         bPChipIsAutoPlay = false;
                 }
             }
@@ -3169,6 +3196,7 @@ namespace DTXMania
                                 bChipHasR = true;
                                 bChipHasP = true;
                                 break;
+
                             case 0xA0:
                                 bChipIsO = true;
                                 break;
@@ -3191,7 +3219,7 @@ namespace DTXMania
                                 break;
                             case 0xA6:
                                 bChipHasR = true;
-                                bChipHasB = true;
+                                bChipHasG = true;
                                 break;
                             case 0xA7:
                                 bChipHasR = true;
@@ -3199,9 +3227,8 @@ namespace DTXMania
                                 bChipHasB = true;
                                 break;
                             case 0xA8:
-                                bChipHasG = true;
-                                bChipHasB = true;
                                 break;
+
                             case 0xA9:
                                 bChipHasR = true;
                                 bChipHasB = true;
@@ -3238,13 +3265,14 @@ namespace DTXMania
                                 bChipHasY = true;
                                 bChipHasP = true;
                                 break;
-                            case 0xC6:
+                            case 0xC5:
                                 bChipHasY = true;
                                 break;
-                            case 0xC7:
+                            case 0xC6:
                                 bChipHasB = true;
                                 bChipHasY = true;
                                 break;
+
                             case 0xC8:
                                 bChipHasG = true;
                                 bChipHasY = true;
@@ -3334,7 +3362,7 @@ namespace DTXMania
                                 bChipHasB = true;
                                 bChipHasP = true;
                                 break;
-                            case 225:
+                            case 0xE1:
                                 bChipHasY = true;
                                 bChipHasP = true;
                                 break;
@@ -3394,7 +3422,7 @@ namespace DTXMania
 							int nアニメカウンタ現在の値 = this.ctチップ模様アニメ[ instIndex ].n現在の値;
 							if ( bChipIsO )
 							{
-								int xo = ( inst == E楽器パート.GUITAR ) ? 88 : openXb;
+								int xo = ( inst == E楽器パート.GUITAR ) ? 88 : 959;
 								this.txチップ.t2D描画( CDTXMania.app.Device, xo, y - 2, new Rectangle( 0, 10, 196, 10 ) );
 							}
 							Rectangle rc = new Rectangle( rectOpenOffsetX, chipHeight, chipWidth, 10 );

@@ -653,14 +653,14 @@ namespace DTXMania
                         case 221:
                         case 222:
                         case 223:
-                        case 225:
-                        case 226:
-                        case 227:
-                        case 228:
-                        case 229:
-                        case 230:
-                        case 231:
-                        case 232:
+                        case 0xE1:
+                        case 0xE2:
+                        case 0xE3:
+                        case 0xE4:
+                        case 0xE5:
+                        case 0xE6:
+                        case 0xE7:
+                        case 0xE8:
 							return true;
 					}
 					return false;
@@ -3618,12 +3618,12 @@ namespace DTXMania
 							{
 								this.n可視チップ数[ c - 0x11 ]++;
 							}
-							if ( ( 0x20 <= c ) && ( c <= 0x27 ) )
-							{
+                            if ((32 <= c && c <= 39) || (147 <= c && c <= 159) || (169 <= c && c <= 175) || (208 <= c && c <= 211))
+                            {
 								this.n可視チップ数.Guitar++;
 							}
-							if ( ( 0xA0 <= c ) && ( c <= 0xa7 ) )
-							{
+                            if ((160 <= c && c <= 167) || (197 <= c && c <= 198) || (200 <= c && c <= 207) || (218 <= c && c <= 223) || (225 <= c && c <= 232))
+                            {
 								this.n可視チップ数.Bass++;
 							}
                             if ( c == 0x4F )
@@ -3824,7 +3824,7 @@ namespace DTXMania
 
 						CChip c_AddMixer = new CChip()
 						{
-							nチャンネル番号 = 0xDA,
+							nチャンネル番号 = 0xFA,
 							n整数値 = pChip.n整数値,
 							n整数値・内部番号 = pChip.n整数値・内部番号,
 							n発声時刻ms = nAddMixer時刻ms,
@@ -3888,7 +3888,7 @@ namespace DTXMania
 							}
 							CChip c = new CChip()											// mixer削除時刻を更新(遅延)する
 							{
-								nチャンネル番号 = 0xDB,
+								nチャンネル番号 = 0xFB,
 								n整数値 = listRemoveTiming[ index ].n整数値,
 								n整数値・内部番号 = listRemoveTiming[ index ].n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -3904,7 +3904,7 @@ namespace DTXMania
 						{																	// 発音していたが既にmixer削除確定していたなら
 							CChip c = new CChip()											// 新しくmixer削除候補として追加する
 							{
-								nチャンネル番号 = 0xDB,
+								nチャンネル番号 = 0xFB,
 								n整数値 = pChip.n整数値,
 								n整数値・内部番号 = pChip.n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
