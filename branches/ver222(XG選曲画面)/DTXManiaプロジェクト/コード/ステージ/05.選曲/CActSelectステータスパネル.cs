@@ -489,25 +489,52 @@ namespace DTXMania
 				#endregion
 				#region [ 選択曲の 最高ランクの描画 ]
 				//-----------------
-				for( int i = 0; i < 5; i++ )
-				{
-					int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[ i ].Drums;
-					if( nMaxRank != 99 )
-					{
-						if ( nMaxRank < 0 )
-						{
-							nMaxRank = 0;
-						}
-						if( nMaxRank > 6 )
-						{
-							nMaxRank = 6;
-						}
-						if( this.txゲージ用数字他 != null && this.str難易度ラベル[ i ] != null)
-						{
-							this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, (353 + ( i * 143 )), 104 - y差分[ i ], new Rectangle(42 + nMaxRank * 32 , 0 , 32, 32) );
-						}
-					}
-				}
+                if (CDTXMania.ConfigIni.bDrums有効)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[i].Drums;
+                        if (nMaxRank != 99)
+                        {
+                            if (nMaxRank < 0)
+                            {
+                                nMaxRank = 0;
+                            }
+                            if (nMaxRank > 6)
+                            {
+                                nMaxRank = 6;
+                            }
+                            if (this.txゲージ用数字他 != null && this.str難易度ラベル[i] != null)
+                            {
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (353 + (i * 143)), 104 - y差分[i], new Rectangle(42 + nMaxRank * 32, 0, 32, 32));
+                            }
+                        }
+                    }
+
+                }
+                else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int nMaxRankG = this.n現在選択中の曲の最高ランク難易度毎[i].Guitar;
+                        int nMaxRankB = this.n現在選択中の曲の最高ランク難易度毎[i].Bass;
+                        if (nMaxRankG != 99)
+                        {
+                            if (nMaxRankG < 0)
+                            {
+                                nMaxRankG = 0;
+                            }
+                            if (nMaxRankG > 6)
+                            {
+                                nMaxRankG = 6;
+                            }
+                            if (this.txゲージ用数字他 != null && this.str難易度ラベル[i] != null)
+                            {
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (353 + (i * 143)), 104 - y差分[i], new Rectangle(42 + nMaxRankG * 32, 0, 32, 32));
+                            }
+                        }
+                    }
+                }
 				//-----------------
 				#endregion
 				#region [ 選択曲の FullCombo の 描画 ]

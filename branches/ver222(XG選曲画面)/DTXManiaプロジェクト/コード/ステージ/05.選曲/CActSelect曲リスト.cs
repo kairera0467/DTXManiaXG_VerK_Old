@@ -471,6 +471,7 @@ namespace DTXMania
             this.txパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_music panel.png"));
             this.txジャケットボックスクローズ = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage backbox.png") );
             this.txジャケットランダム = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage random.png") );
+            this.tx帯 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_backpanel.png" ));
             for (int i = 0; i < 13; i++)
             {
                 this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
@@ -563,6 +564,7 @@ namespace DTXMania
             CDTXMania.t安全にDisposeする( ref this.txパネル );
             CDTXMania.t安全にDisposeする( ref this.txジャケットボックスクローズ );
             CDTXMania.t安全にDisposeする( ref this.txジャケットランダム );
+            CDTXMania.t安全にDisposeする( ref this.tx帯 );
 
 			base.OnManagedリソースの解放();
 		}
@@ -831,6 +833,18 @@ namespace DTXMania
 
 				return 0;
 			}
+            var bar = SlimDX.Matrix.Identity;
+            var barL = SlimDX.Matrix.Identity;
+            bar *= SlimDX.Matrix.RotationY(-0.4f);
+            barL *= SlimDX.Matrix.RotationY(0.4f);
+            bar *= SlimDX.Matrix.Translation(540f, 16f, 0f);
+            barL *= SlimDX.Matrix.Translation(-540f, 16f, 0f);
+            bar *= SlimDX.Matrix.Scaling(1.0f, 0.65f, 1.0f);
+            barL *= SlimDX.Matrix.Scaling(1.0f, 0.65f, 1.0f);
+            this.tx帯.n透明度 = 155 + this.ct登場アニメ用[12].n現在の値;
+            this.tx帯.t3D描画(CDTXMania.app.Device, bar);   //右の帯。
+            this.tx帯.t3D描画(CDTXMania.app.Device, barL);   //右の帯。
+
 			if( !this.b登場アニメ全部完了 )
 			{
                 this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 531, 243, new Rectangle(74, 80, 230, 230)); //真ん中の部分は別々に描画。
@@ -883,8 +897,8 @@ namespace DTXMania
 							//-----------------
 							if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
 								this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, 556, 210 );
-                            if (this.stバー情報[nパネル番号].txアーティスト名 != null)
-                                this.stバー情報[nパネル番号].txアーティスト名.t2D描画(CDTXMania.app.Device, 560 - 770 - this.stバー情報[ nパネル番号 ].nアーティスト名テクスチャの長さdot, 402);
+                            if (this.stバー情報[ nパネル番号 ].txアーティスト名 != null)
+                                this.stバー情報[ nパネル番号 ].txアーティスト名.t2D描画(CDTXMania.app.Device, 560 - 770 - this.stバー情報[ nパネル番号 ].nアーティスト名テクスチャの長さdot, 402);
 							//-----------------
 							#endregion
 						}
@@ -1391,6 +1405,7 @@ namespace DTXMania
         private CTexture txパネル;
         private CTexture txジャケットランダム;
         private CTexture txジャケットボックスクローズ;
+        private CTexture tx帯;
 
 		private int nCurrentPosition = 0;
 		private int nNumOfItems = 0;
