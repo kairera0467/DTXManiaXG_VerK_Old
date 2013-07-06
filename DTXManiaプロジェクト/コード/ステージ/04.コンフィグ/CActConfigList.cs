@@ -610,7 +610,7 @@ namespace DTXMania
                 "Type-B 2ペダルとタムをそれぞれま\n"+
                 "とめた表示です。\n"+
                 "Type-C 3タムのみをまとめた表示です。\n"+
-                "Type-D 現在製作中です・・・・",
+                "Type-D 左右完全対象の表示です。",
                 "To change the displaying position of\n" +
                 "Drum Lanes.\n"+
                 "Type-A default\n" +

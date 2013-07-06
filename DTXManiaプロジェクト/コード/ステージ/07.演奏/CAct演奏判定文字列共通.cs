@@ -52,6 +52,14 @@ namespace DTXMania
 			set;
 		}
 
+        [StructLayout(LayoutKind.Sequential)]
+        protected struct STレーンサイズ
+        {
+            public int x;
+            public int w;
+        }
+
+        protected STレーンサイズ[] stレーンサイズ;
 		// コンストラクタ
 
 		public CAct演奏判定文字列共通()
@@ -123,6 +131,50 @@ namespace DTXMania
 			{
 				this.st状態[ i ].ct進行 = new CCounter();
 			}
+
+            this.stレーンサイズ = new STレーンサイズ[12];
+                STレーンサイズ stレーンサイズ = new STレーンサイズ();
+                //                                LC          HH          SD            BD          HT           LT           FT            CY          LP             RD
+                int[,] sizeXW = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 582, 60 }, { 528, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+                int[,] sizeXW_B = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 478, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, };
+                int[,] sizeXW_C = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, };
+                int[,] sizeXW_D = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 582, 60 }, { 476, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 528, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, };
+
+                for (int i = 0; i < 12; i++)
+                {
+                    this.stレーンサイズ[i] = new STレーンサイズ();
+                    {
+                        this.stレーンサイズ[i] = default(CAct演奏Drums判定文字列.STレーンサイズ);
+                        switch (CDTXMania.ConfigIni.eLaneType.Drums)
+                        {
+                            case Eタイプ.A:
+                                this.stレーンサイズ[i].x = sizeXW[i, 0];
+                                this.stレーンサイズ[i].w = sizeXW[i, 1];
+                                goto IL_19F;
+                            case Eタイプ.B:
+                                this.stレーンサイズ[i].x = sizeXW_B[i, 0];
+                                this.stレーンサイズ[i].w = sizeXW_B[i, 1];
+                                goto IL_19F;
+                            case Eタイプ.C:
+                                this.stレーンサイズ[i].x = sizeXW_C[i, 0];
+                                this.stレーンサイズ[i].w = sizeXW_C[i, 1];
+                                goto IL_19F;
+                            case Eタイプ.D:
+                                this.stレーンサイズ[i].x = sizeXW_D[i, 0];
+                                this.stレーンサイズ[i].w = sizeXW_D[i, 1];
+                                goto IL_19F;
+                        }
+                    IL_19F:
+                        if (i == 7 && CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                        {
+                            this.stレーンサイズ[i].x = sizeXW[9, 0] - 24;
+                        }
+                        if (i == 9 && CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                        {
+                            this.stレーンサイズ[i].x = sizeXW[7, 0];
+                        }
+                    }
+                }
 			base.On活性化();
 			this.nShowLagType = CDTXMania.ConfigIni.nShowLagType;
 		}

@@ -215,14 +215,14 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		[StructLayout( LayoutKind.Sequential )]
-		private struct STレーンサイズ
-		{
-			public int x;
-			public int w;
-		}
+		//[StructLayout( LayoutKind.Sequential )]
+		//private struct STレーンサイズ
+		//{
+		//	public int x;
+		//	public int w;
+		//}
 
-		private STレーンサイズ[] stレーンサイズ;
+		//private STレーンサイズ[] stレーンサイズ;
 		//-----------------
 		#endregion
 	}
