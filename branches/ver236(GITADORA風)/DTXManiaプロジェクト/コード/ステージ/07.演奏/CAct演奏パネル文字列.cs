@@ -161,7 +161,8 @@ namespace DTXMania
         public override void On活性化()
         {
             this.ft表示用フォント = new Font("ＤＦＧ平成ゴシック体W7", 38f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W7", 22f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftShadowFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 19.5f, FontStyle.Bold, GraphicsUnit.Pixel);
             this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
             this.txパネル文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_s.png"));
             this.txパネル文字[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_l.png"));
@@ -206,14 +207,27 @@ namespace DTXMania
                 this.nSongNamePixelLength = (int)graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
-                Bitmap image = new Bitmap(this.nSongNamePixelLength, (int)Math.Ceiling((double)this.ftSongNameFont.GetHeight()));
+                Bitmap image = new Bitmap(500, 100);
                 graphics = Graphics.FromImage(image);
 
-                float y = (((float)image.Height) / 2f) - (this.ftSongNameFont.Size / 2f);
-                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.Black, (float)2f, (float)(y + 2f));
-                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;    
+                System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+                FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
+                gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
+                gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
+
+                //float y = (((float)image.Height) / 2f) - (this.ftSongNameFont.Size / 2f);
+
+                Pen p縁 = new Pen(Color.Black, 3f);
+                graphics.DrawPath(p縁, gp);
+                graphics.FillPath(Brushes.White, gp);
+                //graphics.DrawString(this.strSongName, this.ftShadowFont, Brushes.Black, (float)-3f, (float)(y - 1f));
+                //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
 
                 graphics.Dispose();
+                //graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+                ff.Dispose();
+
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
@@ -257,7 +271,7 @@ namespace DTXMania
                     rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
                 }
 
-                this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
+
                 //this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
                 //this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
                 //this.txジャケット画像.fZ軸中心回転 = 0.3f;
@@ -268,7 +282,7 @@ namespace DTXMania
                 mat *= Matrix.RotationZ(0.3f);
 
                 this.txジャケット画像.t3D描画(CDTXMania.app.Device, mat);
-
+                this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
                     this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
@@ -335,6 +349,7 @@ namespace DTXMania
         private CCounter ct進行用;
         private Font ft表示用フォント;
         private Font ftSongNameFont;
+        private Font ftShadowFont;
         private int n文字列の長さdot;
         private string strパネル文字列;
         private string strSongName;
@@ -345,6 +360,8 @@ namespace DTXMania
         private CTexture[] txパネル文字;
         private CTexture txSongName;
         private CTexture txジャケット画像;
+
+
 
         private void t小文字表示(int x, int y, string str)
         {
@@ -385,7 +402,7 @@ namespace DTXMania
                         break;
                     }
                 }
-                x += (ch == '.' ? 8 : 29);
+                x += (ch == '.' ? 12 : 29);
             }
         }
 

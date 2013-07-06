@@ -39,7 +39,7 @@ namespace DTXMania
 
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftSongDifficultyFont = new System.Drawing.Font("Impact", 15f, FontStyle.Regular);
-            this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W7", 21f, FontStyle.Regular, GraphicsUnit.Pixel);
             
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
             base.On活性化();
@@ -84,10 +84,21 @@ namespace DTXMania
         this.nSongNamePixelLength = (int) graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
         graphics.Dispose();
         this.bmSongNameLength.Dispose();
-        Bitmap image = new Bitmap(this.nSongNamePixelLength, (int) Math.Ceiling((double) this.ftSongNameFont.GetHeight()));
+        Bitmap image = new Bitmap(500, 100);
         graphics = Graphics.FromImage(image);
-        graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float) 0f, (float) 0f);
-        graphics.Dispose();
+
+        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+        System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+        FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
+        gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
+        gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
+
+        Pen p縁 = new Pen(Color.Black, 3f);
+        graphics.DrawPath(p縁, gp);
+        graphics.FillPath(Brushes.White, gp);
+        //graphics.DrawString(this.strSongName, this.ftShadowFont, Brushes.Black, (float)-3f, (float)(y - 1f));
+        //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+
         this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
         image.Dispose();
         this.ftSongNameFont.Dispose();
@@ -173,6 +184,7 @@ namespace DTXMania
         graphics.DrawImage(this.iDrumSpeed, new Rectangle(0, 0, 0x2a, 0x30), new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 0x30, 0x2a, 0x30), GraphicsUnit.Pixel);
         this.txDrumSpeed = new CTexture(CDTXMania.app.Device, bitmap4, CDTXMania.TextureFormat, false);
         graphics.Dispose();
+        //graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
         bitmap4.Dispose();
         base.OnManagedリソースの作成();
 			}
@@ -225,46 +237,6 @@ namespace DTXMania
 			}
 			int x = this.n本体X;
 			int y = this.n本体Y;
-			if( ( ( this.nAVI再生開始時刻 != -1 ) && ( this.avi != null ) ) && ( this.sfリザルトAVI画像 != null ) )
-			{
-				if( this.b動画フレームを作成した && ( this.pAVIBmp != IntPtr.Zero ) )
-				{
-					DataRectangle rectangle = this.sfリザルトAVI画像.LockRectangle( LockFlags.None );
-					DataStream data = rectangle.Data;
-					int num7 = rectangle.Pitch / this.sfリザルトAVI画像.Description.Width;
-					BitmapUtil.BITMAPINFOHEADER* pBITMAPINFOHEADER = (BitmapUtil.BITMAPINFOHEADER*) this.pAVIBmp.ToPointer();
-					if( pBITMAPINFOHEADER->biBitCount == 0x18 )
-					{
-						switch( num7 )
-						{
-							case 2:
-								this.avi.tBitmap24ToGraphicsStreamR5G6B5( pBITMAPINFOHEADER, data, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height );
-								break;
-
-							case 4:
-								this.avi.tBitmap24ToGraphicsStreamX8R8G8B8( pBITMAPINFOHEADER, data, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height );
-								break;
-						}
-					}
-					this.sfリザルトAVI画像.UnlockRectangle();
-					this.b動画フレームを作成した = false;
-				}
-				using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
-				{
-					Rectangle sourceRectangle = new Rectangle( 0, 0, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height );
-					if( y < 0 )
-					{
-						sourceRectangle.Y += -y;
-						sourceRectangle.Height -= -y;
-						y = 0;
-					}
-					if( sourceRectangle.Height > 0 )
-					{
-						CDTXMania.app.Device.UpdateSurface( this.sfリザルトAVI画像, sourceRectangle, surface, new Point( x, y ) );
-					}
-					goto Label_042F;
-				}
-			}
 			if( this.r表示するリザルト画像 != null )
 			{
                 int width = this.r表示するリザルト画像.szテクスチャサイズ.Width;
@@ -282,7 +254,6 @@ namespace DTXMania
                     this.txリザルト画像.t3D描画(CDTXMania.app.Device, mat);
                 }
 			}
-		Label_042F:
             this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
             this.txDrumSpeed.vc拡大縮小倍率 = new Vector3(0.76190476190476190476190476190476f, 0.66666666666666666666666666666667f, 1.0f);
             this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 800, 634);

@@ -625,123 +625,11 @@ namespace DTXMania
                 }
                 if (CDTXMania.ConfigIni.bDrums有効 == true)
                 {
-                    #region[動くドラムセット]
-                    for (int i = 0; i < 10; i++)
+                    if (this.txドラム != null)
                     {
-                        int index = this.n描画順[i];
-                        this.y2 = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[2].nY座標オフセットdot;
-                        this.yh = 491 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[4].nY座標オフセットdot;
-                        this.yb = 517 - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[3].nY座標オフセットdot;
-                        this.yl = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[5].nY座標オフセットdot;
-                        this.yf = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[6].nY座標オフセットdot;
-                        if (CDTXMania.ConfigIni.bドラムセットを動かす == false)
-                        {
-                            y2 = 490;
-                            yh = 491;
-                            yb = 517;
-                            yl = 490;
-                            yf = 490;
-                        }
-
-                        if (index == 0)
-                        {
-                            this.ct左シンバル.t進行();
-                            if (this.tx左シンバル != null)
-                                this.tx左シンバル.t2D描画(CDTXMania.app.Device, -120 + (CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 * 10), 0, new Rectangle(0 + (380 * LCym), 0, 380, 720));
-                        }
-                        if (index == 2)
-                        {
-                            if (this.txスネア != null)
-                                this.txスネア.t2D描画(CDTXMania.app.Device, 0, this.y2);
-                        }
-                        if (index == 4)
-                        {
-                            if (this.txハイタム != null)
-                                this.txハイタム.t2D描画(CDTXMania.app.Device, 106, this.yh);
-                        }
-                        if (index == 3)
-                        {
-                            if (this.txバスドラ != null)
-                                this.txバスドラ.t2D描画(CDTXMania.app.Device, 310, this.yb);
-                        }
-                        if (index == 5)
-                        {
-                            if (this.txロータム != null)
-                                this.txロータム.t2D描画(CDTXMania.app.Device, 870, this.yl);
-                        }
-                        if (index == 6)
-                        {
-                            if (this.txフロアタム != null)
-                                this.txフロアタム.t2D描画(CDTXMania.app.Device, 1049, this.yf);
-                        }
-                        if ((index == 7))
-                        {
-                            this.ct右シンバル.t進行();
-                            if (this.tx右シンバル != null)
-                                this.tx右シンバル.t2D描画(CDTXMania.app.Device, 1020 - (CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 * 10), 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
-                        }
-
+                        this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
 
-                    #endregion
-                    if ((CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3))
-                    {
-                        if (CDTXMania.ConfigIni.nMovieAlpha == 0 && this.txドラム != null)
-                        {
-                            this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
-                        }
-                    }
-                    else
-                    {
-                        if (CDTXMania.ConfigIni.nMovieAlpha <= 5 && this.txドラム != null)
-                        {
-                            this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
-                        }
-                    }
-
-                    this.n振動x座標 = 0;
-                    for (int i = 0; i < 1; i++)
-                    {
-                        if (this.stフィルイン[i].b使用中 && CDTXMania.ConfigIni.ボーナス演出を表示する == true)
-                        {
-                            switch (this.stフィルイン[i].ct進行.n現在の値)
-                            {
-                                case 0:
-                                    this.n振動x座標 = 5;
-                                    break;
-                                case 2:
-                                    this.n振動x座標 = -5;
-                                    break;
-                                case 4:
-                                    this.n振動x座標 = 4;
-                                    break;
-                                case 6:
-                                    n振動x座標 = -4;
-                                    break;
-                                case 8:
-                                    this.n振動x座標 = 3;
-                                    break;
-                                case 10:
-                                    this.n振動x座標 = -3;
-                                    break;
-                                case 12:
-                                    this.n振動x座標 = 2;
-                                    break;
-                                case 14:
-                                    this.n振動x座標 = -2;
-                                    break;
-                                case 16:
-                                    this.n振動x座標 = 1;
-                                    break;
-                                case 18:
-                                    this.n振動x座標 = -1;
-                                    break;
-                                case 20:
-                                    this.n振動x座標 = 0;
-                                    break;
-                            }
-                        }
-                    }
                     #region [ Failed(RISKY1)時の背景 ]
                     if (CDTXMania.ConfigIni.bDrums有効 == true)
                     {
@@ -762,12 +650,6 @@ namespace DTXMania
                         }
                     }
                     #endregion
-                    if (this.txバートップ != null)
-                    {
-                        //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
-                    }
                     long lPos = 0;
                     if (this.dsBGV != null)
                     {

@@ -275,14 +275,14 @@ namespace DTXMania
             this.t大文字表示(82, 518, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].db演奏型スキル値));
             this.t大文字表示(114, 590, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
 
-            string str = CDTXMania.stage結果.st演奏記録[0].nスコア.ToString("0000000");
+            string str = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[0].nスコア);
             for (int i = 0; i < 7; i++)
             {
                 Rectangle rectangle;
                 char ch = str[i];
                 if (ch.Equals(' '))
                 {
-                    rectangle = new Rectangle(0, 0, 36, 50);
+                    rectangle = new Rectangle(0, 0, 0, 0);
                 }
                 else
                 {
@@ -439,7 +439,7 @@ namespace DTXMania
 						break;
 					}
 				}
-                x += (ch == '.' ? 8 : 29);
+                x += (ch == '.' ? 12 : 29);
 			}
 		}
         private void t特大文字表示(int x, int y, string str)

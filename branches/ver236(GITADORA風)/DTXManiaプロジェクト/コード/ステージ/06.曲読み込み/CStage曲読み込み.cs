@@ -27,43 +27,43 @@ namespace DTXMania
             ST文字位置[] st文字位置Array2 = new ST文字位置[11];
             ST文字位置 st文字位置12 = new ST文字位置();
             st文字位置12.ch = '0';
-            st文字位置12.pt = new Point(13, 40);
+            st文字位置12.pt = new Point(0, 0);
             st文字位置Array2[0] = st文字位置12;
             ST文字位置 st文字位置13 = new ST文字位置();
             st文字位置13.ch = '1';
-            st文字位置13.pt = new Point(26, 40);
+            st文字位置13.pt = new Point(100, 0);
             st文字位置Array2[1] = st文字位置13;
             ST文字位置 st文字位置14 = new ST文字位置();
             st文字位置14.ch = '2';
-            st文字位置14.pt = new Point(39, 40);
+            st文字位置14.pt = new Point(200, 0);
             st文字位置Array2[2] = st文字位置14;
             ST文字位置 st文字位置15 = new ST文字位置();
             st文字位置15.ch = '3';
-            st文字位置15.pt = new Point(52, 40);
+            st文字位置15.pt = new Point(300, 0);
             st文字位置Array2[3] = st文字位置15;
             ST文字位置 st文字位置16 = new ST文字位置();
             st文字位置16.ch = '4';
-            st文字位置16.pt = new Point(65, 40);
+            st文字位置16.pt = new Point(400, 0);
             st文字位置Array2[4] = st文字位置16;
             ST文字位置 st文字位置17 = new ST文字位置();
             st文字位置17.ch = '5';
-            st文字位置17.pt = new Point(78, 40);
+            st文字位置17.pt = new Point(500, 0);
             st文字位置Array2[5] = st文字位置17;
             ST文字位置 st文字位置18 = new ST文字位置();
             st文字位置18.ch = '6';
-            st文字位置18.pt = new Point(91, 40);
+            st文字位置18.pt = new Point(600, 0);
             st文字位置Array2[6] = st文字位置18;
             ST文字位置 st文字位置19 = new ST文字位置();
             st文字位置19.ch = '7';
-            st文字位置19.pt = new Point(105, 40);
+            st文字位置19.pt = new Point(700, 0);
             st文字位置Array2[7] = st文字位置19;
             ST文字位置 st文字位置20 = new ST文字位置();
             st文字位置20.ch = '8';
-            st文字位置20.pt = new Point(118, 40);
+            st文字位置20.pt = new Point(800, 0);
             st文字位置Array2[8] = st文字位置20;
             ST文字位置 st文字位置21 = new ST文字位置();
             st文字位置21.ch = '9';
-            st文字位置21.pt = new Point(131, 40);
+            st文字位置21.pt = new Point(900, 0);
             st文字位置Array2[9] = st文字位置21;
             ST文字位置 st文字位置22 = new ST文字位置();
             st文字位置22.ch = '-';
@@ -75,47 +75,47 @@ namespace DTXMania
             ST文字位置[] st文字位置Array3 = new ST文字位置[12];
             ST文字位置 st文字位置23 = new ST文字位置();
             st文字位置23.ch = '.';
-            st文字位置23.pt = new Point(144, 40);
+            st文字位置23.pt = new Point(1000, 0);
             st文字位置Array3[0] = st文字位置23;
             ST文字位置 st文字位置24 = new ST文字位置();
             st文字位置24.ch = '1';
-            st文字位置24.pt = new Point(22, 0);
+            st文字位置24.pt = new Point(100, 0);
             st文字位置Array3[1] = st文字位置24;
             ST文字位置 st文字位置25 = new ST文字位置();
             st文字位置25.ch = '2';
-            st文字位置25.pt = new Point(44, 0);
+            st文字位置25.pt = new Point(200, 0);
             st文字位置Array3[2] = st文字位置25;
             ST文字位置 st文字位置26 = new ST文字位置();
             st文字位置26.ch = '3';
-            st文字位置26.pt = new Point(66, 0);
+            st文字位置26.pt = new Point(300, 0);
             st文字位置Array3[3] = st文字位置26;
             ST文字位置 st文字位置27 = new ST文字位置();
             st文字位置27.ch = '4';
-            st文字位置27.pt = new Point(88, 0);
+            st文字位置27.pt = new Point(400, 0);
             st文字位置Array3[4] = st文字位置27;
             ST文字位置 st文字位置28 = new ST文字位置();
             st文字位置28.ch = '5';
-            st文字位置28.pt = new Point(110, 0);
+            st文字位置28.pt = new Point(500, 0);
             st文字位置Array3[5] = st文字位置28;
             ST文字位置 st文字位置29 = new ST文字位置();
             st文字位置29.ch = '6';
-            st文字位置29.pt = new Point(132, 0);
+            st文字位置29.pt = new Point(600, 0);
             st文字位置Array3[6] = st文字位置29;
             ST文字位置 st文字位置30 = new ST文字位置();
             st文字位置30.ch = '7';
-            st文字位置30.pt = new Point(153, 0);
+            st文字位置30.pt = new Point(700, 0);
             st文字位置Array3[7] = st文字位置30;
             ST文字位置 st文字位置31 = new ST文字位置();
             st文字位置31.ch = '8';
-            st文字位置31.pt = new Point(176, 0);
+            st文字位置31.pt = new Point(800, 0);
             st文字位置Array3[8] = st文字位置31;
             ST文字位置 st文字位置32 = new ST文字位置();
             st文字位置32.ch = '9';
-            st文字位置32.pt = new Point(198, 0);
+            st文字位置32.pt = new Point(900, 0);
             st文字位置Array3[9] = st文字位置32;
             ST文字位置 st文字位置33 = new ST文字位置();
             st文字位置33.ch = '0';
-            st文字位置33.pt = new Point(220, 0);
+            st文字位置33.pt = new Point(0, 0);
             st文字位置Array3[10] = st文字位置33;
             ST文字位置 st文字位置34 = new ST文字位置();
             st文字位置34.ch = '-';
@@ -189,8 +189,8 @@ namespace DTXMania
                 //2013.05.10.kairera0467.曲選択から持ってきた。
                 if (CDTXMania.ConfigIni.b選曲リストフォントを斜体にする) regular |= FontStyle.Italic;
                 if (CDTXMania.ConfigIni.b選曲リストフォントを太字にする) regular |= FontStyle.Bold;
-                this.ftタイトル表示用フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
-                this.ftアーティスト名表示フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
+                this.ftタイトル表示用フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 84f, FontStyle.Bold, GraphicsUnit.Pixel);
+                this.ftアーティスト名表示フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 72f, FontStyle.Bold, GraphicsUnit.Pixel);
 
                 this.nBGM再生開始時刻 = -1L;
                 this.nBGMの総再生時間ms = 0;
@@ -260,6 +260,7 @@ namespace DTXMania
             {
                 this.txベースパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base panel.png"), false);
                 this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_background.jpg"), false);
+                this.txLevel = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_LevelNumber.png"));
                 this.txヘッダーパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_header panel.png"), false);
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"), false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
@@ -278,7 +279,7 @@ namespace DTXMania
                         Size size2 = new Size((int)Math.Ceiling((double)ef2.Width), (int)Math.Ceiling((double)ef2.Height));
                         graphics.Dispose();
                         image.Dispose();
-                        image = new Bitmap(size.Width, size.Height);
+                        image = new Bitmap(1400, 200);
 
                         if (string.IsNullOrEmpty(this.strアーティスト名))       //2012.02.11.kairera0467 アーティスト名が無かった場合の処理。
                             image2 = new Bitmap(size.Width, size.Height);
@@ -290,11 +291,26 @@ namespace DTXMania
                         graphics2 = Graphics.FromImage(image2);
                         graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-                        graphics.DrawString(this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, (float)0f, (float)0f);
+                        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                        System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+                        FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
+
+                        gp.AddString(this.str曲タイトル, ff, 1, 80, new Point(0, 0), StringFormat.GenericDefault);
+                        gp.AddString(this.strアーティスト名, ff, 1, 64, new Point(0, 100), StringFormat.GenericDefault);
+
+                        Pen p縁 = new Pen(Color.Black, 6f);
+                        graphics.DrawPath(p縁, gp);
+                        graphics.FillPath(Brushes.White, gp);
+                        graphics2.DrawPath(p縁, gp);
+                        graphics2.FillPath(Brushes.White, gp);
+
+                        //graphics.DrawString(this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, (float)0f, (float)0f);
                         graphics2.DrawString(this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
+
                         graphics.Dispose();
-                        this.txタイトル = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat);
-                        this.txタイトル.vc拡大縮小倍率 = new Vector3(0.42f, 0.5f, 1f);
+                        ff.Dispose();
+                        this.txタイトル = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                        this.txタイトル.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
                         this.txアーティスト = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
                         this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
                         image.Dispose();
@@ -404,33 +420,29 @@ namespace DTXMania
             else
             {
                 DTXLevel = cdtx.LEVEL.Drums / 10;
-                DTXLevelDeci = (cdtx.LEVEL.Drums - DTXLevel * 10);
+                DTXLevelDeci =  (( cdtx.LEVEL.Drums - (DTXLevel * 10)) * 10);
             }
 
-            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
             {
+                DTXLevel = cdtx.LEVEL.Drums;
+                this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
+                //this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
             }
             else
             {
-                if (this.nIndex == 6 || this.nIndex == 7 || this.nIndex == 8)
+
+                this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
+                if (cdtx.LEVEL.Drums > 100)
                 {
-                    DTXLevel = cdtx.LEVEL.Drums;
-                    //this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
-                    //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                    //this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
                 }
                 else
                 {
-                    //this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
-                    //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
-                    if (cdtx.LEVEL.Drums > 100)
-                    {
-                        //this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
-                    }
-                    else
-                    {
-                        //this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
-                        //this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
-                    }
+                    this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
+
+                    this.t大文字表示(357, 152, string.Format("{0:00}", DTXLevelDeci));
                 }
             }
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
@@ -445,11 +457,7 @@ namespace DTXMania
             }
 
             int y = 184;
-            if (this.txタイトル != null)
-            {
-                //this.txタイトル.t2D描画(CDTXMania.app.Device, (int)(510 + (this.txタイトル.vc拡大縮小倍率.X)), y);
-                //this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
-            }
+
             //this.txジャケット.vc拡大縮小倍率.X = 384.0f / this.txジャケット.sz画像サイズ.Width;
             //this.txジャケット.vc拡大縮小倍率.Y = 384.0f / this.txジャケット.sz画像サイズ.Height;
             //this.txジャケット.fZ軸中心回転 = 0.28f;
@@ -460,7 +468,11 @@ namespace DTXMania
 
             //this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
             this.txジャケット.t3D描画(CDTXMania.app.Device, mat);
-
+            if (this.txタイトル != null)
+            {
+                this.txタイトル.t2D描画(CDTXMania.app.Device, (int)(194 + (this.txタイトル.vc拡大縮小倍率.X)), 303);
+                //this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
+            }
             this.txジャケット.Dispose();
             //-----------------------------
             #endregion
@@ -776,11 +788,11 @@ namespace DTXMania
                         int num2;
                         num = 0;
                         num2 = 0;
-                        Rectangle rc画像内の描画領域 = new Rectangle(this.st大文字位置[j].pt.X, this.st大文字位置[j].pt.Y, 22, 40);
-                        if (c == '.')
+                        Rectangle rc画像内の描画領域 = new Rectangle(this.st大文字位置[j].pt.X, this.st大文字位置[j].pt.Y, 100, 130);
+                        //if (c == '.')
                         {
-                            rc画像内の描画領域.Width -= 2;
-                            rc画像内の描画領域.Height -= 2;
+                        //   rc画像内の描画領域.Width -= 70;
+                        //    rc画像内の描画領域.Height -= 92;
                         }
                         if (this.txLevel != null)
                         {
@@ -791,11 +803,11 @@ namespace DTXMania
                 }
                 if (c == '.')
                 {
-                    x += 0;
+                    x += 30;
                 }
                 else
                 {
-                    x += 24;
+                    x += 90;
                 }
             }
         }

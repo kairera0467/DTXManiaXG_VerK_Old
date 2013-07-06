@@ -211,7 +211,7 @@ namespace DTXMania
 					this.dshow.Dispose();
 					this.dshow = null;
 					
-					Trace.TraceInformation( "動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
+					Trace.TraceInformation( "DirectShow動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
 				}
 
 				this.bDispose済み = true;

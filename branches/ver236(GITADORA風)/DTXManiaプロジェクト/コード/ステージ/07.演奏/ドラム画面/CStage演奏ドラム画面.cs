@@ -319,10 +319,10 @@ namespace DTXMania
                         }
                     }
                 }
-                int nシャッターIN = (int)(base.nShutterInPosY * 7.2);
-                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + nシャッターIN));
-                int nシャッターOUT = 720 - (int)(base.nShutterOutPosY * 7.2f);
-                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, nシャッターOUT);
+                double dbシャッターIN = (base.nShutterInPosY * 7.2);
+                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
+                double dbシャッターOUT = 720 - (base.nShutterOutPosY * 7.2f);
+                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
                 #endregion
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
@@ -478,11 +478,11 @@ namespace DTXMania
         private int[] nチャンネルtoX座標 = new int[] { 370, 470, 582, 527, 645, 748, 694, 373, 815, 298, 419, 419 };
         private int[] nチャンネルtoX座標B = new int[] { 370, 419, 533, 596, 645, 748, 694, 373, 815, 298, 476, 476 };
         private int[] nチャンネルtoX座標C = new int[] { 370, 470, 533, 596, 645, 748, 694, 373, 815, 298, 419, 419 };
-        private int[] nチャンネルtoX座標D = new int[] { 370, 420, 582, 477, 645, 748, 694, 373, 815, 298, 527, 527 };
+        private int[] nチャンネルtoX座標D = new int[] { 370, 419, 582, 476, 645, 748, 694, 373, 815, 298, 525, 525 };
         private int[] nチャンネルtoX座標改 = new int[] { 370, 470, 582, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
         private int[] nチャンネルtoX座標B改 = new int[] { 370, 419, 533, 596, 645, 786, 694, 373, 746, 298, 476, 476 };
         private int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 644, 786, 694, 373, 746, 298, 419, 419 };
-        private int[] nチャンネルtoX座標D改 = new int[] { 370, 420, 582, 477, 645, 786, 694, 373, 746, 298, 527, 527 };
+        private int[] nチャンネルtoX座標D改 = new int[] { 370, 419, 582, 476, 645, 786, 694, 373, 746, 298, 527, 527 };
         //HH SD BD HT LT CY FT HHO RD LC LP LBD
         //レーンタイプB
         //LC 298  HH 371 HHO 374  SD 420  LP 477  BD 534  HT 597 LT 646  FT 695  CY 749  RD 815

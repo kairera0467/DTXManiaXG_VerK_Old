@@ -523,10 +523,9 @@ namespace DTXMania
 			public int x;
 			public int w;
 		}
-
+        private readonly STレーンサイズ[] stレーンサイズ;
 		private CCounter[] ct進行 = new CCounter[ 11 ];
 		private readonly string[] strファイル名;
-		private readonly STレーンサイズ[] stレーンサイズ;
         private readonly int[] n描画順 = new int[] { 9, 2, 4, 6, 5, 3, 1, 8, 7, 0};
 		private CTexture[] txFlush = new CTexture[ 0x16 ];
         private CTexture txLC;
