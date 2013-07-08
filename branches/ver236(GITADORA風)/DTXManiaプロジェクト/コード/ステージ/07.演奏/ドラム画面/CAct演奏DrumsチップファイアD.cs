@@ -22,23 +22,27 @@ namespace DTXMania
 
 		public void Start( Eレーン lane )
 		{
-			this.Start( lane, false, false, false, 0 );
+			this.Start( lane, false, false, false, 0, true );
 		}
 		public void Start( Eレーン lane, bool bフィルイン )
 		{
-			this.Start( lane, bフィルイン, false, false, 0 );
+			this.Start( lane, bフィルイン, false, false, 0, true );
 		}
 		public void Start( Eレーン lane, bool bフィルイン, bool b大波 )
 		{
-			this.Start( lane, bフィルイン, b大波, false, 0 );
+			this.Start( lane, bフィルイン, b大波, false, 0, true );
 		}
 		public void Start( Eレーン lane, bool bフィルイン, bool b大波, bool b細波 )
 		{
-            this.Start( lane, bフィルイン, b大波, b細波, 0 );
+            this.Start( lane, bフィルイン, b大波, b細波, 0, true);
         }
         public void Start( Eレーン lane, bool bフィルイン, bool b大波, bool b細波, int _nJudgeLinePosY_delta_Drums )
         {
-			if (( this.tx火花 != null ) && CDTXMania.ConfigIni.eAttackEffectType != Eタイプ.C)
+            this.Start( lane, bフィルイン, b大波, b細波, 0, true);
+        }
+        public void Start( Eレーン lane, bool bフィルイン, bool b大波, bool b細波, int _nJudgeLinePosY_delta_Drums, bool b表示 )
+        {
+			if (( this.tx火花 != null ) && b表示 && CDTXMania.ConfigIni.eAttackEffectType != Eタイプ.C)
 			{
                 nJudgeLinePosY_delta_Drums = _nJudgeLinePosY_delta_Drums;
 				for ( int j = 0; j < FIRE_MAX; j++ )
@@ -74,7 +78,7 @@ namespace DTXMania
 					}
 				}
 			}
-            if ((this.tx青い星 != null) && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
+            if ((this.tx青い星 != null) && b表示 && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
             {
                 for (int i = 0; i < 16; i++)
                 {
@@ -125,7 +129,7 @@ namespace DTXMania
                 }
             }
 
-            if (this.txNotes != null && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
+            if (this.txNotes != null && b表示 && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
             {
                 for (int i = 0; i < 1; i++)
                 {

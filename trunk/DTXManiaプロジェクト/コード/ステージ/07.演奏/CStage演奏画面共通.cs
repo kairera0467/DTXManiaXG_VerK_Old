@@ -4308,14 +4308,14 @@ namespace DTXMania
                                         bChipHasG = true;
                                         bChipHasB = true;
                                         break;
-                                    case 36:
+                                    case 0x24:
                                         bChipHasR = true;
                                         break;
-                                    case 37:
+                                    case 0x25:
                                         bChipHasR = true;
                                         bChipHasB = true;
                                         break;
-                                    case 38:
+                                    case 0x26:
                                         bChipHasR = true;
                                         bChipHasG = true;
                                         break;
@@ -4323,8 +4323,6 @@ namespace DTXMania
                                         bChipHasR = true;
                                         bChipHasG = true;
                                         bChipHasB = true;
-                                        break;
-                                    case 0x28:
                                         break;
                                     default:
                                         switch (nチャンネル番号)
@@ -4340,27 +4338,26 @@ namespace DTXMania
                                                 bChipHasG = true;
                                                 bChipHasY = true;
                                                 break;
-                                            case 150:
+                                            case 0x96:
                                                 bChipHasG = true;
                                                 bChipHasB = true;
                                                 bChipHasY = true;
                                                 break;
-                                            case 151:
+                                            case 0x97:
                                                 bChipHasR = true;
                                                 bChipHasY = true;
                                                 break;
-                                            case 152:
+                                            case 0x98:
                                                 bChipHasR = true;
                                                 bChipHasB = true;
                                                 bChipHasY = true;
-                                                break;                
-                                            case 153:
+                                                break;
+                                            case 0x99:
                                                 bChipHasR = true;
                                                 bChipHasG = true;
                                                 bChipHasY = true;
                                                 break;
-                                                
-                                            case 154:
+                                            case 0x9A:
                                                 bChipHasR = true;
                                                 bChipHasG = true;
                                                 bChipHasB = true;
@@ -4386,38 +4383,30 @@ namespace DTXMania
                                                 bChipHasR = true;
                                                 bChipHasP = true;
                                                 break;
-                                            case 0xA0:
-                                                bChipIsO = true;
-                                                break;
-                                            case 161:
+
+                                            case 0xA1:
                                                 bChipHasB = true;
                                                 break;
-                                            case 162:
+                                            case 0xA2:
                                                 bChipHasG = true;
                                                 break;
-                                            case 163:
+                                            case 0xA3:
                                                 bChipHasG = true;
                                                 bChipHasB = true;
                                                 break;
-                                            case 164:
+                                            case 0xA4:
                                                 bChipHasR = true;
                                                 break;
-                                                
-                                            case 165:
+                                            case 0xA5:
                                                 bChipHasR = true;
                                                 bChipHasB = true;
                                                 break;
-                                            case 166:
+                                            case 0xA6:
                                                 bChipHasR = true;
                                                 bChipHasG = true;
                                                 break;
-                                            case 167:
+                                            case 0xA7:
                                                 bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                break;
-                                            
-                                            case 0xA8:
                                                 bChipHasG = true;
                                                 bChipHasB = true;
                                                 break;
@@ -4431,7 +4420,6 @@ namespace DTXMania
                                                 bChipHasG = true;
                                                 bChipHasP = true;
                                                 break;
-                                            
                                             case 0xAB:
                                                 bChipHasR = true;
                                                 bChipHasG = true;
@@ -4458,12 +4446,9 @@ namespace DTXMania
                                                 bChipHasY = true;
                                                 bChipHasP = true;
                                                 break;
-
-                                                //ベース
                                             case 0xC5:
                                                 bChipHasY = true;
                                                 break;
-                                            
                                             case 0xC6:
                                                 bChipHasB = true;
                                                 bChipHasY = true;
@@ -4504,32 +4489,30 @@ namespace DTXMania
                                                 bChipHasB = true;
                                                 bChipHasP = true;
                                                 break;
-                                                /*
                                             case 0xD0:
-                                                flag12 = true;
-                                                flag15 = true;
+                                                bChipHasR = true;
+                                                bChipHasY = true;
                                                 bChipHasP = true;
                                                 break;
                                             case 0xD1:
-                                                flag12 = true;
-                                                flag14 = true;
-                                                flag15 = true;
+                                                bChipHasR = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
                                                 bChipHasP = true;
                                                 break;
                                             case 0xD2:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag15 = true;
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasY = true;
                                                 bChipHasP = true;
                                                 break;
                                             case 0xD3:
-                                                flag12 = true;
-                                                flag13 = true;
-                                                flag14 = true;
-                                                flag15 = true;
+                                                bChipHasR = true;
+                                                bChipHasG = true;
+                                                bChipHasB = true;
+                                                bChipHasY = true;
                                                 bChipHasP = true;
                                                 break;
-                                                */
                                             case 0xDA:
                                                 bChipHasG = true;
                                                 bChipHasP = true;

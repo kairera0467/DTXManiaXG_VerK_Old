@@ -569,7 +569,7 @@ namespace DTXMania
                 "ALL OFF: すべて消す",
                 "\n" +
                 "",
-                new string[] { "ALL ON", "EffectOnly", "ALL OFF" });
+                new string[] { "ALL ON", "ChipOFF", "EffectOnly", "ALL OFF" });
             this.list項目リスト.Add(this.iDrumsAttackEffectMode);
 
             this.iDrumsReverse = new CItemToggle("Reverse", CDTXMania.ConfigIni.bReverse.Drums,

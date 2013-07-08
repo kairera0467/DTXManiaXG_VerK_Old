@@ -288,8 +288,8 @@ namespace DTXMania
 
                         graphics = Graphics.FromImage(image);
                         graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                        graphics2 = Graphics.FromImage(image2);
-                        graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                        //graphics2 = Graphics.FromImage(image2);
+                        //graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
                         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                         System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
@@ -301,8 +301,8 @@ namespace DTXMania
                         Pen p縁 = new Pen(Color.Black, 6f);
                         graphics.DrawPath(p縁, gp);
                         graphics.FillPath(Brushes.White, gp);
-                        graphics2.DrawPath(p縁, gp);
-                        graphics2.FillPath(Brushes.White, gp);
+                        //graphics2.DrawPath(p縁, gp);
+                        //graphics2.FillPath(Brushes.White, gp);
 
                         //graphics.DrawString(this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, (float)0f, (float)0f);
                         graphics2.DrawString(this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);

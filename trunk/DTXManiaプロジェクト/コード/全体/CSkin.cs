@@ -182,105 +182,105 @@ namespace DTXMania
 
 			// メソッド
 
-            public void t読み込み()
-            {
-                this.b読み込み未試行 = false;
-                this.b読み込み成功 = false;
-                if (string.IsNullOrEmpty(this.strファイル名))
-                    throw new InvalidOperationException("ファイル名が無効です。");
+			public void t読み込み()
+			{
+				this.b読み込み未試行 = false;
+				this.b読み込み成功 = false;
+				if( string.IsNullOrEmpty( this.strファイル名 ) )
+					throw new InvalidOperationException( "ファイル名が無効です。" );
 
-                if (!File.Exists(CSkin.Path(this.strファイル名)))
-                {
-                    throw new FileNotFoundException(this.strファイル名);
-                }
-                ////				for( int i = 0; i < 2; i++ )		// #27790 2012.3.10 yyagi 2回読み出しを、1回読みだし＋1回メモリコピーに変更
-                ////				{
-                //                    try
-                //                    {
-                //                        this.rSound[ 0 ] = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path( this.strファイル名 ) );
-                //                    }
-                //                    catch
-                //                    {
-                //                        this.rSound[ 0 ] = null;
-                //                        throw;
-                //                    }
-                //                    if ( this.rSound[ 0 ] == null )	// #28243 2012.5.3 yyagi "this.rSound[ 0 ].bストリーム再生する"時もCloneするようにし、rSound[1]がnullにならないよう修正→rSound[1]の再生正常化
-                //                    {
-                //                        this.rSound[ 1 ] = null;
-                //                    }
-                //                    else
-                //                    {
-                //                        this.rSound[ 1 ] = ( CSound ) this.rSound[ 0 ].Clone();	// #27790 2012.3.10 yyagi add: to accelerate loading chip sounds
-                //                        CDTXMania.Sound管理.tサウンドを登録する( this.rSound[ 1 ] );	// #28243 2012.5.3 yyagi add (登録漏れによりストリーム再生処理が発生していなかった)
-                //                    }
+				if( !File.Exists( CSkin.Path( this.strファイル名 ) ) )
+				{
+					throw new FileNotFoundException( this.strファイル名 );
+				}
+////				for( int i = 0; i < 2; i++ )		// #27790 2012.3.10 yyagi 2回読み出しを、1回読みだし＋1回メモリコピーに変更
+////				{
+//                    try
+//                    {
+//                        this.rSound[ 0 ] = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path( this.strファイル名 ) );
+//                    }
+//                    catch
+//                    {
+//                        this.rSound[ 0 ] = null;
+//                        throw;
+//                    }
+//                    if ( this.rSound[ 0 ] == null )	// #28243 2012.5.3 yyagi "this.rSound[ 0 ].bストリーム再生する"時もCloneするようにし、rSound[1]がnullにならないよう修正→rSound[1]の再生正常化
+//                    {
+//                        this.rSound[ 1 ] = null;
+//                    }
+//                    else
+//                    {
+//                        this.rSound[ 1 ] = ( CSound ) this.rSound[ 0 ].Clone();	// #27790 2012.3.10 yyagi add: to accelerate loading chip sounds
+//                        CDTXMania.Sound管理.tサウンドを登録する( this.rSound[ 1 ] );	// #28243 2012.5.3 yyagi add (登録漏れによりストリーム再生処理が発生していなかった)
+//                    }
 
-                ////				}
+////				}
 
-                for (int i = 0; i < 2; i++)		// 一旦Cloneを止めてASIO対応に専念
-                {
-                    try
-                    {
-                        this.rSound[i] = CDTXMania.Sound管理.tサウンドを生成する(CSkin.Path(this.strファイル名));
-                    }
-                    catch
-                    {
-                        this.rSound[i] = null;
-                        throw;
-                    }
-                }
-                this.b読み込み成功 = true;
-            }
-            public void t再生する()
-            {
-                if (this.b読み込み未試行)
-                {
-                    try
-                    {
-                        t読み込み();
-                    }
-                    catch
-                    {
-                        this.b読み込み未試行 = false;
-                    }
-                }
-                if (this.b排他)
-                {
-                    if (r最後に再生した排他システムサウンド != null)
-                        r最後に再生した排他システムサウンド.t停止する();
+				for ( int i = 0; i < 2; i++ )		// 一旦Cloneを止めてASIO対応に専念
+				{
+					try
+					{
+						this.rSound[ i ] = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path( this.strファイル名 ) );
+					}
+					catch
+					{
+						this.rSound[ i ] = null;
+						throw;
+					}
+				}
+				this.b読み込み成功 = true;
+			}
+			public void t再生する()
+			{
+				if ( this.b読み込み未試行 )
+				{
+					try
+					{
+						t読み込み();
+					}
+					catch
+					{
+						this.b読み込み未試行 = false;
+					}
+				}
+				if( this.b排他 )
+				{
+					if( r最後に再生した排他システムサウンド != null )
+						r最後に再生した排他システムサウンド.t停止する();
 
-                    r最後に再生した排他システムサウンド = this;
-                }
-                CSound sound = this.rSound[this.n次に鳴るサウンド番号];
-                if (sound != null)
-                    sound.t再生を開始する(this.bループ);
+					r最後に再生した排他システムサウンド = this;
+				}
+				CSound sound = this.rSound[ this.n次に鳴るサウンド番号 ];
+				if( sound != null )
+					sound.t再生を開始する( this.bループ );
 
-                this.n次に鳴るサウンド番号 = 1 - this.n次に鳴るサウンド番号;
-            }
-            public void t停止する()
-            {
-                if (this.rSound[0] != null)
-                    this.rSound[0].t再生を停止する();
+				this.n次に鳴るサウンド番号 = 1 - this.n次に鳴るサウンド番号;
+			}
+			public void t停止する()
+			{
+				if( this.rSound[ 0 ] != null )
+					this.rSound[ 0 ].t再生を停止する();
 
-                if (this.rSound[1] != null)
-                    this.rSound[1].t再生を停止する();
+				if( this.rSound[ 1 ] != null )
+					this.rSound[ 1 ].t再生を停止する();
 
-                if (r最後に再生した排他システムサウンド == this)
-                    r最後に再生した排他システムサウンド = null;
-            }
+				if( r最後に再生した排他システムサウンド == this )
+					r最後に再生した排他システムサウンド = null;
+			}
 
-            public void tRemoveMixer()
-            {
-                if (CDTXMania.Sound管理.GetCurrentSoundDeviceType() != "DirectShow")
-                {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        if (this.rSound[i] != null)
-                        {
-                            CDTXMania.Sound管理.RemoveMixer(this.rSound[i]);
-                        }
-                    }
-                }
-            }
+			public void tRemoveMixer()
+			{
+				if ( CDTXMania.Sound管理.GetCurrentSoundDeviceType() != "DirectShow" )
+				{
+					for ( int i = 0; i < 2; i++ )
+					{
+						if ( this.rSound[ i ] != null )
+						{
+							CDTXMania.Sound管理.RemoveMixer( this.rSound[ i ] );
+						}
+					}
+				}
+			}
 
 			#region [ IDisposable 実装 ]
 			//-----------------

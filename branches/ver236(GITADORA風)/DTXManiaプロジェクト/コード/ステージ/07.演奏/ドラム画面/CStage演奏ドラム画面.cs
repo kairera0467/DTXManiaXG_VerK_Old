@@ -146,7 +146,7 @@ namespace DTXMania
                 {
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
-                    this.actChipFireD.Start(Eレーン.HH); // #31554 2013.6.12 yyagi
+                    this.actChipFireD.Start(Eレーン.HH, false, false, false, 0, false); // #31554 2013.6.12 yyagi
 
                     this.actAVI.LivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);

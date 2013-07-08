@@ -148,7 +148,7 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
 
-                    this.actChipFireD.Start(Eレーン.HH); // #31554 2013.6.12 yyagi
+                    this.actChipFireD.Start(Eレーン.HH, false, false, false, 0, false); // #31554 2013.6.12 yyagi
                     // 初チップヒット時のもたつき回避。最初にactChipFireD.Start()するときにJITが掛かって？
                     // ものすごく待たされる(2回目以降と比べると2,3桁tick違う)。そこで最初の画面フェードインの間に
                     // 一発Start()を掛けてJITの結果を生成させておく。

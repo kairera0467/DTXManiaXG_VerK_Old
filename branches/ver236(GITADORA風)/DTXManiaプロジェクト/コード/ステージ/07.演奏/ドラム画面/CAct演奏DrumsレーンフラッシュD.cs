@@ -129,7 +129,7 @@ namespace DTXMania
                 }
                 else
                 {
-                    this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Dark.png"));
+                    this.txLine = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Dark.png"));
                 }
 
 				for( int i = 0; i < 16; i++ )
