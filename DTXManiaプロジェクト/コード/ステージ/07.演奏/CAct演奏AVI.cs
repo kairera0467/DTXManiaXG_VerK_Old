@@ -1217,7 +1217,7 @@ namespace DTXMania
         #region [ private ]
         //-----------------
         private bool bFullScreen;
-        private Bitmap blanes;
+//      private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
         private bool b再生トグル;
@@ -1230,7 +1230,7 @@ namespace DTXMania
         public CCounter ct右シンバル;
         public CCounter ct左シンバル;
         public STDGBVALUE<double> LivePoint;
-        private Image ilanes;
+//      private Image ilanes;
         private int nAlpha;
         private int nCurrentMovieMode;
         private long n移動開始時刻ms;

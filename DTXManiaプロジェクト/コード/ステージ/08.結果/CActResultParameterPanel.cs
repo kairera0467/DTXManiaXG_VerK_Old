@@ -225,14 +225,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txNewRecord );
 				CDTXMania.tテクスチャの解放( ref this.txWhite );
                 CDTXMania.tテクスチャの解放( ref this.tx達成率ゲージ );
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.E)
-                {
-                    CDTXMania.tテクスチャの解放( ref this.txエキサイトゲージ[0] );
-                    CDTXMania.tテクスチャの解放( ref this.txエキサイトゲージ[1] );
-                    CDTXMania.tテクスチャの解放( ref this.txエキサイトゲージ[2] );
-                    CDTXMania.tテクスチャの解放( ref this.txスキルパネル );
-                    CDTXMania.tテクスチャの解放( ref this.txスコア );
-                }
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -648,36 +640,11 @@ namespace DTXMania
         private CTexture txパネル本体;
         private CTexture tx達成率ゲージ;
         private CTexture[] tx文字;
-        private CTexture[] txエキサイトゲージ;
-        private CTexture txスキルパネル;
-        private CTexture txスコア;
 
 
         private void t小文字表示(int x, int y, string str)
         {
-            if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-            {
-                this.t小文字表示(x, y, str, false);
-            }
-            else
-            {
-                foreach (char ch in str)
-                {
-                    for (int i = 0; i < this.st小文字位置.Length; i++)
-                    {
-                        if (this.st小文字位置[i].ch == ch)
-                        {
-                            Rectangle rectangle = new Rectangle(this.st小文字位置[i].pt.X, this.st小文字位置[i].pt.Y, 20, 26);
-                            if (this.tx文字[0] != null)
-                            {
-                                this.tx文字[0].t2D描画(CDTXMania.app.Device, x, y, rectangle);
-                            }
-                            break;
-                        }
-                    }
-                    x += 20;
-                }
-            }
+            this.t小文字表示(x, y, str, false);
         }
 		private void t小文字表示( int x, int y, string str, bool b強調 )
 		{
@@ -821,12 +788,6 @@ namespace DTXMania
                 }
             }
         }
-
-
-
- 
-
-
 
 		//-----------------
 		#endregion

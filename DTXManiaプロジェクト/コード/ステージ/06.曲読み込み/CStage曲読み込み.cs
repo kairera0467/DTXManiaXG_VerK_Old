@@ -166,7 +166,7 @@ namespace DTXMania
 							this.st泡[ j ].ct進行 = new CCounter( 0, 200, 3, CDTXMania.Timer );
                             this.st泡[ j ].fX = CDTXMania.Random.Next(1280);
                             this.st泡[ j ].fY = CDTXMania.Random.Next(720);
-							this.st泡[ j ].f半径 = (float) ( 0.5 + ( ( (double) CDTXMania.Random.Next( 30 ) ) / 100.0 ) );
+							//this.st泡[ j ].f半径 = (float) ( 0.5 + ( ( (double) CDTXMania.Random.Next( 30 ) ) / 100.0 ) );
 							break;
 						}
 					}
@@ -607,9 +607,9 @@ namespace DTXMania
 
                 case CStage.Eフェーズ.NOWLOADING_WAVファイルを読み込む:
                     {
-                        if (nWAVcount == 1 && CDTXMania.DTX.listWAV.Count > 0)			// #28934 2012.7.7 yyagi (added checking Count)
+                        //if (nWAVcount == 1 && CDTXMania.DTX.listWAV.Count > 0)			// #28934 2012.7.7 yyagi (added checking Count)
                         {
-                            ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
                         int looptime = (CDTXMania.ConfigIni.b垂直帰線待ちを行う) ? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
                         for (int i = 0; i < looptime && nWAVcount <= CDTXMania.DTX.listWAV.Count; i++)
@@ -620,9 +620,9 @@ namespace DTXMania
                             }
                             nWAVcount++;
                         }
-                        if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
+                        //if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
                         {
-                            ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
                         if (nWAVcount > CDTXMania.DTX.listWAV.Count)
                         {
@@ -635,7 +635,6 @@ namespace DTXMania
 								CDTXMania.DTX.PlanToAddMixerChannel();
 							}
                             CDTXMania.DTX.t旧仕様のドコドコチップを振り分ける(E楽器パート.DRUMS, CDTXMania.ConfigIni.bAssignToLBD.Drums);
-                            CDTXMania.DTX.t譜面仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eNumOfLanes.Drums);
                             CDTXMania.DTX.tドコドコ仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eDkdkType.Drums);
                             CDTXMania.DTX.tドラムのミラー化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eMirror.Drums);
                             CDTXMania.DTX.tドラムのランダム化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eRandom.Drums);
@@ -671,20 +670,20 @@ namespace DTXMania
 						span = ( TimeSpan ) ( DateTime.Now - timeBeginLoad );
 						Trace.TraceInformation( "総読込時間:                {0}", span.ToString() );
 
-						if ( bitmapFilename != null )
+						//if ( bitmapFilename != null )
 						{
-							bitmapFilename.Dispose();
-							bitmapFilename = null;
+						//	bitmapFilename.Dispose();
+						//	bitmapFilename = null;
 						}
-						if ( graphicsFilename != null )
+						//if ( graphicsFilename != null )
 						{
-							graphicsFilename.Dispose();
-							graphicsFilename = null;
+						//	graphicsFilename.Dispose();
+						//	graphicsFilename = null;
 						}
-						if ( ftFilename != null )
+						//if ( ftFilename != null )
 						{
-							ftFilename.Dispose();
-							ftFilename = null;
+						//	ftFilename.Dispose();
+						//	ftFilename = null;
 						}
 						CDTXMania.Timer.t更新();
 						base.eフェーズID = CStage.Eフェーズ.NOWLOADING_システムサウンドBGMの完了を待つ;
@@ -709,9 +708,9 @@ namespace DTXMania
                 case CStage.Eフェーズ.共通_フェードアウト:
                     if (this.actFO.On進行描画() == 0)
                         return 0;
-                    if (txFilename != null)
+                    //if (txFilename != null)
                     {
-                        txFilename.Dispose();
+                    //    txFilename.Dispose();
                     }
                     if (this.sd読み込み音 != null)
                     {
@@ -750,8 +749,10 @@ namespace DTXMania
 
 
 		private void ShowProgressByFilename(string strファイル名 )
-		{
-			if ( graphicsFilename != null && ftFilename != null )
+        {
+            #region[ 廃止。 ]
+            /*
+            if ( graphicsFilename != null && ftFilename != null )
 			{
 				graphicsFilename.Clear( Color.Transparent );
 				graphicsFilename.DrawString( strファイル名, ftFilename, Brushes.White, new RectangleF( 0, 0, 720, 24 ) );
@@ -762,8 +763,10 @@ namespace DTXMania
 				txFilename = new CTexture( CDTXMania.app.Device, bitmapFilename, CDTXMania.TextureFormat );
 				txFilename.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
 				txFilename.t2D描画( CDTXMania.app.Device, 0, 720 - 16 );
-			}
-		}
+            }
+            */
+            #endregion
+        }
 
 		// その他
 
@@ -819,7 +822,7 @@ namespace DTXMania
 		private int nWAVcount;
         private int nCurrentDrumspeed;
         private int nCurrentRISKY;
-		private CTexture txFilename;
+//		private CTexture txFilename;
         private CTexture txLevel;
         private CTexture txBall;
 

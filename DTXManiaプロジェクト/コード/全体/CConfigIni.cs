@@ -1805,8 +1805,9 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; アタックエフェクトタイプ");
             sw.WriteLine("; 0:ALL 粉と爆発エフェクトを表示します。");
-            sw.WriteLine("; 1:EffectOnly 粉を消します。");
-            sw.WriteLine("; 2:ALLOFF すべて消します。");
+            sw.WriteLine("; 1:ChipOFF チップのエフェクトを消します。");
+            sw.WriteLine("; 2:EffectOnly 粉を消します。");
+            sw.WriteLine("; 3:ALLOFF すべて消します。");
             sw.WriteLine("AttackEffectType={0}", (int)this.eAttackEffectType);
             sw.WriteLine();
             sw.WriteLine("; レーン表示");

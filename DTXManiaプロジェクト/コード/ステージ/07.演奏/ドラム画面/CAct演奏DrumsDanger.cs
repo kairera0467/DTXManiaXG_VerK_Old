@@ -46,11 +46,9 @@ namespace DTXMania
 				}
                 if (!this.bDanger中[(int)E楽器パート.DRUMS])
                 {
-                    this.ct移動用 = new CCounter(0, 0x7f, 7, CDTXMania.Timer);
                     this.ct透明度用 = new CCounter(0, 250, 4, CDTXMania.Timer);
                 }
                     this.bDanger中[(int)E楽器パート.DRUMS] = bIsDangerDrums;
-                    this.ct移動用.t進行Loop();
                     this.ct透明度用.t進行Loop();
                     if (!this.bDanger中[(int)E楽器パート.DRUMS])
                     {
@@ -58,7 +56,6 @@ namespace DTXMania
                     }
                     int num = this.ct透明度用.n現在の値;
                     this.tx黒.n透明度 = num;　　//
-                    num = this.ct移動用.n現在の値;
                     int num2 = num;
                     for (int i = 0; i < 2; i++)
                     {

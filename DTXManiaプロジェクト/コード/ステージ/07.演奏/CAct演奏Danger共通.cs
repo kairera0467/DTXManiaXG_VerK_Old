@@ -26,14 +26,12 @@ namespace DTXMania
 			}
 //			this.ct移動用 = new CCounter();
 //			this.ct透明度用 = new CCounter();
-			this.ct移動用 = null;
 			this.ct透明度用 = null;
 
 			base.On活性化();
 		}
 		public override void On非活性化()
 		{
-			this.ct移動用 = null;
 			this.ct透明度用 = null;
 			base.On非活性化();
 		}
@@ -54,7 +52,6 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
 		protected bool[] bDanger中 = { false, false, false};
-		protected CCounter ct移動用;
 		protected CCounter ct透明度用;
 		//-----------------
 		#endregion
