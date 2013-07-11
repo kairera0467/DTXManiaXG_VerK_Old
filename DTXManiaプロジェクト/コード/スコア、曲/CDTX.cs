@@ -1459,7 +1459,7 @@ namespace DTXMania
 					cavi.OnDeviceCreated();
 				}
 			}
-            if( this.listDS != null )
+            if( this.listDS != null && CDTXMania.ConfigIni.bDirectShowMode == true)
             {
                 foreach( CDirectShow cds in this.listDS.Values)
                 {
@@ -1483,7 +1483,8 @@ namespace DTXMania
 							{
 								chip.eAVI種別 = EAVI種別.AVIPAN;
 								chip.rAVI = this.listAVI[ cavipan.nAVI番号 ];
-                                chip.rDShow = this.listDS[ cavipan.nAVI番号 ];
+                                if(CDTXMania.ConfigIni.bDirectShowMode == true)
+                                    chip.rDShow = this.listDS[ cavipan.nAVI番号 ];
 								chip.rAVIPan = cavipan;
 								continue;
 							}
@@ -1492,7 +1493,8 @@ namespace DTXMania
 						{
 							chip.eAVI種別 = EAVI種別.AVI;
 							chip.rAVI = this.listAVI[ chip.n整数値 ];
-                            chip.rDShow = this.listDS[ chip.n整数値 ];
+                            if(CDTXMania.ConfigIni.bDirectShowMode == true)
+                                chip.rDShow = this.listDS[ chip.n整数値 ];
 						}
 					}
 				}

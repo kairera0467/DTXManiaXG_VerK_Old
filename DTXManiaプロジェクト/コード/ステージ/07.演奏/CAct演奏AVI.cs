@@ -388,7 +388,10 @@ namespace DTXMania
                 {
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
-                    this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition,out this.lStopPosition );
+                    if (CDTXMania.ConfigIni.bDirectShowMode == true)
+                    {
+                        this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
+                    }
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
                     {
                         this.n総移動時間ms = 0;
