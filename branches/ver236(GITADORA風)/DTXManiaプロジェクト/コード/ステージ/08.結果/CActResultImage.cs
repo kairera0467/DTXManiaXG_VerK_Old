@@ -82,26 +82,32 @@ namespace DTXMania
         graphics.PageUnit = GraphicsUnit.Pixel;
         this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
         this.nSongNamePixelLength = (int) graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
-        graphics.Dispose();
-        this.bmSongNameLength.Dispose();
-        Bitmap image = new Bitmap(500, 100);
-        graphics = Graphics.FromImage(image);
+                graphics.Dispose();
+                this.bmSongNameLength.Dispose();
 
-        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-        System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-        FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
-        gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
-        gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
+                Bitmap image = new Bitmap(500, 100);
+                graphics = Graphics.FromImage(image);
+                System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
 
-        Pen p縁 = new Pen(Color.Black, 3f);
-        graphics.DrawPath(p縁, gp);
-        graphics.FillPath(Brushes.White, gp);
-        //graphics.DrawString(this.strSongName, this.ftShadowFont, Brushes.Black, (float)-3f, (float)(y - 1f));
-        //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+                if ( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
+                {
+                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                }
+                FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
+                gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
+                gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
-        this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
-        image.Dispose();
-        this.ftSongNameFont.Dispose();
+                Pen p縁 = new Pen(Color.Black, 3f);
+                graphics.DrawPath(p縁, gp);
+                graphics.FillPath(Brushes.White, gp);
+                //graphics.DrawString(this.strSongName, this.ftShadowFont, Brushes.Black, (float)-3f, (float)(y - 1f));
+                //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+
+                this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                image.Dispose();
+                this.ftSongNameFont.Dispose();
+
         Bitmap bitmap2 = new Bitmap(0x3a, 0x12);
         graphics = Graphics.FromImage(bitmap2);
         switch (CDTXMania.nSongDifficulty)
@@ -220,21 +226,6 @@ namespace DTXMania
 				base.b初めての進行描画 = false;
 			}
 			this.ct登場用.t進行();
-			if( ( ( this.avi != null ) && ( this.sfリザルトAVI画像 != null ) ) && ( this.nAVI再生開始時刻 != -1 ) )
-			{
-				int time = (int) ( ( CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻 ) * ( ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0 ) );
-				int frameNoFromTime = this.avi.GetFrameNoFromTime( time );
-				if( frameNoFromTime >= this.avi.GetMaxFrameCount() )
-				{
-					this.nAVI再生開始時刻 = CDTXMania.Timer.n現在時刻;
-				}
-				else if( ( this.n前回描画したフレーム番号 != frameNoFromTime ) && !this.b動画フレームを作成した )
-				{
-					this.b動画フレームを作成した = true;
-					this.n前回描画したフレーム番号 = frameNoFromTime;
-					this.pAVIBmp = this.avi.GetFramePtr( frameNoFromTime );
-				}
-			}
 			int x = this.n本体X;
 			int y = this.n本体Y;
 			if( this.r表示するリザルト画像 != null )

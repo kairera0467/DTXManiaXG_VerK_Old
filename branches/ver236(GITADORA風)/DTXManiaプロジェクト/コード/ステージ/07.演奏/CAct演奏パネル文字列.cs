@@ -209,8 +209,12 @@ namespace DTXMania
                 this.bmSongNameLength.Dispose();
                 Bitmap image = new Bitmap(500, 100);
                 graphics = Graphics.FromImage(image);
-
-                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;    
+                
+                if( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
+                {
+                    graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;    
+                }
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
 
                 FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
@@ -226,7 +230,7 @@ namespace DTXMania
                 //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
 
                 graphics.Dispose();
-                //graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+
                 ff.Dispose();
 
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
