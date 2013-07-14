@@ -832,6 +832,7 @@ namespace DTXMania
 
                     long nTime = inputEvent.nTimeStamp - CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
                     int nInputAdjustTime = this.bIsAutoPlay[base.nチャンネル0Atoレーン07[nPad]] ? 0 : this.nInputAdjustTimeMs.Drums;
+                    int nPedalLagTime = CDTXMania.ConfigIni.nPedalLagTime;
 
                     bool bHitted = false;
 
@@ -1085,12 +1086,12 @@ namespace DTXMania
                                 if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.BD)	// #23857 2010.12.12 yyagi: to support VelocityMin
                                     continue;	// 電子ドラムによる意図的なクロストークを無効にする
 
-                                CDTX.CChip chipBD  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x13, nInputAdjustTime);	// BD
-                                CDTX.CChip chipLP  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime);	// LP
-                                CDTX.CChip chipLBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime);	// LBD
-                                E判定 e判定BD  = (chipBD  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipBD, nInputAdjustTime) : E判定.Miss;
-                                E判定 e判定LP  = (chipLP  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLP, nInputAdjustTime) : E判定.Miss;
-                                E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime) : E判定.Miss;
+                                CDTX.CChip chipBD  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x13, nInputAdjustTime + nPedalLagTime);	// BD
+                                CDTX.CChip chipLP  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime + nPedalLagTime);	// LP
+                                CDTX.CChip chipLBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime + nPedalLagTime);	// LBD
+                                E判定 e判定BD  = (chipBD  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipBD, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
+                                E判定 e判定LP  = (chipLP  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLP, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
+                                E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
                                 switch (eBDGroup)
                                 {
                                     case EBDGroup.左右ペダルのみ打ち分ける:
@@ -1876,12 +1877,12 @@ namespace DTXMania
                             {
                                 if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.LP)
                                     continue;
-                                CDTX.CChip chipBD  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x13, nInputAdjustTime);	// BD
-                                CDTX.CChip chipLP  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime);	// LP
-                                CDTX.CChip chipLBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime);	// LBD
-                                E判定 e判定BD  = (chipBD  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipBD,  nInputAdjustTime) : E判定.Miss;
-                                E判定 e判定LP  = (chipLP  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLP,  nInputAdjustTime) : E判定.Miss;
-                                E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime) : E判定.Miss;
+                                CDTX.CChip chipBD  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x13, nInputAdjustTime + nPedalLagTime);	// BD
+                                CDTX.CChip chipLP  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime + nPedalLagTime);	// LP
+                                CDTX.CChip chipLBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime + nPedalLagTime);	// LBD
+                                E判定 e判定BD  = (chipBD  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipBD,  nInputAdjustTime + nPedalLagTime) : E判定.Miss;
+                                E判定 e判定LP  = (chipLP  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLP,  nInputAdjustTime + nPedalLagTime) : E判定.Miss;
+                                E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
                                 switch (eBDGroup)
                                 {
                                     case EBDGroup.左右ペダルのみ打ち分ける:
@@ -2064,12 +2065,12 @@ namespace DTXMania
                             {
                                 if (inputEvent.nVelocity <= CDTXMania.ConfigIni.nVelocityMin.LBD)
                                     continue;
-                                CDTX.CChip chipBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x13, nInputAdjustTime);	// BD
-                                CDTX.CChip chipLP = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime);	// LP
-                                CDTX.CChip chipLBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime);	// LBD
-                                E判定 e判定BD = (chipBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipBD, nInputAdjustTime) : E判定.Miss;
-                                E判定 e判定LP = (chipLP != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLP, nInputAdjustTime) : E判定.Miss;
-                                E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime) : E判定.Miss;
+                                CDTX.CChip chipBD  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x13, nInputAdjustTime + nPedalLagTime);	// BD
+                                CDTX.CChip chipLP  = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1b, nInputAdjustTime + nPedalLagTime);	// LP
+                                CDTX.CChip chipLBD = this.r指定時刻に一番近い未ヒットChip(nTime, 0x1c, nInputAdjustTime + nPedalLagTime);	// LBD
+                                E判定 e判定BD  = (chipBD  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipBD,  nInputAdjustTime + nPedalLagTime) : E判定.Miss;
+                                E判定 e判定LP  = (chipLP  != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLP,  nInputAdjustTime + nPedalLagTime) : E判定.Miss;
+                                E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
                                 switch (eBDGroup)
                                 {
                                     case EBDGroup.左右ペダルのみ打ち分ける:
@@ -2489,25 +2490,17 @@ namespace DTXMania
                                     #region [ *** ]
                                     //-----------------------------
                                     {
-                                        CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime);
-                                        CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime);
-                                        CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime);
+                                        CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime + nPedalLagTime);
+                                        CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime + nPedalLagTime);
+                                        CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime + nPedalLagTime);
                                         switch (CDTXMania.ConfigIni.eBDGroup)
                                         {
                                             case EBDGroup.打ち分ける:
-                                                rChip = (chipBD != null) ? chipBD : chipLBD;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
+                                                rChip = chipBD;
                                                 break;
 
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 rChip = (chipBD != null) ? chipBD : chipLP;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
                                                 break;
 
                                             case EBDGroup.どっちもBD:
@@ -2532,11 +2525,6 @@ namespace DTXMania
                                                 {
                                                     rChip = chipLBD;
                                                 }
-
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
                                                 #endregion
                                                 break;
                                         }
@@ -2544,29 +2532,22 @@ namespace DTXMania
                                     //-----------------------------
                                     #endregion
                                     break;
-
                                     
                                 case Eパッド.LP:
                                     #region [ *** ]
                                     //-----------------------------
                                     {
-                                        CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime);
-                                        CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime);
-                                        CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime);
+                                        CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime + nPedalLagTime );
+                                        CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime + nPedalLagTime );
+                                        CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime + nPedalLagTime );
                                         switch (CDTXMania.ConfigIni.eBDGroup)
                                         {
+                                            case EBDGroup.打ち分ける:
+                                                rChip = chipLP;
+                                                break;
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 #region[左右ペダル]
-                                                rChip = (chipLP != null) ? chipLP : chipBD;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
-
+                                                rChip = (chipLP != null) ? chipLP : chipLBD;
                                                 #endregion
                                                 break;
 
@@ -2592,19 +2573,10 @@ namespace DTXMania
                                                 {
                                                     rChip = chipBD;
                                                 }
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
                                                 #endregion
                                                 break;
 
                                         }
-                                        rChip = chipLP;
                                     }
                                     //-----------------------------
                                     #endregion
@@ -2613,22 +2585,17 @@ namespace DTXMania
                                 case Eパッド.LBD:
                                     #region [ *** ]
                                     {
-                                        CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime);
-                                        CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime);
-                                        CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime);
+                                        CDTX.CChip chipBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[2], nInputAdjustTime + nPedalLagTime);
+                                        CDTX.CChip chipLP = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[10], nInputAdjustTime + nPedalLagTime);
+                                        CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime + nPedalLagTime);
                                         switch (CDTXMania.ConfigIni.eBDGroup)
                                         {
+                                            case EBDGroup.打ち分ける:
+                                                rChip = chipLBD;
+                                                break;
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 #region [ *** ]
                                                 rChip = (chipLBD != null) ? chipLBD : chipBD;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
                                                 #endregion
                                                 break;
 
@@ -2654,18 +2621,9 @@ namespace DTXMania
                                                 {
                                                     rChip = chipBD;
                                                 }
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
                                                 #endregion
                                                 break;
                                         }
-                                        rChip = chipLBD;
                                     }
                                     #endregion
                                     break;

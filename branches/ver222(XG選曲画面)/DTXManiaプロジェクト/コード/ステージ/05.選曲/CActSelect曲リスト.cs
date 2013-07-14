@@ -469,8 +469,8 @@ namespace DTXMania
             this.txジャケット指定が無い場合の画像 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage default.png" ), false );
             this.tx選曲パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_image_panel.png"));
             this.txパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_music panel.png"));
-            this.txジャケットボックスクローズ = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage backbox.png") );
-            this.txジャケットランダム = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage random.png") );
+            //this.txジャケットボックスクローズ = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage backbox.png") );
+            //this.txジャケットランダム = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_preimage random.png") );
             this.tx帯 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_backpanel.png" ));
             for (int i = 0; i < 13; i++)
             {
@@ -562,8 +562,8 @@ namespace DTXMania
             CDTXMania.t安全にDisposeする( ref this.txジャケット指定が無い場合の画像 );
             CDTXMania.t安全にDisposeする( ref this.tx選曲パネル );
             CDTXMania.t安全にDisposeする( ref this.txパネル );
-            CDTXMania.t安全にDisposeする( ref this.txジャケットボックスクローズ );
-            CDTXMania.t安全にDisposeする( ref this.txジャケットランダム );
+            //CDTXMania.t安全にDisposeする( ref this.txジャケットボックスクローズ );
+            //CDTXMania.t安全にDisposeする( ref this.txジャケットランダム );
             CDTXMania.t安全にDisposeする( ref this.tx帯 );
 
 			base.OnManagedリソースの解放();
@@ -693,7 +693,6 @@ namespace DTXMania
 						this.r現在選択中の曲 = this.r次の曲( this.r現在選択中の曲 );
 						this.n現在の選択行 = ( this.n現在の選択行 + 1 ) % 13;
 
-
 						// 選択曲から７つ下のパネル（＝新しく最下部に表示されるパネル。消えてしまう一番上のパネルを再利用する）に、新しい曲の情報を記載する。
 
 						C曲リストノード song = this.r現在選択中の曲;
@@ -729,7 +728,6 @@ namespace DTXMania
 						for( int i = 0; i < 3; i++ )
 							this.stバー情報[ index ].nスキル値[ i ] = (int) song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.最大スキル[ i ];
 
-
 						// 1行(100カウント)移動完了。
 
 						this.n現在のスクロールカウンタ -= 100;
@@ -752,7 +750,6 @@ namespace DTXMania
 
 						this.r現在選択中の曲 = this.r前の曲( this.r現在選択中の曲 );
 						this.n現在の選択行 = ( ( this.n現在の選択行 - 1 ) + 13 ) % 13;
-
 
 						// 選択曲から５つ上のパネル（＝新しく最上部に表示されるパネル。消えてしまう一番下のパネルを再利用する）に、新しい曲の情報を記載する。
 
@@ -1136,6 +1133,9 @@ namespace DTXMania
                         //-----------------
                         #endregion
                         this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 761, 233, new Rectangle(304, 70, 59, 242));
+                    }
+                    else if (i == 12 || i == 13)
+                    {
                     }
                     else
                     {
@@ -1595,6 +1595,9 @@ namespace DTXMania
         }
         private void tパスを指定してサムネイル画像を生成する( int nバー番号, string strDTXPath, Eバー種別 eType )
         {
+            if (nバー番号 < 0 || nバー番号 > 12)
+                return;
+
             //try
 			{
                 //if (eType == Eバー種別.Score || eType == Eバー種別.Box)

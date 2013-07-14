@@ -301,8 +301,6 @@ namespace DTXMania
         private Image iDrumSpeed;
         private int nAlbumHeight;
         private int nAlbumWidth;
-        private int nAlbumHeightXG3;
-        private int nAlbumWidthXG3;
         private long nAVI再生開始時刻;
         private int nSongNamePixelLength;
         private int n前回描画したフレーム番号;

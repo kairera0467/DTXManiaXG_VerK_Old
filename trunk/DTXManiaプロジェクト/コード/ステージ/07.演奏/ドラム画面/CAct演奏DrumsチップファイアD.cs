@@ -91,7 +91,7 @@ namespace DTXMania
                             int n回転初期値 = CDTXMania.Random.Next(360);
                             double num7 = 0.89 + ( 1 / 100.0); // 拡散の大きさ
                             this.st青い星[j].nLane = (int)lane;
-                            this.st青い星[j].ct進行 = new CCounter(0, 60, 7, CDTXMania.Timer); // カウンタ
+                            this.st青い星[j].ct進行 = new CCounter(0, 40, 7, CDTXMania.Timer); // カウンタ
                             this.st青い星[j].fX = this.nレーンの中央X座標[(int)lane] + 320; //X座標
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                             {
@@ -121,8 +121,8 @@ namespace DTXMania
                             this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
                             this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0)) - 0.1);
                             this.st青い星[j].f加速度の加速度X = 1.000f;
-                            this.st青い星[j].f加速度の加速度Y = 0.99999f;
-                            this.st青い星[j].f重力加速度 = 0.02000f;
+                            this.st青い星[j].f加速度の加速度Y = 1.010f;
+                            this.st青い星[j].f重力加速度 = 0.02040f;
                             this.st青い星[j].f半径 = (float)(0.3 + (((double)CDTXMania.Random.Next(30)) / 100.0));
                             break;
                         }
@@ -189,7 +189,7 @@ namespace DTXMania
                             this.st飛び散るチップ[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0) + 0.3);
                             this.st飛び散るチップ[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0) - 0.8));
                             this.st飛び散るチップ[j].f加速度の加速度X = 0.995f;
-                            this.st飛び散るチップ[j].f加速度の加速度Y = 0.995f;
+                            this.st飛び散るチップ[j].f加速度の加速度Y = 1.000f;
                             this.st飛び散るチップ[j].f重力加速度 = 0.03100f;
                             this.st飛び散るチップ[j].f回転単位 = C変換.DegreeToRadian((float)(n回転初期値 + (i * 90f)));
                             this.st飛び散るチップ[j].f回転方向 = (i < 4) ? 1f : -2f;
@@ -587,7 +587,7 @@ namespace DTXMania
                                 this.st飛び散るチップ[i].fXL += (float)((this.st飛び散るチップ[i].f加速度X * Math.Cos((120.0 * Math.PI / 180.0))) * 5);
                                 this.st飛び散るチップ[i].fXR += (float)((this.st飛び散るチップ[i].f加速度X * Math.Cos((60.0 * Math.PI / 180.0))) * 5);
 
-                                this.st飛び散るチップ[i].fY += (float)((this.st飛び散るチップ[i].f加速度Y * Math.Sin((60.0 * Math.PI / 180.0))) * 10 - Math.Exp(this.st飛び散るチップ[i].f重力加速度 * 2) / 2);
+                                this.st飛び散るチップ[i].fY += (float)((this.st飛び散るチップ[i].f加速度Y * Math.Sin((60.0 * Math.PI / 180.0))) * 10.0f - Math.Exp(this.st飛び散るチップ[i].f重力加速度 * 2.0f) / 2.0f);
                                 this.st飛び散るチップ[i].f加速度X *= this.st飛び散るチップ[i].f加速度の加速度X;
                                 //this.st飛び散るチップ[i].fY *= this.st飛び散るチップ[i].f加速度Y;
                                 this.st飛び散るチップ[i].f加速度Y += this.st飛び散るチップ[i].f重力加速度;

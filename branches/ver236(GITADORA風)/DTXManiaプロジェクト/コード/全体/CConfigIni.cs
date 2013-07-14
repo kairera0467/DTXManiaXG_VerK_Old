@@ -546,6 +546,8 @@ namespace DTXMania
         public STDGBVALUE<bool> bJudgeLineDisp;
         public STDGBVALUE<bool> bLaneFlush;
 
+        public int nPedalLagTime;   //#xxxxx 2013.07.11 kairera0467
+
 		public int n非フォーカス時スリープms;       // #23568 2010.11.04 ikanick add
 		public int nフレーム毎スリープms;			// #xxxxx 2011.11.27 yyagi add
 		public int n演奏速度;
@@ -1065,6 +1067,8 @@ namespace DTXMania
             this.nExplosionInterval = 50;
             this.nExplosionWidgh = 0;
             this.nExplosionHeight = 0;
+
+            this.nPedalLagTime = 0;
 
             this.bAutoAddGage = false;
 			this.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = 1000;
@@ -1815,6 +1819,10 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; レーンフラッシュ表示");
             sw.WriteLine("DrumsLaneFlush={0}", this.bLaneFlush.Drums ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine("; ペダル部分のラグ時間調整");
+            sw.WriteLine("; 入力が遅い場合、マイナス方向に調節してください。");
+            sw.WriteLine("PedalLagTime={0}", this.nPedalLagTime);
             #endregion
 
             //sw.WriteLine( ";-------------------" );
@@ -2858,6 +2866,10 @@ namespace DTXMania
                                             else if ( str3.Equals( "ExplosionHeight" ))
                                             {
                                                 this.nExplosionHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)this.nExplosionHeight);
+                                            }
+                                            else if ( str3.Equals( "PedalLagTime" ) )
+                                            {
+                                                this.nPedalLagTime = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nPedalLagTime );
                                             }
 											continue;
 										}
