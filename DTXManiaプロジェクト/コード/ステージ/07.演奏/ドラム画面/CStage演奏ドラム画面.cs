@@ -1087,7 +1087,7 @@ namespace DTXMania
                                         #region[ BDのヒット処理]
                                         if (e判定BD != E判定.Miss)
                                         {
-                                            this.tドラムヒット処理(nTime, Eパッド.BD, chipBD, inputEvent.nVelocity);
+                                            this.tドラムヒット処理(nTime + nPedalLagTime, Eパッド.BD, chipBD, inputEvent.nVelocity);
                                             bHitted = true;
                                         }
                                         if (bHitted)
@@ -2508,19 +2508,11 @@ namespace DTXMania
                                         switch (CDTXMania.ConfigIni.eBDGroup)
                                         {
                                             case EBDGroup.打ち分ける:
-                                                rChip = (chipBD != null) ? chipBD : chipLBD;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
+                                                rChip = chipBD;
                                                 break;
 
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 rChip = (chipBD != null) ? chipBD : chipLP;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
                                                 break;
 
                                             case EBDGroup.どっちもBD:
@@ -2545,11 +2537,6 @@ namespace DTXMania
                                                 {
                                                     rChip = chipLBD;
                                                 }
-
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
                                                 #endregion
                                                 break;
                                         }
@@ -2568,18 +2555,12 @@ namespace DTXMania
                                         CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime + nPedalLagTime );
                                         switch (CDTXMania.ConfigIni.eBDGroup)
                                         {
+                                            case EBDGroup.打ち分ける:
+                                                rChip = chipLP;
+                                                break;
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 #region[左右ペダル]
                                                 rChip = (chipLP != null) ? chipLP : chipLBD;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
-
                                                 #endregion
                                                 break;
 
@@ -2605,19 +2586,10 @@ namespace DTXMania
                                                 {
                                                     rChip = chipBD;
                                                 }
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
                                                 #endregion
                                                 break;
 
                                         }
-                                        rChip = chipLP;
                                     }
                                     //-----------------------------
                                     #endregion
@@ -2631,17 +2603,12 @@ namespace DTXMania
                                         CDTX.CChip chipLBD = this.r指定時刻に一番近いChip・ヒット未済問わず不可視考慮(nTime, this.nパッド0Atoチャンネル0A[11], nInputAdjustTime + nPedalLagTime);
                                         switch (CDTXMania.ConfigIni.eBDGroup)
                                         {
+                                            case EBDGroup.打ち分ける:
+                                                rChip = chipLBD;
+                                                break;
                                             case EBDGroup.左右ペダルのみ打ち分ける:
                                                 #region [ *** ]
                                                 rChip = (chipLBD != null) ? chipLBD : chipBD;
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
                                                 #endregion
                                                 break;
 
@@ -2667,18 +2634,9 @@ namespace DTXMania
                                                 {
                                                     rChip = chipBD;
                                                 }
-                                                if (rChip != null)
-                                                {
-                                                    base.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
-                                                }
-                                                if (CDTXMania.ConfigIni.bTight)
-                                                {
-                                                    this.tチップのヒット処理・BadならびにTight時のMiss(E楽器パート.DRUMS, base.nパッド0Atoレーン07[nPad]);
-                                                }
                                                 #endregion
                                                 break;
                                         }
-                                        rChip = chipLBD;
                                     }
                                     #endregion
                                     break;

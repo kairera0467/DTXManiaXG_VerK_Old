@@ -1827,7 +1827,9 @@ namespace DTXMania
             sw.WriteLine("; レーンフラッシュ表示");
             sw.WriteLine("DrumsLaneFlush={0}", this.bLaneFlush.Drums ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine( "PedalLagTime={0}", this.nPedalLagTime );
+            sw.WriteLine("; ペダル部分のラグ時間調整");
+            sw.WriteLine("; 入力が遅い場合、マイナス方向に調節してください。");
+            sw.WriteLine("PedalLagTime={0}", this.nPedalLagTime );
             #endregion
 
             //sw.WriteLine( ";-------------------" );
