@@ -122,7 +122,7 @@ namespace DTXMania
                     {
                         f拡大率y= f拡大率x;
                     }
-                    if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f)
+                    if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f && this.dsBGV.dshow != null )
                     {
                         this.dsBGV.dshow.t再生開始();
                         this.bDShowクリップを再生している = true;
@@ -168,7 +168,7 @@ namespace DTXMania
                 this.n移動開始時刻ms = -1;
                 if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                 {
-                    if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
+                    if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null)
                     {
                         //this.dsBGV.dshow.MediaSeeking.SetPositions(
                         //DsLong.FromInt64((long)(-1)),
@@ -388,7 +388,7 @@ namespace DTXMania
                 {
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
-                    if (CDTXMania.ConfigIni.bDirectShowMode == true)
+                    if (CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null)
                     {
                         this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
                     }
@@ -400,8 +400,11 @@ namespace DTXMania
                     else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount()))
                     {
                         this.n移動開始時刻ms = -1L;
-                        this.dsBGV.dshow.MediaCtrl.Stop();
-                        this.bDShowクリップを再生している = false;
+                        if ( this.dsBGV != null )
+                        {
+                            this.dsBGV.dshow.MediaCtrl.Stop();
+                            this.bDShowクリップを再生している = false;
+                        }
                     }
 
                     else
@@ -414,7 +417,7 @@ namespace DTXMania
                             this.n前回表示したフレーム番号 = frameNoFromTime;
                             this.bフレームを作成した = true;
                         }
-                        if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
+                        if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null )
                         {
                             this.dsBGV.dshow.MediaSeeking.SetPositions(
                             DsLong.FromInt64((long)(0)),
@@ -552,7 +555,7 @@ namespace DTXMania
                     {
                         if (this.bFullScreen)
                         {
-                            if (fAVIアスペクト比 > 1.77f && (this.bDShowクリップを再生している == true))
+                            if (fAVIアスペクト比 > 1.77f && (this.bDShowクリップを再生している == true) && this.dsBGV.dshow != null)
                             {
                                 //this.rAVI.avi.Dispose(); //2013.06.26.kairera0467 DShow時にAVIをメモリから外すことで軽くしたいが、エラーを吐くため保留。
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
@@ -1159,7 +1162,7 @@ namespace DTXMania
                 {
                     if (this.b再生トグル == false)
                     {
-                        if (this.dsBGV != null)
+                        if (this.dsBGV.dshow != null)
                         {
                             this.dsBGV.dshow.MediaCtrl.Pause();
                         }
@@ -1171,7 +1174,7 @@ namespace DTXMania
                     }
                     else if(this.b再生トグル == true)
                     {
-                        if (this.dsBGV != null)
+                        if (this.dsBGV.dshow != null)
                         {
                             this.dsBGV.dshow.MediaCtrl.Run();
                         }

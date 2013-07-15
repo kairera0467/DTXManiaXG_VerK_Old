@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using SlimDX;
 using System.Drawing.Text;
+using DirectShowLib;
 using FDK;
 
 namespace DTXMania
@@ -216,6 +217,11 @@ namespace DTXMania
                 this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
                 this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
 
+                if (File.Exists(CSkin.Path(@"Graphics\6_background.mp4")))
+                {
+                    this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\6_background.mp4"), CDTXMania.app.WindowHandle, true);
+                }
+
 				this.nBGM再生開始時刻 = -1L;
 				this.nBGMの総再生時間ms = 0;
 				if( this.sd読み込み音 != null )
@@ -275,6 +281,7 @@ namespace DTXMania
             {
                 this.st泡[i].ct進行 = null;
             }
+            CDTXMania.t安全にDisposeする(ref this.ds背景動画);
 			try
 			{
 				if( this.ftタイトル表示用フォント != null )
@@ -432,8 +439,15 @@ namespace DTXMania
 
             #region [ 背景、レベル、タイトル表示 ]
             //-----------------------------
+
+            if( this.ds背景動画 != null )
+            {
+                this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                this.ds背景動画.t再生開始();
+            }
             if (this.tx背景 != null)
                 this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
+
                 this.Start();
                 for (int i = 0; i < 8; i++)
                 {
@@ -816,6 +830,7 @@ namespace DTXMania
         private CTexture txRISKY;
         private CTexture txシンボル;
         private ST泡[] st泡 = new ST泡[8];
+        private CDirectShow ds背景動画;
 
 		private DateTime timeBeginLoad;
 		private DateTime timeBeginLoadWAV;
