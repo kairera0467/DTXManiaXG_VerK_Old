@@ -159,7 +159,6 @@
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitar判定文字列.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CStage演奏ギター画面.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏ステージ失敗.cs" />
-    <None Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drumsフィルインエフェクト2" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏AVI.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsRGB.cs" />

@@ -2306,7 +2306,7 @@ namespace DTXMania
         private CItemInteger iSystemRisky;					// #23559 2011.7.27 yyagi
         private CItemList iSystemSoundType;         // #24820 2013.1.3 yyagi
         private CItemInteger iSystemWASAPIBufferSizeMs;		// #24820 2013.1.15 yyagi
-        private CItemInteger iSystemASIOBufferSizeMs;		// #24820 2013.1.3 yyagi
+//      private CItemInteger iSystemASIOBufferSizeMs;		// #24820 2013.1.3 yyagi
         private CItemList iSystemASIODevice;				// #24820 2013.1.17 yyagi
         private CItemList iInfoType;
         private CItemToggle iAutoAddGage;
@@ -2316,7 +2316,7 @@ namespace DTXMania
 
         private int iSystemSoundType_initial;
         private int iSystemWASAPIBufferSizeMs_initial;
-        private int iSystemASIOBufferSizeMs_initial;
+//      private int iSystemASIOBufferSizeMs_initial;
         private int iSystemASIODevice_initial;
 
         private CItemToggle iSystemTimeStretch;             // #23664 2013.2.24 yyagi

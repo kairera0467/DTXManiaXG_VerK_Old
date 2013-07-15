@@ -176,11 +176,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.n本体X = 0;
-			this.n本体Y = 0;
 			this.sdDTXで指定されたフルコンボ音 = null;
-			this.bフルコンボ音再生済み = false;
-            this.bエクセレント音再生済み = false;
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -350,11 +346,7 @@ namespace DTXMania
 			public Point pt;
 		}
 
-        private bool bフルコンボ音再生済み;
-        private bool bエクセレント音再生済み;
         private CCounter ct表示用;
-        private int n本体X;
-        private int n本体Y;
         private readonly Point[] ptFullCombo位置;
         private CSound sdDTXで指定されたフルコンボ音;
         private readonly ST文字位置[] st小文字位置;

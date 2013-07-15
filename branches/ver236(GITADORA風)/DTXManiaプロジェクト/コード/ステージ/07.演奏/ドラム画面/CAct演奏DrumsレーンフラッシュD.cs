@@ -169,7 +169,6 @@ namespace DTXMania
                 for (int i = 0; i < 10; i++)
                 {
                     int index = this.n描画順[i];
-                    int x振動 = CDTXMania.stage演奏ドラム画面.actAVI.n振動x座標;
                     int x2 = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + 32);
                     int x3 = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? 32 : 32));
                     int xHH = (CDTXMania.stage演奏ドラム画面.actPad.st基本位置[index].x + 32);
@@ -238,11 +237,11 @@ namespace DTXMania
                             if (index == 6) //FT
                             {
                                 this.txLine.t2D描画(CDTXMania.app.Device, 691, 0, new Rectangle(396, 0, 54, 720));
-                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                                //if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
                                 {
                                     //this.txLine.t2D描画(CDTXMania.app.Device, 742, 0, new Rectangle(447, 0, 5, 720));
                                 }
-                                else
+                                //else
                                 {
                                     //this.txLine.t2D描画(CDTXMania.app.Device, 742, 0, new Rectangle(447, 0, 4, 720));
                                 }

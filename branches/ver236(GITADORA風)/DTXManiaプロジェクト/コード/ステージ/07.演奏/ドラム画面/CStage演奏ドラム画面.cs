@@ -812,20 +812,6 @@ namespace DTXMania
 
                 foreach (STInputEvent inputEvent in listInputEvent)
                 {
-                    /*
-                    CDTX.CChip chip28;
-                    CDTX.CChip chip29;
-                    CDTX.CChip chip30;
-                    E判定 e判定25;
-                    E判定 e判定26;
-                    E判定 e判定27;
-                    CDTX.CChip chip32;
-                    CDTX.CChip chip33;
-                    CDTX.CChip chip34;
-                    E判定 e判定28;
-                    E判定 e判定29;
-                    E判定 e判定30;
-                    */
 
                     if (!inputEvent.b押された)
                         continue;
@@ -1870,7 +1856,7 @@ namespace DTXMania
                         //-----------------------------
                             #endregion
 
-                        #region [rev030ヒット処理]
+                        #region [rev030追加処理]
                         case Eパッド.LP:
                             #region [ LPのヒット処理 ]
                             //-----------------

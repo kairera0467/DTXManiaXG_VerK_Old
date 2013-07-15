@@ -238,7 +238,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
+                if(this.ds背景動画 != null)
+                    CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );

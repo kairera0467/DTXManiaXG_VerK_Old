@@ -186,12 +186,6 @@ namespace DTXMania
                 this.strアーティスト名 = "";
                 this.strSTAGEFILE = "";
 
-                //2013.05.10.kairera0467.曲選択から持ってきた。
-                if (CDTXMania.ConfigIni.b選曲リストフォントを斜体にする) regular |= FontStyle.Italic;
-                if (CDTXMania.ConfigIni.b選曲リストフォントを太字にする) regular |= FontStyle.Bold;
-                this.ftタイトル表示用フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 84f, FontStyle.Bold, GraphicsUnit.Pixel);
-                this.ftアーティスト名表示フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 72f, FontStyle.Bold, GraphicsUnit.Pixel);
-
                 this.nBGM再生開始時刻 = -1L;
                 this.nBGMの総再生時間ms = 0;
                 if (this.sd読み込み音 != null)
@@ -239,13 +233,6 @@ namespace DTXMania
             }
             try
             {
-                if (this.ftタイトル表示用フォント != null)
-                {
-                    this.ftタイトル表示用フォント.Dispose();
-                    this.ftタイトル表示用フォント = null;
-                    this.ftアーティスト名表示フォント.Dispose();
-                    this.ftアーティスト名表示フォント = null;
-                }
                 base.On非活性化();
             }
             finally
@@ -265,30 +252,18 @@ namespace DTXMania
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"), false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
 
+                #region[ 曲名、アーティスト名テクスチャの生成 ]
                 try
                 {
                     if ((this.str曲タイトル != null) && (this.str曲タイトル.Length > 0))
                     {
                         Bitmap image = new Bitmap(1, 1);
-                        Bitmap image2 = new Bitmap(1, 1);
                         Graphics graphics = Graphics.FromImage(image);
-                        Graphics graphics2 = Graphics.FromImage(image2);
-                        SizeF ef = graphics.MeasureString(this.str曲タイトル, this.ftタイトル表示用フォント);
-                        SizeF ef2 = graphics.MeasureString(this.strアーティスト名, this.ftアーティスト名表示フォント);
-                        Size size = new Size((int)Math.Ceiling((double)ef.Width), (int)Math.Ceiling((double)ef.Height));
-                        Size size2 = new Size((int)Math.Ceiling((double)ef2.Width), (int)Math.Ceiling((double)ef2.Height));
                         graphics.Dispose();
                         image.Dispose();
                         image = new Bitmap(1400, 200);
 
-                        if (string.IsNullOrEmpty(this.strアーティスト名))       //2012.02.11.kairera0467 アーティスト名が無かった場合の処理。
-                            image2 = new Bitmap(size.Width, size.Height);
-                        else
-                            image2 = new Bitmap(size2.Width, size2.Height);
-
                         graphics = Graphics.FromImage(image);
-                        //graphics2 = Graphics.FromImage(image2);
-                        //graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                         if ( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                         {
                             graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -303,33 +278,25 @@ namespace DTXMania
                         Pen p縁 = new Pen(Color.Black, 6f);
                         graphics.DrawPath(p縁, gp);
                         graphics.FillPath(Brushes.White, gp);
-                        //graphics2.DrawPath(p縁, gp);
-                        //graphics2.FillPath(Brushes.White, gp);
-
-                        //graphics.DrawString(this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, (float)0f, (float)0f);
-                        //graphics2.DrawString(this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
 
                         graphics.Dispose();
                         ff.Dispose();
                         this.txタイトル = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                         this.txタイトル.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
-                        this.txアーティスト = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
-                        this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
                         image.Dispose();
                     }
                     else
                     {
                         this.txタイトル = null;
-                        this.txアーティスト = null;
                     }
                 }
                 catch (CTextureCreateFailedException)
                 {
                     Trace.TraceError("テクスチャの生成に失敗しました。({0})", new object[] { this.strSTAGEFILE });
                     this.txタイトル = null;
-                    this.txアーティスト = null;
                     this.tx背景 = null;
                 }
+                #endregion
                 base.OnManagedリソースの作成();
             }
         }
@@ -343,7 +310,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txジャケット);
                 CDTXMania.tテクスチャの解放(ref this.txベースパネル);
                 CDTXMania.tテクスチャの解放(ref this.txタイトル);
-                CDTXMania.tテクスチャの解放(ref this.txアーティスト);
                 CDTXMania.tテクスチャの解放(ref this.txRISKY);
                 CDTXMania.tテクスチャの解放(ref this.txDrumspeed);
                 base.OnManagedリソースの解放();
@@ -382,10 +348,6 @@ namespace DTXMania
                 base.b初めての進行描画 = false;
 
                 nWAVcount = 1;
-                bitmapFilename = new Bitmap(1280, 720);
-                graphicsFilename = Graphics.FromImage(bitmapFilename);
-                graphicsFilename.TextRenderingHint = TextRenderingHint.AntiAlias;
-                ftFilename = new Font("MS PGothic", 24f, FontStyle.Bold, GraphicsUnit.Pixel);
             }
             //-----------------------------
             #endregion
@@ -428,9 +390,7 @@ namespace DTXMania
             if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
             {
                 DTXLevel = cdtx.LEVEL.Drums;
-                this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
-                //this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
-                //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
             }
             else
             {
@@ -438,7 +398,7 @@ namespace DTXMania
                 this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
                 if (cdtx.LEVEL.Drums > 100)
                 {
-                    //this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
+
                 }
                 else
                 {
@@ -450,7 +410,6 @@ namespace DTXMania
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
             if (!File.Exists(path))
             {
-                //Trace.TraceWarning("ファイルが存在しません。({0})", new object[] { path });
                 this.txジャケット = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\5_preimage default.png"));
             }
             else
@@ -459,21 +418,15 @@ namespace DTXMania
             }
 
             int y = 184;
-
-            //this.txジャケット.vc拡大縮小倍率.X = 384.0f / this.txジャケット.sz画像サイズ.Width;
-            //this.txジャケット.vc拡大縮小倍率.Y = 384.0f / this.txジャケット.sz画像サイズ.Height;
-            //this.txジャケット.fZ軸中心回転 = 0.28f;
             Matrix mat = Matrix.Identity;
             mat *= Matrix.Scaling(384.0f / this.txジャケット.sz画像サイズ.Width, 384.0f / this.txジャケット.sz画像サイズ.Height, 1f);
             mat *= Matrix.Translation(206f, 66f, 0f);
             mat *= Matrix.RotationZ(0.28f);
 
-            //this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
             this.txジャケット.t3D描画(CDTXMania.app.Device, mat);
             if (this.txタイトル != null)
             {
                 this.txタイトル.t2D描画(CDTXMania.app.Device, (int)(194 + (this.txタイトル.vc拡大縮小倍率.X)), 303);
-                //this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
             }
             this.txジャケット.Dispose();
             //-----------------------------
@@ -588,22 +541,6 @@ namespace DTXMania
 
                         span = (TimeSpan)(DateTime.Now - timeBeginLoad);
                         Trace.TraceInformation("総読込時間:                {0}", span.ToString());
-
-                        if (bitmapFilename != null)
-                        {
-                            bitmapFilename.Dispose();
-                            bitmapFilename = null;
-                        }
-                        if (graphicsFilename != null)
-                        {
-                            graphicsFilename.Dispose();
-                            graphicsFilename = null;
-                        }
-                        if (ftFilename != null)
-                        {
-                            ftFilename.Dispose();
-                            ftFilename = null;
-                        }
                         CDTXMania.Timer.t更新();
                         base.eフェーズID = CStage.Eフェーズ.NOWLOADING_システムサウンドBGMの完了を待つ;
                         return (int)E曲読込画面の戻り値.継続;
@@ -627,10 +564,6 @@ namespace DTXMania
                 case CStage.Eフェーズ.共通_フェードアウト:
                     //if (this.actFO.On進行描画() == 0)
                         //return 0;
-                    if (txFilename != null)
-                    {
-                        txFilename.Dispose();
-                    }
                     if (this.sd読み込み音 != null)
                     {
                         this.sd読み込み音.t解放する();
@@ -648,9 +581,9 @@ namespace DTXMania
         protected bool tキー入力()
         {
             IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
-            if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.Escape))		// escape (exit)
+            if ( keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Escape ) )		// escape (exit)
             {
-                if (CDTXMania.ConfigIni.bギタレボモード)
+                if ( CDTXMania.ConfigIni.bギタレボモード )
                 {
                     if (CDTXMania.stage演奏ギター画面.b活性化してる == true)
                         CDTXMania.stage演奏ギター画面.On非活性化();
@@ -664,23 +597,6 @@ namespace DTXMania
                 return true;
             }
             return false;
-        }
-
-
-        private void ShowProgressByFilename(string strファイル名)
-        {
-            if (graphicsFilename != null && ftFilename != null)
-            {
-                graphicsFilename.Clear(Color.Transparent);
-                graphicsFilename.DrawString(strファイル名, ftFilename, Brushes.White, new RectangleF(0, 0, 720, 24));
-                if (txFilename != null)
-                {
-                    txFilename.Dispose();
-                }
-                txFilename = new CTexture(CDTXMania.app.Device, bitmapFilename, CDTXMania.TextureFormat);
-                txFilename.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
-                txFilename.t2D描画(CDTXMania.app.Device, 0, 720 - 16);
-            }
         }
 
         // その他
@@ -712,8 +628,6 @@ namespace DTXMania
 
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
-        private Font ftタイトル表示用フォント;
-        private Font ftアーティスト名表示フォント;
         private long nBGMの総再生時間ms;
         private long nBGM再生開始時刻;
         private CSound sd読み込み音;
@@ -721,7 +635,6 @@ namespace DTXMania
         private string str曲タイトル;
         private string strアーティスト名;
         private CTexture txタイトル;
-        private CTexture txアーティスト;
         private CTexture txベースパネル;
         private CTexture txヘッダーパネル;
         private CTexture txジャケット;
@@ -733,12 +646,7 @@ namespace DTXMania
         private DateTime timeBeginLoad;
         private DateTime timeBeginLoadWAV;
         private int nWAVcount;
-        private CTexture txFilename;
         private CTexture txLevel;
-
-        private Bitmap bitmapFilename;
-        private Graphics graphicsFilename;
-        private Font ftFilename;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct STATUSPANEL
@@ -791,11 +699,6 @@ namespace DTXMania
                         num = 0;
                         num2 = 0;
                         Rectangle rc画像内の描画領域 = new Rectangle(this.st大文字位置[j].pt.X, this.st大文字位置[j].pt.Y, 100, 130);
-                        //if (c == '.')
-                        {
-                        //   rc画像内の描画領域.Width -= 70;
-                        //    rc画像内の描画領域.Height -= 92;
-                        }
                         if (this.txLevel != null)
                         {
                             this.txLevel.t2D描画(CDTXMania.app.Device, x, y, rc画像内の描画領域);

@@ -200,13 +200,15 @@ namespace DTXMania
                 {
                     this.txジャケット画像 = CDTXMania.tテクスチャの生成(path);
                 }
+
+                #region[ 曲名、アーティスト名テクスチャの生成 ]
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
                 graphics.PageUnit = GraphicsUnit.Pixel;
                 this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
-                this.nSongNamePixelLength = (int)graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
+
                 Bitmap image = new Bitmap(500, 100);
                 graphics = Graphics.FromImage(image);
                 
@@ -221,22 +223,15 @@ namespace DTXMania
                 gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
                 gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
-                //float y = (((float)image.Height) / 2f) - (this.ftSongNameFont.Size / 2f);
-
                 Pen p縁 = new Pen(Color.Black, 3f);
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
-                //graphics.DrawString(this.strSongName, this.ftShadowFont, Brushes.Black, (float)-3f, (float)(y - 1f));
-                //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
-
                 graphics.Dispose();
-
                 ff.Dispose();
 
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();
-                this.ftSongNameFont.Dispose();
-
+                #endregion
                 base.OnManagedリソースの作成();
             }
         }
@@ -350,7 +345,6 @@ namespace DTXMania
             public Point pt;
         }
         private Bitmap bmSongNameLength;
-        private int nSongNamePixelLength;
         private CCounter ct進行用;
         private Font ft表示用フォント;
         private Font ftSongNameFont;

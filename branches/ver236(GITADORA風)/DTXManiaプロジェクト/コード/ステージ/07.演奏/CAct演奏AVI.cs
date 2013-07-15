@@ -124,8 +124,11 @@ namespace DTXMania
                     }
                     if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f)
                     {
-                        this.dsBGV.dshow.t再生開始();
-                        this.bDShowクリップを再生している = true;
+                        if ( this.dsBGV.dshow != null )
+                        {
+                            this.dsBGV.dshow.t再生開始();
+                            this.bDShowクリップを再生している = true;
+                        }
                     }
                     this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
@@ -385,7 +388,8 @@ namespace DTXMania
                 {
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
                     int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
-                    this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition,out this.lStopPosition );
+                    if(this.dsBGV.dshow != null)
+                        this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition,out this.lStopPosition );
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
                     {
                         this.n総移動時間ms = 0;
@@ -409,7 +413,7 @@ namespace DTXMania
                             this.n前回表示したフレーム番号 = frameNoFromTime;
                             this.bフレームを作成した = true;
                         }
-                        if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true)
+                        if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null)
                         {
                             this.dsBGV.dshow.MediaSeeking.SetPositions(
                             DsLong.FromInt64((long)(0)),
@@ -547,7 +551,7 @@ namespace DTXMania
                     {
                         if (this.bFullScreen)
                         {
-                            if (fAVIアスペクト比 > 1.77f && (this.bDShowクリップを再生している == true))
+                            if (fAVIアスペクト比 > 1.77f && (this.bDShowクリップを再生している == true) && this.dsBGV.dshow != null)
                             {
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
                                 //this.tx描画用.t2D描画(CDTXMania.app.Device, this.position, 0);
@@ -769,7 +773,7 @@ namespace DTXMania
                 {
                     if (this.b再生トグル == false)
                     {
-                        if (this.dsBGV != null)
+                        if (this.dsBGV.dshow != null)
                         {
                             this.dsBGV.dshow.MediaCtrl.Pause();
                         }
@@ -781,7 +785,7 @@ namespace DTXMania
                     }
                     else if(this.b再生トグル == true)
                     {
-                        if (this.dsBGV != null)
+                        if (this.dsBGV.dshow != null)
                         {
                             this.dsBGV.dshow.MediaCtrl.Run();
                         }
@@ -829,7 +833,6 @@ namespace DTXMania
         #region [ private ]
         //-----------------
         private bool bFullScreen;
-        private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
         private bool b再生トグル;
@@ -842,7 +845,6 @@ namespace DTXMania
         public CCounter ct右シンバル;
         public CCounter ct左シンバル;
         public STDGBVALUE<double> LivePoint;
-        private Image ilanes;
         private int nAlpha;
         private int nCurrentMovieMode;
         private long n移動開始時刻ms;
@@ -867,8 +869,6 @@ namespace DTXMania
         private int position2;
         private CDTX.CAVI rAVI;
         private CDirectShow ds汎用;
-
-        public int n振動x座標;
 
         public CDTX.CDirectShow dsBGV;
 
@@ -895,11 +895,6 @@ namespace DTXMania
         private CTexture tx描画用2;
         private CTexture txDShow汎用;
         private CCounter[] ct箱 = new CCounter[15];
-        private int y2;
-        private int yh;
-        private int yb;
-        private int yl;
-        private int yf;
 
         private float ratio1;
         private float ratio2;

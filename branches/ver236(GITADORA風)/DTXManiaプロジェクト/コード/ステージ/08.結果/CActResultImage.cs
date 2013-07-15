@@ -63,25 +63,24 @@ namespace DTXMania
 				else if( ( ( !this.tリザルト画像の指定があれば構築する() ) && ( !this.tプレビュー画像の指定があれば構築する() ) ) )
 				{
 					this.r表示するリザルト画像 = this.txリザルト画像がないときの画像;
-				}
+                }
+
+                #region[ 曲名、アーティスト名テクスチャの生成 ]
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
                 graphics.PageUnit = GraphicsUnit.Pixel;
                 this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
-                this.nSongNamePixelLength = (int) graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
                 graphics.Dispose();
-
                 this.bmSongNameLength.Dispose();
 
                 Bitmap image = new Bitmap(500, 100);
                 graphics = Graphics.FromImage(image);
-                System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-
                 if ( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                 {
                     graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                     graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                 }
+                System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
                 FontFamily ff = new FontFamily("ＤＦＧ平成ゴシック体W7");
                 gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
                 gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
@@ -89,38 +88,36 @@ namespace DTXMania
                 Pen p縁 = new Pen(Color.Black, 3f);
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
-                //graphics.DrawString(this.strSongName, this.ftShadowFont, Brushes.Black, (float)-3f, (float)(y - 1f));
-                //graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
-
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
+                #endregion
 
-        Bitmap bitmap2 = new Bitmap(0x3a, 0x12);
-        graphics = Graphics.FromImage(bitmap2);
+                Bitmap bitmap2 = new Bitmap(0x3a, 0x12);
+                graphics = Graphics.FromImage(bitmap2);
 
-        graphics.Dispose();
-        this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
-        bitmap2.Dispose();
-        Bitmap bitmap3 = new Bitmap(100, 100);
-        graphics = Graphics.FromImage(bitmap3);
-        float num;
+                graphics.Dispose();
+                this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
+                bitmap2.Dispose();
+                Bitmap bitmap3 = new Bitmap(100, 100);
+                graphics = Graphics.FromImage(bitmap3);
+                float num;
 
-        if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-        {
-            num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
-        }
-        else
-        {
-            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
-            {
-                num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
-            }
-            else
-            {
-                num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f;
-            }
-        }
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                {
+                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
+                }
+                else
+                {
+                    if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
+                    {
+                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
+                    }
+                    else
+                    {
+                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f;
+                    }
+                }
 
         if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
         {
@@ -177,10 +174,6 @@ namespace DTXMania
                 int width = this.r表示するリザルト画像.szテクスチャサイズ.Width;
                 int height = this.r表示するリザルト画像.szテクスチャサイズ.Height;
                 {
-                    //this.r表示するリザルト画像.vc拡大縮小倍率.X = 245.0f / ((float)width);
-                    //this.r表示するリザルト画像.vc拡大縮小倍率.Y = 245.0f / ((float)height);
-                    //this.r表示するリザルト画像.fZ軸中心回転 = 0.3f;
-                    //this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, width, height));
                     Matrix mat = Matrix.Identity;
                     mat *= Matrix.Scaling(245.0f / this.txリザルト画像.sz画像サイズ.Width, 245.0f / this.txリザルト画像.sz画像サイズ.Height, 1f);
                     mat *= Matrix.Translation(440f, -335f, 0f);
@@ -205,14 +198,10 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private Bitmap bmSongNameLength;
-        private bool b動画フレームを作成した;
         private CCounter ct登場用;
         private System.Drawing.Font ftSongDifficultyFont;
         private System.Drawing.Font ftSongNameFont;
         private Image iDrumSpeed;
-        private long nAVI再生開始時刻;
-        private int nSongNamePixelLength;
-        private int n前回描画したフレーム番号;
         private int n本体X;
         private int n本体Y;
         private CTexture r表示するリザルト画像;
