@@ -56,7 +56,7 @@ namespace DTXMania
                     {
                         this.tx描画用 = new CTexture(CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
                     }
-                    if (fAVIアスペクト比 < 1.77f)
+                    if ( fAVIアスペクト比 < 1.77f )
                     {
                         //旧企画クリップだった場合
                         this.ratio1 = 720f / ((float)this.frameheight);
@@ -1162,9 +1162,10 @@ namespace DTXMania
                 {
                     if (this.b再生トグル == false)
                     {
-                        if (this.dsBGV.dshow != null)
+                        if ( this.dsBGV != null )
                         {
-                            this.dsBGV.dshow.MediaCtrl.Pause();
+                            if( this.dsBGV.dshow != null )
+                                this.dsBGV.dshow.MediaCtrl.Pause();
                         }
                         if (this.ds汎用 != null)
                         {
@@ -1174,9 +1175,10 @@ namespace DTXMania
                     }
                     else if(this.b再生トグル == true)
                     {
-                        if (this.dsBGV.dshow != null)
+                        if (this.dsBGV != null)
                         {
-                            this.dsBGV.dshow.MediaCtrl.Run();
+                            if( this.dsBGV.dshow != null )
+                                this.dsBGV.dshow.MediaCtrl.Run();
                         }
                         if (this.ds汎用 != null)
                         {
