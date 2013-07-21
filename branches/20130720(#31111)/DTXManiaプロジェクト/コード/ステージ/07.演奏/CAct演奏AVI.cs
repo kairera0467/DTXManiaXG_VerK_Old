@@ -26,10 +26,9 @@ namespace DTXMania
         public void Start(int nチャンネル番号, CDTX.CAVI rAVI, CDTX.CDirectShow dsBGV, int n開始サイズW, int n開始サイズH, int n終了サイズW, int n終了サイズH, int n画像側開始位置X, int n画像側開始位置Y, int n画像側終了位置X, int n画像側終了位置Y, int n表示側開始位置X, int n表示側開始位置Y, int n表示側終了位置X, int n表示側終了位置Y, int n総移動時間ms, int n移動開始時刻ms)
         {
 
-            if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bAVI有効)
+            if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bAVI有効 && CDTXMania.ConfigIni.bDirectShowMode == false)
             {
                 this.rAVI = rAVI;
-                this.dsBGV = dsBGV;
                 this.n開始サイズW = n開始サイズW;
                 this.n開始サイズH = n開始サイズH;
                 this.n終了サイズW = n終了サイズW;
@@ -122,13 +121,50 @@ namespace DTXMania
                     {
                         f拡大率y= f拡大率x;
                     }
-                    if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f && this.dsBGV.dshow != null )
-                    {
-                        this.dsBGV.dshow.t再生開始();
-                        this.bDShowクリップを再生している = true;
-                    }
+
                     this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
+                }
+            }
+            else if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bAVI有効 && CDTXMania.ConfigIni.bDirectShowMode)
+            {
+                this.dsBGV = dsBGV;
+
+                this.framewidth = (uint)this.dsBGV.dshow.n幅px;
+                this.frameheight = (uint)this.dsBGV.dshow.n高さpx;
+                this.fAVIアスペクト比 = ((float)this.framewidth) / ((float)this.frameheight);
+                if (fAVIアスペクト比 < 1.77f)
+                {
+                    #region[ 旧規格クリップ時の処理。結果的には面倒な処理なんだよな・・・・ ]
+                    this.rAVI = rAVI;
+                    this.n開始サイズW = n開始サイズW;
+                    this.n開始サイズH = n開始サイズH;
+                    this.n終了サイズW = n終了サイズW;
+                    this.n終了サイズH = n終了サイズH;
+                    this.n画像側開始位置X = n画像側開始位置X;
+                    this.n画像側開始位置Y = n画像側開始位置Y;
+                    this.n画像側終了位置X = n画像側終了位置X;
+                    this.n画像側終了位置Y = n画像側終了位置Y;
+                    this.n表示側開始位置X = n表示側開始位置X;
+                    this.n表示側開始位置Y = n表示側開始位置Y;
+                    this.n表示側終了位置X = n表示側終了位置X;
+                    this.n表示側終了位置Y = n表示側終了位置Y;
+                    this.n総移動時間ms = n総移動時間ms;
+                    this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
+                    this.n前回表示したフレーム番号 = -1;
+
+                    this.vclip = new Vector3(1.42f, 1.42f, 1f);
+                    this.dsBGV.dshow = null;
+                    #endregion
+                }
+                if (this.tx描画用 == null)
+                {
+                    this.tx描画用 = new CTexture(CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+                }
+                if (CDTXMania.ConfigIni.bDirectShowMode == true && fAVIアスペクト比 > 1.77f && this.dsBGV.dshow != null)
+                {
+                    this.dsBGV.dshow.t再生開始();
+                    this.bDShowクリップを再生している = true;
                 }
             }
         }
@@ -168,14 +204,6 @@ namespace DTXMania
                 this.n移動開始時刻ms = -1;
                 if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                 {
-                    if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null)
-                    {
-                        //this.dsBGV.dshow.MediaSeeking.SetPositions(
-                        //DsLong.FromInt64((long)(-1)),
-                        //AMSeekingSeekingFlags.AbsolutePositioning,
-                        //null,
-                        //AMSeekingSeekingFlags.NoPositioning);
-                    }
                     this.dsBGV.dshow.MediaCtrl.Stop();
                     this.bDShowクリップを再生している = false;
                 }
@@ -350,6 +378,7 @@ namespace DTXMania
             }
             if (this.txDShow汎用 != null && CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した)
             {
+                #region[ 汎用動画 ]
                 if (this.ds汎用 != null)
                 {
                     if (this.txDShow汎用 != null)
@@ -380,6 +409,7 @@ namespace DTXMania
                         AMSeekingSeekingFlags.NoPositioning);
                     }
                 }
+                #endregion
             }
             #region[ムービーのフレーム作成処理]
             if ((!base.b活性化してない))
@@ -387,17 +417,24 @@ namespace DTXMania
                 if (((this.bFullScreen || this.bWindowMode) && (this.tx描画用 != null)))
                 {
                     int time = (int)((CSound管理.rc演奏用タイマ.n現在時刻 - this.n移動開始時刻ms) * (((double)CDTXMania.ConfigIni.n演奏速度) / 20.0));
-                    int frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
+                    int frameNoFromTime = 0;
+
                     if (CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null)
                     {
                         this.dsBGV.dshow.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
+                        frameNoFromTime = (int)lDshowPosition;
                     }
+                    else
+                    {
+                        frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime(time);
+                    }
+
                     if ((this.n総移動時間ms != 0) && (this.n総移動時間ms < time))
                     {
                         this.n総移動時間ms = 0;
                         this.n移動開始時刻ms = -1L;
                     }
-                    else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount()))
+                    else if ((this.n総移動時間ms == 0) && (frameNoFromTime >= (CDTXMania.ConfigIni.bDirectShowMode ? (int)this.lStopPosition : this.rAVI.avi.GetMaxFrameCount())))
                     {
                         this.n移動開始時刻ms = -1L;
                         if ( this.dsBGV != null )
@@ -406,12 +443,11 @@ namespace DTXMania
                             this.bDShowクリップを再生している = false;
                         }
                     }
-
                     else
                     {
                         Rectangle rectangle;
                         Rectangle rectangle2;
-                        if (!((this.n前回表示したフレーム番号 == frameNoFromTime) || this.bフレームを作成した))
+                        if ((((this.n前回表示したフレーム番号 != frameNoFromTime) || !this.bフレームを作成した)) && (fAVIアスペクト比 < 1.77f || CDTXMania.ConfigIni.bDirectShowMode == false))
                         {
                             this.pBmp = this.rAVI.avi.GetFramePtr(frameNoFromTime);
                             this.n前回表示したフレーム番号 = frameNoFromTime;
@@ -425,7 +461,7 @@ namespace DTXMania
                             null,
                             AMSeekingSeekingFlags.NoPositioning);
                         }
-                        Size size = new Size((int)this.rAVI.avi.nフレーム幅, (int)this.rAVI.avi.nフレーム高さ);
+                        Size size = new Size((int)this.framewidth, (int)this.frameheight);
                         Size sz720pサイズ = new Size(1280, 720);
                         Size sz開始サイズ = new Size(this.n開始サイズW, this.n開始サイズH);
                         Size sz終了サイズ = new Size(this.n終了サイズW, this.n終了サイズH);
@@ -1052,7 +1088,7 @@ namespace DTXMania
                         CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 }
 
-                if ((((this.n移動開始時刻ms != -1L) && (this.rAVI != null )) && (this.rAVI.avi != null)) && (this.bWindowMode) && (CDTXMania.ConfigIni.bAVI有効))
+                if ((((this.n移動開始時刻ms != -1L) && ((this.rAVI != null )) && (this.rAVI.avi != null)) || (this.dsBGV != null && this.dsBGV.dshow != null) ) && (this.bWindowMode) && (CDTXMania.ConfigIni.bAVI有効))
                 {
                     this.vector = this.tx描画用.vc拡大縮小倍率;
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
