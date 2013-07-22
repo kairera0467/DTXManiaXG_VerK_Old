@@ -134,7 +134,7 @@ namespace DTXMania
             {
                 for (int i = 0; i < 1; i++)
                 {
-                    for (int j = 0; j < 12; j++)
+                    for (int j = 0; j < 8; j++)
                     {
                         if (!this.st飛び散るチップ[j].b使用中)
                         {
@@ -331,7 +331,7 @@ namespace DTXMania
 				this.st青い星[ i ].b使用中 = false;
 				this.st青い星[ i ].ct進行 = new CCounter();
 			}
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 8; i++)
             {
                 this.st飛び散るチップ[i] = new ST飛び散るチップ();
                 this.st飛び散るチップ[i].b使用中 = false;
@@ -359,7 +359,7 @@ namespace DTXMania
 			{
 				this.st青い星[ i ].ct進行 = null;
 			}
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 8; i++)
             {
                 this.st飛び散るチップ[i].ct進行 = null;
             }
@@ -564,7 +564,7 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
                 {
-                    for (int i = 0; i < 12; i++)
+                    for (int i = 0; i < 8; i++)
                     {
                         if (this.st飛び散るチップ[i].b使用中)
                         {
@@ -1069,7 +1069,7 @@ namespace DTXMania
 		private ST大波[] st大波 = new ST大波[ BIGWAVE_MAX ];
 		private ST細波[] st細波 = new ST細波[ BIGWAVE_MAX ];
 		private ST青い星[] st青い星 = new ST青い星[ STAR_MAX ];
-        private ST飛び散るチップ[] st飛び散るチップ = new ST飛び散るチップ[ 12 ];
+        private ST飛び散るチップ[] st飛び散るチップ = new ST飛び散るチップ[ 8 ];
 		private CTexture[] tx火花 = new CTexture[10];
         private CTexture tx火花2;
         private CTexture txボーナス花火;
