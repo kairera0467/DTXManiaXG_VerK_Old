@@ -223,11 +223,11 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
-                if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")))
+				if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")))
                 {
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path(@"Graphics\5_background.mp4"), CDTXMania.app.WindowHandle, true );
                 }
-				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
+                this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), false );
 				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
 				this.txFLIP = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
@@ -289,7 +289,7 @@ namespace DTXMania
                         AMSeekingSeekingFlags.NoPositioning);
                     }
                 }
-
+                
 				if( this.tx背景 != null )
 					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 
@@ -307,7 +307,7 @@ namespace DTXMania
 				if( this.tx上部パネル != null )
 						this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0, y );
 
-				//this.actInformation.On進行描画();
+				this.actInformation.On進行描画();
 				if( this.tx下部パネル != null )
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
@@ -319,7 +319,7 @@ namespace DTXMania
                     this.txコメントバー.t2D描画(CDTXMania.app.Device, 484, 342);
 				}
 				this.actArtistComment.On進行描画();
-				//this.actオプションパネル.On進行描画();
+				this.actオプションパネル.On進行描画();
 				if ( this.txFLIP != null && CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.16 yyagi
 				{
 					Rectangle rect = new Rectangle(0x1f, 0x31, 20, 11);
