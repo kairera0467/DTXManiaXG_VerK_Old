@@ -505,7 +505,6 @@ namespace DTXMania
 	    public int n初期ウィンドウ開始位置Y;
 		public int nウインドウwidth;				// #23510 2010.10.31 yyagi add
 		public int nウインドウheight;				// #23510 2010.10.31 yyagi add
-        public bool クレジットを表示する;
         public bool ボーナス演出を表示する;
         public bool bドラムセットを動かす;
         public bool bHAZARD;
@@ -562,6 +561,7 @@ namespace DTXMania
 		public string strDTXManiaのバージョン;
 		public string str曲データ検索パス;
 		public string str選曲リストフォント;
+        public string str曲名表示フォント;
         public string strCardName;
         public string strGroupName;
 		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
@@ -1084,6 +1084,7 @@ namespace DTXMania
 			this.n表示可能な最小コンボ数.Guitar = 2;
 			this.n表示可能な最小コンボ数.Bass = 2;
 			this.str選曲リストフォント = "MS PGothic";
+            this.str曲名表示フォント = "MS PGothic";
 			this.n選曲リストフォントのサイズdot = 20;
 			this.b選曲リストフォントを太字にする = true;
 			this.n自動再生音量 = 80;
@@ -1229,7 +1230,7 @@ namespace DTXMania
 		}
 		public void t書き出し( string iniファイル名 )
 		{
-			StreamWriter sw = new StreamWriter( iniファイル名, false, Encoding.GetEncoding( "shift-jis" ) );
+			StreamWriter sw = new StreamWriter( iniファイル名, false, Encoding.GetEncoding( "unicode" ) );
 			sw.WriteLine( ";-------------------" );
 			
 			#region [ System ]
@@ -1277,9 +1278,6 @@ namespace DTXMania
             sw.WriteLine("; ネームカラー");
             sw.WriteLine("; 0=白, 1=薄黄色, 2=黄色, 3=緑, 4=青, 5=紫 以下略。");
             sw.WriteLine("NameColor={0}", this.nNameColor);
-            sw.WriteLine();
-            sw.WriteLine("クレジットの表示(0:表示する, 1:表示しない)");
-            sw.WriteLine("CREDIT={0}", this.クレジットを表示する ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; クリップの表示位置");
             sw.WriteLine("; 0=表示しない, 1=全画面, 2=ウインドウ, 3=全画面&ウインドウ");
@@ -1528,6 +1526,9 @@ namespace DTXMania
             sw.WriteLine( "; Font name for select song item." );
 			sw.WriteLine( "SelectListFontName={0}", this.str選曲リストフォント );
 			sw.WriteLine();
+            sw.WriteLine("; 読み込み画面、演奏画面、ネームプレート、リザルト画面の曲名で使用するフォント名");
+            sw.WriteLine( "DisplayFontName={0}", this.str曲名表示フォント);
+            sw.WriteLine();
 			sw.WriteLine( "; 選曲リストのフォントのサイズ[dot]" );
             sw.WriteLine( "; Font size[dot] for select song item." );
 			sw.WriteLine( "SelectListFontSize={0}", this.n選曲リストフォントのサイズdot );
@@ -1782,18 +1783,8 @@ namespace DTXMania
             sw.WriteLine( "; ボーナス演出の表示(0:表示しない, 1:表示する)");
             sw.WriteLine("DrumsStageEffect={0}", this.ボーナス演出を表示する ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine( "; BPMバーの表示(0:表示する, 1:左のみ表示, 2:表示しない)");
-            sw.WriteLine("BPMBar={0}", (int)this.eBPMbar); ;
-            sw.WriteLine();
             sw.WriteLine("; ドラムレーンタイプ(0:A, 1:B, 2:C )");
             sw.WriteLine("DrumsLaneType={0}", (int)this.eLaneType.Drums);
-            sw.WriteLine();
-            sw.WriteLine("; ネームプレートタイプ");
-            sw.WriteLine("; 0:タイプA XG2風の表示がされます。 ");
-            sw.WriteLine("; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれます。");
-            sw.WriteLine("; 2:タイプC ver1.50bまでのXG2風の表示です。");
-            sw.WriteLine("; 3:タイプD XG3+αの表示がされます。これが俺の求めていたXG3だ!)");
-            sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate.Drums);
             sw.WriteLine();
             sw.WriteLine("; CLASSIC譜面判別");
             sw.WriteLine("CLASSIC={0}", this.bCLASSIC譜面判別を有効にする ? 1 : 0);
@@ -2216,10 +2207,6 @@ namespace DTXMania
                                             {
                                                 this.nNameColor = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9, 0);
                                             }
-                                            else if (str3.Equals("Credit"))
-                                            {
-                                                this.クレジットを表示する = C変換.bONorOFF(str4[0]);
-                                            }
                                             else if (str3.Equals("SkinChangeByBoxDef"))
                                             {
                                                 this.bUseBoxDefSkin = C変換.bONorOFF(str4[0]);
@@ -2454,6 +2441,10 @@ namespace DTXMania
                                             else if (str3.Equals("SelectListFontName"))
                                             {
                                                 this.str選曲リストフォント = str4;
+                                            }
+                                            else if (str3.Equals("DisplayFontName"))
+                                            {
+                                                this.str曲名表示フォント = str4;
                                             }
                                             else if (str3.Equals("SelectListFontSize"))
                                             {

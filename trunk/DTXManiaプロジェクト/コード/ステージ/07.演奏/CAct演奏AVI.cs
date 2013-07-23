@@ -532,7 +532,7 @@ namespace DTXMania
                         this.n前回表示したフレーム番号 = frameNoFromTime;
                         this.bフレームを作成した = true;
                     }
-                    if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV.dshow != null )
+                    if (this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV != null )
                     {
                         this.dsBGV.dshow.MediaSeeking.SetPositions(
                         DsLong.FromInt64((long)(0)),

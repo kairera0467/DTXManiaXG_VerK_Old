@@ -160,9 +160,8 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            this.ft表示用フォント = new Font("ＤＦＧ平成ゴシック体W7", 38f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W7", 22f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ftShadowFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 19.5f, FontStyle.Bold, GraphicsUnit.Pixel);
+            this.ft表示用フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 26f, FontStyle.Bold, GraphicsUnit.Pixel);
+            this.ft称号フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Bold, GraphicsUnit.Pixel);
             this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
             this.txパネル文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_s.png"));
             this.txパネル文字[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_l.png"));
@@ -178,6 +177,11 @@ namespace DTXMania
                 this.ft表示用フォント.Dispose();
                 this.ft表示用フォント = null;
             }
+            if ( this.ft称号フォント != null )
+            {
+                this.ft称号フォント.Dispose();
+                this.ft称号フォント = null;
+            }
             CDTXMania.tテクスチャの解放(ref this.txPanel);
             CDTXMania.tテクスチャの解放(ref this.txスキルパネル);
             CDTXMania.tテクスチャの解放(ref this.txパネル文字[0]);
@@ -191,6 +195,8 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 this.SetPanelString(this.strパネル文字列);
+                this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
+                this.strTitleName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
                 string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
                 if (!File.Exists(path))
                 {
@@ -204,13 +210,16 @@ namespace DTXMania
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
+
                 graphics.PageUnit = GraphicsUnit.Pixel;
                 this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
 
                 Bitmap image = new Bitmap(500, 100);
+                Bitmap image2 = new Bitmap(200, 100);
                 graphics = Graphics.FromImage(image);
+                Graphics graネームプレート用 = Graphics.FromImage(image2);
                 
                 if( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                 {
@@ -219,17 +228,22 @@ namespace DTXMania
                 }
                 System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
 
-                FontFamily ff = new FontFamily("ＭＳ Ｐゴシック");
+                FontFamily ff = new FontFamily(CDTXMania.ConfigIni.str曲名表示フォント);
                 gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
                 gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
                 Pen p縁 = new Pen(Color.Black, 3f);
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
+
+                graネームプレート用.DrawString(this.strTitleName, this.ft称号フォント, Brushes.White, (float)8f, (float)12f);
+                graネームプレート用.DrawString(this.strPlayerName, this.ft表示用フォント, Brushes.White, (float)8f, (float)32f);
+
                 graphics.Dispose();
                 ff.Dispose();
 
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                this.txネームプレート用文字 = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 #endregion
                 base.OnManagedリソースの作成();
@@ -242,6 +256,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txPanel);
                 CDTXMania.tテクスチャの解放(ref this.txSongName);
                 CDTXMania.tテクスチャの解放(ref this.txジャケット画像);
+                CDTXMania.tテクスチャの解放(ref this.txネームプレート用文字);
                 base.OnManagedリソースの解放();
             }
         }
@@ -286,6 +301,7 @@ namespace DTXMania
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
                     this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
+                    this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, 23, 242);
                     this.t小文字表示(100, 314, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect));
                     this.t小文字表示(100, 344, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great));
                     this.t小文字表示(100, 374, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good));
@@ -347,17 +363,19 @@ namespace DTXMania
         private Bitmap bmSongNameLength;
         private CCounter ct進行用;
         private Font ft表示用フォント;
-        private Font ftSongNameFont;
-        private Font ftShadowFont;
+        private Font ft称号フォント;
         private int n文字列の長さdot;
         private string strパネル文字列;
         private string strSongName;
+        private string strPlayerName;
+        private string strTitleName;
         private CTexture txPanel;
         private CTexture txスキルパネル;
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
         private CTexture[] txパネル文字;
         private CTexture txSongName;
+        private CTexture txネームプレート用文字;
         private CTexture txジャケット画像;
 
 

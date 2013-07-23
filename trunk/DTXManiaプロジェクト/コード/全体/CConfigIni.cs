@@ -505,7 +505,6 @@ namespace DTXMania
 	    public int n初期ウィンドウ開始位置Y;
 		public int nウインドウwidth;				// #23510 2010.10.31 yyagi add
 		public int nウインドウheight;				// #23510 2010.10.31 yyagi add
-        public bool クレジットを表示する;
         public bool ボーナス演出を表示する;
         public bool bドラムセットを動かす;
         public bool bHAZARD;
@@ -1233,7 +1232,7 @@ namespace DTXMania
 		}
 		public void t書き出し( string iniファイル名 )
 		{
-			StreamWriter sw = new StreamWriter( iniファイル名, false, Encoding.GetEncoding( "shift-jis" ) );
+			StreamWriter sw = new StreamWriter( iniファイル名, false, Encoding.GetEncoding( "unicode" ) );
 			sw.WriteLine( ";-------------------" );
 			
 			#region [ System ]
@@ -1281,9 +1280,6 @@ namespace DTXMania
             sw.WriteLine("; ネームカラー");
             sw.WriteLine("; 0=白, 1=薄黄色, 2=黄色, 3=緑, 4=青, 5=紫 以下略。");
             sw.WriteLine("NameColor={0}", this.nNameColor);
-            sw.WriteLine();
-            sw.WriteLine("クレジットの表示(0:表示する, 1:表示しない)");
-            sw.WriteLine("CREDIT={0}", this.クレジットを表示する ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; クリップの表示位置");
             sw.WriteLine("; 0=表示しない, 1=全画面, 2=ウインドウ, 3=全画面&ウインドウ");
@@ -2222,10 +2218,6 @@ namespace DTXMania
                                             else if (str3.Equals("NameColor"))
                                             {
                                                 this.nNameColor = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9, 0);
-                                            }
-                                            else if (str3.Equals("Credit"))
-                                            {
-                                                this.クレジットを表示する = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("SkinChangeByBoxDef"))
                                             {

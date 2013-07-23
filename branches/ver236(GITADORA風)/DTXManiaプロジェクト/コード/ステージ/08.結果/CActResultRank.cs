@@ -98,18 +98,15 @@ namespace DTXMania
 			}
 			if( base.b初めての進行描画 )
 			{
-                this.ctランク表示 = new CCounter(0, 0x3e8, 2, CDTXMania.Timer);
+                this.ctランク表示 = new CCounter(0, 127, 1, CDTXMania.Timer);
 				base.b初めての進行描画 = false;
 			}
 			this.ctランク表示.t進行();
-			if( this.ctランク表示.n現在の値 >= 100 )
-			{
-				double num2 = ( (double) ( this.ctランク表示.n現在の値 - 100 ) ) / 950.0;
-                if (this.txランク文字 != null)
-                {
-                    this.txランク文字.t2D描画(CDTXMania.app.Device, 480, this.n本体Y, new Rectangle(0, 0, (int)((double)txランク文字.sz画像サイズ.Width * num2), this.txランク文字.sz画像サイズ.Height));
-                }
-			}
+            if (this.txランク文字 != null)
+            {
+                this.txランク文字.n透明度 = this.ctランク表示.n現在の値 * 2;
+                this.txランク文字.t2D描画( CDTXMania.app.Device, 480, this.n本体Y );
+            }
 			if( !this.ctランク表示.b終了値に達した )
 			{
 				return 0;

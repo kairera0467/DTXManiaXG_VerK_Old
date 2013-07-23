@@ -329,8 +329,6 @@ namespace DTXMania
             this.pBmp = IntPtr.Zero;
             this.MovieMode();
             this.nAlpha = 255 - ((int)(((float)(CDTXMania.ConfigIni.nMovieAlpha * 255)) / 10f));
-            this.ct右シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
-            this.ct左シンバル = new CCounter(0, 8, 35, CDTXMania.Timer);
             if (File.Exists(CSkin.Path(@"Graphics\7_Movie.mp4")))
             {
                 this.ds汎用 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\7_Movie.mp4"), CDTXMania.app.WindowHandle, true);
@@ -348,14 +346,6 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 this.txドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
-                this.tx左シンバル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_LCymbal.png"));
-                this.tx右シンバル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_RCymbal.png"));
-                this.txスネア = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_Snare.png"));
-                this.txハイタム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_HiTom.png"));
-                this.txロータム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_LowTom.png"));
-                this.txフロアタム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_FloorTom.png"));
-                this.txバスドラ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_BassDrum.png"));
-                this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
                 if (CDTXMania.ConfigIni.bGraph.Drums == true)
                 {
@@ -366,22 +356,7 @@ namespace DTXMania
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanel.png"));
                 }
                 this.txDShow汎用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
-                this.txLivePoint = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_LivePointGauge.png"));
                 this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_score numbers.png"));
-                string pathBPMFL = CSkin.Path(@"Graphics\7_BPMbar_Flush_L.png");
-                string pathBPMFR = CSkin.Path(@"Graphics\7_BPMbar_Flush_R.png");
-                string pathBPMbarL = CSkin.Path(@"Graphics\7_BPMbarL.png");
-                string pathBPMbarR = CSkin.Path(@"Graphics\7_BPMbarR.png");
-                if(File.Exists(pathBPMbarL) && File.Exists(pathBPMbarR))
-                {
-                    this.txBPMバー左 = CDTXMania.tテクスチャの生成(pathBPMbarL);
-                    this.txBPMバー右 = CDTXMania.tテクスチャの生成(pathBPMbarR);
-                }
-                if (File.Exists(pathBPMFL) && File.Exists(pathBPMFR))
-                {
-                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成(pathBPMFL);
-                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成(pathBPMFR);
-                }
 
                 for (int i = 0; i < 1; i++)
                 {
@@ -422,39 +397,15 @@ namespace DTXMania
                 CDTXMania.t安全にDisposeする(ref this.ds汎用);
                 //テクスチャ 17枚
                 CDTXMania.tテクスチャの解放(ref this.txScore);
-                CDTXMania.tテクスチャの解放(ref this.txLivePoint);
                 CDTXMania.tテクスチャの解放(ref this.txドラム);
-                CDTXMania.tテクスチャの解放(ref this.tx左シンバル);
-                CDTXMania.tテクスチャの解放(ref this.tx右シンバル);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバー左);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバー右);
-                CDTXMania.tテクスチャの解放(ref this.txスネア);
-                CDTXMania.tテクスチャの解放(ref this.txハイタム);
-                CDTXMania.tテクスチャの解放(ref this.txロータム);
-                CDTXMania.tテクスチャの解放(ref this.txフロアタム);
-                CDTXMania.tテクスチャの解放( ref this.txバスドラ );
-                CDTXMania.tテクスチャの解放( ref this.txバートップ );
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
                 CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
-                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ左 );
-                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ右 );
                 CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
                 base.OnManagedリソースの解放();
             }
         }
         public unsafe int t進行描画(int x, int y)
         {
-            int RCym = this.ct右シンバル.n現在の値;
-            int LCym = this.ct左シンバル.n現在の値;
-            int num1 = 0;
-            if (CDTXMania.ConfigIni.bDrums有効 == true)
-            {
-                num1 = CDTXMania.stage演奏ドラム画面.ctBPMバー.n現在の値;
-            }
-            else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
-            {
-                num1 = CDTXMania.stage演奏ギター画面.ctBPMバー.n現在の値;
-            }
             if (this.txDShow汎用 != null && CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した)
             {
                 #region[ 汎用動画 ]
@@ -756,413 +707,9 @@ namespace DTXMania
                 }
                 if (CDTXMania.ConfigIni.bDrums有効 == true)
                 {
-                    #region[動くドラムセット]
-                    for (int i = 0; i < 10; i++)
+                    if ( this.txドラム != null )
                     {
-                        int index = this.n描画順[i];
-                        this.y2 = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 2 ].nY座標オフセットdot;
-                        this.yh = 491 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 4 ].nY座標オフセットdot;
-                        this.yb = 517 - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 3 ].nY座標オフセットdot;
-                        this.yl = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 5 ].nY座標オフセットdot;
-                        this.yf = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 6 ].nY座標オフセットdot;
-                        if (CDTXMania.ConfigIni.bドラムセットを動かす == false)
-                        {
-                            y2 = 490;
-                            yh = 491;
-                            yb = 517;
-                            yl = 490;
-                            yf = 490;
-                        }
-
-                        if (index == 0)
-                        {
-                            this.ct左シンバル.t進行();
-                            if(this.tx左シンバル != null)
-                            this.tx左シンバル.t2D描画(CDTXMania.app.Device, -120 + (CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 * 10), 0, new Rectangle(0 + (380 * LCym), 0, 380, 720));
-                        }
-                        if (index == 2)
-                        {
-                            if (this.txスネア != null)
-                            this.txスネア.t2D描画(CDTXMania.app.Device, 0, this.y2);
-                        }
-                        if (index == 4)
-                        {
-                            if (this.txハイタム != null)
-                            this.txハイタム.t2D描画(CDTXMania.app.Device, 106, this.yh);
-                        }
-                        if (index == 3)
-                        {
-                            if (this.txバスドラ != null)
-                            this.txバスドラ.t2D描画(CDTXMania.app.Device, 310, this.yb);
-                        }
-                        if (index == 5)
-                        {
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
-                            {
-                                if (this.txロータム != null)
-                                this.txロータム.t2D描画(CDTXMania.app.Device, 817, this.yl);
-                            }
-                            else
-                            {
-                                if (this.txロータム != null)
-                                this.txロータム.t2D描画(CDTXMania.app.Device, 870, this.yl);
-                            }
-                        }
-                        if (index == 6)
-                        {
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
-                            {
-                                if (this.txフロアタム != null)
-                                    this.txフロアタム.t2D描画(CDTXMania.app.Device, 996, this.yf);
-                            }
-                            else
-                            {
-                                if (this.txフロアタム != null)
-                                    this.txフロアタム.t2D描画(CDTXMania.app.Device, 1049, this.yf);
-                            }
-                        }
-                        if ((index == 7))
-                        {
-                            this.ct右シンバル.t進行();
-                            if (this.tx右シンバル != null)
-                                this.tx右シンバル.t2D描画(CDTXMania.app.Device, 1020 - (CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 * 10), 0, new Rectangle(0 + (380 * RCym), 0, 380, 720));
-                        }
-                        
-                    }
-
-                    #endregion
-                    if (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3)
-                    {
-                        if (CDTXMania.ConfigIni.nMovieAlpha == 0)
-                        {
-                            this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
-                        }
-                    }
-                    else
-                    {
-                        if (CDTXMania.ConfigIni.nMovieAlpha <= 5)
-                        {
-                            this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
-                        }
-                    }
-
-                    this.n振動x座標 = 0;
-                    for (int i = 0; i < 1; i++)
-                    {
-                        if (this.stフィルイン[i].b使用中 && CDTXMania.ConfigIni.ボーナス演出を表示する == true)
-                        {
-                            switch (this.stフィルイン[i].ct進行.n現在の値)
-                            {
-                                case 0:
-                                    this.n振動x座標 = 5;
-                                    break;
-                                case 2:
-                                    this.n振動x座標 = -5;
-                                    break;
-                                case 4:
-                                    this.n振動x座標 = 4;
-                                    break;
-                                case 6:
-                                    n振動x座標 = -4;
-                                    break;
-                                case 8:
-                                    this.n振動x座標 = 3;
-                                    break;
-                                case 10:
-                                    this.n振動x座標 = -3;
-                                    break;
-                                case 12:
-                                    this.n振動x座標 = 2;
-                                    break;
-                                case 14:
-                                    this.n振動x座標 = -2;
-                                    break;
-                                case 16:
-                                    this.n振動x座標 = 1;
-                                    break;
-                                case 18:
-                                    this.n振動x座標 = -1;
-                                    break;
-                                case 20:
-                                    this.n振動x座標 = 0;
-                                    break;
-                            }
-                        }
-                    }
-                    #region [ Failed(RISKY1)時の背景 ]
-                    if(CDTXMania.ConfigIni.bDrums有効 == true)
-                    {
-                        if ( CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums <= 0.0 )
-                        {
-                            this.tx黒幕.t2D描画( CDTXMania.app.Device, 0, 0 );
-                        }
-                    }
-                    else if(CDTXMania.ConfigIni.bGuitar有効 == true)
-                    {
-                        if ( CDTXMania.stage演奏ギター画面.actGauge.db現在のゲージ値.Guitar <= 0.0 )
-                        {
-     
-                        }
-                        else if ( CDTXMania.stage演奏ギター画面.actGauge.db現在のゲージ値.Bass <= 0.0 )
-                        {
-    
-                        }
-                    }
-                    #endregion
-                    if (this.txバートップ != null)
-                    {
-                        //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
-                    }
-                    long lPos = 0;
-                    //if (this.dsBGV != null)
-                    //{
-                        //this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
-                        //CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
-                        //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
-                    //}
-
-                    if ((this.txBPMバー左 != null && this.txBPMバー右 != null) && CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 >= 11)
-                    {
-                        if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
-                        {
-
-                            if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
-                            {
-                                this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                                if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
-                                {
-                                    {
-                                        this.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                        this.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 54);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                            }
-
-                            if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
-                            {
-                                this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                                if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
-                                {
-                                    this.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                    this.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 908 - (1 * num1), 54);
-                                }
-                            }
-                            else
-                            {
-                                this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                            }
-                        }
-                        else if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.B)
-                        {
-                            this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                        }
-                    }
-                    if (CDTXMania.ConfigIni.bLivePoint)
-                    {
-                        if (CDTXMania.ConfigIni.bDrums有効 == true)
-                        {
-                            #region[LivePoint]
-                            if (this.txLivePoint != null)
-                                this.txLivePoint.t2D描画(CDTXMania.app.Device, 886, 52, new Rectangle(0, 0, 71, 668));
-                            string str = string.Format("{0,3:##0}", CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.Drums);
-                            for (int i = 0; i < 3; i++)
-                            {
-                                Rectangle rectangle;
-                                char ch = str[i];
-                                if (ch.Equals(' '))
-                                {
-                                    rectangle = new Rectangle(72, 250, 17, 25);
-                                }
-                                else
-                                {
-                                    int num3 = int.Parse(str.Substring(i, 1));
-                                    if (num3 < 5)
-                                    {
-                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
-                                    }
-                                    else
-                                    {
-                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
-                                    }
-                                }
-                                if (this.txScore != null)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 895 + (i * 18), 685, rectangle);
-                                }
-                            }
-                            #region[箱]
-                                //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                                if (this.LivePoint.Drums >= 0)
-                                {
-                                    if (this.LivePoint.Drums >= 20)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 626, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 40)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 585, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 60)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 544, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 80)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 503, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 100)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 462, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 120)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 420, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 140)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 379, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 160)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 338, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 180)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 297, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 200)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 256, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 220)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 214, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 240)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 173, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 260)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 132, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 280)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 91, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 300)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 50, new Rectangle(71, 624, 46, 44));
-                                    }
-                                }
-                                #endregion
-                            #endregion
-                        }
-                        else if (CDTXMania.ConfigIni.bGuitar有効 && CDTXMania.ConfigIni.bDrums有効 == false)
-                        {
-                            #region[LivePoint]
-                            if (this.txLivePoint != null)
-                                this.txLivePoint.t2D描画(CDTXMania.app.Device, 2, 52, new Rectangle(0, 0, 71, 668));
-                            string str = string.Format("{0,3:##0}", CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.Drums);
-                            for (int i = 0; i < 3; i++)
-                            {
-                                Rectangle rectangle;
-                                char ch = str[i];
-                                if (ch.Equals(' '))
-                                {
-                                    rectangle = new Rectangle(72, 250, 17, 25);
-                                }
-                                else
-                                {
-                                    int num3 = int.Parse(str.Substring(i, 1));
-                                    if (num3 < 5)
-                                    {
-                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
-                                    }
-                                    else
-                                    {
-                                        rectangle = new Rectangle(72, (num3 * 25), 17, 25);
-                                    }
-                                }
-                                if (this.txScore != null)
-                                {
-                                    this.txLivePoint.t2D描画(CDTXMania.app.Device, 895 + (i * 18), 685, rectangle);
-                                }
-                                #region[箱]
-                                //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                                if (this.LivePoint.Drums >= 0)
-                                {
-                                    if (this.LivePoint.Drums >= 20)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 626, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 40)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 585, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 60)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 544, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 80)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 503, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 100)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 462, new Rectangle(71, 536, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 120)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 420, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 140)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 379, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 160)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 338, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 180)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 297, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 200)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 256, new Rectangle(71, 580, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 220)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 214, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 240)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 173, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 260)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 132, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 280)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 91, new Rectangle(71, 624, 46, 44));
-                                    }
-                                    if (this.LivePoint.Drums >= 300)
-                                    {
-                                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 887, 50, new Rectangle(71, 624, 46, 44));
-                                    }
-                                }
-                                #endregion
-                            }
-                            #endregion
-                        }
+                        this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
                 }
 
@@ -1355,8 +902,6 @@ namespace DTXMania
         private uint framewidth;
         private int i1;
         private int i2;
-        public CCounter ct右シンバル;
-        public CCounter ct左シンバル;
         public STDGBVALUE<double> LivePoint;
 //      private Image ilanes;
         private int nAlpha;
@@ -1384,38 +929,18 @@ namespace DTXMania
         private CDTX.CAVI rAVI;
         private CDirectShow ds汎用;
 
-        public int n振動x座標;
-
         public CDTX.CDirectShow dsBGV;
 
         private CTexture tx黒幕;
-        private CTexture txBPMバー左;
-        private CTexture txBPMバー右;
-        private CTexture txBPMバーフラッシュ左;
-        private CTexture txBPMバーフラッシュ右;
         private CTexture txlanes;
-        private CTexture txLivePoint;
         private CTexture txScore;
         private CTexture txクリップパネル;
-        private CTexture txスネア;
         private CTexture txドラム;
-        private CTexture txハイタム;
-        private CTexture txバートップ;
-        private CTexture txバスドラ;
-        private CTexture tx左シンバル;
-        private CTexture txフロアタム;
         private CTexture txフィルインエフェクト;
-        private CTexture tx右シンバル;
-        private CTexture txロータム;
         private CTexture tx描画用;
         private CTexture tx描画用2;
         private CTexture txDShow汎用;
         private CCounter[] ct箱 = new CCounter[15];
-        private int y2;
-        private int yh;
-        private int yb;
-        private int yl;
-        private int yf;
 
         private float ratio1;
         private float ratio2;

@@ -826,17 +826,6 @@ namespace DTXMania
                     //-----------------------------
                     switch (((Eパッド)nPad))
                     {
-                        case Eパッド.LC:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct左シンバル.n現在の値 = 0;
-                            break;
-                        case Eパッド.CY:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct右シンバル.n現在の値 = 0;
-                            break;
-                    }
-                    switch (((Eパッド)nPad))
-                    {
                         case Eパッド.HH:
                             #region [ HHとLC(groupingしている場合) のヒット処理 ]
                             //-----------------------------
@@ -2241,17 +2230,6 @@ namespace DTXMania
                     //-----------------------------
                     this.actLaneFlushD.Start((Eレーン)this.nパッド0Atoレーン07[nPad], ((float)inputEvent.nVelocity) / 127f);
                     this.actPad.Hit(this.nパッド0Atoパッド08[nPad]);
-                    switch (((Eパッド)nPad))
-                    {
-                        case Eパッド.LC:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct左シンバル.n現在の値 = 0;
-                            break;
-                        case Eパッド.CY:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct右シンバル.n現在の値 = 0;
-                            break;
-                    }
 
                     if (CDTXMania.ConfigIni.bドラム打音を発声する)
                     {
