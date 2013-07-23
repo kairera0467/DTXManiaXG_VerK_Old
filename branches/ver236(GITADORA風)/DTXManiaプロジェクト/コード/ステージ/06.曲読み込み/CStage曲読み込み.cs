@@ -270,7 +270,7 @@ namespace DTXMania
                             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                         }
                         System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-                        FontFamily ff = new FontFamily("ＭＳ Ｐゴシック");
+                        FontFamily ff = new FontFamily(CDTXMania.ConfigIni.str曲名表示フォント);
 
                         gp.AddString(this.str曲タイトル, ff, 1, 80, new Point(0, 0), StringFormat.GenericDefault);
                         gp.AddString(this.strアーティスト名, ff, 1, 64, new Point(0, 100), StringFormat.GenericDefault);
