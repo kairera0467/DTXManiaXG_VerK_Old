@@ -164,16 +164,16 @@ namespace DTXMania
                 if (this.nStrlengthbydot > 240)
                 {
                     this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                     {
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)68f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)42f, (float)136f);
+                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)46f, (float)136f);
                         }
                         else
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, namecolor, (float)42f, (float)136f);
+                            graphics.DrawString(this.strPlayerName, this.ftNameFont, namecolor, (float)46f, (float)136f);
                         }
                         graphics.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, (float)54f, (float)105f);
                     }
@@ -193,7 +193,7 @@ namespace DTXMania
                 }
                 else
                 {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A || CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.C)
+                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                     {
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)65f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)

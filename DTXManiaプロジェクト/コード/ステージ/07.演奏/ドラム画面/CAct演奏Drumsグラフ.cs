@@ -125,6 +125,9 @@ namespace DTXMania
                 this.tx比較 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
                 this.txグラフバックパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
                 this.tx数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
+                this.txComboBom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Combobomb.png"));
+                if (this.txComboBom != null)
+                    this.txComboBom.b加算合成 = true;
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -136,6 +139,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.tx比較 );
                 CDTXMania.tテクスチャの解放( ref this.txグラフバックパネル );
                 CDTXMania.tテクスチャの解放( ref this.tx数字 );
+                CDTXMania.tテクスチャの解放(ref this.txComboBom);
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -145,6 +149,7 @@ namespace DTXMania
 			{
 				if( base.b初めての進行描画 )
 				{
+                    this.ct爆発エフェクト = new CCounter(0, 13, 20, CDTXMania.Timer);
 					base.b初めての進行描画 = false;
                 }
                 double db1ノーツごとの達成率 = (double)this.dbグラフ値目標 / CDTXMania.DTX.n可視チップ数.Drums;
@@ -187,6 +192,10 @@ namespace DTXMania
                 {
                     this.tx比較.t2D描画(CDTXMania.app.Device, 1070, 200, new Rectangle(336, 0, 162, 60));
                     this.t小文字表示(1150, 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                    if (this.dbグラフ値現在 > this.dbグラフ値目標)
+                    {
+                        this.tx比較.n透明度 = 128;
+                    }
                 }
                 else if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
@@ -317,7 +326,7 @@ namespace DTXMania
                     //this.txグラフ.n透明度 = 128;
                     //this.txグラフ.b加算合成 = true;
                     this.txグラフ.t2D描画(CDTXMania.app.Device, 969, 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
-                    //this.txグラフ.b加算合成 = false;
+                    
                 }
                 // --目標値
                 
@@ -396,6 +405,7 @@ namespace DTXMania
         private STキラキラ[] stキラキラ = new STキラキラ[ 64 ];
         private STキラキラ[] stフラッシュ = new STキラキラ[ 16 ];
 
+        private CCounter ct爆発エフェクト;
         public double db現在の判定数合計;
         private double dbグラフ値目標;
         public double dbグラフ値比較;
@@ -409,6 +419,7 @@ namespace DTXMania
         private CTexture tx比較;
 		private CTexture txグラフ;
         private CTexture txグラフバックパネル;
+        protected CTexture txComboBom;
 		//-----------------
 
 

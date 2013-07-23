@@ -23,7 +23,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public static readonly string VERSION = "Ver2.65(130707)";
+		public static readonly string VERSION = "Ver2.70(130722)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -512,33 +512,6 @@ namespace DTXMania
 				Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
             }
 
-            #region[ クレジット表記 ]
-            if (ConfigIni.クレジットを表示する == true)
-            {
-                this.ftDeclaration = new System.Drawing.Font("Arial", 13f, FontStyle.Regular, GraphicsUnit.Pixel);
-                Bitmap image = new Bitmap(1, 1);
-                Graphics graphics = Graphics.FromImage(image);
-                graphics.PageUnit = GraphicsUnit.Pixel;
-                int width = (int)graphics.MeasureString("DTXManiaXG(verK) ver 2.60     based on DTXMania", this.ftDeclaration).Width;
-                graphics.Dispose();
-                Bitmap bitmap2 = new Bitmap(width, this.ftDeclaration.Height);
-                graphics = Graphics.FromImage(bitmap2);
-                graphics.DrawString("DTXManiaXG(verK) ver 2.60     based on DTXMania", this.ftDeclaration, Brushes.White, (float)0f, (float)0f);
-                graphics.Dispose();
-                this.txCredit = new CTexture(app.Device, bitmap2, TextureFormat);
-                bitmap2.Dispose();
-                graphics = Graphics.FromImage(image);
-                graphics.PageUnit = GraphicsUnit.Pixel;
-                width = (int)graphics.MeasureString("CREDIT            0", this.ftDeclaration).Width;
-                graphics.Dispose();
-                bitmap2 = new Bitmap(width, this.ftDeclaration.Height);
-                graphics = Graphics.FromImage(bitmap2);
-                graphics.DrawString("CREDIT            0", this.ftDeclaration, Brushes.White, (float)0f, (float)0f);
-                graphics.Dispose();
-                this.txDeclaration = new CTexture(app.Device, bitmap2, TextureFormat);
-                bitmap2.Dispose();
-            }
-            #endregion
         }
 		protected override void UnloadContent()
 		{
@@ -1431,14 +1404,6 @@ for (int i = 0; i < 3; i++) {
 						break;
 				}
 			}
-            if (ConfigIni.クレジットを表示する == true)
-            {
-                this.txDeclaration.t2D描画(this.Device, 472, 694);
-                if ((r現在のステージ.eステージID == CStage.Eステージ.タイトル) || (r現在のステージ.eステージID == CStage.Eステージ.終了))
-                {
-                    this.txCredit.t2D描画(this.Device, (1280 - this.txCredit.sz画像サイズ.Width) - 20, 700);
-                }
-            }
 			this.Device.EndScene();			// Present()は game.csのOnFrameEnd()に登録された、GraphicsDeviceManager.game_FrameEnd() 内で実行されるので不要
 											// (つまり、Present()は、Draw()完了後に実行される)
 #if !GPUFlushAfterPresent
@@ -1606,9 +1571,6 @@ for (int i = 0; i < 3; i++) {
 		private static CDTX dtx;
 		private List<CActivity> listトップレベルActivities;
 		public int n進行描画の戻り値;
-        private CTexture txCredit;
-        private CTexture txDeclaration;
-        private System.Drawing.Font ftDeclaration;
 		private MouseButtons mb = System.Windows.Forms.MouseButtons.Left;
         private string strWindowTitle = "";
 
