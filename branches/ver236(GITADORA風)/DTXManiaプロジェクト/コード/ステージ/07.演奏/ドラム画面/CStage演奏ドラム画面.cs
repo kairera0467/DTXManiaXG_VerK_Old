@@ -653,7 +653,8 @@ namespace DTXMania
 	
 		protected override void t進行描画・AVI()
 		{
-			base.t進行描画・AVI( 0, 0 );
+            if( CDTXMania.ConfigIni.bAVI有効 )
+			    base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
