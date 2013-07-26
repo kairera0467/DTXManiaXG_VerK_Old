@@ -69,6 +69,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
+            this.ct登場用 = new CCounter(0, 12, 16, CDTXMania.Timer);
             dtLastQueueOperation = DateTime.MinValue;
             if (CDTXMania.bコンパクトモード)
             {
@@ -231,11 +232,12 @@ namespace DTXMania
 
 		protected override void t進行描画・AVI()
 		{
-		    //base.t進行描画・AVI( 0, 0 );
+            if ( CDTXMania.ConfigIni.bAVI有効 )
+		        base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
-		    base.t進行描画・BGA( 500, 50 );
+		    //base.t進行描画・BGA( 500, 50 );
 		}
 		protected override void t進行描画・DANGER()			// #23631 2011.4.19 yyagi
 		{
