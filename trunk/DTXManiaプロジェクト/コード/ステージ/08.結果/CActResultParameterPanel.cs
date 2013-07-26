@@ -280,14 +280,7 @@ namespace DTXMania
                     }
                     if (num >= 100)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            this.t大文字表示(750, 460, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGreat数));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x, y + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGreat数));
-                        }
+                        this.t大文字表示(x, y + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGreat数));
                     }
                     if (num >= 200)
                     {

@@ -117,7 +117,7 @@ namespace DTXMania
                             break;
 
                         default:
-                            this.txランク文字 = null;
+                            this.txランク文字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
                             break;
                     }
                     switch (CDTXMania.stage結果.nランク値.Bass)
@@ -152,7 +152,7 @@ namespace DTXMania
                             break;
 
                         default:
-                            this.txランク文字2P = null;
+                            this.txランク文字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
                             break;
                     }
                 }

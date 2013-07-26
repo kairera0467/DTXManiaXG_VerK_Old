@@ -1336,57 +1336,10 @@ namespace DTXMania
                 int nRate = this.bブーストボーナス == true ? 2 : 1;
                 if (CDTXMania.ConfigIni.bAutoAddGage == true)
                 {
-                    if (((pChip.e楽器パート != E楽器パート.UNKNOWN)) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
+                    if (((pChip.e楽器パート == E楽器パート.DRUMS)) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
                     {
-                        int nCombos = this.actCombo.n現在のコンボ数[(int)pChip.e楽器パート];
-                        float nScoreDelta = 0;
-                        float nComboMax;
-                        nComboMax = CDTXMania.DTX.n可視チップ数.Drums;
-                        if (eJudgeResult == E判定.Perfect)//ここでパフェ基準を作成。
-                        {
-                            if (nCombos < nComboMax)
-                            {
-                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数 ) / 50.0f / (nComboMax - 24.5f);
-                            }
-                            //1000000÷50÷(その曲のMAXCOMBO-24.5)
-                            else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
-                            {
-                                nScoreDelta = 1000000.0f - (float)this.actScore.n現在の本当のスコア.Drums;
-                            }
-                            //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
-
-                        }
-                        else if (eJudgeResult == E判定.Great)
-                        {
-                            nScoreDelta = 1000000 / 50 / (nComboMax - 24.5f) * 0.5f;
-                        }
-                        else if (eJudgeResult == E判定.Good)
-                        {
-                            nScoreDelta = 1000000 / 50 / (nComboMax - 24.5f) * 0.2f;
-                        }
-
-                        if (nCombos < 50)
-                        {
-                            nScoreDelta = nScoreDelta * nCombos;
-                        }
-                        else if (nCombos == nComboMax || this.nヒット数・Auto含まない.Drums.Perfect == nComboMax)
-                        {
-                        }
-                        else
-                        {
-                            nScoreDelta = nScoreDelta * 50;
-                        }
-
-                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta);
-                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta;
-                    }
-                    //return eJudgeResult;
-                }
-                else
-                {
-                    if ((!bPChipIsAutoPlay && (pChip.e楽器パート != E楽器パート.UNKNOWN)) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
-                    {
-                        int nCombos = this.actCombo.n現在のコンボ数[(int)pChip.e楽器パート];
+                        #region[ドラム]
+                        int nCombos = this.actCombo.n現在のコンボ数.Drums;
                         float nScoreDelta = 0;
                         float nComboMax;
                         nComboMax = CDTXMania.DTX.n可視チップ数.Drums;
@@ -1425,10 +1378,157 @@ namespace DTXMania
                             nScoreDelta = nScoreDelta * 50;
                         }
 
-                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta * nRate);
-                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta * nRate;
+                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta);
+                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta;
+                        #endregion
+                    }
+                    else if (((pChip.e楽器パート == E楽器パート.GUITAR) || pChip.e楽器パート == E楽器パート.BASS) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
+                    {
+                        #region[ ギター&ベース ]
+                        int nCombos = this.actCombo.n現在のコンボ数[(int)pChip.e楽器パート];
+                        float nScoreDelta = 0;
+                        float nComboMax;
+                        nComboMax = CDTXMania.DTX.n可視チップ数[(int)pChip.e楽器パート];
+                        if (eJudgeResult == E判定.Perfect)//ここでパフェ基準を作成。
+                        {
+                            if (nCombos < nComboMax)
+                            {
+                                nScoreDelta = 1000000.0f / ( 1275.0f + 50.0f * (nComboMax - 50f));
+                            }
+                            //100万/{1275+50×(総ノーツ数-50)}
+                            else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
+                            {
+                                nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f))) * 50.0f * (nComboMax - 25.5f);
+                            }
+                            //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
 
-                        //return eJudgeResult;
+                        }
+                        else if (eJudgeResult == E判定.Great)
+                        {
+                            nScoreDelta = (int)(1000000.0f / (1275.0f + 50.0f * (nComboMax - 50f))) * 0.5f;
+                        }
+                        else if (eJudgeResult == E判定.Good)
+                        {
+                            nScoreDelta = (int)(1000000.0f / (1275.0f + 50.0f * (nComboMax - 50f))) * 0.2f;
+                        }
+
+                        if (nCombos < 50)
+                        {
+                            nScoreDelta = nScoreDelta * nCombos;
+                        }
+                        else if (nCombos == nComboMax || this.nヒット数・Auto含まない[(int)pChip.e楽器パート].Perfect == nComboMax)
+                        {
+                        }
+                        else
+                        {
+                            nScoreDelta = nScoreDelta * 50;
+                        }
+
+                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta);
+                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta;
+                        #endregion
+                    }
+                    else
+                    {
+                    }
+                    //return eJudgeResult;
+                }
+                else
+                {
+                    if ((!bPChipIsAutoPlay && (pChip.e楽器パート != E楽器パート.UNKNOWN)) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
+                    {
+                        #region[ドラム]
+                        int nCombos = this.actCombo.n現在のコンボ数.Drums;
+                        float nScoreDelta = 0;
+                        float nComboMax;
+                        nComboMax = CDTXMania.DTX.n可視チップ数.Drums;
+                        if (eJudgeResult == E判定.Perfect)//ここでパフェ基準を作成。
+                        {
+                            if (nCombos < nComboMax)
+                            {
+                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / 50.0f / (nComboMax - 24.5f);
+                            }
+                            //1000000÷50÷(その曲のMAXCOMBO-24.5)
+                            else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
+                            {
+                                nScoreDelta = 1000000.0f - (float)this.actScore.n現在の本当のスコア.Drums;
+                            }
+                            //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
+
+                        }
+                        else if (eJudgeResult == E判定.Great)
+                        {
+                            nScoreDelta = 1000000 / 50 / (nComboMax - 24.5f) * 0.5f;
+                        }
+                        else if (eJudgeResult == E判定.Good)
+                        {
+                            nScoreDelta = 1000000 / 50 / (nComboMax - 24.5f) * 0.2f;
+                        }
+
+                        if (nCombos < 50)
+                        {
+                            nScoreDelta = nScoreDelta * nCombos;
+                        }
+                        else if (nCombos == nComboMax || this.nヒット数・Auto含まない.Drums.Perfect == nComboMax)
+                        {
+                        }
+                        else
+                        {
+                            nScoreDelta = nScoreDelta * 50;
+                        }
+
+                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta);
+                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta;
+                        #endregion
+                    }
+                    else if (((pChip.e楽器パート == E楽器パート.GUITAR) || pChip.e楽器パート == E楽器パート.BASS) && (eJudgeResult != E判定.Miss) && (eJudgeResult != E判定.Bad))
+                    {
+                        #region[ ギター&ベース ]
+                        int nCombos = this.actCombo.n現在のコンボ数[(int)pChip.e楽器パート];
+                        float nScoreDelta = 0;
+                        float nComboMax;
+                        nComboMax = CDTXMania.DTX.n可視チップ数[(int)pChip.e楽器パート];
+                        if (eJudgeResult == E判定.Perfect || eJudgeResult == E判定.Auto)//ここでパフェ基準を作成。
+                        {
+                            if (nCombos < nComboMax)
+                            {
+                                nScoreDelta = (int)1000000.0f / (1275.0f + 50.0f * (nComboMax - 50f));
+                            }
+                            // 100万/{1275+50×(総ノーツ数-50)}
+                            else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
+                            {
+                                nScoreDelta = (int)1000000.0f - (1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f))) * 50.0f * (nComboMax - 25.5f);
+                            }
+                            //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
+
+                        }
+                        else if (eJudgeResult == E判定.Great)
+                        {
+                            nScoreDelta = (int)1000000.0f / (1275.0f + 50.0f * (nComboMax - 50f)) * 0.5f;
+                        }
+                        else if (eJudgeResult == E判定.Good)
+                        {
+                            nScoreDelta = (int)1000000.0f / (1275.0f + 50.0f * (nComboMax - 50f)) * 0.2f;
+                        }
+
+                        if (nCombos < 50)
+                        {
+                            nScoreDelta = nScoreDelta * nCombos;
+                        }
+                        else if (nCombos == nComboMax || this.nヒット数・Auto含まない[(int)pChip.e楽器パート].Perfect == nComboMax)
+                        {
+                        }
+                        else
+                        {
+                            nScoreDelta = nScoreDelta * 50;
+                        }
+
+                        this.actScore.Add(pChip.e楽器パート, bIsAutoPlay, (long)nScoreDelta);
+                        this.actStatusPanels.nCurrentScore += (long)nScoreDelta;
+                        #endregion
+                    }
+                    else
+                    {
                     }
                 }
             }
