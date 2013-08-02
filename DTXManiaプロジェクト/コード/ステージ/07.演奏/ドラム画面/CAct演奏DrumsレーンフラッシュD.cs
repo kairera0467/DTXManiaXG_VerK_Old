@@ -365,31 +365,7 @@ namespace DTXMania
 
                             if (index == 0) //LC
                             {
-                                this.txLine.t2D描画(CDTXMania.app.Device, 358, 0, new Rectangle(0, 0, 390, 720));
-                                this.txLine.t2D描画(CDTXMania.app.Device, xLC - 4, 0, new Rectangle(0, 0, 70, 720));
-                                //this.txLine.t2D描画(CDTXMania.app.Device, 365, 0, new Rectangle(70, 0, 2, 720)); //左の棒
-                            }
-                            if (index == 7) //CY
-                            {
-                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                {
-                                    this.txLine.t2D描画(CDTXMania.app.Device, xCY - 69, 0, new Rectangle(450, 0, 70, 720));
-                                }
-                                else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                {
-                                    this.txLine.t2D描画(CDTXMania.app.Device, xCY - 31, 0, new Rectangle(450, 0, 70, 720));
-                                }
-                            }
-                            if (index == 8) //RD
-                            {
-                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                {
-                                    this.txLine.t2D描画(CDTXMania.app.Device, xCY - 55, 0, new Rectangle(520, 0, 38, 720));
-                                }
-                                else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                {
-                                    this.txLine.t2D描画(CDTXMania.app.Device, xCY - 122, 0, new Rectangle(520, 0, 38, 720));
-                                }
+                                this.txLine.t2D描画(CDTXMania.app.Device, 295, 0, new Rectangle(0, 0, 558, 720));
                             }
                         }
                     }

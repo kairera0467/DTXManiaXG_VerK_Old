@@ -207,7 +207,7 @@ namespace DTXMania
 					}
 					set
 					{
-						if( ( value < 0.0 ) || ( value > 100.0 ) )
+						if( ( value < 0.0 ) || ( value > 200.0 ) )
 						{
 							throw new ArgumentOutOfRangeException();
 						}

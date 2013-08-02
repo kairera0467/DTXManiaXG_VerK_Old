@@ -376,7 +376,7 @@ namespace DTXMania
 				this.t背景テクスチャの生成();
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
-
+                this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_judge strings.png" ) );
 
 				base.OnManagedリソースの作成();
 			}
@@ -388,6 +388,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 
 				CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
+                CDTXMania.tテクスチャの解放( ref this.tx判定画像anime );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -677,6 +678,7 @@ namespace DTXMania
 		protected CTexture txWailing枠;
 		protected CTexture txチップ;
 		protected CTexture txヒットバー;
+        public CTexture tx判定画像anime;     //2013.8.2 kairera0467 アニメーションの場合はあらかじめこっちで読み込む。
 
 		protected CTexture tx背景;
 		protected STDGBVALUE<int> nInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
