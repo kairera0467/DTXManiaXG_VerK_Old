@@ -192,9 +192,10 @@ namespace DTXMania
 			{
                 if (CDTXMania.ConfigIni.nJudgeFrames > 1)
                 {
-                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    //this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    //2013.8.2 kairera0467 CStage演奏画面共通側で読み込むテスト。
                 }
                 else
                 {

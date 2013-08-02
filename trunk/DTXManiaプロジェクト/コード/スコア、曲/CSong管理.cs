@@ -1651,9 +1651,9 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 						ini.stセクション[ n ].b演奏にマウスを使用した )
                     {
                         // (A) 全オートじゃないようなので、演奏結果情報を有効としてランクを算出する。
-                        if (CDTXMania.ConfigIni.nSkillMode == 0)
+                        if ( CDTXMania.ConfigIni.nSkillMode == 0 )
                         {
-                            score.譜面情報.最大ランク[n楽器番号] =
+                            score.譜面情報.最大ランク[ n楽器番号 ] =
                             CScoreIni.t旧ランク値を計算して返す(
                                 ini.stセクション[n].n全チップ数,
                                 ini.stセクション[n].nPerfect数,
@@ -1663,30 +1663,29 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
                                 ini.stセクション[n].nMiss数
                                 );
                         }
-                        else
+                        else if( CDTXMania.ConfigIni.nSkillMode == 1 )
                         {
-                            score.譜面情報.最大ランク[n楽器番号] =
+                            score.譜面情報.最大ランク[ n楽器番号 ] =
                             CScoreIni.tランク値を計算して返す(
-                                ini.stセクション[n].n全チップ数,
-                                ini.stセクション[n].nPerfect数,
-                                ini.stセクション[n].nGreat数,
-                                ini.stセクション[n].nGood数,
-                                ini.stセクション[n].nPoor数,
-                                ini.stセクション[n].nMiss数,
-                                ini.stセクション[n].n最大コンボ数
+                                ini.stセクション[ n ].n全チップ数,
+                                ini.stセクション[ n ].nPerfect数,
+                                ini.stセクション[ n ].nGreat数,
+                                ini.stセクション[ n ].nGood数,
+                                ini.stセクション[ n ].nPoor数,
+                                ini.stセクション[ n ].nMiss数,
+                                ini.stセクション[ n ].n最大コンボ数
                                 );
                         }
                     }
 					else
 					{
 						// (B) 全オートらしいので、ランクは無効とする。
-
 						score.譜面情報.最大ランク[ n楽器番号 ] = (int) CScoreIni.ERANK.UNKNOWN;
 					}
 					//-----------------
 					#endregion
 					score.譜面情報.最大スキル[ n楽器番号 ] = ini.stセクション[ n ].db演奏型スキル値;
-                    score.譜面情報.最大曲別スキル[n楽器番号] = ini.stセクション[n].dbゲーム型スキル値;
+                    score.譜面情報.最大曲別スキル[ n楽器番号 ] = ini.stセクション[ n ].dbゲーム型スキル値;
 					score.譜面情報.フルコンボ[ n楽器番号 ] = ini.stセクション[ n ].bフルコンボである;
 				}
 				score.譜面情報.演奏回数.Drums = ini.stファイル.PlayCountDrums;

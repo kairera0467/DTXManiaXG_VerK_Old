@@ -525,19 +525,9 @@ namespace DTXMania
                         this.n総移動時間ms = 0;
                         this.n移動開始時刻ms = -1L;
                     }
-                    //if ( ( this.n総移動時間ms == 0) )
                     if( ( this.n総移動時間ms == 0 ) && ( frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount() ) )
                     {
-                        //if ((frameNoFromTime >= (( CDTXMania.ConfigIni.bDirectShowMode && this.bDShowクリップを再生している ) ? (int)this.lStopPosition : this.rAVI.avi.GetMaxFrameCount())))
-                        {
-                            this.n移動開始時刻ms = -1L;
-                            //if (this.dsBGV != null && this.fAVIアスペクト比 > 1.77f)
-                            //{
-                            //    this.dsBGV.dshow.MediaCtrl.Stop();
-                            //    this.bDShowクリップを再生している = false;
-                            //}
-
-                        }
+                        this.n移動開始時刻ms = -1L;
                     }
                     if ((((this.n前回表示したフレーム番号 != frameNoFromTime) || !this.bフレームを作成した)) && (fAVIアスペクト比 < 1.77f || CDTXMania.ConfigIni.bDirectShowMode == false))
                     {
@@ -547,13 +537,15 @@ namespace DTXMania
                     }
                     
                     //ループ防止
-                    if ( this.lDshowPosition == this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV != null )
+                    if ( this.lDshowPosition >= this.lStopPosition && CDTXMania.ConfigIni.bDirectShowMode == true && this.dsBGV != null )
                     {
                         this.dsBGV.dshow.MediaSeeking.SetPositions(
                         DsLong.FromInt64((long)(0)),
                         AMSeekingSeekingFlags.AbsolutePositioning,
                         null,
                         AMSeekingSeekingFlags.NoPositioning);
+                        this.dsBGV.dshow.MediaCtrl.Stop();
+                        this.bDShowクリップを再生している = false;
                     }
 
                     Size size = new Size((int)this.framewidth, (int)this.frameheight);
@@ -798,7 +790,7 @@ namespace DTXMania
                         if (index == 4)
                         {
                             if (this.txハイタム != null)
-                            this.txハイタム.t2D描画(CDTXMania.app.Device, 106, this.yh);
+                            this.txハイタム.t2D描画(CDTXMania.app.Device, 107, this.yh);
                         }
                         if (index == 3)
                         {
@@ -843,7 +835,7 @@ namespace DTXMania
                     #endregion
                     if (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3)
                     {
-                        if (CDTXMania.ConfigIni.nMovieAlpha == 0)
+                        if (CDTXMania.ConfigIni.nMovieAlpha <= 1)
                         {
                             this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                         }
@@ -859,7 +851,7 @@ namespace DTXMania
                     this.n振動x座標 = 0;
                     for (int i = 0; i < 1; i++)
                     {
-                        if (this.stフィルイン[i].b使用中 && CDTXMania.ConfigIni.ボーナス演出を表示する == true)
+                        if (this.stフィルイン[i].b使用中 && CDTXMania.ConfigIni.ボーナス演出を表示する == true && CDTXMania.ConfigIni.nLaneDisp.Drums == 0 || CDTXMania.ConfigIni.nLaneDisp.Drums == 2 )
                         {
                             switch (this.stフィルイン[i].ct進行.n現在の値)
                             {
@@ -1285,7 +1277,6 @@ namespace DTXMania
                     }
                     #endregion
                     this.tx描画用.vc拡大縮小倍率 = this.vector;
-
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
                 if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))
