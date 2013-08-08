@@ -11,7 +11,8 @@ namespace DTXMania
 		protected override void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス )
 		{
 			int x = 480;
-			int y = CDTXMania.ConfigIni.bReverse.Guitar ? 0x103 : 150;
+			int y = 150;
+            //XGではリバース時のコンボ位置はそのまま。
 			if( base.txCOMBOギター != null )
 			{
 				base.txCOMBOギター.n透明度 = 0xff;
@@ -24,7 +25,7 @@ namespace DTXMania
 		protected override void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{
 			int x = 810;
-			int y = CDTXMania.ConfigIni.bReverse.Bass ? 0x103 : 150;
+			int y = 150;
 			if( base.txCOMBOギター != null )
 			{
 				base.txCOMBOギター.n透明度 = 0xff;

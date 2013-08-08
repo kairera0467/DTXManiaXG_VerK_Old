@@ -37,7 +37,7 @@ namespace DTXMania
             //リバース時のY座標
 			if( CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] )
 			{
-				y = ( nLane < 5 ) ? 0x171 : 0x171;
+				y = ( nLane < 5 ) ? 611 : 611;
 			}
 			base.Start( nLane, x, y );
 		}

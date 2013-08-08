@@ -161,9 +161,11 @@ namespace DTXMania
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
+                    
+                    this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
                     this.actFI.tフェードイン開始();
                     this.ct登場用.t進行();
-
 //					if ( this.bDTXVmode )
                     {
                         #region [テストコード: 再生開始小節の変更]
@@ -653,8 +655,7 @@ namespace DTXMania
 	
 		protected override void t進行描画・AVI()
 		{
-            if( CDTXMania.ConfigIni.bAVI有効 )
-			    base.t進行描画・AVI( 0, 0 );
+			base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{

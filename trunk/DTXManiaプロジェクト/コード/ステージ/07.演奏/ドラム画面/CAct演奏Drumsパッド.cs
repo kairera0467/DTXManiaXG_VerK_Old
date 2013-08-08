@@ -331,7 +331,7 @@ namespace DTXMania
                     }
                     #endregion
                 }
-#region[ ボーナス表示 ]
+                #region[ ボーナス表示 ]
                 for (int i = 0; i < 2; i++)
                 {
                     //アニメーションは仮のもの。後から強化する予定。
@@ -346,7 +346,7 @@ namespace DTXMania
                         }
                         if (this.txボーナス文字 != null)
                         {
-                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[1].x, 570);
+                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[1].x, (CDTXMania.ConfigIni.bReverse.Drums ? 60 : 570));
                             //if (this.stボーナス[i].ct進行.n現在の値 >= 765)
                             //{
                             //    int n = this.stボーナス[i].ct進行.n現在の値 - 765;
@@ -355,7 +355,7 @@ namespace DTXMania
                         }
                     }
                 }
-#endregion
+                #endregion
             }
 			return 0;
 		}
@@ -385,49 +385,49 @@ namespace DTXMania
                     {
                       //2013.02.20.kairera0467 現在はレーンタイプAのみ対応。座標はやや適当。
                       //2013.05.10.kairera0467 やっとこさレーンタイプBに正式対応。
-                        case 0:
+                        case 0: //LC
                             this.stボーナス[i].x = 270;
                             break;
-                        case 1:
+                        case 1: //HH
                             this.stボーナス[i].x = 340;
                             break;
-                        case 2:
+                        case 2: //LP
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                                 this.stボーナス[i].x = 410;
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                                 this.stボーナス[i].x = 470;
                             break;
-                        case 3:
+                        case 3: //SD
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                                 this.stボーナス[i].x = 460;
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 410;
+                                this.stボーナス[i].x = 390;
                             break;
-                        case 4:
+                        case 4: //HT
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                                 this.stボーナス[i].x = 520;
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 590;
+                                this.stボーナス[i].x = 580;
                             break;
-                        case 5:
+                        case 5: //BD
                             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                                 this.stボーナス[i].x = 580;
                             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                                 this.stボーナス[i].x = 530;
                             break;
-                        case 6:
+                        case 6: //LT
                             this.stボーナス[i].x = 630;
                             break;
-                        case 7:
+                        case 7: //FT
                             this.stボーナス[i].x = 660;
                             break;
-                        case 8:
+                        case 8: //CY
                             if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
                                 this.stボーナス[i].x = 740;
                             else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                                 this.stボーナス[i].x = 780;
                             break;
-                        case 9:
+                        case 9: //RD
                             if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
                                 this.stボーナス[i].x = 800;
                             else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)

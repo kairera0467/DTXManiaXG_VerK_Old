@@ -377,6 +377,7 @@ namespace DTXMania
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
                 this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_judge strings.png" ) );
+                this.txボーナスエフェクト = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Fillin Effect.png" ) );
 
 				base.OnManagedリソースの作成();
 			}
@@ -389,6 +390,7 @@ namespace DTXMania
 
 				CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
                 CDTXMania.tテクスチャの解放( ref this.tx判定画像anime );
+                CDTXMania.tテクスチャの解放( ref this.txボーナスエフェクト );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -679,6 +681,7 @@ namespace DTXMania
 		protected CTexture txチップ;
 		protected CTexture txヒットバー;
         public CTexture tx判定画像anime;     //2013.8.2 kairera0467 アニメーションの場合はあらかじめこっちで読み込む。
+        public CTexture txボーナスエフェクト;
 
 		protected CTexture tx背景;
 		protected STDGBVALUE<int> nInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
@@ -2515,7 +2518,7 @@ namespace DTXMania
                         }
                         if ((ePlayMode == E楽器パート.DRUMS) && (configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視 && (this.txチップ != null))
                         {
-                            this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((0x38 + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
+                            this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
                         }
                         break;
                     #endregion

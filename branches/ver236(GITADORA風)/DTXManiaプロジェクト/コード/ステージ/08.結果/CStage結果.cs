@@ -196,7 +196,10 @@ namespace DTXMania
 
                         //---------------------------------------------------------------------/
                     }
-                    ini.t書き出し(str);
+                    if( CDTXMania.ConfigIni.bScoreIniを出力する )
+                    {
+                        ini.t書き出し(str);
+                    }
                 }
 				//---------------------
 				#endregion

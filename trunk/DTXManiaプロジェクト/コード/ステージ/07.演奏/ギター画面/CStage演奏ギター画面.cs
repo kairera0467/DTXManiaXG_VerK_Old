@@ -232,8 +232,7 @@ namespace DTXMania
 
 		protected override void t進行描画・AVI()
 		{
-            if ( CDTXMania.ConfigIni.bAVI有効 )
-		        base.t進行描画・AVI( 0, 0 );
+		    base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
@@ -350,7 +349,7 @@ namespace DTXMania
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
 		{
 			base.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, inst,
-				154, 369, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38 );
+				154, 606, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38 );
 		}
 #if false
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
@@ -482,7 +481,7 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 154, 369 };			// ドラム画面かギター画面かで変わる値
+					int[] y_base = { 154, 611 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
 					const int WailingWidth = 54;		// 4種全て同じ値
@@ -747,14 +746,14 @@ namespace DTXMania
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ))
 			{
-				int y = configIni.bReverse.Guitar ? ( ( 0x171 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 1 );
-				if ( ( dTX.bチップがある.Guitar && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
+				int y = configIni.bReverse.Guitar ? ( ( 611 - pChip.nバーからの距離dot.Guitar ) - 6 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 6 );
+				if ( ( dTX.bチップがある.Guitar && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
                     if( CDTXMania.ConfigIni.bJudgeLineDisp.Guitar )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 88, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
-				y = configIni.bReverse.Bass ? ( ( 0x171 - pChip.nバーからの距離dot.Bass ) - 1 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) - 1 );
-				if ( ( dTX.bチップがある.Bass && ( y > 0 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
+				y = configIni.bReverse.Bass ? ( ( 611 - pChip.nバーからの距離dot.Bass ) - 6 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) - 6 );
+				if ( ( dTX.bチップがある.Bass && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
                     if( CDTXMania.ConfigIni.bJudgeLineDisp.Bass )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 959, y, new Rectangle( 0, 20, 193, 2 ) );

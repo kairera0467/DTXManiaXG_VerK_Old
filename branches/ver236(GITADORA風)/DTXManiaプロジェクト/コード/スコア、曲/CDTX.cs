@@ -653,14 +653,14 @@ namespace DTXMania
                         case 221:
                         case 222:
                         case 223:
-                        case 225:
-                        case 226:
-                        case 227:
-                        case 228:
-                        case 229:
-                        case 230:
-                        case 231:
-                        case 232:
+                        case 0xE1:
+                        case 0xE2:
+                        case 0xE3:
+                        case 0xE4:
+                        case 0xE5:
+                        case 0xE6:
+                        case 0xE7:
+                        case 0xE8:
 							return true;
 					}
 					return false;
@@ -757,23 +757,24 @@ namespace DTXMania
 			//-----------------
 			public int CompareTo( CDTX.CChip other )
 			{
+                //チップの重なり順を決める。16進数で16個ずつ並んでいます。
 				byte[] n優先度 = new byte[] {
-					5, 5, 3, 3, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 
-					5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 
-					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 3, 3, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, //0x00 ～ 0x0F
+					5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, //0x10 ～ 0x1F　ドラム演奏
+					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, //0x20 ～ 0x2F　ギター演奏
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x30 ～ 0x3F　ドラム不可視
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x40 ～ 0x4F　未使用(0x4Fはボーナスチップ)
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x50 ～ 0x5F　小節線、拍線、フィル、AVIなど
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x60 ～ 0x6F　BGA、SE
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x70 ～ 0x7F　SE
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x80 ～ 0x8F　SE
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x90 ～ 0x9F　SE
+					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, //0xA0 ～ 0xAF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xB0 ～ 0xBF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xC0 ～ 0xCF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xD0 ～ 0xDF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xE0 ～ 0xEF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xF0 ～ 0xFF　
 				};
 
 
@@ -1459,7 +1460,7 @@ namespace DTXMania
 					cavi.OnDeviceCreated();
 				}
 			}
-            if( this.listDS != null )
+            if( this.listDS != null && CDTXMania.ConfigIni.bDirectShowMode == true)
             {
                 foreach( CDirectShow cds in this.listDS.Values)
                 {
@@ -1483,7 +1484,8 @@ namespace DTXMania
 							{
 								chip.eAVI種別 = EAVI種別.AVIPAN;
 								chip.rAVI = this.listAVI[ cavipan.nAVI番号 ];
-                                chip.rDShow = this.listDS[ cavipan.nAVI番号 ];
+                                if(CDTXMania.ConfigIni.bDirectShowMode == true)
+                                    chip.rDShow = this.listDS[ cavipan.nAVI番号 ];
 								chip.rAVIPan = cavipan;
 								continue;
 							}
@@ -1492,7 +1494,8 @@ namespace DTXMania
 						{
 							chip.eAVI種別 = EAVI種別.AVI;
 							chip.rAVI = this.listAVI[ chip.n整数値 ];
-                            chip.rDShow = this.listDS[ chip.n整数値 ];
+                            if(CDTXMania.ConfigIni.bDirectShowMode == true)
+                                chip.rDShow = this.listDS[ chip.n整数値 ];
 						}
 					}
 				}
@@ -1932,18 +1935,17 @@ namespace DTXMania
                 {
                     foreach (CChip chip in this.listChip)
                     {
-                        int num2 = chip.nチャンネル番号;
-                        if ((part == E楽器パート.DRUMS) && ((num2 == 0x19) || (num2 == 0x16)))
+                        int nチャンネル番号 = chip.nチャンネル番号;
+                        if ((part == E楽器パート.DRUMS) && ((nチャンネル番号 == 0x19) || (nチャンネル番号 == 0x16)))
                         {
                             if (num == chip.n発声位置)
                             {
                                 chip.nチャンネル番号 = 0x1a;
                             }
-                            else if (num2 == 0x19)
+                            else if (nチャンネル番号 == 0x19)
                             {
                                 chip.nチャンネル番号 = 0x16;
                             }
-                            int num1 = chip.nチャンネル番号;
                             num = chip.n発声位置;
                         }
                     }
@@ -1956,9 +1958,9 @@ namespace DTXMania
                     int num4 = 0;
                     int num5 = 0;
                     int num6 = 0;
-                    foreach (CChip chip2 in this.listChip)
+                    foreach (CChip chip in this.listChip)
                     {
-                        int num7 = chip2.nチャンネル番号;
+                        int num7 = chip.nチャンネル番号;
                         if ((part == E楽器パート.DRUMS) && ((num7 >= 0x11) || (num7 <= 0x1c)))
                         {
                             switch (num7)
@@ -1966,13 +1968,13 @@ namespace DTXMania
                                 case 0x11:
                                 case 0x16:
                                 case 0x18:
-                                    if (num6 == chip2.n発声位置)
+                                    if (num6 == chip.n発声位置)
                                     {
-                                        chip2.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
+                                        chip.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
                                     }
                                     flag2 = num7 == 0x16;
-                                    num4 = chip2.nチャンネル番号;
-                                    num6 = chip2.n発声位置;
+                                    num4 = chip.nチャンネル番号;
+                                    num6 = chip.n発声位置;
                                     continue;
 
 
@@ -1983,58 +1985,58 @@ namespace DTXMania
                                     }
                                 case 0x14:
                                     {
-                                        chip2.nチャンネル番号 = ((num5 == chip2.n発声位置) && (num3 == 20)) ? 0x15 : 20;
+                                        chip.nチャンネル番号 = ((num5 == chip.n発声位置) && (num3 == 20)) ? 0x15 : 20;
                                         flag = false;
-                                        num3 = chip2.nチャンネル番号;
-                                        num5 = chip2.n発声位置;
+                                        num3 = chip.nチャンネル番号;
+                                        num5 = chip.n発声位置;
                                         continue;
                                     }
                                 case 0x15:
-                                    if (num5 != chip2.n発声位置)
+                                    if (num5 != chip.n発声位置)
                                     {
                                         if (flag)
                                         {
-                                            chip2.nチャンネル番号 = 20;
+                                            chip.nチャンネル番号 = 20;
                                         }
                                     }
                                     if (num3 == 0x15)
                                     {
-                                        chip2.nチャンネル番号 = 20;
+                                        chip.nチャンネル番号 = 20;
                                     }
-                                    num3 = chip2.nチャンネル番号;
-                                    num5 = chip2.n発声位置;
+                                    num3 = chip.nチャンネル番号;
+                                    num5 = chip.n発声位置;
                                     continue;
 
                                 case 0x17:
                                     {
-                                        chip2.nチャンネル番号 = ((num5 == chip2.n発声位置) && (num3 == 0x15)) ? 20 : 0x15;
+                                        chip.nチャンネル番号 = ((num5 == chip.n発声位置) && (num3 == 0x15)) ? 20 : 0x15;
                                         flag = true;
-                                        num3 = chip2.nチャンネル番号;
-                                        num5 = chip2.n発声位置;
+                                        num3 = chip.nチャンネル番号;
+                                        num5 = chip.n発声位置;
                                         continue;
                                     }
                                 case 0x19:
                                     {
-                                        chip2.nチャンネル番号 = ((num6 == chip2.n発声位置) && (num4 == 0x16)) ? 0x11 : 0x16;
+                                        chip.nチャンネル番号 = ((num6 == chip.n発声位置) && (num4 == 0x16)) ? 0x11 : 0x16;
                                         flag2 = true;
-                                        num4 = chip2.nチャンネル番号;
-                                        num6 = chip2.n発声位置;
+                                        num4 = chip.nチャンネル番号;
+                                        num6 = chip.n発声位置;
                                         continue;
                                     }
                                 case 0x1a:
-                                    if (num6 != chip2.n発声位置)
+                                    if (num6 != chip.n発声位置)
                                     {
-                                        chip2.nチャンネル番号 = (flag2 && ((chip2.n発声位置 - num6) <= 0xc0)) ? 0x11 : 0x16;
+                                        chip.nチャンネル番号 = (flag2 && ((chip.n発声位置 - num6) <= 0xc0)) ? 0x11 : 0x16;
                                     }
-                                    chip2.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
-                                    num4 = chip2.nチャンネル番号;
-                                    num6 = chip2.n発声位置;
+                                    chip.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
+                                    num4 = chip.nチャンネル番号;
+                                    num6 = chip.n発声位置;
                                     continue;
 
                                 case 0x1b:
                                 case 0x1c:
                                     {
-                                        chip2.nチャンネル番号 = 0x76;
+                                        chip.nチャンネル番号 = 0x76;
                                         continue;
                                     }
                             }
@@ -2653,24 +2655,24 @@ namespace DTXMania
         {
             switch (nランダム化前チャンネル番号)
             {
-                case 17:
-                case 24:
-                    chip.nチャンネル番号 = n乱数排列数列[0] + 17;
+                case 0x11:
+                case 0x18:
+                    chip.nチャンネル番号 = n乱数排列数列[0] + 0x11;
                     return;
-                case 18:
-                    chip.nチャンネル番号 = n乱数排列数列[1] + 17;
+                case 0x12:
+                    chip.nチャンネル番号 = n乱数排列数列[1] + 0x11;
                     return;
-                case 19:
-                case 23:
+                case 0x13:
+                case 0x17:
                     break;
-                case 20:
-                    chip.nチャンネル番号 = n乱数排列数列[2] + 17;
+                case 0x14:
+                    chip.nチャンネル番号 = n乱数排列数列[2] + 0x11;
                     return;
-                case 21:
-                    chip.nチャンネル番号 = n乱数排列数列[3] + 17;
+                case 0x15:
+                    chip.nチャンネル番号 = n乱数排列数列[3] + 0x11;
                     return;
-                case 22:
-                    chip.nチャンネル番号 = n乱数排列数列[4] + 17;
+                case 0x16:
+                    chip.nチャンネル番号 = n乱数排列数列[4] + 0x11;
                     break;
                 default:
                     return;
@@ -3618,12 +3620,12 @@ namespace DTXMania
 							{
 								this.n可視チップ数[ c - 0x11 ]++;
 							}
-							if ( ( 0x20 <= c ) && ( c <= 0x27 ) )
-							{
+                            if ((32 <= c && c <= 39) || (147 <= c && c <= 159) || (169 <= c && c <= 175) || (208 <= c && c <= 211))
+                            {
 								this.n可視チップ数.Guitar++;
 							}
-							if ( ( 0xA0 <= c ) && ( c <= 0xa7 ) )
-							{
+                            if ((160 <= c && c <= 167) || (197 <= c && c <= 198) || (200 <= c && c <= 207) || (218 <= c && c <= 223) || (225 <= c && c <= 232))
+                            {
 								this.n可視チップ数.Bass++;
 							}
                             if ( c == 0x4F )
@@ -3824,7 +3826,7 @@ namespace DTXMania
 
 						CChip c_AddMixer = new CChip()
 						{
-							nチャンネル番号 = 0xDA,
+							nチャンネル番号 = 0xFA,
 							n整数値 = pChip.n整数値,
 							n整数値・内部番号 = pChip.n整数値・内部番号,
 							n発声時刻ms = nAddMixer時刻ms,
@@ -3888,7 +3890,7 @@ namespace DTXMania
 							}
 							CChip c = new CChip()											// mixer削除時刻を更新(遅延)する
 							{
-								nチャンネル番号 = 0xDB,
+								nチャンネル番号 = 0xFB,
 								n整数値 = listRemoveTiming[ index ].n整数値,
 								n整数値・内部番号 = listRemoveTiming[ index ].n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -3904,7 +3906,7 @@ namespace DTXMania
 						{																	// 発音していたが既にmixer削除確定していたなら
 							CChip c = new CChip()											// 新しくmixer削除候補として追加する
 							{
-								nチャンネル番号 = 0xDB,
+								nチャンネル番号 = 0xFB,
 								n整数値 = pChip.n整数値,
 								n整数値・内部番号 = pChip.n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
