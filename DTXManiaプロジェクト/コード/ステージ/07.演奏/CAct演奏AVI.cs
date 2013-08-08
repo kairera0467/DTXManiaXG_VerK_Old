@@ -25,7 +25,7 @@ namespace DTXMania
 
         public void Start(int nチャンネル番号, CDTX.CAVI rAVI, CDTX.CDirectShow dsBGV, int n開始サイズW, int n開始サイズH, int n終了サイズW, int n終了サイズH, int n画像側開始位置X, int n画像側開始位置Y, int n画像側終了位置X, int n画像側終了位置Y, int n表示側開始位置X, int n表示側開始位置Y, int n表示側終了位置X, int n表示側終了位置Y, int n総移動時間ms, int n移動開始時刻ms)
         {
-            if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode == false)
+            if ( nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode == false && CDTXMania.ConfigIni.bAVI有効 )
             {
                 this.rAVI = rAVI;
                 this.dsBGV.dshow.Dispose();
@@ -126,7 +126,7 @@ namespace DTXMania
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
                 }
             }
-            else if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode)
+            else if ( nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode && CDTXMania.ConfigIni.bAVI有効 )
             {
                 this.rAVI = rAVI;
                 this.dsBGV = dsBGV;
@@ -389,7 +389,7 @@ namespace DTXMania
                     this.stフィルイン[i].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
                     this.stフィルイン[i].b使用中 = false;
                 }
-                this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Fillin Effect.png"));
+                //this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Fillin Effect.png"));
                 
                 base.OnManagedリソースの作成();
             }
@@ -435,7 +435,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txバスドラ );
                 CDTXMania.tテクスチャの解放( ref this.txバートップ );
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
-                CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
+                //CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
                 CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ左 );
                 CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ右 );
                 CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
@@ -741,17 +741,27 @@ namespace DTXMania
                         {
                             int numf = this.stフィルイン[i].ct進行.n現在の値;
                             this.stフィルイン[i].ct進行.t進行();
-                            if (this.stフィルイン[i].ct進行.b終了値に達した)
+                            if ( this.stフィルイン[i].ct進行.b終了値に達した )
                             {
                                 this.stフィルイン[i].ct進行.t停止();
                                 this.stフィルイン[i].b使用中 = false;
                             }
-                            if (this.txフィルインエフェクト != null)
+                            //if ( this.txフィルインエフェクト != null )
+                            CStage演奏ドラム画面 stageDrum = CDTXMania.stage演奏ドラム画面;
+                            CStage演奏ギター画面 stageGuitar = CDTXMania.stage演奏ギター画面;
+
+                            if( ( CDTXMania.ConfigIni.bDrums有効 ? stageDrum.txボーナスエフェクト : stageGuitar.txボーナスエフェクト ) != null )
                             {
-                                this.txフィルインエフェクト.vc拡大縮小倍率.X = 2.0f;
-                                this.txフィルインエフェクト.vc拡大縮小倍率.Y = 2.0f;
-                                this.txフィルインエフェクト.b加算合成 = true;
-                                this.txフィルインエフェクト.t2D描画(CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + (360 * numf), 640, 360));
+                                //this.txフィルインエフェクト.vc拡大縮小倍率.X = 2.0f;
+                                //this.txフィルインエフェクト.vc拡大縮小倍率.Y = 2.0f;
+                                //this.txフィルインエフェクト.b加算合成 = true;
+                                //this.txフィルインエフェクト.t2D描画(CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + (360 * numf), 640, 360));
+                                if( CDTXMania.ConfigIni.bDrums有効 )
+                                {
+                                    stageDrum.txボーナスエフェクト.vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
+                                    stageDrum.txボーナスエフェクト.b加算合成 = true;
+                                    stageDrum.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + ( 360 * numf ), 640, 360 )) ;
+                                }
                             }
                         }
                     }
@@ -1405,7 +1415,7 @@ namespace DTXMania
         private CTexture txバスドラ;
         private CTexture tx左シンバル;
         private CTexture txフロアタム;
-        private CTexture txフィルインエフェクト;
+        //private CTexture txフィルインエフェクト;
         private CTexture tx右シンバル;
         private CTexture txロータム;
         private CTexture tx描画用;

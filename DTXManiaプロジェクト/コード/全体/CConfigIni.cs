@@ -2053,13 +2053,16 @@ namespace DTXMania
 			{
 				string str;
 				this.tキーアサインを全部クリアする();
-				StreamReader reader = new StreamReader( this.ConfigIniファイル名, Encoding.GetEncoding( "shift-jis" ) );
+				StreamReader reader = new StreamReader( this.ConfigIniファイル名, Encoding.GetEncoding( "Shift_JIS" ) );
 				str = reader.ReadToEnd();
 				t文字列から読み込み( str );
 				CDTXVersion version = new CDTXVersion( this.strDTXManiaのバージョン );
 				if( version.n整数部 <= 69 )
 				{
-					this.tデフォルトのキーアサインに設定する();
+                    //Ver.Kでは公式とバージョンの書き方が違う影響で、
+                    //この分岐文では正常に分岐してくれない(?)
+                    
+					//this.tデフォルトのキーアサインに設定する();
 				}
 			}
 		}
@@ -3348,20 +3351,20 @@ namespace DTXMania
         }
 		private void tデフォルトのキーアサインに設定する()
 		{
-			//this.tキーアサインを全部クリアする();
+			this.tキーアサインを全部クリアする();
 
 			string strDefaultKeyAssign = @"
 [DrumsKeyAssign]
 
-HH=K033
-SD=K012,K013
-BD=K0126,K048,J03
-HT=K031,K015,K011,K016
-LT=K023,K017
-FT=K022,K019
-CY=K047,K020
-HO=K028
-RD=K0111,K021
+HH=K033,M042,M093
+SD=K012,K013,M025,M026,M027,M028,M029,M031,M032,M034,M037,M038,M040,M0113
+BD=K0126,K048,M033,M035,M036,M0112
+HT=K031,K015,K011,K016,M048,M050
+LT=K023,K017,M047
+FT=K022,K019,M041,M043,M045
+CY=K047,K020,M049,M052,M055,M057,M091
+HO=K028,M046,M092
+RD=K0111,K021,M051,M053,M059,M089
 LC=K035,K010
 LP=K087
 LBD=K077
@@ -3371,8 +3374,8 @@ LBD=K077
 R=K055
 G=K056,J012
 B=K057
-Y=
-P=
+Y=K058
+P=K059
 Pick=K0115,K046,J06
 Wail=K0116
 Decide=K060
@@ -3383,8 +3386,8 @@ Cancel=K061
 R=K090
 G=K091,J013
 B=K092
-Y=
-P=
+Y=K093
+P=K094
 Pick=K0103,K0100,J08
 Wail=K089
 Decide=K096
@@ -3393,7 +3396,7 @@ Cancel=K097
 [SystemKeyAssign]
 Capture=K065
 ";
-			//t文字列から読み込み( strDefaultKeyAssign );
+			t文字列から読み込み( strDefaultKeyAssign );
 		}
 		//-----------------
 		#endregion

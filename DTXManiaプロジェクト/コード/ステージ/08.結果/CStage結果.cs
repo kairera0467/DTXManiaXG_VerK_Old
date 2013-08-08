@@ -111,11 +111,11 @@ namespace DTXMania
                         //        10.11.17 change (int to bool) ikanick
                         if (CDTXMania.ConfigIni.nSkillMode == 0)
                         {
-                            this.nランク値[i] = CScoreIni.tランク値を計算して返す(part);
+                            this.nランク値[ i ] = CScoreIni.tランク値を計算して返す(part);
                         }
                         else if (CDTXMania.ConfigIni.nSkillMode == 1)
                         {
-                            this.nランク値[i] = CScoreIni.t旧ランク値を計算して返す(part);
+                            this.nランク値[ i ] = CScoreIni.t旧ランク値を計算して返す(part);
                         }
                     }
                 }
@@ -129,72 +129,72 @@ namespace DTXMania
 				CScoreIni ini = new CScoreIni( str );
                 
                 bool[] b今までにフルコンボしたことがある = new bool[] { false, false, false };
-                if( CDTXMania.ConfigIni.bScoreIniを出力する )
-                {
-				    for( int i = 0; i < 3; i++ )
-				    {
-				    	// フルコンボチェックならびに新記録ランクチェックは、ini.Record[] が、スコアチェックや演奏型スキルチェックの IF 内で書き直されてしまうよりも前に行う。(2010.9.10)
+				for( int i = 0; i < 3; i++ )
+				{
+					// フルコンボチェックならびに新記録ランクチェックは、ini.Record[] が、スコアチェックや演奏型スキルチェックの IF 内で書き直されてしまうよりも前に行う。(2010.9.10)
 
-					    b今までにフルコンボしたことがある[ i ] = ini.stセクション[ i * 2 ].bフルコンボである | ini.stセクション[ i * 2 + 1 ].bフルコンボである;
+				    b今までにフルコンボしたことがある[ i ] = ini.stセクション[ i * 2 ].bフルコンボである | ini.stセクション[ i * 2 + 1 ].bフルコンボである;
 
-					    #region [deleted by #24459]
-			//		if( this.nランク値[ i ] <= CScoreIni.tランク値を計算して返す( ini.stセクション[ ( i * 2 ) + 1 ] ) )
-			//		{
-			//			this.b新記録ランク[ i ] = true;
-					//		}
-					#endregion
-					    // #24459 上記の条件だと[HiSkill.***]でのランクしかチェックしていないので、BestRankと比較するよう変更。
-					    if ( this.nランク値[ i ] >= 0 && ini.stファイル.BestRank[ i ] > this.nランク値[ i ] )		// #24459 2011.3.1 yyagi update BestRank
-					    {
-					    	this.b新記録ランク[ i ] = true;
-					    	ini.stファイル.BestRank[ i ] = this.nランク値[ i ];
-					    }
+				    #region [deleted by #24459]
+			//	if( this.nランク値[ i ] <= CScoreIni.tランク値を計算して返す( ini.stセクション[ ( i * 2 ) + 1 ] ) )
+			//	{
+			//		this.b新記録ランク[ i ] = true;
+		    //		}
+			    #endregion
+					// #24459 上記の条件だと[HiSkill.***]でのランクしかチェックしていないので、BestRankと比較するよう変更。
+			        if ( this.nランク値[ i ] >= 0 && ini.stファイル.BestRank[ i ] > this.nランク値[ i ] )		// #24459 2011.3.1 yyagi update BestRank
+					{
+						this.b新記録ランク[ i ] = true;
+						ini.stファイル.BestRank[ i ] = this.nランク値[ i ];
+					}
 
-					    // 新記録スコアチェック
-					    if( this.st演奏記録[ i ].nスコア > ini.stセクション[ i * 2 ].nスコア )
-					    {
-						    this.b新記録スコア[ i ] = true;
-						    ini.stセクション[ i * 2 ] = this.st演奏記録[ i ];
-					    }
+					// 新記録スコアチェック
+					if( this.st演奏記録[ i ].nスコア > ini.stセクション[ i * 2 ].nスコア )
+					{
+					    this.b新記録スコア[ i ] = true;
+					    ini.stセクション[ i * 2 ] = this.st演奏記録[ i ];
+					}
 
-                        // 新記録スキルチェック
-                        if (this.st演奏記録[i].db演奏型スキル値 > ini.stセクション[(i * 2) + 1].db演奏型スキル値)
+                    // 新記録スキルチェック
+                    if ( this.st演奏記録[ i ].db演奏型スキル値 > ini.stセクション[ ( i * 2 ) + 1 ].db演奏型スキル値 )
+                    {
+                        this.b新記録スキル[ i ] = true;
+                        ini.stセクション[ ( i * 2 ) + 1 ] = this.st演奏記録[ i ];
+                    }
+
+					// ラストプレイ #23595 2011.1.9 ikanick
+                    // オートじゃなければプレイ結果を書き込む
+                    if (this.bオート[ i ] == false) {
+                        ini.stセクション[ i + 6 ] = this.st演奏記録[ i ];
+                    }
+
+                    // #23596 10.11.16 add ikanick オートじゃないならクリア回数を1増やす
+                    //        11.02.05 bオート to t更新条件を取得する use      ikanick
+					bool[] b更新が必要か否か = new bool[ 3 ];
+					CScoreIni.t更新条件を取得する( out b更新が必要か否か[ 0 ], out b更新が必要か否か[ 1 ], out b更新が必要か否か[ 2 ] );
+
+                    if ( b更新が必要か否か[ i ] )
+                    {
+                        switch ( i )
                         {
-                            this.b新記録スキル[ i ] = true;
-                            ini.stセクション[(i * 2) + 1] = this.st演奏記録[ i ];
+                            case 0:
+                                ini.stファイル.ClearCountDrums++;
+                                break;
+                            case 1:
+                                ini.stファイル.ClearCountGuitar++;
+                                break;
+                            case 2:
+                                ini.stファイル.ClearCountBass++;
+                                break;
+                            default:
+                                throw new Exception("クリア回数増加のk(0-2)が範囲外です。");
                         }
-
-					    // ラストプレイ #23595 2011.1.9 ikanick
-                        // オートじゃなければプレイ結果を書き込む
-                        if (this.bオート[ i ] == false) {
-                            ini.stセクション[i + 6] = this.st演奏記録[ i ];
-                        }
-
-                        // #23596 10.11.16 add ikanick オートじゃないならクリア回数を1増やす
-                        //        11.02.05 bオート to t更新条件を取得する use      ikanick
-					    bool[] b更新が必要か否か = new bool[ 3 ];
-					    CScoreIni.t更新条件を取得する( out b更新が必要か否か[ 0 ], out b更新が必要か否か[ 1 ], out b更新が必要か否か[ 2 ] );
-
-                        if (b更新が必要か否か[ i ])
-                        {
-                            switch ( i )
-                            {
-                                case 0:
-                                    ini.stファイル.ClearCountDrums++;
-                                    break;
-                                case 1:
-                                    ini.stファイル.ClearCountGuitar++;
-                                    break;
-                                case 2:
-                                    ini.stファイル.ClearCountBass++;
-                                    break;
-                                default:
-                                    throw new Exception("クリア回数増加のk(0-2)が範囲外です。");
-                            }
-                        }
+                    }
                     //---------------------------------------------------------------------/
-				    }
-				    ini.t書き出し( str );
+                    if( CDTXMania.ConfigIni.bScoreIniを出力する )
+                    {
+				        ini.t書き出し( str );
+                    }
                 }
 				//---------------------
 				#endregion
@@ -236,9 +236,7 @@ namespace DTXMania
 				}
 				//---------------------
 				#endregion
-                if (CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
-                {
-                    #region [ #RESULTSOUND_xx の再生（あれば）]
+                #region [ #RESULTSOUND_xx の再生（あれば）]
                     //---------------------
                     int rank = CScoreIni.t総合ランク値を計算して返す(this.st演奏記録.Drums, this.st演奏記録.Guitar, this.st演奏記録.Bass);
 
@@ -267,7 +265,6 @@ namespace DTXMania
                     }
                     //---------------------
                     #endregion
-                }
 
 				base.On活性化();
 			}

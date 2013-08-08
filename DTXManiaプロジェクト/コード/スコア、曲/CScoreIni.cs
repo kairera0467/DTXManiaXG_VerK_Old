@@ -1371,6 +1371,42 @@ namespace DTXMania
             }
             return (int)ERANK.UNKNOWN;
         }
+        
+        /// <summary>
+        /// nDummy 適当な数値を入れてください。特に使いません。
+        /// dRate 達成率を入れます。
+        /// </summary>
+        internal static int tランク値を計算して返す( int nDummy, double dRate )
+        {
+            if ( dRate == 0 )
+                return (int)ERANK.UNKNOWN;
+
+            if ( dRate >= 95 )
+            {
+                return (int)ERANK.SS;
+            }
+            if ( dRate >= 80 )
+            {
+                return (int)ERANK.S;
+            }
+            if ( dRate >= 73 )
+            {
+                return (int)ERANK.A;
+            }
+            if ( dRate >= 63 )
+            {
+                return (int)ERANK.B;
+            }
+            if ( dRate >= 53 )
+            {
+                return (int)ERANK.C;
+            }
+            if ( dRate >= 45 )
+            {
+                return (int)ERANK.D;
+            }
+            return (int)ERANK.E;
+        }
         internal static int tランク値を計算して返す(int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, int nCombo)
         {
             if (nTotal <= 0)

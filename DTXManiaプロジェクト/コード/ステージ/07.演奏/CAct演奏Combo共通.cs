@@ -344,12 +344,12 @@ namespace DTXMania
                     #region [ "COMBO" 文字を表示。]
                     //-----------------
                     int nコンボx = n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
-                    int nコンボy = n表示中央Y;
+                    int nコンボy = n表示中央Y + (CDTXMania.ConfigIni.bReverse.Drums ? 510 : 0);
 
                     if (this.n現在のコンボ数.Drums % 100 == 0 && CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                     {
                         nコンボx += n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
-                        nコンボy += 30;
+                        nコンボy += 30 ;
                     }
                     //-----------------
                     #endregion

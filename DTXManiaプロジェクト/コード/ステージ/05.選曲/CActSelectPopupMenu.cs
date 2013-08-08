@@ -182,6 +182,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.font );
 			nItemSelecting = -1;
 
+            this.CommandHistory = new DTXMania.CStage選曲.CCommandHistory();
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -259,11 +260,11 @@ namespace DTXMania
 					}
 					#endregion
                     #region [ BD二回: キャンセル ]
-                    else if (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.BD))
+                    else if ( CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.BD ) )
                     {	// キャンセル
-                        CDTXMania.stage選曲.CommandHistory.Add(E楽器パート.DRUMS, EパッドFlag.BD);
+                        this.CommandHistory.Add( E楽器パート.DRUMS, EパッドFlag.BD );
                         EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.BD, EパッドFlag.BD };
-                        if (CDTXMania.stage選曲.CommandHistory.CheckCommand(comChangeScrollSpeed, E楽器パート.DRUMS))
+                        if ( this.CommandHistory.CheckCommand( comChangeScrollSpeed , E楽器パート.DRUMS) )
                         {
                             CDTXMania.Skin.sound変更音.t再生する();
                             tBDContinuity();
@@ -399,6 +400,7 @@ namespace DTXMania
 		private List<CItemBase> lciMenuItems;
 		private bool bShowAllItems;
 		private bool bIsSelectingIntItem;
+        public DTXMania.CStage選曲.CCommandHistory CommandHistory;
 
 		[StructLayout( LayoutKind.Sequential )]
 		private struct STキー反復用カウンタ

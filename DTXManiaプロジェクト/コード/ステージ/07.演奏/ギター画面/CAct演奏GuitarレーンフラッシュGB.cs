@@ -66,60 +66,62 @@ namespace DTXMania
 						{
 							//int x = ( ( ( i < 5 ) ? 88 : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 37 * base.ct進行[ i ].n現在の値 ) / 100 );
                             int x = (((i < 5) ? 88 : 958) + this.nRGBのX座標[num2, i]);
-							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 55 + ( j * 118 ) ) : 100 + ( j * 118 );
+							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 317 + ( j * 118 ) ) : 100 + ( j * 118 );
 							if( texture != null )
 							{
                                 texture.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(j * 37, 0, 37, 118));
 							}
 						}
-						base.ct進行[ i ].t進行();
+                        base.ct進行[ i ].t進行();
 						if( base.ct進行[ i ].b終了値に達した )
 						{
 							base.ct進行[ i ].t停止();
 						}
 					}
 				}
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[0] == true)
+                //ここの分岐文はbase.ct進行[ n ]のものを使わないと、停止中にレーンフラッシュが消えてしまう。
+                if ( !base.ct進行[ 0 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 86, 105, new Rectangle(0, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[ 1 ] == true)
+                if ( !base.ct進行[ 1 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 125, 105, new Rectangle(39, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[2] == true)
+                if ( !base.ct進行[ 2 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 164, 105, new Rectangle(78, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[3] == true)
+                if ( !base.ct進行[ 3 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 203, 105, new Rectangle(117, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[4] == true)
+                if ( !base.ct進行[ 4 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 242, 105, new Rectangle(156, 0, 41, 566));
                 }
 
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[5] == true)
+                if ( !base.ct進行[ 5 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 956, 105, new Rectangle(0, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[6] == true)
+                if ( !base.ct進行[ 6 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 997, 105, new Rectangle(39, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[7] == true)
+                if ( !base.ct進行[ 7 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1034, 105, new Rectangle(78, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[8] == true)
+                if ( !base.ct進行[ 8 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1073, 105, new Rectangle(117, 0, 41, 566));
                 }
-                if (CDTXMania.stage演奏ギター画面.actRGB.b押下状態[9] == true)
+                if ( !base.ct進行[ 9 ].b停止中 )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1112, 105, new Rectangle(156, 0, 41, 566));
                 }
+ 
 			}
 			return 0;
 		}

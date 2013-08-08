@@ -167,7 +167,8 @@ namespace DTXMania
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
 
 
-
+                    this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                     this.actFI.tフェードイン開始();
                     this.ct登場用.t進行();
@@ -636,8 +637,9 @@ namespace DTXMania
 	
 		protected override void t進行描画・AVI()
 		{
-            if( CDTXMania.ConfigIni.bAVI有効 )
-			    base.t進行描画・AVI( 0, 0 );
+            //ここでif文を入れると、ドラムセットなど演出の類が消えてしまうため、
+            //AVI内にif文を入れる。一応引数を使わないはずだが要人のために0にする。
+			base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
