@@ -25,7 +25,7 @@ namespace DTXMania
 
         public void Start(int nチャンネル番号, CDTX.CAVI rAVI, CDTX.CDirectShow dsBGV, int n開始サイズW, int n開始サイズH, int n終了サイズW, int n終了サイズH, int n画像側開始位置X, int n画像側開始位置Y, int n画像側終了位置X, int n画像側終了位置Y, int n表示側開始位置X, int n表示側開始位置Y, int n表示側終了位置X, int n表示側終了位置Y, int n総移動時間ms, int n移動開始時刻ms)
         {
-            if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode == false && CDTXMania.ConfigIni.bAVI有効 )
+            if ( nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode == false && CDTXMania.ConfigIni.bAVI有効 )
             {
                 this.rAVI = rAVI;
                 this.dsBGV.dshow.Dispose();
@@ -126,7 +126,7 @@ namespace DTXMania
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
                 }
             }
-            else if (nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode)
+            else if ( nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode && CDTXMania.ConfigIni.bAVI有効 )
             {
                 this.rAVI = rAVI;
                 this.dsBGV = dsBGV;
@@ -498,6 +498,7 @@ namespace DTXMania
                         this.dsBGV.dshow.MediaCtrl.Stop();
                         this.bDShowクリップを再生している = false;
                     }
+
                     Size size = new Size((int)this.framewidth, (int)this.frameheight);
                     Size sz720pサイズ = new Size(1280, 720);
                     Size sz開始サイズ = new Size(this.n開始サイズW, this.n開始サイズH);
@@ -522,9 +523,6 @@ namespace DTXMania
                         Size size5 = new Size(sz開始サイズ.Width + ((int)((sz終了サイズ.Width - sz開始サイズ.Width) * num5)), sz開始サイズ.Height + ((int)((sz終了サイズ.Height - sz開始サイズ.Height) * num5)));
                         rectangle = new Rectangle((int)((point2.X - location.X) * num5), (int)((point2.Y - location.Y) * num5), ((int)((point2.X - location.X) * num5)) + size5.Width, ((int)((point2.Y - location.Y) * num5)) + size5.Height);
                         rectangle2 = new Rectangle((int)((point4.X - point3.X) * num5), (int)((point4.Y - point3.Y) * num5), ((int)((point4.X - point3.X) * num5)) + size5.Width, ((int)((point4.Y - point3.Y) * num5)) + size5.Height);
-                        if ((((rectangle.Right <= 0) || (rectangle.Bottom <= 0)) || ((rectangle.Left >= size.Width) || (rectangle.Top >= size.Height))) || (((rectangle2.Right <= 0) || (rectangle2.Bottom <= 0)) || ((rectangle2.Left >= sz720pサイズ.Width) || (rectangle2.Top >= sz720pサイズ.Height))))
-                        {
-                        }
                         if (rectangle.X < 0)
                         {
                             int num6 = -rectangle.X;
@@ -580,9 +578,6 @@ namespace DTXMania
                             int num13 = rectangle2.Bottom - sz720pサイズ.Height;
                             rectangle.Height -= num13;
                             rectangle2.Height -= num13;
-                        }
-                        if ((((rectangle.X >= rectangle.Right) || (rectangle.Y >= rectangle.Bottom)) || ((rectangle2.X >= rectangle2.Right) || (rectangle2.Y >= rectangle2.Bottom))) || ((((rectangle.Right < 0) || (rectangle.Bottom < 0)) || ((rectangle.X > size.Width) || (rectangle.Y > size.Height))) || (((rectangle2.Right < 0) || (rectangle2.Bottom < 0)) || ((rectangle2.X > sz720pサイズ.Width) || (rectangle2.Y > sz720pサイズ.Height)))))
-                        {
                         }
                     }
                     if ((this.tx描画用 != null) && (this.n総移動時間ms != -1) && CDTXMania.ConfigIni.bDirectShowMode == false)
@@ -953,7 +948,7 @@ namespace DTXMania
         private CTexture txScore;
         private CTexture txクリップパネル;
         private CTexture txドラム;
-        private CTexture txフィルインエフェクト;
+        //private CTexture txフィルインエフェクト;
         private CTexture tx描画用;
         private CTexture tx描画用2;
         private CTexture txDShow汎用;

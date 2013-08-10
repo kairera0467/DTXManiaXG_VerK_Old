@@ -50,12 +50,6 @@ namespace FDK
 
 		// メソッド
 
-		/// <summary>
-		/// WASAPIの初期化
-		/// </summary>
-		/// <param name="mode"></param>
-		/// <param name="n希望バッファサイズms">(未使用; 本メソッド内で自動設定する)</param>
-		/// <param name="n更新間隔ms">(未使用; 本メソッド内で自動設定する)</param>
 		public CSoundDeviceWASAPI( Eデバイスモード mode, long n希望バッファサイズms, long n更新間隔ms )
 		{
 			// 初期化。
@@ -146,7 +140,6 @@ namespace FDK
 				// Trace.TraceInformation( "Selected Default WASAPI Device: {0}", deviceInfo.name );
 				// Trace.TraceInformation( "MinPeriod={0}, DefaultPeriod={1}", deviceInfo.minperiod, deviceInfo.defperiod );
 				n更新間隔ms = (long) ( deviceInfo.minperiod * 1000 );
-				n希望バッファサイズms = n更新間隔ms + 1;	// 2013.4.25 #31237 yyagi; バッファサイズ設定の完全自動化。更新間隔＝バッファサイズにするとBASS_ERROR_UNKNOWNになるので+1する。
 			}
 			else
 			{
@@ -154,7 +147,7 @@ namespace FDK
 			}
 			#endregion
 
-Retry:
+//Retry:
 			var flags = ( mode == Eデバイスモード.排他 ) ?BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EXCLUSIVE : BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT;
 			if ( BassWasapi.BASS_WASAPI_Init( nデバイス, n周波数, nチャンネル数, flags, ( n希望バッファサイズms / 1000.0f ), ( n更新間隔ms / 1000.0f ), this.tWasapiProc, IntPtr.Zero ) )
 			{
@@ -206,18 +199,20 @@ Retry:
 					//-----------------
 					#endregion
 				}
-			}
-			else if ( mode == Eデバイスモード.排他 )
-			{
-				Trace.TraceInformation("Failed to initialize setting BASS (WASAPI) mode [{0}]", Bass.BASS_ErrorGetCode().ToString() );
-				#region [ 排他モードに失敗したのなら共有モードでリトライ。]
-				//-----------------
-				mode = Eデバイスモード.共有;
-				goto Retry;
-				//-----------------
-				#endregion
-			}
-			else
+            }
+            #region [ #31737 WASAPI排他モードのみ利用可能とし、WASAPI共有モードは使用できないようにするために、WASAPI共有モードでの初期化フローを削除する。 ]
+            //else if ( mode == Eデバイスモード.排他 )
+			//{
+			//	Trace.TraceInformation("Failed to initialize setting BASS (WASAPI) mode [{0}]", Bass.BASS_ErrorGetCode().ToString() );
+			//	#region [ 排他モードに失敗したのなら共有モードでリトライ。]
+			//	//-----------------
+			//	mode = Eデバイスモード.共有;
+			//	goto Retry;
+			//	//-----------------
+			//	#endregion
+            //}
+            #endregion
+            else
 			{
 				#region [ それでも失敗したら例外発生。]
 				//-----------------

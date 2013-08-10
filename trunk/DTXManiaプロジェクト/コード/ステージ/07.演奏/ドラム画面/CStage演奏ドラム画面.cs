@@ -143,7 +143,7 @@ namespace DTXMania
                 this.bIsFinishedFadeout = false;
                 this.bエクセ = false;
                 this.bフルコン = false;
-                if (base.b初めての進行描画)
+                if( base.b初めての進行描画 )
                 {
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
@@ -167,8 +167,11 @@ namespace DTXMania
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
 
 
-                    this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
-                    this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    if( this.tx判定画像anime != null && this.txボーナスエフェクト != null )
+                    {
+                        this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                        this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    }
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                     this.actFI.tフェードイン開始();
                     this.ct登場用.t進行();
@@ -729,16 +732,10 @@ namespace DTXMania
 
 		private void t進行描画・グラフ()        
         {
-            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
+            if( CDTXMania.ConfigIni.bGraph.Drums )
             {
-            }
-            else
-            {
-                if (CDTXMania.ConfigIni.bGraph.Drums)
-                {
-                    this.actGraph.On進行描画();
-                    this.actGraph.db現在の判定数合計 = this.nヒット数・Auto含む.Drums.Perfect + this.nヒット数・Auto含む.Drums.Great + this.nヒット数・Auto含む.Drums.Good + this.nヒット数・Auto含む.Drums.Miss + this.nヒット数・Auto含む.Drums.Poor;
-                }
+                this.actGraph.On進行描画();
+                this.actGraph.db現在の判定数合計 = this.nヒット数・Auto含む.Drums.Perfect + this.nヒット数・Auto含む.Drums.Great + this.nヒット数・Auto含む.Drums.Good + this.nヒット数・Auto含む.Drums.Miss + this.nヒット数・Auto含む.Drums.Poor;
             }
         }
 
@@ -752,7 +749,7 @@ namespace DTXMania
         }
         protected override void t進行描画・パネル文字列()
         {
-            base.t進行描画・パネル文字列(912, 640);
+            base.t進行描画・パネル文字列( 912, 640 );
         }
 
 		protected override void t進行描画・演奏情報()
@@ -804,22 +801,8 @@ namespace DTXMania
 
                 foreach (STInputEvent inputEvent in listInputEvent)
                 {
-                    /*
-                    CDTX.CChip chip28;
-                    CDTX.CChip chip29;
-                    CDTX.CChip chip30;
-                    E判定 e判定25;
-                    E判定 e判定26;
-                    E判定 e判定27;
-                    CDTX.CChip chip32;
-                    CDTX.CChip chip33;
-                    CDTX.CChip chip34;
-                    E判定 e判定28;
-                    E判定 e判定29;
-                    E判定 e判定30;
-                    */
 
-                    if (!inputEvent.b押された)
+                    if( !inputEvent.b押された )
                         continue;
 
                     long nTime = inputEvent.nTimeStamp - CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
@@ -2952,6 +2935,7 @@ namespace DTXMania
                                 this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 5, new Rectangle(0, 522, 0x30, 10));
                             }
                             break;
+
                         case 0x1c:
                             x = (x + 0x13) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
                             if (this.txチップ != null)
@@ -3241,9 +3225,9 @@ namespace DTXMania
                         default:
                             break;
                     }
-                    if(configIni.ボーナス演出を表示する)
+                    if( configIni.ボーナス演出を表示する )
                     {
-                        this.actAVI.Start(true);
+                        this.actAVI.Start( true );
                         CDTXMania.Skin.sound歓声音.t再生する();
                         CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                     }

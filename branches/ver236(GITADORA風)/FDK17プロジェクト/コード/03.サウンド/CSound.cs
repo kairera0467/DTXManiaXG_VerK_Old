@@ -1127,10 +1127,9 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 					BassMix.BASS_Mixer_ChannelRemove( this._hTempoStream );
 					Bass.BASS_StreamFree( this._hTempoStream );
 				}
-				BassMix.BASS_Mixer_ChannelRemove( this._hBassStream );
-				Bass.BASS_StreamFree( this._hBassStream );
+				BassMix.BASS_Mixer_ChannelRemove( this.hBassStream );
+				Bass.BASS_StreamFree( this.hBassStream );
 				this.hBassStream = -1;
-				this._hBassStream = -1;
 				this._hTempoStream = 0;
 				//-----------------
 				#endregion

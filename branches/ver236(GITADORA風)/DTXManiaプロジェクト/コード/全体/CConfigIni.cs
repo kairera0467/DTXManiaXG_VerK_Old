@@ -2047,7 +2047,7 @@ namespace DTXMania
 				CDTXVersion version = new CDTXVersion( this.strDTXManiaのバージョン );
 				if( version.n整数部 <= 69 )
 				{
-					this.tデフォルトのキーアサインに設定する();
+					//this.tデフォルトのキーアサインに設定する();
 				}
 			}
 		}

@@ -503,7 +503,7 @@ namespace FDK
 		}
 		public void t2D上下反転描画( Device device, int x, int y, float depth, Rectangle rc画像内の描画領域 )
 		{
-			if( this.texture == null )
+            if( this.texture == null )
 				throw new InvalidOperationException( "テクスチャは生成されていません。" );
 
 			this.tレンダリングステートの設定( device );

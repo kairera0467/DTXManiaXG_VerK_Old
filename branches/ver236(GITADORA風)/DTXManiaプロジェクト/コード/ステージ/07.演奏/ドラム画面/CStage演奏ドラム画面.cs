@@ -162,8 +162,11 @@ namespace DTXMania
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                     
-                    this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
-                    this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    if( this.tx判定画像anime != null && this.txボーナスエフェクト != null )
+                    {
+                        this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                        this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    }
                     this.actFI.tフェードイン開始();
                     this.ct登場用.t進行();
 //					if ( this.bDTXVmode )

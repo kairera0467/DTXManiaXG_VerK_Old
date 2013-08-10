@@ -255,7 +255,7 @@ namespace DTXMania
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
                 try
                 {
-                    if ((this.str曲タイトル != null) && (this.str曲タイトル.Length > 0))
+                    if(( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ))
                     {
                         Bitmap image = new Bitmap(1, 1);
                         Graphics graphics = Graphics.FromImage(image);
@@ -264,13 +264,13 @@ namespace DTXMania
                         image = new Bitmap(1400, 200);
 
                         graphics = Graphics.FromImage(image);
-                        if ( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
+                        if( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                         {
                             graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                         }
                         System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
-                        FontFamily ff = new FontFamily(CDTXMania.ConfigIni.str曲名表示フォント);
+                        FontFamily ff = new FontFamily( CDTXMania.ConfigIni.str曲名表示フォント );
 
                         gp.AddString(this.str曲タイトル, ff, 1, 80, new Point(0, 0), StringFormat.GenericDefault);
                         gp.AddString(this.strアーティスト名, ff, 1, 64, new Point(0, 100), StringFormat.GenericDefault);
