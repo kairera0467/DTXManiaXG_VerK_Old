@@ -127,6 +127,12 @@ namespace DTXMania
 					this.ctチップ模様アニメ[ 0 ] = null;
                     this.ctコンボ動作タイマ = new CCounter(1, 16, (int)((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
 					this.ctWailingチップ模様アニメ = new CCounter( 0, 4, 50, CDTXMania.Timer );
+
+                    if( this.tx判定画像anime != null && this.txボーナスエフェクト != null )
+                    {
+                        this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                        this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                    }
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					this.actFI.tフェードイン開始();
 					base.b初めての進行描画 = false;
