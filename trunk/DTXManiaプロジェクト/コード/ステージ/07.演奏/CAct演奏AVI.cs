@@ -28,7 +28,7 @@ namespace DTXMania
             if ( nチャンネル番号 == 0x54 && CDTXMania.ConfigIni.bDirectShowMode == false && CDTXMania.ConfigIni.bAVI有効 )
             {
                 this.rAVI = rAVI;
-                this.dsBGV.dshow.Dispose();
+                //this.dsBGV.dshow.Dispose();
                 this.n開始サイズW = n開始サイズW;
                 this.n開始サイズH = n開始サイズH;
                 this.n終了サイズW = n終了サイズW;
