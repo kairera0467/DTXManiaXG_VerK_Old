@@ -738,7 +738,7 @@ namespace DTXMania
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                     this.tx描画用.n透明度 = 0xff;
                     #region[ スキルメーター有効 ]
-                    if (CDTXMania.ConfigIni.bGraph.Drums == true)
+                    if ( CDTXMania.ConfigIni.bGraph.Drums == true && CDTXMania.ConfigIni.bDrums有効 )
                     {
                         if ( this.fAVIアスペクト比 > 1.77f )
                         {
@@ -753,45 +753,37 @@ namespace DTXMania
                         if (this.txクリップパネル != null)
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, 4, 401);
                         this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
-                        if ( this.fAVIアスペクト比 > 1.77f && this.bDShowクリップを再生している )
+
+                        if( CDTXMania.ConfigIni.bDirectShowMode == true && this.bDShowクリップを再生している )
                         {
-                            if ( CDTXMania.ConfigIni.bDirectShowMode == false )
+                            if( this.dsBGV != null )
                             {
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
-                                //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(13, this.position2);
-                            }
-                            else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
-                            {
-                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
-                                if (this.dsBGV.dshow.b上下反転)
-                                    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 13, this.position2);
-                                else
-                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
+                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
+                                if( this.dsBGV.dshow.b上下反転 )
+                                {
+                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 13, this.position2 );
+                                }
+                                else if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+                                {
+                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
+                                }
                             }
                         }
-                        else if( this.fAVIアスペクト比 > 1.77f )
+                        else
                         {
-                            //if ( CDTXMania.ConfigIni.bDirectShowMode == false )
+                            if ( this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 422);
-                                //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 422);
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
                             }
-                            //else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+                            else if (this.fAVIアスペクト比 > 1.77f)
                             {
-                                //if (this.dsBGV.dshow.b上下反転)
-                                //{
-                                //    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 13, this.position2);
-                                //}
-                                //else
-                                //{
-                                //    this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
-                                //}
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
                             }
                         }
                     }
                     #endregion
                     #region[ スキルメーター無効 ]
-                    else
+                    else if( CDTXMania.ConfigIni.bGraph.Drums == false && CDTXMania.ConfigIni.bDrums有効 )
                     {
                         if ( this.fAVIアスペクト比 > 1.77f )
                         {
@@ -804,37 +796,38 @@ namespace DTXMania
                             this.position2 = 858 + (int)((420f - (this.framewidth * this.ratio2)) / 2f);
                         }
                         if (this.txクリップパネル != null)
-                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 142);
+                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 142); 
                         this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
                         this.tx描画用.vc拡大縮小倍率 = this.smallvc;
-                        if ( this.fAVIアスペクト比 > 1.77f && this.bDShowクリップを再生している )
+                        if( CDTXMania.ConfigIni.bDirectShowMode == true && this.bDShowクリップを再生している )
                         {
-                            if ( CDTXMania.ConfigIni.bDirectShowMode == false )
-                            {
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
-                            }
-                            else if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+                            if( this.dsBGV != null )
                             {
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
-                                if (this.dsBGV.dshow.b上下反転)
+                                if( this.dsBGV.dshow.b上下反転 )
                                 {
-                                    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 858, this.position2);
+                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 858, this.position2 );
                                 }
-                                else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+                                else if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
                                 {
-                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
+                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
                                 }
                             }
-                            //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
                         }
-                        else if ( this.fAVIアスペクト比 > 1.77f )
+                        else
                         {
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
+                            if ( this.fAVIアスペクト比 < 1.77f )
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
+                            }
+                            else if (this.fAVIアスペクト比 > 1.77f)
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
+                            }
                         }
                     }
                     #endregion
                     this.tx描画用.vc拡大縮小倍率 = this.vector;
-
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
                 if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))
