@@ -69,11 +69,11 @@ namespace DTXMania
 				this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
 				if( CDTXMania.ConfigIni.bストイックモード )
 				{
-					this.r表示するリザルト画像 = this.txリザルト画像がないときの画像;
+					this.txリザルト画像 = this.txリザルト画像がないときの画像;
 				}
 				else if( ( ( !this.tリザルト画像の指定があれば構築する() ) && ( !this.tプレビュー画像の指定があれば構築する() ) ) )
 				{
-					this.r表示するリザルト画像 = this.txリザルト画像がないときの画像;
+					this.txリザルト画像 = this.txリザルト画像がないときの画像;
                 }
 
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
@@ -189,18 +189,14 @@ namespace DTXMania
 			int x = this.n本体X;
 			int y = this.n本体Y;
             this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, 23, 242);
-			if( this.r表示するリザルト画像 != null )
+			if( this.txリザルト画像 != null )
 			{
-                int width = this.r表示するリザルト画像.szテクスチャサイズ.Width;
-                int height = this.r表示するリザルト画像.szテクスチャサイズ.Height;
-                {
-                    Matrix mat = Matrix.Identity;
-                    mat *= Matrix.Scaling(245.0f / this.txリザルト画像.sz画像サイズ.Width, 245.0f / this.txリザルト画像.sz画像サイズ.Height, 1f);
-                    mat *= Matrix.Translation(440f, -335f, 0f);
-                    mat *= Matrix.RotationZ(0.3f);
+                Matrix mat = Matrix.Identity;
+                mat *= Matrix.Scaling(245.0f / this.txリザルト画像.sz画像サイズ.Width, 245.0f / this.txリザルト画像.sz画像サイズ.Height, 1f);
+                mat *= Matrix.Translation(440f, -335f, 0f);
+                mat *= Matrix.RotationZ(0.3f);
 
-                    this.txリザルト画像.t3D描画(CDTXMania.app.Device, mat);
-                }
+                this.txリザルト画像.t3D描画(CDTXMania.app.Device, mat);
 			}
             this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
             this.txDrumSpeed.vc拡大縮小倍率 = new Vector3(0.76190476190476190476190476190476f, 0.66666666666666666666666666666667f, 1.0f);

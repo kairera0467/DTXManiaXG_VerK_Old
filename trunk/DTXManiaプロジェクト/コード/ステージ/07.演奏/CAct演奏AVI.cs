@@ -1222,14 +1222,14 @@ namespace DTXMania
                                     this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
                             }
                         }
-                        else if ( this.fAVIアスペクト比 < 1.77f && ( this.n総移動時間ms != -1 ) )
+                        else if ( ( this.n総移動時間ms != -1 ) )
                         {
-                            //if ( CDTXMania.ConfigIni.bDirectShowMode == false )
+                            if( this.fAVIアスペクト比 < 1.77f )
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 422);
                                 //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(this.position2, 422);
                             }
-                            //else if ( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+                            else
                             {
                                 //if (this.dsBGV.dshow.b上下反転)
                                 //{
@@ -1237,7 +1237,7 @@ namespace DTXMania
                                 //}
                                 //else
                                 //{
-                                //    this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 13, this.position2);
                                 //}
                             }
                         }
@@ -1280,9 +1280,16 @@ namespace DTXMania
                             }
                             //CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(858, this.position2);
                         }
-                        else if ( this.fAVIアスペクト比 < 1.77f && (this.n総移動時間ms != -1) )
+                        else if( (this.n総移動時間ms != -1) )
                         {
-                            this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
+                            if( this.fAVIアスペクト比 < 1.77f )
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
+                            }
+                            else
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, 858, this.position2);
+                            }
                         }
                     }
                     #endregion
