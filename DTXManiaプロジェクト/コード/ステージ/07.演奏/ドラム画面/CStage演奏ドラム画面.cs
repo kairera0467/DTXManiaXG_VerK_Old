@@ -3232,7 +3232,7 @@ namespace DTXMania
                         CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                     }
                     if (CDTXMania.ConfigIni.nSkillMode == 1 && (!bPChipIsAutoPlay || CDTXMania.ConfigIni.bAutoAddGage))
-                        this.actScore.n現在の本当のスコア.Drums += 500;
+                        this.actScore.Add(E楽器パート.DRUMS, bIsAutoPlay, 500L);
                 }
             }
 

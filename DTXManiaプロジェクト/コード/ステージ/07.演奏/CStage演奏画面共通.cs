@@ -1220,6 +1220,7 @@ namespace DTXMania
                     {
                         case E判定.Miss:
                         case E判定.Bad:
+                            this.actCombo.tコンボリセット処理();
                             this.nヒット数・Auto含む.Drums.Miss++;
                             if (!bPChipIsAutoPlay)
                             {
