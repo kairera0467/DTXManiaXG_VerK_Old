@@ -140,6 +140,12 @@ namespace DTXMania
             public CCounter ct進行;
         }
         public ST爆発[] st爆発 = new ST爆発[2];
+        public bool[] b爆発した = new bool[256];    //たぶん256個あったら十分かな。
+        public int n火薬カウント;   //なんとなく火薬(笑)
+
+        public STDGBVALUE<bool>[] bn00コンボに到達した = new STDGBVALUE<bool>[256];
+        public STDGBVALUE<int> nコンボカウント = new STDGBVALUE<int>();
+        
 
 		// 内部クラス
 
@@ -210,6 +216,15 @@ namespace DTXMania
 				this.nジャンプ差分値[ i ] = (int) ( -15.0 * Math.Sin( ( Math.PI * i ) / 180.0 ) );
 
 		}
+		
+		public void tコンボリセット処理()
+        {
+            for (int i = 0; i < 256; i++)
+            {
+                this.b爆発した[i] = false;
+                this.bn00コンボに到達した[i].Drums = false;
+            }
+        }
 
 
 		// メソッド
@@ -329,7 +344,7 @@ namespace DTXMania
                     if (nジャンプインデックス >= 0 && nジャンプインデックス < 180)
                         f拡大率 = 1.0f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
 
-                    if ( this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
+                    if ((this.n現在のコンボ数.Drums > (this.n現在のコンボ数.Drums / 100) + 100) && this.bn00コンボに到達した[ nコンボカウント.Drums ].Drums == false && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
                     {
                         f拡大率 = 1.22f - (((float)this.nジャンプ差分値[nジャンプインデックス]) / 180.0f);		// f拡大率 = 1.0 → 1.3333... → 1.0
                     }
@@ -340,10 +355,11 @@ namespace DTXMania
                     //-----------------
                     int nコンボx = n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
                     int nコンボy = n表示中央Y + (CDTXMania.ConfigIni.bReverse.Drums ? 510 : 0);
-                    if ( this.n現在のコンボ数.Drums % 100 == 0 )
+                    
+                    if ((this.n現在のコンボ数.Drums > (this.n現在のコンボ数.Drums / 100 * 100) && ( this.n現在のコンボ数.Drums >= 100 ? this.bn00コンボに到達した[ nコンボカウント.Drums ].Drums == false : false)))
                     {
                         nコンボx += n表示中央X - ((int)((nドラムコンボのCOMBO文字の幅 * f拡大率) / 1.3f));
-                        nコンボy += 30;
+                        nコンボy += 30 ;
                     }
                     //-----------------
                     #endregion
@@ -385,15 +401,16 @@ namespace DTXMania
 
 			for( int i = 0; i < n桁数; i++ )
 			{
-                if (this.txCOMBOドラム != null && this.n現在のコンボ数.Drums % 100 != 0)
+                if ((this.n現在のコンボ数.Drums > (this.n現在のコンボ数.Drums / 100 * 100) && (this.n現在のコンボ数.Drums >= 100 ? this.bn00コンボに到達した[nコンボカウント.Drums].Drums == false : false) && (nジャンプインデックス >= 0 && nジャンプインデックス < 180)))
+                {
+                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 14;
+                }
+                else
                 {
                     x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
                     this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
                 }
-                else if (this.n現在のコンボ数.Drums % 100 == 0 && (nジャンプインデックス >= 0 && nジャンプインデックス < 180))
-                {
-                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 14;
-                }
+
 				y = nY上辺位置px;
 
 				nJump = nジャンプインデックス - ( ( ( n桁数 - i ) - 1 ));

@@ -105,6 +105,7 @@ namespace DTXMania
                         }
                     }
                     base.txgbar.vc拡大縮小倍率.X = 1f;
+                    base.txgbar.b加算合成 = true;
                     base.txgbar.t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 31, 480, 31));
                 }
                 if (base.db現在のゲージ値.Drums <= 0.3)

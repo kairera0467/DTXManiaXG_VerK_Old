@@ -1227,6 +1227,14 @@ namespace DTXMania
 				"ベースチップがヒットバー付近で表示\nされなくなります。",
 				"Bass chips are hidden by approaching\nto the hit bar." );
 			this.list項目リスト.Add( this.iBassHidden );
+
+            this.iBassJudgeLineDisp = new CItemToggle("JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Bass,
+                "判定ラインの表示 / 非表示を切り替えます。",
+                "Toggle JudgeLine");
+            this.list項目リスト.Add(this.iBassJudgeLineDisp);
+
+
+
 			this.iBassReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Bass,
 				"ベースチップが譜面の上から下に流\nれるようになります。",
 				"The scroll way is reversed. Bass chips\nflow from the top to the bottom." );
@@ -2609,6 +2617,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bLight.Bass = this.iBassLight.bON;
 			CDTXMania.ConfigIni.bLeft.Bass = this.iBassLeft.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass = this.iBassInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
+
+            CDTXMania.ConfigIni.bJudgeLineDisp.Bass = this.iBassJudgeLineDisp.bON;
 
 			CDTXMania.ConfigIni.b演奏音を強調する.Bass = this.iSystemSoundMonitorBass.bON;
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass = this.iSystemMinComboBass.n現在の値;

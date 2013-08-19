@@ -186,7 +186,6 @@ namespace DTXMania
             CDTXMania.tテクスチャの解放(ref this.txスキルパネル);
             CDTXMania.tテクスチャの解放(ref this.txパネル文字[0]);
             CDTXMania.tテクスチャの解放(ref this.txパネル文字[1]);
-            CDTXMania.tテクスチャの解放(ref this.txジャケット画像);
             this.ct進行用 = null;
             base.On非活性化();
         }
@@ -197,15 +196,6 @@ namespace DTXMania
                 this.SetPanelString(this.strパネル文字列);
                 this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
                 this.strTitleName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
-                string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
-                if (!File.Exists(path))
-                {
-                    this.txジャケット画像 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"));
-                }
-                else
-                {
-                    this.txジャケット画像 = CDTXMania.tテクスチャの生成(path);
-                }
 
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
                 this.bmSongNameLength = new Bitmap(1, 1);
@@ -233,6 +223,7 @@ namespace DTXMania
                 gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
                 Pen p縁 = new Pen(Color.Black, 3f);
+                p縁.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
 
@@ -255,7 +246,6 @@ namespace DTXMania
             {
                 CDTXMania.tテクスチャの解放(ref this.txPanel);
                 CDTXMania.tテクスチャの解放(ref this.txSongName);
-                CDTXMania.tテクスチャの解放(ref this.txジャケット画像);
                 CDTXMania.tテクスチャの解放(ref this.txネームプレート用文字);
                 base.OnManagedリソースの解放();
             }
@@ -287,16 +277,6 @@ namespace DTXMania
                 }
 
 
-                //this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
-                //this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
-                //this.txジャケット画像.fZ軸中心回転 = 0.3f;
-                //this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
-                Matrix mat = Matrix.Identity;
-                mat *= Matrix.Scaling(245.0f / this.txジャケット画像.sz画像サイズ.Width, 245.0f / this.txジャケット画像.sz画像サイズ.Height, 1f);
-                mat *= Matrix.Translation(440f, -335f, 0f);
-                mat *= Matrix.RotationZ(0.3f);
-
-                this.txジャケット画像.t3D描画(CDTXMania.app.Device, mat);
                 this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
@@ -376,7 +356,6 @@ namespace DTXMania
         private CTexture[] txパネル文字;
         private CTexture txSongName;
         private CTexture txネームプレート用文字;
-        private CTexture txジャケット画像;
 
 
 

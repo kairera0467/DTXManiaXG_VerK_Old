@@ -276,6 +276,7 @@ namespace DTXMania
                         gp.AddString(this.strアーティスト名, ff, 1, 64, new Point(0, 100), StringFormat.GenericDefault);
 
                         Pen p縁 = new Pen(Color.Black, 6f);
+                        p縁.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
                         graphics.DrawPath(p縁, gp);
                         graphics.FillPath(Brushes.White, gp);
 

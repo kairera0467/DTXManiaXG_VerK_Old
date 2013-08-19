@@ -101,6 +101,7 @@ namespace DTXMania
                 gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
                 Pen p縁 = new Pen(Color.Black, 3f);
+                p縁.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
                 graネームプレート用.DrawString(this.strTitleName, this.ft称号フォント, Brushes.White, (float)8f, (float)12f);

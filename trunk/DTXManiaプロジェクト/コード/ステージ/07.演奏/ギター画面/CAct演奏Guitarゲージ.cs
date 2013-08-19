@@ -105,7 +105,7 @@ namespace DTXMania
                         base.txgbg.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
-                            base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
+                            base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Guitar;
                             base.txgbar.t2D描画(CDTXMania.app.Device, 13, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
@@ -118,7 +118,7 @@ namespace DTXMania
                         base.txgbg.t2D描画(CDTXMania.app.Device, 938, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
-                            base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
+                            base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
                             base.txgbar.t2D描画(CDTXMania.app.Device, 938 +13, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
