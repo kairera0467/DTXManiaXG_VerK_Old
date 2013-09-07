@@ -67,12 +67,14 @@ namespace DTXMania
                 {
                     this.txジャケット = CDTXMania.tテクスチャの生成(path);
                 }
-                this.txジャケット.vc拡大縮小倍率.X = 0.96f;
-                this.txジャケット.vc拡大縮小倍率.Y = 0.96f;
-                this.txジャケット.fZ軸中心回転 = 0.28f;
-                this.txジャケット.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - this.counter.n現在の値) * 0xff) / 100) : ((this.counter.n現在の値 * 0xff) / 100);
-                this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
-
+                if( this.txジャケット != null )
+                {
+                    this.txジャケット.vc拡大縮小倍率.X = 0.96f;
+                    this.txジャケット.vc拡大縮小倍率.Y = 0.96f;
+                    this.txジャケット.fZ軸中心回転 = 0.28f;
+                    this.txジャケット.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - this.counter.n現在の値) * 0xff) / 100) : ((this.counter.n現在の値 * 0xff) / 100);
+                    this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
+                }
 			}
             else if (this.tx黒幕 == null)
             {

@@ -10,9 +10,10 @@ namespace DTXMania
 		// プロパティ
 
 		public STDGBVALUE<long> nスコアの増分;
+        public STDGBVALUE<int>[] x位置 = new STDGBVALUE<int>[10];
 		public STDGBVALUE<double> n現在の本当のスコア;
 		public STDGBVALUE<long> n現在表示中のスコア;
-		protected long n進行用タイマ;
+		public long n進行用タイマ;
 		protected CTexture txScore;
 
 		
@@ -128,11 +129,11 @@ namespace DTXMania
 		}
 		public override void OnManagedリソースの作成()
 		{
-            if (!base.b活性化してない)
-            {
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbersGD.png"));
-                base.OnManagedリソースの作成();
-            }
+			if( !base.b活性化してない )
+			{
+                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+				base.OnManagedリソースの作成();
+			}
 		}
 		public override void OnManagedリソースの解放()
 		{

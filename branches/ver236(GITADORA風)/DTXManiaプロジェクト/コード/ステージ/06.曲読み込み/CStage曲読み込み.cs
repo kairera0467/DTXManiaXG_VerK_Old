@@ -197,8 +197,9 @@ namespace DTXMania
                 string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
                     CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
 
-                CDTX cdtx = new CDTX(strDTXファイルパス, true);
-                this.str曲タイトル = CDTXMania.stage選曲.r確定された曲.strタイトル;
+                CDTX cdtx = new CDTX( strDTXファイルパス, true );
+
+				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : CDTXMania.stage選曲.r確定された曲.strタイトル;
                 this.strアーティスト名 = cdtx.ARTIST;
                 if (((cdtx.SOUND_NOWLOADING != null) && (cdtx.SOUND_NOWLOADING.Length > 0)) && File.Exists(cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING))
                 {
@@ -215,7 +216,8 @@ namespace DTXMania
                 int LEVEL = cdtx.LEVEL.Drums;
                 cdtx.On非活性化();
                 base.On活性化();
-                this.tラベル名からステータスパネルを決定する(CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[CDTXMania.stage選曲.n確定された曲の難易度]);
+                if( !CDTXMania.bコンパクトモード )
+                    this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
             }
             finally
             {

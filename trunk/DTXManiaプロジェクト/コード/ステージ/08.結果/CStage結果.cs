@@ -88,7 +88,7 @@ namespace DTXMania
                     {
                         CScoreIni.C演奏記録 part = this.st演奏記録[i];
                         bool bIsAutoPlay = true;
-                        switch (i)
+                        switch ( i )
                         {
                             case 0:
                                 bIsAutoPlay = CDTXMania.ConfigIni.bドラムが全部オートプレイである;

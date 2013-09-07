@@ -334,7 +334,7 @@ namespace DTXMania
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
                 this.t進行描画・コンボ();
                 bIsFinishedFadeout = this.t進行描画・フェードイン・アウト();
-                if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) && CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.E)
+                if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態) )
                 {
                     if ((this.actGauge.IsFailed(E楽器パート.DRUMS)) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                     {
@@ -362,7 +362,7 @@ namespace DTXMania
                         }
                         else
                         {
-                            CDTXMania.Skin.soundステージクリア音.t再生する();
+
                         }
                         this.actFOStageClear.tフェードアウト開始();
                     }

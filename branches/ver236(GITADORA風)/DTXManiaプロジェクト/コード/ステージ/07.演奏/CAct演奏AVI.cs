@@ -765,16 +765,20 @@ namespace DTXMania
                                     this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
                                 }
                             }
+                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 1.77f )
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
+                            }
                         }
                         else if( CDTXMania.ConfigIni.bDirectShowMode == true && this.n総移動時間ms != -1 )
                         {
                             if ( this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
+                                //this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
                             }
                             else if (this.fAVIアスペクト比 > 1.77f)
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
+                                //this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
                             }
                         }
                         else if( CDTXMania.ConfigIni.bDirectShowMode == false )
@@ -821,20 +825,20 @@ namespace DTXMania
                                     this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
                                 }
                             }
-                            else
+                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 168);
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
                             }
                         }
                         else if( CDTXMania.ConfigIni.bDirectShowMode == true && this.n総移動時間ms != -1 )
                         {
                             if( this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
+                                //this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
                             }
                             else if( this.fAVIアスペクト比 > 1.77f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
+                                //this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
                             }
                         }
                         else if( CDTXMania.ConfigIni.bDirectShowMode == false )

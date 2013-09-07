@@ -23,7 +23,7 @@ namespace DTXMania
     {
         // プロパティ
 
-        public static readonly string VERSION = "Ver2.75(130811)";
+        public static readonly string VERSION = "Ver2.75GD(130811)";
         public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
         public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -795,7 +795,7 @@ namespace DTXMania
                             Directory.SetCurrentDirectory(CDTXMania.strEXEのあるフォルダ);
                         }
 
-                        this.tガベージコレクションを実行する();
+                        //this.tガベージコレクションを実行する();       // #31980 2013.9.3 yyagi タイトル画面でだけ、毎フレームGCを実行して重くなっていた問題の修正
                         //-----------------------------
                         #endregion
                         break;

@@ -59,6 +59,7 @@ namespace DTXMania
 			public string Presound;
 			public string Backgound;
 			public STDGBVALUE<int> レベル;
+            public STDGBVALUE<int> レベルDec;
 			public STRANK 最大ランク;
 			public STSKILL 最大スキル;
             public STSKILL 最大曲別スキル;
@@ -258,6 +259,7 @@ namespace DTXMania
 			this.譜面情報.Presound = "";
 			this.譜面情報.Backgound = "";
 			this.譜面情報.レベル = new STDGBVALUE<int>();
+            this.譜面情報.レベルDec = new STDGBVALUE<int>();
 			this.譜面情報.最大ランク = new ST譜面情報.STRANK();
 			this.譜面情報.最大ランク.Drums =  (int)CScoreIni.ERANK.UNKNOWN;
 			this.譜面情報.最大ランク.Guitar = (int)CScoreIni.ERANK.UNKNOWN;

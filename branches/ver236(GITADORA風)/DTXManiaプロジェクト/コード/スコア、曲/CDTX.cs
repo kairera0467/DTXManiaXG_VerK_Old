@@ -1255,6 +1255,7 @@ namespace DTXMania
 		public string GENRE;
 		public bool HIDDENLEVEL;
 		public STDGBVALUE<int> LEVEL;
+        public STDGBVALUE<int> LEVELDEC;
 		public Dictionary<int, CAVI> listAVI;
         public Dictionary<int, CDirectShow> listDS;
 		public Dictionary<int, CAVIPAN> listAVIPAN;
@@ -4415,15 +4416,18 @@ namespace DTXMania
 				//-----------------
 				else if(
 					strコマンド.StartsWith( "DLEVEL", StringComparison.OrdinalIgnoreCase ) ||
+                    strコマンド.StartsWith( "DLEVELDEC", StringComparison.OrdinalIgnoreCase ) ||
 					strコマンド.StartsWith( "PLAYLEVEL", StringComparison.OrdinalIgnoreCase ) )
 				{
 					this.t入力・パラメータ食い込みチェック( "DLEVEL", ref strコマンド, ref strパラメータ );
+                    this.t入力・パラメータ食い込みチェック( "DLEVELDEC", ref strコマンド, ref strパラメータ);
 					this.t入力・パラメータ食い込みチェック( "PLAYLEVEL", ref strコマンド, ref strパラメータ );
 
 					int dlevel;
 					if( int.TryParse( strパラメータ, out dlevel ) )
 					{
 						this.LEVEL.Drums = Math.Min( Math.Max( dlevel, 0 ), 1000 );	// 0～100 に丸める
+                        this.LEVELDEC.Drums = Math.Min( Math.Max( dlevel, 0 ), 10 );
 					}
 				}
 				//-----------------

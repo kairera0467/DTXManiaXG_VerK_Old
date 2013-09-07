@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Diagnostics;
 using System.IO;
+using DirectShowLib;
 using FDK;
 
 namespace DTXMania
@@ -222,6 +223,10 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
+                if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")))
+                {
+                    this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path(@"Graphics\5_background.mp4"), CDTXMania.app.WindowHandle, true );
+                }
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), false );
 				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
@@ -233,7 +238,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.t安全にDisposeする( ref this.r現在演奏中のスコアの背景動画 );
+                CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
@@ -268,6 +273,21 @@ namespace DTXMania
 				#endregion
 
 				this.ct登場時アニメ用共通.t進行();
+
+                if( this.ds背景動画 != null )
+                {
+                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                    this.ds背景動画.t再生開始();
+                    this.ds背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
+                    if (this.lDshowPosition == this.lStopPosition)
+                    {
+                        this.ds背景動画.MediaSeeking.SetPositions(
+                        DsLong.FromInt64((long)(0)),
+                        AMSeekingSeekingFlags.AbsolutePositioning,
+                        0,
+                        AMSeekingSeekingFlags.NoPositioning);
+                    }
+                }
 
 				if( this.tx背景 != null )
 					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
@@ -703,6 +723,9 @@ namespace DTXMania
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
 		private CTexture txFLIP;
+        private CDirectShow ds背景動画;
+        private long lDshowPosition;
+        private long lStopPosition;
 
 		private struct STCommandTime		// #24063 2011.1.16 yyagi コマンド入力時刻の記録用
 		{
