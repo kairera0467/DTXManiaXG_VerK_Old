@@ -22,26 +22,26 @@ namespace DTXMania
                 }
                 long num = CDTXMania.Timer.n現在時刻;
 
-                #region [ スコアを桁数ごとに n位の数[] に格納する。CAct演奏Drumsスコアの使いまわし。 ]
+                #region [ スコアを桁数ごとに n位の数[] に格納する。CAct演奏コンボ共通の使いまわし。 ]
 			    //-----------------
 			    //座標側の管理が複雑になるので、コンボとは違い、右から数値を入れていく。
                 int n = (int)this.n現在表示中のスコア.Drums;
 			    int n桁数 = 0;
-                int[] n位の数 = new int[10];
-			    while( ( n > 0 ) && ( n桁数 < 10 ) )
+                int[] n位の数 = new int[ ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 7 ) ];
+			    while( ( n > 0 ) && ( n桁数 < ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 7 ) ) )
 			    {
-			    	n位の数[ 9 - n桁数 ] = n % 10;
-			    	n = ( n - ( n % 10 ) ) / 10;
+			    	n位の数[ ( CDTXMania.ConfigIni.nSkillMode == 0 ? 9 : 6 ) - n桁数 ] = n % 10;
+			    	n = ( n - ( n % ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 10 ) ) ) / ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 10 );
 			    	n桁数++;
 			    }
 
                 int n2 = (int)this.n現在の本当のスコア.Drums;
                 int n桁数2 = 0;
-                int[] n位の数2 = new int[10];
-                while ((n2 > 0) && (n桁数2 < 10))
+                int[] n位の数2 = new int[ ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 7 ) ];
+                while ((n2 > 0) && (n桁数2 < ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 7 )))
                 {
-                    n位の数2[ 9 - n桁数2 ] = n2 % 10;
-                    n2 = (n2 - (n2 % 10)) / 10;
+                    n位の数2[ ( CDTXMania.ConfigIni.nSkillMode == 0 ? 9 : 6 ) - n桁数2 ] = n2 % 10;
+                    n2 = (n2 - (n2 % ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 10 ))) / ( CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 10 );
                     n桁数2++;
                 }
 			    //-----------------
@@ -62,17 +62,17 @@ namespace DTXMania
                     }
                     base.n進行用タイマ += 15;
                 }
-                    for (int s = 0; s < 10; s++)
+                for (int s = 0; s < (CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 7); s++)
+                {
+                    if (n位の数[s] == n位の数2[s])
                     {
-                        if (n位の数[s] == n位の数2[s])
-                        {
-                            base.x位置[s].Drums = 0;
-                        }
-                        else
-                        {
-                            base.x位置[s].Drums = 4;
-                        }
+                        base.x位置[s].Drums = 0;
                     }
+                    else
+                    {
+                        base.x位置[s].Drums = 4;
+                    }
+                }
 
 
                 string str = this.n現在表示中のスコア.Drums.ToString("0000000");

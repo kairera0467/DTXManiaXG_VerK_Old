@@ -335,37 +335,31 @@ namespace DTXMania
 
 		// メソッド
 
-        public void t全画面・ウィンドウモード切り替え()
-        {
+		public void t全画面・ウィンドウモード切り替え()
+		{
 #if WindowedFullscreen
-            if ( ConfigIni != null )
+			if ( ConfigIni != null )
 #else
-            DeviceSettings settings = base.GraphicsDeviceManager.CurrentSettings.Clone();
-            if ((ConfigIni != null) && (ConfigIni.bウィンドウモード != settings.Windowed))
+			DeviceSettings settings = base.GraphicsDeviceManager.CurrentSettings.Clone();
+			if ( ( ConfigIni != null ) && ( ConfigIni.bウィンドウモード != settings.Windowed ) )
 #endif
-            {
+			{
 #if !WindowedFullscreen
-                settings.Windowed = ConfigIni.bウィンドウモード;
+				settings.Windowed = ConfigIni.bウィンドウモード;
 #endif
-                if (ConfigIni.bウィンドウモード == false)	// #23510 2010.10.27 yyagi: backup current window size before going fullscreen mode
-                {
-                    currentClientSize = this.Window.ClientSize;
-                    ConfigIni.nウインドウwidth = this.Window.ClientSize.Width;
-                    ConfigIni.nウインドウheight = this.Window.ClientSize.Height;
-//                  FDK.CTaskBar.ShowTaskBar( false );
-                }
+				if ( ConfigIni.bウィンドウモード == false )	// #23510 2010.10.27 yyagi: backup current window size before going fullscreen mode
+				{
+					currentClientSize = this.Window.ClientSize;
+					ConfigIni.nウインドウwidth = this.Window.ClientSize.Width;
+					ConfigIni.nウインドウheight = this.Window.ClientSize.Height;
+//					FDK.CTaskBar.ShowTaskBar( false );
+				}
 #if !WindowedFullscreen
-                base.GraphicsDeviceManager.ChangeDevice(settings);
+				base.GraphicsDeviceManager.ChangeDevice( settings );
 #endif
-                if (ConfigIni.bウィンドウモード == true)	// #23510 2010.10.27 yyagi: to resume window size from backuped value
-                {
-#if WindowedFullscreen
-                    base.Window.ClientSize =
-                        new Size(currentClientSize.Width, currentClientSize.Height);
-                }
-            }
 				if ( ConfigIni.bウィンドウモード == true )	// #23510 2010.10.27 yyagi: to resume window size from backuped value
 				{
+#if WindowedFullscreen
 															// #30666 2013.2.2 yyagi Don't use Fullscreen mode becasue NVIDIA GeForce is
 															// tend to delay drawing on Fullscreen mode. So DTXMania uses Maximized window
 															// in spite of using fullscreen mode.
@@ -373,10 +367,10 @@ namespace DTXMania
 					app.Window.FormBorderStyle = FormBorderStyle.Sizable;
 					app.Window.WindowState = FormWindowState.Normal;
 #endif
-                    base.Window.ClientSize =
-                        new Size(currentClientSize.Width, currentClientSize.Height);
-//                  FDK.CTaskBar.ShowTaskBar( true );
-                }
+					base.Window.ClientSize =
+						new Size( currentClientSize.Width, currentClientSize.Height );
+//					FDK.CTaskBar.ShowTaskBar( true );
+				}
 #if WindowedFullscreen
 				else 
 				{
@@ -384,23 +378,22 @@ namespace DTXMania
 					app.Window.FormBorderStyle = FormBorderStyle.None;
 					app.Window.WindowState = FormWindowState.Maximized;
 				}
-            if ( ConfigIni.bウィンドウモード )
-            {
-                if ( !this.bマウスカーソル表示中 )
-                {
-                    Cursor.Show();
-                    this.bマウスカーソル表示中 = true;
-                }
-            }
-            else if ( this.bマウスカーソル表示中 )
-            {
-                Cursor.Hide();
-                this.bマウスカーソル表示中 = false;
-            }
+				if ( ConfigIni.bウィンドウモード )
+				{
+				    if ( !this.bマウスカーソル表示中 )
+				    {
+				        Cursor.Show();
+				        this.bマウスカーソル表示中 = true;
+				    }
+				}
+				else if ( this.bマウスカーソル表示中 )
+				{
+				    Cursor.Hide();
+				    this.bマウスカーソル表示中 = false;
+				}
 #endif
-            }
-                
-        }
+			}
+		}
     
 
 		#region [ #24609 リザルト画像をpngで保存する ]		// #24609 2011.3.14 yyagi; to save result screen in case BestRank or HiSkill.
@@ -476,13 +469,13 @@ namespace DTXMania
 				Cursor.Hide();
 				this.bマウスカーソル表示中 = false;
 			}
-            this.Device.SetTransform(TransformState.View, Matrix.LookAtLH(new Vector3(0f, 0f, (float)(-SampleFramework.GameWindowSize.Height / 2 * Math.Sqrt(3.0))), new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f)));
-            this.Device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(C変換.DegreeToRadian((float)60f), ((float)this.Device.Viewport.Width) / ((float)this.Device.Viewport.Height), -100f, 100f));
-            this.Device.SetRenderState(RenderState.Lighting, false);
-            this.Device.SetRenderState(RenderState.ZEnable, false);
-            this.Device.SetRenderState(RenderState.AntialiasedLineEnable, false);
-            this.Device.SetRenderState(RenderState.AlphaTestEnable, true);
-            this.Device.SetRenderState(RenderState.AlphaRef, 10);
+			this.Device.SetTransform(TransformState.View, Matrix.LookAtLH(new Vector3(0f, 0f, (float)(-SampleFramework.GameWindowSize.Height / 2 * Math.Sqrt(3.0))), new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f)));
+			this.Device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(C変換.DegreeToRadian((float)60f), ((float)this.Device.Viewport.Width) / ((float)this.Device.Viewport.Height), -100f, 100f));
+			this.Device.SetRenderState( RenderState.Lighting, false );
+			this.Device.SetRenderState( RenderState.ZEnable, false );
+			this.Device.SetRenderState( RenderState.AntialiasedLineEnable, false );
+			this.Device.SetRenderState( RenderState.AlphaTestEnable, true );
+			this.Device.SetRenderState( RenderState.AlphaRef, 10 );
 
             if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
             {
@@ -543,7 +536,8 @@ namespace DTXMania
 
 			if( Timer != null )
 				Timer.t更新();
-            if (CSound管理.rc演奏用タイマ != null)
+
+            if ( CSound管理.rc演奏用タイマ != null )
                 CSound管理.rc演奏用タイマ.t更新();
 
 			if( Input管理 != null )
@@ -796,7 +790,7 @@ namespace DTXMania
 							Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
 						}
 
-						this.tガベージコレクションを実行する();
+                        //this.tガベージコレクションを実行する();       // #31980 2013.9.3 yyagi タイトル画面でだけ、毎フレームGCを実行して重くなっていた問題の修正
 						//-----------------------------
 						#endregion
 						break;

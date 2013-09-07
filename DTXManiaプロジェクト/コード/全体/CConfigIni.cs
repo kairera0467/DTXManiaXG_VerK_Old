@@ -1744,7 +1744,7 @@ namespace DTXMania
 
             #region[DTXManiaXG追加オプション]
             //sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
-            //sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
+            sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
             //sw.WriteLine();
             sw.WriteLine("; dkdk仕様変更(0:デフォルト, 1:始動足変更, 2:dkdk1レーン化)");
             sw.WriteLine("DkdkType={0}", (int)this.eDkdkType.Drums);
@@ -2052,7 +2052,7 @@ namespace DTXMania
 			if( this.bConfigIniが存在している )
 			{
 				string str;
-				this.tキーアサインを全部クリアする();
+				//this.tキーアサインを全部クリアする();
 				StreamReader reader = new StreamReader( this.ConfigIniファイル名, Encoding.GetEncoding( "Shift_JIS" ) );
 				str = reader.ReadToEnd();
 				t文字列から読み込み( str );
@@ -2220,7 +2220,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("NameColor"))
                                             {
-                                                this.nNameColor = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9, 0);
+                                                this.nNameColor = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 19, 0);
                                             }
                                             else if (str3.Equals("SkinChangeByBoxDef"))
                                             {

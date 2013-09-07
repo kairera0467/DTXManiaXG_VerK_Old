@@ -364,10 +364,18 @@ namespace FDK
 		{
 			this.t2D描画( device, x, y, 1f, rc画像内の描画領域 );
 		}
+        public void t2D描画( Device device, float x, float y )
+		{
+			this.t2D描画( device, (int)x, (int)y, 1f, this.rc全画像 );
+		}
+		public void t2D描画( Device device, float x, float y, Rectangle rc画像内の描画領域 )
+		{
+			this.t2D描画( device, (int)x, (int)y, 1f, rc画像内の描画領域 );
+		}
 		public void t2D描画( Device device, int x, int y, float depth, Rectangle rc画像内の描画領域 )
 		{
-			if( this.texture == null )
-                throw new InvalidOperationException("テクスチャは生成されていません。");
+            if (this.texture == null)
+                return;
 
 			this.tレンダリングステートの設定( device );
 
@@ -660,7 +668,7 @@ namespace FDK
 			device.DrawUserPrimitives( PrimitiveType.TriangleStrip, 2, this.cvPositionColoredVertexies );
 		}
 
-		#region [ IDosposable 実装 ]
+		#region [ IDisposable 実装 ]
 		//-----------------
 		public void Dispose()
 		{

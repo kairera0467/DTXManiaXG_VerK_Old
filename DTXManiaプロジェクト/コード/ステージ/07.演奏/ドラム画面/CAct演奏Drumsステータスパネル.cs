@@ -14,13 +14,14 @@ namespace DTXMania
     {
         public override void On活性化()
         {
-
             this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 22f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftNameFont = new Font("Arial", 26f, FontStyle.Bold, GraphicsUnit.Pixel);
             this.ftLevelFont = new Font("Impact", 26f, FontStyle.Regular);
             this.ftDifficultyL = new Font("Arial", 30f, FontStyle.Bold);
             this.ftDifficultyS = new Font("Arial", 20f, FontStyle.Bold);
+
+            this.pfNameFont = new CPrivateFont( new FontFamily( "Arial" ), 20, FontStyle.Bold ); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
             {
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
@@ -88,20 +89,24 @@ namespace DTXMania
                 graphics.Dispose();
                 this.bNamePlate = new Bitmap(0x170, 0x103);
                 this.bDifficulty = new Bitmap(0x170, 0x103);
-                graphics = Graphics.FromImage(this.bNamePlate);
+                graphics = Graphics.FromImage( this.bNamePlate );
                 graphics2 = Graphics.FromImage(this.bDifficulty);
                 graphics.DrawImage(this.iNamePlate, 0, 0, 0x170, 0x103);
                 graphics2.DrawImage(this.iDifficulty, 0, 0, 0x170, 0x103);
                 this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
                 Brush namecolor = Brushes.White;
+                Color clNameColor = Color.White;
+                Color clNameColorLower = Color.White;
                 LinearGradientBrush gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.LightYellow, Color.FromArgb(255, 245, 201), LinearGradientMode.Vertical );
                 switch (CDTXMania.ConfigIni.nNameColor)
                 {
                     case 0:
                         namecolor = Brushes.White;
+                        clNameColor = Color.White;
                         break;
                     case 1:
                         namecolor = Brushes.LightYellow;
+                        clNameColor = Color.LightYellow;
                         break;
                     case 2:
                         namecolor = Brushes.Yellow;
@@ -126,6 +131,7 @@ namespace DTXMania
                         break;
                     case 9:
                         namecolor = Brushes.Gold;
+                        clNameColor = Color.Gold;
                         break;
 
                     case 10:
@@ -133,34 +139,54 @@ namespace DTXMania
                         break;
                     case 11:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.LightYellow,             Color.FromArgb(255, 245, 201), LinearGradientMode.Vertical );
+                        clNameColor = Color.Yellow;
+                        clNameColorLower = Color.White;
                         break;
                     case 12:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 216, 0),   Color.FromArgb(255, 238, 182), LinearGradientMode.Horizontal );
+                        clNameColor = Color.Yellow;
+                        clNameColorLower = Color.White;
                         break;
                     case 13:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(0, 255, 33),    Color.FromArgb(153, 255, 164), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(0, 255, 33);
+                        clNameColorLower = Color.FromArgb(153, 255, 164);
                         break;
                     case 14:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(0, 38, 255),    Color.FromArgb(178, 189, 255), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(0, 38, 255);
+                        clNameColorLower = Color.FromArgb(178, 189, 255);
                         break;
                     case 15:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(72, 0, 255),    Color.FromArgb(180, 153, 255), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(72, 0, 255);
+                        clNameColorLower = Color.FromArgb(180, 153, 255);
                         break;
                     case 16:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 0, 0),     Color.FromArgb(255, 153, 153), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(255, 0, 0);
+                        clNameColorLower = Color.FromArgb(255, 153, 153);
                         break;
                     case 17:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(232, 182, 149), Color.FromArgb(122, 69, 26), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(232, 182, 149);
+                        clNameColorLower = Color.FromArgb(122, 69, 26);
                         break;
                     case 18:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(246, 245, 255), Color.FromArgb(125, 128, 137), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(246, 245, 255);
+                        clNameColorLower = Color.FromArgb(125, 128, 137);
                         break;
                     case 19:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 241, 181), Color.FromArgb(238, 196, 85), LinearGradientMode.Vertical);
+                        clNameColor = Color.FromArgb(255, 241, 181);
+                        clNameColorLower = Color.FromArgb(238, 196, 85);
                         break;
                 }
 
                 #region[ 名前、グループ名 ]
+                //2013.09.07.kairera0467 できればこの辺のメンテナンスが楽にできるよう、コードを簡略にしたいが・・・・
+                Bitmap bmpCardName;
                 if (this.nStrlengthbydot > 240)
                 {
                     this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -169,7 +195,7 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)68f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)46f, (float)136f);
+                            graphics.DrawString( this.strPlayerName, this.ftNameFont, gb, (float)46f, (float)136f );
                         }
                         else
                         {
@@ -182,7 +208,9 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)54f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)54f, (float)100f);
+                            //graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)54f, (float)100f);
+                            bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower );
+                            graphics.DrawImage( bmpCardName, 46f, 92f );
                         }
                         else
                         {
@@ -211,7 +239,9 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)54f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)54f, (float)100f);
+                            //graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)54f, (float)100f);
+                            bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
+                            graphics.DrawImage( bmpCardName, 46f, 92f );
                         }
                         else
                         {
@@ -529,6 +559,7 @@ namespace DTXMania
         private CTexture txnameplate;
         private CTexture txNamePlate;
         private CTexture txScore;
+        private CPrivateFont pfNameFont;
         //-----------------
         #endregion
     }
