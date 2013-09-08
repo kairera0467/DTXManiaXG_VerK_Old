@@ -4418,18 +4418,15 @@ namespace DTXMania
 				//-----------------
 				else if(
 					strコマンド.StartsWith( "DLEVEL", StringComparison.OrdinalIgnoreCase ) ||
-                    strコマンド.StartsWith( "DLEVELDEC", StringComparison.OrdinalIgnoreCase ) ||
 					strコマンド.StartsWith( "PLAYLEVEL", StringComparison.OrdinalIgnoreCase ) )
 				{
 					this.t入力・パラメータ食い込みチェック( "DLEVEL", ref strコマンド, ref strパラメータ );
-                    this.t入力・パラメータ食い込みチェック( "DLEVELDEC", ref strコマンド, ref strパラメータ);
 					this.t入力・パラメータ食い込みチェック( "PLAYLEVEL", ref strコマンド, ref strパラメータ );
 
 					int dlevel;
 					if( int.TryParse( strパラメータ, out dlevel ) )
 					{
 						this.LEVEL.Drums = Math.Min( Math.Max( dlevel, 0 ), 1000 );	// 0～100 に丸める
-                        this.LEVELDEC.Drums = Math.Min( Math.Max( dlevel, 0 ), 10 );
 					}
 				}
 				//-----------------
@@ -4462,6 +4459,17 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
+                #region[ DLVDEC ]
+                else if( strコマンド.StartsWith( "DLVDEC", StringComparison.OrdinalIgnoreCase ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "DLVDEC", ref strコマンド, ref strパラメータ);
+                    int dleveldec;
+					if( int.TryParse( strパラメータ, out dleveldec ) )
+					{
+                        this.LEVELDEC.Drums = Math.Min( Math.Max( dleveldec, 0 ), 10 );
+					}
+                }
+                #endregion
 #if TEST_NOTEOFFMODE
 				else if (str.StartsWith("SUPRESSNOTEOFF_HIHAT", StringComparison.OrdinalIgnoreCase)) {
 					this.t入力・パラメータ食い込みチェック("SUPRESSNOTEOFF_HIHAT", ref str, ref str2);
@@ -4476,8 +4484,8 @@ namespace DTXMania
 					this.bBASS演奏で直前のBASSを消音する = !str2.ToLower().Equals("on");
 				}
 #endif
-				#region [ GENRE ]
-				//-----------------
+                #region [ GENRE ]
+                //-----------------
 				else if( strコマンド.StartsWith( "GENRE", StringComparison.OrdinalIgnoreCase ) )
 				{
 					this.t入力・パラメータ食い込みチェック( "GENRE", ref strコマンド, ref strパラメータ );

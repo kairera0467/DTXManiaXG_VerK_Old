@@ -139,7 +139,7 @@ namespace DTXMania
                         break;
                     case 11:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.LightYellow,             Color.FromArgb(255, 245, 201), LinearGradientMode.Vertical );
-                        clNameColor = Color.Yellow;
+                        clNameColor = Color.LightYellow;
                         clNameColorLower = Color.White;
                         break;
                     case 12:
@@ -150,27 +150,27 @@ namespace DTXMania
                     case 13:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(0, 255, 33),    Color.FromArgb(153, 255, 164), LinearGradientMode.Vertical);
                         clNameColor = Color.FromArgb(0, 255, 33);
-                        clNameColorLower = Color.FromArgb(153, 255, 164);
+                        clNameColorLower = Color.FromArgb(193, 255, 199);
                         break;
                     case 14:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(0, 38, 255),    Color.FromArgb(178, 189, 255), LinearGradientMode.Vertical);
                         clNameColor = Color.FromArgb(0, 38, 255);
-                        clNameColorLower = Color.FromArgb(178, 189, 255);
+                        clNameColorLower = Color.FromArgb(229, 233, 255);
                         break;
                     case 15:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(72, 0, 255),    Color.FromArgb(180, 153, 255), LinearGradientMode.Vertical);
                         clNameColor = Color.FromArgb(72, 0, 255);
-                        clNameColorLower = Color.FromArgb(180, 153, 255);
+                        clNameColorLower = Color.FromArgb(159, 124, 255);
                         break;
                     case 16:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 0, 0),     Color.FromArgb(255, 153, 153), LinearGradientMode.Vertical);
-                        clNameColor = Color.FromArgb(255, 0, 0);
-                        clNameColorLower = Color.FromArgb(255, 153, 153);
+                        clNameColor = Color.FromArgb(255, 255, 0, 0);
+                        clNameColorLower = Color.FromArgb(255, 255, 200, 200);
                         break;
                     case 17:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(232, 182, 149), Color.FromArgb(122, 69, 26), LinearGradientMode.Vertical);
-                        clNameColor = Color.FromArgb(232, 182, 149);
-                        clNameColorLower = Color.FromArgb(122, 69, 26);
+                        clNameColor = Color.FromArgb(255, 232, 182, 149);
+                        clNameColorLower = Color.FromArgb(255, 122, 69, 26);
                         break;
                     case 18:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(246, 245, 255), Color.FromArgb(125, 128, 137), LinearGradientMode.Vertical);
@@ -179,14 +179,14 @@ namespace DTXMania
                         break;
                     case 19:
                         gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb(255, 241, 181), Color.FromArgb(238, 196, 85), LinearGradientMode.Vertical);
-                        clNameColor = Color.FromArgb(255, 241, 181);
-                        clNameColorLower = Color.FromArgb(238, 196, 85);
+                        clNameColor = Color.FromArgb(255, 238, 196, 85);
+                        clNameColorLower = Color.FromArgb(255, 255, 241, 200);
                         break;
                 }
 
                 #region[ 名前、グループ名 ]
                 //2013.09.07.kairera0467 できればこの辺のメンテナンスが楽にできるよう、コードを簡略にしたいが・・・・
-                Bitmap bmpCardName;
+                Bitmap bmpCardName = new Bitmap(1, 1);
                 if (this.nStrlengthbydot > 240)
                 {
                     this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -195,7 +195,9 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)68f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString( this.strPlayerName, this.ftNameFont, gb, (float)46f, (float)136f );
+                            //graphics.DrawString( this.strPlayerName, this.ftNameFont, gb, (float)46f, (float)136f );
+                            bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower );
+                            graphics.DrawImage( bmpCardName, 42f, 126f );
                         }
                         else
                         {
@@ -226,7 +228,9 @@ namespace DTXMania
                         graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)80f, (float)65f);
                         if (CDTXMania.ConfigIni.nNameColor >= 11)
                         {
-                            graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)42f, (float)136f);
+                            //graphics.DrawString(this.strPlayerName, this.ftNameFont, gb, (float)42f, (float)136f);
+                            bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
+                            graphics.DrawImage(bmpCardName, 42f, 126f);
                         }
                         else
                         {
@@ -252,14 +256,14 @@ namespace DTXMania
                 }
                 #endregion
 
-                string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10f); ;
+                string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10f);
                     if (CDTXMania.DTX.LEVEL.Drums > 100)
                     {
                         str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 100f);
                     }
                     else
                     {
-                        str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10f);
+                        str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0f : 0 ) );
                     }
                 
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
@@ -327,6 +331,7 @@ namespace DTXMania
                 }
                 graphics.Dispose();
                 graphics2.Dispose();
+                bmpCardName.Dispose();
                 //テクスチャ変換
                 this.txNamePlate = new CTexture(CDTXMania.app.Device, this.bNamePlate, CDTXMania.TextureFormat, false);
                 this.txDummy = new CTexture(CDTXMania.app.Device, this.bDifficulty, CDTXMania.TextureFormat, false);
@@ -340,6 +345,7 @@ namespace DTXMania
                 this.ftLevelFont.Dispose();
                 this.ftDisplayFont.Dispose();
                 this.ftNameFont.Dispose();
+                this.pfNameFont.Dispose();
 
                 base.OnManagedリソースの作成();
             }
@@ -367,6 +373,7 @@ namespace DTXMania
                 this.ftDisplayFont.Dispose();
                 this.ftNameFont.Dispose();
                 this.ftLevelFont.Dispose();
+                this.pfNameFont.Dispose();
                 base.OnManagedリソースの解放();
             }
         }
@@ -551,6 +558,7 @@ namespace DTXMania
         private Image iScore;
         private int nCurrentDrumspeed;
         private int nStrlengthbydot;
+        private STDGBVALUE<int> n表記するLEVEL;
         private string strGroupName;
         private string strPanelString;
         private string strPlayerName;
