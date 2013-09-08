@@ -238,7 +238,7 @@ namespace DTXMania
                     #endregion
                 }
 
-                if ( fAVIアスペクト比 > 1.77f && this.dsBGV != null )
+                if ( fAVIアスペクト比 > 1.77f && this.dsBGV != null && this.dsBGV.dshow != null )
                 {
                     this.dsBGV.dshow.t再生開始();
                     this.bDShowクリップを再生している = true;

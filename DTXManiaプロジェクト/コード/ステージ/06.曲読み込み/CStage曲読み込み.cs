@@ -217,7 +217,7 @@ namespace DTXMania
                 this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
                 this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
 
-                if (File.Exists(CSkin.Path(@"Graphics\6_background.mp4")))
+                if ( File.Exists( CSkin.Path(@"Graphics\6_background.mp4") ) && !CDTXMania.bコンパクトモード )
                 {
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\6_background.mp4"), CDTXMania.app.WindowHandle, true);
                 }
@@ -233,8 +233,9 @@ namespace DTXMania
 				string strDTXファイルパス = ( CDTXMania.bコンパクトモード ) ?
 					CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
 
-                CDTX cdtx = new CDTX(strDTXファイルパス, true);
-				this.str曲タイトル = CDTXMania.stage選曲.r確定された曲.strタイトル;
+                CDTX cdtx = new CDTX( strDTXファイルパス, true );
+
+				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : CDTXMania.stage選曲.r確定された曲.strタイトル;
                 this.strアーティスト名 = cdtx.ARTIST;
                 for (int i = 0; i < 8; i++)
                 {
@@ -265,7 +266,8 @@ namespace DTXMania
                 int LEVEL = cdtx.LEVEL.Drums;
 				cdtx.On非活性化();
 				base.On活性化();
-                this.tラベル名からステータスパネルを決定する(CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[CDTXMania.stage選曲.n確定された曲の難易度]);
+                if( !CDTXMania.bコンパクトモード )
+                    this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
 			}
 			finally
 			{
@@ -492,8 +494,14 @@ namespace DTXMania
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
             CDTX cdtx = new CDTX(strDTXファイルパス, true);
             
-            double DTXLevel = cdtx.LEVEL.Drums / 10;
+            //後に変数にしてギターベースなどでも正常に表示できるようにする予定
+            STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
+            n表記するLEVEL.Drums = cdtx.LEVEL.Drums / 10.0;
+            n表記するLEVEL.Drums += ( cdtx.LEVELDEC.Drums != 0 ? cdtx.LEVELDEC.Drums / 100.0 : 0 );
+            int DTXLevel = cdtx.LEVEL.Drums;
             double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL.Drums);
+
+            string strLevel = string.Format( "{0:0.00}", n表記するLEVEL.Drums );
 
             if (cdtx.LEVEL.Drums > 100)
             {
@@ -514,7 +522,8 @@ namespace DTXMania
             }
             else
             {
-                this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
+                //this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
+                this.t大文字表示( 335, 218, string.Format( "{0:0}", strLevel.Substring(0, 1) ) );
                 this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
                 if (cdtx.LEVEL.Drums > 100)
                 {
@@ -522,8 +531,9 @@ namespace DTXMania
                 }
                 else
                 {
-                    this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
+                    //this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
+                    this.t小文字表示( 354, 236, string.Format("{0:00}", strLevel.Substring(1, 3) ) );
+                    //this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
                 }
             }
             if (CDTXMania.ConfigIni.bSkillModeを自動切換えする == true)

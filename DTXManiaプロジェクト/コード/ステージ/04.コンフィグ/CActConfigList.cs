@@ -1525,16 +1525,19 @@ namespace DTXMania
                     {
                         this.iDrumsLaneDisp.n現在選択されている項目番号 = 3;
                         this.iDrumsJudgeLineDisp.bON = false;
+                        this.iDrumsLaneFlush.bON = false;
                     }
                     else if (iDrumsDark.n現在選択されている項目番号 == (int)Eダークモード.HALF)
                     {
                         this.iDrumsLaneDisp.n現在選択されている項目番号 = 1;
                         this.iDrumsJudgeLineDisp.bON = true;
+                        this.iDrumsLaneFlush.bON = true;
                     }
                     else
                     {
                         this.iDrumsLaneDisp.n現在選択されている項目番号 = 0;
                         this.iDrumsJudgeLineDisp.bON = true;
+                        this.iDrumsLaneFlush.bON = true;
                     }
                 }
                 #endregion
