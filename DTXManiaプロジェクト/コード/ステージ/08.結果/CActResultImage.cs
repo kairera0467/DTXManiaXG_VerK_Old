@@ -61,7 +61,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                Brush steelBlue;
+                prvSongDifficultyFont = new CPrivateFont( new FontFamily( "Impact" ), 14, FontStyle.Regular );
+                Brush DifficultyPanel;
 				this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
 				this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1;
@@ -76,104 +77,112 @@ namespace DTXMania
 				{
 					this.r表示するリザルト画像 = this.txリザルト画像がないときの画像;
 				}
-        this.bmSongNameLength = new Bitmap(1, 1);
-        Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
-        graphics.PageUnit = GraphicsUnit.Pixel;
-        this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
-        this.nSongNamePixelLength = (int) graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
-        graphics.Dispose();
-        this.bmSongNameLength.Dispose();
-        Bitmap image = new Bitmap(this.nSongNamePixelLength, (int) Math.Ceiling((double) this.ftSongNameFont.GetHeight()));
-        graphics = Graphics.FromImage(image);
-        graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float) 0f, (float) 0f);
-        graphics.Dispose();
-        this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
-        image.Dispose();
-        this.ftSongNameFont.Dispose();
-        Bitmap bitmap2 = new Bitmap(0x3a, 0x12);
-        graphics = Graphics.FromImage(bitmap2);
-        switch (CDTXMania.nSongDifficulty)
-        {
-            case 0:
-                steelBlue = Brushes.GhostWhite;
-                break;
+                this.bmSongNameLength = new Bitmap(1, 1);
+                Bitmap bmpCardName = new Bitmap(1, 1);
+                Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
+                graphics.PageUnit = GraphicsUnit.Pixel;
+                this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
+                this.nSongNamePixelLength = (int) graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
+                graphics.Dispose();
+                this.bmSongNameLength.Dispose();
+                Bitmap image = new Bitmap(this.nSongNamePixelLength, (int) Math.Ceiling((double) this.ftSongNameFont.GetHeight()));
+                graphics = Graphics.FromImage( image );
+                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float) 0f, (float) 0f);
+                graphics.Dispose();
+                this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                image.Dispose();
+                this.ftSongNameFont.Dispose();
+                Bitmap bitmap2 = new Bitmap(0x3a, 0x12);
+                graphics = Graphics.FromImage(bitmap2);
+                switch ( CDTXMania.nSongDifficulty )
+                {
+                    case 0:
+                        DifficultyPanel = Brushes.GhostWhite;
+                        break;
 
-            case 1:
-            case 6:
-                steelBlue = Brushes.Green;
-                break;
+                    case 1:
+                    case 6:
+                        DifficultyPanel = Brushes.Green;
+                        break;
 
-            case 2:
-                steelBlue = Brushes.Aqua;
-                break;
+                    case 2:
+                        DifficultyPanel = Brushes.Aqua;
+                        break;
 
-            case 3:
-            case 7:
-                steelBlue = Brushes.Yellow;
-                break;
+                    case 3:
+                    case 7:
+                        DifficultyPanel = Brushes.Yellow;
+                        break;
 
-            case 4:
-            case 8:
-                steelBlue = Brushes.Red;
-                break;
+                    case 4:
+                    case 8:
+                        DifficultyPanel = Brushes.Red;
+                        break;
 
-            case 5:
-            case 9:
-                steelBlue = Brushes.Purple;
-                break;
+                    case 5:
+                    case 9:
+                        DifficultyPanel = Brushes.Purple;
+                        break;
 
-            case 10:
-            case 11:
-                steelBlue = Brushes.Gold;
-                break;
+                    case 10:
+                    case 11:
+                        DifficultyPanel = Brushes.Gold;
+                        break;
 
-            default:
-                steelBlue = Brushes.Orange;
-                break;
-        }
-        graphics.FillRectangle(steelBlue, (float)0f, (float)0f, (float)58f, (float)18f);
-        graphics.DrawString(CDTXMania.strSongDifficulyName.Substring(0, 3), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(1, 1, 1)), (float)10f, (float)-4f);
-        graphics.Dispose();
-        this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
-        bitmap2.Dispose();
-        Bitmap bitmap3 = new Bitmap(100, 100);
-        graphics = Graphics.FromImage(bitmap3);
-        float num;
+                    default:
+                        DifficultyPanel = Brushes.Orange;
+                        break;
+                }
+                graphics.FillRectangle(DifficultyPanel, (float)0f, (float)0f, (float)58f, (float)18f);
 
-        if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-        {
-            num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
-        }
-        else
-        {
-            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
-            {
-                num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
-            }
-            else
-            {
-                num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f;
-            }
-        }
+                //graphics.DrawString(CDTXMania.strSongDifficulyName.Substring(0, 3), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(1, 1, 1)), (float)10f, (float)-4f);
+                bmpCardName = this.prvSongDifficultyFont.DrawPrivateFont( CDTXMania.strSongDifficulyName.Substring(0, 3), Color.FromArgb(1, 1, 1), Color.Transparent );
+                graphics.DrawImage( bmpCardName, 8f, -8f );
 
-        if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-        {
-            graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-        }
-        else
-        {
-            graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-        }
-        this.txSongLevel = new CTexture(CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat, false);
-        graphics.Dispose();
-        bitmap3.Dispose();
-        Bitmap bitmap4 = new Bitmap(0x2a, 0x30);
-        graphics = Graphics.FromImage(bitmap4);
-        graphics.DrawImage(this.iDrumSpeed, new Rectangle(0, 0, 0x2a, 0x30), new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 0x30, 0x2a, 0x30), GraphicsUnit.Pixel);
-        this.txDrumSpeed = new CTexture(CDTXMania.app.Device, bitmap4, CDTXMania.TextureFormat, false);
-        graphics.Dispose();
-        bitmap4.Dispose();
-        base.OnManagedリソースの作成();
+                graphics.Dispose();
+                this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
+                bitmap2.Dispose();
+                Bitmap bitmap3 = new Bitmap(100, 100);
+                graphics = Graphics.FromImage(bitmap3);
+                float num;
+
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                {
+                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
+                }
+                else
+                {
+                    if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
+                    {
+                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 100.0f;
+                    }
+                    else
+                    {
+                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f + ( CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums / 100.0f : 0 );
+                    }
+                }
+
+                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                {
+                    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
+                }
+                else
+                {
+                    graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
+                }
+                this.txSongLevel = new CTexture(CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat, false);
+                graphics.Dispose();
+                bitmap3.Dispose();
+                Bitmap bitmap4 = new Bitmap(0x2a, 0x30);
+                graphics = Graphics.FromImage(bitmap4);
+                graphics.DrawImage(this.iDrumSpeed, new Rectangle(0, 0, 0x2a, 0x30), new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 0x30, 0x2a, 0x30), GraphicsUnit.Pixel);
+                this.txDrumSpeed = new CTexture(CDTXMania.app.Device, bitmap4, CDTXMania.TextureFormat, false);
+                graphics.Dispose();
+                bitmap4.Dispose();
+                prvSongDifficultyFont.Dispose();
+                bmpCardName.Dispose();
+
+                base.OnManagedリソースの作成();
 			}
 		}
         public override void OnManagedリソースの解放()
@@ -317,6 +326,7 @@ namespace DTXMania
         private CTexture txSongName;
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
+        private CPrivateFont prvSongDifficultyFont;
 
 
 		private bool t背景画像があればその一部からリザルト画像を構築する()
