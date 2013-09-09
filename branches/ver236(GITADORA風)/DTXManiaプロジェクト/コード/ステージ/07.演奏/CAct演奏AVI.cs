@@ -726,8 +726,9 @@ namespace DTXMania
                 }
 
                 //コンボ、ジャケット画像
-                CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 CDTXMania.stage演奏ドラム画面.actStatusPanels.On進行描画();
+                CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
+
 
                 if ((((this.n総移動時間ms != -1L) && (((this.rAVI != null )) && (this.rAVI.avi != null)) || (this.dsBGV != null && this.dsBGV.dshow != null) )) && ( this.bWindowMode ) && (CDTXMania.ConfigIni.bAVI有効))
                 {
