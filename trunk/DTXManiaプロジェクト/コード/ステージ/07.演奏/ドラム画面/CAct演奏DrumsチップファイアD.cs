@@ -142,7 +142,7 @@ namespace DTXMania
                             int n回転初期値 = 1;
                             double num7 = 0.9 + (1 / 100.0); // 拡散の大きさ
                             this.st飛び散るチップ[j].nLane = (int)lane;
-                            this.st飛び散るチップ[j].ct進行 = new CCounter(0, 46, 10, CDTXMania.Timer); // カウンタ
+                            this.st飛び散るチップ[j].ct進行 = new CCounter(0, 44, 10, CDTXMania.Timer); // カウンタ
 
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                             {

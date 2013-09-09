@@ -319,7 +319,7 @@ namespace DTXMania
                                     dbLevel = this.n現在選択中の曲のレベル[i] / 10;
                                     rect百の位 = this.rc数字[ (int)dbLevel ];
                                     rect十の位 = this.rc数字[ nLevel % 10  ];
-                                    rect一の位 = this.rc数字[ nLevel / 100 ];
+                                    rect一の位 = this.rc数字[ cスコア.譜面情報.レベルDec.Drums ];
                                 }
                                 else if (this.n現在選択中の曲のレベル[i] > 100)
                                 {

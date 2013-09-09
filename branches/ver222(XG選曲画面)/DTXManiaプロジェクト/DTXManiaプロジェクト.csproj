@@ -200,6 +200,7 @@
     <Compile Include="コード\全体\CDTXMania.cs" />
     <Compile Include="コード\全体\CDTXVersion.cs" />
     <Compile Include="コード\全体\CPad.cs" />
+    <Compile Include="コード\全体\CPrivateFont.cs" />
     <Compile Include="コード\全体\CSkin.cs" />
     <Compile Include="コード\ステージ\07.演奏\Cクリアステージ.cs" />
     <Compile Include="コード\全体\C定数.cs" />

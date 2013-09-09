@@ -59,6 +59,7 @@ namespace DTXMania
 			public string Presound;
 			public string Backgound;
 			public STDGBVALUE<int> レベル;
+            public STDGBVALUE<int> レベルDec;
 			public STRANK 最大ランク;
 			public STSKILL 最大スキル;
             public STSKILL 最大曲別スキル;
@@ -69,6 +70,7 @@ namespace DTXMania
 			public CDTX.E種別 曲種別;
 			public double Bpm;
 			public int Duration;
+            public STDGBVALUE<bool> b完全にCLASSIC譜面である;
 
 			[Serializable]
 			[StructLayout( LayoutKind.Sequential )]
@@ -206,7 +208,7 @@ namespace DTXMania
 					}
 					set
 					{
-						if( ( value < 0.0 ) || ( value > 100.0 ) )
+						if( ( value < 0.0 ) || ( value > 200.0 ) )
 						{
 							throw new ArgumentOutOfRangeException();
 						}
@@ -257,6 +259,7 @@ namespace DTXMania
 			this.譜面情報.Presound = "";
 			this.譜面情報.Backgound = "";
 			this.譜面情報.レベル = new STDGBVALUE<int>();
+            this.譜面情報.レベルDec = new STDGBVALUE<int>();
 			this.譜面情報.最大ランク = new ST譜面情報.STRANK();
 			this.譜面情報.最大ランク.Drums =  (int)CScoreIni.ERANK.UNKNOWN;
 			this.譜面情報.最大ランク.Guitar = (int)CScoreIni.ERANK.UNKNOWN;
@@ -275,6 +278,7 @@ namespace DTXMania
 			this.譜面情報.曲種別 = CDTX.E種別.DTX;
 			this.譜面情報.Bpm = 120.0;
 			this.譜面情報.Duration = 0;
+            this.譜面情報.b完全にCLASSIC譜面である.Drums = false;
 		}
 	}
 }

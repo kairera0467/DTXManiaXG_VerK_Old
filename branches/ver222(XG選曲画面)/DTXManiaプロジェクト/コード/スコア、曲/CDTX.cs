@@ -27,7 +27,31 @@ namespace DTXMania
 			Rxx = 4,
 			RxB = 5,
 			RGx = 6,
-			RGB = 7
+			RGB = 7,
+            xxxYx = 10,
+            xxBYx,
+            xGxYx,
+            xGBYx,
+            RxxYx,
+            RxBYx,
+            RGxYx,
+            RGBYx,
+            xxxxP = 20,
+            xxBxP,
+            xGxxP,
+            xGBxP,
+            RxxxP,
+            RxBxP,
+            RGxxP,
+            RGBxP,
+            xxxYP = 30,
+            xxBYP,
+            xGxYP,
+            xGBYP,
+            RxxYP,
+            RxBYP,
+            RGxYP,
+            RGBYP
 		};
 
 
@@ -46,6 +70,7 @@ namespace DTXMania
 				#region [ strAVIファイル名の作成。]
 				//-----------------
 				string strAVIファイル名;
+                strAVIファイル名 = CSkin.Path(@"Graphics\7_Movie.avi");
 				if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
 					strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
 				else
@@ -55,9 +80,16 @@ namespace DTXMania
 
 				if( !File.Exists( strAVIファイル名 ) )
 				{
-					Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
-					this.avi = null;
-					return;
+					//Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
+                    Trace.TraceWarning("ファイルが存在しません。代わりに汎用AVIを再生します。({0})({1})", this.strコメント文, strAVIファイル名);
+					//this.avi = null;
+
+                    if (!File.Exists(strAVIファイル名))
+                    {
+                        Trace.TraceWarning("汎用AVIファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名);
+                        this.avi = null;
+                        return;
+                    }
 				}
 
 				// AVI の生成。
@@ -102,6 +134,81 @@ namespace DTXMania
 					this.avi = null;
 					
 					Trace.TraceInformation( "動画を解放しました。({0})({1})", this.strコメント文, strAVIファイル名 );
+				}
+
+				this.bDispose済み = true;
+			}
+			//-----------------
+			#endregion
+		}
+        public class CDirectShow : IDisposable
+		{
+			public FDK.CDirectShow dshow;
+			private bool bDispose済み;
+			public int n番号;
+			public string strコメント文 = "";
+			public string strファイル名 = "";
+
+			public void OnDeviceCreated()
+			{
+				#region [ str動画ファイル名の作成。]
+				//-----------------
+				string str動画ファイル名;
+				if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+					str動画ファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+				else
+					str動画ファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+				//-----------------
+				#endregion
+
+				if( !File.Exists( str動画ファイル名 ) )
+				{
+					Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, str動画ファイル名 );
+					this.dshow = null;
+				}
+
+				// AVI の生成。
+
+				try
+				{
+                    this.dshow = new FDK.CDirectShow( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + this.strファイル名, CDTXMania.app.WindowHandle, true);
+					Trace.TraceInformation( "DirectShowを生成しました。({0})({1})({2}byte)", this.strコメント文, str動画ファイル名, this.dshow.nデータサイズbyte );
+				}
+				catch( Exception e )
+				{
+					Trace.TraceError( e.Message );
+					Trace.TraceError( "DirectShowの生成に失敗しました。({0})({1})", this.strコメント文, str動画ファイル名 );
+					this.dshow= null;
+				}
+			}
+			public override string ToString()
+			{
+				return string.Format( "CAVI{0}: File:{1}, Comment:{2}", CDTX.tZZ( this.n番号 ), this.strファイル名, this.strコメント文 );
+			}
+
+			#region [ IDisposable 実装 ]
+			//-----------------
+			public void Dispose()
+			{
+				if( this.bDispose済み )
+					return;
+
+				if( this.dshow != null )
+				{
+					#region [ strAVIファイル名 の作成。 ]
+					//-----------------
+					string str動画ファイル名;
+					if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+						str動画ファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+					else
+						str動画ファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+					//-----------------
+					#endregion
+
+					this.dshow.Dispose();
+					this.dshow = null;
+					
+					Trace.TraceInformation( "動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
 				}
 
 				this.bDispose済み = true;
@@ -389,6 +496,7 @@ namespace DTXMania
 			public int n発声時刻ms;
 			public int nLag;				// 2011.2.1 yyagi
 			public CDTX.CAVI rAVI;
+            public CDTX.CDirectShow rDShow;
 			public CDTX.CAVIPAN rAVIPan;
 			public CDTX.CBGA rBGA;
 			public CDTX.CBGAPAN rBGAPan;
@@ -476,6 +584,21 @@ namespace DTXMania
 						case 0x90:
 						case 0x91:
 						case 0x92:
+
+                        case 147:
+                        case 148:
+                        case 149:
+                        case 150:
+                        case 151:
+                        case 152:
+                        case 153:
+                        case 154:
+                        case 155:
+                        case 156:
+                        case 157:
+                        case 158:
+                        case 159:
+
 						case 0xa0:
 						case 0xa1:
 						case 0xa2:
@@ -484,6 +607,14 @@ namespace DTXMania
 						case 0xa5:
 						case 0xa6:
 						case 0xa7:
+
+                        case 0xa9:
+                        case 0xaa:
+                        case 0xab:
+                        case 0xac:
+                        case 0xad:
+                        case 0xae:
+
 						case 0xaf:
 						case 0xb1:
 						case 0xb2:
@@ -499,6 +630,34 @@ namespace DTXMania
 						case 0xbc:
                         case 0xbd:
                         case 0xbe:
+                        case 197:
+                        case 198:
+                        case 200:
+                        case 201:
+                        case 202:
+                        case 203:
+                        case 204:
+                        case 205:
+                        case 206:
+                        case 207:
+                        case 208:
+                        case 209:
+                        case 210:
+                        case 211:
+                        case 218:
+                        case 219:
+                        case 220:
+                        case 221:
+                        case 222:
+                        case 223:
+                        case 0xE1:
+                        case 0xE2:
+                        case 0xE3:
+                        case 0xE4:
+                        case 0xE5:
+                        case 0xE6:
+                        case 0xE7:
+                        case 0xE8:
 							return true;
 					}
 					return false;
@@ -595,23 +754,24 @@ namespace DTXMania
 			//-----------------
 			public int CompareTo( CDTX.CChip other )
 			{
+                //チップの重なり順を決める。16進数で16個ずつ並んでいます。
 				byte[] n優先度 = new byte[] {
-					5, 5, 3, 3, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 
-					5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 
-					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+					5, 5, 3, 3, 5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, //0x00 ～ 0x0F
+					5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, //0x10 ～ 0x1F　ドラム演奏
+					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, //0x20 ～ 0x2F　ギター演奏
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x30 ～ 0x3F　ドラム不可視
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x40 ～ 0x4F　未使用(0x4Fはボーナスチップ)
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x50 ～ 0x5F　小節線、拍線、フィル、AVIなど
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x60 ～ 0x6F　BGA、SE
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x70 ～ 0x7F　SE
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x80 ～ 0x8F　SE
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x90 ～ 0x9F　SE
+					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, //0xA0 ～ 0xAF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xB0 ～ 0xBF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xC0 ～ 0xCF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xD0 ～ 0xDF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xE0 ～ 0xEF　
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xF0 ～ 0xFF　
 				};
 
 
@@ -968,6 +1128,7 @@ namespace DTXMania
 			public bool LeftCymbal;
 			public bool OpenGuitar;
 			public bool OpenBass;
+            public bool AVI;
 			
 			public bool this[ int index ]
 			{
@@ -1007,6 +1168,9 @@ namespace DTXMania
 
 						case 10:
 							return this.OpenBass;
+
+                        case 11:
+                            return this.AVI;
 					}
 					throw new IndexOutOfRangeException();
 				}
@@ -1057,6 +1221,10 @@ namespace DTXMania
 						case 10:
 							this.OpenBass = value;
 							return;
+
+                        case 11:
+                            this.AVI = value;
+                            return;
 					}
 					throw new IndexOutOfRangeException();
 				}
@@ -1084,7 +1252,9 @@ namespace DTXMania
 		public string GENRE;
 		public bool HIDDENLEVEL;
 		public STDGBVALUE<int> LEVEL;
+        public STDGBVALUE<int> LEVELDEC;
 		public Dictionary<int, CAVI> listAVI;
+        public Dictionary<int, CDirectShow> listDS;
 		public Dictionary<int, CAVIPAN> listAVIPAN;
 		public Dictionary<int, CBGA> listBGA;
 		public Dictionary<int, CBGAPAN> listBGAPAN;
@@ -1097,6 +1267,7 @@ namespace DTXMania
 		public bool MIDINOTE;
 		public int MIDIレベル;
 		public STLANEINT n可視チップ数;
+        public int nボーナスチップ数;
 		public const int n最大音数 = 4;
 		public const int n小節の解像度 = 384;
 		public string PANEL;
@@ -1151,6 +1322,7 @@ namespace DTXMania
 			stdgbvalue.Guitar = 0;
 			stdgbvalue.Bass = 0;
 			this.LEVEL = stdgbvalue;
+            this.LEVELDEC = stdgbvalue;
 			for (int i = 0; i < 7; i++) {
 				this.RESULTIMAGE[i] = "";
 				this.RESULTMOVIE[i] = "";
@@ -1170,6 +1342,7 @@ namespace DTXMania
 			this.bチップがある.LeftCymbal = false;
 			this.bチップがある.OpenGuitar = false;
 			this.bチップがある.OpenBass = false;
+            this.bチップがある.AVI = false;
 			this.strファイル名 = "";
 			this.strフォルダ名 = "";
 			this.strファイル名の絶対パス = "";
@@ -1294,6 +1467,7 @@ namespace DTXMania
 					{
 						chip.eAVI種別 = EAVI種別.Unknown;
 						chip.rAVI = null;
+                        chip.rDShow = null;
 						chip.rAVIPan = null;
 						if( this.listAVIPAN.ContainsKey( chip.n整数値 ) )
 						{
@@ -1312,28 +1486,6 @@ namespace DTXMania
 							chip.rAVI = this.listAVI[ chip.n整数値 ];
 						}
 					}
-                    if (chip.nチャンネル番号 == 0x99)
-                    {
-                        chip.eAVI種別 = EAVI種別.Unknown;
-                        chip.rAVI = null;
-                        chip.rAVIPan = null;
-                        if (this.listAVIPAN.ContainsKey(chip.n整数値))
-                        {
-                            CAVIPAN cavipan = this.listAVIPAN[chip.n整数値];
-                            if (this.listAVI.ContainsKey(cavipan.nAVI番号) && (this.listAVI[cavipan.nAVI番号].avi != null))
-                            {
-                                chip.eAVI種別 = EAVI種別.AVIPAN;
-                                chip.rAVI = this.listAVI[cavipan.nAVI番号];
-                                chip.rAVIPan = cavipan;
-                                continue;
-                            }
-                        }
-                        if (this.listAVI.ContainsKey(chip.n整数値) && (this.listAVI[chip.n整数値].avi != null))
-                        {
-                            chip.eAVI種別 = EAVI種別.AVI;
-                            chip.rAVI = this.listAVI[chip.n整数値];
-                        }
-                    }
 				}
 			}
 		}
@@ -1496,7 +1648,7 @@ namespace DTXMania
 				foreach ( CChip chip in this.listChip )
 				{
 					#region [ BGAPAN/BGA/BMPTEX/BMP ]
-					if ( ( ( ( chip.nチャンネル番号 == 4 ) || ( chip.nチャンネル番号 == 7 ) ) || ( ( chip.nチャンネル番号 >= 0x100 ) && ( chip.nチャンネル番号 <= 0x59 ) ) ) || ( chip.nチャンネル番号 == 0x60 ) )
+					if ( ( ( ( chip.nチャンネル番号 == 4 ) || ( chip.nチャンネル番号 == 7 ) ) || ( ( chip.nチャンネル番号 >= 0x55 ) && ( chip.nチャンネル番号 <= 0x59 ) ) ) || ( chip.nチャンネル番号 == 0x60 ) )
 					{
 						chip.eBGA種別 = EBGA種別.Unknown;
 						chip.rBMP = null;
@@ -1584,13 +1736,6 @@ namespace DTXMania
 				}
 			}
 		}
-		public void tWave再生位置自動補正()
-		{
-			foreach( CWAV cwav in this.listWAV.Values )
-			{
-				this.tWave再生位置自動補正( cwav );
-			}
-		}
         public void t旧仕様のドコドコチップを振り分ける(E楽器パート part, bool bAssignToLBD)
         {
             if (part == E楽器パート.DRUMS && bAssignToLBD)
@@ -1631,14 +1776,14 @@ namespace DTXMania
                 {
                     int num = 0;
                     int index = 0;
-                    int[] numArray = new int[0x3e8];
+                    int[] numArray = new int[1000];
                     int num3 = 0;
                     int num4 = 0;
                     int num5 = -1;
                     int num6 = 0;
                     int num7 = 0;
                     bool flag = false;
-                    for (int i = 0; i < 0x3e8; i++)
+                    for (int i = 0; i < 1000; i++)
                     {
                         numArray[i] = 0;
                     }
@@ -1778,18 +1923,17 @@ namespace DTXMania
                 {
                     foreach (CChip chip in this.listChip)
                     {
-                        int num2 = chip.nチャンネル番号;
-                        if ((part == E楽器パート.DRUMS) && ((num2 == 0x19) || (num2 == 0x16)))
+                        int nチャンネル番号 = chip.nチャンネル番号;
+                        if ((part == E楽器パート.DRUMS) && ((nチャンネル番号 == 0x19) || (nチャンネル番号 == 0x16)))
                         {
                             if (num == chip.n発声位置)
                             {
                                 chip.nチャンネル番号 = 0x1a;
                             }
-                            else if (num2 == 0x19)
+                            else if (nチャンネル番号 == 0x19)
                             {
                                 chip.nチャンネル番号 = 0x16;
                             }
-                            int num1 = chip.nチャンネル番号;
                             num = chip.n発声位置;
                         }
                     }
@@ -1802,9 +1946,9 @@ namespace DTXMania
                     int num4 = 0;
                     int num5 = 0;
                     int num6 = 0;
-                    foreach (CChip chip2 in this.listChip)
+                    foreach (CChip chip in this.listChip)
                     {
-                        int num7 = chip2.nチャンネル番号;
+                        int num7 = chip.nチャンネル番号;
                         if ((part == E楽器パート.DRUMS) && ((num7 >= 0x11) || (num7 <= 0x1c)))
                         {
                             switch (num7)
@@ -1812,13 +1956,13 @@ namespace DTXMania
                                 case 0x11:
                                 case 0x16:
                                 case 0x18:
-                                    if (num6 == chip2.n発声位置)
+                                    if (num6 == chip.n発声位置)
                                     {
-                                        chip2.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
+                                        chip.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
                                     }
                                     flag2 = num7 == 0x16;
-                                    num4 = chip2.nチャンネル番号;
-                                    num6 = chip2.n発声位置;
+                                    num4 = chip.nチャンネル番号;
+                                    num6 = chip.n発声位置;
                                     continue;
 
 
@@ -1829,58 +1973,58 @@ namespace DTXMania
                                     }
                                 case 0x14:
                                     {
-                                        chip2.nチャンネル番号 = ((num5 == chip2.n発声位置) && (num3 == 20)) ? 0x15 : 20;
+                                        chip.nチャンネル番号 = ((num5 == chip.n発声位置) && (num3 == 20)) ? 0x15 : 20;
                                         flag = false;
-                                        num3 = chip2.nチャンネル番号;
-                                        num5 = chip2.n発声位置;
+                                        num3 = chip.nチャンネル番号;
+                                        num5 = chip.n発声位置;
                                         continue;
                                     }
                                 case 0x15:
-                                    if (num5 != chip2.n発声位置)
+                                    if (num5 != chip.n発声位置)
                                     {
                                         if (flag)
                                         {
-                                            chip2.nチャンネル番号 = 20;
+                                            chip.nチャンネル番号 = 20;
                                         }
                                     }
                                     if (num3 == 0x15)
                                     {
-                                        chip2.nチャンネル番号 = 20;
+                                        chip.nチャンネル番号 = 20;
                                     }
-                                    num3 = chip2.nチャンネル番号;
-                                    num5 = chip2.n発声位置;
+                                    num3 = chip.nチャンネル番号;
+                                    num5 = chip.n発声位置;
                                     continue;
 
                                 case 0x17:
                                     {
-                                        chip2.nチャンネル番号 = ((num5 == chip2.n発声位置) && (num3 == 0x15)) ? 20 : 0x15;
+                                        chip.nチャンネル番号 = ((num5 == chip.n発声位置) && (num3 == 0x15)) ? 20 : 0x15;
                                         flag = true;
-                                        num3 = chip2.nチャンネル番号;
-                                        num5 = chip2.n発声位置;
+                                        num3 = chip.nチャンネル番号;
+                                        num5 = chip.n発声位置;
                                         continue;
                                     }
                                 case 0x19:
                                     {
-                                        chip2.nチャンネル番号 = ((num6 == chip2.n発声位置) && (num4 == 0x16)) ? 0x11 : 0x16;
+                                        chip.nチャンネル番号 = ((num6 == chip.n発声位置) && (num4 == 0x16)) ? 0x11 : 0x16;
                                         flag2 = true;
-                                        num4 = chip2.nチャンネル番号;
-                                        num6 = chip2.n発声位置;
+                                        num4 = chip.nチャンネル番号;
+                                        num6 = chip.n発声位置;
                                         continue;
                                     }
                                 case 0x1a:
-                                    if (num6 != chip2.n発声位置)
+                                    if (num6 != chip.n発声位置)
                                     {
-                                        chip2.nチャンネル番号 = (flag2 && ((chip2.n発声位置 - num6) <= 0xc0)) ? 0x11 : 0x16;
+                                        chip.nチャンネル番号 = (flag2 && ((chip.n発声位置 - num6) <= 0xc0)) ? 0x11 : 0x16;
                                     }
-                                    chip2.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
-                                    num4 = chip2.nチャンネル番号;
-                                    num6 = chip2.n発声位置;
+                                    chip.nチャンネル番号 = (num4 == 0x16) ? 0x11 : 0x16;
+                                    num4 = chip.nチャンネル番号;
+                                    num6 = chip.n発声位置;
                                     continue;
 
                                 case 0x1b:
                                 case 0x1c:
                                     {
-                                        chip2.nチャンネル番号 = 0x76;
+                                        chip.nチャンネル番号 = 0x76;
                                         continue;
                                     }
                             }
@@ -2499,24 +2643,24 @@ namespace DTXMania
         {
             switch (nランダム化前チャンネル番号)
             {
-                case 17:
-                case 24:
-                    chip.nチャンネル番号 = n乱数排列数列[0] + 17;
+                case 0x11:
+                case 0x18:
+                    chip.nチャンネル番号 = n乱数排列数列[0] + 0x11;
                     return;
-                case 18:
-                    chip.nチャンネル番号 = n乱数排列数列[1] + 17;
+                case 0x12:
+                    chip.nチャンネル番号 = n乱数排列数列[1] + 0x11;
                     return;
-                case 19:
-                case 23:
+                case 0x13:
+                case 0x17:
                     break;
-                case 20:
-                    chip.nチャンネル番号 = n乱数排列数列[2] + 17;
+                case 0x14:
+                    chip.nチャンネル番号 = n乱数排列数列[2] + 0x11;
                     return;
-                case 21:
-                    chip.nチャンネル番号 = n乱数排列数列[3] + 17;
+                case 0x15:
+                    chip.nチャンネル番号 = n乱数排列数列[3] + 0x11;
                     return;
-                case 22:
-                    chip.nチャンネル番号 = n乱数排列数列[4] + 17;
+                case 0x16:
+                    chip.nチャンネル番号 = n乱数排列数列[4] + 0x11;
                     break;
                 default:
                     return;
@@ -2542,25 +2686,37 @@ namespace DTXMania
 
 
 
-        public void tWave再生位置自動補正(CWAV wc)
-        {
-            if (wc.rSound[0] != null && wc.rSound[0].n総演奏時間ms >= 5000)
-            {
-                for (int i = 0; i < nPolyphonicSounds; i++)
-                {
-                    if ((wc.rSound[i] != null) && (wc.rSound[i].b再生中))
-                    {
-                        long nCurrentTime = CSound管理.rc演奏用タイマ.nシステム時刻ms;
-                        if (nCurrentTime > wc.n再生開始時刻[i])
-                        {
-                            long nAbsTimeFromStartPlaying = nCurrentTime - wc.n再生開始時刻[i];
-                            // wc.rSound[ i ].t再生位置を変更する( wc.rSound[ i ].t時刻から位置を返す( nAbsTimeFromStartPlaying ) );
-                             wc.rSound[i].t再生位置を変更する(nAbsTimeFromStartPlaying);	// WASAPI/ASIO用
-                        }
-                    }
-                }
-            }
-        }
+		public void tWave再生位置自動補正()
+		{
+			foreach( CWAV cwav in this.listWAV.Values )
+			{
+				this.tWave再生位置自動補正( cwav );
+			}
+		}
+		public void tWave再生位置自動補正( CWAV wc )
+		{
+			if ( wc.rSound[ 0 ] != null && wc.rSound[ 0 ].n総演奏時間ms >= 5000 )
+			{
+				for ( int i = 0; i < nPolyphonicSounds; i++ )
+				{
+					if ( ( wc.rSound[ i ] != null ) && ( wc.rSound[ i ].b再生中 ) )
+					{
+						long nCurrentTime = CSound管理.rc演奏用タイマ.nシステム時刻ms;
+						if ( nCurrentTime > wc.n再生開始時刻[ i ] )
+						{
+							long nAbsTimeFromStartPlaying = nCurrentTime - wc.n再生開始時刻[ i ];
+							//Trace.TraceInformation( "再生位置自動補正: {0}, seek先={1}ms, 全音長={2}ms",
+							//    Path.GetFileName( wc.rSound[ 0 ].strファイル名 ),
+							//    nAbsTimeFromStartPlaying,
+							//    wc.rSound[ 0 ].n総演奏時間ms
+							//);
+							// wc.rSound[ i ].t再生位置を変更する( wc.rSound[ i ].t時刻から位置を返す( nAbsTimeFromStartPlaying ) );
+							wc.rSound[ i ].t再生位置を変更する( nAbsTimeFromStartPlaying );	// WASAPI/ASIO用
+						}
+					}
+				}
+			}
+		}
 		public void tWavの再生停止( int nWaveの内部番号 )
 		{
 			if( this.listWAV.ContainsKey( nWaveの内部番号 ) )
@@ -2886,8 +3042,6 @@ namespace DTXMania
 					CSound sound = wc.rSound[ index ];
 					if( sound != null )
 					{
-						sound.n音量 = (int) ( ( (double) ( nVol * wc.n音量 ) ) / 100.0 );
-						sound.n位置 = wc.n位置;
 						if( bBad )
 						{
 							sound.db周波数倍率 = ( (float) ( 100 + ( ( ( CDTXMania.Random.Next( 3 ) + 1 ) * 7 ) * ( 1 - ( CDTXMania.Random.Next( 2 ) * 2 ) ) ) ) ) / 100f;
@@ -2897,6 +3051,9 @@ namespace DTXMania
 							sound.db周波数倍率 = 1.0;
 						}
 						sound.db再生速度 = ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0;
+						// 再生速度によって、WASAPI/ASIOで使う使用mixerが決まるため、付随情報の設定(音量/PAN)は、再生速度の設定後に行う
+						sound.n音量 = (int) ( ( (double) ( nVol * wc.n音量 ) ) / 100.0 );
+						sound.n位置 = wc.n位置;
 						sound.t再生を開始する();
 					}
 					wc.n再生開始時刻[ wc.n現在再生中のサウンド番号 ] = n再生開始システム時刻ms;
@@ -2946,7 +3103,7 @@ namespace DTXMania
 					}
 				}
 			}
-		}
+        }
 		public void t全チップの再生再開()
 		{
 			foreach( CWAV cwav in this.listWAV.Values )
@@ -3452,14 +3609,18 @@ namespace DTXMania
 							{
 								this.n可視チップ数[ c - 0x11 ]++;
 							}
-							if ( ( 0x20 <= c ) && ( c <= 0x27 ) )
-							{
+                            if ((32 <= c && c <= 39) || (147 <= c && c <= 159) || (169 <= c && c <= 175) || (208 <= c && c <= 211))
+                            {
 								this.n可視チップ数.Guitar++;
 							}
-							if ( ( 0xA0 <= c ) && ( c <= 0xa7 ) )
-							{
+                            if ((160 <= c && c <= 167) || (197 <= c && c <= 198) || (200 <= c && c <= 207) || (218 <= c && c <= 223) || (225 <= c && c <= 232))
+                            {
 								this.n可視チップ数.Bass++;
 							}
+                            if ( c == 0x4F )
+                            {
+                                this.nボーナスチップ数++;
+                            }
 						}
 						#endregion
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );
@@ -3542,6 +3703,10 @@ namespace DTXMania
 							{
 								Trace.TraceInformation( cavi.ToString() );
 							}
+                            foreach ( CDirectShow cds in this.listDS.Values)
+                            {
+                                Trace.TraceInformation( cds.ToString());
+                            }
 							foreach ( CAVIPAN cavipan in this.listAVIPAN.Values )
 							{
 								Trace.TraceInformation( cavipan.ToString() );
@@ -3595,7 +3760,7 @@ namespace DTXMania
 					// BGM:
 					case 0x01:
 					// Dr演奏チャネル
-					case 0x11:	case 0x12:	case 0x13:	case 0x14:	case 0x15:	case 0x16:	case 0x17:	case 0x18:	case 0x19:	case 0x1A:
+					case 0x11:	case 0x12:	case 0x13:	case 0x14:	case 0x15:	case 0x16:	case 0x17:	case 0x18:	case 0x19:	case 0x1A:  case 0x1B:  case 0x1C:
 					// Gt演奏チャネル
 					case 0x20:	case 0x21:	case 0x22:	case 0x23:	case 0x24:	case 0x25:	case 0x26:	case 0x27:	case 0x28:
 					// Bs演奏チャネル
@@ -3650,7 +3815,7 @@ namespace DTXMania
 
 						CChip c_AddMixer = new CChip()
 						{
-							nチャンネル番号 = 0xDA,
+							nチャンネル番号 = 0xFA,
 							n整数値 = pChip.n整数値,
 							n整数値・内部番号 = pChip.n整数値・内部番号,
 							n発声時刻ms = nAddMixer時刻ms,
@@ -3665,7 +3830,7 @@ namespace DTXMania
 						if ( listWAV.ContainsKey( pChip.n整数値・内部番号 ) )
 						{
 							CDTX.CWAV wc = CDTXMania.DTX.listWAV[ pChip.n整数値・内部番号 ];
-							duration = (wc.rSound[0] == null)? 0 : wc.rSound[0].n総演奏時間ms;
+							duration = ( wc.rSound[ 0 ] == null ) ? 0 : (int) ( wc.rSound[ 0 ].n総演奏時間ms / this.db再生速度 );	// #23664 durationに再生速度が加味されておらず、低速再生でBGMが途切れる問題を修正 (発声時刻msは、DTX読み込み時に再生速度加味済)
 						}
 //Debug.WriteLine("duration=" + duration );
 						int n新RemoveMixer時刻ms, n新RemoveMixer位置;
@@ -3714,7 +3879,7 @@ namespace DTXMania
 							}
 							CChip c = new CChip()											// mixer削除時刻を更新(遅延)する
 							{
-								nチャンネル番号 = 0xDB,
+								nチャンネル番号 = 0xFB,
 								n整数値 = listRemoveTiming[ index ].n整数値,
 								n整数値・内部番号 = listRemoveTiming[ index ].n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -3730,7 +3895,7 @@ namespace DTXMania
 						{																	// 発音していたが既にmixer削除確定していたなら
 							CChip c = new CChip()											// 新しくmixer削除候補として追加する
 							{
-								nチャンネル番号 = 0xDB,
+								nチャンネル番号 = 0xFB,
 								n整数値 = pChip.n整数値,
 								n整数値・内部番号 = pChip.n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -3865,6 +4030,7 @@ namespace DTXMania
 			this.listBGA = new Dictionary<int, CBGA>();
 			this.listAVIPAN = new Dictionary<int, CAVIPAN>();
 			this.listAVI = new Dictionary<int, CAVI>();
+            this.listDS = new Dictionary<int, CDirectShow>();
 			this.listChip = new List<CChip>();
 			base.On活性化();
 		}
@@ -3902,6 +4068,14 @@ namespace DTXMania
 				}
 				this.listAVI = null;
 			}
+            if (this.listDS != null)
+            {
+                foreach (CDirectShow cds in this.listDS.Values)
+                {
+                    cds.Dispose();
+                }
+                this.listDS= null;
+            }
 			if( this.listBPM != null )
 			{
 				this.listBPM.Clear();
@@ -3962,6 +4136,13 @@ namespace DTXMania
 						cavi.Dispose();
 					}
 				}
+                if (this.listDS != null)
+                {
+                    foreach (CDirectShow cds in this.listDS.Values)
+                    {
+                        cds.Dispose();
+                    }
+                }
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -4264,6 +4445,17 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
+                #region[ DLVDEC ]
+                else if( strコマンド.StartsWith( "DLVDEC", StringComparison.OrdinalIgnoreCase ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "DLVDEC", ref strコマンド, ref strパラメータ);
+                    int dleveldec;
+					if( int.TryParse( strパラメータ, out dleveldec ) )
+					{
+                        this.LEVELDEC.Drums = Math.Min( Math.Max( dleveldec, 0 ), 10 );
+					}
+                }
+                #endregion
 #if TEST_NOTEOFFMODE
 				else if (str.StartsWith("SUPRESSNOTEOFF_HIHAT", StringComparison.OrdinalIgnoreCase)) {
 					this.t入力・パラメータ食い込みチェック("SUPRESSNOTEOFF_HIHAT", ref str, ref str2);
@@ -4278,8 +4470,8 @@ namespace DTXMania
 					this.bBASS演奏で直前のBASSを消音する = !str2.ToLower().Equals("on");
 				}
 #endif
-				#region [ GENRE ]
-				//-----------------
+                #region [ GENRE ]
+                //-----------------
 				else if( strコマンド.StartsWith( "GENRE", StringComparison.OrdinalIgnoreCase ) )
 				{
 					this.t入力・パラメータ食い込みチェック( "GENRE", ref strコマンド, ref strパラメータ );
@@ -4546,6 +4738,18 @@ namespace DTXMania
 				this.listAVI.Remove( zz );
 
 			this.listAVI.Add( zz, avi );
+
+            var ds = new CDirectShow()
+            {
+                n番号 = zz,
+                strファイル名 = strパラメータ,
+                strコメント文 = strコメント,
+            };
+
+            if (this.listDS.ContainsKey(zz))	// 既にリスト中に存在しているなら削除。後のものが有効。
+                this.listDS.Remove(zz);
+
+            this.listDS.Add(zz, ds);
 			//-----------------
 			#endregion
 
@@ -5960,6 +6164,10 @@ namespace DTXMania
 			}
 			switch( nチャンネル番号 )
 			{
+                case 0x17:
+                    this.bチップがある.FT = true;
+                    break;
+
 				case 0x18:
 					this.bチップがある.HHOpen = true;
 					break;
@@ -5972,9 +6180,21 @@ namespace DTXMania
 					this.bチップがある.LeftCymbal = true;
 					break;
 
+                case 0x1b:
+                    this.bチップがある.LP = true;
+                    break;
+
+                case 0x1c:
+                    this.bチップがある.LBD = true;
+                    break;
+
 				case 0x20:
 					this.bチップがある.OpenGuitar = true;
 					break;
+
+                case 0x54:
+                    this.bチップがある.AVI = true;
+                    break;
 
 				case 0xA0:
 					this.bチップがある.OpenBass = true;
@@ -6092,14 +6312,14 @@ namespace DTXMania
 				{
 					chip.e楽器パート = E楽器パート.DRUMS;
 				}
-				if( ( nチャンネル番号 >= 0x20 ) && ( nチャンネル番号 <= 0x27 ) )
-				{
-					chip.e楽器パート = E楽器パート.GUITAR;
-				}
-				if( ( nチャンネル番号 >= 160 ) && ( nチャンネル番号 <= 0xA7 ) )
-				{
-					chip.e楽器パート = E楽器パート.BASS;
-				}
+                if (( nチャンネル番号 >= 32 && nチャンネル番号 <= 39) || (147 <= nチャンネル番号 && nチャンネル番号 <= 159) || (169 <= nチャンネル番号 && nチャンネル番号 <= 175) || (208 <= nチャンネル番号 && nチャンネル番号 <= 211))
+                {
+                    chip.e楽器パート = E楽器パート.GUITAR;
+                }
+                if ((nチャンネル番号 >= 160 && nチャンネル番号 <= 167) || (197 <= nチャンネル番号 && nチャンネル番号 <= 198) || (200 <= nチャンネル番号 && nチャンネル番号 <= 207) || (218 <= nチャンネル番号 && nチャンネル番号 <= 223) || (225 <= nチャンネル番号 && nチャンネル番号 <= 232))
+                {
+                    chip.e楽器パート = E楽器パート.BASS;
+                }
 				//-----------------
 				#endregion
 

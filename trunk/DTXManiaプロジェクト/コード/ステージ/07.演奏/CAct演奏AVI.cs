@@ -17,6 +17,8 @@ namespace DTXMania
 
         public CAct演奏AVI()
         {
+            base.list子Activities.Add( this.actFill = new CAct演奏Drumsフィルインエフェクト() );
+
             base.b活性化してない = true;
         }
 
@@ -733,7 +735,7 @@ namespace DTXMania
                     CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
                 }
 
-                if (CDTXMania.ConfigIni.ボーナス演出を表示する == true)
+                if( CDTXMania.ConfigIni.ボーナス演出を表示する == true )
                 {
                     for (int i = 0; i < 1; i++)
                     {
@@ -1373,6 +1375,8 @@ namespace DTXMania
                     }
                 }
             }
+            if(CDTXMania.ConfigIni.ボーナス演出を表示する)
+                this.actFill.tStart();
         }
         public override int On進行描画()
         {
@@ -1384,6 +1388,8 @@ namespace DTXMania
 
         #region [ private ]
         //-----------------
+        public CAct演奏Drumsフィルインエフェクト actFill;
+
         private bool bFullScreen;
 //      private Bitmap blanes;
         public bool bWindowMode;

@@ -1371,6 +1371,42 @@ namespace DTXMania
             }
             return (int)ERANK.UNKNOWN;
         }
+        
+        /// <summary>
+        /// nDummy 適当な数値を入れてください。特に使いません。
+        /// dRate 達成率を入れます。
+        /// </summary>
+        internal static int tランク値を計算して返す( int nDummy, double dRate )
+        {
+            if ( dRate == 0 )
+                return (int)ERANK.UNKNOWN;
+
+            if ( dRate >= 95 )
+            {
+                return (int)ERANK.SS;
+            }
+            if ( dRate >= 80 )
+            {
+                return (int)ERANK.S;
+            }
+            if ( dRate >= 73 )
+            {
+                return (int)ERANK.A;
+            }
+            if ( dRate >= 63 )
+            {
+                return (int)ERANK.B;
+            }
+            if ( dRate >= 53 )
+            {
+                return (int)ERANK.C;
+            }
+            if ( dRate >= 45 )
+            {
+                return (int)ERANK.D;
+            }
+            return (int)ERANK.E;
+        }
         internal static int tランク値を計算して返す(int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, int nCombo)
         {
             if (nTotal <= 0)
@@ -1414,7 +1450,7 @@ namespace DTXMania
             }
             return (int)ERANK.E;
         }
-        internal static double tゲーム型スキルを計算して返す(int nLevel, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        internal static double tゲーム型スキルを計算して返す(double dbLevel, int nLevelDec, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
         {
             //こちらはプレイヤースキル・全曲スキルに加算される得点。いわゆる曲別スキル。
             double dbPERFECT率 = (100.0 * nPerfect / nTotal);
@@ -1426,7 +1462,16 @@ namespace DTXMania
             if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
                 ret = 0.0;
 
-            ret = ((dbRate * (nLevel / 10.0) * 0.2));
+            if (dbLevel >= 100)
+            {
+                dbLevel = dbLevel / 100.0;
+            }
+            else if (dbLevel < 100)
+            {
+                dbLevel = dbLevel / 10.0 + ( nLevelDec != 0 ? 0 : nLevelDec / 100.0 );
+            }
+
+            ret = ((dbRate * dbLevel * 0.2));
             ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
             if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
             {
@@ -1519,15 +1564,24 @@ namespace DTXMania
             }
             return (int)ERANK.E;
         }
-        internal static double t旧ゲーム型スキルを計算して返す(int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        internal static double t旧ゲーム型スキルを計算して返す( double dbLevel, int nLevelDec, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
         {
             double ret;
-            if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
+            if ( ( nTotal == 0 ) || ( ( nPerfect == 0 ) && ( nCombo == 0 ) ) )
                 ret = 0.0;
 
-            ret = ((nLevel * ((nPerfect * 0.8 + nCombo * 0.2) / ((double)nTotal))) / 2.0);
-            ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
-            if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
+            if ( dbLevel >= 100 )
+            {
+                dbLevel = dbLevel / 100;
+            }
+            else if( dbLevel < 100 )
+            {
+                dbLevel = dbLevel / 10.0 + ( nLevelDec != 0 ? 0 : nLevelDec / 100.0 );
+            }
+
+            ret = ( ( dbLevel * ( ( nPerfect * 0.8 + nCombo * 0.2 ) / ( ( double )nTotal ) ) ) / 2.0 );
+            ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
+            if ( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
             {
                 return 0;
             }
@@ -1546,16 +1600,13 @@ namespace DTXMania
             ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
             return ret;
         }
-        internal static double t旧ゴーストスキルを計算して返す(int nTotal, int nPerfect, double db目標スキル, E楽器パート inst)
+        internal static double t旧ゴーストスキルを計算して返す(int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, E楽器パート inst)
         {
             if (nTotal == 0)
                 return 0.0;
-
-            int nAuto = nTotal - nPerfect;
-            double y = (nPerfect * 1.0 * 100.0) / ((double)nTotal);
+            int nAuto = nTotal - (nPerfect + nGreat + nGood + nPoor + nMiss);
+            double y = ((nPerfect * 1.0 + nGreat * 0.8 + nGood * 0.5 + nPoor * 0.2 + nMiss * 0.0 + nAuto * 0.0) * 100.0) / ((double)nTotal);
             double ret = (100.0 * ((Math.Pow(1.03, y) - 1.0) / (Math.Pow(1.03, 100.0) - 1.0)));
-
-            ret = ret / db目標スキル;
 
             return ret;
         }

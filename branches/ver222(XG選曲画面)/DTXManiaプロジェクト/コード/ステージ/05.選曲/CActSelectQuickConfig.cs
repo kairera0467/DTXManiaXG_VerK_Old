@@ -192,19 +192,19 @@ namespace DTXMania
 				automode = 0;	// All Auto
 			}
 			else if (	CDTXMania.ConfigIni.bAutoPlay.GtR == true && CDTXMania.ConfigIni.bAutoPlay.GtG == true &&
-                        CDTXMania.ConfigIni.bAutoPlay.GtB == true && CDTXMania.ConfigIni.bAutoPlay.GtY == true && CDTXMania.ConfigIni.bAutoPlay.GtP == true && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
+                        CDTXMania.ConfigIni.bAutoPlay.GtB == true && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
 						CDTXMania.ConfigIni.bAutoPlay.GtW == false )
 			{
 				automode = 1;	// Auto Neck
 			}
 			else if (	CDTXMania.ConfigIni.bAutoPlay.GtR == false && CDTXMania.ConfigIni.bAutoPlay.GtG == false &&
-                        CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtY == false && CDTXMania.ConfigIni.bAutoPlay.GtP == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == true &&
+                        CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == true &&
 						CDTXMania.ConfigIni.bAutoPlay.GtW == false )
 			{
 				automode = 2;	// Auto Pick
 			}
 			else if	(	CDTXMania.ConfigIni.bAutoPlay.GtR == false && CDTXMania.ConfigIni.bAutoPlay.GtB == false &&
-                        CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtY == false && CDTXMania.ConfigIni.bAutoPlay.GtP == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
+                        CDTXMania.ConfigIni.bAutoPlay.GtB == false && CDTXMania.ConfigIni.bAutoPlay.GtPick == false &&
 						CDTXMania.ConfigIni.bAutoPlay.GtW == false )
 			{
 				automode = 4;	// OFF
@@ -357,18 +357,18 @@ namespace DTXMania
 
                         if (d == Eダークモード.FULL)
                         {
-                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 3;
-                            CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
+                            //CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 3;
+                            //CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
                         }
                         else if (d == Eダークモード.HALF)
                         {
-                            CDTXMania.ConfigIni.nLaneDisp[ nCurrentTarget ] = 1;
-                            CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = true;
+                            //CDTXMania.ConfigIni.nLaneDisp[ nCurrentTarget ] = 1;
+                            //CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = true;
                         }
                         else
                         {
-                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 0;
-                            CDTXMania.ConfigIni.bJudgeLineDisp[nCurrentTarget] = true;
+                            //CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 0;
+                            //CDTXMania.ConfigIni.bJudgeLineDisp[nCurrentTarget] = true;
                         }
 					}
 					break;
