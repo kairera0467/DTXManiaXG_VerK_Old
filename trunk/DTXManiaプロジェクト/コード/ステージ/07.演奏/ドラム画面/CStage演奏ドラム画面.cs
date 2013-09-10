@@ -330,9 +330,9 @@ namespace DTXMania
                         }
                     }
                 }
-                double dbシャッターIN = (base.nShutterInPosY * 7.2);
+                double dbシャッターIN = (base.nShutterInPosY.Drums * 7.2);
                 this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
-                double dbシャッターOUT = 720 - (base.nShutterOutPosY * 7.2f);
+                double dbシャッターOUT = 720 - (base.nShutterOutPosY.Drums * 7.2f);
                 this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
                 #endregion
                 this.t進行描画・判定ライン();

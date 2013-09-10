@@ -568,8 +568,8 @@ namespace DTXMania
 		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
         public int nMovieMode;
         public int nJudgeLine;
-        public int nShutterInSide;
-        public int nShutterOutSide;
+        public STDGBVALUE<int> nShutterInSide;
+        public STDGBVALUE<int> nShutterOutSide;
         public bool bCLASSIC譜面判別を有効にする;
         public bool bMutingLP;
         public bool bLivePoint;
@@ -1003,8 +1003,10 @@ namespace DTXMania
             this.nMovieMode = 1;
             this.nMovieAlpha = 0;
             this.nJudgeLine = 0;
-            this.nShutterInSide = 0;
-            this.nShutterOutSide = 0;
+            this.nShutterInSide = new STDGBVALUE<int>();
+            this.nShutterInSide.Drums = 0;
+            this.nShutterOutSide = new STDGBVALUE<int>();
+            this.nShutterOutSide.Drums = 0;
 			this.nフレーム毎スリープms = -1;			// #xxxxx 2011.11.27 yyagi add
 			this.n非フォーカス時スリープms = 1;			// #23568 2010.11.04 ikanick add
 			this._bGuitar有効 = false;
@@ -1775,10 +1777,14 @@ namespace DTXMania
             sw.WriteLine("DrumSetMoves={0}", this.bドラムセットを動かす ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; シャッターINSIDE(0～100)");
-            sw.WriteLine("ShutterIn={0}", (int)this.nShutterInSide);
+            sw.WriteLine("DrumsShutterIn={0}", (int)this.nShutterInSide.Drums);
+            sw.WriteLine("GuitarShutterIn={0}", (int)this.nShutterInSide.Guitar);
+            sw.WriteLine("BassShutterIn={0}", (int)this.nShutterInSide.Bass);
             sw.WriteLine();
             sw.WriteLine("; シャッターOUTSIDE(0～100)");
-            sw.WriteLine("ShutterOut={0}", (int)this.nShutterOutSide);
+            sw.WriteLine("DrumsShutterOut={0}", (int)this.nShutterOutSide.Drums);
+            sw.WriteLine("GuitarShutterOut={0}", (int)this.nShutterOutSide.Guitar);
+            sw.WriteLine("BassShutterOut={0}", (int)this.nShutterOutSide.Bass);
             sw.WriteLine();
             sw.WriteLine( "; ボーナス演出の表示(0:表示しない, 1:表示する)");
             sw.WriteLine("DrumsStageEffect={0}", this.ボーナス演出を表示する ? 1 : 0);
@@ -2749,13 +2755,29 @@ namespace DTXMania
                                             {
                                                 this.nJudgeLine = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine);
                                             }
-                                            else if (str3.Equals("ShutterIn"))
+                                            else if ( str3.Equals( "DrumsShutterIn" ) )
                                             {
-                                                this.nShutterInSide = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 0xfff, this.nShutterInSide);
+                                                this.nShutterInSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Drums );
                                             }
-                                            else if (str3.Equals("ShutterOut"))
+                                            else if ( str3.Equals( "DrumsShutterOut" ) )
                                             {
-                                                this.nShutterOutSide = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, -100, 100, this.nShutterOutSide);
+                                                this.nShutterOutSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Drums );
+                                            }
+                                            else if ( str3.Equals( "GuitarShutterIn" ) )
+                                            {
+                                                this.nShutterInSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Guitar );
+                                            }
+                                            else if ( str3.Equals( "GuitarShutterOut" ) )
+                                            {
+                                                this.nShutterOutSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
+                                            }
+                                            else if ( str3.Equals( "BassShutterIn" ) )
+                                            {
+                                                this.nShutterInSide.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Bass );
+                                            }
+                                            else if ( str3.Equals( "BassShutterOut" ) )
+                                            {
+                                                this.nShutterOutSide.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
                                             }
                                             else if (str3.Equals("DrumsLaneType"))
                                             {
