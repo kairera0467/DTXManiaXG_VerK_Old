@@ -92,6 +92,7 @@ namespace DTXMania
                 this.txレーン = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_lanes_Guitar.png") );
                 this.txヒットバー = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\ScreenPlayDrums hit-bar.png"));
 				//this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
+                this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter_GB.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -101,8 +102,9 @@ namespace DTXMania
 			{
 				//CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.txチップ );
-                CDTXMania.tテクスチャの解放(ref this.txレーン);
+                CDTXMania.tテクスチャの解放( ref this.txレーン );
 				CDTXMania.tテクスチャの解放( ref this.txヒットバー );
+                CDTXMania.tテクスチャの解放( ref this.txシャッター );
 				//CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
 				base.OnManagedリソースの解放();
 			}
@@ -169,6 +171,69 @@ namespace DTXMania
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
+                #region[ シャッター ]
+                //CLASSICシャッター(レーンシャッター)は未実装。
+                //if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false )))
+                {
+                    //if ( this.txLaneCover != null )
+                    {
+                        //旧画像
+                        //this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
+                        //if (CDTXMania.DTX.bチップがある.LeftCymbal == false)
+                        {
+                            //this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0, new Rectangle(0, 0, 70, 720));
+                        }
+                        //if ((CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false))
+                        {
+                            //レーンタイプでの入れ替わりあり
+                            //if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
+                            {
+                            //    this.txLaneCover.t2D描画(CDTXMania.app.Device, 416, 0, new Rectangle(124, 0, 54, 720));
+                            }
+                            //else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
+                            {
+                            //    this.txLaneCover.t2D描画(CDTXMania.app.Device, 470, 0, new Rectangle(124, 0, 54, 720));
+                            }
+                            //else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                            {
+                            //    this.txLaneCover.t2D描画(CDTXMania.app.Device, 522, 0, new Rectangle(124, 0, 54, 720));
+                            }
+                        }
+                        //if (CDTXMania.DTX.bチップがある.FT == false)
+                        {
+                            //this.txLaneCover.t2D描画(CDTXMania.app.Device, 690, 0, new Rectangle(71, 0, 52, 720));
+                        }
+                        //if (CDTXMania.DTX.bチップがある.Ride == false)
+                        {
+                            //RDPositionで入れ替わり
+                            //if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                            {
+                            //    this.txLaneCover.t2D描画(CDTXMania.app.Device, 815, 0, new Rectangle(178, 0, 38, 720));
+                            }
+                            //else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                            {
+                            //    this.txLaneCover.t2D描画(CDTXMania.app.Device, 743, 0, new Rectangle(178, 0, 38, 720));
+                            }
+                        }
+                    }
+                }
+                double dbシャッターIN_Guitar = ( base.nShutterInPosY.Guitar * 7.2 );
+                double dbシャッターIN_Bass = ( base.nShutterInPosY.Bass * 7.2 );
+                if( this.txシャッター != null )
+                {
+                    this.txシャッター.t2D描画( CDTXMania.app.Device, 80, ( int )( -720 + dbシャッターIN_Guitar ) );
+                    this.txシャッター.t2D描画( CDTXMania.app.Device, 952, ( int )( -720 + dbシャッターIN_Bass ) );
+                }
+                
+                double dbシャッターOUT_Guitar = 720 - ( base.nShutterOutPosY.Guitar );
+                double dbシャッターOUT_Bass = 720 - ( base.nShutterOutPosY.Bass * 7.2f );
+                if( this.txシャッター != null )
+                {
+                    this.txシャッター.t2D描画( CDTXMania.app.Device, 80, ( int )dbシャッターOUT_Guitar );
+                    this.txシャッター.t2D描画( CDTXMania.app.Device, 952, ( int )dbシャッターOUT_Bass );
+                }
+                #endregion
+
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
                 this.t進行描画・RGBボタン();
@@ -212,6 +277,7 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private CTexture txレーン;
+        private CTexture txシャッター;
         public CAct演奏Guitarグラフ actGraph;
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
@@ -355,7 +421,7 @@ namespace DTXMania
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
 		{
 			base.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, inst,
-				154, 606, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38 );
+				164, 606, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38 );
 		}
 #if false
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
@@ -752,13 +818,13 @@ namespace DTXMania
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ))
 			{
-				int y = configIni.bReverse.Guitar ? ( ( 611 - pChip.nバーからの距離dot.Guitar ) - 6 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) - 6 );
+				int y = configIni.bReverse.Guitar ? ( ( 611 - pChip.nバーからの距離dot.Guitar ) + 8 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) + 8 );
 				if ( ( dTX.bチップがある.Guitar && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
                     if( CDTXMania.ConfigIni.bJudgeLineDisp.Guitar )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 88, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
-				y = configIni.bReverse.Bass ? ( ( 611 - pChip.nバーからの距離dot.Bass ) - 6 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) - 6 );
+				y = configIni.bReverse.Bass ? ( ( 611 - pChip.nバーからの距離dot.Bass ) + 8 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) + 8 );
 				if ( ( dTX.bチップがある.Bass && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
                     if( CDTXMania.ConfigIni.bJudgeLineDisp.Bass )

@@ -279,8 +279,13 @@ namespace DTXMania
 			this.tステータスパネルの選択();
 			this.tパネル文字列の設定();
             this.nJudgeLinePosY = 561 - CDTXMania.ConfigIni.nJudgeLine;
-            this.nShutterInPosY = CDTXMania.ConfigIni.nShutterInSide;
-            this.nShutterOutPosY = CDTXMania.ConfigIni.nShutterOutSide;
+            this.nShutterInPosY.Drums = CDTXMania.ConfigIni.nShutterInSide.Drums;
+            this.nShutterOutPosY.Drums = CDTXMania.ConfigIni.nShutterOutSide.Drums;
+            this.nShutterInPosY.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
+            this.nShutterOutPosY.Guitar = CDTXMania.ConfigIni.nShutterOutSide.Guitar;
+            this.nShutterInPosY.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
+            this.nShutterOutPosY.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
+
             this.actJudgeString.iP_A = this.nJudgeLinePosY - 0xbd;
             this.actJudgeString.iP_B = this.nJudgeLinePosY + 0x17;
 
@@ -641,8 +646,8 @@ namespace DTXMania
         protected readonly float[] fDamageLevelFactor = new float[] { 0.5f, 1f, 1.5f };
 
         public int nJudgeLinePosY = 561;//(CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561);
-        public int nShutterInPosY = 0;
-        public int nShutterOutPosY = 0;
+        public STDGBVALUE<int> nShutterInPosY = new STDGBVALUE<int>();
+        public STDGBVALUE<int> nShutterOutPosY = new STDGBVALUE<int>();
         public long n現在のスコア = 0;
 		public STDGBVALUE<CHITCOUNTOFRANK> nヒット数・Auto含まない;
 		public STDGBVALUE<CHITCOUNTOFRANK> nヒット数・Auto含む;
@@ -1979,9 +1984,9 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
-                        if (this.nShutterInPosY > 0)
+                        if (this.nShutterInPosY.Drums > 0)
                         {
-                            this.nShutterInPosY--;
+                            this.nShutterInPosY.Drums--;
                         }
                     }
                     else if (this.sw.ElapsedMilliseconds > 10L)
@@ -1993,14 +1998,14 @@ namespace DTXMania
                                 this.sw2.Reset();
                             }
                         }
-                        else if (this.nShutterInPosY > 0)
+                        else if (this.nShutterInPosY.Drums > 0)
                         {
-                            this.nShutterInPosY--;
+                            this.nShutterInPosY.Drums--;
                         }
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterInSide = this.nShutterInPosY;
+                    CDTXMania.ConfigIni.nShutterInSide.Drums = this.nShutterInPosY.Drums;
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.NumberPad2))
                 {
@@ -2008,10 +2013,10 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
-                        if (this.nShutterInPosY < 100)
+                        if (this.nShutterInPosY.Drums < 100)
                         {
-                            if(this.nShutterInPosY + this.nShutterOutPosY <= 99)
-                            this.nShutterInPosY++;
+                            if(this.nShutterInPosY.Drums + this.nShutterOutPosY.Drums <= 99)
+                                this.nShutterInPosY.Drums++;
                         }
                     }
                     else if (this.sw.ElapsedMilliseconds > 10L)
@@ -2023,10 +2028,10 @@ namespace DTXMania
                                 this.sw2.Reset();
                             }
                         }
-                        else if (this.nShutterInPosY < 100)
+                        else if (this.nShutterInPosY.Drums < 100)
                         {
-                            if (this.nShutterInPosY + this.nShutterOutPosY <= 99)
-                            this.nShutterInPosY++;
+                            if (this.nShutterInPosY.Drums + this.nShutterOutPosY.Drums <= 99)
+                                this.nShutterInPosY.Drums++;
                         }
                         this.sw.Reset();
                         this.sw.Start();
@@ -2039,10 +2044,10 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
-                        if (this.nShutterOutPosY < 100)
+                        if (this.nShutterOutPosY.Drums < 100)
                         {
-                            if (this.nShutterInPosY + this.nShutterOutPosY <= 99)
-                            this.nShutterOutPosY++;
+                            if (this.nShutterInPosY.Drums + this.nShutterOutPosY.Drums <= 99)
+                                this.nShutterOutPosY.Drums++;
                         }
                     }
                     else if (this.sw.ElapsedMilliseconds > 10L)
@@ -2054,15 +2059,15 @@ namespace DTXMania
                                 this.sw2.Reset();
                             }
                         }
-                        else if (this.nShutterOutPosY < 100)
+                        else if (this.nShutterOutPosY.Drums < 100)
                         {
-                            if (this.nShutterInPosY + this.nShutterOutPosY <= 99)
-                            this.nShutterOutPosY++;
+                            if (this.nShutterInPosY.Drums + this.nShutterOutPosY.Drums <= 99)
+                                this.nShutterOutPosY.Drums++;
                         }
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterOutSide = this.nShutterOutPosY;
+                    CDTXMania.ConfigIni.nShutterOutSide.Drums = this.nShutterOutPosY.Drums;
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.NumberPad6))
                 {
@@ -2070,9 +2075,9 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
-                        if (this.nShutterOutPosY > 0)
+                        if (this.nShutterOutPosY.Drums > 0)
                         {
-                            this.nShutterOutPosY--;
+                            this.nShutterOutPosY.Drums--;
                         }
                     }
                     else if (this.sw.ElapsedMilliseconds > 10L)
@@ -2084,14 +2089,14 @@ namespace DTXMania
                                 this.sw2.Reset();
                             }
                         }
-                        else if (this.nShutterOutPosY > 0)
+                        else if (this.nShutterOutPosY.Drums > 0)
                         {
-                            this.nShutterOutPosY--;
+                            this.nShutterOutPosY.Drums--;
                         }
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterOutSide = this.nShutterOutPosY;
+                    CDTXMania.ConfigIni.nShutterOutSide.Drums = this.nShutterOutPosY.Drums;
                 }
 
                 if (keyboard.bキーが押された(0x3a))

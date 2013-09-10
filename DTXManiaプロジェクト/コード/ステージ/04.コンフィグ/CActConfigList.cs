@@ -893,21 +893,21 @@ namespace DTXMania
                 "(ScrollSpeed=x0.5 means half speed)");
             this.list項目リスト.Add(this.iDrumsJudgeLinePos);
 
-            this.iDrumsShutterInPos = new CItemInteger("ShutterInPos", 0, 100, CDTXMania.ConfigIni.nShutterInSide,
+            this.iDrumsShutterInPos = new CItemInteger( "ShutterInPos", 0, 100, CDTXMania.ConfigIni.nShutterInSide.Drums,
                 "演奏時のノーツが現れる側のシャッターの\n" +
                 "位置を変更します。",
                 "\n" +
                 "\n" +
                 "");
-            this.list項目リスト.Add(this.iDrumsShutterInPos);
+            this.list項目リスト.Add( this.iDrumsShutterInPos );
 
-            this.iDrumsShutterOutPos = new CItemInteger("ShutterOutPos", 0, 100, CDTXMania.ConfigIni.nShutterOutSide,
+            this.iDrumsShutterOutPos = new CItemInteger( "ShutterOutPos", 0, 100, CDTXMania.ConfigIni.nShutterOutSide.Drums,
                 "演奏時のノーツが消える側のシャッターの\n" +
                 "位置を変更します。",
                 "\n" +
                 "\n" +
                 "");
-            this.list項目リスト.Add(this.iDrumsShutterOutPos);
+            this.list項目リスト.Add( this.iDrumsShutterOutPos );
 
             this.iDrumsClassicNotes = new CItemToggle("CLASSIC Notes", CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする,
                 "CLASSIC譜面の判別の有無を設定します。\n",
@@ -1135,8 +1135,21 @@ namespace DTXMania
 
             //比較対象(そもそも比較グラフさえ完成していない)
             //シャッタータイプ
-            //シャッターポジション(IN)
-            //シャッターポジション(OUT)
+            this.iGuitarShutterInPos = new CItemInteger( "ShutterInPos", 0, 100, CDTXMania.ConfigIni.nShutterInSide.Guitar,
+                "演奏時のノーツが現れる側のシャッターの\n" +
+                "位置を変更します。",
+                "\n" +
+                "\n" +
+                "");
+            this.list項目リスト.Add( this.iGuitarShutterInPos );
+
+            this.iGuitarShutterOutPos = new CItemInteger( "ShutterOutPos", 0, 100, CDTXMania.ConfigIni.nShutterOutSide.Guitar,
+                "演奏時のノーツが消える側のシャッターの\n" +
+                "位置を変更します。",
+                "\n" +
+                "\n" +
+                "");
+            this.list項目リスト.Add( this.iGuitarShutterOutPos );
             //判定ラインポジション
 
 			this.iSystemSoundMonitorGuitar = new CItemToggle( "GuitarMonitor", CDTXMania.ConfigIni.b演奏音を強調する.Guitar,
@@ -1219,6 +1232,7 @@ namespace DTXMania
 				"演奏時のベース譜面のスクロールの\n速度を指定します。\nx0.5 ～ x1000.0 までを指定可能です。",
 				"To change the scroll speed for the\nbass lanes.\nYou can set it from x0.5 to x1000.0.\n(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iBassScrollSpeed );
+
 			this.iBassSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Bass,
 				"ベースチップがヒットバー付近にくる\nまで表示されなくなります。",
 				"Bass chips are disappered until they\ncome near the hit bar, and suddenly\nappears." );
@@ -1270,6 +1284,21 @@ namespace DTXMania
 				"Initial number to show the combo\n for the bass.\nYou can specify from 1 to 99999." );
 			this.list項目リスト.Add( this.iSystemMinComboBass );
 
+            this.iBassShutterInPos = new CItemInteger( "ShutterInPos", 0, 100, CDTXMania.ConfigIni.nShutterInSide.Bass,
+                "演奏時のノーツが現れる側のシャッターの\n" +
+                "位置を変更します。",
+                "\n" +
+                "\n" +
+                "");
+            this.list項目リスト.Add( this.iBassShutterInPos );
+
+            this.iBassShutterOutPos = new CItemInteger( "ShutterOutPos", 0, 100, CDTXMania.ConfigIni.nShutterOutSide.Bass,
+                "演奏時のノーツが消える側のシャッターの\n" +
+                "位置を変更します。",
+                "\n" +
+                "\n" +
+                "");
+            this.list項目リスト.Add( this.iBassShutterOutPos );
 			
 			// #23580 2011.1.3 yyagi
 			this.iBassInputAdjustTimeMs = new CItemInteger( "InputAdjust", -99, 0, CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass,
@@ -2391,6 +2420,8 @@ namespace DTXMania
         private CItemList iBassDark;
         private CItemList iBassLaneDisp;
         private CItemToggle iBassJudgeLineDisp;
+        private CItemInteger iBassShutterInPos;
+        private CItemInteger iBassShutterOutPos;
         private CItemToggle iBassLaneFlush;
 
 		private CItemInteger iCommonPlaySpeed;
@@ -2465,6 +2496,8 @@ namespace DTXMania
         private CItemList iGuitarDark;
         private CItemList iGuitarLaneDisp;
         private CItemToggle iGuitarJudgeLineDisp;
+        private CItemInteger iGuitarShutterInPos;
+        private CItemInteger iGuitarShutterOutPos;
         private CItemToggle iGuitarLaneFlush;
 
 		private CItemInteger iDrumsInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
@@ -2622,6 +2655,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass = this.iBassInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
 
             CDTXMania.ConfigIni.bJudgeLineDisp.Bass = this.iBassJudgeLineDisp.bON;
+            CDTXMania.ConfigIni.nShutterInSide.Bass = this.iBassShutterInPos.n現在の値;
+            CDTXMania.ConfigIni.nShutterOutSide.Bass = this.iBassShutterOutPos.n現在の値;
 
 			CDTXMania.ConfigIni.b演奏音を強調する.Bass = this.iSystemSoundMonitorBass.bON;
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass = this.iSystemMinComboBass.n現在の値;
@@ -2686,8 +2721,8 @@ namespace DTXMania
             CDTXMania.ConfigIni.bHAZARD = this.iDrumsHAZARD.bON;
             CDTXMania.ConfigIni.eAttackEffectType = (Eタイプ)this.iDrumsAttackEffectMode.n現在選択されている項目番号;
             CDTXMania.ConfigIni.nJudgeLine = this.iDrumsJudgeLinePos.n現在の値;
-            CDTXMania.ConfigIni.nShutterInSide = this.iDrumsShutterInPos.n現在の値;
-            CDTXMania.ConfigIni.nShutterOutSide = this.iDrumsShutterOutPos.n現在の値;
+            CDTXMania.ConfigIni.nShutterInSide.Drums = this.iDrumsShutterInPos.n現在の値;
+            CDTXMania.ConfigIni.nShutterOutSide.Drums = this.iDrumsShutterOutPos.n現在の値;
 
 			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;     // ダークはプリセット切り替えとして使うため、保存はしない。
 			CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;						// #23559 2011.7.27 yyagi
@@ -2712,6 +2747,10 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bLeft.Guitar = this.iGuitarLeft.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar = this.iGuitarInputAdjustTimeMs.n現在の値;	// #23580 2011.1.3 yyagi
             CDTXMania.ConfigIni.bGraph.Guitar = this.iGuitarGraph.bON;
+
+            CDTXMania.ConfigIni.bJudgeLineDisp.Guitar = this.iGuitarJudgeLineDisp.bON;
+            CDTXMania.ConfigIni.nShutterInSide.Guitar = this.iGuitarShutterInPos.n現在の値;
+            CDTXMania.ConfigIni.nShutterOutSide.Guitar = this.iGuitarShutterOutPos.n現在の値;
 
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Guitar = this.iSystemMinComboGuitar.n現在の値;
 			CDTXMania.ConfigIni.b演奏音を強調する.Guitar = this.iSystemSoundMonitorGuitar.bON;
