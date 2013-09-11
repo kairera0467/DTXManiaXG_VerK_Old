@@ -51,7 +51,7 @@ namespace DTXMania
                 {
                     base.n進行用タイマ = num;
                 }
-                while ((num - base.n進行用タイマ) >= 15)
+                while ((num - base.n進行用タイマ) >= ( CDTXMania.ConfigIni.nSkillMode == 0 ? 15 : 12 ) )
                 {
                     for (int j = 0; j < 3; j++)
                     {
@@ -60,7 +60,7 @@ namespace DTXMania
                         if (this.n現在表示中のスコア[j] > (long)this.n現在の本当のスコア[j])
                             this.n現在表示中のスコア[j] = (long)this.n現在の本当のスコア[j];
                     }
-                    base.n進行用タイマ += 15;
+                    base.n進行用タイマ += ( CDTXMania.ConfigIni.nSkillMode == 0 ? 15 : 12 );
                 }
                 for (int s = 0; s < (CDTXMania.ConfigIni.nSkillMode == 0 ? 10 : 7); s++)
                 {
