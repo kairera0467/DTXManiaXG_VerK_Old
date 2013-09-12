@@ -845,6 +845,7 @@ namespace DTXMania
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Drums = cdtx.LEVEL.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Guitar = cdtx.LEVEL.Guitar;
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Bass = cdtx.LEVEL.Bass;
+                                    c曲リストノード.arスコア[ i ].譜面情報.レベルDec.Drums = cdtx.LEVELDEC.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベルを非表示にする = cdtx.HIDDENLEVEL;
                                     c曲リストノード.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums = (cdtx2.bチップがある.LeftCymbal == false && cdtx2.bチップがある.LP == false && cdtx2.bチップがある.LBD == false && cdtx2.bチップがある.FT == false && cdtx2.bチップがある.Ride == false) ? true : false;
 									c曲リストノード.arスコア[ i ].譜面情報.曲種別 = cdtx.e種別;
@@ -1122,6 +1123,7 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Bass );
+                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Bass );

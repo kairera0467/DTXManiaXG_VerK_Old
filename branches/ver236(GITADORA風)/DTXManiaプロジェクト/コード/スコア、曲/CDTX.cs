@@ -2049,84 +2049,84 @@ namespace DTXMania
             }
         }
 
-        public void tドラムのミラー化(E楽器パート part, Eミラーモード eMirror)
+        public void tドラムのミラー化( E楽器パート part, Eミラーモード eMirror )
         {
-            if (part == E楽器パート.DRUMS && eMirror != Eミラーモード.OFF)
+            if( part == E楽器パート.DRUMS && eMirror != Eミラーモード.OFF )
             {
-                foreach (CDTX.CChip current in this.listChip)
+                foreach( CDTX.CChip current in this.listChip )
                 {
                     int nチャンネル番号 = current.nチャンネル番号;
-                    if (part == E楽器パート.DRUMS && 17 <= nチャンネル番号 && nチャンネル番号 <= 28)
+                    if ( part == E楽器パート.DRUMS && 0x11 <= nチャンネル番号 && nチャンネル番号 <= 0x1C )
                     {
-                        switch (eMirror)
+                        switch( eMirror )
                         {
                             case Eミラーモード.PAD:
-                                if (nチャンネル番号 != 19 && nチャンネル番号 != 27 && nチャンネル番号 != 28)
+                                if ( nチャンネル番号 != 0x13 && nチャンネル番号 != 0x1B && nチャンネル番号 != 0x1C )
                                 {
-                                    CDTX.tミラーチップのチャンネルを指定する(current, nチャンネル番号);
+                                    CDTX.tミラーチップのチャンネルを指定する( current, nチャンネル番号 );
                                 }
                                 break;
                             case Eミラーモード.PEDAL:
-                                if (nチャンネル番号 == 19 || nチャンネル番号 == 27 || nチャンネル番号 == 28)
+                                if ( nチャンネル番号 == 0x13 || nチャンネル番号 == 0x1B || nチャンネル番号 == 0x1C )
                                 {
-                                    CDTX.tミラーチップのチャンネルを指定する(current, nチャンネル番号);
+                                    CDTX.tミラーチップのチャンネルを指定する( current, nチャンネル番号 );
                                 }
                                 break;
                             case Eミラーモード.ALL:
-                                CDTX.tミラーチップのチャンネルを指定する(current, nチャンネル番号);
+                                CDTX.tミラーチップのチャンネルを指定する( current, nチャンネル番号 );
                                 break;
                         }
                     }
                 }
             }
         }
-        private static void tミラーチップのチャンネルを指定する(CDTX.CChip chip, int nミラー化前チャンネル番号)
+        private static void tミラーチップのチャンネルを指定する( CDTX.CChip chip, int nミラー化前チャンネル番号 )
         {
-            switch (nミラー化前チャンネル番号)
+            switch( nミラー化前チャンネル番号 )
             {
-                case 17:
-                case 24:
-                    if (CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.B)
+                case 0x11:
+                case 0x18:
+                    if ( CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.B )
                     {
-                        chip.nチャンネル番号 = ((CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.A) ? 25 : 22);
+                        chip.nチャンネル番号 = ( ( CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.A ) ? 0x19 : 0x16 );
                         return;
                     }
                     break;
-                case 18:
-                    chip.nチャンネル番号 = ((CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.C) ? 21 : 23);
+                case 0x12:
+                    chip.nチャンネル番号 = ( ( CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.C ) ? 21 : 23 );
                     return;
-                case 19:
+                case 0x13:
                     if (CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.C)
                     {
-                        chip.nチャンネル番号 = 27;
+                        chip.nチャンネル番号 = 0x1C;
                         return;
                     }
                     break;
-                case 20:
+                case 0x14:
                     if (CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.C)
                     {
-                        chip.nチャンネル番号 = 21;
+                        chip.nチャンネル番号 = 0x15;
                         return;
                     }
                     break;
-                case 21:
-                    chip.nチャンネル番号 = ((CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.C) ? 18 : 20);
+                case 0x15:
+                    chip.nチャンネル番号 = ( ( CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.C ) ? 0x12 : 0x14);
                     return;
-                case 22:
-                    chip.nチャンネル番号 = ((CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.C) ? 17 : 26);
+                case 0x16:
+                    chip.nチャンネル番号 = ( ( CDTXMania.ConfigIni.eNumOfLanes.Drums == Eタイプ.C ) ? 0x11 : 0x1A);
                     return;
-                case 23:
-                    chip.nチャンネル番号 = 18;
+                case 0x17:
+                    chip.nチャンネル番号 = 0x12;
                     return;
-                case 25:
-                    chip.nチャンネル番号 = 17;
+                case 0x19:
+                    chip.nチャンネル番号 = 0x11;
                     return;
-                case 26:
-                    chip.nチャンネル番号 = 22;
+                case 0x1A:
+                    chip.nチャンネル番号 = 0x16;
                     return;
-                case 27:
-                case 28:
-                    chip.nチャンネル番号 = 19;
+                case 0x1B:
+                case 0x1C:
+                    chip.nチャンネル番号 = 0x13;
                     break;
                 default:
                     return;
