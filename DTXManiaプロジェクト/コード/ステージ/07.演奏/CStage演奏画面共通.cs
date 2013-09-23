@@ -2866,7 +2866,7 @@ namespace DTXMania
                     bGtBsW = true;
                     break;
                 default:
-                    switch (pChip.nチャンネル番号)
+                    switch( pChip.nチャンネル番号 )
                     {
                         case 0x93:
                             bGtBsY = true;
@@ -2876,8 +2876,8 @@ namespace DTXMania
                             bGtBsY = true;
                             break;
                         case 0x95:
-                            flag2 = true;
-                            flag4 = true;
+                            bGtBsG = true;
+                            bGtBsY = true;
                             break;
                         case 0x96:
                             flag2 = true;
@@ -4016,7 +4016,7 @@ namespace DTXMania
                 bool flag10 = false;
                 bool flag11 = false;
                 int nチャンネル番号 = chip.nチャンネル番号;
-                switch (nチャンネル番号)
+                switch ( nチャンネル番号 )
                 {
                     case 0x20:
                         break;
