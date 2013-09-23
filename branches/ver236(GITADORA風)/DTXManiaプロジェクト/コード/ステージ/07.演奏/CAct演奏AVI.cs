@@ -476,7 +476,7 @@ namespace DTXMania
                         this.n総移動時間ms = 0;
                         this.n移動開始時刻ms = -1L;
                     }
-                    if( ( this.n総移動時間ms == 0 ) && ( frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount() ) )
+                    if( ( this.n総移動時間ms == 0 ) && this.rAVI.avi != null ? ( frameNoFromTime >= this.rAVI.avi.GetMaxFrameCount() ) : false )
                     {
                         this.n移動開始時刻ms = -1L;
                     }

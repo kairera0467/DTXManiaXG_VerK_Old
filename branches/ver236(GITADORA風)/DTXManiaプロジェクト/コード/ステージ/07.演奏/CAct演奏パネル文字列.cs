@@ -162,6 +162,7 @@ namespace DTXMania
         {
             this.ft表示用フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 26f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ft称号フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.prv表示用フォント = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str曲名表示フォント ), 20, FontStyle.Regular );
             this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
             this.txパネル文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_s.png"));
             this.txパネル文字[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_l.png"));
@@ -208,8 +209,8 @@ namespace DTXMania
 
                 Bitmap image = new Bitmap(500, 100);
                 Bitmap image2 = new Bitmap(200, 100);
-                graphics = Graphics.FromImage(image);
-                Graphics graネームプレート用 = Graphics.FromImage(image2);
+                graphics = Graphics.FromImage( image );
+                Graphics graネームプレート用 = Graphics.FromImage( image2 );
                 
                 if( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                 {
@@ -222,16 +223,103 @@ namespace DTXMania
                 gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
                 gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
+
                 Pen p縁 = new Pen(Color.Black, 3f);
                 p縁.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
 
+                                #region[ ネームカラー ]
+                //--------------------
+                Color clNameColor = Color.White;
+                Color clNameColorLower = Color.White;
+                switch( CDTXMania.ConfigIni.nNameColor )
+                {
+                    case 0:
+                        clNameColor = Color.White;
+                        break;
+                    case 1:
+                        clNameColor = Color.LightYellow;
+                        break;
+                    case 2:
+                        clNameColor = Color.Yellow;
+                        break;
+                    case 3:
+                        clNameColor = Color.Green;
+                        break;
+                    case 4:
+                        clNameColor = Color.Blue;
+                        break;
+                    case 5:
+                        clNameColor = Color.Purple;
+                        break;
+                    case 6:
+                        clNameColor = Color.Red;
+                        break;
+                    case 7:
+                        clNameColor = Color.Brown;
+                        break;
+                    case 8:
+                        clNameColor = Color.Silver;
+                        break;
+                    case 9:
+                        clNameColor = Color.Gold;
+                        break;
+
+                    case 10:
+                        clNameColor = Color.White;
+                        break;
+                    case 11:
+                        clNameColor = Color.LightYellow;
+                        clNameColorLower = Color.White;
+                        break;
+                    case 12:
+                        clNameColor = Color.Yellow;
+                        clNameColorLower = Color.White;
+                        break;
+                    case 13:
+                        clNameColor = Color.FromArgb( 0, 255, 33 );
+                        clNameColorLower = Color.White;
+                        break;
+                    case 14:
+                        clNameColor = Color.FromArgb( 0, 38, 255 );
+                        clNameColorLower = Color.White;
+                        break;
+                    case 15:
+                        clNameColor = Color.FromArgb( 72, 0, 255 );
+                        clNameColorLower = Color.White;
+                        break;
+                    case 16:
+                        clNameColor = Color.FromArgb( 255, 255, 0, 0 );
+                        clNameColorLower = Color.White;
+                        break;
+                    case 17:
+                        clNameColor = Color.FromArgb( 255, 232, 182, 149 );
+                        clNameColorLower = Color.FromArgb( 255, 122, 69, 26 );
+                        break;
+                    case 18:
+                        clNameColor = Color.FromArgb( 246, 245, 255 );
+                        clNameColorLower = Color.FromArgb( 125, 128, 137 );
+                        break;
+                    case 19:
+                        clNameColor = Color.FromArgb( 255, 238, 196, 85 );
+                        clNameColorLower = Color.FromArgb(255, 255, 241, 200 );
+                        break;
+                }
+                //--------------------
+                #endregion
+                #region[ 名前とか ]
+                Bitmap bmpCardName = new Bitmap( 1, 1 );
+                bmpCardName = this.prv表示用フォント.DrawPrivateFont( this.strPlayerName, Color.White, Color.Transparent, clNameColor,( CDTXMania.ConfigIni.nNameColor > 11 ? clNameColorLower : clNameColor ) );
+                graネームプレート用.DrawImage( bmpCardName, -2f, 26f );
+
                 graネームプレート用.DrawString(this.strTitleName, this.ft称号フォント, Brushes.White, (float)8f, (float)12f);
-                graネームプレート用.DrawString(this.strPlayerName, this.ft表示用フォント, Brushes.White, (float)8f, (float)32f);
+                //graネームプレート用.DrawString(this.strPlayerName, this.ft表示用フォント, Brushes.White, (float)8f, (float)32f);
+                #endregion
 
                 graphics.Dispose();
                 ff.Dispose();
+                this.prv表示用フォント.Dispose();
 
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 this.txネームプレート用文字 = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false);
@@ -242,11 +330,11 @@ namespace DTXMania
         }
         public override void OnManagedリソースの解放()
         {
-            if (!base.b活性化してない)
+            if ( !base.b活性化してない )
             {
-                CDTXMania.tテクスチャの解放(ref this.txPanel);
-                CDTXMania.tテクスチャの解放(ref this.txSongName);
-                CDTXMania.tテクスチャの解放(ref this.txネームプレート用文字);
+                CDTXMania.tテクスチャの解放( ref this.txPanel );
+                CDTXMania.tテクスチャの解放( ref this.txSongName );
+                CDTXMania.tテクスチャの解放( ref this.txネームプレート用文字 );
                 base.OnManagedリソースの解放();
             }
         }
@@ -356,7 +444,7 @@ namespace DTXMania
         private CTexture[] txパネル文字;
         private CTexture txSongName;
         private CTexture txネームプレート用文字;
-
+        private CPrivateFastFont prv表示用フォント;
 
 
         private void t小文字表示(int x, int y, string str)

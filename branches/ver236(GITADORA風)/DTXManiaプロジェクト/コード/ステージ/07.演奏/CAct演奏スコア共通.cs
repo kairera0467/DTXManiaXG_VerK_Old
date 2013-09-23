@@ -131,7 +131,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbersGD.png"));
 				base.OnManagedリソースの作成();
 			}
 		}

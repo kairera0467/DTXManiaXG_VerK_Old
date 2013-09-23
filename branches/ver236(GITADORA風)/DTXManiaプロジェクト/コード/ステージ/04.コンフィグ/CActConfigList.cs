@@ -75,13 +75,14 @@ namespace DTXMania
 				"OFF: all display parts are shown.\nHALF: lanes and gauge are\n disappeared.\nFULL: additionaly to HALF, bar/beat\n lines, hit bar are disappeared.",
 				new string[] { "OFF", "HALF", "FULL" } );
 			this.list項目リスト.Add( this.iCommonDark );
-            */
+            
             int nDGmode = (CDTXMania.ConfigIni.bGuitar有効 ? 2 : 0) + (CDTXMania.ConfigIni.bDrums有効 ? 1 : 0) - 1;
             this.iSystemGRmode = new CItemList("Drums & GR", CItemBase.Eパネル種別.通常, nDGmode,
                 "使用楽器の選択：\nDrOnly: ドラムのみ有効にします。\nGROnly: ギター/ベースのみの\n専用画面を用います。\nBoth: ドラムとギター/ベースの\n両方を有効にします。\n",
                 "DrOnly: Only Drums is available.\nGROnly: Only Guitar/Bass are available.\n You can play them in GR screen.\nBoth: Both Drums and Guitar/Bass\n are available.",
                 new string[] { "DrOnly", "GROnly", "Both" });
             this.list項目リスト.Add(this.iSystemGRmode);
+            */
 
             this.iSystemRisky = new CItemInteger("Risky", 0, 100, CDTXMania.ConfigIni.nRisky,
                 "Riskyモードの設定:\n" +
@@ -796,10 +797,10 @@ namespace DTXMania
             this.list項目リスト.Add(this.iSystemMinComboDrums);
 
             // #23580 2011.1.3 yyagi
-            this.iDrumsInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 0, CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums,
+            this.iDrumsInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums,
                 "ドラムの入力タイミングの微調整を\n" +
                 "行います。\n" +
-                "-99 ～ 0ms まで指定可能です。\n" +
+                "-99 ～ 99ms まで指定可能です。\n" +
                 "値を指定してください。\n",
                 "To adjust the drums input timing.\n" +
                 "You can set from -99 to 0ms.\n" +
@@ -897,44 +898,68 @@ namespace DTXMania
                 "lane",
                 new string[] { "L R", "R L", "R Only" });
             this.list項目リスト.Add(this.iDrumsDkdkType);
+
             /*
             this.iDrumsNumOfLanes = new CItemList("NumOfLanes", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNumOfLanes.Drums,
                 "10レーン譜面の仕様を変更する。\n"+
-                "A: デフォルト10レーン\n  B: XG仕様9レーン\n  C: CLASSIC仕様6レーン", "To change the number of lanes.\n  10: default 10 lanes\n  9: XG style 9 lanes\n  6: classic style 6 lanes", 
+                "A: デフォルト10レーン\n"+
+                "B: XG仕様9レーン\n"+
+                "C: CLASSIC仕様6レーン",
+
+                "To change the number of lanes.\n"+
+                "10: default 10 lanes\n"+
+                "9: XG style 9 lanes\n"+
+                "6: classic style 6 lanes", 
                 new string[]{"10","9","6"});
             this.list項目リスト.Add(this.iDrumsNumOfLanes);
             */
-            this.iDrumsRandom = new CItemList("Random", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandom.Drums, "ドラムのパッドチップがランダムに\n降ってきます。\n  Part: レーン単位で交換\n  Super: 小節単位で交換\n  Hyper: 四分の一小節単位で交換\n  Master: 死ぬがよい\n  Another: チップを丁度良くバラける", "Drums chips (pads) come randomly.\n  Part: swapping lanes randomly\n  Super: swapping for each measure\n  Hyper: swapping for each 1/4 measure\n  Master: game over...\n  Another: moderately swapping each\n  chip randomly", new string[]
-	{
-		"OFF",
-		"Part",
-		"Super",
-		"Hyper",
-		"Master",
-		"Another"
-	});
+            
+            this.iDrumsRandom = new CItemList("Random", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandom.Drums,
+                "ドラムのパッドチップがランダムに\n"+
+                "降ってきます。\n"+
+                "Part: レーン単位で交換\n"+
+                "Super: 小節単位で交換\n"+
+                "Hyper: 四分の一小節単位で交換\n"+
+                "Master: 死ぬがよい\n"+
+                "Another: チップを丁度良くバラける",
+                "Drums chips (pads) come randomly.\n"+
+                "Part: swapping lanes randomly\n"+
+                "Super: swapping for each measure\n"+
+                "Hyper: swapping for each 1/4 measure\n"+
+                "Master: game over...\n"+
+                "Another: moderately swapping each\n"+
+                "chip randomly",
+                new string[] { "OFF", "Part", "Super", "Hyper", "Master", "Another" } );
             this.list項目リスト.Add(this.iDrumsRandom);
-            this.iDrumsRandomPedal = new CItemList("RandomPedal", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandomPedal.Drums, "ドラムの足チップがランダムに\n降ってきます。\n  Part: レーン単位で交換\n  Super: 小節単位で交換\n  Hyper: 四分の一小節単位で交換\n  Master: 死ぬがよい\n  Another: チップを丁度良くバラける", "Drums chips (pedals) come randomly.\n  Part: swapping lanes randomly\n  Super: swapping for each measure\n  Hyper: swapping for each 1/4 measure\n  Master: game over...\n  Another: moderately swapping each\n  chip randomly", new string[]
-	{
-		"OFF",
-		"Part",
-		"Super",
-		"Hyper",
-		"Master",
-		"Another"
-	});
+
+            this.iDrumsRandomPedal = new CItemList("RandomPedal", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandomPedal.Drums,
+                "ドラムの足チップがランダムに\n降ってきます。\n"+
+                "Part: レーン単位で交換\n"+
+                "Super: 小節単位で交換\n"+
+                "Hyper: 四分の一小節単位で交換\n"+
+                "Master: 死ぬがよい\n"+
+                "Another: チップを丁度良くバラける",
+                "Drums chips (pedals) come randomly.\n"+
+                "Part: swapping lanes randomly\n"+
+                "Super: swapping for each measure\n"+
+                "Hyper: swapping for each 1/4 measure\n"+
+                "Master: game over...\n"+
+                "Another: moderately swapping each\n"+
+                "chip randomly",
+                new string[] { "OFF", "Part", "Super", "Hyper", "Master", "Another" } );
             this.list項目リスト.Add(this.iDrumsRandomPedal);
+
             this.iDrumsMirror = new CItemList("Mirror", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eMirror.Drums,
-                "ドラムのチップにミラーをかけます。\n" +
-                "Pad: パッドだけミラー\n" +
-                "Pedal: 足だけミラー\n" +
+                "ドラムのチップにミラーをかけます。\n"+
+                "Pad: パッドだけミラー\n"+
+                "Pedal: 足だけミラー\n"+
                 "All: 全部ミラー",
-                "Drums chips come reversely from\n" +
-                "left to right.\n" +
-                "Pad: pads only\n" +
-                "Pedal: pedals only\n" +
+                "Drums chips come reversely from\n"+
+                "left to right.\n"+
+                "Pad: pads only\n"+
+                "Pedal: pedals only\n"+
                 "All: all pads and pedals",
-                new string[] { "OFF", "Pad", "Pedal", "All" });
+                new string[] {"OFF","Pad","Pedal","All"});
             this.list項目リスト.Add(this.iDrumsMirror);
 
             // #24074 2011.01.23 add ikanick
@@ -946,11 +971,10 @@ namespace DTXMania
                 " or not.");
             this.list項目リスト.Add(this.iDrumsGraph);
 
-            this.iDrumsGoToKeyAssign = new CItemBase("Drums Keys", CItemBase.Eパネル種別.通常,
-                "ドラムのキー入力に関する項目を設\n" +
-                "定します。",
-                "Settings for the drums key/pad inputs.");
-            this.list項目リスト.Add(this.iDrumsGoToKeyAssign);
+			this.iDrumsGoToKeyAssign = new CItemBase( "Drums Keys", CItemBase.Eパネル種別.通常,
+				"ドラムのキー入力に関する項目を設定します。",
+				"Settings for the drums key/pad inputs." );
+			this.list項目リスト.Add( this.iDrumsGoToKeyAssign );
 
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.Drums;
@@ -1095,8 +1119,8 @@ namespace DTXMania
             this.list項目リスト.Add(this.iSystemMinComboGuitar);
 
             // #23580 2011.1.3 yyagi
-            this.iGuitarInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 0, CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar,
-                "ギターの入力タイミングの微調整を\n行います。\n-99 ～ 0ms まで指定可能です。\n入力ラグを軽減するためには、負の\n値を指定してください。",
+            this.iGuitarInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar,
+                "ギターの入力タイミングの微調整を\n行います。\n-99 ～ 99ms まで指定可能です。\n入力ラグを軽減するためには、負の\n値を指定してください。",
                 "To adjust the guitar input timing.\nYou can set from -99 to 0ms.\nTo decrease input lag, set minus value.");
             this.list項目リスト.Add(this.iGuitarInputAdjustTimeMs);
 
@@ -1210,8 +1234,8 @@ namespace DTXMania
 
 
             // #23580 2011.1.3 yyagi
-            this.iBassInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 0, CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass,
-                "ベースの入力タイミングの微調整を\n行います。\n-99 ～ 0ms まで指定可能です。入力ラグを軽減するためには、負の\n値を指定してください。",
+            this.iBassInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass,
+                "ベースの入力タイミングの微調整を\n行います。\n-99 ～ 99ms まで指定可能です。入力ラグを軽減するためには、負の\n値を指定してください。",
                 "To adjust the bass input timing.\nYou can set from -99 to 0ms.\nTo decrease input lag, set minus value.");
             this.list項目リスト.Add(this.iBassInputAdjustTimeMs);
 
@@ -2521,9 +2545,10 @@ namespace DTXMania
             //CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
             CDTXMania.ConfigIni.n演奏速度 = this.iCommonPlaySpeed.n現在の値;
 
-            CDTXMania.ConfigIni.bGuitar有効 = (((this.iSystemGRmode.n現在選択されている項目番号 + 1) / 2) == 1);
+            //CDTXMania.ConfigIni.bGuitar有効 = (((this.iSystemGRmode.n現在選択されている項目番号 + 1) / 2) == 1);
             //this.iSystemGuitar.bON;
-            CDTXMania.ConfigIni.bDrums有効 = (((this.iSystemGRmode.n現在選択されている項目番号 + 1) % 2) == 1);
+            //CDTXMania.ConfigIni.bDrums有効 = (((this.iSystemGRmode.n現在選択されている項目番号 + 1) % 2) == 1);
+            CDTXMania.ConfigIni.bDrums有効 = true;
             //this.iSystemDrums.bON;
 
             CDTXMania.ConfigIni.b全画面モード = this.iSystemFullscreen.bON;
