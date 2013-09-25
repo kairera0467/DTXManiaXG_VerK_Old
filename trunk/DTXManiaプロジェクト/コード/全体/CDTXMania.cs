@@ -1657,14 +1657,15 @@ for (int i = 0; i < 3; i++) {
 			base.Window.ClientSize = new Size(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);	// #34510 yyagi 2010.10.31 to change window size got from Config.ini
 #if !WindowedFullscreen
 			if (!ConfigIni.bウィンドウモード)						// #23510 2010.11.02 yyagi: add; to recover window size in case bootup with fullscreen mode
-			{
+			{														// #30666 2013.02.02 yyagi: currentClientSize should be always made
 #endif
-				currentClientSize = new Size(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);
+				currentClientSize = new Size( ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight );
 #if !WindowedFullscreen
-            }
+			}
 #endif
             base.Window.MaximizeBox = true;							// #23510 2010.11.04 yyagi: to support maximizing window
 			base.Window.FormBorderStyle = FormBorderStyle.Sizable;	// #23510 2010.10.27 yyagi: changed from FixedDialog to Sizable, to support window resize
+																	// #30666 2013.02.02 yyagi: moved the code to t全画面・ウインドウモード切り替え()
 			base.Window.ShowIcon = true;
 			base.Window.Icon = Properties.Resources.dtx;
 			base.Window.KeyDown += new KeyEventHandler( this.Window_KeyDown );
