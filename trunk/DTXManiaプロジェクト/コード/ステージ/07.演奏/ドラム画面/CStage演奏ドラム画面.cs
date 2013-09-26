@@ -468,12 +468,23 @@ namespace DTXMania
         private int[] nチャンネルtoX座標D = new int[] { 370, 420, 582, 477, 645, 748, 694, 373, 815, 298, 527, 527 };
         private int[] nチャンネルtoX座標改 = new int[] { 370, 470, 582, 527, 645, 786, 694, 373, 746, 298, 419, 419 };
         private int[] nチャンネルtoX座標B改 = new int[] { 370, 419, 533, 596, 645, 786, 694, 373, 746, 298, 476, 476 };
-        private int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 644, 786, 694, 373, 746, 298, 419, 419 };
+        private int[] nチャンネルtoX座標C改 = new int[] { 370, 470, 533, 596, 645, 786, 694, 373, 746, 298, 419, 419 };
         private int[] nチャンネルtoX座標D改 = new int[] { 370, 420, 582, 477, 645, 786, 694, 373, 746, 298, 527, 527 };
+
+        private int[] nボーナスチャンネルtoX座標    = new int[] { 0, 298, 370, 419, 470, 527, 582, 645, 694, 748, 815, 0  };
+        private int[] nボーナスチャンネルtoX座標B   = new int[] { 0, 298, 370, 476, 419, 596, 533, 645, 694, 748, 815, 476 };
+        private int[] nボーナスチャンネルtoX座標C   = new int[] { 0, 298, 370, 419, 470, 596, 533, 645, 694, 748, 815, 419 };
+        private int[] nボーナスチャンネルtoX座標D   = new int[] { 0, 298, 370, 527, 420, 477, 582, 645, 694, 748, 815, 527 };
+        private int[] nボーナスチャンネルtoX座標改  = new int[] { 0, 298, 370, 419, 470, 527, 582, 645, 694, 815, 748, 419 };
+        private int[] nボーナスチャンネルtoX座標B改 = new int[] { 0, 298, 370, 476, 419, 596, 533, 645, 694, 815, 748, 476 };
+        private int[] nボーナスチャンネルtoX座標C改 = new int[] { 0, 298, 370, 419, 470, 596, 533, 645, 694, 815, 748, 419 };
+        private int[] nボーナスチャンネルtoX座標D改 = new int[] { 0, 298, 370, 527, 420, 477, 582, 645, 694, 815, 748, 527 };
         //HH SD BD HT LT CY FT HHO RD LC LP LBD
         //レーンタイプB
         //LC 298  HH 371 HHO 374  SD 420  LP 477  BD 534  HT 597 LT 646  FT 695  CY 749  RD 815
         //レーンタイプC
+
+        //2013.09.26.kairera0467 ボーナスの場合はレーンタイプAの並び方。
 
         public int UnitTime;
 		private CTexture txヒットバーGB;
@@ -3173,6 +3184,115 @@ namespace DTXMania
         
         protected override void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
         {
+
+            if (!pChip.bHit && pChip.b可視)
+            {
+                if (this.txチップ != null)
+                {
+                    this.txチップ.n透明度 = pChip.n透明度;
+                }
+                
+                int x = this.nボーナスチャンネルtoX座標[ pChip.n整数値 ];
+
+                if (configIni.eLaneType.Drums == Eタイプ.A)
+                {
+                    if (configIni.eRDPosition == ERDPosition.RCRD)
+                    {
+                        x = this.nボーナスチャンネルtoX座標[pChip.n整数値];
+                    }
+                    else if (configIni.eRDPosition == ERDPosition.RDRC)
+                    {
+                        x = this.nボーナスチャンネルtoX座標改[pChip.n整数値];
+                    }
+                }
+                else if (configIni.eLaneType.Drums == Eタイプ.B)
+                {
+                    if (configIni.eRDPosition == ERDPosition.RCRD)
+                    {
+                        x = this.nボーナスチャンネルtoX座標B[pChip.n整数値];
+                    }
+                    else if (configIni.eRDPosition == ERDPosition.RDRC)
+                    {
+                        x = this.nボーナスチャンネルtoX座標B改[pChip.n整数値];
+                    }
+                }
+                else if (configIni.eLaneType.Drums == Eタイプ.C)
+                {
+                    if (configIni.eRDPosition == ERDPosition.RCRD)
+                    {
+                        x = this.nボーナスチャンネルtoX座標C[pChip.nチャンネル番号 - 0x11];
+                    }
+                    else if (configIni.eRDPosition == ERDPosition.RDRC)
+                    {
+                        x = this.nボーナスチャンネルtoX座標C改[pChip.nチャンネル番号 - 0x11];
+                    }
+                }
+                else if (configIni.eLaneType.Drums == Eタイプ.D)
+                {
+                    if (configIni.eRDPosition == ERDPosition.RCRD)
+                    {
+                        x = this.nボーナスチャンネルtoX座標D[pChip.nチャンネル番号 - 0x11];
+                    }
+                    else if (configIni.eRDPosition == ERDPosition.RDRC)
+                    {
+                        x = this.nボーナスチャンネルtoX座標D改[pChip.nチャンネル番号 - 0x11];
+                    }
+                }
+
+                if (configIni.eRDPosition == ERDPosition.RDRC)
+                {
+                    if (configIni.eLaneType.Drums == Eタイプ.A)
+                    {
+                        x = this.nボーナスチャンネルtoX座標改[pChip.nチャンネル番号 - 0x11];
+                    }
+                    else if (configIni.eLaneType.Drums == Eタイプ.B)
+                    {
+                        x = this.nボーナスチャンネルtoX座標B改[pChip.nチャンネル番号 - 0x11];
+                    }
+                }
+                
+
+                int y = configIni.bReverse.Drums ? (159 + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums);
+                if (base.txチップ != null)
+                {
+                    base.txチップ.vc拡大縮小倍率 = new Vector3((float)pChip.dbチップサイズ倍率, (float)pChip.dbチップサイズ倍率, 1f);
+                }
+                int num9 = this.ctチップ模様アニメ.Drums.n現在の値;
+
+                switch (pChip.nチャンネル番号)
+                {
+                    case 0x4F:
+                        if (this.txチップ != null)
+                        {
+                            switch (pChip.n整数値)
+                            {
+                                case 0x01:
+                                    x = (x + 0x13) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
+                                    if (this.txチップ != null)
+                                    {
+                                        this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(448, 0, 64, 10));
+
+                                    }
+                                    break;
+                                case 0x09:
+                                    x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
+                                    if (this.txチップ != null)
+                                    {
+                                        this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(338, 535, 0x40, 10));
+                                    }
+                                    break;
+                        }
+                    }
+                    break;
+
+                }
+                if (this.txチップ != null)
+                {
+                    this.txチップ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                    this.txチップ.n透明度 = 0xff;
+                }
+            }
+
             bool bPChipIsAutoPlay = bCheckAutoPlay(pChip);
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
