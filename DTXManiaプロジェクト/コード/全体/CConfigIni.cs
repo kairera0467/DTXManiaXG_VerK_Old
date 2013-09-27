@@ -1058,8 +1058,11 @@ namespace DTXMania
             this.bJudgeLineDisp = new STDGBVALUE<bool>();
             this.bJudgeLineDisp.Drums = true;
             this.bJudgeLineDisp.Guitar = true;
+            this.bJudgeLineDisp.Bass = true;
             this.bLaneFlush = new STDGBVALUE<bool>();
             this.bLaneFlush.Drums = true;
+            this.bLaneFlush.Guitar = true;
+            this.bLaneFlush.Bass = true;
 
             this.nJudgeFrames = 24;
             this.nJudgeInterval = 14;
