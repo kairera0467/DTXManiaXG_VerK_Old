@@ -451,11 +451,11 @@ namespace DTXMania
             int num1 = 0;
             if (CDTXMania.ConfigIni.bDrums有効 == true)
             {
-                num1 = CDTXMania.stage演奏ドラム画面.ctBPMバー.n現在の値;
+                num1 = (int)CDTXMania.stage演奏ドラム画面.ctBPMバー.db現在の値;
             }
             else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
             {
-                num1 = CDTXMania.stage演奏ギター画面.ctBPMバー.n現在の値;
+                num1 = (int)CDTXMania.stage演奏ギター画面.ctBPMバー.n現在の値;
             }
             if (this.txDShow汎用 != null && ( CDTXMania.ConfigIni.bDrums有効 ? CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した : CDTXMania.stage演奏ギター画面.ct登場用.b終了値に達した ) )
             {

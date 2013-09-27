@@ -155,12 +155,11 @@ namespace DTXMania
 
                     this.actAVI.LivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
-                    int UnitTime;
-                    double BPM = CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM;
-                    UnitTime = (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 13.2 * 1000.0));
-                    this.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
+                    double UnitTime;
+                    UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
+                    this.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CDTXMania.Timer);
 
-                    this.ctコンボ動作タイマ = new CCounter(0, 15, (int)((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 * 1000.0)), CDTXMania.Timer);
+                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CDTXMania.Timer);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -368,8 +367,8 @@ namespace DTXMania
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                 {
                     this.bサビ区間 = true;
-                    UnitTime = 15;
-                    ctBPMバー = new CCounter(1, 14, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
+                    UnitTime = 0.08;
+                    ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
                     //this.actFOClear.tフェードアウト開始();
                     if ((this.actGauge.IsFailed(E楽器パート.DRUMS)) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                     {
@@ -486,7 +485,7 @@ namespace DTXMania
 
         //2013.09.26.kairera0467 ボーナスの場合はレーンタイプAの並び方。
 
-        public int UnitTime;
+        public double UnitTime;
 		private CTexture txヒットバーGB;
 		private CTexture txレーンフレームGB;
         public CTexture txシャッター;
