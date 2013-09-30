@@ -113,7 +113,7 @@ namespace FDK
             this.db終了値 = 0;
             this.db間隔 = 0;
             this.db現在の値 = 0;
-            this.db現在の経過時間 = CTimer.n未使用;
+            this.db現在の経過時間 = CSoundTimer.n未使用;
 		}
 
 		/// <summary>生成と同時に開始する。</summary>
@@ -124,7 +124,7 @@ namespace FDK
 		}
 
         /// <summary>生成と同時に開始する。(double版)</summary>
-        public CCounter( double db開始値, double db終了値, double db間隔, CTimer timer )
+        public CCounter( double db開始値, double db終了値, double db間隔, CSoundTimer timer )
             : this()
         {
             this.t開始( db開始値, db終了値, db間隔 * 1000.0, timer );
@@ -157,13 +157,13 @@ namespace FDK
 		/// <param name="db終了値">最後のカウント値。</param>
 		/// <param name="db間隔">カウント値を１増加させるのにかける時間（秒単位）。</param>
 		/// <param name="timer">カウントに使用するタイマ。</param>
-		public void t開始( double db開始値, double db終了値, double db間隔, CTimer timer )
+		public void t開始( double db開始値, double db終了値, double db間隔, CSoundTimer timer )
 		{
 			this.db開始値 = db開始値;
 			this.db終了値 = db終了値;
 			this.db間隔 = db間隔;
-			this.timer = timer;
-			this.db現在の経過時間 = this.timer.n現在時刻;
+			this.timerdb = timer;
+			this.db現在の経過時間 = this.timerdb.dbシステム時刻;
 			this.db現在の値 = db開始値;
 		}
 
@@ -195,9 +195,9 @@ namespace FDK
 		/// </summary>
 		public void t進行db()
 		{
-			if ( ( this.timer != null ) && ( this.db現在の経過時間 != CTimer.n未使用 ) )
+			if ( ( this.timerdb != null ) && ( this.db現在の経過時間 != CSoundTimer.n未使用 ) )
 			{
-				double num = this.timer.n現在時刻;
+				double num = this.timerdb.n現在時刻;
 				if ( num < this.db現在の経過時間 )
 					this.db現在の経過時間 = num;
 
@@ -239,9 +239,9 @@ namespace FDK
 		/// </summary>
 		public void t進行LoopDb()
 		{
-			if ( ( this.timer != null ) && ( this.db現在の経過時間 != CTimer.n未使用 ) )
+			if ( ( this.timerdb != null ) && ( this.db現在の経過時間 != CSoundTimer.n未使用 ) )
 			{
-				double num = this.timer.n現在時刻;
+				double num = this.timerdb.n現在時刻;
 				if ( num < this.n現在の経過時間ms )
 					this.db現在の経過時間 = num;
 
@@ -262,7 +262,7 @@ namespace FDK
 		public void t停止()
 		{
 			this.n現在の経過時間ms = CTimer.n未使用;
-            this.db現在の経過時間 = CTimer.n未使用;
+            this.db現在の経過時間 = CSoundTimer.n未使用;
 		}
 
 
@@ -328,6 +328,7 @@ namespace FDK
 		#region [ private ]
 		//-----------------
 		private CTimer timer;
+        private CSoundTimer timerdb;
 		private int n間隔ms;
         private double db間隔;
 		//-----------------

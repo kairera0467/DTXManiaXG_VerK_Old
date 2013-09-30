@@ -157,9 +157,9 @@ namespace DTXMania
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     double UnitTime;
                     UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
-                    this.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CDTXMania.Timer);
+                    this.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
 
-                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CDTXMania.Timer);
+                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -285,7 +285,12 @@ namespace DTXMania
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
-                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false )))
+                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && 
+                    ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && 
+                    ( CDTXMania.DTX.bチップがある.FT == false ) && 
+                    ( CDTXMania.DTX.bチップがある.Ride == false ) && 
+                    ( CDTXMania.DTX.bチップがある.LP == false ) &&
+                    ( CDTXMania.DTX.b強制的にXG譜面にする == false )))
                 {
                     if ( this.txLaneCover != null )
                     {
@@ -367,8 +372,8 @@ namespace DTXMania
                 if (bIsFinishedPlaying && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                 {
                     this.bサビ区間 = true;
-                    UnitTime = 0.08;
-                    ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CDTXMania.Timer);
+                    UnitTime = 0.015;
+                    ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
                     //this.actFOClear.tフェードアウト開始();
                     if ((this.actGauge.IsFailed(E楽器パート.DRUMS)) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                     {

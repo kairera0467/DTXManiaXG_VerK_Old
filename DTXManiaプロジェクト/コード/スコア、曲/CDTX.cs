@@ -1291,6 +1291,7 @@ namespace DTXMania
 		public string strファイル名の絶対パス;
 		public string strフォルダ名;
 		public string TITLE;
+        public bool b強制的にXG譜面にする;
 #if TEST_NOTEOFFMODE
 		public STLANEVALUE<bool> b演奏で直前の音を消音する;
 //		public bool bHH演奏で直前のHHを消音する;
@@ -1357,6 +1358,7 @@ namespace DTXMania
 			this.nRESULTIMAGE用優先順位 = new int[ 7 ];
 			this.nRESULTMOVIE用優先順位 = new int[ 7 ];
 			this.nRESULTSOUND用優先順位 = new int[ 7 ];
+            this.b強制的にXG譜面にする = false;
 
 			#region [ 2011.1.1 yyagi GDA->DTX変換テーブル リファクタ後 ]
 			STGDAPARAM[] stgdaparamArray = new STGDAPARAM[] {		// GDA->DTX conversion table
@@ -4590,6 +4592,11 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
+                else if( strコマンド.StartsWith( "FORCINGXG"  ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "FORCINGXG", ref strコマンド, ref strパラメータ );
+					this.b強制的にXG譜面にする = strパラメータ.ToLower().Equals( "on" );
+                }
 				else if( !this.bヘッダのみ )		// ヘッダのみの解析の場合、以下は無視。
 				{
 					#region [ PANEL ]
