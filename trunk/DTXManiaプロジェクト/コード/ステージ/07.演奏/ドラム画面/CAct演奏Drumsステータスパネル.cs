@@ -279,7 +279,8 @@ namespace DTXMania
                     ( CDTXMania.DTX.bチップがある.LP == false ) && 
                     ( CDTXMania.DTX.bチップがある.LBD == false ) && 
                     ( CDTXMania.DTX.bチップがある.FT == false ) && 
-                    ( CDTXMania.DTX.bチップがある.Ride == false ) )
+                    ( CDTXMania.DTX.bチップがある.Ride == false ) &&
+                    ( CDTXMania.DTX.b強制的にXG譜面にする == false) )
                 {
                     str = string.Format( "{0:00}", CDTXMania.DTX.LEVEL.Drums );
                 }
@@ -292,7 +293,8 @@ namespace DTXMania
                     ( CDTXMania.DTX.bチップがある.LP == false ) && 
                     ( CDTXMania.DTX.bチップがある.LBD == false ) && 
                     ( CDTXMania.DTX.bチップがある.FT == false ) && 
-                    ( CDTXMania.DTX.bチップがある.Ride == false ) )
+                    ( CDTXMania.DTX.bチップがある.Ride == false ) &&
+                    ( CDTXMania.DTX.b強制的にXG譜面にする == false) )
                 {
                     if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                         graphics2.DrawString( str.Substring( 0, 2 ), this.ftDifficultyL, Brushes.Black, 18f + width, 164f );
@@ -315,7 +317,8 @@ namespace DTXMania
                     ( CDTXMania.DTX.bチップがある.LP == false ) && 
                     ( CDTXMania.DTX.bチップがある.LBD == false ) && 
                     ( CDTXMania.DTX.bチップがある.FT == false ) && 
-                    ( CDTXMania.DTX.bチップがある.Ride == false ) )
+                    ( CDTXMania.DTX.bチップがある.Ride == false ) &&
+                    ( CDTXMania.DTX.b強制的にXG譜面にする == false) )
                 {
                 }
                 else

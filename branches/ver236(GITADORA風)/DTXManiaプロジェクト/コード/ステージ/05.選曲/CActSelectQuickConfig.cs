@@ -57,7 +57,7 @@ namespace DTXMania
 			List<int> automode = tConfigureAuto_DefaultSettings();
 			if ( nInst == (int) E楽器パート.DRUMS )
 			{
-				l.Add( new CItemList( "Auto Mode", CItemBase.Eパネル種別.通常, automode[ nInst ], "", "", new string[] { "All Auto", "Auto LP", "Auto BD", "2Pedal Auto", "3 Auto", "Custom", "OFF" } ) );
+				l.Add( new CItemList( "Auto Mode", CItemBase.Eパネル種別.通常, automode[ nInst ], "", "", new string[] { "All Auto", "Auto LP", "Auto BD", "2Pedal Auto", "XGLaneAuto", "Custom", "OFF" } ) );
 			}
 			else
 			{

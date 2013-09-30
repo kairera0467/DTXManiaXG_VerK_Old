@@ -2301,6 +2301,7 @@ for (int i = 0; i < 3; i++) {
 					{
 						Timer.Dispose();
 						Timer = null;
+
 						Trace.TraceInformation( "タイマの終了処理を完了しました。" );
 					}
 					else

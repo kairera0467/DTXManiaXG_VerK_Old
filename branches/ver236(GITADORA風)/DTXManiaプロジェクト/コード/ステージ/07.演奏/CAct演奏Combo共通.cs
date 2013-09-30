@@ -323,11 +323,11 @@ namespace DTXMania
                 y += this.nジャンプ差分値[nJump];
             }
 
-            if ( (CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 4) != 0 )
+            if ( (int)(CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.db現在の値 / 4) != 0 )
             {
                 y動作差分 = 2;
             }
-            else if ( CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.n現在の値 / 15 != 1.0 )
+            else if ( (int)(CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ.db現在の値 / 16) != 1 )
             {
                 y動作差分 = 8;
             }

@@ -514,7 +514,7 @@ namespace DTXMania
                 DTXLevelDeci = ( cdtx.LEVEL.Drums - DTXLevel * 10 );
             }
 
-            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
+            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && !cdtx.b強制的にXG譜面にする )
             {
                 DTXLevel = cdtx.LEVEL.Drums;
                 this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
@@ -536,9 +536,9 @@ namespace DTXMania
                     //this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
                 }
             }
-            if (CDTXMania.ConfigIni.bSkillModeを自動切換えする == true)
+            if( CDTXMania.ConfigIni.bSkillModeを自動切換えする == true && CDTXMania.ConfigIni.bDrums有効 )
             {
-                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums)
+                if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && !cdtx.b強制的にXG譜面にする )
                 {
                     CDTXMania.ConfigIni.nSkillMode = 0;
                 }
