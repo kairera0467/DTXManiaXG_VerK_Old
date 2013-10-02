@@ -760,6 +760,18 @@
   <data name="toolStripMenuItemすべてのチップの選択.Text" xml:space="preserve">
     <value>すべてのチップの選択(&amp;A)</value>
   </data>
+  <data name="toolStripMenuItemレーン内のすべてのチップの選択.Size" type="System.Drawing.Size, System.Drawing">
+    <value>287, 22</value>
+  </data>
+  <data name="toolStripMenuItemレーン内のすべてのチップの選択.Text" xml:space="preserve">
+    <value>レーン内のすべてのチップの選択(&amp;L) []</value>
+  </data>
+  <data name="toolStripMenuItem小節内のすべてのチップの選択.Size" type="System.Drawing.Size, System.Drawing">
+    <value>287, 22</value>
+  </data>
+  <data name="toolStripMenuItem小節内のすべてのチップの選択.Text" xml:space="preserve">
+    <value>小節内のすべてのチップの選択(&amp;R) []</value>
+  </data>
   <data name="toolStripSeparator16.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 6</value>
   </data>

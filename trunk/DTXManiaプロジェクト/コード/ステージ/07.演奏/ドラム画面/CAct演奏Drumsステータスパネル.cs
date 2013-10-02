@@ -16,7 +16,6 @@ namespace DTXMania
         {
             this.ftDisplayFont = new Font( "ＤＦＧ平成ゴシック体W5", 22f, FontStyle.Regular, GraphicsUnit.Pixel );
             this.ftGroupFont = new Font( "ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel );
-            this.ftNameFont = new Font( "Arial", 26f, FontStyle.Bold, GraphicsUnit.Pixel );
             this.ftLevelFont = new Font( "Impact", 26f, FontStyle.Regular );
             this.ftDifficultyL = new Font( "Arial", 30f, FontStyle.Bold );
             this.ftDifficultyS = new Font( "Arial", 20f, FontStyle.Bold );
@@ -29,7 +28,8 @@ namespace DTXMania
                     ( CDTXMania.DTX.bチップがある.LP == false ) && 
                     ( CDTXMania.DTX.bチップがある.LBD == false ) && 
                     ( CDTXMania.DTX.bチップがある.FT == false ) && 
-                    ( CDTXMania.DTX.bチップがある.Ride == false ) )
+                    ( CDTXMania.DTX.bチップがある.Ride == false ) &&
+                    ( CDTXMania.DTX.b強制的にXG譜面にする == false) )
                 {
                     this.ftDifficultyL = new Font( "Arial", 30f, FontStyle.Bold );
                     this.ftDifficultyS = new Font( "Arial", 20f, FontStyle.Bold );
@@ -115,92 +115,77 @@ namespace DTXMania
 
                 #region[ ネームカラー ]
                 //--------------------
-                Brush namecolor = Brushes.White;
                 Color clNameColor = Color.White;
                 Color clNameColorLower = Color.White;
-                LinearGradientBrush gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.LightYellow, Color.FromArgb(255, 245, 201), LinearGradientMode.Vertical );
                 switch( CDTXMania.ConfigIni.nNameColor )
                 {
                     case 0:
-                        namecolor = Brushes.White;
                         clNameColor = Color.White;
                         break;
                     case 1:
-                        namecolor = Brushes.LightYellow;
                         clNameColor = Color.LightYellow;
                         break;
                     case 2:
-                        namecolor = Brushes.Yellow;
                         clNameColor = Color.Yellow;
                         break;
                     case 3:
-                        namecolor = Brushes.Green;
+                        clNameColor = Color.Green;
                         break;
                     case 4:
-                        namecolor = Brushes.Blue;
+                        clNameColor = Color.Blue;
                         break;
                     case 5:
-                        namecolor = Brushes.Purple;
+                        clNameColor = Color.Purple;
                         break;
                     case 6:
-                        namecolor = Brushes.Red;
+                        clNameColor = Color.Red;
                         break;
                     case 7:
-                        namecolor = Brushes.Brown;
+                        clNameColor = Color.Brown;
                         break;
                     case 8:
-                        namecolor = Brushes.Silver;
+                        clNameColor = Color.Silver;
                         break;
                     case 9:
-                        namecolor = Brushes.Gold;
                         clNameColor = Color.Gold;
                         break;
 
                     case 10:
-                        namecolor = Brushes.White;
+                        clNameColor = Color.White;
                         break;
                     case 11:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.LightYellow,                Color.FromArgb( 255, 245, 201 ), LinearGradientMode.Vertical );
                         clNameColor = Color.LightYellow;
                         clNameColorLower = Color.White;
                         break;
                     case 12:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 255, 216, 0 ),    Color.FromArgb( 255, 238, 182 ), LinearGradientMode.Horizontal );
                         clNameColor = Color.Yellow;
                         clNameColorLower = Color.White;
                         break;
                     case 13:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 0, 255, 33 ),     Color.FromArgb( 153, 255, 164 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 0, 255, 33 );
                         clNameColorLower = Color.White;
                         break;
                     case 14:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 0, 38, 255 ),     Color.FromArgb( 178, 189, 255 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 0, 38, 255 );
                         clNameColorLower = Color.White;
                         break;
                     case 15:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 72, 0, 255 ),     Color.FromArgb( 180, 153, 255 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 72, 0, 255 );
                         clNameColorLower = Color.White;
                         break;
                     case 16:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 255, 0, 0 ),      Color.FromArgb( 255, 153, 153 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 255, 255, 0, 0 );
                         clNameColorLower = Color.White;
                         break;
                     case 17:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 232, 182, 149 ),  Color.FromArgb( 122, 69, 26 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 255, 232, 182, 149 );
                         clNameColorLower = Color.FromArgb( 255, 122, 69, 26 );
                         break;
                     case 18:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 246, 245, 255 ),  Color.FromArgb( 125, 128, 137 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 246, 245, 255 );
                         clNameColorLower = Color.FromArgb( 125, 128, 137 );
                         break;
                     case 19:
-                        gb = new LinearGradientBrush( graphics.VisibleClipBounds, Color.FromArgb( 255, 241, 181 ),  Color.FromArgb( 238, 196, 85 ), LinearGradientMode.Vertical );
                         clNameColor = Color.FromArgb( 255, 238, 196, 85 );
                         clNameColorLower = Color.FromArgb(255, 255, 241, 200 );
                         break;
@@ -245,7 +230,8 @@ namespace DTXMania
                     }
                     else
                     {
-                        graphics.DrawString( this.strPlayerName, this.ftNameFont, namecolor, 42f, 136f );
+                        bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName, clNameColor, Color.Transparent );
+                        graphics.DrawImage( bmpCardName, 42f, 126f );
                     }
                     graphics.DrawString( this.strGroupName, this.ftGroupFont, Brushes.White, 54f, 105f );
                 }
@@ -258,7 +244,8 @@ namespace DTXMania
                     }
                     else
                     {
-                        graphics.DrawString( this.strPlayerName, this.ftNameFont, namecolor, 54f, 100f );
+                        bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName, clNameColor, Color.Transparent );
+                        graphics.DrawImage( bmpCardName, 46f, 92f );
                     }
                     graphics.DrawString( this.strGroupName, this.ftGroupFont, Brushes.White, 54f, 500f );
                 }
@@ -368,7 +355,6 @@ namespace DTXMania
                 //ここで使用したフォント3つはここで開放。
                 this.ftLevelFont.Dispose();
                 this.ftDisplayFont.Dispose();
-                this.ftNameFont.Dispose();
                 this.pfNameFont.Dispose();
 
                 base.OnManagedリソースの作成();
@@ -395,7 +381,6 @@ namespace DTXMania
                 this.ftDifficultyS.Dispose();
                 this.ftDifficultyL.Dispose();
                 this.ftDisplayFont.Dispose();
-                this.ftNameFont.Dispose();
                 this.ftLevelFont.Dispose();
                 this.pfNameFont.Dispose();
                 base.OnManagedリソースの解放();
@@ -564,7 +549,6 @@ namespace DTXMania
         private Font ftDifficultyL;
         private Font ftDifficultyS;
         private Font ftDisplayFont;
-        private Font ftNameFont;
         private Font ftGroupFont;
         private Font ftLevelFont;
         private Image iAlbum;

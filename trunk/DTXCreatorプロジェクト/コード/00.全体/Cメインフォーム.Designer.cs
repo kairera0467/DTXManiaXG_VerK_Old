@@ -1524,7 +1524,8 @@
 			this.toolStripMenuItemすべてのチップの選択.Name = "toolStripMenuItemすべてのチップの選択";
 			resources.ApplyResources( this.toolStripMenuItemすべてのチップの選択, "toolStripMenuItemすべてのチップの選択" );
 			this.toolStripMenuItemすべてのチップの選択.Click += new System.EventHandler( this.toolStripMenuItemすべてのチップの選択_Click );
-			// toolStripMenuItemレーン内のすべてのチップの選択
+			//
+            // toolStripMenuItemレーン内のすべてのチップの選択
 			// 
 			this.toolStripMenuItemレーン内のすべてのチップの選択.Name = "toolStripMenuItemレーン内のすべてのチップの選択";
 			resources.ApplyResources( this.toolStripMenuItemレーン内のすべてのチップの選択, "toolStripMenuItemレーン内のすべてのチップの選択" );
@@ -1535,7 +1536,6 @@
 			this.toolStripMenuItem小節内のすべてのチップの選択.Name = "toolStripMenuItem小節内のすべてのチップの選択";
 			resources.ApplyResources( this.toolStripMenuItem小節内のすべてのチップの選択, "toolStripMenuItem小節内のすべてのチップの選択" );
 			this.toolStripMenuItem小節内のすべてのチップの選択.Click += new System.EventHandler( this.toolStripMenuItem小節内のすべてのチップの選択_Click );
-			// 
 			// 
 			// toolStripSeparator16
 			// 

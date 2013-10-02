@@ -1190,8 +1190,8 @@ namespace DTXMania
                         int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Guitar;
                         eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
                         this.actJudgeString.Start(13, bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag);
-                        break;
                     }
+                    break;
 
                 case E楽器パート.BASS:
                     {
@@ -1712,27 +1712,21 @@ namespace DTXMania
 						}
 						continue;
 					}
-                    else
+                    else if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
                     {
-                        if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
+                        if( chip.n発声時刻ms > nTime)
                         {
-                            if ((long)chip.n発声時刻ms > nTime)
-                            {
-                                break;
-                            }
-                            nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
+                            break;
                         }
-                        else
+                        nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
+                    }
+                    else if ((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
+                    {
+                        if (chip.n発声時刻ms > nTime)
                         {
-                            if ((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
-                            {
-                                if ((long)chip.n発声時刻ms > nTime)
-                                {
-                                    break;
-                                }
-                                nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
-                            }
+                            break;
                         }
+                        nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
                     }
 				}
 //				nIndex_NearestChip_Future++;
@@ -1741,11 +1735,37 @@ namespace DTXMania
 //			while ( nIndex_NearestChip_Past >= 0 )		// 過去方向への検索
 			for ( ; nIndex_NearestChip_Past >= 0; nIndex_NearestChip_Past-- )
 			{
-                CDTX.CChip chip = listChip[nIndex_NearestChip_Past];
-                if (!chip.bHit && ((nChannel >= 0x11 && nChannel <= 0x1c && (chip.nチャンネル番号 == nChannel || chip.nチャンネル番号 == nChannel + 32)) || (nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel) || (nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)))
-                {
-                    break;
-                }
+				CDTX.CChip chip = listChip[ nIndex_NearestChip_Past ];
+				if ( (!chip.bHit) &&
+						(
+							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1a ) &&
+								( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
+							)
+							||
+							(
+								( ( nChannel == 0x2f ) && ( chip.e楽器パート == E楽器パート.GUITAR ) ) ||
+								( ( ( nChannel >= 0x20 ) && ( nChannel <= 0x28 ) ) ||
+                                ( 147 <= nChannel && nChannel <= 159 ) ||
+                                ( 169 <= nChannel && nChannel <= 175 ) ||
+                                ( 208 <= nChannel && nChannel <= 211 )
+                                && ( chip.nチャンネル番号 == nChannel ) )
+							)
+							||
+							(
+								( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) ||
+								( ( ( nChannel >= 0xA0 ) && ( nChannel <= 0xa8 ) ) ||
+                                ( 160 <= nChannel && nChannel <= 168 ) ||
+                                ( 197 <= nChannel && nChannel <= 198 ) ||
+                                ( 200 <= nChannel && nChannel <= 207 ) ||
+                                ( 218 <= nChannel && nChannel <= 223 ) ||
+                                ( 225 <= nChannel && nChannel <= 232 )
+                                && ( chip.nチャンネル番号 == nChannel ) )
+							)
+						)
+					)
+					{
+						break;
+					}
 //				nIndex_NearestChip_Past--;
 			}
 			if ( ( nIndex_NearestChip_Future >= count ) && ( nIndex_NearestChip_Past < 0 ) )	// 検索対象が過去未来どちらにも見つからなかった場合
@@ -3332,6 +3352,7 @@ namespace DTXMania
                                 bChipHasB = true;
                                 break;
                             case 0xA8:
+                                bChipHasW = true;
                                 break;
 
                             case 0xA9:
@@ -3974,7 +3995,7 @@ namespace DTXMania
 			}
 			#endregion
 
-			if ( !CDTXMania.ConfigIni.bGuitar有効 || !CDTXMania.DTX.bチップがある[indexInst] )
+			if ( !CDTXMania.ConfigIni.bGuitar有効 || !CDTXMania.DTX.bチップがある[ indexInst ] )
 			{
 				return;
 			}
@@ -4010,8 +4031,7 @@ namespace DTXMania
                 bool flag10 = false;
                 bool flag11 = false;
 
-                int nチャンネル番号 = chip.nチャンネル番号;
-                switch ( nチャンネル番号 )
+                switch ( chip.nチャンネル番号 )
                 {
                     case 0x20:
                         break;
@@ -4042,7 +4062,7 @@ namespace DTXMania
                         flag9 = true;
                         break;
                     default:
-                        switch (nチャンネル番号)
+                        switch ( chip.nチャンネル番号 )
                         {
                             case 147:
                                 flag10 = true;
@@ -4383,10 +4403,10 @@ namespace DTXMania
 						long nTime = eventPick.nTimeStamp - CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻;
 						int chWailingSound = ( inst == E楽器パート.GUITAR ) ? 0x2F : 0xAF;
 						CDTX.CChip pChip = this.r指定時刻に一番近い未ヒットChip( nTime, chWailingSound, this.nInputAdjustTimeMs[indexInst] );	// E楽器パート.GUITARなチップ全てにヒットする
-						E判定 e判定 = this.e指定時刻からChipのJUDGEを返す( nTime, pChip, this.nInputAdjustTimeMs[indexInst] );
+                        E判定 e判定 = this.e指定時刻からChipのJUDGEを返す(nTime, pChip, this.nInputAdjustTimeMs[indexInst]);
 //Trace.TraceInformation("ch={0:x2}, mask1={1:x1}, mask2={2:x2}", pChip.nチャンネル番号,  ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F, ( flagRGB & ~nAutoMask) & 0x0F );
-						if( ( pChip != null ) && ( ( ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F ) == ( ( flagRGB & ~nAutoMask) & 0x0F ) ) && ( e判定 != E判定.Miss ) )
-						{
+						//if ( ( pChip != null ) && ( ( ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F ) == ( ( flagRGB & ~nAutoMask) & 0x0F ) ) && ( e判定 != E判定.Miss ) )
+						//{
 							bool bChipHasR = false;
 							bool bChipHasG = false;
 							bool bChipHasB = false;
@@ -4394,338 +4414,339 @@ namespace DTXMania
                             bool bChipHasP = false;
 							bool bChipHasW = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x08 );
 							bool bChipIsO = false;
-                            bool bSuccessOPEN = bChipIsO && (autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
-
-                            if (chip != null)
+                            bool bSuccessOPEN = bChipIsO && ( autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
+                        if( pChip != null )
+                        {
+                            switch ( chip.nチャンネル番号 )
                             {
-                                int nチャンネル番号 = chip.nチャンネル番号;
-                                switch (nチャンネル番号)
+                                case 0x20:
+                                    bChipIsO = true;
+                                    break;
+                                case 0x21:
+                                    bChipHasB = true;
+                                    break;
+                                case 0x22:
+                                    bChipHasG = true;
+                                    break;
+                                case 0x23:
+                                    bChipHasG = true;
+                                    bChipHasB = true;
+                                    break;
+                                case 0x24:
+                                    bChipHasR = true;
+                                    break;
+                                case 0x25:
+                                    bChipHasR = true;
+                                    bChipHasB = true;
+                                    break;
+                                case 0x26:
+                                    bChipHasR = true;
+                                    bChipHasG = true;
+                                    break;
+                                case 0x27:
+                                    bChipHasR = true;
+                                    bChipHasG = true;
+                                    bChipHasB = true;
+                                    break;
+                                default:
+                                    switch ( chip.nチャンネル番号 )
+                                    {
+                                        case 0x93:
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x94:
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x95:
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x96:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x97:
+                                            bChipHasR = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x98:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x99:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x9A:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0x9B:
+                                            bChipHasP = true;
+                                            break;
+                                        case 0x9C:
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0x9D:
+                                            bChipHasG = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0x9E:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0x9F:
+                                            bChipHasR = true;
+                                            bChipHasP = true;
+                                            break;
+
+                                        case 0xA1:
+                                            bChipHasB = true;
+                                            break;
+                                        case 0xA2:
+                                            bChipHasG = true;
+                                            break;
+                                        case 0xA3:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            break;
+                                        case 0xA4:
+                                            bChipHasR = true;
+                                            break;
+                                        case 0xA5:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            break;
+                                        case 0xA6:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            break;
+                                        case 0xA7:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            break;
+                                        case 0xA9:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xAA:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xAB:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xAC:
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xAD:
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xAE:
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xAF:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xC5:
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xC6:
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xC8:
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xC9:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xCA:
+                                            bChipHasR = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xCB:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xCC:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xCD:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            break;
+                                        case 0xCE:
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xCF:
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xD0:
+                                            bChipHasR = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xD1:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xD2:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xD3:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xDA:
+                                            bChipHasG = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xDB:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xDC:
+                                            bChipHasR = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xDD:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xDE:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xDF:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE1:
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE2:
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE3:
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE4:
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE5:
+                                            bChipHasR = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE6:
+                                            bChipHasR = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE7:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                        case 0xE8:
+                                            bChipHasR = true;
+                                            bChipHasG = true;
+                                            bChipHasB = true;
+                                            bChipHasY = true;
+                                            bChipHasP = true;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            int num17 = ( bChipHasR ? 4 : 0) | ( bChipHasG ? 2 : 0) | ( bChipHasB ? 1 : 0) | ( bChipHasY ? 16 : 0) | ( bChipHasP ? 32 : 0);
+                            if ( pChip != null && ( num17 & ~nAutoMask & 0x3F ) == ( flagRGB & ~nAutoMask & 0x3F ) && e判定 != E判定.Miss)
+                            {
+
+                                if ((bChipHasR && (autoR || pushingR != 0)) || bSuccessOPEN)
                                 {
-                                    case 0x20:
-                                        bChipIsO = true;
-                                        break;
-                                    case 0x21:
-                                        bChipHasB = true;
-                                        break;
-                                    case 0x22:
-                                        bChipHasG = true;
-                                        break;
-                                    case 0x23:
-                                        bChipHasG = true;
-                                        bChipHasB = true;
-                                        break;
-                                    case 0x24:
-                                        bChipHasR = true;
-                                        break;
-                                    case 0x25:
-                                        bChipHasR = true;
-                                        bChipHasB = true;
-                                        break;
-                                    case 0x26:
-                                        bChipHasR = true;
-                                        bChipHasG = true;
-                                        break;
-                                    case 0x27:
-                                        bChipHasR = true;
-                                        bChipHasG = true;
-                                        bChipHasB = true;
-                                        break;
-                                    default:
-                                        switch (nチャンネル番号)
-                                        {
-                                            case 0x93:
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x94:
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x95:
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x96:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x97:
-                                                bChipHasR = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x98:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x99:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x9A:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0x9B:
-                                                bChipHasP = true;
-                                                break;
-                                            case 0x9C:
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0x9D:
-                                                bChipHasG = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0x9E:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0x9F:
-                                                bChipHasR = true;
-                                                bChipHasP = true;
-                                                break;
-
-                                            case 0xA1:
-                                                bChipHasB = true;
-                                                break;
-                                            case 0xA2:
-                                                bChipHasG = true;
-                                                break;
-                                            case 0xA3:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                break;
-                                            case 0xA4:
-                                                bChipHasR = true;
-                                                break;
-                                            case 0xA5:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                break;
-                                            case 0xA6:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                break;
-                                            case 0xA7:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                break;
-                                            case 0xA9:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xAA:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xAB:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xAC:
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xAD:
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xAE:
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xAF:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xC5:
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xC6:
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xC8:
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xC9:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xCA:
-                                                bChipHasR = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xCB:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xCC:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xCD:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                break;
-                                            case 0xCE:
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xCF:
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xD0:
-                                                bChipHasR = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xD1:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xD2:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xD3:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xDA:
-                                                bChipHasG = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xDB:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xDC:
-                                                bChipHasR = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xDD:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xDE:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xDF:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE1:
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE2:
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE3:
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE4:
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE5:
-                                                bChipHasR = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE6:
-                                                bChipHasR = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE7:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                            case 0xE8:
-                                                bChipHasR = true;
-                                                bChipHasG = true;
-                                                bChipHasB = true;
-                                                bChipHasY = true;
-                                                bChipHasP = true;
-                                                break;
-                                        }
-                                        break;
+                                    this.actChipFireGB.Start(R);
                                 }
+                                if ((bChipHasG && (autoG || pushingG != 0)) || bSuccessOPEN)
+                                {
+                                    this.actChipFireGB.Start(G);
+                                }
+                                if ((bChipHasB && (autoB || pushingB != 0)) || bSuccessOPEN)
+                                {
+                                    this.actChipFireGB.Start(B);
+                                }
+                                if ((bChipHasY && (autoY || pushingY != 0)) || bSuccessOPEN)
+                                {
+                                    this.actChipFireGB.Start(Y);
+                                }
+                                if ((bChipHasP && (autoP || pushingP != 0)) || bSuccessOPEN)
+                                {
+                                    this.actChipFireGB.Start(P);
+                                }
+                                this.tチップのヒット処理(nTime, pChip);
+                                this.tサウンド再生(pChip, CSound管理.rc演奏用タイマ.nシステム時刻, inst, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する[indexInst], e判定 == E判定.Poor);
+                                int chWailingChip = (inst == E楽器パート.GUITAR) ? 0x28 : 0xA8;
+                                CDTX.CChip item = this.r指定時刻に一番近い未ヒットChip(nTime, chWailingChip, this.nInputAdjustTimeMs[indexInst], 140);
+                                if (item != null)
+                                {
+                                    this.queWailing[indexInst].Enqueue(item);
+                                }
+                                continue;
                             }
-
-                            if ((bChipHasR && (autoR || pushingR != 0)) || bChipHasR )
-                            {
-                                this.actChipFireGB.Start( R );
-                            }
-                            if ((bChipHasG && (autoG || pushingG != 0)) || bChipHasG )
-                            {
-                                this.actChipFireGB.Start( G );
-                            }
-                            if ((bChipHasB && (autoB || pushingB != 0)) || bChipHasB )
-                            {
-                                this.actChipFireGB.Start( B );
-                            }
-                            if ((bChipHasY && ( autoY || pushingY != 0)) || bChipHasY )
-                            {
-                                this.actChipFireGB.Start( Y );
-                            }
-                            if ((bChipHasP && (autoP || pushingP != 0)) || bChipHasP )
-                            {
-                                this.actChipFireGB.Start( P );
-                            }
-							this.tチップのヒット処理( nTime, pChip );
-							this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.nシステム時刻, inst, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する[indexInst], e判定 == E判定.Poor );
-							int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 0x28 : 0xA8;
-							CDTX.CChip item = this.r指定時刻に一番近い未ヒットChip( nTime, chWailingChip, this.nInputAdjustTimeMs[ indexInst ], 140 );
-							if ( item != null )
-							{
-								this.queWailing[indexInst].Enqueue( item );
-							}
-							continue;
 						}
 
 						// 以下、間違いレーンでのピック時
