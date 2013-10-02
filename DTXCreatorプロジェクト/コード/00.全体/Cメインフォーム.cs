@@ -1860,8 +1860,6 @@ namespace DTXCreator
 			// メニューを表示。
 
 			this.contextMenuStrip譜面右メニュー.Show( this.pictureBox譜面パネル, x, y );
-
-			
 		}
 		public void t最近使ったファイルをFileメニューへ追加する()
 		{

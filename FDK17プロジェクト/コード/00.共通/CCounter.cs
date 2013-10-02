@@ -7,6 +7,17 @@ namespace FDK
 	/// <summary>
 	/// 一定間隔で単純増加する整数（カウント値）を扱う。
 	/// </summary>
+    /// <remarks>
+    /// ○使い方
+    /// 1.CCounterの変数をつくる。
+    /// 2.CCounterを生成
+    ///   ctCounter = new CCounter( 0, 3, 10, CDTXMania.Timer );
+    /// 3.進行メソッドを使用する。
+    /// 4.ウマー。
+    ///
+    /// double値を使う場合、t進行db、t進行LoopDbを使うこと。
+    /// また、double版では間隔の値はミリ秒単位ではなく、通常の秒単位になります。
+    /// </remarks>
 	public class CCounter
 	{
 		// 値プロパティ

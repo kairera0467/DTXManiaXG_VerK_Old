@@ -117,7 +117,7 @@ namespace DTXCreator.譜面
 			this._Form.t選択チップの有無に応じて編集用GUIの有効・無効を設定する();
 			this._Form.pictureBox譜面パネル.Refresh();
 		}
-        		public void tレーン上の全チップを選択する( int lane )			// #32134 2013.9.29 suggested by beatme
+        public void tレーン上の全チップを選択する( int lane )			// #32134 2013.9.29 suggested by beatme
 		{
 			// Debug.WriteLine( "laneno=" + lane + " " + this.mgr譜面管理者ref.listレーン[ lane ].strレーン名 );
 

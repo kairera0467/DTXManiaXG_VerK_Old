@@ -340,27 +340,25 @@ namespace DTXMania
 								this.padCY_Decide = value;
 								return;
 
-                            case (int) EKeyConfigPad.LP:
-                                this.padLP = value;
-                                return;
-
 							case (int) EKeyConfigPad.HHO:
 								this.padHHO_Y = value;
 								return;
                             
+                            case (int) EKeyConfigPad.RD:
+								this.padRD = value;
+								return;
+                            
+                            case (int) EKeyConfigPad.LC:
+								this.padLC_P = value;
+								return;
+                            
+                            case (int) EKeyConfigPad.LP:
+                                this.padLP = value;
+                                return;
+                            
                             case (int) EKeyConfigPad.LBD:
 								this.padLBD = value;
 								return;
-
-							case (int) EKeyConfigPad.RD:
-								this.padRD = value;
-								return;
-
-							case (int) EKeyConfigPad.LC:
-								this.padLC_P = value;
-								return;
-
-
 
 							case (int) EKeyConfigPad.Capture:
 								this.padCapture = value;
@@ -3173,12 +3171,20 @@ namespace DTXMania
 										}
 										else if( str3.Equals( "G" ) )
 										{
-										this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.G );
+										    this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.G );
 										}
 										else if( str3.Equals( "B" ) )
 										{
 											this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.B );
 										}
+                                        else if( str3.Equals( "Y" ) )
+                                        {
+                                            this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.Y );
+                                        }
+                                        else if( str3.Equals( "P" ) ) 
+                                        {
+                                            this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.P );
+                                        }
 										else if( str3.Equals( "Pick" ) )
 										{
 											this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.Pick );

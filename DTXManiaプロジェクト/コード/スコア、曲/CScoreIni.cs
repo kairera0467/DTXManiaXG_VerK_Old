@@ -231,11 +231,15 @@ namespace DTXMania
 				this.bAutoPlay.GtR = false;
 				this.bAutoPlay.GtG = false;
 				this.bAutoPlay.GtB = false;
+                this.bAutoPlay.GtY = false;
+                this.bAutoPlay.GtP = false;
 				this.bAutoPlay.GtPick = false;
 				this.bAutoPlay.GtW = false;
 				this.bAutoPlay.BsR = false;
 				this.bAutoPlay.BsG = false;
 				this.bAutoPlay.BsB = false;
+                this.bAutoPlay.BsY = false;
+                this.bAutoPlay.BsP = false;
 				this.bAutoPlay.BsPick = false;
 				this.bAutoPlay.BsW = false;
 

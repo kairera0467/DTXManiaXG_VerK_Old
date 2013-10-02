@@ -2644,6 +2644,18 @@ The image size is 204x269.</value>
   <data name="toolStripMenuItemすべてのチップの選択.Text" xml:space="preserve">
     <value>Select &amp;All</value>
   </data>
+  <data name="toolStripMenuItemレーン内のすべてのチップの選択.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 22</value>
+  </data>
+  <data name="toolStripMenuItemレーン内のすべてのチップの選択.Text" xml:space="preserve">
+    <value>Select all in the &amp;lane []</value>
+  </data>
+  <data name="toolStripMenuItem小節内のすべてのチップの選択.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 22</value>
+  </data>
+  <data name="toolStripMenuItem小節内のすべてのチップの選択.Text" xml:space="preserve">
+    <value>Select all in the pa&amp;rt []</value>
+  </data>
   <data name="toolStripSeparator16.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 6</value>
   </data>
