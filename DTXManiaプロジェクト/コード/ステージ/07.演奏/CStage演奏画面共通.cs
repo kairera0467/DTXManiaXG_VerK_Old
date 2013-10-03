@@ -1738,7 +1738,7 @@ namespace DTXMania
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Past ];
 				if ( (!chip.bHit) &&
 						(
-							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1a ) &&
+							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1c ) &&
 								( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 							)
 							||
