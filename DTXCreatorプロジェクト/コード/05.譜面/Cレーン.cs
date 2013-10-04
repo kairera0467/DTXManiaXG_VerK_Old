@@ -121,7 +121,7 @@ namespace DTXCreator.譜面
 
 		public bool bパターンレーンである()
 		{
-			if( ( this.eレーン種別 != E種別.GtR ) && ( this.eレーン種別 != E種別.GtG ) && ( this.eレーン種別 != E種別.GtB ) && ( this.eレーン種別 != E種別.BsR ) && ( this.eレーン種別 != E種別.BsG ) && ( this.eレーン種別 != E種別.BsB ) )
+			if( ( this.eレーン種別 != E種別.GtR ) && ( this.eレーン種別 != E種別.GtG ) && ( this.eレーン種別 != E種別.GtB ) && ( this.eレーン種別 != E種別.GtY ) && ( this.eレーン種別 != E種別.GtP ) && ( this.eレーン種別 != E種別.BsR ) && ( this.eレーン種別 != E種別.BsG ) && ( this.eレーン種別 != E種別.BsB ) )
 			{
 				return false;
 			}

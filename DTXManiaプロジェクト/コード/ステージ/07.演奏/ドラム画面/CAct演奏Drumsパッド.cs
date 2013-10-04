@@ -332,7 +332,7 @@ namespace DTXMania
                     #endregion
                 }
                 #region[ ボーナス表示 ]
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     //アニメーションは仮のもの。後から強化する予定。
                     if (this.stボーナス[i].b使用中)
@@ -362,7 +362,7 @@ namespace DTXMania
 
         public void Start(int nLane, bool bボーナス)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < 3; j++)
             {
                 if (this.stボーナス[j].b使用中)
                 {
@@ -370,9 +370,9 @@ namespace DTXMania
                     this.stボーナス[j].b使用中 = false;
                 }
             }
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (!this.stボーナス[j].b使用中)
                     {
@@ -392,31 +392,37 @@ namespace DTXMania
                             this.stボーナス[i].x = 340;
                             break;
                         case 2: //LP
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 410;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 470;
+                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
+                                this.stボーナス[i].x = 390;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B )
+                                this.stボーナス[i].x = 440;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
+                                this.stボーナス[i].x = 500;
                             break;
                         case 3: //SD
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 460;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
+                                this.stボーナス[i].x = 446;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
                                 this.stボーナス[i].x = 390;
                             break;
                         case 4: //HT
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 520;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 580;
+                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A )
+                                this.stボーナス[i].x = 500;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
+                                this.stボーナス[i].x = 570;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
+                                this.stボーナス[i].x = 440;
                             break;
                         case 5: //BD
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 580;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 530;
+                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A )
+                                this.stボーナス[i].x = 550;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
+                                this.stボーナス[i].x = 504;
+                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
+                                this.stボーナス[i].x = 560;
                             break;
                         case 6: //LT
-                            this.stボーナス[i].x = 630;
+                            this.stボーナス[i].x = 618;
                             break;
                         case 7: //FT
                             this.stボーナス[i].x = 660;
@@ -484,7 +490,7 @@ namespace DTXMania
 		private CTexture tx光るパッド;
         private CTexture txボーナス文字;
         public bool[] bボーナス文字 = new bool[10];
-        public STボーナス[] stボーナス = new STボーナス[2];
+        public STボーナス[] stボーナス = new STボーナス[4];
 		//-----------------
 		#endregion
 	}

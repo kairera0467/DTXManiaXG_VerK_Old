@@ -1488,10 +1488,7 @@ namespace DTXCreator
                                 item.n読み込み時の解像度 = nChips;
                                 c小節.listチップ.Add(item);
                                 break;
-                            default:
-                                switch (nCh)
-                                {
-                                    case 208:
+                             case 208:
                                         item = new Cチップ();
                                         item.nレーン番号0to = nLaneGtR;
                                         item.n位置grid = i;
@@ -1594,8 +1591,6 @@ namespace DTXCreator
                                         item.n値・整数1to1295 = 1;
                                         item.n読み込み時の解像度 = nChips;
                                         c小節.listチップ.Add(item);
-                                        break;
-                                }
                                 break;
                         }
                     }

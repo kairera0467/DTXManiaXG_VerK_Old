@@ -1574,15 +1574,6 @@ namespace DTXMania
             if ( ( nTotal == 0 ) || ( ( nPerfect == 0 ) && ( nCombo == 0 ) ) )
                 ret = 0.0;
 
-            if ( dbLevel >= 100 )
-            {
-                dbLevel = dbLevel / 100;
-            }
-            else if( dbLevel < 100 )
-            {
-                dbLevel = dbLevel / 10.0 + ( nLevelDec != 0 ? 0 : nLevelDec / 100.0 );
-            }
-
             ret = ( ( dbLevel * ( ( nPerfect * 0.8 + nCombo * 0.2 ) / ( ( double )nTotal ) ) ) / 2.0 );
             ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
             if ( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
