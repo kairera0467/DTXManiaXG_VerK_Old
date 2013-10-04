@@ -3224,22 +3224,22 @@ namespace DTXMania
                 {
                     if (configIni.eRDPosition == ERDPosition.RCRD)
                     {
-                        x = this.nボーナスチャンネルtoX座標C[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標C[ pChip.n整数値 ];
                     }
                     else if (configIni.eRDPosition == ERDPosition.RDRC)
                     {
-                        x = this.nボーナスチャンネルtoX座標C改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標C改[pChip.n整数値];
                     }
                 }
                 else if (configIni.eLaneType.Drums == Eタイプ.D)
                 {
                     if (configIni.eRDPosition == ERDPosition.RCRD)
                     {
-                        x = this.nボーナスチャンネルtoX座標D[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標D[pChip.n整数値];
                     }
                     else if (configIni.eRDPosition == ERDPosition.RDRC)
                     {
-                        x = this.nボーナスチャンネルtoX座標D改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標D改[pChip.n整数値];
                     }
                 }
 
@@ -3247,11 +3247,11 @@ namespace DTXMania
                 {
                     if (configIni.eLaneType.Drums == Eタイプ.A)
                     {
-                        x = this.nボーナスチャンネルtoX座標改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標改[pChip.n整数値];
                     }
                     else if (configIni.eLaneType.Drums == Eタイプ.B)
                     {
-                        x = this.nボーナスチャンネルtoX座標B改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標B改[pChip.n整数値];
                     }
                 }
                 
@@ -3265,13 +3265,16 @@ namespace DTXMania
 
                 switch (pChip.nチャンネル番号)
                 {
+                    case 0x4C:
+                    case 0x4D:
+                    case 0x4E:
                     case 0x4F:
                         if (this.txチップ != null)
                         {
                             switch (pChip.n整数値)
                             {
                                 case 0x01:
-                                    x = (x + 0x13) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
+                                    x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
                                     if (this.txチップ != null)
                                     {
                                         this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(448, 0, 64, 10));

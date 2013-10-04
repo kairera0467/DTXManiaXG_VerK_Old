@@ -3633,7 +3633,7 @@ namespace DTXMania
                             {
 								this.n可視チップ数.Bass++;
 							}
-                            if ( c == 0x4F )
+                            if ( c >= 0x4C && c <= 0x4F )
                             {
                                 this.nボーナスチップ数++;
                             }
