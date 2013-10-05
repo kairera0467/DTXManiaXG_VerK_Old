@@ -4418,9 +4418,9 @@ namespace DTXMania
 							bool bChipHasW = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x08 );
 							bool bChipIsO = false;
                             bool bSuccessOPEN = bChipIsO && ( autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
-                        if( pChip != null )
-                        {
-                            switch ( chip.nチャンネル番号 )
+                            if( pChip != null )
+                            {
+                            switch ( pChip.nチャンネル番号 )
                             {
                                 case 0x20:
                                     bChipIsO = true;
@@ -4452,7 +4452,7 @@ namespace DTXMania
                                     bChipHasB = true;
                                     break;
                                 default:
-                                    switch ( chip.nチャンネル番号 )
+                                    switch ( pChip.nチャンネル番号 )
                                     {
                                         case 0x93:
                                             bChipHasY = true;
