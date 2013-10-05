@@ -279,7 +279,7 @@ namespace DTXMania
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
-                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false )))
+                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false ) && ( CDTXMania.DTX.b強制的にXG譜面にする == false)))
                 {
                     if ( this.txLaneCover != null )
                     {
@@ -3161,22 +3161,22 @@ namespace DTXMania
                 {
                     if (configIni.eRDPosition == ERDPosition.RCRD)
                     {
-                        x = this.nボーナスチャンネルtoX座標C[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標C[pChip.n整数値];
                     }
                     else if (configIni.eRDPosition == ERDPosition.RDRC)
                     {
-                        x = this.nボーナスチャンネルtoX座標C改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標C改[pChip.n整数値];
                     }
                 }
                 else if (configIni.eLaneType.Drums == Eタイプ.D)
                 {
                     if (configIni.eRDPosition == ERDPosition.RCRD)
                     {
-                        x = this.nボーナスチャンネルtoX座標D[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標D[pChip.n整数値];
                     }
                     else if (configIni.eRDPosition == ERDPosition.RDRC)
                     {
-                        x = this.nボーナスチャンネルtoX座標D改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標D改[pChip.n整数値];
                     }
                 }
 
@@ -3184,11 +3184,11 @@ namespace DTXMania
                 {
                     if (configIni.eLaneType.Drums == Eタイプ.A)
                     {
-                        x = this.nボーナスチャンネルtoX座標改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標改[pChip.n整数値];
                     }
                     else if (configIni.eLaneType.Drums == Eタイプ.B)
                     {
-                        x = this.nボーナスチャンネルtoX座標B改[pChip.nチャンネル番号 - 0x11];
+                        x = this.nボーナスチャンネルtoX座標B改[pChip.n整数値];
                     }
                 }
                 

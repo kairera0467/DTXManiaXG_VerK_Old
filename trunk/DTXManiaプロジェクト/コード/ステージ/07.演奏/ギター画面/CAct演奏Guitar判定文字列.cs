@@ -102,7 +102,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 int n = 0;
-                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                if ( CDTXMania.ConfigIni.nJudgeFrames > 1 )
                 {
                     while (n < 15)
                     {
@@ -230,7 +230,7 @@ namespace DTXMania
                             int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0))) - ((nRectY - 135) / 2);
                             if (CDTXMania.stage演奏ギター画面.tx判定画像anime != null)
                             {
-                                if (CDTXMania.ConfigIni.nJudgeFrames > 1 && CDTXMania.stage演奏ドラム画面.tx判定画像anime != null)
+                                if (CDTXMania.ConfigIni.nJudgeFrames > 1 && CDTXMania.stage演奏ギター画面.tx判定画像anime != null)
                                 {
                                     if (base.st状態[j].judge == E判定.Perfect)
                                     {

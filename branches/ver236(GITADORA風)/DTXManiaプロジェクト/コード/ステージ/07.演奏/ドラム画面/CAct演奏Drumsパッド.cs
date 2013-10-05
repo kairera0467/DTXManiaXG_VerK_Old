@@ -332,7 +332,7 @@ namespace DTXMania
                     #endregion
                 }
 #region[ ボーナス表示 ]
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     //アニメーションは仮のもの。後から強化する予定。
                     if (this.stボーナス[i].b使用中)
@@ -346,7 +346,7 @@ namespace DTXMania
                         }
                         if (this.txボーナス文字 != null)
                         {
-                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[1].x, 570);
+                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, 160, 80);
                             //if (this.stボーナス[i].ct進行.n現在の値 >= 765)
                             //{
                             //    int n = this.stボーナス[i].ct進行.n現在の値 - 765;
@@ -362,7 +362,7 @@ namespace DTXMania
 
         public void Start(int nLane, bool bボーナス)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < 3; j++)
             {
                 if (this.stボーナス[j].b使用中)
                 {
@@ -370,69 +370,15 @@ namespace DTXMania
                     this.stボーナス[j].b使用中 = false;
                 }
             }
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 2; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (!this.stボーナス[j].b使用中)
                     {
                         this.stボーナス[j].b使用中 = true;
                         this.stボーナス[j].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
                         break;
-                    }
-
-                    switch (nLane)
-                    {
-                        //2013.02.20.kairera0467 現在はレーンタイプAのみ対応。座標はやや適当。
-                        //2013.05.10.kairera0467 やっとこさレーンタイプBに正式対応。
-                        case 0:
-                            this.stボーナス[i].x = 270;
-                            break;
-                        case 1:
-                            this.stボーナス[i].x = 340;
-                            break;
-                        case 2:
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 410;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 470;
-                            break;
-                        case 3:
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 460;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 410;
-                            break;
-                        case 4:
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 520;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 590;
-                            break;
-                        case 5:
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                                this.stボーナス[i].x = 580;
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                                this.stボーナス[i].x = 530;
-                            break;
-                        case 6:
-                            this.stボーナス[i].x = 630;
-                            break;
-                        case 7:
-                            this.stボーナス[i].x = 660;
-                            break;
-                        case 8:
-                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                this.stボーナス[i].x = 740;
-                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                this.stボーナス[i].x = 780;
-                            break;
-                        case 9:
-                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                this.stボーナス[i].x = 800;
-                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                this.stボーナス[i].x = 740;
-                            break;
                     }
                 }
             }
@@ -484,7 +430,7 @@ namespace DTXMania
 		private CTexture tx光るパッド;
         private CTexture txボーナス文字;
         public bool[] bボーナス文字 = new bool[10];
-        public STボーナス[] stボーナス = new STボーナス[2];
+        public STボーナス[] stボーナス = new STボーナス[3];
 		//-----------------
 		#endregion
 	}

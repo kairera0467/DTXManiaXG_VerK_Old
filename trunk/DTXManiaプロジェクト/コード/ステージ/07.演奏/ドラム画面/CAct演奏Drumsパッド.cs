@@ -96,8 +96,134 @@ namespace DTXMania
             this.stパッド状態[nLane].nY座標加速度dot2 = 2;
         }
 
+        
+        public void Start( int nLane, bool bボーナス, int n代入番号 )
+        {
+            for ( int j = 0; j < 4; j++ )
+            {
+                if (this.stボーナス[j].b使用中)
+                {
+                    this.stボーナス[j].ct進行.t停止();
+                    this.stボーナス[j].b使用中 = false;
+                }
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (!this.stボーナス[ j ].b使用中)
+                    {
+                        this.stボーナス[ j ].b使用中 = true;
+                        this.stボーナス[ j ].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
+                        this.stボーナス[ n代入番号 ].nLane = nLane;
+                        this.stボーナス[ n代入番号 ].x = -100;//this.nボーナスX座標A[ this.stボーナス[ n代入番号 ].nLane ];
+
+                        if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A )
+                        {
+                            if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標A[ this.stボーナス[ n代入番号 ].nLane ];
+                            else if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標A_改[ this.stボーナス[ n代入番号 ].nLane ];
+                        }
+                        else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B )
+                        {
+                            if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標B[ this.stボーナス[ n代入番号 ].nLane ];
+                            else if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標B_改[ this.stボーナス[ n代入番号 ].nLane ];
+                        }
+                        else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
+                        {
+                            if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標C[ this.stボーナス[ n代入番号 ].nLane ];
+                            else if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標C_改[ this.stボーナス[ n代入番号 ].nLane ];
+                        }
+                        else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
+                        {
+                            if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標D[ this.stボーナス[ n代入番号 ].nLane ];
+                            else if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC )
+                                this.stボーナス[ n代入番号 ].x = this.nボーナスX座標D_改[ this.stボーナス[ n代入番号 ].nLane ];
+                        }
+
+                        /*
+                        switch (nLane)
+                        {
+                            //2013.02.20.kairera0467 現在はレーンタイプAのみ対応。座標はやや適当。
+                            //2013.05.10.kairera0467 やっとこさレーンタイプBに正式対応。
+                            case 0: //LC
+                                this.stボーナス[i].x = 270;
+                                break;
+                            case 1: //HH
+                                this.stボーナス[i].x = 340;
+                                break;
+                            case 2: //LP
+                                if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
+                                    this.stボーナス[i].x = 390;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
+                                    this.stボーナス[i].x = 440;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    this.stボーナス[i].x = 500;
+                                break;
+                            case 3: //SD
+                                if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
+                                    this.stボーナス[i].x = 446;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    this.stボーナス[i].x = 390;
+                                break;
+                            case 4: //HT
+                                if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
+                                    this.stボーナス[i].x = 500;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
+                                    this.stボーナス[i].x = 570;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    this.stボーナス[i].x = 440;
+                                break;
+                            case 5: //BD
+                                if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
+                                    this.stボーナス[i].x = 550;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
+                                    this.stボーナス[i].x = 504;
+                                else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
+                                    this.stボーナス[i].x = 560;
+                                break;
+                            case 6: //LT
+                                this.stボーナス[i].x = 618;
+                                break;
+                            case 7: //FT
+                                this.stボーナス[i].x = 660;
+                                break;
+                            case 8: //CY
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                                    this.stボーナス[i].x = 740;
+                                else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                    this.stボーナス[i].x = 780;
+                                break;
+                            case 9: //RD
+                                if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
+                                    this.stボーナス[i].x = 800;
+                                else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                    this.stボーナス[i].x = 740;
+                                break;
+                            
+                        }
+                        */
+                    }
+
+                }
+            }
+        }
+ 
+
         public override void On非活性化()
         {
+            for( int i = 0; i < 4; i++ )
+			{
+                this.stボーナス[ i ].x = -100;
+                this.stボーナス[ i ].b使用中 = false;
+
+            }
 
             base.On非活性化();
         }
@@ -332,10 +458,12 @@ namespace DTXMania
                     #endregion
                 }
                 #region[ ボーナス表示 ]
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
+                    
                     //アニメーションは仮のもの。後から強化する予定。
-                    if (this.stボーナス[i].b使用中)
+                    
+                    if (this.stボーナス[ i ].b使用中)
                     {
                         int numf = this.stボーナス[i].ct進行.n現在の値;
                         this.stボーナス[i].ct進行.t進行();
@@ -343,10 +471,13 @@ namespace DTXMania
                         {
                             this.stボーナス[i].ct進行.t停止();
                             this.stボーナス[i].b使用中 = false;
+                            this.stボーナス[i].x = -100;
                         }
+
+
                         if (this.txボーナス文字 != null)
                         {
-                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[1].x, (CDTXMania.ConfigIni.bReverse.Drums ? 60 : 570));
+                            this.txボーナス文字.t2D描画(CDTXMania.app.Device, this.stボーナス[ i ].x, (CDTXMania.ConfigIni.bReverse.Drums ? 60 : 570));
                             //if (this.stボーナス[i].ct進行.n現在の値 >= 765)
                             //{
                             //    int n = this.stボーナス[i].ct進行.n現在の値 - 765;
@@ -354,96 +485,14 @@ namespace DTXMania
                             //}
                         }
                     }
+                    
+                    
                 }
                 #endregion
             }
 			return 0;
 		}
 
-        public void Start(int nLane, bool bボーナス)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                if (this.stボーナス[j].b使用中)
-                {
-                    this.stボーナス[j].ct進行.t停止();
-                    this.stボーナス[j].b使用中 = false;
-                }
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (!this.stボーナス[j].b使用中)
-                    {
-                        this.stボーナス[j].b使用中 = true;
-                        this.stボーナス[j].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
-                        break;
-                    }
-
-                    switch (nLane)
-                    {
-                      //2013.02.20.kairera0467 現在はレーンタイプAのみ対応。座標はやや適当。
-                      //2013.05.10.kairera0467 やっとこさレーンタイプBに正式対応。
-                        case 0: //LC
-                            this.stボーナス[i].x = 270;
-                            break;
-                        case 1: //HH
-                            this.stボーナス[i].x = 340;
-                            break;
-                        case 2: //LP
-                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
-                                this.stボーナス[i].x = 390;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B )
-                                this.stボーナス[i].x = 440;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
-                                this.stボーナス[i].x = 500;
-                            break;
-                        case 3: //SD
-                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
-                                this.stボーナス[i].x = 446;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
-                                this.stボーナス[i].x = 390;
-                            break;
-                        case 4: //HT
-                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A )
-                                this.stボーナス[i].x = 500;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
-                                this.stボーナス[i].x = 570;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
-                                this.stボーナス[i].x = 440;
-                            break;
-                        case 5: //BD
-                            if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A )
-                                this.stボーナス[i].x = 550;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C )
-                                this.stボーナス[i].x = 504;
-                            else if( CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D )
-                                this.stボーナス[i].x = 560;
-                            break;
-                        case 6: //LT
-                            this.stボーナス[i].x = 618;
-                            break;
-                        case 7: //FT
-                            this.stボーナス[i].x = 660;
-                            break;
-                        case 8: //CY
-                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                this.stボーナス[i].x = 740;
-                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                this.stボーナス[i].x = 780;
-                            break;
-                        case 9: //RD
-                            if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                this.stボーナス[i].x = 800;
-                            else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                this.stボーナス[i].x = 740;
-                            break;
-                    }
-                }
-            }
-        }
- 
 
 
 
@@ -478,6 +527,7 @@ namespace DTXMania
             public bool b使用中;
             public CCounter ct進行;
             public int x;
+            public int nLane;
         }
 		private long nY座標制御タイマ;
         private long nY座標制御タイマ2;
@@ -491,6 +541,15 @@ namespace DTXMania
         private CTexture txボーナス文字;
         public bool[] bボーナス文字 = new bool[10];
         public STボーナス[] stボーナス = new STボーナス[4];
+
+        private int[] nボーナスX座標A =    new int[] { 270, 340, 390, 446, 500, 550, 618, 660, 740, 800 };
+        private int[] nボーナスX座標A_改 = new int[] { 270, 340, 390, 446, 500, 550, 618, 660, 780, 740 };
+        private int[] nボーナスX座標B =    new int[] { 270, 340, 440, 390, 570, 504, 618, 660, 740, 800 };
+        private int[] nボーナスX座標B_改 = new int[] { 270, 340, 440, 390, 570, 504, 618, 660, 780, 740 };
+        private int[] nボーナスX座標C =    new int[] { 270, 340, 390, 446, 570, 504, 618, 660, 740, 800 };
+        private int[] nボーナスX座標C_改 = new int[] { 270, 340, 390, 446, 570, 504, 618, 660, 780, 740 };
+        private int[] nボーナスX座標D =    new int[] { 270, 340, 500, 390, 440, 560, 618, 660, 740, 800 };
+        private int[] nボーナスX座標D_改 = new int[] { 270, 340, 500, 390, 440, 560, 618, 660, 780, 740 };
 		//-----------------
 		#endregion
 	}
