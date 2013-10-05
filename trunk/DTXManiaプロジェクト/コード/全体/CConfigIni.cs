@@ -1121,6 +1121,7 @@ namespace DTXMania
                 this.nJudgeLinePosOffset[i] = 0;
 			}
 			this.n演奏速度 = 20;
+            this.ドラムコンボ文字の表示位置 = Eドラムコンボ文字の表示位置.RIGHT;
             this.bCLASSIC譜面判別を有効にする = false;
             this.bSkillModeを自動切換えする = false;
             this.bMutingLP = true;
