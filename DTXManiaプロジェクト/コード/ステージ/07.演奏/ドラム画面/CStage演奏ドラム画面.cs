@@ -479,10 +479,10 @@ namespace DTXMania
         private int[] nボーナスチャンネルtoX座標B   = new int[] { 0, 298, 370, 476, 419, 596, 533, 645, 694, 748, 815, 476 };
         private int[] nボーナスチャンネルtoX座標C   = new int[] { 0, 298, 370, 419, 470, 596, 533, 645, 694, 748, 815, 419 };
         private int[] nボーナスチャンネルtoX座標D   = new int[] { 0, 298, 370, 527, 420, 477, 582, 645, 694, 748, 815, 527 };
-        private int[] nボーナスチャンネルtoX座標改  = new int[] { 0, 298, 370, 419, 470, 527, 582, 645, 694, 815, 748, 419 };
-        private int[] nボーナスチャンネルtoX座標B改 = new int[] { 0, 298, 370, 476, 419, 596, 533, 645, 694, 815, 748, 476 };
-        private int[] nボーナスチャンネルtoX座標C改 = new int[] { 0, 298, 370, 419, 470, 596, 533, 645, 694, 815, 748, 419 };
-        private int[] nボーナスチャンネルtoX座標D改 = new int[] { 0, 298, 370, 527, 420, 477, 582, 645, 694, 815, 748, 527 };
+        private int[] nボーナスチャンネルtoX座標改  = new int[] { 0, 298, 370, 419, 470, 527, 582, 645, 694, 786, 748, 419 };
+        private int[] nボーナスチャンネルtoX座標B改 = new int[] { 0, 298, 370, 476, 419, 596, 533, 645, 694, 786, 748, 476 };
+        private int[] nボーナスチャンネルtoX座標C改 = new int[] { 0, 298, 370, 419, 470, 596, 533, 645, 694, 786, 748, 419 };
+        private int[] nボーナスチャンネルtoX座標D改 = new int[] { 0, 298, 370, 527, 420, 477, 582, 645, 694, 786, 748, 527 };
         //HH SD BD HT LT CY FT HHO RD LC LP LBD
         //レーンタイプB
         //LC 298  HH 371 HHO 374  SD 420  LP 477  BD 534  HT 597 LT 646  FT 695  CY 749  RD 815
@@ -3243,6 +3243,7 @@ namespace DTXMania
                     }
                 }
 
+                /*
                 if (configIni.eRDPosition == ERDPosition.RDRC)
                 {
                     if (configIni.eLaneType.Drums == Eタイプ.A)
@@ -3254,7 +3255,7 @@ namespace DTXMania
                         x = this.nボーナスチャンネルtoX座標B改[pChip.n整数値];
                     }
                 }
-                
+                */
 
                 int y = configIni.bReverse.Drums ? (159 + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums);
                 if (base.txチップ != null)
