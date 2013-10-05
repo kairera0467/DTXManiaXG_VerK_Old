@@ -244,6 +244,12 @@ namespace DTXMania
 				stパッド状態.n明るさ = 0;
 				this.stパッド状態[ i ] = stパッド状態;
 			}
+            for (int i = 0; i < 4; i++)
+            {
+                this.stボーナス[i].x = -100;
+                this.stボーナス[i].b使用中 = false;
+
+            }
 			base.On活性化();
 		}
 		public override void OnManagedリソースの作成()
