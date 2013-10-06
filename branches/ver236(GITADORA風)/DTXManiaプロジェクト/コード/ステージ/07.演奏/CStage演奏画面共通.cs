@@ -1297,7 +1297,7 @@ namespace DTXMania
                         {
                             if (nCombos < nComboMax)
                             {
-                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f / (nComboMax - 50f));
+                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50f));
                             }
                             //1000000÷50÷(その曲のMAXCOMBO-24.5)
                             else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
@@ -1309,11 +1309,11 @@ namespace DTXMania
                         }
                         else if (eJudgeResult == E判定.Great)
                         {
-                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f / (nComboMax - 50f))) * 0.5f;
+                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50f))) * 0.5f;
                         }
                         else if (eJudgeResult == E判定.Good)
                         {
-                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f / (nComboMax - 50f))) * 0.2f;
+                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50f))) * 0.2f;
                         }
 
                         if (nCombos < 50)
@@ -1342,7 +1342,7 @@ namespace DTXMania
                         {
                             if (nCombos < nComboMax)
                             {
-                                nScoreDelta = 1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f));
+                                nScoreDelta = 1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f));
                             }
                             // 100万/{1275+50×(総ノーツ数-50)}
                             else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
@@ -1354,11 +1354,11 @@ namespace DTXMania
                         }
                         else if (eJudgeResult == E判定.Great)
                         {
-                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f)) * 0.5f;
+                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f)) * 0.5f;
                         }
                         else if (eJudgeResult == E判定.Good)
                         {
-                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f)) * 0.2f;
+                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f)) * 0.2f;
                         }
 
 
@@ -1396,7 +1396,7 @@ namespace DTXMania
                         {
                             if (nCombos < nComboMax)
                             {
-                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f / (nComboMax - 50f));
+                                nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50f));
                             }
                             //1000000÷50÷(その曲のMAXCOMBO-24.5)
                             else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
@@ -1408,11 +1408,11 @@ namespace DTXMania
                         }
                         else if (eJudgeResult == E判定.Great)
                         {
-                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f / (nComboMax - 50f))) * 0.5f;
+                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50.0f))) * 0.5f;
                         }
                         else if (eJudgeResult == E判定.Good)
                         {
-                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f / (nComboMax - 50f))) * 0.2f;
+                            nScoreDelta = ((1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50.0f))) * 0.2f;
                         }
 
                         if (nCombos < 50)
@@ -1441,7 +1441,7 @@ namespace DTXMania
                         {
                             if (nCombos < nComboMax)
                             {
-                                nScoreDelta = 1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f));
+                                nScoreDelta = 1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f));
                             }
                             // 100万/{1275+50×(総ノーツ数-50)}
                             else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
@@ -1453,11 +1453,11 @@ namespace DTXMania
                         }
                         else if (eJudgeResult == E判定.Great)
                         {
-                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f)) * 0.5f;
+                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f)) * 0.5f;
                         }
                         else if (eJudgeResult == E判定.Good)
                         {
-                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f)) * 0.2f;
+                            nScoreDelta = 1000000.0f / (1275.0f + 50.0f * (nComboMax - 50.0f)) * 0.2f;
                         }
 
 
