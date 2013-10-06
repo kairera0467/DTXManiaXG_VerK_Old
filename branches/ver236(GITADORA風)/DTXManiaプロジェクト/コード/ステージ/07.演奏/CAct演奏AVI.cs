@@ -768,7 +768,7 @@ namespace DTXMania
                             }
                             else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 13, this.position2 );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 424 );
                             }
                         }
                         else if( CDTXMania.ConfigIni.bDirectShowMode == true && this.n総移動時間ms != -1 )
