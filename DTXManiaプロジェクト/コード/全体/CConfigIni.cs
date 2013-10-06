@@ -2807,9 +2807,9 @@ namespace DTXMania
                                             {
                                                 this.ボーナス演出を表示する = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("BPMbar"))
+                                            else if (str3.Equals("BPMBar"))
                                             {
-                                                this.eBPMbar = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eBPMbar);
+                                                this.eBPMbar = ( Eタイプ )C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eBPMbar);
                                             }
                                             else if (str3.Equals("CLASSIC"))
                                             {
