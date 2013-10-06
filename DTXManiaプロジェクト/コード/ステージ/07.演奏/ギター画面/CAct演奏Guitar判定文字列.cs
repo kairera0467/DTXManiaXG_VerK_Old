@@ -208,7 +208,7 @@ namespace DTXMania
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.レーン上 ) ? 1000 : 175;
+								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.レーン上 ) ? 1000 : 770;
 								num6 = CDTXMania.ConfigIni.bReverse.Bass ? 450 : 300;
 							}
 							else if( j == 13 )
