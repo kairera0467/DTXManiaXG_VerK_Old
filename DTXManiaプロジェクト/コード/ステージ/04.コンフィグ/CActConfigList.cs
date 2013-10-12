@@ -1570,7 +1570,7 @@ namespace DTXMania
                         this.iDrumsJudgeLineDisp.bON = false;
                         this.iDrumsLaneFlush.bON = false;
                     }
-                    else if (iDrumsDark.n現在選択されている項目番号 == (int)Eダークモード.HALF)
+                    else if (this.iDrumsDark.n現在選択されている項目番号 == (int)Eダークモード.HALF)
                     {
                         this.iDrumsLaneDisp.n現在選択されている項目番号 = 1;
                         this.iDrumsJudgeLineDisp.bON = true;
@@ -1579,6 +1579,27 @@ namespace DTXMania
                     else
                     {
                         this.iDrumsLaneDisp.n現在選択されている項目番号 = 0;
+                        this.iDrumsJudgeLineDisp.bON = true;
+                        this.iDrumsLaneFlush.bON = true;
+                    }
+                }
+                else if (this.list項目リスト[this.n現在の選択項目] == this.iGuitarDark)					// #27029 2012.1.4 from
+                {
+                    if (this.iGuitarDark.n現在選択されている項目番号 == (int)Eダークモード.FULL)
+                    {
+                        this.iGuitarLaneDisp.n現在選択されている項目番号 = 3;
+                        this.iGuitarJudgeLineDisp.bON = false;
+                        this.iGuitarLaneFlush.bON = false;
+                    }
+                    else if (this.iGuitarDark.n現在選択されている項目番号 == (int)Eダークモード.HALF)
+                    {
+                        this.iGuitarLaneDisp.n現在選択されている項目番号 = 1;
+                        this.iGuitarJudgeLineDisp.bON = true;
+                        this.iGuitarLaneFlush.bON = true;
+                    }
+                    else
+                    {
+                        this.iGuitarLaneDisp.n現在選択されている項目番号 = 0;
                         this.iDrumsJudgeLineDisp.bON = true;
                         this.iDrumsLaneFlush.bON = true;
                     }
@@ -2189,10 +2210,11 @@ namespace DTXMania
                                 int nシャッターIN = (int)(this.iDrumsShutterInPos.n現在の値 * 7.2);
                                 int nシャッターOUT = 720 - (int)(this.iDrumsShutterOutPos.n現在の値 * 7.2f);
                                 this.txレーン.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 70, 720));
-                                if(this.iDrumsJudgeLineDisp.bON == true)
-                                    this.tx判定ライン.t2D描画(CDTXMania.app.Device, 0, CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561 - this.iDrumsJudgeLinePos.n現在の値, new Rectangle(0, 0, 70, 8));
+
                                 this.txシャッター.t2D描画(CDTXMania.app.Device, 0, (int)(-720 + nシャッターIN), new Rectangle(0, 0, 70, 720));
                                 this.txシャッター.t2D描画(CDTXMania.app.Device, 0, nシャッターOUT, new Rectangle(0, 0, 70, 720));
+                                if(this.iDrumsJudgeLineDisp.bON == true)
+                                    this.tx判定ライン.t2D描画(CDTXMania.app.Device, 0, CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561 - this.iDrumsJudgeLinePos.n現在の値, new Rectangle(0, 0, 70, 8));
                             }
                         }
 						break;

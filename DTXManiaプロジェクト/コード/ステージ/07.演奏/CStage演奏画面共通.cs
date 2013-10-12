@@ -1366,6 +1366,7 @@ namespace DTXMania
                             else if (this.nヒット数・Auto含む.Drums.Perfect >= nComboMax)
                             {
                                 nScoreDelta = 1000000.0f - (float)this.actScore.n現在の本当のスコア.Drums;
+                                //nScoreDelta = (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数 - (1000000.0f - 500.0f * CDTXMania.DTX.nボーナスチップ数) / (1275.0f + 50.0f * (nComboMax - 50f)) * ((1275.0f + 50.0f * (nComboMax - 49.0f))));
                             }
                             //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
 
@@ -1383,9 +1384,9 @@ namespace DTXMania
                         {
                             nScoreDelta = nScoreDelta * nCombos;
                         }
-                        else if (nCombos == nComboMax || this.nヒット数・Auto含まない.Drums.Perfect == nComboMax)
-                        {
-                        }
+                        //else if (nCombos == nComboMax || this.nヒット数・Auto含まない.Drums.Perfect == nComboMax)
+                        //{
+                        //}
                         else
                         {
                             nScoreDelta = nScoreDelta * 50;
@@ -1410,7 +1411,7 @@ namespace DTXMania
                             // 100万/{1275+50×(総ノーツ数-50)}
                             else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
                             {
-                                nScoreDelta = 1000000.0f - (1000000.0f / 1275.0f + 50.0f / (nComboMax - 50.0f)) * (1275.0f + 50.0f * (nComboMax - 50.0f));
+                                nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f))) * ((1275.0f + 50.0f * (nComboMax - 49.0f)));
                             }
                             //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
 
@@ -1509,7 +1510,7 @@ namespace DTXMania
                             // 100万/{1275+50×(総ノーツ数-50)}
                             else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
                             {
-                                nScoreDelta = 1000000.0f - ( 1000000.0f / 1275.0f + 50.0f / ( nComboMax - 50.0f ) ) * ( 1275.0f + 50.0f * (nComboMax - 50.0f));
+                                nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f))) * ((1275.0f + 50.0f * (nComboMax - 49.0f)));
                             }
                             //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
 

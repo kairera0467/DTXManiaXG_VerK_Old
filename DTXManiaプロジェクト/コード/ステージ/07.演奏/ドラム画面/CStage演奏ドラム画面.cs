@@ -3359,8 +3359,8 @@ namespace DTXMania
                         CDTXMania.Skin.sound歓声音.t再生する();
                         CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                     }
-                    if (CDTXMania.ConfigIni.nSkillMode == 1 && (!bPChipIsAutoPlay || CDTXMania.ConfigIni.bAutoAddGage))
-                        this.actScore.Add(E楽器パート.DRUMS, bIsAutoPlay, 500L);
+                    if ( CDTXMania.ConfigIni.nSkillMode == 1 && ( !CDTXMania.ConfigIni.bドラムが全部オートプレイである || CDTXMania.ConfigIni.bAutoAddGage ) )
+                        this.actScore.Add( E楽器パート.DRUMS, bIsAutoPlay, 500L );
                 }
             }
 
