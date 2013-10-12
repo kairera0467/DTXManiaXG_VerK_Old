@@ -159,8 +159,7 @@ namespace DTXMania
 				this.t進行描画・ステータスパネル();
                 this.t進行描画・スコア();
 				this.t進行描画・レーンフラッシュGB();
-				this.t進行描画・ギターベース判定ライン();
-                this.t進行描画・判定ライン();
+
 
 				this.t進行描画・DANGER();
 
@@ -233,7 +232,8 @@ namespace DTXMania
                     this.txシャッター.t2D描画( CDTXMania.app.Device, 952, ( int )dbシャッターOUT_Bass );
                 }
                 #endregion
-
+				this.t進行描画・ギターベース判定ライン();
+                this.t進行描画・判定ライン();
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
                 this.t進行描画・RGBボタン();

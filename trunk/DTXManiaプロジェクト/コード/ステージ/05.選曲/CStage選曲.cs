@@ -291,7 +291,12 @@ namespace DTXMania
                 }
                 
 				if( this.tx背景 != null )
-					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                {
+                    if( this.ds背景動画.b上下反転 )
+					    this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                    else
+                        this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                }
 
 				this.actPreimageパネル.On進行描画();
 			//	this.bIsEnumeratingSongs = !this.actPreimageパネル.bIsPlayingPremovie;				// #27060 2011.3.2 yyagi: #PREMOVIE再生中は曲検索を中断する
