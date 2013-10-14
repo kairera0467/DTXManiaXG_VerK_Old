@@ -1384,9 +1384,9 @@ namespace DTXMania
                         {
                             nScoreDelta = nScoreDelta * nCombos;
                         }
-                        //else if (nCombos == nComboMax || this.nヒット数・Auto含まない.Drums.Perfect == nComboMax)
-                        //{
-                        //}
+                        else if (nCombos == nComboMax || this.nヒット数・Auto含まない.Drums.Perfect == nComboMax)
+                        {
+                        }
                         else
                         {
                             nScoreDelta = nScoreDelta * 50;
@@ -3547,7 +3547,7 @@ namespace DTXMania
 				if ( !pChip.bHit && pChip.b可視 )
 				{
 					int y = configIni.bReverse[ instIndex ] ? ( barYReverse - pChip.nバーからの距離dot[ instIndex ] ) : ( barYNormal + pChip.nバーからの距離dot[ instIndex ] );
-					if ( ( showRangeY0 < y ) && ( y < showRangeY1 ) )
+					//if ( ( showRangeY0 < y ) && ( y < showRangeY1 ) )
 					{
 						if ( this.txチップ != null )
 						{

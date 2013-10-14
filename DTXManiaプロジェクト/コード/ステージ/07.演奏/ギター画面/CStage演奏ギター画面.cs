@@ -821,13 +821,13 @@ namespace DTXMania
 				int y = configIni.bReverse.Guitar ? ( ( 611 - pChip.nバーからの距離dot.Guitar ) + 8 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) + 8 );
 				if ( ( dTX.bチップがある.Guitar && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
-                    if( CDTXMania.ConfigIni.bJudgeLineDisp.Guitar )
+                    if( configIni.bJudgeLineDisp.Guitar )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 88, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
 				y = configIni.bReverse.Bass ? ( ( 611 - pChip.nバーからの距離dot.Bass ) + 8 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) + 8 );
 				if ( ( dTX.bチップがある.Bass && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
 				{
-                    if( CDTXMania.ConfigIni.bJudgeLineDisp.Bass )
+                    if( configIni.bJudgeLineDisp.Bass )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 959, y, new Rectangle( 0, 20, 193, 2 ) );
 				}
 			}
