@@ -656,7 +656,7 @@ namespace DTXMania
 		protected override void t進行描画・AVI()
 		{
             //ここでif文を入れると、ドラムセットなど演出の類が消えてしまうため、
-            //AVI内にif文を入れる。一応引数を使わないはずだが要人のために0にする。
+            //AVI内にif文を入れる。一応引数を使わないはずだが用心のために0にする。
 			base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
@@ -3278,7 +3278,7 @@ namespace DTXMania
                                     x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
                                     if (this.txチップ != null)
                                     {
-                                        this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(448, 0, 64, 10));
+                                        this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(98, 546, 64, 10));
 
                                     }
                                     break;
@@ -3286,7 +3286,7 @@ namespace DTXMania
                                     x = (x + 19) - ((int)((38.0 * pChip.dbチップサイズ倍率) / 2.0));
                                     if (this.txチップ != null)
                                     {
-                                        this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(338, 535, 0x40, 10));
+                                        this.txチップ.t2D描画(CDTXMania.app.Device, x, y - 4, new Rectangle(334, 532, 0x40, 10));
                                     }
                                     break;
                         }

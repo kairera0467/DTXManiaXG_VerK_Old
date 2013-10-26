@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Drawing;
+using System.Threading;
 using SlimDX;
 using FDK;
 
@@ -26,6 +27,13 @@ namespace DTXMania
 				{
 					return false;
 				}
+			}
+		}
+		public bool bIsFocusingParameter		// #32059 2013.9.17 yyagi
+		{
+			get
+			{
+				return b要素値にフォーカス中;
 			}
 		}
 		public bool b現在選択されている項目はReturnToMenuである
@@ -68,6 +76,11 @@ namespace DTXMania
 				"左側のメニューに戻ります。",
 				"Return to left menu." );
 			this.list項目リスト.Add( this.iSystemReturnToMenu );
+
+			this.iSystemReloadDTX = new CItemBase( "Reload Songs", CItemBase.Eパネル種別.通常,
+				"曲データの一覧情報を取得し直します。",
+				"Reload song data." );
+			this.list項目リスト.Add( this.iSystemReloadDTX );
 
             /*
 			this.iCommonDark = new CItemList( "Dark", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eDark,
@@ -1095,6 +1108,11 @@ namespace DTXMania
 
             //レーン表示
 
+            this.iGuitarLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Guitar,
+                "レーンフラッシュの表示 / 非表示を切り替えます。",
+                "Toggle LaneFlush" );
+            this.list項目リスト.Add( this.iGuitarLaneFlush );
+
             this.iGuitarJudgeLineDisp = new CItemToggle( "JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Guitar,
                 "判定ラインの表示 / 非表示を切り替えます。",
                 "Toggle JudgeLine");
@@ -1613,6 +1631,22 @@ namespace DTXMania
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemSkinSubfolder )			// #28195 2012.5.2 yyagi
 				{
 					tGenerateSkinSample();
+				}
+				#endregion
+				#region [ 曲データ一覧の再読み込み ]
+				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemReloadDTX )				// #32081 2013.10.21 yyagi
+				{
+					if ( CDTXMania.EnumSongs.IsEnumerating )
+					{
+						// Debug.WriteLine( "バックグラウンドでEnumeratingSongs中だったので、一旦中断します。" );
+						CDTXMania.EnumSongs.Abort();
+						CDTXMania.actEnumSongs.On非活性化();
+					}
+
+					CDTXMania.EnumSongs.StartEnumFromDisk();
+					CDTXMania.EnumSongs.ChangeEnumeratePriority( ThreadPriority.Normal );
+					CDTXMania.actEnumSongs.bコマンドでの曲データ取得 = true;
+					CDTXMania.actEnumSongs.On活性化();
 				}
 				#endregion
 			}
@@ -2541,6 +2575,7 @@ namespace DTXMania
 		private CItemInteger iBassInputAdjustTimeMs;		//
 		private CItemList iSystemSkinSubfolder;				// #28195 2012.5.2 yyagi
 		private CItemToggle iSystemUseBoxDefSkin;			// #28195 2012.5.6 yyagi
+        private CItemBase iSystemReloadDTX;					// #32081 2013.10.21 yyagi
 
 		private int t前の項目( int nItem )
 		{
@@ -2568,7 +2603,7 @@ namespace DTXMania
 		}
 		private void t全部のベースパッドのAutoを切り替える( bool bAutoON )
 		{
-			this.iBassR.bON = this.iBassG.bON = this.iBassB.bON = this.iGuitarY.bON = this.iGuitarP.bON = this.iBassPick.bON = this.iBassW.bON = bAutoON;
+			this.iBassR.bON = this.iBassG.bON = this.iBassB.bON = this.iBassY.bON = this.iBassP.bON = this.iBassPick.bON = this.iBassW.bON = bAutoON;
 		}
 		private void tConfigIniへ記録する()
 		{
@@ -2784,6 +2819,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar = this.iGuitarInputAdjustTimeMs.n現在の値;	// #23580 2011.1.3 yyagi
             CDTXMania.ConfigIni.bGraph.Guitar = this.iGuitarGraph.bON;
 
+            CDTXMania.ConfigIni.bLaneFlush.Guitar = this.iGuitarLaneFlush.bON;
             CDTXMania.ConfigIni.bJudgeLineDisp.Guitar = this.iGuitarJudgeLineDisp.bON;
             CDTXMania.ConfigIni.nShutterInSide.Guitar = this.iGuitarShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide.Guitar = this.iGuitarShutterOutPos.n現在の値;

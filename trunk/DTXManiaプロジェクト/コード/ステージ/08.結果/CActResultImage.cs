@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.IO;
 using System.Drawing;
 using SlimDX;
@@ -16,6 +17,100 @@ namespace DTXMania
 
 		public CActResultImage()
 		{
+            #region[ 難易度数字 ]
+
+            ST文字位置[] st文字位置Array2 = new ST文字位置[11];
+            ST文字位置 st文字位置12 = new ST文字位置();
+            st文字位置12.ch = '0';
+            st文字位置12.pt = new Point(0, 16);
+            st文字位置Array2[0] = st文字位置12;
+            ST文字位置 st文字位置13 = new ST文字位置();
+            st文字位置13.ch = '1';
+            st文字位置13.pt = new Point(16, 16);
+            st文字位置Array2[1] = st文字位置13;
+            ST文字位置 st文字位置14 = new ST文字位置();
+            st文字位置14.ch = '2';
+            st文字位置14.pt = new Point(32, 16);
+            st文字位置Array2[2] = st文字位置14;
+            ST文字位置 st文字位置15 = new ST文字位置();
+            st文字位置15.ch = '3';
+            st文字位置15.pt = new Point(48, 16);
+            st文字位置Array2[3] = st文字位置15;
+            ST文字位置 st文字位置16 = new ST文字位置();
+            st文字位置16.ch = '4';
+            st文字位置16.pt = new Point(64, 16);
+            st文字位置Array2[4] = st文字位置16;
+            ST文字位置 st文字位置17 = new ST文字位置();
+            st文字位置17.ch = '5';
+            st文字位置17.pt = new Point(80, 16);
+            st文字位置Array2[5] = st文字位置17;
+            ST文字位置 st文字位置18 = new ST文字位置();
+            st文字位置18.ch = '6';
+            st文字位置18.pt = new Point(96, 16);
+            st文字位置Array2[6] = st文字位置18;
+            ST文字位置 st文字位置19 = new ST文字位置();
+            st文字位置19.ch = '7';
+            st文字位置19.pt = new Point(112, 16);
+            st文字位置Array2[7] = st文字位置19;
+            ST文字位置 st文字位置20 = new ST文字位置();
+            st文字位置20.ch = '8';
+            st文字位置20.pt = new Point(128, 16);
+            st文字位置Array2[8] = st文字位置20;
+            ST文字位置 st文字位置21 = new ST文字位置();
+            st文字位置21.ch = '9';
+            st文字位置21.pt = new Point(144, 16);
+            st文字位置Array2[9] = st文字位置21;
+            ST文字位置 st文字位置22 = new ST文字位置();
+            st文字位置22.ch = '-';
+            st文字位置22.pt = new Point(0, 16);
+            st文字位置Array2[10] = st文字位置22;
+            this.st小文字位置 = st文字位置Array2;
+
+            //大文字
+            ST文字位置[] st文字位置Array3 = new ST文字位置[12];
+            ST文字位置 st文字位置23 = new ST文字位置();
+            st文字位置23.ch = '0';
+            st文字位置23.pt = new Point(0, 0);
+            st文字位置Array3[0] = st文字位置23;
+            ST文字位置 st文字位置24 = new ST文字位置();
+            st文字位置24.ch = '1';
+            st文字位置24.pt = new Point(20, 0);
+            st文字位置Array3[1] = st文字位置24;
+            ST文字位置 st文字位置25 = new ST文字位置();
+            st文字位置25.ch = '2';
+            st文字位置25.pt = new Point(40, 0);
+            st文字位置Array3[2] = st文字位置25;
+            ST文字位置 st文字位置26 = new ST文字位置();
+            st文字位置26.ch = '3';
+            st文字位置26.pt = new Point(60, 0);
+            st文字位置Array3[3] = st文字位置26;
+            ST文字位置 st文字位置27 = new ST文字位置();
+            st文字位置27.ch = '4';
+            st文字位置27.pt = new Point(80, 0);
+            st文字位置Array3[4] = st文字位置27;
+            ST文字位置 st文字位置28 = new ST文字位置();
+            st文字位置28.ch = '5';
+            st文字位置28.pt = new Point(100, 0);
+            st文字位置Array3[5] = st文字位置28;
+            ST文字位置 st文字位置29 = new ST文字位置();
+            st文字位置29.ch = '6';
+            st文字位置29.pt = new Point(120, 0);
+            st文字位置Array3[6] = st文字位置29;
+            ST文字位置 st文字位置30 = new ST文字位置();
+            st文字位置30.ch = '7';
+            st文字位置30.pt = new Point(140, 0);
+            st文字位置Array3[7] = st文字位置30;
+            ST文字位置 st文字位置31 = new ST文字位置();
+            st文字位置31.ch = '8';
+            st文字位置31.pt = new Point(160, 0);
+            st文字位置Array3[8] = st文字位置31;
+            ST文字位置 st文字位置32 = new ST文字位置();
+            st文字位置32.ch = '9';
+            st文字位置32.pt = new Point(180, 0);
+            st文字位置Array3[9] = st文字位置32;
+            this.st大文字位置 = st文字位置Array3;
+
+            #endregion
 			base.b活性化してない = true;
 		}
 
@@ -36,10 +131,7 @@ namespace DTXMania
             this.n本体Y = 0x11b;
             this.nAlbumWidth = 102;
             this.nAlbumHeight = 102;
-
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ftSongDifficultyFont = new System.Drawing.Font("Impact", 15f, FontStyle.Regular);
-
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
             base.On活性化();
 
@@ -61,9 +153,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                prvSongDifficultyFont = new CPrivateFont( new FontFamily( "Impact" ), 14, FontStyle.Regular );
-                Brush DifficultyPanel;
 				this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
+                this.txDifficulty = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_Difficulty.png" ) );
+                this.txLevel = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_LevelNumber.png" ) );
 				this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1;
 				this.n前回描画したフレーム番号 = -1;
@@ -82,95 +174,22 @@ namespace DTXMania
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
                 graphics.PageUnit = GraphicsUnit.Pixel;
                 this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
-                this.nSongNamePixelLength = (int) graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
-                graphics.Dispose();
+                this.nSongNamePixelLength = (int)graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
                 this.bmSongNameLength.Dispose();
-                Bitmap image = new Bitmap(this.nSongNamePixelLength, (int) Math.Ceiling((double) this.ftSongNameFont.GetHeight()));
-                graphics = Graphics.FromImage( image );
-                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float) 0f, (float) 0f);
+                Bitmap image = new Bitmap(this.nSongNamePixelLength, (int)Math.Ceiling((double)this.ftSongNameFont.GetHeight()));
+                graphics = Graphics.FromImage(image);
+                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+
                 graphics.Dispose();
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
-                Bitmap bitmap2 = new Bitmap(0x3a, 0x12);
-                graphics = Graphics.FromImage(bitmap2);
-                switch ( CDTXMania.nSongDifficulty )
-                {
-                    case 0:
-                        DifficultyPanel = Brushes.GhostWhite;
-                        break;
-
-                    case 1:
-                    case 6:
-                        DifficultyPanel = Brushes.Green;
-                        break;
-
-                    case 2:
-                        DifficultyPanel = Brushes.Aqua;
-                        break;
-
-                    case 3:
-                    case 7:
-                        DifficultyPanel = Brushes.Yellow;
-                        break;
-
-                    case 4:
-                    case 8:
-                        DifficultyPanel = Brushes.Red;
-                        break;
-
-                    case 5:
-                    case 9:
-                        DifficultyPanel = Brushes.Purple;
-                        break;
-
-                    case 10:
-                    case 11:
-                        DifficultyPanel = Brushes.Gold;
-                        break;
-
-                    default:
-                        DifficultyPanel = Brushes.Orange;
-                        break;
-                }
-                graphics.FillRectangle(DifficultyPanel, (float)0f, (float)0f, (float)58f, (float)18f);
-
-                //graphics.DrawString(CDTXMania.strSongDifficulyName.Substring(0, 3), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(1, 1, 1)), (float)10f, (float)-4f);
-                bmpCardName = this.prvSongDifficultyFont.DrawPrivateFont( CDTXMania.strSongDifficulyName.Substring(0, 3), Color.FromArgb(1, 1, 1), Color.Transparent );
-                graphics.DrawImage( bmpCardName, 8f, -8f );
-
-                graphics.Dispose();
-                this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
-                bitmap2.Dispose();
+                //this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
+                //bitmap2.Dispose();
                 Bitmap bitmap3 = new Bitmap(100, 100);
                 graphics = Graphics.FromImage(bitmap3);
-                float num;
 
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-                {
-                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
-                }
-                else
-                {
-                    if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
-                    {
-                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 100.0f;
-                    }
-                    else
-                    {
-                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f + ( CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums / 100.0f : 0 );
-                    }
-                }
-
-                if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-                {
-                    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-                }
-                else
-                {
-                    graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-                }
-                this.txSongLevel = new CTexture(CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat, false);
+                //this.txSongLevel = new CTexture(CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat, false);
                 graphics.Dispose();
                 bitmap3.Dispose();
                 Bitmap bitmap4 = new Bitmap(0x2a, 0x30);
@@ -179,7 +198,6 @@ namespace DTXMania
                 this.txDrumSpeed = new CTexture(CDTXMania.app.Device, bitmap4, CDTXMania.TextureFormat, false);
                 graphics.Dispose();
                 bitmap4.Dispose();
-                prvSongDifficultyFont.Dispose();
                 bmpCardName.Dispose();
 
                 base.OnManagedリソースの作成();
@@ -189,19 +207,20 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                CDTXMania.tテクスチャの解放(ref this.txリザルト画像);
-                CDTXMania.tテクスチャの解放(ref this.txリザルト画像がないときの画像);
+                CDTXMania.tテクスチャの解放( ref this.txリザルト画像 );
+                CDTXMania.tテクスチャの解放( ref this.txリザルト画像がないときの画像 );
+                CDTXMania.tテクスチャの解放( ref this.txDifficulty );
                 if (this.sfリザルトAVI画像 != null)
                 {
                     this.sfリザルトAVI画像.Dispose();
                     this.sfリザルトAVI画像 = null;
                 }
-                    CDTXMania.tテクスチャの解放(ref this.txSongName);
-                    CDTXMania.tテクスチャの解放(ref this.r表示するリザルト画像);
-                    CDTXMania.tテクスチャの解放(ref this.txSongLevel);
-                    CDTXMania.tテクスチャの解放(ref this.txSongDifficulty);
-                    CDTXMania.tテクスチャの解放(ref this.txDrumSpeed);
-                    base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放( ref this.txSongName );
+                CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
+                //CDTXMania.tテクスチャの解放( ref this.txSongLevel );
+                    
+                CDTXMania.tテクスチャの解放( ref this.txDrumSpeed );
+                base.OnManagedリソースの解放();
             }
         }
 		public override unsafe int On進行描画()
@@ -282,10 +301,48 @@ namespace DTXMania
                 this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, width, height));
             }
 		Label_042F:
-            this.txSongName.t2D描画(CDTXMania.app.Device, (this.n本体X + this.nAlbumWidth) + 3, this.n本体Y + 0x3f);
-            this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
-            this.txSongLevel.vc拡大縮小倍率.X = 1.5f;
-            this.txSongLevel.t2D描画(CDTXMania.app.Device, 0x447, 20);
+            float num;
+            STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
+            n表記するLEVEL.Drums = CDTXMania.DTX.LEVEL.Drums / 10.0;
+            n表記するLEVEL.Drums += ( CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0 : 0 );
+            int DTXLevel = CDTXMania.DTX.LEVEL.Drums;
+            double DTXLevelDeci = (DTXLevel * 10 - CDTXMania.DTX.LEVEL.Drums);
+
+            string strLevel = string.Format( "{0:0.00}", n表記するLEVEL.Drums );
+
+            if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+            {
+                num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
+            }
+            else
+            {
+                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
+                {
+                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 100.0f;
+                }
+                else
+                {
+                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f + (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums / 100.0f : 0);
+                }
+            }
+
+            if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+            {
+                //    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
+                this.t大文字表示(1106, 22, num.ToString());
+            }
+            else
+            {
+                //    graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
+                this.t大文字表示(1106, 22, string.Format(num.ToString().Substring(0, 1)));
+                this.txLevel.t2D描画(CDTXMania.app.Device, 1126, 22, new Rectangle(160, 16, 6, 16));
+                this.t小文字表示(1133, 24, string.Format(string.Format("{0,0:00}", strLevel.Substring(1, 3))));
+            }
+
+            this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体X + this.nAlbumWidth ) + 3, this.n本体Y + 0x3f);
+            //this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
+            if (this.txDifficulty != null)
+                this.txDifficulty.t2D描画(CDTXMania.app.Device, 940, 20, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
             this.txDrumSpeed.vc拡大縮小倍率.X = 0.7619048f;
             this.txDrumSpeed.vc拡大縮小倍率.Y = 0.6666667f;
             this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 0x43c, 60);
@@ -301,12 +358,16 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
+        [StructLayout(LayoutKind.Sequential)]
+        private struct ST文字位置
+        {
+            public char ch;
+            public Point pt;
+        }
         private CAvi avi;
         private Bitmap bmSongNameLength;
         private bool b動画フレームを作成した;
         private CCounter ct登場用;
-        private System.Drawing.Font ftSongDifficultyFont;
-        private System.Drawing.Font ftSongNameFont;
         private Image iDrumSpeed;
         private int nAlbumHeight;
         private int nAlbumWidth;
@@ -320,13 +381,16 @@ namespace DTXMania
         private Surface sfリザルトAVI画像;
         private string strAVIファイル名;
         private string strSongName;
+        private System.Drawing.Font ftSongNameFont;
         private CTexture txDrumSpeed;
-        private CTexture txSongDifficulty;
-        private CTexture txSongLevel;
+        private CTexture txLevel;
         private CTexture txSongName;
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
-        private CPrivateFont prvSongDifficultyFont;
+        private CTexture txDifficulty;
+
+        private readonly ST文字位置[] st小文字位置;
+        private readonly ST文字位置[] st大文字位置;
 
 
 		private bool t背景画像があればその一部からリザルト画像を構築する()
@@ -550,6 +614,76 @@ namespace DTXMania
 			}
 			return true;
 		}
+        private void t小文字表示(int x, int y, string str)
+        {
+            this.t小文字表示(x, y, str, false);
+        }
+        private void t小文字表示(int x, int y, string str, bool b強調)
+        {
+            foreach (char ch in str)
+            {
+                for (int i = 0; i < this.st小文字位置.Length; i++)
+                {
+                    if (this.st小文字位置[i].ch == ch)
+                    {
+                        Rectangle rectangle = new Rectangle(this.st小文字位置[i].pt.X, this.st小文字位置[i].pt.Y, 16, 14);
+                        if (this.txLevel != null)
+                        {
+                            this.txLevel.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                        }
+                        break;
+                    }
+                }
+                if (ch == '.')
+                {
+                    x += 0;
+                }
+                else
+                {
+                    x += 16;
+                }
+            }
+        }
+        private void t大文字表示(int x, int y, string str)
+        {
+            this.t大文字表示(x, y, str, false);
+        }
+        private void t大文字表示(int x, int y, string str, bool bExtraLarge)
+        {
+            for (int i = 0; i < str.Length; i++)
+            {
+                char c = str[i];
+                for (int j = 0; j < this.st大文字位置.Length; j++)
+                {
+                    if (this.st大文字位置[j].ch == c)
+                    {
+                        int num;
+                        int num2;
+                        num = 0;
+                        num2 = 0;
+                        Rectangle rc画像内の描画領域 = new Rectangle(this.st大文字位置[j].pt.X, this.st大文字位置[j].pt.Y, 20, 16);
+                        if (c == '.')
+                        {
+                            rc画像内の描画領域.Width -= 2;
+                            rc画像内の描画領域.Height -= 2;
+                        }
+                        if (this.txLevel != null)
+                        {
+                            this.txLevel.t2D描画( CDTXMania.app.Device, x, y, rc画像内の描画領域 );
+                        }
+                        break;
+                    }
+                }
+                if (c == '.')
+                {
+                    x += 0;
+                }
+                else
+                {
+                    x += 20;
+                }
+            }
+        }
 		//-----------------
 		#endregion
 	}
