@@ -65,11 +65,11 @@ namespace DTXMania
 						for( int j = 0; j < 5; j++ )
 						{
 							//int x = ( ( ( i < 5 ) ? 88 : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 37 * base.ct進行[ i ].n現在の値 ) / 100 );
-                            int x = (((i < 5) ? 88 : 958) + this.nRGBのX座標[num2, i]);
+                            int x = (((i < 5) ? 88 : 958) + this.nRGBのX座標[num2, i]+ ( ( 19 * base.ct進行[ i ].n現在の値 ) / 70 ));
 							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 317 + ( j * 118 ) ) : 100 + ( j * 118 );
-							if( texture != null )
+							if( texture != null && CDTXMania.ConfigIni.bLaneFlush[ (int) e楽器パート ] )
 							{
-                                texture.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(j * 37, 0, 37, 118));
+                                texture.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(j * 37, 0, ( 37 * (70 - base.ct進行[i].n現在の値)) / 70, 118));
 							}
 						}
                         base.ct進行[ i ].t進行();
@@ -80,23 +80,23 @@ namespace DTXMania
 					}
 				}
                 //ここの分岐文はbase.ct進行[ n ]のものを使わないと、停止中にレーンフラッシュが消えてしまう。
-                if ( !base.ct進行[ 0 ].b停止中 )
+                if ( !base.ct進行[ 0 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 86, 105, new Rectangle(0, 0, 41, 566));
                 }
-                if ( !base.ct進行[ 1 ].b停止中 )
+                if ( !base.ct進行[ 1 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 125, 105, new Rectangle(39, 0, 41, 566));
                 }
-                if ( !base.ct進行[ 2 ].b停止中 )
+                if ( !base.ct進行[ 2 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 164, 105, new Rectangle(78, 0, 41, 566));
                 }
-                if ( !base.ct進行[ 3 ].b停止中 )
+                if ( !base.ct進行[ 3 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 203, 105, new Rectangle(117, 0, 41, 566));
                 }
-                if ( !base.ct進行[ 4 ].b停止中 )
+                if ( !base.ct進行[ 4 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 242, 105, new Rectangle(156, 0, 41, 566));
                 }

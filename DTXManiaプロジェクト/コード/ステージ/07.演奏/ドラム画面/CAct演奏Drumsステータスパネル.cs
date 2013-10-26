@@ -91,7 +91,6 @@ namespace DTXMania
                 #endregion
                 this.iDrumspeed = Image.FromFile( CSkin.Path( @"Graphics\7_panel_icons.jpg" ) );
                 this.iRisky = Image.FromFile( CSkin.Path( @"Graphics\7_panel_icons2.jpg" ) );
-                this.iScore = Image.FromFile( CSkin.Path( @"Graphics\ScreenPlay score numbers.png" ) );
                 this.b4font = new Bitmap( 1, 1 );
                 Graphics graphics = Graphics.FromImage( this.b4font );
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -375,7 +374,6 @@ namespace DTXMania
                 this.iNamePlate.Dispose();
                 this.iDrumspeed.Dispose();
                 this.iRisky.Dispose();
-                this.iScore.Dispose();
                 this.iDifficulty.Dispose();
 
                 this.ftDifficultyS.Dispose();
@@ -556,7 +554,6 @@ namespace DTXMania
         private Image iRisky;
         private Image iNamePlate;
         private Image iDifficulty;
-        private Image iScore;
         private int nCurrentDrumspeed;
         private int nStrlengthbydot;
         private string strGroupName;

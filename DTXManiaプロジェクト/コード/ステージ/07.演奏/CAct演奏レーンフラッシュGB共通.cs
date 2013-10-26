@@ -29,7 +29,7 @@ namespace DTXMania
 			{
 				throw new IndexOutOfRangeException( "有効範囲は 0～10 です。" );
 			}
-			this.ct進行[ nLane ] = new CCounter( 0, 100, 1, CDTXMania.Timer );
+			this.ct進行[ nLane ] = new CCounter( 0, 70, 1, CDTXMania.Timer );
 		}
 
 
