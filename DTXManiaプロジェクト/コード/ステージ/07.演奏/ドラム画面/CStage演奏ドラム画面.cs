@@ -2279,14 +2279,14 @@ namespace DTXMania
                             break;
                     }
 
-                    if (CDTXMania.ConfigIni.bドラム打音を発声する)
+                    if( CDTXMania.ConfigIni.bドラム打音を発声する )
                     {
                         CDTX.CChip rChip = this.r空うちChip(E楽器パート.DRUMS, (Eパッド)nPad);
-                        if (rChip != null)
+                        if( rChip != null )
                         {
                             #region [ (B1) 空打ち音が譜面で指定されているのでそれを再生する。]
                             //-----------------
-                            this.tサウンド再生(rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums);
+                            this.tサウンド再生( rChip, CSound管理.rc演奏用タイマ.nシステム時刻, E楽器パート.DRUMS, CDTXMania.ConfigIni.n手動再生音量, CDTXMania.ConfigIni.b演奏音を強調する.Drums );
                             //-----------------
                             #endregion
                         }
@@ -2566,19 +2566,19 @@ namespace DTXMania
 
                                             case EBDGroup.どっちもBD:
                                                 #region[共通]
-                                                if (chipLP != null)
+                                                if( chipLP != null )
                                                 {
                                                     rChip = chipLP;
                                                 }
-                                                else if (chipLBD == null)
+                                                else if( chipLBD == null )
                                                 {
                                                     rChip = chipBD;
                                                 }
-                                                else if (chipBD == null)
+                                                else if( chipBD == null )
                                                 {
                                                     rChip = chipLBD;
                                                 }
-                                                else if (chipLBD.n発声位置 < chipBD.n発声位置)
+                                                else if( chipLBD.n発声位置 < chipBD.n発声位置 )
                                                 {
                                                     rChip = chipLBD;
                                                 }
@@ -3319,7 +3319,7 @@ namespace DTXMania
 
             pChip.bHit = true;
             bボーナス = true;
-            if ((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.b歓声を発声する )
+            if ((this.actCombo.n現在のコンボ数.Drums > 0) && configIni.b歓声を発声する )
             {
                 switch (pChip.n整数値)
                 {
@@ -3454,8 +3454,8 @@ namespace DTXMania
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
                 pChip.bHit = true;
-                this.r現在の空うちドラムChip[(int)this.eチャンネルtoパッド[pChip.nチャンネル番号 - 0xb1]] = pChip;
-                pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 190)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
+                this.r現在の空うちドラムChip[ (int)this.eチャンネルtoパッド[ pChip.nチャンネル番号 - 0xb1 ] ] = pChip;
+                pChip.nチャンネル番号 = ( ( pChip.nチャンネル番号 < 188 || pChip.nチャンネル番号 > 190 ) ? ( pChip.nチャンネル番号 - 177 + 17 ) : ( pChip.nチャンネル番号 - 179 + 17 ) );
             }
         }
 		protected override void t進行描画・チップ・小節線( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
