@@ -1167,7 +1167,7 @@ namespace DTXMania
 		{
 			return tチップのヒット処理( nHitTime, pChip, screenmode, true );
 		}
-        protected E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, bool bCorrectLane)
+        protected E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, E楽器パート screenmode, bool bCorrectLane )
         {
             pChip.bHit = true;
             if (pChip.e楽器パート == E楽器パート.UNKNOWN)
@@ -1183,7 +1183,7 @@ namespace DTXMania
                     {
                         int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Drums;
                         eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
-                        this.actJudgeString.Start(this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11], bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag);
+                        this.actJudgeString.Start( this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11], bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag );
                     }
                     break;
 
@@ -1225,6 +1225,7 @@ namespace DTXMania
                 case E楽器パート.DRUMS:
                     switch (eJudgeResult)
                     {
+                        #region[ ヒット数の加算 ]
                         case E判定.Miss:
                         case E判定.Bad:
                             this.actCombo.tコンボリセット処理();
@@ -1269,6 +1270,7 @@ namespace DTXMania
                             break;
                         case E判定.Auto:
                             break;
+                        #endregion
                     }
 
                     if (CDTXMania.ConfigIni.bドラムが全部オートプレイである || !bPChipIsAutoPlay)
@@ -1411,7 +1413,8 @@ namespace DTXMania
                             // 100万/{1275+50×(総ノーツ数-50)}
                             else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
                             {
-                                nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f))) * ((1275.0f + 50.0f * (nComboMax - 49.0f)));
+                                nScoreDelta = 1000000.0f - (float)this.actScore.n現在の本当のスコア[ ( int )pChip.e楽器パート ];
+                                //nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f))) * ((1275.0f + 50.0f * (nComboMax - 49.0f)));
                             }
                             //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
 
@@ -1510,7 +1513,8 @@ namespace DTXMania
                             // 100万/{1275+50×(総ノーツ数-50)}
                             else if (this.nヒット数・Auto含む[(int)pChip.e楽器パート].Perfect >= nComboMax)
                             {
-                                nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f))) * ((1275.0f + 50.0f * (nComboMax - 49.0f)));
+                                nScoreDelta = 1000000.0f - (float)this.actScore.n現在の本当のスコア[ ( int )pChip.e楽器パート ];
+                                //nScoreDelta = 1000000.0f - (1000000.0f / (1275.0f + 50.0f / (nComboMax - 50.0f))) * ((1275.0f + 50.0f * (nComboMax - 49.0f)));
                             }
                             //1000000-PERFECT基準値×50×(その曲のMAXCOMBO-25.5)
 
@@ -3547,7 +3551,7 @@ namespace DTXMania
 				if ( !pChip.bHit && pChip.b可視 )
 				{
 					int y = configIni.bReverse[ instIndex ] ? ( barYReverse - pChip.nバーからの距離dot[ instIndex ] ) : ( barYNormal + pChip.nバーからの距離dot[ instIndex ] );
-					//if ( ( showRangeY0 < y ) && ( y < showRangeY1 ) )
+					if ( ( showRangeY0 < y ) && ( y < showRangeY1 ) )
 					{
 						if ( this.txチップ != null )
 						{

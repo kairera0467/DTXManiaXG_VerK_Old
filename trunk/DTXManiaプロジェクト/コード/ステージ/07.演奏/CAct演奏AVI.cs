@@ -763,8 +763,10 @@ namespace DTXMania
                                     stageDrum.txボーナスエフェクト.vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
                                     stageDrum.txボーナスエフェクト.b加算合成 = true;
                                     stageDrum.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + ( 360 * numf ), 640, 360 )) ;
+
                                 }
                             }
+
                         }
                     }
                 }
@@ -1179,7 +1181,7 @@ namespace DTXMania
                         }
                     }
                 }
-
+                //CDTXMania.act文字コンソール.tPrint(200, 0, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", this.actFill.lDshowPosition));
                 //コンボ、ネームプレート
                 //グラフ無効&ネームプレートA,C
                 if (CDTXMania.ConfigIni.bGraph.Drums == false && (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A))
@@ -1376,7 +1378,10 @@ namespace DTXMania
                 }
             }
             if(CDTXMania.ConfigIni.ボーナス演出を表示する)
-                this.actFill.tStart();
+                //this.actFill.On進行描画();
+                //this.actFill.tStart();
+
+
         }
         public override int On進行描画()
         {

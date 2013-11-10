@@ -21,6 +21,7 @@ namespace DTXMania
             this.ftDifficultyS = new Font( "Arial", 20f, FontStyle.Bold );
 
             this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 20, FontStyle.Bold ); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
+            this.pfSongTitleFont = new CPrivateFastFont( new FontFamily( "ＤＦＧ平成ゴシック体W5" ), 22, FontStyle.Regular );
             if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
             {
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 
@@ -195,16 +196,22 @@ namespace DTXMania
                 #region[ 名前、グループ名 ]
                 //2013.09.07.kairera0467 できればこの辺のメンテナンスが楽にできるよう、コードを簡略にしたいが・・・・
                 Bitmap bmpCardName = new Bitmap( 1, 1 );
+                Bitmap bmpSongTitle = new Bitmap( 1, 1 );
+                #region[ 曲名 ]
                 if( this.nStrlengthbydot > 240 )
                 {
-                    this.ftDisplayFont = new Font( "ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel );
+                    graphics.ScaleTransform(240.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
                     if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                     {
-                        graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 68f );
+                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 68f );
+                        graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 62f);
+                        graphics.ResetTransform();
                     }
                     else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                     {
-                        graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
+                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
+                        graphics.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 54f);
+                        graphics.ResetTransform();
                     }
                 }
                 else
@@ -219,8 +226,9 @@ namespace DTXMania
                         graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
                     }
                 }
+                #endregion
 
-                if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                if ( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                 {
                     if(CDTXMania.ConfigIni.nNameColor >= 11)
                     {
@@ -342,6 +350,7 @@ namespace DTXMania
                 graphics.Dispose();
                 graphics2.Dispose();
                 bmpCardName.Dispose();
+                bmpSongTitle.Dispose();
                 //テクスチャ変換
                 this.txNamePlate = new CTexture( CDTXMania.app.Device, this.bNamePlate, CDTXMania.TextureFormat, false );
                 this.txDummy = new CTexture( CDTXMania.app.Device, this.bDifficulty, CDTXMania.TextureFormat, false );
@@ -355,7 +364,7 @@ namespace DTXMania
                 this.ftLevelFont.Dispose();
                 this.ftDisplayFont.Dispose();
                 this.pfNameFont.Dispose();
-
+                this.pfSongTitleFont.Dispose();
                 base.OnManagedリソースの作成();
             }
         }
@@ -381,6 +390,7 @@ namespace DTXMania
                 this.ftDisplayFont.Dispose();
                 this.ftLevelFont.Dispose();
                 this.pfNameFont.Dispose();
+                pfSongTitleFont.Dispose();
                 base.OnManagedリソースの解放();
             }
         }
@@ -565,6 +575,7 @@ namespace DTXMania
         private CTexture txNamePlate;
         private CTexture txScore;
         private CPrivateFastFont pfNameFont;
+        private CPrivateFastFont pfSongTitleFont;
         //-----------------
         #endregion
     }

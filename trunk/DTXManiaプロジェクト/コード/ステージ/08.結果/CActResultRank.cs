@@ -85,7 +85,7 @@ namespace DTXMania
                 }
                 else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
                 {
-                    switch (CDTXMania.stage結果.nランク値.Guitar)
+                    switch( CDTXMania.stage結果.nランク値.Guitar )
                     {
                         case 0:
                             this.txランク文字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
