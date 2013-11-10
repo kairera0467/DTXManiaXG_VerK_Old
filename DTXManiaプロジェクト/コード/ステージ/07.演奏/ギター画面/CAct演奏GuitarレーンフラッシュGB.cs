@@ -82,44 +82,44 @@ namespace DTXMania
                 //ここの分岐文はbase.ct進行[ n ]のものを使わないと、停止中にレーンフラッシュが消えてしまう。
                 if ( !base.ct進行[ 0 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 86, 105, new Rectangle(0, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 86, 104, new Rectangle(0, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 1 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 125, 105, new Rectangle(39, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 125, 104, new Rectangle(39, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 2 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 164, 105, new Rectangle(78, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 164, 104, new Rectangle(78, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 3 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 203, 105, new Rectangle(117, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 203, 104, new Rectangle(117, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 4 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 242, 105, new Rectangle(156, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 242, 104, new Rectangle(156, 0, 41, 566));
                 }
 
                 if ( !base.ct進行[ 5 ].b停止中 )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 956, 105, new Rectangle(0, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 956, 104, new Rectangle(0, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 6 ].b停止中 )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 997, 105, new Rectangle(39, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 997, 104, new Rectangle(39, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 7 ].b停止中 )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1034, 105, new Rectangle(78, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1034, 104, new Rectangle(78, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 8 ].b停止中 )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1073, 105, new Rectangle(117, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1073, 104, new Rectangle(117, 0, 41, 566));
                 }
                 if ( !base.ct進行[ 9 ].b停止中 )
                 {
-                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1112, 105, new Rectangle(156, 0, 41, 566));
+                    this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1112, 104, new Rectangle(156, 0, 41, 566));
                 }
  
 			}

@@ -110,11 +110,11 @@ namespace DTXMania
                         this.fMiss率[i] = bIsAutoPlay ? 0f : ((100f * part.nMiss数) / ((float)part.n全チップ数));
                         this.bオート[i] = bIsAutoPlay;	// #23596 10.11.16 add ikanick そのパートがオートなら1
                         //        10.11.17 change (int to bool) ikanick
-                        if (CDTXMania.ConfigIni.nSkillMode == 0)
+                        if (CDTXMania.ConfigIni.nSkillMode == 1)
                         {
-                            this.nランク値[ i ] = CScoreIni.tランク値を計算して返す(part);
+                            this.nランク値[ i ] = CScoreIni.tランク値を計算して返す( part );
                         }
-                        else if (CDTXMania.ConfigIni.nSkillMode == 1)
+                        else if (CDTXMania.ConfigIni.nSkillMode == 0)
                         {
                             this.nランク値[ i ] = CScoreIni.t旧ランク値を計算して返す(part);
                         }

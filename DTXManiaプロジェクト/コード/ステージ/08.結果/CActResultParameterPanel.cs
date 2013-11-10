@@ -284,6 +284,7 @@ namespace DTXMania
                         else
                         {
                             this.t大文字表示(x, y, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nPerfect数));
+                            this.t大文字表示(600, 466, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nPerfect数));
                         }
                         this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, 466, 81, new Rectangle(0, 0, (int)num11, 56));
                     }
@@ -296,6 +297,7 @@ namespace DTXMania
                         else
                         {
                             this.t大文字表示(x, y + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nGreat数));
+                            this.t大文字表示(600, 466 + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nGreat数));
                         }
                     }
                     if (num >= 200)
@@ -333,58 +335,30 @@ namespace DTXMania
                     }
                     if (num >= 0)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
+                        if( CDTXMania.ConfigIni.bDrums有効 )
                         {
-                            this.t小文字表示(660, 459, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率[i]));
+                            this.t小文字表示(x + 0x40, y, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率[i]));
                         }
                         else
                         {
-                            this.t小文字表示(x + 0x40, y, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率[i]));
+                            this.t小文字表示(x + 0x40, y, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率.Guitar));
                         }
                     }
                     if (num >= 100)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            this.t小文字表示(805, 459, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率[i]));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x + 0x40, y + 0x19, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率[i]));
-                        }
+                        this.t小文字表示(x + 0x40, y + 0x19, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率[i]));
                     }
                     if (num >= 200)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            this.t小文字表示(660, 481, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率[i]));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x + 0x40, y + 50, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率[i]));
-                        }
+                        this.t小文字表示(x + 0x40, y + 50, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率[i]));
                     }
                     if (num >= 300)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            this.t小文字表示(805, 481, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率[i]));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x + 0x40, y + 0x4b, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率[i]));
-                        }
+                        this.t小文字表示(x + 0x40, y + 0x4b, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率[i]));
                     }
                     if (num >= 400)
                     {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                        {
-                            this.t小文字表示(660, 502, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率[i]));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x + 0x40, y + 100, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率[i]));
-                        }
+                        this.t小文字表示(x + 0x40, y + 100, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率[i]));
                     }
                     if (num >= 500)
                     {
