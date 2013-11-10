@@ -3374,22 +3374,22 @@ namespace DTXMania
 						}
 						#endregion
 						#region [ 必要に応じて空打ち音を0小節に定義する ]
-						for ( int m = 0xb1; m <= 0xbc; m++ )			// #28146 2012.4.21 yyagi; bb -> bc
-						{
-							foreach ( CChip chip in this.listChip )
-							{
-								if ( chip.nチャンネル番号 == m )
-								{
-									CChip c = new CChip();
-									c.n発声位置 = 0;
-									c.nチャンネル番号 = chip.nチャンネル番号;
-									c.n整数値 = chip.n整数値;
-									c.n整数値・内部番号 = chip.n整数値・内部番号;
-									this.listChip.Insert( 0, c );
-									break;
-								}
-							}
-						}
+						//for ( int m = 0xb1; m <= 0xbe; m++ )			// #28146 2012.4.21 yyagi; bb -> bc
+						//{
+							//foreach ( CChip chip in this.listChip )
+							//{
+								//if ( chip.nチャンネル番号 == m )
+								//{
+									//CChip c = new CChip();
+									//c.n発声位置 = 0;
+									//c.nチャンネル番号 = chip.nチャンネル番号;
+									//c.n整数値 = chip.n整数値;
+									//c.n整数値・内部番号 = chip.n整数値・内部番号;
+									//this.listChip.Insert( 0, c );
+									//break;
+								//}
+							//}
+						//}
 						#endregion
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );
 						//Trace.TraceInformation( "空打確認時間:             {0}", span.ToString() );
@@ -3789,10 +3789,10 @@ namespace DTXMania
                     case 0xE1:  case 0xE2:  case 0xE3:  case 0xE4:  case 0xE5:  case 0xE6:  case 0xE7:  case 0xE8:
 					// Dr不可視チップ
 					case 0x31:	case 0x32:	case 0x33:	case 0x34:	case 0x35:	case 0x36:	case 0x37:
-					case 0x38:	case 0x39:	case 0x3A:
+					case 0x38:	case 0x39:	case 0x3A:  case 0x3B:　case 0x3C:
 					// Dr/Gt/Bs空打ち
 					case 0xB1:	case 0xB2:	case 0xB3:	case 0xB4:	case 0xB5:	case 0xB6:	case 0xB7:	case 0xB8:
-					case 0xB9:	case 0xBA:	case 0xBB:	case 0xBC:
+					case 0xB9:	case 0xBA:	case 0xBB:	case 0xBC:　case 0xBD:　case 0xBE:
 					// フィルインサウンド
 					case 0x1F:	case 0x2F:	//case 0xAF:
 					// 自動演奏チップ

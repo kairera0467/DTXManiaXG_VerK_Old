@@ -1377,7 +1377,7 @@ namespace DTXMania
                     }
                 }
             }
-            if(CDTXMania.ConfigIni.ボーナス演出を表示する)
+            //if(CDTXMania.ConfigIni.ボーナス演出を表示する)
                 //this.actFill.On進行描画();
                 //this.actFill.tStart();
 

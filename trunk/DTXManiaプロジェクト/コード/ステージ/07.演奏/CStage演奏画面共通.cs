@@ -887,18 +887,18 @@ namespace DTXMania
 							return this.r現在の空うちドラムChip.HHO;
 
                         case Eパッド.LP:
-                            if (this.r現在の空うちドラムChip.LP != null)
+                            if ( this.r現在の空うちドラムChip.LP != null )
                             {
                                 return this.r現在の空うちドラムChip.LP;
                             }
-                            if (CDTXMania.ConfigIni.eBDGroup != EBDGroup.左右ペダルのみ打ち分ける)
+                            if( CDTXMania.ConfigIni.eBDGroup != EBDGroup.左右ペダルのみ打ち分ける )
                             {
                                 if (this.r現在の空うちドラムChip.LBD != null)
                                 {
                                     return this.r現在の空うちドラムChip.LBD;
                                 }
                             }
-                            return this.r現在の空うちドラムChip.BD;
+                            return this.r現在の空うちドラムChip.LP;
 
                         case Eパッド.LBD:
                             if (this.r現在の空うちドラムChip.LBD != null)
@@ -912,7 +912,7 @@ namespace DTXMania
                                     return this.r現在の空うちドラムChip.LP;
                                 }
                             }
-                            return this.r現在の空うちドラムChip.BD;
+                            return this.r現在の空うちドラムChip.LBD;
 
 
 					}
@@ -2740,6 +2740,8 @@ namespace DTXMania
 					case 0xb8:
 					case 0xb9:
 					case 0xbc:
+                    case 0xbd:
+                    case 0xbe:
 						this.t進行描画・チップ・空打ち音設定・ドラム( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
