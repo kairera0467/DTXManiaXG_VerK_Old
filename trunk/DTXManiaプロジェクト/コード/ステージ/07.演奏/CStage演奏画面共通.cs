@@ -319,7 +319,7 @@ namespace DTXMania
 //				Debug.WriteLine( "CH=" + pChip.nチャンネル番号.ToString( "x2" ) + ", 整数値=" + pChip.n整数値 +  ", time=" + pChip.n発声時刻ms );
 				if ( pChip.n発声時刻ms <= 0 )
 				{
-					if ( pChip.nチャンネル番号 == 0xFA )
+					if ( pChip.nチャンネル番号 == 0xDA )
 					{
 						pChip.bHit = true;
 //						Debug.WriteLine( "first [DA] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値 + ", time=" + pChip.n発声時刻ms );
@@ -330,7 +330,7 @@ namespace DTXMania
 							{
 								if ( wc.rSound[ i ] != null )
 								{
-									CDTXMania.Sound管理.AddMixer( wc.rSound[ i ], db再生速度 );
+									CDTXMania.Sound管理.AddMixer( wc.rSound[ i ], db再生速度, pChip.b演奏終了後も再生が続くチップである );
 									//AddMixer( wc.rSound[ i ] );		// 最初はqueueを介さず直接ミキサー登録する
 								}
 							}
@@ -597,6 +597,7 @@ namespace DTXMania
         {
             internal bool bIsAdd;
             internal CSound csound;
+            internal bool b演奏終了後も再生が続くチップである;
         };
 
 		public CAct演奏AVI actAVI;
@@ -703,12 +704,13 @@ namespace DTXMania
 		protected Stopwatch sw2;
 //		protected GCLatencyMode gclatencymode;
 
-		public void AddMixer( CSound cs )
+        public void AddMixer( CSound cs, bool _b演奏終了後も再生が続くチップである )
 		{
 			stmixer stm = new stmixer()
 			{
 				bIsAdd = true,
-				csound = cs
+				csound = cs,
+                b演奏終了後も再生が続くチップである = _b演奏終了後も再生が続くチップである
 			};
 			queueMixerSound.Enqueue( stm );
 //		Debug.WriteLine( "★Queue: add " + Path.GetFileName( stm.csound.strファイル名 ));
@@ -718,7 +720,8 @@ namespace DTXMania
 			stmixer stm = new stmixer()
 			{
 				bIsAdd = false,
-				csound = cs
+				csound = cs,
+                b演奏終了後も再生が続くチップである = false
 			};
 			queueMixerSound.Enqueue( stm );
 //		Debug.WriteLine( "★Queue: remove " + Path.GetFileName( stm.csound.strファイル名 ));
@@ -739,7 +742,7 @@ namespace DTXMania
 						stmixer stm = queueMixerSound.Dequeue();
 						if ( stm.bIsAdd )
 						{
-							CDTXMania.Sound管理.AddMixer( stm.csound, db再生速度 );
+							CDTXMania.Sound管理.AddMixer( stm.csound, db再生速度, stm.b演奏終了後も再生が続くチップである );
 						}
 						else
 						{
@@ -2218,6 +2221,7 @@ namespace DTXMania
 			{
 				this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージ失敗;
 				base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト;
+                CDTXMania.DTX.t全チップの再生停止();
 				this.actFO.tフェードアウト開始();
 			}
 		}
@@ -2804,7 +2808,7 @@ namespace DTXMania
                                     if (wc.rSound[i] != null)
                                     {
                                         //CDTXMania.Sound管理.AddMixer( wc.rSound[ i ] );
-                                        AddMixer(wc.rSound[i]);
+                                        AddMixer(wc.rSound[ i ], pChip.b演奏終了後も再生が続くチップである );
                                     }
                                 }
                             }
