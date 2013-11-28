@@ -124,6 +124,7 @@ namespace DTXMania
             {
                 return 0;
             }
+            CDTXMania.DTX.t全チップの再生停止();
             return 1;
         }
 
