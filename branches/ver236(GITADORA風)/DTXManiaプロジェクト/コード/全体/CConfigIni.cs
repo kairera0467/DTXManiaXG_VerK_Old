@@ -572,7 +572,8 @@ namespace DTXMania
         public int nShutterOutSide;
         public bool bCLASSIC譜面判別を有効にする;
         public bool bMutingLP;
-        public bool bLivePoint;
+        public bool bShowMusicInfo;
+        public bool bShowScore;
 
         #region[ 画像関連 ]
         public int nJudgeFrames;
@@ -1178,7 +1179,8 @@ namespace DTXMania
 			this.nShowLagType = (int) EShowLagType.OFF;	// #25370 2011.6.3 yyagi ズレ時間表示
 			this.bIsAutoResultCapture = false;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能ON/OFF
 
-            this.bLivePoint = true;
+            this.bShowScore = true;
+            this.bShowMusicInfo = true;
 			this.bバッファ入力を行う = true;
 			this.bIsSwappedGuitarBass = false;			// #24063 2011.1.16 yyagi ギターとベースの切り替え
 			this.bIsAllowedDoubleClickFullscreen = true;	// #26752 2011.11.26 ダブルクリックでのフルスクリーンモード移行を許可
@@ -1489,8 +1491,11 @@ namespace DTXMania
 			sw.WriteLine( "HitSound={0}", this.bドラム打音を発声する ? 1 : 0 );
 			sw.WriteLine();
             #endregion
-            sw.WriteLine( "; LivePointの表示(0:OFF, 1:ON)");
-            sw.WriteLine( "LivePoint={0}", this.bLivePoint ? 1 : 0);
+            sw.WriteLine( "; スコアの表示(0:OFF, 1:ON)" );
+            sw.WriteLine( "ShowScore={0}", this.bShowScore ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine( "; 演奏中の曲情報の表示(0:OFF, 1:ON)" );
+            sw.WriteLine( "ShowMusicInfo={0}", this.bShowMusicInfo ? 1 : 0);
             sw.WriteLine();
 			sw.WriteLine( "; 演奏記録（～.score.ini）の出力 (0:OFF, 1:ON)" );
 			sw.WriteLine( "SaveScoreIni={0}", this.bScoreIniを出力する ? 1 : 0 );
@@ -2262,9 +2267,13 @@ namespace DTXMania
                                             {
                                                 this.nInfoType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 1, (int)this.nInfoType);
                                             }
-                                            else if (str3.Equals("LivePoint"))
+                                            else if ( str3.Equals( "ShowScore" ) )
                                             {
-                                                this.bLivePoint = C変換.bONorOFF(str4[0]);
+                                                this.bShowScore = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if ( str3.Equals( "ShowMusicInfo" ) )
+                                            {
+                                                this.bShowMusicInfo = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("DoubleClickFullScreen"))	// #26752 2011.11.27 yyagi
                                             {

@@ -267,11 +267,17 @@ namespace DTXMania
                 "");
             this.list項目リスト.Add(this.iAutoAddGage);
 
-            this.iSystemLivePoint = new CItemToggle("LivePoint", CDTXMania.ConfigIni.bLivePoint,
-                "LivePointゲージの表示を設定します。\n",
+            this.iSystemShowScore = new CItemToggle( "ShowScore", CDTXMania.ConfigIni.bShowScore,
+                "演奏中のスコアの表示の有無を設定します。\n",
                 "\n" +
                 "");
-            this.list項目リスト.Add(this.iSystemLivePoint);
+            this.list項目リスト.Add( this.iSystemShowScore );
+
+            this.iSystemShowMusicInfo = new CItemToggle( "ShowMusicInfo", CDTXMania.ConfigIni.bShowMusicInfo,
+                "OFFにすると演奏中のジャケット、曲情報を表示しません。",
+                ""
+                );
+            this.list項目リスト.Add( this.iSystemShowMusicInfo );
 
             this.iSystemBufferedInput = new CItemToggle("BufferedInput", CDTXMania.ConfigIni.bバッファ入力を行う,
                 "バッファ入力モード：\nON にすると、FPS を超える入力解像\n度を実現します。\nOFF にすると、入力解像度は FPS に\n等しくなります。",
@@ -542,7 +548,8 @@ namespace DTXMania
             this.iDrumsAttackEffectMode = new CItemList("AttackEffectType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAttackEffectType,
                 "アタックエフェクトの表示方法を設定します。\n" +
                 "ALL ON: すべて表示\n" +
-                "EffectOnly: エフェクト画像のみ表示\n" +
+                "ChipOFF: チップエフェクトのみ消す\n" +
+                "EffectOnly: エフェクト画像以外消す\n" +
                 "ALL OFF: すべて消す",
                 "\n" +
                 "",
@@ -2318,7 +2325,6 @@ namespace DTXMania
         private CItemInteger iSystemPreviewSoundWait;
         private CItemToggle iSystemRandomFromSubBox;
         private CItemBase iSystemReturnToMenu;
-        private CItemToggle iSystemLivePoint;
         private CItemToggle iSystemSaveScore;
         private CItemToggle iSystemSoundMonitorBass;
         private CItemToggle iSystemSoundMonitorDrums;
@@ -2339,6 +2345,8 @@ namespace DTXMania
         private CItemList iSystemSkillMode;
         private CItemToggle iSystemDifficlty;
         private CItemToggle iMutingLP;
+        private CItemToggle iSystemShowScore;
+        private CItemToggle iSystemShowMusicInfo;
 
         private int iSystemSoundType_initial;
         private int iSystemWASAPIBufferSizeMs_initial;
@@ -2574,7 +2582,8 @@ namespace DTXMania
             CDTXMania.ConfigIni.b歓声を発声する = this.iSystemAudienceSound.bON;
             CDTXMania.ConfigIni.eダメージレベル = (Eダメージレベル)this.iSystemDamageLevel.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bScoreIniを出力する = this.iSystemSaveScore.bON;
-            CDTXMania.ConfigIni.bLivePoint = this.iSystemLivePoint.bON;
+            CDTXMania.ConfigIni.bShowScore = this.iSystemShowScore.bON;
+            CDTXMania.ConfigIni.bShowMusicInfo = this.iSystemShowMusicInfo.bON;
 
             CDTXMania.ConfigIni.bログ出力 = this.iLogOutputLog.bON;
             CDTXMania.ConfigIni.n手動再生音量 = this.iSystemChipVolume.n現在の値;

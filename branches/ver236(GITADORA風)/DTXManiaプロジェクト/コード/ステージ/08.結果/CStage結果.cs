@@ -379,10 +379,6 @@ namespace DTXMania
 				{
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
 				}
-                if (this.actRank.On進行描画() == 0)
-                {
-                    this.bアニメが完了 = false;
-                }
 				if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
@@ -391,6 +387,10 @@ namespace DTXMania
 				{
 					this.bアニメが完了 = false;
 				}
+                if (this.actRank.On進行描画() == 0)
+                {
+                    this.bアニメが完了 = false;
+                }
 				if( base.eフェーズID == CStage.Eフェーズ.共通_フェードイン )
 				{
 					if( this.actFI.On進行描画() != 0 )

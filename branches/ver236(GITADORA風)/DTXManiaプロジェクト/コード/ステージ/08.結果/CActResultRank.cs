@@ -105,7 +105,7 @@ namespace DTXMania
             if (this.txランク文字 != null)
             {
                 this.txランク文字.n透明度 = this.ctランク表示.n現在の値 * 2;
-                this.txランク文字.t2D描画( CDTXMania.app.Device, 480, this.n本体Y );
+                this.txランク文字.t2D描画( CDTXMania.app.Device, 480, 50 );
             }
 			if( !this.ctランク表示.b終了値に達した )
 			{

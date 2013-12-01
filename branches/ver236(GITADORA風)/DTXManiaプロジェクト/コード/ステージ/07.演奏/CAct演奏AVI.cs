@@ -717,16 +717,16 @@ namespace DTXMania
                         }
                     }
                 }
-                if (CDTXMania.ConfigIni.bDrums有効 == true)
+
+                //コンボ、ジャケット画像
+                if( CDTXMania.ConfigIni.bShowMusicInfo )
                 {
-                    if ( this.txドラム != null )
+                    if( this.txドラム != null )
                     {
                         this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
+                    CDTXMania.stage演奏ドラム画面.actStatusPanels.On進行描画();
                 }
-
-                //コンボ、ジャケット画像
-                CDTXMania.stage演奏ドラム画面.actStatusPanels.On進行描画();
                 CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
 
 

@@ -344,7 +344,7 @@ namespace DTXMania
                             this.stボーナス[i].ct進行.t停止();
                             this.stボーナス[i].b使用中 = false;
                         }
-                        if (this.txボーナス文字 != null)
+                        if( this.txボーナス文字 != null && CDTXMania.ConfigIni.bShowScore )
                         {
                             this.txボーナス文字.t2D描画(CDTXMania.app.Device, 160, 80);
                             //if (this.stボーナス[i].ct進行.n現在の値 >= 765)

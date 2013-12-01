@@ -38,9 +38,10 @@ namespace DTXMania
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftSongDifficultyFont = new System.Drawing.Font("Impact", 15f, FontStyle.Regular);
             this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W7", 21f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ft表示用フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 26f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ft表示用フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ft称号フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
+            this.txジャケットパネル = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\8_JacketPanel.png") );
             base.On活性化();
 
 		}
@@ -60,6 +61,7 @@ namespace DTXMania
                 this.ft称号フォント.Dispose();
                 this.ft称号フォント = null;
             }
+            CDTXMania.tテクスチャの解放( ref this.txジャケットパネル );
 			base.On非活性化();
 		}
 		public override void OnManagedリソースの作成()
@@ -189,19 +191,18 @@ namespace DTXMania
 			this.ct登場用.t進行();
 			int x = this.n本体X;
 			int y = this.n本体Y;
-            this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, 23, 242);
+            this.txネームプレート用文字.t2D描画( CDTXMania.app.Device, 186, 256);
+            this.txジャケットパネル.t2D描画( CDTXMania.app.Device, 0, 0);
 			if( this.txリザルト画像 != null )
 			{
                 Matrix mat = Matrix.Identity;
                 mat *= Matrix.Scaling(245.0f / this.txリザルト画像.sz画像サイズ.Width, 245.0f / this.txリザルト画像.sz画像サイズ.Height, 1f);
-                mat *= Matrix.Translation(440f, -335f, 0f);
+                mat *= Matrix.Translation(-28f, -94.5f, 0f);
                 mat *= Matrix.RotationZ(0.3f);
 
                 this.txリザルト画像.t3D描画(CDTXMania.app.Device, mat);
 			}
-            this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
-            this.txDrumSpeed.vc拡大縮小倍率 = new Vector3(0.76190476190476190476190476190476f, 0.66666666666666666666666666666667f, 1.0f);
-            this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 800, 634);
+            this.txSongName.t2D描画(CDTXMania.app.Device, 506, 630);
 			if( !this.ct登場用.b終了値に達した )
 			{
 				return 0;
@@ -234,6 +235,7 @@ namespace DTXMania
         private CTexture txSongName;
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
+        private CTexture txジャケットパネル;
 
 		private bool tプレビュー画像の指定があれば構築する()
 		{

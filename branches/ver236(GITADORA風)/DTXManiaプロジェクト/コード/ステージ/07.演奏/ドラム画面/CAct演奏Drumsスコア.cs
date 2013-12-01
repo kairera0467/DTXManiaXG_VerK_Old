@@ -51,13 +51,12 @@ namespace DTXMania
                         int num4 = int.Parse(str.Substring(i, 1));
                         rectangle = new Rectangle(num4 * 36, 0, 36, 50);
                     }
-                    if (base.txScore != null)
+                    if( base.txScore != null )
                     {
-
                         base.txScore.t2D描画(CDTXMania.app.Device, 30 + (i * 34), 40, rectangle);
                     }
                 }
-                if (base.txScore != null)
+                if( base.txScore != null )
                 {
                     base.txScore.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
                 }

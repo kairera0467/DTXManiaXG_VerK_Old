@@ -252,24 +252,24 @@ namespace DTXMania
             int num = this.ct表示用.n現在の値;
             Point[] pointArray = new Point[] { new Point(960, 46), new Point(2000, 0x29), new Point(2000, 0x29) };
 
-            this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
-            this.t小文字表示(100, 314, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPerfect数・Auto含まない));
-            this.t小文字表示(100, 344, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGreat数・Auto含まない));
-            this.t小文字表示(100, 374, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGood数・Auto含まない));
-            this.t小文字表示(100, 404, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPoor数・Auto含まない));
-            this.t小文字表示(100, 434, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nMiss数・Auto含まない));
-            this.t小文字表示(100, 464, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].n最大コンボ数));
+            this.txスキルパネル.t2D描画(CDTXMania.app.Device, 186, 249);
+            this.t小文字表示(270, 322, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPerfect数・Auto含まない));
+            this.t小文字表示(270, 352, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGreat数・Auto含まない));
+            this.t小文字表示(270, 382, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGood数・Auto含まない));
+            this.t小文字表示(270, 412, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPoor数・Auto含まない));
+            this.t小文字表示(270, 442, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nMiss数・Auto含まない));
+            this.t小文字表示(270, 472, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].n最大コンボ数));
 
 
-            this.t小文字表示(190, 314, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPerfect率[0])));
-            this.t小文字表示(190, 344, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGreat率[0])));
-            this.t小文字表示(190, 374, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGood率[0])));
-            this.t小文字表示(190, 404, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPoor率[0])));
-            this.t小文字表示(190, 434, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fMiss率[0])));
-            this.t小文字表示(190, 464, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
+            this.t小文字表示(354, 322, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPerfect率[0])));
+            this.t小文字表示(354, 352, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGreat率[0])));
+            this.t小文字表示(354, 382, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGood率[0])));
+            this.t小文字表示(354, 412, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPoor率[0])));
+            this.t小文字表示(354, 442, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fMiss率[0])));
+            this.t小文字表示(354, 472, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
 
-            this.t大文字表示(82, 518, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].db演奏型スキル値));
-            this.t大文字表示(114, 590, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
+            this.t大文字表示(242, 524, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].db演奏型スキル値));
+            this.t大文字表示(274, 596, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
 
             string str = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[0].nスコア);
             for (int i = 0; i < 7; i++)
@@ -294,17 +294,6 @@ namespace DTXMania
             if (this.txスコア != null)
             {
                 this.txスコア.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
-            }
-
-            this.txエキサイトゲージ[0].t2D描画(CDTXMania.app.Device, 294, 626);
-            this.txエキサイトゲージ[1].vc拡大縮小倍率.X = (float)CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums;
-            if (CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums == 1.0)
-            {
-                this.txエキサイトゲージ[2].t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 0, 480, 31));
-            }
-            else
-            {
-                this.txエキサイトゲージ[1].t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 0, 480, 31));
             }
 
             for (int i = 0; i < 1; i++)

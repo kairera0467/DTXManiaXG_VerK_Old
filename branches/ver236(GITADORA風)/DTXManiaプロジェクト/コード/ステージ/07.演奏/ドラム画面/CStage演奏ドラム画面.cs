@@ -366,9 +366,11 @@ namespace DTXMania
                         this.actFOStageClear.tフェードアウト開始();
                     }
                 }
-                this.t進行描画・スコア();
+                if( CDTXMania.ConfigIni.bShowScore )
+                    this.t進行描画・スコア();
                 this.t進行描画・ゲージ();
-                this.t進行描画・パネル文字列();
+                if( CDTXMania.ConfigIni.bShowMusicInfo )
+                    this.t進行描画・パネル文字列();
                 this.t進行描画・演奏情報();
                 this.t進行描画・判定文字列1・通常位置指定の場合();
                 this.t進行描画・判定文字列2・判定ライン上指定の場合();
