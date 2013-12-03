@@ -236,11 +236,11 @@ namespace DTXMania
                 }
                 if (base.b初めての進行描画)
                 {
-                    this.ct表示用 = new CCounter(0, 0x3e7, 3, CDTXMania.Timer);
+                    this.ct表示用 = new CCounter(0, 1000, 3, CDTXMania.Timer);
                     base.b初めての進行描画 = false;
                 }
                 this.ct表示用.t進行();
-                double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値);
+                double num11 = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0 ))) / 300.0 ) * (this.ct表示用.n現在の値 > 300 ? 300 : this.ct表示用.n現在の値) ;
                 int num = this.ct表示用.n現在の値;
                 Point[] pointArray = new Point[] { new Point(960, 46), new Point(2000, 0x29), new Point(2000, 0x29) };
 

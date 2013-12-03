@@ -571,7 +571,8 @@ namespace DTXMania
             this.iDrumsAttackEffectMode = new CItemList("AttackEffectType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAttackEffectType,
                 "アタックエフェクトの表示方法を設定します。\n" +
                 "ALL ON: すべて表示\n" +
-                "EffectOnly: エフェクト画像のみ表示\n" +
+                "ChipOFF: チップエフェクトのみ消す\n" +
+                "EffectOnly: エフェクト画像以外消す\n" +
                 "ALL OFF: すべて消す",
                 "\n" +
                 "",

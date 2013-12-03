@@ -292,7 +292,7 @@ namespace DTXMania
                 
 				if( this.tx背景 != null )
                 {
-                    if( this.ds背景動画 != null ? this.ds背景動画.b上下反転 : false )
+                    if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
 					    this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
                     else
                         this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );

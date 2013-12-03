@@ -447,8 +447,17 @@ namespace DTXMania
                 this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
                 this.ds背景動画.t再生開始();
             }
-            if (this.tx背景 != null)
-                this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
+            if( this.tx背景 != null )
+            {
+                if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
+                {
+                    this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                }
+                else
+                {
+                    this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                }
+            }
 
                 this.Start();
                 for (int i = 0; i < 8; i++)
