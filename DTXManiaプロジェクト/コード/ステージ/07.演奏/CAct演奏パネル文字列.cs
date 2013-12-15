@@ -63,10 +63,6 @@ namespace DTXMania
 		{
             this.ft表示用フォント = new Font("ＤＦＧ平成ゴシック体W7", 38f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
-            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
-            {
-                this.txNamePlateXG3 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_NamePlate.png"));
-            }
 			this.n文字列の長さdot = 0;
 			this.txPanel = null;
 			this.ct進行用 = new CCounter();
@@ -138,12 +134,6 @@ namespace DTXMania
 				{
 					rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
 				}
-
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.D)
-                {
-                    this.txNamePlateXG3.t2D描画(CDTXMania.app.Device, 825, 0);
-                    this.txPanel.t2D描画(CDTXMania.app.Device, 940, 40, rectangle);
-                }
 			}
 			return 0;
 		}

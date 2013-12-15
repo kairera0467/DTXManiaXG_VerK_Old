@@ -223,11 +223,11 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
-				if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")))
+                if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")))
                 {
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path(@"Graphics\5_background.mp4"), CDTXMania.app.WindowHandle, true );
                 }
-                this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
+				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), false );
 				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
 				this.txFLIP = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
@@ -238,8 +238,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if(this.ds背景動画 != null)
-                    CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
+                CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
@@ -256,7 +255,7 @@ namespace DTXMania
 				//---------------------
 				if( base.b初めての進行描画 )
 				{
-					this.ct登場時アニメ用共通 = new CCounter( 0, 100, 3, CDTXMania.Timer );
+					this.ct登場時アニメ用共通 = new CCounter( 0, 100, 4, CDTXMania.Timer );
 					if( CDTXMania.r直前のステージ == CDTXMania.stage結果 )
 					{
 						this.actFIfrom結果画面.tフェードイン開始();
@@ -267,6 +266,7 @@ namespace DTXMania
 						this.actFIFO.tフェードイン開始();
 						base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					}
+                    CDTXMania.Skin.soundSelectMusic.t再生する();
 					this.t選択曲変更通知();
 					base.b初めての進行描画 = false;
 				}
@@ -275,7 +275,7 @@ namespace DTXMania
 
 				this.ct登場時アニメ用共通.t進行();
 
-               if( this.ds背景動画 != null )
+                if( this.ds背景動画 != null )
                 {
                     this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
                     this.ds背景動画.t再生開始();
@@ -289,7 +289,7 @@ namespace DTXMania
                         AMSeekingSeekingFlags.NoPositioning);
                     }
                 }
-                
+
 				if( this.tx背景 != null )
                 {
                     if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
@@ -298,7 +298,7 @@ namespace DTXMania
                         this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
                 }
 
-				this.actPreimageパネル.On進行描画();
+			//	this.actPreimageパネル.On進行描画();
 			//	this.bIsEnumeratingSongs = !this.actPreimageパネル.bIsPlayingPremovie;				// #27060 2011.3.2 yyagi: #PREMOVIE再生中は曲検索を中断する
 
 				this.act曲リスト.On進行描画();
@@ -310,21 +310,29 @@ namespace DTXMania
 					y = ( (int) ( this.tx上部パネル.sz画像サイズ.Height * dbY表示割合 ) ) - this.tx上部パネル.sz画像サイズ.Height;
 				}
 				if( this.tx上部パネル != null )
-						this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0, y );
+                {
+		            this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0f, 78.0f - ( this.ct登場時アニメ用共通.n現在の値 * 0.61f ) , new Rectangle(0, 17, 200, 55 ) );
+                    this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0f, 24.0f + ( this.ct登場時アニメ用共通.n現在の値 * 0.57f ) , new Rectangle(0, 81, 200, 55 ) );
+                    this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0f, 150.0f, new Rectangle(0, 150, 200, 12 ) );
+                    this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0f, 143.0f, new Rectangle(0, 143, 200, 3 ) );
+                }
 
-				this.actInformation.On進行描画();
+				//this.actInformation.On進行描画();
 				if( this.tx下部パネル != null )
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
 				this.actステータスパネル.On進行描画();
-				this.act演奏履歴パネル.On進行描画();
+                if( CDTXMania.ConfigIni.bDrums有効 )
+                {
+                    this.act演奏履歴パネル.On進行描画();
+                }
 				this.actPresound.On進行描画();
 				if( this.txコメントバー != null )
 				{
-                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 484, 342);
+            //      this.txコメントバー.t2D描画(CDTXMania.app.Device, 484, 342);
 				}
-				this.actArtistComment.On進行描画();
-				this.actオプションパネル.On進行描画();
+			//	this.actArtistComment.On進行描画();
+				//this.actオプションパネル.On進行描画();
 				if ( this.txFLIP != null && CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.16 yyagi
 				{
 					Rectangle rect = new Rectangle(0x1f, 0x31, 20, 11);
@@ -481,7 +489,7 @@ namespace DTXMania
 							}
 							#endregion
 							#region [ Up ]
-							this.ctキー反復用.Up.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.UpArrow ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
+							this.ctキー反復用.Up.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftArrow ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
 							this.ctキー反復用.R.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.R ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
 							if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
 							{
@@ -489,7 +497,7 @@ namespace DTXMania
 							}
 							#endregion
 							#region [ Down ]
-							this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
+							this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
 							this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.B ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
 							if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
 							{
@@ -528,7 +536,7 @@ namespace DTXMania
 								{
 									Debug.WriteLine( "ドラムス難易度変更" );
 									this.act曲リスト.t難易度レベルをひとつ進める();
-									CDTXMania.Skin.sound変更音.t再生する();
+									//CDTXMania.Skin.sound変更音.t再生する();
 								}
 							}
 							#endregion
@@ -713,7 +721,7 @@ namespace DTXMania
 		private CActオプションパネル actオプションパネル;
 		public CActSelectステータスパネル actステータスパネル;
 		private CActSelect演奏履歴パネル act演奏履歴パネル;
-		private CActSelect曲リスト act曲リスト;
+		public CActSelect曲リスト act曲リスト;
 		private CActSelectShowCurrentPosition actShowCurrentPosition;
 
 		private CActSortSongs actSortSongs;
@@ -721,7 +729,7 @@ namespace DTXMania
 
 		private bool bBGM再生済み;
 		private STキー反復用カウンタ ctキー反復用;
-		private CCounter ct登場時アニメ用共通;
+		public CCounter ct登場時アニメ用共通;
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private Font ftフォント;
 		private CTexture txコメントバー;

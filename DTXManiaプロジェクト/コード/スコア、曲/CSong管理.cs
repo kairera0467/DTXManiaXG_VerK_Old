@@ -1124,6 +1124,8 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Bass );
                     bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Drums );
+                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Guitar );
+                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Bass );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Bass );

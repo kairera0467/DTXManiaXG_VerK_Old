@@ -210,6 +210,7 @@ namespace DTXMania
 				this.str曲タイトル = "";
                 this.strアーティスト名 = "";
 				this.strSTAGEFILE = "";
+                this.bSTAGEFILEが存在する = false;
 
                 //2013.05.10.kairera0467.曲選択から持ってきた。
                 if (CDTXMania.ConfigIni.b選曲リストフォントを斜体にする) regular |= FontStyle.Italic;
@@ -246,6 +247,7 @@ namespace DTXMania
 				if( ( ( cdtx.STAGEFILE != null ) && ( cdtx.STAGEFILE.Length > 0 ) ) && ( File.Exists( cdtx.strフォルダ名 + cdtx.STAGEFILE ) && !CDTXMania.ConfigIni.bストイックモード ) )
 				{
 					this.strSTAGEFILE = cdtx.strフォルダ名 + cdtx.STAGEFILE;
+                    this.bSTAGEFILEが存在する = true;
 				}
 				else
 				{
@@ -283,6 +285,7 @@ namespace DTXMania
             {
                 this.st泡[i].ct進行 = null;
             }
+            this.bSTAGEFILEが存在する = false;
             CDTXMania.t安全にDisposeする(ref this.ds背景動画);
 			try
 			{
@@ -442,14 +445,14 @@ namespace DTXMania
             #region [ 背景、レベル、タイトル表示 ]
             //-----------------------------
 
-            if( this.ds背景動画 != null )
+            if( this.ds背景動画 != null && !this.bSTAGEFILEが存在する )
             {
                 this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
                 this.ds背景動画.t再生開始();
             }
             if( this.tx背景 != null )
             {
-                if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
+                if( this.ds背景動画 != null && this.ds背景動画.b上下反転 && !this.bSTAGEFILEが存在する )
                 {
                     this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
                 }
@@ -833,6 +836,7 @@ namespace DTXMania
         private readonly ST文字位置[] st大文字位置;
 		private Font ftタイトル表示用フォント;
         private Font ftアーティスト名表示フォント;
+        private bool bSTAGEFILEが存在する;
 		private long nBGMの総再生時間ms;
 		private long nBGM再生開始時刻;
 		private CSound sd読み込み音;

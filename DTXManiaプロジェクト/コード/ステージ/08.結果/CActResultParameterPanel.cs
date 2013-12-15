@@ -240,9 +240,21 @@ namespace DTXMania
                     base.b初めての進行描画 = false;
                 }
                 this.ct表示用.t進行();
-                double num11 = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0 ))) / 300.0 ) * (this.ct表示用.n現在の値 > 300 ? 300 : this.ct表示用.n現在の値) ;
+                double num11 = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
                 int num = this.ct表示用.n現在の値;
                 Point[] pointArray = new Point[] { new Point(960, 46), new Point(2000, 0x29), new Point(2000, 0x29) };
+
+                if ((CDTXMania.Input管理.Keyboard.bキーが押されている(0x3c)))
+                {
+                    //F7
+                    //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
+                    //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                    //CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
+                    //CDTXMania.ConfigIni.nヒット範囲ms.Perfect = 1000;
+                    //this.ct表示用.n現在の値 = 0;
+                    //CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 = 80.0;
+                }
+
 
                 for (int i = 0; i < 1; i++)
                 {
