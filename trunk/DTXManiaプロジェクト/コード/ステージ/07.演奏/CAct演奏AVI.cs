@@ -281,12 +281,12 @@ namespace DTXMania
             if ((this.rAVI != null) && (this.rAVI.avi != null))
             {
                 this.n移動開始時刻ms = -1;
-                if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+            }
+            if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
                 {
                     this.dsBGV.dshow.MediaCtrl.Stop();
                     this.bDShowクリップを再生している = false;
                 }
-            }
         }
         public void MovieMode()
         {

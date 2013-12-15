@@ -31,6 +31,14 @@ namespace DTXMania
         SOUND曲決定,
         SOUNDエクセレント音,
         SOUND新記録音,
+        SOUNDSELECTMUSIC,
+        SOUNDNOVICE,
+        SOUNDREGULAR,
+        SOUNDEXPERT,
+        SOUNDMASTER,
+        SOUNDBASIC,
+        SOUNDADVANCED,
+        SOUNDEXTREME,
 		Count				// システムサウンド総数の計算用
 	}
 
@@ -335,6 +343,14 @@ namespace DTXMania
         public Cシステムサウンド sound曲決定 = null;
         public Cシステムサウンド soundエクセレント音 = null;
         public Cシステムサウンド sound新記録音 = null;
+        public Cシステムサウンド soundSelectMusic = null;
+        public Cシステムサウンド soundNovice = null;
+        public Cシステムサウンド soundRegular = null;
+        public Cシステムサウンド soundExpert = null;
+        public Cシステムサウンド soundMaster = null;
+        public Cシステムサウンド soundBasic = null;
+        public Cシステムサウンド soundAdvanced = null;
+        public Cシステムサウンド soundExtreme = null;
 		public readonly int nシステムサウンド数 = (int)Eシステムサウンド.Count;
 		public Cシステムサウンド this[ Eシステムサウンド sound ]
 		{
@@ -386,6 +402,30 @@ namespace DTXMania
 
                     case Eシステムサウンド.SOUND曲決定:
                         return this.sound曲決定;
+
+                    case Eシステムサウンド.SOUNDNOVICE:
+                        return this.soundNovice;
+
+                    case Eシステムサウンド.SOUNDREGULAR:
+                        return this.soundRegular;
+
+                    case Eシステムサウンド.SOUNDEXPERT:
+                        return this.soundExpert;
+
+                    case Eシステムサウンド.SOUNDMASTER:
+                        return this.soundMaster;
+
+                    case Eシステムサウンド.SOUNDBASIC:
+                        return this.soundBasic;
+
+                    case Eシステムサウンド.SOUNDADVANCED:
+                        return this.soundAdvanced;
+
+                    case Eシステムサウンド.SOUNDEXTREME:
+                        return this.soundExtreme;
+
+                    case Eシステムサウンド.SOUNDSELECTMUSIC:
+                        return this.soundSelectMusic;
 
 					case Eシステムサウンド.BGM起動画面:
 						return this.bgm起動画面;
@@ -470,6 +510,30 @@ namespace DTXMania
 
                     case 19:
                         return this.soundステージクリア音;
+
+                    case 20:
+                        return this.soundNovice;
+
+                    case 21:
+                        return this.soundRegular;
+
+                    case 22:
+                        return this.soundExpert;
+
+                    case 23:
+                        return this.soundMaster;
+
+                    case 24:
+                        return this.soundSelectMusic;
+                    
+                    case 25:
+                        return this.soundBasic;
+
+                    case 26:
+                        return this.soundAdvanced;
+
+                    case 27:
+                        return this.soundExtreme;
 				}
 				throw new IndexOutOfRangeException();
 			}
@@ -617,6 +681,14 @@ namespace DTXMania
 			this.sound曲読込開始音		= new Cシステムサウンド( @"Sounds\Now loading.ogg",		false, true,  true  );
 			this.soundタイトル音		= new Cシステムサウンド( @"Sounds\Title.ogg",			false, true,  false );
             this.sound曲決定            = new Cシステムサウンド( @"Sounds\MusicDecide.ogg",     false, false, false );
+            this.soundNovice            = new Cシステムサウンド( @"Sounds\Novice.ogg",          false, false, false );
+            this.soundRegular           = new Cシステムサウンド( @"Sounds\Regular.ogg",         false, false, false );
+			this.soundExpert		    = new Cシステムサウンド( @"Sounds\Expert.ogg",		    false, false, false );
+            this.soundBasic             = new Cシステムサウンド( @"Sounds\Basic.ogg",           false, false, false );
+            this.soundAdvanced          = new Cシステムサウンド( @"Sounds\Advanced.ogg",        false, false, false );
+			this.soundExtreme	        = new Cシステムサウンド( @"Sounds\Extreme.ogg",		    false, false, false );
+			this.soundMaster		    = new Cシステムサウンド( @"Sounds\Master.ogg",			false, false, false );
+            this.soundSelectMusic       = new Cシステムサウンド( @"Sounds\SelectMusic.ogg",     false, false, false );
 			this.bgm起動画面			= new Cシステムサウンド( @"Sounds\Setup BGM.ogg",		true,  true,  false );
 			this.bgmオプション画面		= new Cシステムサウンド( @"Sounds\Option BGM.ogg",		true,  true,  false );
 			this.bgmコンフィグ画面		= new Cシステムサウンド( @"Sounds\Config BGM.ogg",		true,  true,  false );

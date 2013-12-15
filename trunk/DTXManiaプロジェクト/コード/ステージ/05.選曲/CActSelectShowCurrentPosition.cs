@@ -35,8 +35,8 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない )
 			{
-				string pathScrollBar = CSkin.Path( @"Graphics\ScreenSelect scrollbar.png" );
-				string pathScrollPosition = CSkin.Path( @"Graphics\ScreenSelect scrollbar.png" );
+				string pathScrollBar = CSkin.Path( @"Graphics\5_scrollbar.png" );
+				string pathScrollPosition = CSkin.Path( @"Graphics\5_scrollbar.png" );
 				if ( File.Exists( pathScrollBar ) )
 				{
 					this.txScrollBar = CDTXMania.tテクスチャの生成( pathScrollBar, false );
@@ -63,21 +63,22 @@ namespace DTXMania
 			#region [ スクロールバーの描画 #27648 ]
 			if ( this.txScrollBar != null )
 			{
-				for ( int sy = 0; sy < 336; sy += 128 )
-				{
-					int ry = ( sy / 128 );
-					int h = ( ( ry + 1 ) * 128 > 336 ) ? 336 - ry * 128 : 128;
-					this.txScrollBar.t2D描画( CDTXMania.app.Device, 1280 - 12, 150 + sy, new Rectangle( ry * 12, 0, 12, h ) );	// 本当のy座標は88なんだが、なぜか約30のバイアスが掛かる・・・
-				}
+				//for ( int sy = 0; sy < 336; sy += 128 )
+				//{
+				//	int ry = ( sy / 128 );
+				//	int h = ( ( ry + 1 ) * 128 > 336 ) ? 336 - ry * 128 : 128;
+				//	this.txScrollBar.t2D描画( CDTXMania.app.Device, 1280 - 12, 150 + sy, new Rectangle( ry * 12, 0, 12, h ) );	// 本当のy座標は88なんだが、なぜか約30のバイアスが掛かる・・・
+				//}
+                this.txScrollBar.t2D描画( CDTXMania.app.Device, (1280 - ((429.0f / 100.0f ) * CDTXMania.stage選曲.ct登場時アニメ用共通.n現在の値)), 164, new Rectangle( 0, 0, 352, 26 ) ); //移動後のxは851
 			}
 			#endregion
 			#region [ スクロール地点の描画 (計算はCActSelect曲リストで行う。スクロール位置と選曲項目の同期のため。)#27648 ]
 			if ( this.txScrollPosition != null )
 			{
 				int py = CDTXMania.stage選曲.nスクロールバー相対y座標;
-				if ( py <= 336 - 6 - 8 )
+				if( py <= 336 && py >= 0 )
 				{
-					this.txScrollPosition.t2D描画( CDTXMania.app.Device, 1280 - 12 + 3, 150 + py, new Rectangle( 30, 120, 6, 8 ) );
+					this.txScrollPosition.t2D描画( CDTXMania.app.Device, ( 1280 - (( 424.0f / 100.0f ) * CDTXMania.stage選曲.ct登場時アニメ用共通.n現在の値 ) ) + py, 168, new Rectangle( 0, 26, 16, 16 ) );//856
 				}
 			}
 			#endregion

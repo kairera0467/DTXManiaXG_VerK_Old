@@ -496,7 +496,7 @@ namespace DTXMania
                         }
                     }
                 }
-                else if (CDTXMania.ConfigIni.nSkillMode == 1)
+                else if( CDTXMania.ConfigIni.nSkillMode == 1 )
                 {
                     string str = this.nCurrentScore.ToString("0000000");
                     for( int i = 0; i < 7; i++ )

@@ -22,16 +22,16 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                this.dsエフェクト動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\7_Fillin Effect.mp4" ), CDTXMania.app.WindowHandle, true );
-                this.tx背景 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
+                //this.dsエフェクト動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\7_Fillin Effect.mp4" ), CDTXMania.app.WindowHandle, true );
+                //this.tx背景 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
             }
         }
         public override void OnManagedリソースの解放()
         {
             if (!base.b活性化してない)
             {
-                CDTXMania.t安全にDisposeする( ref this.dsエフェクト動画 );
-                CDTXMania.tテクスチャの解放( ref this.tx背景 );
+                //CDTXMania.t安全にDisposeする( ref this.dsエフェクト動画 );
+                //CDTXMania.tテクスチャの解放( ref this.tx背景 );
                 base.OnManagedリソースの解放();
             }
         }
@@ -46,7 +46,12 @@ namespace DTXMania
         }
         public override int On進行描画()
         {
+            if (base.b初めての進行描画)
+            {
+
+            }
             //this.On進行描画();
+            /*
             if (this.dsエフェクト動画 != null)
             {
                 this.dsエフェクト動画.t再生開始();
@@ -55,7 +60,7 @@ namespace DTXMania
                 this.dsエフェクト動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
 
             }
-            /*
+            
             if ( this.lDshowPosition >= this.lStopPosition )
             {
                 this.dsエフェクト動画.MediaSeeking.SetPositions(
@@ -65,15 +70,16 @@ namespace DTXMania
                 AMSeekingSeekingFlags.NoPositioning);
                 this.dsエフェクト動画.MediaCtrl.Stop();
             }
-            */
+            
             if (this.tx背景 != null)
             {
-                //this.tx背景.b加算合成 = true;
-                //if (this.dsエフェクト動画.b上下反転)
-                    //this.tx背景.t2D上下反転描画(CDTXMania.app.Device, 0, 0);
-                //else
-                    //this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
+                this.tx背景.b加算合成 = true;
+                if (this.dsエフェクト動画.b上下反転)
+                    this.tx背景.t2D上下反転描画(CDTXMania.app.Device, 0, 0);
+                else
+                    this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
             }
+            */
             return 0;
         }
         public void tStart()
@@ -87,8 +93,8 @@ namespace DTXMania
 
         #region [ private ]
         //-----------------
-        CDirectShow dsエフェクト動画;
-        CTexture tx背景;
+        public CDirectShow dsエフェクト動画;
+        public CTexture tx背景;
         public long lDshowPosition;
         public long lStopPosition;
         //-----------------

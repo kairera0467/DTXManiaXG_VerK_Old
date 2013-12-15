@@ -370,28 +370,35 @@ namespace DTXMania
 				if( base.b初めての進行描画 )
 				{
 					this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
-                    this.actFI.tフェードイン開始();
+                    if( File.Exists( CSkin.Path(@"Graphics\7_StageClear.mp4" ) ) )
+                        this.actFO.tフェードイン開始();
+                    else
+                        this.actFI.tフェードイン開始();
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					if( this.rResultSound != null )
 					{
 						this.rResultSound.t再生を開始する();
 					}
-                    if( this.ds背景動画 != null )
-                    {
-                        this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
-                        this.ds背景動画.t再生開始();
-                        this.ds背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
-                        if (this.lDshowPosition == this.lStopPosition)
-                        {
-                            this.ds背景動画.MediaSeeking.SetPositions(
-                            DsLong.FromInt64((long)(0)),
-                            AMSeekingSeekingFlags.AbsolutePositioning,
-                            0,
-                            AMSeekingSeekingFlags.NoPositioning);
-                        }
-                    }
+
 					base.b初めての進行描画 = false;
 				}
+                if( this.ds背景動画 != null )
+                {
+                    this.ds背景動画.t再生開始();
+                    this.ds背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
+                    this.ds背景動画.bループ再生 = true;
+                    
+                    if (this.lDshowPosition == this.lStopPosition)
+                    {
+                        this.ds背景動画.MediaSeeking.SetPositions(
+                        DsLong.FromInt64((long)(0)),
+                        AMSeekingSeekingFlags.AbsolutePositioning,
+                        0,
+                        AMSeekingSeekingFlags.NoPositioning);
+                    }
+                    
+                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                }
 				this.bアニメが完了 = true;
 				if( this.ct登場用.b進行中 )
 				{
@@ -461,10 +468,20 @@ namespace DTXMania
 				}
 				if( base.eフェーズID == CStage.Eフェーズ.共通_フェードイン )
 				{
-					if( this.actFI.On進行描画() != 0 )
-					{
-						base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
-					}
+                    if( File.Exists( CSkin.Path(@"Graphics\7_StageClear.mp4" ) ) )
+                    {
+		    			if( this.actFO.On進行描画() != 0 )
+	    				{
+    						base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
+					    }
+                    }
+                    else
+                    {
+		    			if( this.actFI.On進行描画() != 0 )
+	    				{
+    						base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
+					    }
+                    }
 				}
 				else if( ( base.eフェーズID == CStage.Eフェーズ.共通_フェードアウト ) )			//&& ( this.actFO.On進行描画() != 0 ) )
 				{
@@ -481,7 +498,6 @@ namespace DTXMania
 				#endregion
 
 				// キー入力
-
 				if( CDTXMania.act現在入力を占有中のプラグイン == null )
 				{
 					if( CDTXMania.ConfigIni.bドラム打音を発声する && CDTXMania.ConfigIni.bDrums有効 )
