@@ -502,7 +502,6 @@ namespace DTXMania
 								{
 									Debug.WriteLine( "ドラムス難易度変更" );
 									this.act曲リスト.t難易度レベルをひとつ進める();
-									CDTXMania.Skin.sound変更音.t再生する();
 								}
 							}
 							#endregion
