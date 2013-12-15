@@ -31,6 +31,14 @@ namespace DTXMania
         SOUND曲決定,
         SOUNDエクセレント音,
         SOUND新記録音,
+        SOUNDSELECTMUSIC,
+        SOUNDNOVICE,
+        SOUNDREGULAR,
+        SOUNDEXPERT,
+        SOUNDMASTER,
+        SOUNDBASIC,
+        SOUNDADVANCED,
+        SOUNDEXTREME,
 		Count				// システムサウンド総数の計算用
 	}
 
@@ -182,105 +190,105 @@ namespace DTXMania
 
 			// メソッド
 
-            public void t読み込み()
-            {
-                this.b読み込み未試行 = false;
-                this.b読み込み成功 = false;
-                if (string.IsNullOrEmpty(this.strファイル名))
-                    throw new InvalidOperationException("ファイル名が無効です。");
+			public void t読み込み()
+			{
+				this.b読み込み未試行 = false;
+				this.b読み込み成功 = false;
+				if( string.IsNullOrEmpty( this.strファイル名 ) )
+					throw new InvalidOperationException( "ファイル名が無効です。" );
 
-                if (!File.Exists(CSkin.Path(this.strファイル名)))
-                {
-                    throw new FileNotFoundException(this.strファイル名);
-                }
-                ////				for( int i = 0; i < 2; i++ )		// #27790 2012.3.10 yyagi 2回読み出しを、1回読みだし＋1回メモリコピーに変更
-                ////				{
-                //                    try
-                //                    {
-                //                        this.rSound[ 0 ] = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path( this.strファイル名 ) );
-                //                    }
-                //                    catch
-                //                    {
-                //                        this.rSound[ 0 ] = null;
-                //                        throw;
-                //                    }
-                //                    if ( this.rSound[ 0 ] == null )	// #28243 2012.5.3 yyagi "this.rSound[ 0 ].bストリーム再生する"時もCloneするようにし、rSound[1]がnullにならないよう修正→rSound[1]の再生正常化
-                //                    {
-                //                        this.rSound[ 1 ] = null;
-                //                    }
-                //                    else
-                //                    {
-                //                        this.rSound[ 1 ] = ( CSound ) this.rSound[ 0 ].Clone();	// #27790 2012.3.10 yyagi add: to accelerate loading chip sounds
-                //                        CDTXMania.Sound管理.tサウンドを登録する( this.rSound[ 1 ] );	// #28243 2012.5.3 yyagi add (登録漏れによりストリーム再生処理が発生していなかった)
-                //                    }
+				if( !File.Exists( CSkin.Path( this.strファイル名 ) ) )
+				{
+					throw new FileNotFoundException( this.strファイル名 );
+				}
+////				for( int i = 0; i < 2; i++ )		// #27790 2012.3.10 yyagi 2回読み出しを、1回読みだし＋1回メモリコピーに変更
+////				{
+//                    try
+//                    {
+//                        this.rSound[ 0 ] = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path( this.strファイル名 ) );
+//                    }
+//                    catch
+//                    {
+//                        this.rSound[ 0 ] = null;
+//                        throw;
+//                    }
+//                    if ( this.rSound[ 0 ] == null )	// #28243 2012.5.3 yyagi "this.rSound[ 0 ].bストリーム再生する"時もCloneするようにし、rSound[1]がnullにならないよう修正→rSound[1]の再生正常化
+//                    {
+//                        this.rSound[ 1 ] = null;
+//                    }
+//                    else
+//                    {
+//                        this.rSound[ 1 ] = ( CSound ) this.rSound[ 0 ].Clone();	// #27790 2012.3.10 yyagi add: to accelerate loading chip sounds
+//                        CDTXMania.Sound管理.tサウンドを登録する( this.rSound[ 1 ] );	// #28243 2012.5.3 yyagi add (登録漏れによりストリーム再生処理が発生していなかった)
+//                    }
 
-                ////				}
+////				}
 
-                for (int i = 0; i < 2; i++)		// 一旦Cloneを止めてASIO対応に専念
-                {
-                    try
-                    {
-                        this.rSound[i] = CDTXMania.Sound管理.tサウンドを生成する(CSkin.Path(this.strファイル名));
-                    }
-                    catch
-                    {
-                        this.rSound[i] = null;
-                        throw;
-                    }
-                }
-                this.b読み込み成功 = true;
-            }
-            public void t再生する()
-            {
-                if (this.b読み込み未試行)
-                {
-                    try
-                    {
-                        t読み込み();
-                    }
-                    catch
-                    {
-                        this.b読み込み未試行 = false;
-                    }
-                }
-                if (this.b排他)
-                {
-                    if (r最後に再生した排他システムサウンド != null)
-                        r最後に再生した排他システムサウンド.t停止する();
+				for ( int i = 0; i < 2; i++ )		// 一旦Cloneを止めてASIO対応に専念
+				{
+					try
+					{
+						this.rSound[ i ] = CDTXMania.Sound管理.tサウンドを生成する( CSkin.Path( this.strファイル名 ) );
+					}
+					catch
+					{
+						this.rSound[ i ] = null;
+						throw;
+					}
+				}
+				this.b読み込み成功 = true;
+			}
+			public void t再生する()
+			{
+				if ( this.b読み込み未試行 )
+				{
+					try
+					{
+						t読み込み();
+					}
+					catch
+					{
+						this.b読み込み未試行 = false;
+					}
+				}
+				if( this.b排他 )
+				{
+					if( r最後に再生した排他システムサウンド != null )
+						r最後に再生した排他システムサウンド.t停止する();
 
-                    r最後に再生した排他システムサウンド = this;
-                }
-                CSound sound = this.rSound[this.n次に鳴るサウンド番号];
-                if (sound != null)
-                    sound.t再生を開始する(this.bループ);
+					r最後に再生した排他システムサウンド = this;
+				}
+				CSound sound = this.rSound[ this.n次に鳴るサウンド番号 ];
+				if( sound != null )
+					sound.t再生を開始する( this.bループ );
 
-                this.n次に鳴るサウンド番号 = 1 - this.n次に鳴るサウンド番号;
-            }
-            public void t停止する()
-            {
-                if (this.rSound[0] != null)
-                    this.rSound[0].t再生を停止する();
+				this.n次に鳴るサウンド番号 = 1 - this.n次に鳴るサウンド番号;
+			}
+			public void t停止する()
+			{
+				if( this.rSound[ 0 ] != null )
+					this.rSound[ 0 ].t再生を停止する();
 
-                if (this.rSound[1] != null)
-                    this.rSound[1].t再生を停止する();
+				if( this.rSound[ 1 ] != null )
+					this.rSound[ 1 ].t再生を停止する();
 
-                if (r最後に再生した排他システムサウンド == this)
-                    r最後に再生した排他システムサウンド = null;
-            }
+				if( r最後に再生した排他システムサウンド == this )
+					r最後に再生した排他システムサウンド = null;
+			}
 
-            public void tRemoveMixer()
-            {
-                if (CDTXMania.Sound管理.GetCurrentSoundDeviceType() != "DirectShow")
-                {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        if (this.rSound[i] != null)
-                        {
-                            CDTXMania.Sound管理.RemoveMixer(this.rSound[i]);
-                        }
-                    }
-                }
-            }
+			public void tRemoveMixer()
+			{
+				if ( CDTXMania.Sound管理.GetCurrentSoundDeviceType() != "DirectShow" )
+				{
+					for ( int i = 0; i < 2; i++ )
+					{
+						if ( this.rSound[ i ] != null )
+						{
+							CDTXMania.Sound管理.RemoveMixer( this.rSound[ i ] );
+						}
+					}
+				}
+			}
 
 			#region [ IDisposable 実装 ]
 			//-----------------
@@ -335,6 +343,14 @@ namespace DTXMania
         public Cシステムサウンド sound曲決定 = null;
         public Cシステムサウンド soundエクセレント音 = null;
         public Cシステムサウンド sound新記録音 = null;
+        public Cシステムサウンド soundSelectMusic = null;
+        public Cシステムサウンド soundNovice = null;
+        public Cシステムサウンド soundRegular = null;
+        public Cシステムサウンド soundExpert = null;
+        public Cシステムサウンド soundMaster = null;
+        public Cシステムサウンド soundBasic = null;
+        public Cシステムサウンド soundAdvanced = null;
+        public Cシステムサウンド soundExtreme = null;
 		public readonly int nシステムサウンド数 = (int)Eシステムサウンド.Count;
 		public Cシステムサウンド this[ Eシステムサウンド sound ]
 		{
@@ -386,6 +402,30 @@ namespace DTXMania
 
                     case Eシステムサウンド.SOUND曲決定:
                         return this.sound曲決定;
+
+                    case Eシステムサウンド.SOUNDNOVICE:
+                        return this.soundNovice;
+
+                    case Eシステムサウンド.SOUNDREGULAR:
+                        return this.soundRegular;
+
+                    case Eシステムサウンド.SOUNDEXPERT:
+                        return this.soundExpert;
+
+                    case Eシステムサウンド.SOUNDMASTER:
+                        return this.soundMaster;
+
+                    case Eシステムサウンド.SOUNDBASIC:
+                        return this.soundBasic;
+
+                    case Eシステムサウンド.SOUNDADVANCED:
+                        return this.soundAdvanced;
+
+                    case Eシステムサウンド.SOUNDEXTREME:
+                        return this.soundExtreme;
+
+                    case Eシステムサウンド.SOUNDSELECTMUSIC:
+                        return this.soundSelectMusic;
 
 					case Eシステムサウンド.BGM起動画面:
 						return this.bgm起動画面;
@@ -470,6 +510,30 @@ namespace DTXMania
 
                     case 19:
                         return this.soundステージクリア音;
+
+                    case 20:
+                        return this.soundNovice;
+
+                    case 21:
+                        return this.soundRegular;
+
+                    case 22:
+                        return this.soundExpert;
+
+                    case 23:
+                        return this.soundMaster;
+
+                    case 24:
+                        return this.soundSelectMusic;
+                    
+                    case 25:
+                        return this.soundBasic;
+
+                    case 26:
+                        return this.soundAdvanced;
+
+                    case 27:
+                        return this.soundExtreme;
 				}
 				throw new IndexOutOfRangeException();
 			}
@@ -606,7 +670,7 @@ namespace DTXMania
 			this.sound決定音			= new Cシステムサウンド( @"Sounds\Decide.ogg",			false, false, false );
 			this.sound変更音			= new Cシステムサウンド( @"Sounds\Change.ogg",			false, false, false );
 			this.sound取消音			= new Cシステムサウンド( @"Sounds\Cancel.ogg",			false, false, true  );
-			this.sound歓声音			= new Cシステムサウンド( @"Sounds\Audience.ogg",		false, false, true  );
+			this.sound歓声音			= new Cシステムサウンド( @"Sounds\Audience.ogg",		false, true,  true  );
 			this.soundSTAGEFAILED音		= new Cシステムサウンド( @"Sounds\Stage failed.ogg",	false, true,  true  );
 			this.soundゲーム開始音		= new Cシステムサウンド( @"Sounds\Game start.ogg",		false, false, false );
 			this.soundゲーム終了音		= new Cシステムサウンド( @"Sounds\Game end.ogg",		false, true,  false );
@@ -617,6 +681,14 @@ namespace DTXMania
 			this.sound曲読込開始音		= new Cシステムサウンド( @"Sounds\Now loading.ogg",		false, true,  true  );
 			this.soundタイトル音		= new Cシステムサウンド( @"Sounds\Title.ogg",			false, true,  false );
             this.sound曲決定            = new Cシステムサウンド( @"Sounds\MusicDecide.ogg",     false, false, false );
+            this.soundNovice            = new Cシステムサウンド( @"Sounds\Novice.ogg",          false, false, false );
+            this.soundRegular           = new Cシステムサウンド( @"Sounds\Regular.ogg",         false, false, false );
+			this.soundExpert		    = new Cシステムサウンド( @"Sounds\Expert.ogg",		    false, false, false );
+            this.soundBasic             = new Cシステムサウンド( @"Sounds\Basic.ogg",           false, false, false );
+            this.soundAdvanced          = new Cシステムサウンド( @"Sounds\Advanced.ogg",        false, false, false );
+			this.soundExtreme	        = new Cシステムサウンド( @"Sounds\Extreme.ogg",		    false, false, false );
+			this.soundMaster		    = new Cシステムサウンド( @"Sounds\Master.ogg",			false, false, false );
+            this.soundSelectMusic       = new Cシステムサウンド( @"Sounds\SelectMusic.ogg",     false, false, false );
 			this.bgm起動画面			= new Cシステムサウンド( @"Sounds\Setup BGM.ogg",		true,  true,  false );
 			this.bgmオプション画面		= new Cシステムサウンド( @"Sounds\Option BGM.ogg",		true,  true,  false );
 			this.bgmコンフィグ画面		= new Cシステムサウンド( @"Sounds\Config BGM.ogg",		true,  true,  false );

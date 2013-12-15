@@ -390,7 +390,7 @@ namespace DTXMania
                 DTXLevelDeci =  (( cdtx.LEVEL.Drums - (DTXLevel * 10)) * 10);
             }
 
-            if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && ( CDTXMania.DTX.b強制的にXG譜面にする == false)  )
+            if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && ( CDTXMania.DTX.b強制的にXG譜面にする == false)  )
             {
                 DTXLevel = cdtx.LEVEL.Drums;
                 this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));

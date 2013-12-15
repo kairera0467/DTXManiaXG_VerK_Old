@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Drawing.Text;
-
+using System.IO;
 using SlimDX;
 using FDK;
 
@@ -81,6 +81,32 @@ namespace DTXMania
 			this.n現在のアンカ難易度レベル = 0;
 			base.b活性化してない = true;
 			this.bIsEnumeratingSongs = false;
+
+            
+            this.stパネルマップ = null;
+            this.stパネルマップ = new STATUSPANEL[12];		// yyagi: 以下、手抜きの初期化でスマン
+            string[] labels = new string[12] {
+            "DTXMANIA",     //0
+            "DEBUT",        //1
+            "NOVICE",       //2
+            "REGULAR",      //3
+            "EXPERT",       //4
+            "MASTER",       //5
+            "BASIC",        //6
+            "ADVANCED",     //7
+            "EXTREME",      //8
+            "RAW",          //9
+            "RWS",          //10
+            "REAL"          //11
+            };
+            int[] status = new int[12] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+
+            for (int i = 0; i < 12; i++)
+            {
+                this.stパネルマップ[i] = default(STATUSPANEL);
+                this.stパネルマップ[i].status = status[i];
+                this.stパネルマップ[i].label = labels[i];
+            }
 		}
 
 
@@ -273,11 +299,90 @@ namespace DTXMania
 				song = this.r次の曲( song );
 			}
 
+            this.tラベル名からステータスパネルを決定する( this.r現在選択中の曲.ar難易度ラベル[ this.n現在選択中の曲の現在の難易度レベル ] );
+
+            switch( this.nIndex  )
+            {
+                case 2:
+                    CDTXMania.Skin.soundNovice.t再生する();
+                    string strnov = CSkin.Path( @"Sounds\Novice.ogg" );
+                    if( !File.Exists( strnov ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+
+                case 3:
+                    CDTXMania.Skin.soundRegular.t再生する();
+                    string strreg = CSkin.Path( @"Sounds\Regular.ogg" );
+                    if( !File.Exists( strreg ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+
+                case 4:
+                    CDTXMania.Skin.soundExpert.t再生する();
+                    string strexp = CSkin.Path( @"Sounds\Expert.ogg" );
+                    if( !File.Exists( strexp ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+
+                case 5:
+                    CDTXMania.Skin.soundMaster.t再生する();
+                    string strmas = CSkin.Path( @"Sounds\Master.ogg" );
+                    if( !File.Exists( strmas ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+                
+                case 6:
+                    CDTXMania.Skin.soundBasic.t再生する();
+                    string strbsc = CSkin.Path( @"Sounds\Basic.ogg" );
+                    if( !File.Exists( strbsc ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+
+                case 7:
+                    CDTXMania.Skin.soundAdvanced.t再生する();
+                    string stradv = CSkin.Path( @"Sounds\Advanced.ogg" );
+                    if( !File.Exists( stradv ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+
+                case 8:
+                    CDTXMania.Skin.soundExtreme.t再生する();
+                    string strext = CSkin.Path( @"Sounds\Extreme.ogg" );
+                    if( !File.Exists( strext ) )
+                        CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+
+                default:
+                    CDTXMania.Skin.sound変更音.t再生する();
+                    break;
+            }
 
 			// 選曲ステージに変更通知を発出し、関係Activityの対応を行ってもらう。
 
 			CDTXMania.stage選曲.t選択曲変更通知();
 		}
+
+        public void tラベル名からステータスパネルを決定する(string strラベル名)
+        {
+            if (string.IsNullOrEmpty(strラベル名))
+            {
+                this.nIndex = 0;
+            }
+            else
+            {
+                STATUSPANEL[] array = this.stパネルマップ;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    STATUSPANEL sTATUSPANEL = array[i];
+                    if (strラベル名.Equals(sTATUSPANEL.label, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        this.nIndex = sTATUSPANEL.status;
+                        return;
+                    }
+                    this.nIndex++;
+                }
+            }
+        }
 
 
 		/// <summary>
@@ -1028,6 +1133,14 @@ namespace DTXMania
 				}
 			}
 		}
+        [StructLayout(LayoutKind.Sequential)]
+        public struct STATUSPANEL
+        {
+            public string label;
+            public int status;
+        }
+        public int nIndex;
+        public STATUSPANEL[] stパネルマップ;
 
 		private bool b登場アニメ全部完了;
 		private Color color文字影 = Color.FromArgb( 0x40, 10, 10, 10 );

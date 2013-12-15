@@ -321,7 +321,7 @@ namespace DTXMania
 							{
 								if ( wc.rSound[ i ] != null )
 								{
-									CDTXMania.Sound管理.AddMixer( wc.rSound[ i ], db再生速度 );
+									CDTXMania.Sound管理.AddMixer( wc.rSound[ i ], db再生速度, pChip.b演奏終了後も再生が続くチップである );
 									//AddMixer( wc.rSound[ i ] );		// 最初はqueueを介さず直接ミキサー登録する
 								}
 							}
@@ -586,6 +586,7 @@ namespace DTXMania
         {
             internal bool bIsAdd;
             internal CSound csound;
+            internal bool b演奏終了後も再生が続くチップである;
         };
 
 		public CAct演奏AVI actAVI;
@@ -689,12 +690,13 @@ namespace DTXMania
 		protected Stopwatch sw2;
 //		protected GCLatencyMode gclatencymode;
 
-        public void AddMixer(CSound cs)
+        public void AddMixer( CSound cs, bool _b演奏終了後も再生が続くチップである )
         {
             stmixer stm = new stmixer()
            {
                bIsAdd = true,
-               csound = cs
+               csound = cs,
+               b演奏終了後も再生が続くチップである = _b演奏終了後も再生が続くチップである
            };
             queueMixerSound.Enqueue(stm);
             //Debug.WriteLine("★Queue: add " + Path.GetFileName(stm.csound.strファイル名));
@@ -704,11 +706,38 @@ namespace DTXMania
             stmixer stm = new stmixer()
             {
                 bIsAdd = false,
-                csound = cs
+                csound = cs,
+                b演奏終了後も再生が続くチップである = false
             };
             queueMixerSound.Enqueue(stm);
             //Debug.WriteLine("★Queue: remove " + Path.GetFileName(stm.csound.strファイル名));
         }
+		public void ManageMixerQueue()
+		{
+			// もしサウンドの登録/削除が必要なら、実行する
+			if ( queueMixerSound.Count > 0 )
+			{
+				//Debug.WriteLine( "☆queueLength=" + queueMixerSound.Count );
+				DateTime dtnow = DateTime.Now;
+				TimeSpan ts = dtnow - dtLastQueueOperation;
+				if ( ts.Milliseconds > 7 )
+				{
+					for ( int i = 0; i < 2 && queueMixerSound.Count > 0; i++ )
+					{
+						dtLastQueueOperation = dtnow;
+						stmixer stm = queueMixerSound.Dequeue();
+						if ( stm.bIsAdd )
+						{
+							CDTXMania.Sound管理.AddMixer( stm.csound, db再生速度, stm.b演奏終了後も再生が続くチップである );
+						}
+						else
+						{
+							CDTXMania.Sound管理.RemoveMixer( stm.csound );
+						}
+					}
+				}
+			}
+		}
 
 		protected E判定 e指定時刻からChipのJUDGEを返す( long nTime, CDTX.CChip pChip, int nInputAdjustTime )
 		{
@@ -2063,7 +2092,7 @@ namespace DTXMania
                     //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
                     //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
                     //CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
-                    //CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums = 190;
+                    CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums = 90;
                 }
                 if ( keyboard.bキーが押された(0x3d))
                 {
@@ -2687,7 +2716,7 @@ namespace DTXMania
                                     if (wc.rSound[i] != null)
                                     {
                                         //CDTXMania.Sound管理.AddMixer( wc.rSound[ i ] );
-                                        AddMixer(wc.rSound[i]);
+                                        AddMixer( wc.rSound[ i ], pChip.b演奏終了後も再生が続くチップである );;
                                     }
                                 }
                             }
@@ -2696,23 +2725,26 @@ namespace DTXMania
                     #endregion
                     #region [ db: ミキサーからチップ音削除 ]
                     case 0xDB:
-                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
-                        {
-                            //Debug.WriteLine("[DB(RemoveMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString("x2") + ", wav=" + pChip.n整数値.ToString("x2") + ", time=" + pChip.n発声時刻ms);
-                            pChip.bHit = true;
-                            if (listWAV.ContainsKey(pChip.n整数値・内部番号))	// 参照が遠いので後日最適化する
-                            {
-                                CDTX.CWAV wc = listWAV[pChip.n整数値・内部番号];
-                                for (int i = 0; i < nPolyphonicSounds; i++)
-                                {
-                                    if (wc.rSound[i] != null)
-                                    {
-                                        //CDTXMania.Sound管理.RemoveMixer( wc.rSound[ i ] );
-                                        RemoveMixer(wc.rSound[i]);
-                                    }
-                                }
-                            }
-                        }
+						if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
+						{
+//Debug.WriteLine( "[DB(RemoveMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値.ToString( "x2" ) + ", time=" + pChip.n発声時刻ms );
+							pChip.bHit = true;
+							if ( listWAV.ContainsKey( pChip.n整数値・内部番号 ) )	// 参照が遠いので後日最適化する
+							{
+							    CDTX.CWAV wc = listWAV[ pChip.n整数値・内部番号 ];
+							    for ( int i = 0; i < nPolyphonicSounds; i++ )
+							    {
+									if ( wc.rSound[ i ] != null )
+									{
+										//CDTXMania.Sound管理.RemoveMixer( wc.rSound[ i ] );
+										if ( !wc.rSound[ i ].b演奏終了後も再生が続くチップである )	// #32248 2013.10.16 yyagi
+										{															// DTX終了後も再生が続くチップの0xDB登録をなくすことはできず。
+											RemoveMixer( wc.rSound[ i ] );							// (ミキサー解除のタイミングが遅延する場合の対応が面倒なので。)
+										}															// そこで、代わりにフラグをチェックしてミキサー削除ロジックへの遷移をカットする。
+									}
+							    }
+							}
+						}
                         break;
                     #endregion
                     #region [ その他(未定義) ]
