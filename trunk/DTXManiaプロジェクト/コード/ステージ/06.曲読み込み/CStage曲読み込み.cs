@@ -252,6 +252,7 @@ namespace DTXMania
 				else
 				{
 					this.strSTAGEFILE = CSkin.Path( @"Graphics\\6_background.jpg" );
+                    this.bSTAGEFILEが存在する = false;
 				}
 				if( ( ( cdtx.SOUND_NOWLOADING != null ) && ( cdtx.SOUND_NOWLOADING.Length > 0 ) ) && File.Exists( cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING ) )
 				{

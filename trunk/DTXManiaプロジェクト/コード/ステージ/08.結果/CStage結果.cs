@@ -572,7 +572,10 @@ namespace DTXMania
 					}
 					if( ( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Return ) ) ) && !this.bアニメが完了 )
 					{
-						this.actFI.tフェードイン完了();					// #25406 2011.6.9 yyagi
+                        if (File.Exists(CSkin.Path(@"Graphics\7_StageClear.mp4")))
+                            this.actFO.tフェードイン完了();
+                        else
+                            this.actFI.tフェードイン完了();
 						this.actResultImage.tアニメを完了させる();
 						this.actParameterPanel.tアニメを完了させる();
 						this.actRank.tアニメを完了させる();
