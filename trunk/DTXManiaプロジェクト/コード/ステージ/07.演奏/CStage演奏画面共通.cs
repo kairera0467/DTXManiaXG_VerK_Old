@@ -2936,37 +2936,38 @@ namespace DTXMania
                         case 0x9B:
                             bGtBsP = true;
                             break;
-                        case 156:
+                        case 0x9C:
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
-                        case 157:
+                        case 0x9D:
                             bGtBsG = true;
                             bGtBsP = true;
                             break;
-                        case 158:
+                        case 0x9E:
                             bGtBsG = true;
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
-                        case 159:
+                        case 0x9F:
                             bGtBsR = true;
                             bGtBsP = true;
                             break;
+
                         case 0xA0:
                             bGtBsO = true;
                             break;
-                        case 161:
+                        case 0xA1:
                             bGtBsB = true;
                             break;
-                        case 162:
+                        case 0xA2:
                             bGtBsG = true;
                             break;
-                        case 163:
+                        case 0xA3:
                             bGtBsG = true;
                             bGtBsB = true;
                             break;
-                        case 164:
+                        case 0xA4:
                             bGtBsR = true;
                             break;
                         case 165:
@@ -2982,6 +2983,8 @@ namespace DTXMania
                             bGtBsG = true;
                             bGtBsB = true;
                             break;
+
+
                         case 0xA8:
                             bGtBsW = true;
                             break;
@@ -4044,334 +4047,391 @@ namespace DTXMania
 			CDTX.CChip chip = this.r次に来る指定楽器Chipを更新して返す(inst);
             if (chip != null)
             {
-                bool flag7 = false;
-                bool flag8 = false;
-                bool flag9 = false;
-                bool flag10 = false;
-                bool flag11 = false;
+                bool bAutoGuitarR = false;
+                bool bAutoGuitarG = false;
+                bool bAutoGuitarB = false;
+                bool bAutoGuitarY = false;
+                bool bAutoGuitarP = false;
+                bool bAutoBassR = false;
+                bool bAutoBassG = false;
+                bool bAutoBassB = false;
+                bool bAutoBassY = false;
+                bool bAutoBassP = false;
 
                 switch ( chip.nチャンネル番号 )
                 {
                     case 0x20:
                         break;
                     case 0x21:
-                        flag9 = true;
+                        bAutoGuitarB = true;
                         break;
                     case 0x22:
-                        flag8 = true;
+                        bAutoGuitarG = true;
                         break;
                     case 0x23:
-                        flag8 = true;
-                        flag9 = true;
+                        bAutoGuitarG = true;
+                        bAutoGuitarB = true;
                         break;
                     case 0x24:
-                        flag7 = true;
+                        bAutoGuitarR = true;
                         break;
                     case 0x25:
-                        flag7 = true;
-                        flag9 = true;
+                        bAutoGuitarR = true;
+                        bAutoGuitarB = true;
                         break;
                     case 0x26:
-                        flag7 = true;
-                        flag8 = true;
+                        bAutoGuitarR = true;
+                        bAutoGuitarG = true;
                         break;
                     case 0x27:
-                        flag7 = true;
-                        flag8 = true;
-                        flag9 = true;
+                        bAutoGuitarR = true;
+                        bAutoGuitarG = true;
+                        bAutoGuitarB = true;
                         break;
                     default:
                         switch ( chip.nチャンネル番号 )
                         {
                             case 147:
-                                flag10 = true;
+                                bAutoGuitarY = true;
                                 break;
                             case 148:
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
                                 break;
                             case 149:
-                                flag8 = true;
-                                flag10 = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarY = true;
                                 break;
                             case 150:
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
                                 break;
-                            case 151:
-                                flag7 = true;
-                                flag10 = true;
+                            case 0x97:
+                                bAutoGuitarR = true;
+                                bAutoGuitarY = true;
                                 break;
                             case 152:
-                                flag7 = true;
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoGuitarR = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
                                 break;
-                            case 153:
-                                flag7 = true;
-                                flag8 = true;
-                                flag10 = true;
+
+                            case 0x99:
+                                bAutoGuitarR = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarY = true;
                                 break;
-                            case 154:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
+                            case 0x9A:
+                                bAutoGuitarR = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
                                 break;
-                            case 155:
-                                flag11 = true;
+                            case 0x9B:
+                                bAutoGuitarP = true;
                                 break;
                             case 156:
-                                flag9 = true;
-                                flag11 = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarP = true;
                                 break;
                             case 157:
-                                flag8 = true;
-                                flag11 = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarP = true;
                                 break;
                             case 158:
-                                flag8 = true;
-                                flag9 = true;
-                                flag11 = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarP = true;
                                 break;
                             case 159:
-                                flag7 = true;
-                                flag11 = true;
+                                bAutoGuitarR = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 161:
-                                flag9 = true;
+
+                                //BASS
+                            case 0xA1:
+                                bAutoBassB = true;
                                 break;
-                            case 162:
-                                flag8 = true;
+
+                            case 0xA2:
+                                bAutoBassG = true;
                                 break;
-                            case 163:
-                                flag8 = true;
-                                flag9 = true;
+
+                            case 0xA3:
+                                bAutoBassG = true;
+                                bAutoBassB = true;
                                 break;
-                            case 164:
-                                flag7 = true;
+
+                            case 0xA4:
+                                bAutoBassR = true;
                                 break;
-                            case 165:
-                                flag7 = true;
-                                flag9 = true;
+
+                            case 0xA5:
+                                bAutoBassR = true;
+                                bAutoBassB = true;
                                 break;
-                            case 166:
-                                flag7 = true;
-                                flag8 = true;
+
+                            case 0xA6:
+                                bAutoBassR = true;
+                                bAutoBassG = true;
                                 break;
-                            case 167:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
+
+                            case 0xA7:
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
                                 break;
-                            case 169:
-                                flag7 = true;
-                                flag9 = true;
-                                flag11 = true;
+
+                            //A8 WAILING(BASS)
+
+                            case 0xA9:
+                                bAutoGuitarR = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 170:
-                                flag7 = true;
-                                flag8 = true;
-                                flag11 = true;
+
+                            case 0xAA:
+                                bAutoGuitarR = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 171:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
-                                flag11 = true;
+
+                            case 0xAB:
+                                bAutoGuitarR = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 172:
-                                flag10 = true;
-                                flag11 = true;
+
+                            case 0xAC:
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 173:
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+
+                            case 0xAD:
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 174:
-                                flag8 = true;
-                                flag10 = true;
-                                flag11 = true;
+
+                            case 0xAE:
+                                bAutoGuitarG = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 175:
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+
+                            case 0xAF:
+                                bAutoGuitarG = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 197:
-                                flag10 = true;
+
+                            case 0xC5:
+                                bAutoBassY = true;
                                 break;
+
                             case 198:
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
                                 break;
-                            case 200:
-                                flag8 = true;
-                                flag10 = true;
+
+                            case 0xC8:
+                                bAutoBassG = true;
+                                bAutoBassY = true;
                                 break;
+
                             case 201:
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
                                 break;
-                            case 202:
-                                flag7 = true;
-                                flag10 = true;
+
+                            case 0xCA:
+                                bAutoBassR = true;
+                                bAutoBassY = true;
                                 break;
+
                             case 203:
-                                flag7 = true;
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoBassR = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
                                 break;
                             case 204:
-                                flag7 = true;
-                                flag8 = true;
-                                flag10 = true;
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassY = true;
                                 break;
                             case 205:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
                                 break;
                             case 206:
-                                flag11 = true;
+                                bAutoBassP = true;
                                 break;
                             case 207:
-                                flag9 = true;
-                                flag11 = true;
+                                bAutoBassB = true;
+                                bAutoBassP = true;
                                 break;
-                            case 208:
-                                flag7 = true;
-                                flag10 = true;
-                                flag11 = true;
+                            case 0xD0:
+                                bAutoGuitarR = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
                             case 209:
-                                flag7 = true;
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoGuitarR = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
                             case 210:
-                                flag7 = true;
-                                flag8 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoGuitarR = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
                             case 211:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoGuitarR = true;
+                                bAutoGuitarG = true;
+                                bAutoGuitarB = true;
+                                bAutoGuitarY = true;
+                                bAutoGuitarP = true;
                                 break;
-                            case 218:
-                                flag8 = true;
-                                flag11 = true;
+                            case 0xDA:
+                                bAutoBassG = true;
+                                bAutoBassP = true;
                                 break;
                             case 219:
-                                flag8 = true;
-                                flag9 = true;
-                                flag11 = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
+                                bAutoBassP = true;
                                 break;
                             case 220:
-                                flag7 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassP = true;
                                 break;
                             case 221:
-                                flag7 = true;
-                                flag9 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassB = true;
+                                bAutoBassP = true;
                                 break;
                             case 222:
-                                flag7 = true;
-                                flag8 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassP = true;
                                 break;
                             case 223:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
+                                bAutoBassP = true;
                                 break;
                             case 225:
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                             case 226:
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                             case 227:
-                                flag8 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassG = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                             case 228:
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                             case 229:
-                                flag7 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                             case 230:
-                                flag7 = true;
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                             case 231:
-                                flag7 = true;
-                                flag8 = true;
-                                flag10 = true;
-                                flag11 = true;
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
-                            case 232:
-                                flag7 = true;
-                                flag8 = true;
-                                flag9 = true;
-                                flag10 = true;
-                                flag11 = true;
+                            case 0xE8:
+                                bAutoBassR = true;
+                                bAutoBassG = true;
+                                bAutoBassB = true;
+                                bAutoBassY = true;
+                                bAutoBassP = true;
                                 break;
                         }
                         break;
                 }
-                if (flag7 && autoR)
+                //オートさん専用
+                if( bAutoGuitarR && bIsAutoPlay.GtR )
                 {
-                    this.actLaneFlushGB.Start( R );
+                    this.actLaneFlushGB.Start( 0 );
                     this.actRGB.Push( R );
                 }
-                if (flag8 && autoG)
+                if( bAutoGuitarG && bIsAutoPlay.GtG )
                 {
-                    this.actLaneFlushGB.Start( G );
+                    this.actLaneFlushGB.Start( 1 );
                     this.actRGB.Push( G );
                 }
-                if (flag9 && autoB)
+                if( bAutoGuitarB && bIsAutoPlay.GtB )
                 {
-                    this.actLaneFlushGB.Start( B );
+                    this.actLaneFlushGB.Start( 2 );
                     this.actRGB.Push( B );
                 }
-                if (flag10 && autoY)
+                if( bAutoGuitarY && bIsAutoPlay.GtY )
                 {
-                    this.actLaneFlushGB.Start( Y );
+                    this.actLaneFlushGB.Start( 3 );
                     this.actRGB.Push( Y );
                 }
-                if (flag11 && autoP)
+                if( bAutoGuitarP && bIsAutoPlay.GtP )
                 {
-                    this.actLaneFlushGB.Start( P );
+                    this.actLaneFlushGB.Start( 4 );
+                    this.actRGB.Push( P );
+                }
+
+                if( bAutoBassR && bIsAutoPlay.BsR )
+                {
+                    this.actLaneFlushGB.Start( 5 );
+                    this.actRGB.Push( R );
+                }
+                if( bAutoBassG && bIsAutoPlay.BsG )
+                {
+                    this.actLaneFlushGB.Start( 6 );
+                    this.actRGB.Push( G );
+                }
+                if( bAutoBassB && bIsAutoPlay.BsB )
+                {
+                    this.actLaneFlushGB.Start( 7 );
+                    this.actRGB.Push( B );
+                }
+                if( bAutoBassY && bIsAutoPlay.BsY )
+                {
+                    this.actLaneFlushGB.Start( 8 );
+                    this.actRGB.Push( Y );
+                }
+                if( bAutoBassP && bIsAutoPlay.BsP )
+                {
+                    this.actLaneFlushGB.Start( 9 );
                     this.actRGB.Push( P );
                 }
             }
 //			else
 			{
+                //オートさん以外
 				int pushingR = CDTXMania.Pad.b押されている( inst, Eパッド.R ) ? 4 : 0;
 				this.t入力メソッド記憶( inst );
 				int pushingG = CDTXMania.Pad.b押されている( inst, Eパッド.G ) ? 2 : 0;
@@ -4424,10 +4484,8 @@ namespace DTXMania
 						CDTX.CChip pChip = this.r指定時刻に一番近い未ヒットChip( nTime, chWailingSound, this.nInputAdjustTimeMs[indexInst] );	// E楽器パート.GUITARなチップ全てにヒットする
                         E判定 e判定 = this.e指定時刻からChipのJUDGEを返す(nTime, pChip, this.nInputAdjustTimeMs[indexInst]);
 //Trace.TraceInformation("ch={0:x2}, mask1={1:x1}, mask2={2:x2}", pChip.nチャンネル番号,  ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F, ( flagRGB & ~nAutoMask) & 0x0F );
-						//if ( ( pChip != null ) && ( ( ( pChip.nチャンネル番号 & ~nAutoMask ) & 0x0F ) == ( ( flagRGB & ~nAutoMask) & 0x0F ) ) && ( e判定 != E判定.Miss ) )
-						//{
-                            if( pChip != null )
-                            {
+                        if( pChip != null )
+						{
 							bool bChipHasR = false;
 							bool bChipHasG = false;
 							bool bChipHasB = false;
@@ -4501,6 +4559,8 @@ namespace DTXMania
                                             bChipHasG = true;
                                             bChipHasY = true;
                                             break;
+                                        //OK
+
                                         case 0x9A:
                                             bChipHasR = true;
                                             bChipHasG = true;
@@ -4527,6 +4587,7 @@ namespace DTXMania
                                             bChipHasR = true;
                                             bChipHasP = true;
                                             break;
+                                        //OK
 
                                         case 0xA1:
                                             bChipHasB = true;
@@ -4554,6 +4615,8 @@ namespace DTXMania
                                             bChipHasG = true;
                                             bChipHasB = true;
                                             break;
+                                        //OK
+
                                         case 0xA9:
                                             bChipHasR = true;
                                             bChipHasB = true;
@@ -4590,6 +4653,8 @@ namespace DTXMania
                                             bChipHasY = true;
                                             bChipHasP = true;
                                             break;
+                                        //OK
+
                                         case 0xC5:
                                             bChipHasY = true;
                                             break;
@@ -4633,6 +4698,8 @@ namespace DTXMania
                                             bChipHasB = true;
                                             bChipHasP = true;
                                             break;
+                                        //OK
+
                                         case 0xD0:
                                             bChipHasR = true;
                                             bChipHasY = true;
@@ -4657,6 +4724,8 @@ namespace DTXMania
                                             bChipHasY = true;
                                             bChipHasP = true;
                                             break;
+                                        //OK
+
                                         case 0xDA:
                                             bChipHasG = true;
                                             bChipHasP = true;
@@ -4730,11 +4799,13 @@ namespace DTXMania
                                             bChipHasY = true;
                                             bChipHasP = true;
                                             break;
+                                        //OK
                                     }
                                     break;
                             }
-                            int num17 = ( bChipHasR ? 4 : 0) | ( bChipHasG ? 2 : 0) | ( bChipHasB ? 1 : 0) | ( bChipHasY ? 16 : 0) | ( bChipHasP ? 32 : 0);
-                            if ( pChip != null && ( num17 & ~nAutoMask & 0x3F ) == ( flagRGB & ~nAutoMask & 0x3F ) && e判定 != E判定.Miss)
+
+                            int num17 = ( bChipHasR ? 4 : 0 ) | ( bChipHasG ? 2 : 0 ) | ( bChipHasB ? 1 : 0 ) | ( bChipHasY ? 16 : 0 ) | ( bChipHasP ? 32 : 0 );
+                            if( pChip != null && ( num17 & ~nAutoMask & 0x3F ) == ( flagRGB & ~nAutoMask & 0x3F ) && e判定 != E判定.Miss )
                             {
 
                                 if ((bChipHasR && (autoR || pushingR != 0)) || bSuccessOPEN)
