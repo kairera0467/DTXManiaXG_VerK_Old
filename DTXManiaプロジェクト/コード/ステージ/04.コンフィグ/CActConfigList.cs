@@ -1275,6 +1275,14 @@ namespace DTXMania
 				"Bass chips are hidden by approaching\nto the hit bar." );
 			this.list項目リスト.Add( this.iBassHidden );
 
+            //レーン表示
+
+            this.iBassLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Bass,
+                "レーンフラッシュの表示 / 非表示を切り替えます。",
+                "Toggle LaneFlush" );
+            this.list項目リスト.Add( this.iBassLaneFlush );
+
+
             this.iBassJudgeLineDisp = new CItemToggle("JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Bass,
                 "判定ラインの表示 / 非表示を切り替えます。",
                 "Toggle JudgeLine");
@@ -2726,6 +2734,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bLeft.Bass = this.iBassLeft.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass = this.iBassInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
 
+            CDTXMania.ConfigIni.bLaneFlush.Bass = this.iBassLaneFlush.bON;
             CDTXMania.ConfigIni.bJudgeLineDisp.Bass = this.iBassJudgeLineDisp.bON;
             CDTXMania.ConfigIni.nShutterInSide.Bass = this.iBassShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide.Bass = this.iBassShutterOutPos.n現在の値;
