@@ -181,6 +181,7 @@ namespace DTXMania
 			this.sdDTXで指定されたフルコンボ音 = null;
 			this.bフルコンボ音再生済み = false;
             this.bエクセレント音再生済み = false;
+            this.b新記録音再生済み = false;
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -239,6 +240,7 @@ namespace DTXMania
                     this.ct表示用 = new CCounter(0, 1000, 3, CDTXMania.Timer);
                     base.b初めての進行描画 = false;
                 }
+
                 this.ct表示用.t進行();
                 double num11 = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
                 int num = this.ct表示用.n現在の値;
@@ -296,7 +298,7 @@ namespace DTXMania
                         else
                         {
                             this.t大文字表示(x, y, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nPerfect数));
-                            this.t大文字表示(600, 466, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nPerfect数));
+                            this.t大文字表示(610, 466, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nPerfect数));
                         }
                         this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, 466, 81, new Rectangle(0, 0, (int)num11, 56));
                     }
@@ -309,7 +311,7 @@ namespace DTXMania
                         else
                         {
                             this.t大文字表示(x, y + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nGreat数));
-                            this.t大文字表示(600, 466 + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nGreat数));
+                            this.t大文字表示(610, 466 + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nGreat数));
                         }
                     }
                     if (num >= 200)
@@ -409,8 +411,7 @@ namespace DTXMania
                     {
                     }
                 }
-
-                if (this.ct表示用.n現在の値 < 700)
+                if( this.ct表示用.n現在の値 < 700 )
                 {
                     int num5 = this.ct表示用.n現在の値 / 100;
                     double num6 = 1.0 - (((double)(this.ct表示用.n現在の値 % 100)) / 100.0);
@@ -449,10 +450,20 @@ namespace DTXMania
                     this.txWhite.t2D描画(CDTXMania.app.Device, num7, num8, rectangle);
                 }
 
-                if (this.ct表示用.n現在の値 >= 900)
+                if( this.ct表示用.n現在の値 >= 700 )
                 {
+                    if( CDTXMania.stage結果.b新記録スキル.Drums == true && !this.b新記録音再生済み )
+                    {
+                        CDTXMania.Skin.sound新記録音.t再生する();
+                        this.b新記録音再生済み = true;
+                    }
+                }
+                if( this.ct表示用.n現在の値 >= 900 )
+                { 
+
                     for (int j = 0; j < 3; j++)
                     {
+
                         if(CDTXMania.stage結果.st演奏記録[0].nPerfect数 == CDTXMania.stage結果.st演奏記録[0].n全チップ数)
                         {
                             if (this.ct表示用.b終了値に達した)
@@ -502,10 +513,7 @@ namespace DTXMania
                             }
                             if (this.ct表示用.b終了値に達した)
                             {
-                                if (CDTXMania.stage結果.b新記録スキル.Drums == true)
-                                {
-                                    CDTXMania.Skin.sound新記録音.t再生する();
-                                }
+
                             }
                         }
                         else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[0].nPerfect数 != CDTXMania.stage結果.st演奏記録[0].n全チップ数)
@@ -580,6 +588,10 @@ namespace DTXMania
                                 }
                             }
                         }
+                        else
+                        {
+
+                        }
                     }
 
                 }
@@ -600,6 +612,7 @@ namespace DTXMania
 			public Point pt;
 		}
 
+        private bool b新記録音再生済み;
         private bool bフルコンボ音再生済み;
         private bool bエクセレント音再生済み;
         private CCounter ct表示用;

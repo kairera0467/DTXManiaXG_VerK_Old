@@ -3842,7 +3842,7 @@ namespace DTXMania
 
 						CChip c_AddMixer = new CChip()
 						{
-							nチャンネル番号 = 0xFA,
+							nチャンネル番号 = 0xEA,
 							n整数値 = pChip.n整数値,
 							n整数値・内部番号 = pChip.n整数値・内部番号,
 							n発声時刻ms = nAddMixer時刻ms,
@@ -3912,7 +3912,7 @@ namespace DTXMania
 							}
 							CChip c = new CChip()											// mixer削除時刻を更新(遅延)する
 							{
-								nチャンネル番号 = 0xFB,
+								nチャンネル番号 = 0xEB,
 								n整数値 = listRemoveTiming[ index ].n整数値,
 								n整数値・内部番号 = listRemoveTiming[ index ].n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -3928,7 +3928,7 @@ namespace DTXMania
 						{																	// 発音していたが既にmixer削除確定していたなら
 							CChip c = new CChip()											// 新しくmixer削除候補として追加する
 							{
-								nチャンネル番号 = 0xFB,
+								nチャンネル番号 = 0xEB,
 								n整数値 = pChip.n整数値,
 								n整数値・内部番号 = pChip.n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -4017,16 +4017,43 @@ namespace DTXMania
 		/// </summary>
 		public void SwapGuitarBassInfos()						// #24063 2011.1.24 yyagi ギターとベースの譜面情報入替
 		{
-			for (int i = this.listChip.Count - 1; i >= 0; i--) {
-				if (listChip[i].e楽器パート == E楽器パート.BASS) {
-					listChip[i].e楽器パート = E楽器パート.GUITAR;
-					listChip[i].nチャンネル番号 -= ( 0xA0 - 0x20 );
+			for( int i = this.listChip.Count - 1; i >= 0; i-- )
+            {
+				if( listChip[ i ].e楽器パート == E楽器パート.BASS )
+                {
+					listChip[ i ].e楽器パート = E楽器パート.GUITAR;
+                    if( listChip[ i ].nチャンネル番号 >= 0xA0 && listChip[ i ].nチャンネル番号 <= 0xA8 )
+					    listChip[ i ].nチャンネル番号 -= ( 0xA0 - 0x20 );
+                    else if( listChip[ i ].nチャンネル番号 == 0xC5 || listChip[ i ].nチャンネル番号 == 0xC6 )
+                        listChip[ i ].nチャンネル番号 -= 0x32;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xC8 && listChip[ i ].nチャンネル番号 <= 0xCF )
+                        listChip[ i ].nチャンネル番号 -= 0x33;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xDA && listChip[ i ].nチャンネル番号 <= 0xDC )
+                        listChip[ i ].nチャンネル番号 -= 0x3D;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xDD && listChip[ i ].nチャンネル番号 <= 0xDF )
+                        listChip[ i ].nチャンネル番号 -= 0x34;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xE1 && listChip[ i ].nチャンネル番号 <= 0xE8 )
+                        listChip[ i ].nチャンネル番号 -= 0x35;
 				}
-				else if ( listChip[i].e楽器パート == E楽器パート.GUITAR )
+				else if( listChip[i].e楽器パート == E楽器パート.GUITAR )
 				{
-					listChip[i].e楽器パート = E楽器パート.BASS;
-					listChip[i].nチャンネル番号 += ( 0xA0 - 0x20 );
+					listChip[ i ].e楽器パート = E楽器パート.BASS;
+
+                    if( listChip[ i ].nチャンネル番号 >= 0x20 && listChip[ i ].nチャンネル番号 <= 0x28 )
+					    listChip[ i ].nチャンネル番号 += ( 0xA0 - 0x20 );
+                    else if( listChip[ i ].nチャンネル番号 == 0x93 || listChip[ i ].nチャンネル番号 == 0x94 )
+                        listChip[ i ].nチャンネル番号 += 0x32;
+                    else if( listChip[ i ].nチャンネル番号 >= 0x95 && listChip[ i ].nチャンネル番号 <= 0x9C )
+                        listChip[ i ].nチャンネル番号 += 0x33;
+                    else if( listChip[ i ].nチャンネル番号 >= 0x9D && listChip[ i ].nチャンネル番号 <= 0x9F )
+                        listChip[ i ].nチャンネル番号 += 0x3D;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xA9 && listChip[ i ].nチャンネル番号 <= 0xAB )
+                        listChip[ i ].nチャンネル番号 += 0x34;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xAC && listChip[ i ].nチャンネル番号 <= 0xD3 )
+                        listChip[ i ].nチャンネル番号 += 0x35;
 				}
+
+                //Wailing
 				else if ( listChip[ i ].nチャンネル番号 == 0x28 )		// #25215 2011.5.21 yyagi wailingはE楽器パート.UNKNOWNが割り当てられているので個別に対応
 				{
 					listChip[ i ].nチャンネル番号 += ( 0xA0 - 0x20 );
@@ -4039,6 +4066,10 @@ namespace DTXMania
 			int t = this.LEVEL.Bass;
 			this.LEVEL.Bass = this.LEVEL.Guitar;
 			this.LEVEL.Guitar = t;
+
+            t = this.LEVELDEC.Bass;
+			this.LEVELDEC.Bass = this.LEVELDEC.Guitar;
+			this.LEVELDEC.Guitar = t;
 
 			t = this.n可視チップ数.Bass;
 			this.n可視チップ数.Bass = this.n可視チップ数.Guitar;
@@ -6196,7 +6227,7 @@ namespace DTXMania
 			{
 				this.bチップがある.Guitar = true;
 			}
-			else if( ( nチャンネル番号 >= 0xA0 ) && ( nチャンネル番号 <= 0xa7 ) )
+			else if( ( nチャンネル番号 >= 0xA0 ) && ( nチャンネル番号 <= 0xa7 ) || ( nチャンネル番号 == 0xC5 ) || ( nチャンネル番号 == 0xC6 ) || ( nチャンネル番号 >= 0xC8 ) && ( nチャンネル番号 <= 0xCF ) || ( nチャンネル番号 >= 0xDA ) && ( nチャンネル番号 <= 0xDF ) || ( nチャンネル番号 >= 0xE1 ) && ( nチャンネル番号 <= 0xE8 )  )
 			{
 				this.bチップがある.Bass = true;
 			}
@@ -6354,7 +6385,7 @@ namespace DTXMania
                 {
                     chip.e楽器パート = E楽器パート.GUITAR;
                 }
-                if ((nチャンネル番号 >= 160 && nチャンネル番号 <= 167) || (197 <= nチャンネル番号 && nチャンネル番号 <= 198) || (200 <= nチャンネル番号 && nチャンネル番号 <= 207) || (218 <= nチャンネル番号 && nチャンネル番号 <= 223) || (225 <= nチャンネル番号 && nチャンネル番号 <= 232))
+                if ( (nチャンネル番号 >= 0xA1 && nチャンネル番号 <= 0xA7 ) || ( 0xC5 <= nチャンネル番号 && nチャンネル番号 <= 0xC6) || ( 0xC8 <= nチャンネル番号 && nチャンネル番号 <= 0xCF) || ( 0xDA <= nチャンネル番号 && nチャンネル番号 <= 0xDF ) || ( 0xE1 <= nチャンネル番号 && nチャンネル番号 <= 0xE8 ))
                 {
                     chip.e楽器パート = E楽器パート.BASS;
                 }

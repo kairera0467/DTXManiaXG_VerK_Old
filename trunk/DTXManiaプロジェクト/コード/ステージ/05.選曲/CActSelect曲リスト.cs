@@ -1164,23 +1164,18 @@ namespace DTXMania
 							#endregion
                             #region [ ジャケット画像の描画 ]
                             //-----------------
-                            if( this.txTumbnail[nパネル番号] != null )
-                            {
-                            float f拡大率 = (float)218.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width;
-                            float f拡大率2 = (float)218.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
-                            var mat = SlimDX.Matrix.Identity;
-                            mat *= SlimDX.Matrix.Scaling(f拡大率 * CTexture.f画面比率, f拡大率2 * CTexture.f画面比率, 1.0f);
-                                mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[i].rotY + (this.stマトリックス座標[i].rotY - this.stマトリックス座標[i].rotY));
-                                mat *= SlimDX.Matrix.Translation(
-                                    (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
-                                    (this.stマトリックス座標[i].y + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
-                                    (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.txTumbnail[nパネル番号].t3D描画(CDTXMania.app.Device, mat);
-                            }
                             for( int la = 0; la < 5 ; la++ )
                             {
                                 if( CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null )
                                     this.txクリアランプ.t2D描画(CDTXMania.app.Device, 506, 292 - la * 13, new Rectangle((CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.最大スキル.Drums != 0 ? 11 + la * 11 : 0), ( CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.フルコンボ.Drums ? 10 : 0), 11, 10));
+                            }
+                            if( this.txTumbnail[ nパネル番号 ] != null )
+                            {
+                                float f拡大率 = (float)218.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width;
+                                float f拡大率2 = (float)218.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
+                                this.txTumbnail[ nパネル番号 ].vc拡大縮小倍率 = new Vector3( f拡大率, f拡大率2, 1.0f );
+                                this.txTumbnail[ nパネル番号 ].t2D描画(CDTXMania.app.Device, 537, 249 );
+                                this.txTumbnail[ nパネル番号 ].vc拡大縮小倍率 = new Vector3( 1.0f, 1.0f, 1.0f );
                             }
                             //-----------------
                             #endregion

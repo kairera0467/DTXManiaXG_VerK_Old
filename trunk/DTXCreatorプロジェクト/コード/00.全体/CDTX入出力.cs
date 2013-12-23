@@ -1613,7 +1613,7 @@ namespace DTXCreator
 					{
 						int nLaneBsV = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BsV" );
 						int nLaneBsR = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BsR" );
-						int nLanrBsG = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BsG" );
+						int nLaneBsG = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BsG" );
 						int nLaneBsB = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BsB" );
 						Cチップ cチップ2 = new Cチップ();
 						cチップ2.nレーン番号0to = nLaneBsV;
@@ -1623,7 +1623,7 @@ namespace DTXCreator
 						c小節2.listチップ.Add( cチップ2 );
 						switch( nCh )
 						{
-							case 160:
+							case 0xA0:
 								cチップ2 = new Cチップ();
 								cチップ2.nレーン番号0to = nLaneBsR;
 								cチップ2.n位置grid = j;
@@ -1643,7 +1643,7 @@ namespace DTXCreator
 
 							case 0xa2:
 								cチップ2 = new Cチップ();
-								cチップ2.nレーン番号0to = nLanrBsG;
+								cチップ2.nレーン番号0to = nLaneBsG;
 								cチップ2.n位置grid = j;
 								cチップ2.n値・整数1to1295 = 1;
 								cチップ2.n読み込み時の解像度 = nChips;
@@ -1652,7 +1652,7 @@ namespace DTXCreator
 
 							case 0xa3:
 								cチップ2 = new Cチップ();
-								cチップ2.nレーン番号0to = nLanrBsG;
+								cチップ2.nレーン番号0to = nLaneBsG;
 								cチップ2.n位置grid = j;
 								cチップ2.n値・整数1to1295 = 1;
 								cチップ2.n読み込み時の解像度 = nChips;
@@ -1697,7 +1697,7 @@ namespace DTXCreator
 								cチップ2.n読み込み時の解像度 = nChips;
 								c小節2.listチップ.Add( cチップ2 );
 								cチップ2 = new Cチップ();
-								cチップ2.nレーン番号0to = nLanrBsG;
+								cチップ2.nレーン番号0to = nLaneBsG;
 								cチップ2.n位置grid = j;
 								cチップ2.n値・整数1to1295 = 1;
 								cチップ2.n読み込み時の解像度 = nChips;
@@ -1712,7 +1712,7 @@ namespace DTXCreator
 								cチップ2.n読み込み時の解像度 = nChips;
 								c小節2.listチップ.Add( cチップ2 );
 								cチップ2 = new Cチップ();
-								cチップ2.nレーン番号0to = nLanrBsG;
+								cチップ2.nレーン番号0to = nLaneBsG;
 								cチップ2.n位置grid = j;
 								cチップ2.n値・整数1to1295 = 1;
 								cチップ2.n読み込み時の解像度 = nChips;
