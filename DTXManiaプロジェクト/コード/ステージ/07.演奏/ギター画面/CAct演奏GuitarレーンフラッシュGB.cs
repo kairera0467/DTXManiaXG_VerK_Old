@@ -72,8 +72,8 @@ namespace DTXMania
 							if( texture != null && CDTXMania.ConfigIni.bLaneFlush[ (int) e楽器パート ] )
 							{
                                 texture.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( j * 37, 0, ( 37 * ( 70 - base.ct進行[ i ].n現在の値)) / 70, 118 ) );
-                                if( j == 4 )
-                                    this.txレーンフラッシュ.t2D描画( CDTXMania.app.Device, x2 + ( ( i < 5 ? i : i - 5 ) * 39 ), y2, new Rectangle( i * 39, 0, 41, 566 ) );
+                                //if( j == 4 )
+                                    //this.txレーンフラッシュ.t2D描画( CDTXMania.app.Device, x2 + ( ( i < 5 ? i : i - 5 ) * 39 ), y2, new Rectangle( i * 39, 0, 41, 566 ) );
 							}
 						}
                         base.ct進行[ i ].t進行();
@@ -84,7 +84,7 @@ namespace DTXMania
 					}
 				}
                 //ここの分岐文はbase.ct進行[ n ]のものを使わないと、停止中にレーンフラッシュが消えてしまう。
-                /*
+                
                 if ( !base.ct進行[ 0 ].b停止中 && CDTXMania.ConfigIni.bLaneFlush.Guitar )
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 86, 104, new Rectangle(0, 0, 41, 566));
@@ -126,7 +126,7 @@ namespace DTXMania
                 {
                     this.txレーンフラッシュ.t2D描画(CDTXMania.app.Device, 1112, 104, new Rectangle(156, 0, 41, 566));
                 }
- */
+
 			}
 			return 0;
 		}

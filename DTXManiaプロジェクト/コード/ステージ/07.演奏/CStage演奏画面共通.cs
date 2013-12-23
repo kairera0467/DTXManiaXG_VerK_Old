@@ -319,7 +319,7 @@ namespace DTXMania
 //				Debug.WriteLine( "CH=" + pChip.nチャンネル番号.ToString( "x2" ) + ", 整数値=" + pChip.n整数値 +  ", time=" + pChip.n発声時刻ms );
 				if ( pChip.n発声時刻ms <= 0 )
 				{
-					if ( pChip.nチャンネル番号 == 0xDA )
+					if ( pChip.nチャンネル番号 == 0xEA )
 					{
 						pChip.bHit = true;
 //						Debug.WriteLine( "first [DA] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値 + ", time=" + pChip.n発声時刻ms );
@@ -1205,6 +1205,16 @@ namespace DTXMania
                         this.actJudgeString.Start(14, bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag);
                     }
                     break;
+
+                case E楽器パート.UNKNOWN:
+                    {
+                        if( pChip.nチャンネル番号 == 0x4F )
+                        {
+                            int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Drums;
+                            eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
+                        }
+                    }
+                    break;
             }
 
             if (CDTXMania.ConfigIni.bAutoAddGage == false)
@@ -1276,7 +1286,7 @@ namespace DTXMania
                         #endregion
                     }
 
-                    if (CDTXMania.ConfigIni.bドラムが全部オートプレイである || !bPChipIsAutoPlay)
+                    if( CDTXMania.ConfigIni.bドラムが全部オートプレイである || !bPChipIsAutoPlay )
                     {
                         switch (eJudgeResult)
                         {
@@ -1329,6 +1339,12 @@ namespace DTXMania
                     }
                     break;
 
+                case E楽器パート.UNKNOWN:
+                    if( pChip.nチャンネル番号 == 0x4F )
+                    {
+
+                    }
+                    break;
                 default:
                     break;
             }
@@ -1730,9 +1746,9 @@ namespace DTXMania
                         }
                         nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
                     }
-                    else if ((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
+                    else if( ( nChannel == 0xAF && chip.e楽器パート == E楽器パート.BASS ) || ((( 0xA0 <= nChannel && nChannel <= 0xA8) || (0xC5 <= nChannel && nChannel <= 0xC6) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel ) )
                     {
-                        if (chip.n発声時刻ms > nTime)
+                        if( chip.n発声時刻ms > nTime )
                         {
                             break;
                         }
@@ -1764,11 +1780,11 @@ namespace DTXMania
 							(
 								( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) ||
 								( ( ( nChannel >= 0xA0 ) && ( nChannel <= 0xa8 ) ) ||
-                                ( 160 <= nChannel && nChannel <= 168 ) ||
-                                ( 197 <= nChannel && nChannel <= 198 ) ||
-                                ( 200 <= nChannel && nChannel <= 207 ) ||
-                                ( 218 <= nChannel && nChannel <= 223 ) ||
-                                ( 225 <= nChannel && nChannel <= 232 )
+                                ( 0xA0 <= nChannel && nChannel <= 0xA8 ) ||
+                                ( 0xC5 <= nChannel && nChannel <= 0xC6 ) ||
+                                ( 0xC8 <= nChannel && nChannel <= 0xCF ) ||
+                                ( 0xDA <= nChannel && nChannel <= 0xDF ) ||
+                                ( 0xE1 <= nChannel && nChannel <= 0xE8 )
                                 && ( chip.nチャンネル番号 == nChannel ) )
 							)
 						)
@@ -1834,13 +1850,13 @@ namespace DTXMania
 		protected CDTX.CChip r次にくるギターChipを更新して返す()
 		{
 			int nInputAdjustTime = this.bIsAutoPlay.GtPick ? 0 : this.nInputAdjustTimeMs.Guitar;
-            this.r次にくるギターChip = this.r指定時刻に一番近い未ヒットChip(CSound管理.rc演奏用タイマ.n現在時刻, 47, nInputAdjustTime, 500);
+            this.r次にくるギターChip = this.r指定時刻に一番近い未ヒットChip( CSound管理.rc演奏用タイマ.n現在時刻, 0x2f, nInputAdjustTime, 500 );
 			return this.r次にくるギターChip;
 		}
 		protected CDTX.CChip r次にくるベースChipを更新して返す()
 		{
 			int nInputAdjustTime = this.bIsAutoPlay.BsPick ? 0 : this.nInputAdjustTimeMs.Bass;
-            this.r次にくるベースChip = this.r指定時刻に一番近い未ヒットChip(CSound管理.rc演奏用タイマ.n現在時刻, 0xaf, nInputAdjustTime, 500);
+            this.r次にくるベースChip = this.r指定時刻に一番近い未ヒットChip( CSound管理.rc演奏用タイマ.n現在時刻, 0xaf, nInputAdjustTime, 500 );
 			return this.r次にくるベースChip;
 		}
 
@@ -2691,30 +2707,30 @@ namespace DTXMania
 					case 0xa6:
 					case 0xa7:
 
-                    case 197:
-                    case 198:
-                    case 200:
-                    case 201:
-                    case 202:
-                    case 203:
-                    case 204:
-                    case 205:
-                    case 206:
-                    case 207:
-                    case 218:
-                    case 219:
-                    case 220:
-                    case 221:
-                    case 222:
-                    case 223:
-                    case 225:
-                    case 226:
-                    case 227:
-                    case 228:
-                    case 229:
-                    case 230:
-                    case 231:
-                    case 232:
+                    case 0xC5:
+                    case 0xC6:
+                    case 0xC8:
+                    case 0xC9:
+                    case 0xCA:
+                    case 0xCB:
+                    case 0xCC:
+                    case 0xCD:
+                    case 0xCE:
+                    case 0xCF:
+                    case 0xDA:
+                    case 0xDB:
+                    case 0xDC:
+                    case 0xDD:
+                    case 0xDE:
+                    case 0xDF:
+                    case 0xE1:
+                    case 0xE2:
+                    case 0xE3:
+                    case 0xE4:
+                    case 0xE5:
+                    case 0xE6:
+                    case 0xE7:
+                    case 0xE8:
 						this.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, E楽器パート.BASS );
 						break;
 					#endregion
@@ -2795,9 +2811,9 @@ namespace DTXMania
 						}
 						break;
 					#endregion
-                    #region [ da: ミキサーへチップ音追加 ]
-                    case 0xFA:
-                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+                    #region [ ea: ミキサーへチップ音追加 ]
+                    case 0xEA:
+                        if( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
                         {
                             //Debug.WriteLine("[DA(AddMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString("x2") + ", wav=" + pChip.n整数値.ToString("x2") + ", time=" + pChip.n発声時刻ms);
                             pChip.bHit = true;
@@ -2816,9 +2832,9 @@ namespace DTXMania
                         }
                         break;
                     #endregion
-                    #region [ db: ミキサーからチップ音削除 ]
-                    case 0xFB:
-                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+                    #region [ eb: ミキサーからチップ音削除 ]
+                    case 0xEB:
+                        if( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
                         {
                             //Debug.WriteLine("[DB(RemoveMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString("x2") + ", wav=" + pChip.n整数値.ToString("x2") + ", time=" + pChip.n発声時刻ms);
                             pChip.bHit = true;
@@ -3232,9 +3248,9 @@ namespace DTXMania
 				#region [ Hidden/Sudden処理 ]
 				if ( configIni.bSudden[ instIndex ] )
 				{
-					pChip.b可視 = pChip.nバーからの距離dot[ instIndex ] < 200;
+					pChip.b可視 = pChip.nバーからの距離dot[ instIndex ] < 300;
 				}
-				if ( configIni.bHidden[ instIndex ] && ( pChip.nバーからの距離dot[ instIndex ] < 100 ) )
+				if ( configIni.bHidden[ instIndex ] && ( pChip.nバーからの距離dot[ instIndex ] < 200 ) )
 				{
 					pChip.b可視 = false;
 				}
@@ -4045,7 +4061,7 @@ namespace DTXMania
 //			if ( bIsAutoPlay[ (int) Eレーン.Guitar - 1 + indexInst ] )	// このような、バグの入りやすい書き方(GT/BSのindex値が他と異なる)はいずれ見直したい
 //			{
 			CDTX.CChip chip = this.r次に来る指定楽器Chipを更新して返す(inst);
-            if (chip != null)
+            if( chip != null )
             {
                 bool bAutoGuitarR = false;
                 bool bAutoGuitarG = false;

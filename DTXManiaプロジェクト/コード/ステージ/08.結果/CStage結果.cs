@@ -143,52 +143,56 @@ namespace DTXMania
 		    //		}
 			    #endregion
 					// #24459 上記の条件だと[HiSkill.***]でのランクしかチェックしていないので、BestRankと比較するよう変更。
-			        if ( this.nランク値[ i ] >= 0 && ini.stファイル.BestRank[ i ] > this.nランク値[ i ] )		// #24459 2011.3.1 yyagi update BestRank
-					{
-						this.b新記録ランク[ i ] = true;
-						ini.stファイル.BestRank[ i ] = this.nランク値[ i ];
-					}
 
-					// 新記録スコアチェック
-					if( this.st演奏記録[ i ].nスコア > ini.stセクション[ i * 2 ].nスコア )
-					{
-					    this.b新記録スコア[ i ] = true;
-					    ini.stセクション[ i * 2 ] = this.st演奏記録[ i ];
-					}
-
-                    // 新記録スキルチェック
-                    if ( this.st演奏記録[ i ].db演奏型スキル値 > ini.stセクション[ ( i * 2 ) + 1 ].db演奏型スキル値 )
+                    if( !this.bオート[ i ] || !CDTXMania.ConfigIni.bAutoAddGage )
                     {
-                        this.b新記録スキル[ i ] = true;
-                        ini.stセクション[ ( i * 2 ) + 1 ] = this.st演奏記録[ i ];
-                    }
+			            if ( this.nランク値[ i ] >= 0 && ini.stファイル.BestRank[ i ] > this.nランク値[ i ] )		// #24459 2011.3.1 yyagi update BestRank
+					    {
+    						this.b新記録ランク[ i ] = true;
+	    					ini.stファイル.BestRank[ i ] = this.nランク値[ i ];
+		    			}
 
-					// ラストプレイ #23595 2011.1.9 ikanick
-                    // オートじゃなければプレイ結果を書き込む
-                    if (this.bオート[ i ] == false) {
-                        ini.stセクション[ i + 6 ] = this.st演奏記録[ i ];
-                    }
+			    		// 新記録スコアチェック
+				    	if( this.st演奏記録[ i ].nスコア > ini.stセクション[ i * 2 ].nスコア )
+					    {
+					        this.b新記録スコア[ i ] = true;
+					        ini.stセクション[ i * 2 ] = this.st演奏記録[ i ];
+					    }
 
-                    // #23596 10.11.16 add ikanick オートじゃないならクリア回数を1増やす
-                    //        11.02.05 bオート to t更新条件を取得する use      ikanick
-					bool[] b更新が必要か否か = new bool[ 3 ];
-					CScoreIni.t更新条件を取得する( out b更新が必要か否か[ 0 ], out b更新が必要か否か[ 1 ], out b更新が必要か否か[ 2 ] );
-
-                    if ( b更新が必要か否か[ i ] )
-                    {
-                        switch ( i )
+                        // 新記録スキルチェック
+                        if ( this.st演奏記録[ i ].db演奏型スキル値 > ini.stセクション[ ( i * 2 ) + 1 ].db演奏型スキル値 )
                         {
-                            case 0:
-                                ini.stファイル.ClearCountDrums++;
-                                break;
-                            case 1:
-                                ini.stファイル.ClearCountGuitar++;
-                                break;
-                            case 2:
-                                ini.stファイル.ClearCountBass++;
-                                break;
-                            default:
-                                throw new Exception("クリア回数増加のk(0-2)が範囲外です。");
+                            this.b新記録スキル[ i ] = true;
+                            ini.stセクション[ ( i * 2 ) + 1 ] = this.st演奏記録[ i ];
+                        }
+
+			    		// ラストプレイ #23595 2011.1.9 ikanick
+                        // オートじゃなければプレイ結果を書き込む
+                        if( this.bオート[ i ] == false ) {
+                            ini.stセクション[ i + 6 ] = this.st演奏記録[ i ];
+                        }
+                    
+                        // #23596 10.11.16 add ikanick オートじゃないならクリア回数を1増やす
+                        //        11.02.05 bオート to t更新条件を取得する use      ikanick
+					    bool[] b更新が必要か否か = new bool[ 3 ];
+					    CScoreIni.t更新条件を取得する( out b更新が必要か否か[ 0 ], out b更新が必要か否か[ 1 ], out b更新が必要か否か[ 2 ] );
+
+                        if ( b更新が必要か否か[ i ] )
+                        {
+                            switch ( i )
+                            {
+                                case 0:
+                                    ini.stファイル.ClearCountDrums++;
+                                    break;
+                                case 1:
+                                    ini.stファイル.ClearCountGuitar++;
+                                    break;
+                                case 2:
+                                    ini.stファイル.ClearCountBass++;
+                                    break;
+                                default:
+                                    throw new Exception("クリア回数増加のk(0-2)が範囲外です。");
+                            }
                         }
                     }
                     //---------------------------------------------------------------------/
@@ -338,7 +342,7 @@ namespace DTXMania
                 }
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_header panel.png" ), true );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_footer panel.png" ), true );
-                this.tx中央パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_center panel.png"));
+                //this.tx中央パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_center panel.png"));
                 this.txリザルトパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_result panel.png"));
 				//this.txオプションパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen option panels.png" ) );
 				base.OnManagedリソースの作成();
@@ -356,7 +360,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
-                CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
+                //CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
                 CDTXMania.tテクスチャの解放( ref this.txリザルトパネル );
                 //CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
                 base.OnManagedリソースの解放();
@@ -369,7 +373,7 @@ namespace DTXMania
 				int num;
 				if( base.b初めての進行描画 )
 				{
-					this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
+					this.ct登場用 = new CCounter( 0, 5000, 1, CDTXMania.Timer );
                     if( File.Exists( CSkin.Path(@"Graphics\7_StageClear.mp4" ) ) )
                         this.actFO.tフェードイン開始();
                     else
@@ -442,14 +446,14 @@ namespace DTXMania
 				}
 				if( this.tx下部パネル != null )
 				{
-					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
+					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 				}
                 if (this.actRank.On進行描画() == 0)
                 {
                     this.bアニメが完了 = false;
                 }
-                if( this.tx中央パネル != null )
-                    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
+                //if( this.tx中央パネル != null )
+                //    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
                 if( this.txリザルトパネル != null )
                 {
                     this.txリザルトパネル.t2D描画( CDTXMania.app.Device, 453, 11 );
@@ -621,14 +625,14 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private CCounter ct登場用;
+		public CCounter ct登場用;
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private CActFIFOWhite actFI;
 		private CActFIFOBlack actFO;
 		private CActオプションパネル actOption;
 		private CActResultParameterPanel actParameterPanel;
 		private CActResultRank actRank;
-		private CActResultImage actResultImage;
+		public CActResultImage actResultImage;
 		private CActResultSongBar actSongBar;
 		private bool bアニメが完了;
 		private bool bIsCheckedWhetherResultScreenShouldSaveOrNot;				// #24509 2011.3.14 yyagi
@@ -640,7 +644,7 @@ namespace DTXMania
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
         private CTexture txリザルトパネル;
-        private CTexture tx中央パネル;
+
         private CDirectShow ds背景動画;
         private long lDshowPosition;
         private long lStopPosition;

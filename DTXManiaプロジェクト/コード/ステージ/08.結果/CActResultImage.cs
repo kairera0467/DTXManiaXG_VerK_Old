@@ -163,24 +163,34 @@ namespace DTXMania
 				this.pAVIBmp = IntPtr.Zero;
 				if( CDTXMania.ConfigIni.bストイックモード )
 				{
-					this.r表示するリザルト画像 = this.txリザルト画像がないときの画像;
+					this.txリザルト画像 = this.txリザルト画像がないときの画像;
 				}
-				else if( ( ( !this.tリザルト動画の指定があれば構築する() && !this.tリザルト画像の指定があれば構築する() ) && ( !this.tプレビュー動画の指定があれば構築する() && !this.tプレビュー画像の指定があれば構築する() ) ) && !this.t背景画像があればその一部からリザルト画像を構築する() )
+				else if( ( ( !this.tリザルト画像の指定があれば構築する() ) && ( !this.tプレビュー画像の指定があれば構築する() ) ) )
 				{
-					this.r表示するリザルト画像 = this.txリザルト画像がないときの画像;
-				}
+					this.txリザルト画像 = this.txリザルト画像がないときの画像;
+                }
+
+                this.i中央パネル = Image.FromFile( CSkin.Path( @"Graphics\8_center panel.png" ) );
+                this.b中央パネル = new Bitmap(1280, 136);
+
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Bitmap bmpCardName = new Bitmap(1, 1);
+                Graphics songname = Graphics.FromImage(this.bmSongNameLength);
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
+                songname.PageUnit = GraphicsUnit.Pixel;
                 graphics.PageUnit = GraphicsUnit.Pixel;
                 this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
-                this.nSongNamePixelLength = (int)graphics.MeasureString(this.strSongName, this.ftSongNameFont).Width;
+                this.nSongNamePixelLength = (int)songname.MeasureString(this.strSongName, this.ftSongNameFont).Width;
                 this.bmSongNameLength.Dispose();
                 Bitmap image = new Bitmap(this.nSongNamePixelLength, (int)Math.Ceiling((double)this.ftSongNameFont.GetHeight()));
-                graphics = Graphics.FromImage(image);
-                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, (float)0f, (float)0f);
+                songname = Graphics.FromImage( image );
+                graphics = Graphics.FromImage( b中央パネル );
 
-                graphics.Dispose();
+                graphics.DrawImage( this.i中央パネル, 0, 0, 1280, 136 );
+                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, 578f, 85f);
+
+                songname.Dispose();
+                this.tx中央パネル = new CTexture( CDTXMania.app.Device, this.b中央パネル, CDTXMania.TextureFormat );
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
@@ -199,6 +209,7 @@ namespace DTXMania
                 graphics.Dispose();
                 bitmap4.Dispose();
                 bmpCardName.Dispose();
+                i中央パネル.Dispose();
 
                 base.OnManagedリソースの作成();
 			}
@@ -207,6 +218,7 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
+                CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
                 CDTXMania.tテクスチャの解放( ref this.txリザルト画像 );
                 CDTXMania.tテクスチャの解放( ref this.txリザルト画像がないときの画像 );
                 CDTXMania.tテクスチャの解放( ref this.txDifficulty );
@@ -231,77 +243,41 @@ namespace DTXMania
 			}
 			if( base.b初めての進行描画 )
 			{
-				this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
+				this.ct登場用 = new CCounter( 0, 1500, 1, CDTXMania.Timer );
 				base.b初めての進行描画 = false;
 			}
 			this.ct登場用.t進行();
-			if( ( ( this.avi != null ) && ( this.sfリザルトAVI画像 != null ) ) && ( this.nAVI再生開始時刻 != -1 ) )
-			{
-				int time = (int) ( ( CDTXMania.Timer.n現在時刻 - this.nAVI再生開始時刻 ) * ( ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0 ) );
-				int frameNoFromTime = this.avi.GetFrameNoFromTime( time );
-				if( frameNoFromTime >= this.avi.GetMaxFrameCount() )
-				{
-					this.nAVI再生開始時刻 = CDTXMania.Timer.n現在時刻;
-				}
-				else if( ( this.n前回描画したフレーム番号 != frameNoFromTime ) && !this.b動画フレームを作成した )
-				{
-					this.b動画フレームを作成した = true;
-					this.n前回描画したフレーム番号 = frameNoFromTime;
-					this.pAVIBmp = this.avi.GetFramePtr( frameNoFromTime );
-				}
-			}
-			int x = this.n本体X;
-			int y = this.n本体Y;
-			if( ( ( this.nAVI再生開始時刻 != -1 ) && ( this.avi != null ) ) && ( this.sfリザルトAVI画像 != null ) )
-			{
-				if( this.b動画フレームを作成した && ( this.pAVIBmp != IntPtr.Zero ) )
-				{
-					DataRectangle rectangle = this.sfリザルトAVI画像.LockRectangle( LockFlags.None );
-					DataStream data = rectangle.Data;
-					int num7 = rectangle.Pitch / this.sfリザルトAVI画像.Description.Width;
-					BitmapUtil.BITMAPINFOHEADER* pBITMAPINFOHEADER = (BitmapUtil.BITMAPINFOHEADER*) this.pAVIBmp.ToPointer();
-					if( pBITMAPINFOHEADER->biBitCount == 0x18 )
-					{
-						switch( num7 )
-						{
-							case 2:
-								this.avi.tBitmap24ToGraphicsStreamR5G6B5( pBITMAPINFOHEADER, data, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height );
-								break;
 
-							case 4:
-								this.avi.tBitmap24ToGraphicsStreamX8R8G8B8( pBITMAPINFOHEADER, data, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height );
-								break;
-						}
-					}
-					this.sfリザルトAVI画像.UnlockRectangle();
-					this.b動画フレームを作成した = false;
-				}
-				using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
-				{
-					Rectangle sourceRectangle = new Rectangle( 0, 0, this.sfリザルトAVI画像.Description.Width, this.sfリザルトAVI画像.Description.Height );
-					if( y < 0 )
-					{
-						sourceRectangle.Y += -y;
-						sourceRectangle.Height -= -y;
-						y = 0;
-					}
-					if( sourceRectangle.Height > 0 )
-					{
-						CDTXMania.app.Device.UpdateSurface( this.sfリザルトAVI画像, sourceRectangle, surface, new Point( x, y ) );
-					}
-					goto Label_042F;
-				}
-			}
-            if (this.r表示するリザルト画像 != null)
+            this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
+            if( this.r表示するリザルト画像 != null )
             {
                 int width = this.r表示するリザルト画像.szテクスチャサイズ.Width;
                 int height = this.r表示するリザルト画像.szテクスチャサイズ.Height;
-                this.r表示するリザルト画像.vc拡大縮小倍率.X = ((float)this.nAlbumWidth) / ((float)width);
-                this.r表示するリザルト画像.vc拡大縮小倍率.Y = ((float)this.nAlbumHeight) / ((float)height);
-                this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, width, height));
+
+                /*if( this.ct登場用.n現在の値 < 500 )
+                {
+
+                    var mat = Matrix.Identity;
+
+                    //mat *= Matrix.RotationX( 0.1f - ( ( 0.1f / 200.0f ) * this.ct登場用.n現在の値 ) );
+                    mat *= Matrix.RotationY( this.ct登場用.n現在の値 < 200 ? ( -0.2f - ( ( -0.2f / 200.0f ) * this.ct登場用.n現在の値 ) ) : 0.0f );
+                    //mat *= Matrix.RotationZ( this.ct登場用.n現在の値 < 500 ? ( -0.2f - ( ( -0.2f / 500.0f ) * this.ct登場用.n現在の値 ) ) : 0.0f );
+                    mat *= Matrix.Scaling( ((float)this.nAlbumWidth) / ((float)width), ((float)this.nAlbumHeight) / (float)height, 0.0f );
+
+                    mat *= Matrix.Translation(0f, 0f, 0f);
+
+                    this.r表示するリザルト画像.t3D描画( CDTXMania.app.Device, mat );
+                }
+                else 
+                */
+                {
+                    this.r表示するリザルト画像.vc拡大縮小倍率.X = ((float)this.nAlbumWidth) / ((float)width);
+                    this.r表示するリザルト画像.vc拡大縮小倍率.Y = ((float)this.nAlbumHeight) / ((float)height);
+                    this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 469, 283, new Rectangle(0, 0, width, height));
+                }
             }
-		Label_042F:
             float num;
+
             STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
             n表記するLEVEL.Drums = CDTXMania.DTX.LEVEL.Drums / 10.0;
             n表記するLEVEL.Drums += ( CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0 : 0 );
@@ -367,7 +343,7 @@ namespace DTXMania
         private CAvi avi;
         private Bitmap bmSongNameLength;
         private bool b動画フレームを作成した;
-        private CCounter ct登場用;
+        public CCounter ct登場用;
         private Image iDrumSpeed;
         private int nAlbumHeight;
         private int nAlbumWidth;
@@ -388,6 +364,10 @@ namespace DTXMania
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
         private CTexture txDifficulty;
+
+        private Bitmap b中央パネル;
+        private Image i中央パネル;
+        private CTexture tx中央パネル;
 
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;

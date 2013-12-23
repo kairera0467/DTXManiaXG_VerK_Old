@@ -121,7 +121,7 @@ namespace DTXMania
                         this.tx文字3.vc拡大縮小倍率 = new Vector3( 4.0f, 4.0f, 1.0f );
 
                         this.tx文字2.t2D描画( CDTXMania.app.Device, 1100 - ( 1.30f * this.ct時間稼ぎ.n現在の値), 1600 - ( 1.6f * this.ct時間稼ぎ.n現在の値), new System.Drawing.Rectangle( 0, 0, 620, 92 )  );
-                        this.tx文字3.t2D描画( CDTXMania.app.Device, -500 + ( 1.10f * this.ct時間稼ぎ.n現在の値), 1600 - ( 1.6f * this.ct時間稼ぎ.n現在の値), new System.Drawing.Rectangle( 0, 92, 620, 94 )  );
+                        this.tx文字3.t2D描画( CDTXMania.app.Device, -250 + ( 1.10f * this.ct時間稼ぎ.n現在の値), 1600 - ( 1.6f * this.ct時間稼ぎ.n現在の値), new System.Drawing.Rectangle( 0, 92, 620, 94 )  );
                     }
                 }
                 else
