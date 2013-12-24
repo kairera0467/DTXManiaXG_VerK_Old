@@ -359,7 +359,7 @@ namespace DTXMania
                 this.txバスドラ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_BassDrum.png"));
                 this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
-                if (CDTXMania.ConfigIni.bGraph.Drums == true)
+                if( CDTXMania.ConfigIni.bGraph.Drums == true && CDTXMania.ConfigIni.bDrums有効 )
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelB.png"));
                 }
@@ -1314,12 +1314,68 @@ namespace DTXMania
                         }
                     }
                     #endregion
-                    this.tx描画用.vc拡大縮小倍率 = this.vector;
 
-                    if(CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                    if( ( CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true ) && CDTXMania.ConfigIni.eNamePlate.Guitar == Eタイプ.B )
                     {
-
+                        #region[ スキルメーター無効 ]
+                        if ( this.fAVIアスペクト比 > 1.77f )
+                        {
+                            this.ratio2 = 420f / ((float)this.framewidth);
+                            this.position2 = 168 + (int)((240f - (this.frameheight * this.ratio2)) / 2f);
+                        }
+                        else
+                        {
+                            this.ratio2 = 240f / ((float)this.frameheight);
+                            this.position2 = 858 + (int)((420f - (this.framewidth * this.ratio2)) / 2f);
+                        }
+                        if( this.txクリップパネル != null )
+                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, 856, 142); 
+                        this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
+                        this.tx描画用.vc拡大縮小倍率 = this.smallvc;
+                        if( CDTXMania.ConfigIni.bDirectShowMode == true  )
+                        {
+                            if( this.dsBGV != null && this.bDShowクリップを再生している )
+                            {
+                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
+                                if( this.dsBGV.dshow.b上下反転 )
+                                {
+                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 858, this.position2 );
+                                }
+                                else if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+                                {
+                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
+                                }
+                            }
+                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 1.77f )
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
+                            }
+                        }
+                        else if( CDTXMania.ConfigIni.bDirectShowMode == true  )
+                        {
+                            if( this.fAVIアスペクト比 < 1.77f )
+                            {
+                            //    this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
+                            }
+                            else if( this.fAVIアスペクト比 > 1.77f )
+                            {
+                            //    this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
+                            }
+                        }
+                        else if( CDTXMania.ConfigIni.bDirectShowMode == false )
+                        {
+                            if( this.fAVIアスペクト比 < 1.77f )
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 168 );
+                            }
+                            else if(this.fAVIアスペクト比 > 1.77f)
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 858, this.position2 );
+                            }
+                        }
+                        #endregion
                     }
+                    this.tx描画用.vc拡大縮小倍率 = this.vector;
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
                 if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))

@@ -92,6 +92,8 @@ namespace DTXMania
             public int status;
         }
         public long nCurrentScore;
+        public long n現在のスコアGuitar;
+        public long n現在のスコアBass;
         public int nIndex;
         public int nStatus;
         public STATUSPANEL[] stパネルマップ;
