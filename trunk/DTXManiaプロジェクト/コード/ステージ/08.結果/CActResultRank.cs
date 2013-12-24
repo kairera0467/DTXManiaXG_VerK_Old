@@ -83,7 +83,7 @@ namespace DTXMania
                             break;
                     }
                 }
-                else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                else if( CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true )
                 {
                     switch( CDTXMania.stage結果.nランク値.Guitar )
                     {
@@ -113,7 +113,9 @@ namespace DTXMania
 
                         case 6:
                         case 99:	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-                            this.txランク文字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
+                            this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankE.png" ) );
+                            if( CDTXMania.ConfigIni.bギターが全部オートプレイである )
+                                this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankSS.png" ) );
                             break;
 
                         default:

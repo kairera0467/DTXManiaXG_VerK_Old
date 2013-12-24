@@ -1081,22 +1081,22 @@ namespace DTXMania
 					{
 						int nパネル番号 = ( ( ( this.n現在の選択行 - 5 ) + i ) + 13 ) % 13;
 
-                        if (i == 6)
+                        if( i == 6 )
                         {
                             #region [ ジャケット画像の描画 ]
                             //-----------------
                             if( this.txパネル != null )
                             {
                                 var mat = SlimDX.Matrix.Identity;
-                                mat *= SlimDX.Matrix.Scaling(0.62f, 0.88f, 1.0f);
-                                mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[i].rotY + (this.stマトリックス座標[i].rotY - this.stマトリックス座標[i].rotY));
+                                mat *= SlimDX.Matrix.Scaling( 0.62f, 0.88f, 1.0f );
+                                mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[ i ].rotY + (this.stマトリックス座標[ i ].rotY - this.stマトリックス座標[i].rotY));
                                 mat *= SlimDX.Matrix.Translation(
-                                    (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
-                                    (this.stマトリックス座標[i].y + 2 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
-                                    (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
+                                    ( this.stマトリックス座標[ i ].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
+                                    ( this.stマトリックス座標[ i ].y + 2 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
+                                    ( this.stマトリックス座標[ i ].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                                 this.txパネル.t3D描画(CDTXMania.app.Device, mat);
                             }
-                            if (this.txTumbnail[nパネル番号] != null)
+                            if( this.txTumbnail[nパネル番号] != null )
                             {
                                 float f拡大率 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width;
                                 float f拡大率2 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
@@ -1113,12 +1113,12 @@ namespace DTXMania
                             #endregion
                             #region [ タイトル名テクスチャを描画。]
                             //-----------------
-                            if (this.stバー情報[nパネル番号].txタイトル名 != null)
+                            if( this.stバー情報[nパネル番号].txタイトル名 != null )
                             {
                                 //this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 0x58, y + 8 );
                                 var mat = SlimDX.Matrix.Identity;
-                                mat *= SlimDX.Matrix.Scaling(0.35f, 0.45f, 1.0f);
-                                mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[i].rotY + (this.stマトリックス座標[i].rotY - this.stマトリックス座標[i].rotY));
+                                mat *= SlimDX.Matrix.Scaling( 0.35f, 0.45f, 1.0f );
+                                mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[ i ].rotY + (this.stマトリックス座標[i].rotY - this.stマトリックス座標[i].rotY));
                                 mat *= SlimDX.Matrix.Translation(
                                     (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].y + 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
@@ -1138,17 +1138,22 @@ namespace DTXMania
                             }
                             //-----------------
                             #endregion
-                            this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 761, 233, new Rectangle(304, 70, 59, 242));
+                            if( this.tx選曲パネル != null )
+                                this.tx選曲パネル.t2D描画( CDTXMania.app.Device, 761, 233, new Rectangle( 304, 70, 59, 242 ) );
                         }
                         else if( i == 5 )
 						{
 							// (A) 選択曲パネルを描画。
-                            this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 531, 243, new Rectangle(74, 80, 230, 230)); //真ん中の部分は別々に描画。
-                            this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
-                            this.txランプ用帯.t3D描画( CDTXMania.app.Device, barL );   //右の帯。
+                            if( this.tx選曲パネル != null )
+                                this.tx選曲パネル.t2D描画( CDTXMania.app.Device, 531, 243, new Rectangle( 74, 80, 230, 230 ) ); //真ん中の部分は別々に描画。
+                            if( this.txランプ用帯 != null )
+                            {
+                                this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
+                                this.txランプ用帯.t3D描画( CDTXMania.app.Device, barL );   //右の帯。
+                            }
                             #region [ バーテクスチャを描画。]
 							//-----------------
-                            if (this.txパネル != null)
+                            if( this.txパネル != null )
                             {
                                 var mat = SlimDX.Matrix.Identity;
                                 mat *= SlimDX.Matrix.Scaling(0.8f, 0.8f, 1.0f);
@@ -1159,7 +1164,8 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                                 this.txパネル.t3D描画(CDTXMania.app.Device, mat);
                             }
-                            this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 457, 163, new Rectangle(0, 0, 363, 368));
+                            if( this.tx選曲パネル != null )
+                                this.tx選曲パネル.t2D描画( CDTXMania.app.Device, 457, 163, new Rectangle( 0, 0, 363, 368 ) );
 							//-----------------
 							#endregion
                             #region [ ジャケット画像の描画 ]
@@ -1199,7 +1205,7 @@ namespace DTXMania
 							// (B) その他のパネルの描画。
                             #region [ ジャケット画像の描画 ]
                             //-----------------
-                            if (this.txパネル != null)
+                            if( this.txパネル != null )
                             {
                                 var mat = SlimDX.Matrix.Identity;
                                 mat *= SlimDX.Matrix.Scaling(0.62f, 0.88f, 1.0f);
@@ -1210,7 +1216,7 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                                 this.txパネル.t3D描画(CDTXMania.app.Device, mat);
                             }
-                            if (this.txTumbnail[ nパネル番号 ] != null)
+                            if( this.txTumbnail[ nパネル番号 ] != null )
                             {
                                 float f拡大率 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width;
                                 float f拡大率2 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
@@ -1227,8 +1233,10 @@ namespace DTXMania
                             #endregion
 							#region [ タイトル名テクスチャを描画。]
 							//-----------------
-                            this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
-                            this.tx選曲パネル.t2D描画( CDTXMania.app.Device, 761, 233, new Rectangle( 304, 70, 59, 242 ) );
+                            if( this.txランプ用帯 != null )
+                                this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
+                            if( this.tx選曲パネル != null )
+                                this.tx選曲パネル.t2D描画( CDTXMania.app.Device, 761, 233, new Rectangle( 304, 70, 59, 242 ) );
                             if (this.stバー情報[ nパネル番号 ].txタイトル名 != null)
                             {
                                 var mat = SlimDX.Matrix.Identity;
@@ -1341,7 +1349,8 @@ namespace DTXMania
                     }
                     else if( ( i == 5 ) )
                     {
-                        this.txランプ用帯.t3D描画( CDTXMania.app.Device, barL );   //右の帯。
+                        if( this.txランプ用帯 != null )
+                            this.txランプ用帯.t3D描画( CDTXMania.app.Device, barL );   //右の帯。
                         for (int la = 0; la < 5; la++)
                         {
                             //if( this.stバー情報[ 6 ].ar難易度ラベル[ la ] != null )
@@ -1355,11 +1364,12 @@ namespace DTXMania
                                 //this.txクリアランプ.t3D描画( CDTXMania.app.Device, lamp, new Rectangle((CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.最大スキル.Drums != 0 ? 11 + la * 11 : 0), (CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.フルコンボ.Drums ? 10 : 0), 11, 10));
                             }
                         }
-                        this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 531, 243, new Rectangle(74, 80, 230, 230)); //真ん中の部分は別々に描画。
+                        if( this.tx選曲パネル != null )
+                            this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 531, 243, new Rectangle(74, 80, 230, 230)); //真ん中の部分は別々に描画。
 						// (A) スクロールが停止しているときの選択曲バーの描画。
                         #region [ ジャケット画像の描画 ]
                         //-----------------
-                        if (this.txパネル != null)
+                        if( this.txパネル != null )
                         {
                             var mat = SlimDX.Matrix.Identity;
                             mat *= SlimDX.Matrix.Scaling(CTexture.f画面比率, CTexture.f画面比率, 1.0f);
@@ -1370,7 +1380,8 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                             this.txパネル.t3D描画(CDTXMania.app.Device, mat);
                         }
-                        this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 457, 163, new Rectangle(0, 0, 363, 368));
+                        if( this.tx選曲パネル != null )
+                            this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 457, 163, new Rectangle(0, 0, 363, 368));
 
                         for( int la = 0; la < 5 ; la++ )
                         {
@@ -1411,11 +1422,13 @@ namespace DTXMania
                     else
                     {
                         // (B) スクロール中の選択曲バー、またはその他のバーの描画。
-                        this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
-                        this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 761, 233, new Rectangle(304, 70, 59, 242));
+                        if( this.txランプ用帯 != null )
+                            this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
+                        if( this.tx選曲パネル != null )
+                            this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 761, 233, new Rectangle(304, 70, 59, 242));
                         #region [ ジャケット画像の描画 ]
                         //-----------------
-                        if (this.txパネル != null)
+                        if( this.txパネル != null )
                         {
                             var mat = SlimDX.Matrix.Identity;
                             mat *= SlimDX.Matrix.Scaling(0.62f, 0.88f, 1.0f);
@@ -1426,7 +1439,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                             this.txパネル.t3D描画(CDTXMania.app.Device, mat);
                         }
-                        if (this.txTumbnail[nパネル番号] != null)
+                        if( this.txTumbnail[nパネル番号] != null )
                         {
                             float f拡大率 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width ;
                             float f拡大率2 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
@@ -1443,7 +1456,7 @@ namespace DTXMania
                         #endregion
                         #region [ タイトル名テクスチャを描画。]
                         //-----------------
-                        if (this.stバー情報[nパネル番号].txタイトル名 != null)
+                        if( this.stバー情報[nパネル番号].txタイトル名 != null )
                         {
                             //this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 0x58, y + 8 );
                             var mat = SlimDX.Matrix.Identity;
@@ -1455,7 +1468,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                             this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
                         }
-                        if (this.stバー情報[nパネル番号].txアーティスト名 != null)
+                        if( this.stバー情報[nパネル番号].txアーティスト名 != null )
                         {
                             var mat = SlimDX.Matrix.Identity;
                             mat *= SlimDX.Matrix.Scaling(0.35f, 0.45f, 1.0f);
