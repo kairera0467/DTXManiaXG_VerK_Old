@@ -631,9 +631,11 @@ namespace DTXMania
 						case 0xba:
 						case 0xbb:
 						case 0xbc:
+
                         case 0xbd:
                         case 0xbe:
-                        case 197:
+
+                        case 0xC5:
                         case 198:
                         case 200:
                         case 201:
@@ -3627,15 +3629,15 @@ namespace DTXMania
 							{
 								this.n可視チップ数[ c - 0x11 ]++;
 							}
-                            if ((32 <= c && c <= 39) || (147 <= c && c <= 159) || (169 <= c && c <= 175) || (208 <= c && c <= 211))
+                            if ( ( 0x20 <= c ) && ( c <= 0x27 ) || ( 0x93 <= c ) && ( c <= 0x9F ) || ( 0xA9 <= c ) && ( c <= 0xAF ) || ( 0xD0 <= c ) && ( c <= 0xD3 ) )
                             {
 								this.n可視チップ数.Guitar++;
 							}
-                            if ((160 <= c && c <= 167) || (197 <= c && c <= 198) || (200 <= c && c <= 207) || (218 <= c && c <= 223) || (225 <= c && c <= 232))
+                            if ( ( 0xA0 <= c ) && ( c <= 0xA7 ) || ( 0xC5 <= c ) && ( c <= 0xC6 ) || ( 0xC8 <= c ) && ( c <= 0xCF ) || ( 0xDA <= c ) && ( c <= 0xDF ) || ( 0xE1 <= c ) && ( c <= 0xE8 ) )
                             {
 								this.n可視チップ数.Bass++;
 							}
-                            if ( c >= 0x4C && c <= 0x4F )
+                            if ( ( c >= 0x4C ) && ( c <= 0x4F ) )
                             {
                                 this.nボーナスチップ数++;
                             }
