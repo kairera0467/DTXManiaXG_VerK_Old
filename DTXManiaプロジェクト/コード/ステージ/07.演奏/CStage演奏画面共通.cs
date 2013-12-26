@@ -998,9 +998,12 @@ namespace DTXMania
 						break;
 					}
 				}
-				else if (((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)) && ((160 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 168) || (197 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 198) || (200 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 207) || (218 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 223) || (225 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 232)))
+				else if (((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)))
 				{
-					break;
+                    if ((((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
+                    {
+					    break;
+                    }
 				}
 				// nIndex_NearestChip_Past--;
 			}
@@ -3009,10 +3012,10 @@ namespace DTXMania
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
-                        case 170:
+                        case 0xAA:
                             bGtBsR = true;
                             bGtBsG = true;
-                            bGtBsB = true;
+                            bGtBsP = true;
                             break;
                         case 171:
                             bGtBsR = true;
@@ -3109,25 +3112,25 @@ namespace DTXMania
                             break;
 
 
-                        case 218:
+                        case 0xDA:
                             bGtBsG = true;
                             bGtBsP = true;
                             break;
-                        case 219:
+                        case 0xDB:
                             bGtBsG = true;
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
-                        case 220:
+                        case 0xDC:
                             bGtBsR = true;
                             bGtBsP = true;
                             break;
-                        case 221:
+                        case 0xDD:
                             bGtBsR = true;
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
-                        case 222:
+                        case 0xDE:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsP = true;
@@ -3495,30 +3498,34 @@ namespace DTXMania
                                 bChipHasY = true;
                                 bChipHasP = true;
                                 break;
-                            case 0xD4:
+
+                                
+                            case 0xDA:
                                 bChipHasG = true;
                                 bChipHasP = true;
                                 break;
-                            case 0xD5:
+                            case 0xDB:
                                 bChipHasG = true;
                                 bChipHasB = true;
                                 bChipHasP = true;
                                 break;
-                            case 0xD6:
+                                
+                            case 0xDC:
                                 bChipHasR = true;
                                 bChipHasP = true;
                                 break;
-                            case 221:
+                                 
+                            case 0xDD:
                                 bChipHasR = true;
                                 bChipHasB = true;
                                 bChipHasP = true;
                                 break;
-                            case 222:
+                            case 0xDE:
                                 bChipHasR = true;
                                 bChipHasG = true;
                                 bChipHasP = true;
                                 break;
-                            case 223:
+                            case 0xDF:
                                 bChipHasR = true;
                                 bChipHasG = true;
                                 bChipHasB = true;
@@ -3528,17 +3535,17 @@ namespace DTXMania
                                 bChipHasY = true;
                                 bChipHasP = true;
                                 break;
-                            case 226:
+                            case 0xE2:
                                 bChipHasB = true;
                                 bChipHasY = true;
                                 bChipHasP = true;
                                 break;
-                            case 227:
+                            case 0xE3:
                                 bChipHasG = true;
                                 bChipHasY = true;
                                 bChipHasP = true;
                                 break;
-                            case 228:
+                            case 0xE4:
                                 bChipHasG = true;
                                 bChipHasB = true;
                                 bChipHasY = true;
