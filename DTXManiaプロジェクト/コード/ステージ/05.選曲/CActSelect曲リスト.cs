@@ -1385,7 +1385,7 @@ namespace DTXMania
 
                         for( int la = 0; la < 5 ; la++ )
                         {
-                            if( CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null )
+                            if( CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null && CDTXMania.stage選曲.r現在選択中の曲.arスコア != null )
                                 this.txクリアランプ.t2D描画(CDTXMania.app.Device, 506, 292 - la * 13, new Rectangle((CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.最大スキル.Drums != 0 ? 11 + la * 11 : 0), ( CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.フルコンボ.Drums ? 10 : 0), 11, 10));
                         }
                         if( this.txTumbnail[ nパネル番号 ] != null )
