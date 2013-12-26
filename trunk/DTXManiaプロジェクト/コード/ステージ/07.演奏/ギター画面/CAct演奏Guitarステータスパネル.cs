@@ -24,7 +24,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_score numbers_Guitar.png" ) );
+                this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Score numbers_Guitar.png" ) );
                 this.b4font = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.b4font);
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -36,8 +36,11 @@ namespace DTXMania
 
                 #region[ ギターNamePlate ]
                 this.iNamePlateGt = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar.png"));
+                this.iNamePlateBs = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar.png"));
                 Graphics gNamePlateGt = Graphics.FromImage(this.b4font);
-                this.bNamePlateL = new Bitmap(250, 266);
+                Graphics gNamePlateBs = Graphics.FromImage(this.b4font);
+                this.bNamePlateL = new Bitmap( 250, 266 );
+                this.bNamePlateR = new Bitmap( 250, 266 );
                 gNamePlateGt = Graphics.FromImage(this.bNamePlateL);
                 gNamePlateGt.Dispose();
                 gNamePlateGt = Graphics.FromImage(this.bNamePlateL);
@@ -71,7 +74,7 @@ namespace DTXMania
 
 				//this.tx左パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_nameplate_Guitar.png" ) );
                 this.tx左パネル = new CTexture(CDTXMania.app.Device, this.bNamePlateL, CDTXMania.TextureFormat, false);
-				this.tx右パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay status panels right.png" ) );
+				//this.tx右パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay status panels right.png" ) );
                 //this.tx曲名パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_songpanel.png"));
                 this.tx曲名パネル = new CTexture(CDTXMania.app.Device, this.bSongPanel, CDTXMania.TextureFormat, false);
 
@@ -117,7 +120,7 @@ namespace DTXMania
 						guitar = 15;
 					}
                     #region[ スコア表示 ]
-                    this.n現在のスコアGuitar = (long)CDTXMania.stage演奏ドラム画面.actScore.n現在表示中のスコア.Drums;
+                    this.n現在のスコアGuitar = (long)CDTXMania.stage演奏ギター画面.actScore.n現在表示中のスコア.Guitar;
                     if( CDTXMania.ConfigIni.nSkillMode == 0 )
                     {
                         string str = this.nCurrentScore.ToString("0000000000");
@@ -127,21 +130,21 @@ namespace DTXMania
                             char ch = str[i];
                             if (ch.Equals(' '))
                             {
-                                rectangle = new Rectangle(0, 0, 24, 27);
+                                rectangle = new Rectangle(0, 0, 24, 25);
                             }
                             else
                             {
                                 int num3 = int.Parse(str.Substring(i, 1));
                                 if (num3 < 5)
                                 {
-                                    rectangle = new Rectangle((num3 * 24), 0, 24, 27);
+                                    rectangle = new Rectangle((num3 * 24), 0, 24, 25);
                                 }
                                 else
                                 {
-                                    rectangle = new Rectangle((num3 * 24), 0, 24, 36);
+                                    rectangle = new Rectangle((num3 * 24), 0, 24, 25);
                                 }
                             }
-                            if (this.txScore != null)
+                            if( this.txScore != null )
                             {
                                 SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
                                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
@@ -164,25 +167,25 @@ namespace DTXMania
                     }
                     else if( CDTXMania.ConfigIni.nSkillMode == 1 )
                     {
-                        string str = this.nCurrentScore.ToString("0000000");
+                        string str = this.n現在のスコアGuitar.ToString("0000000");
                         for( int i = 0; i < 7; i++ )
                         {
                             Rectangle rectangle;
                             char ch = str[i];
                             if (ch.Equals(' '))
                             {
-                                rectangle = new Rectangle(0, 0, 24, 27);
+                                rectangle = new Rectangle(0, 0, 24, 25);
                             }
                             else
                             {
                                 int num3 = int.Parse(str.Substring(i, 1));
                                 if (num3 < 5)
                                 {
-                                    rectangle = new Rectangle((num3 * 24), 0, 24, 27);
+                                    rectangle = new Rectangle((num3 * 24), 0, 24, 25);
                                 }
                                 else
                                 {
-                                    rectangle = new Rectangle((num3 * 24), 0, 24, 27);
+                                    rectangle = new Rectangle((num3 * 24), 0, 24, 25);
                                 }
                             }
                             if( this.txScore != null )
@@ -190,10 +193,10 @@ namespace DTXMania
                                 SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
                                 if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                                 {
-                                    matScoreXG *= SlimDX.Matrix.Translation(-870 + (i * 30), 114 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
-                                    matScoreXG *= SlimDX.Matrix.Scaling(0.47f, 0.65f, 1.0f);
-                                    matScoreXG *= SlimDX.Matrix.RotationY(-0.60f);
-                                    this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
+                                    //matScoreXG *= SlimDX.Matrix.Translation(-870 + (i * 30), 114 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
+                                    //matScoreXG *= SlimDX.Matrix.Scaling(0.47f, 0.65f, 1.0f);
+                                    //matScoreXG *= SlimDX.Matrix.RotationY(-0.60f);
+                                    this.txScore.t2D描画(CDTXMania.app.Device, 402 + ( i * 25 ), 396, rectangle);
                                 }
                                 else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                                 {
@@ -247,7 +250,7 @@ namespace DTXMania
         private CTexture tx曲名パネル;
         private Bitmap b4font;
         private Bitmap bNamePlateL;
-        //private Bitmap bNamePlateR;
+        private Bitmap bNamePlateR;
         private Bitmap bSongPanel;
         //private Bitmap bDifficulty;
         private Font ftDifficultyL;
@@ -263,7 +266,7 @@ namespace DTXMania
         //private Image iDrumspeed;
         //private Image iRisky;
         private Image iNamePlateGt;
-        //private Image iNamePlateBs;
+        private Image iNamePlateBs;
         private Image iSongPanel;
         //private Image iDifficulty;
         private CTexture txScore;

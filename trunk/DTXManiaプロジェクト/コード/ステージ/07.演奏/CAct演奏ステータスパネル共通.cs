@@ -78,6 +78,8 @@ namespace DTXMania
         public override void On活性化()
         {
             this.nCurrentScore = 0L;
+            this.n現在のスコアGuitar = 0L;
+            this.n現在のスコアBass = 0L;
             this.nStatus = 0;
             this.nIndex = 0;
             base.On活性化();
