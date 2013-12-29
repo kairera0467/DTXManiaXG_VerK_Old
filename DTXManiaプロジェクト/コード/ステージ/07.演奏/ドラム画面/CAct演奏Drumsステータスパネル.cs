@@ -14,14 +14,14 @@ namespace DTXMania
     {
         public override void On活性化()
         {
-            this.ftDisplayFont = new Font( "ＤＦＧ平成ゴシック体W5", 22f, FontStyle.Regular, GraphicsUnit.Pixel );
-            this.ftGroupFont = new Font( "ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel );
+            this.ftDisplayFont = new Font( "ＤＦＧ平成ゴシック体W5" , 22f, FontStyle.Regular, GraphicsUnit.Pixel );
+            this.ftGroupFont = new Font( "ＤＦＧ平成ゴシック体W5" , 16f, FontStyle.Regular, GraphicsUnit.Pixel );
             this.ftLevelFont = new Font( "Impact", 26f, FontStyle.Regular );
             this.ftDifficultyL = new Font( "Arial", 30f, FontStyle.Bold );
             this.ftDifficultyS = new Font( "Arial", 20f, FontStyle.Bold );
 
             this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 20, FontStyle.Bold ); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
-            this.pfSongTitleFont = new CPrivateFastFont( new FontFamily( "ＤＦＧ平成ゴシック体W5" ), 22, FontStyle.Regular );
+            this.pfSongTitleFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 22, FontStyle.Regular );
             if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
             {
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 

@@ -537,8 +537,17 @@ namespace DTXMania
 				nCurrentPosition = index;
 				nNumOfItems = list.Count;
 			}
-            CDTXMania.tテクスチャの解放( ref this.tx選択されている曲の曲名 );
-            CDTXMania.tテクスチャの解放( ref this.tx選択されている曲のアーティスト名 );
+
+            if( this.tx選択されている曲の曲名 != null )
+            {
+                this.tx選択されている曲の曲名.Dispose();
+                this.tx選択されている曲の曲名 = null;
+            }
+            if( this.tx選択されている曲のアーティスト名 != null )
+            {
+                this.tx選択されている曲のアーティスト名.Dispose();
+                this.tx選択されている曲のアーティスト名 = null;
+            }
 		}
 
 		// CActivity 実装
@@ -711,11 +720,14 @@ namespace DTXMania
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txアーティスト名 );
             }
 
-            if( this.tx選択されている曲の曲名 != null || this.tx選択されている曲のアーティスト名 != null )
-            {   
-                CDTXMania.tテクスチャの解放( ref this.tx選択されている曲の曲名 );
-                CDTXMania.tテクスチャの解放( ref this.tx選択されている曲のアーティスト名 );
+            if( this.tx選択されている曲の曲名 != null )
+            {
+                this.tx選択されている曲の曲名.Dispose();
                 this.tx選択されている曲の曲名 = null;
+            }
+            if( this.tx選択されている曲のアーティスト名 != null )
+            {
+                this.tx選択されている曲のアーティスト名.Dispose();
                 this.tx選択されている曲のアーティスト名 = null;
             }
             #region[ ジャケット画像の解放 ]
@@ -922,12 +934,15 @@ namespace DTXMania
 						this.n現在のスクロールカウンタ -= 100;
 						this.n目標のスクロールカウンタ -= 100;
 
-						this.t選択曲が変更された(false);				// スクロールバー用に今何番目を選択しているかを更新
-                        if( this.tx選択されている曲の曲名 != null && this.tx選択されている曲のアーティスト名 != null )
+						this.t選択曲が変更された( false );				// スクロールバー用に今何番目を選択しているかを更新
+                        if( this.tx選択されている曲の曲名 != null )
                         {
                             this.tx選択されている曲の曲名.Dispose();
-                            this.tx選択されている曲のアーティスト名.Dispose();
                             this.tx選択されている曲の曲名 = null;
+                        }
+                        if( this.tx選択されている曲のアーティスト名 != null )
+                        {
+                            this.tx選択されている曲のアーティスト名.Dispose();
                             this.tx選択されている曲のアーティスト名 = null;
                         }
 
@@ -998,11 +1013,14 @@ namespace DTXMania
 
 
 						this.t選択曲が変更された( false );				// スクロールバー用に今何番目を選択しているかを更新
-                        if( this.tx選択されている曲の曲名 != null && this.tx選択されている曲のアーティスト名 != null )
+                        if( this.tx選択されている曲の曲名 != null )
                         {
                             this.tx選択されている曲の曲名.Dispose();
-                            this.tx選択されている曲のアーティスト名.Dispose();
                             this.tx選択されている曲の曲名 = null;
+                        }
+                        if( this.tx選択されている曲のアーティスト名 != null )
+                        {
+                            this.tx選択されている曲のアーティスト名.Dispose();
                             this.tx選択されている曲のアーティスト名 = null;
                         }
 						
@@ -1197,9 +1215,9 @@ namespace DTXMania
                             #endregion
 							#region [ タイトル名テクスチャを描画。]
 							//-----------------
-                            if( this.stバー情報[ nパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ nパネル番号 ].strタイトル文字列 != null )
+                            if( this.stバー情報[ nパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ nパネル番号 ].strタイトル文字列 != null && this.tx選択されている曲の曲名 == null )
                                 this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
-                            if( this.stバー情報[ nパネル番号 ].strアーティスト名 != "" && this.stバー情報[ nパネル番号 ].strアーティスト名 != null )
+                            if( this.stバー情報[ nパネル番号 ].strアーティスト名 != "" && this.stバー情報[ nパネル番号 ].strアーティスト名 != null && this.tx選択されている曲のアーティスト名 == null )
                                 this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strアーティスト名 );
 
 						    if( this.tx選択されている曲の曲名 != null )
@@ -1413,9 +1431,9 @@ namespace DTXMania
                         #endregion
 						#region [ タイトル名テクスチャを描画。]
 						//-----------------
-                        if( this.stバー情報[ nパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ nパネル番号 ].strタイトル文字列 != null )
+                        if( this.stバー情報[ nパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ nパネル番号 ].strタイトル文字列 != null && this.tx選択されている曲の曲名 == null )
                             this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
-                        if( this.stバー情報[ nパネル番号 ].strアーティスト名 != "" && this.stバー情報[ nパネル番号 ].strアーティスト名 != null )
+                        if( this.stバー情報[ nパネル番号 ].strアーティスト名 != "" && this.stバー情報[ nパネル番号 ].strアーティスト名 != null && this.tx選択されている曲のアーティスト名 == null )
                             this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strアーティスト名 );
 
 						if( this.tx選択されている曲の曲名 != null )
@@ -1893,7 +1911,7 @@ namespace DTXMania
 				this.stバー情報[ i ].eバー種別 = this.e曲のバー種別を返す( song );
                 this.stバー情報[ i ].ar譜面情報 = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報;
 
-                for( int n = 0; n < 5; n++ )
+                //for( int n = 0; n < 5; n++ )
                 {
                     //this.stバー情報[ i ].ar難易度ラベル[ n ];
 
@@ -1963,12 +1981,12 @@ namespace DTXMania
         }
         private void tパスを指定してサムネイル画像を生成する( int nバー番号, string strDTXPath, Eバー種別 eType )
         {
-            if (nバー番号 < 0 || nバー番号 > 12)
+            if( nバー番号 < 0 || nバー番号 > 12 )
                 return;
 
             //try
 			{
-                //if (eType == Eバー種別.Score || eType == Eバー種別.Box)
+                //if ( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Score || this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Box)
                 {
                     if (!File.Exists(strDTXPath))
                     {
@@ -1979,15 +1997,16 @@ namespace DTXMania
                         this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(strDTXPath);
                     }
                 }
-                //else if (eType == Eバー種別.Random)
-                {
-                    //this.txTumbnail[ nバー番号 ] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage random.png"), false);
-                }
-                //else if (eType == Eバー種別.BackBox)
-                {
-                    //if(this.txジャケットボックスクローズ != null)
-                    //this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage random.png"), false);
-                }
+                //else if( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Random)
+                //{
+                //    if( this.txジャケットランダム != null )
+                //        this.txTumbnail[ nバー番号 ] = this.txジャケットランダム;
+                //}
+                //else if( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.BackBox)
+                //{
+                //    if( this.txジャケットボックスクローズ != null )
+                //        this.txTumbnail[ nバー番号 ] = this.txジャケットボックスクローズ;
+                //}
 			}
             /*
 			catch( CTextureCreateFailedException )

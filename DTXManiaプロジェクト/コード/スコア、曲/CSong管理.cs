@@ -791,6 +791,11 @@ namespace DTXMania
 			cスコア.譜面情報.演奏履歴.行5 = br.ReadString();
 			cスコア.譜面情報.レベルを非表示にする = br.ReadBoolean();
             cスコア.譜面情報.b完全にCLASSIC譜面である.Drums = br.ReadBoolean();
+            cスコア.譜面情報.b完全にCLASSIC譜面である.Guitar = br.ReadBoolean();
+            cスコア.譜面情報.b完全にCLASSIC譜面である.Bass = br.ReadBoolean();
+            cスコア.譜面情報.b譜面がある.Drums = br.ReadBoolean();
+            cスコア.譜面情報.b譜面がある.Guitar = br.ReadBoolean();
+            cスコア.譜面情報.b譜面がある.Bass = br.ReadBoolean();
 			cスコア.譜面情報.曲種別 = (CDTX.E種別) br.ReadInt32();
 			cスコア.譜面情報.Bpm = br.ReadDouble();
 			cスコア.譜面情報.Duration = br.ReadInt32();
@@ -848,6 +853,9 @@ namespace DTXMania
                                     c曲リストノード.arスコア[ i ].譜面情報.レベルDec.Drums = cdtx.LEVELDEC.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベルを非表示にする = cdtx.HIDDENLEVEL;
                                     c曲リストノード.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums = (cdtx2.bチップがある.LeftCymbal == false && cdtx2.bチップがある.LP == false && cdtx2.bチップがある.LBD == false && cdtx2.bチップがある.FT == false && cdtx2.bチップがある.Ride == false) ? true : false;
+                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Drums = cdtx2.bチップがある.Drums;
+                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Guitar = cdtx2.bチップがある.Guitar;
+                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Bass = cdtx2.bチップがある.Bass;
 									c曲リストノード.arスコア[ i ].譜面情報.曲種別 = cdtx.e種別;
 									c曲リストノード.arスコア[ i ].譜面情報.Bpm = cdtx.BPM;
 									c曲リストノード.arスコア[ i ].譜面情報.Duration = 0;	//  (cdtx.listChip == null)? 0 : cdtx.listChip[ cdtx.listChip.Count - 1 ].n発声時刻ms;
@@ -1145,6 +1153,11 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.演奏履歴.行5 );
 					bw.Write( node.arスコア[ i ].譜面情報.レベルを非表示にする );
                     bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums );
+                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Guitar );
+                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Bass );
+                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Drums );
+                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Guitar );
+                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Bass );
 					bw.Write( (int) node.arスコア[ i ].譜面情報.曲種別 );
 					bw.Write( node.arスコア[ i ].譜面情報.Bpm );
 					bw.Write( node.arスコア[ i ].譜面情報.Duration );
