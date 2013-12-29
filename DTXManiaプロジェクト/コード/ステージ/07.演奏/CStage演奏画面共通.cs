@@ -704,13 +704,13 @@ namespace DTXMania
 		protected Stopwatch sw2;
 //		protected GCLatencyMode gclatencymode;
 
-        public void AddMixer( CSound cs, bool _b演奏終了後も再生が続くチップである )
+		public void AddMixer( CSound cs, bool _b演奏終了後も再生が続くチップである )
 		{
 			stmixer stm = new stmixer()
 			{
 				bIsAdd = true,
 				csound = cs,
-                b演奏終了後も再生が続くチップである = _b演奏終了後も再生が続くチップである
+				b演奏終了後も再生が続くチップである = _b演奏終了後も再生が続くチップである
 			};
 			queueMixerSound.Enqueue( stm );
 //		Debug.WriteLine( "★Queue: add " + Path.GetFileName( stm.csound.strファイル名 ));
@@ -721,7 +721,7 @@ namespace DTXMania
 			{
 				bIsAdd = false,
 				csound = cs,
-                b演奏終了後も再生が続くチップである = false
+				b演奏終了後も再生が続くチップである = false
 			};
 			queueMixerSound.Enqueue( stm );
 //		Debug.WriteLine( "★Queue: remove " + Path.GetFileName( stm.csound.strファイル名 ));
@@ -961,7 +961,7 @@ namespace DTXMania
 					}
 					continue;	// ほんの僅かながら高速化
 				}
-				else if ((nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || (((0x20 <= nChannel && nChannel <= 0x28) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || (0xD0 <= nChannel && nChannel <= 0xD3)) && chip.nチャンネル番号 == nChannel))
+				else if( ( nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || ( ( ( 0x20 <= nChannel && nChannel <= 0x28 ) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || (0xD0 <= nChannel && nChannel <= 0xD3)) && chip.nチャンネル番号 == nChannel))
 				{
 					if ( chip.n発声時刻ms > nTime )
 					{
@@ -969,7 +969,7 @@ namespace DTXMania
 					}
 					nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
 				}
-                else if ((nChannel == 0x4F && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
+                else if( ( nChannel == 0x4F ) &&  ( chip.e楽器パート == E楽器パート.BASS ) || ((( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel))
 				{
 					if ( chip.n発声時刻ms > nTime )
 					{
@@ -984,23 +984,23 @@ namespace DTXMania
 			for ( ; nIndex_NearestChip_Past >= 0; nIndex_NearestChip_Past-- )
 			{
                 CDTX.CChip chip = listChip[nIndex_NearestChip_Past];
-				if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1c ) )
+				if( ( 0x11 <= nChannel ) && ( nChannel <= 0x1c ) )
 				{
-					if ( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
+					if( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 					{
 						break;
 					}
 				}
-				else if ((nChannel == 47 && chip.e楽器パート == E楽器パート.GUITAR) || (((0x20 <= nChannel && nChannel <= 0x28) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
+				else if( ( nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || (((0x20 <= nChannel && nChannel <= 0x28) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel))
 				{
-					if ( ( 0x20 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 0x28 ) || (((0x20 <= nChannel && nChannel <= 0x28) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel) )
+					if( ( 0x20 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 0x28 ) || (((0x20 <= nChannel && nChannel <= 0x28) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel) )
 					{
 						break;
 					}
 				}
-				else if (((nChannel == 175 && chip.e楽器パート == E楽器パート.BASS) || (((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel)))
+				else if (((nChannel == 0xAF && chip.e楽器パート == E楽器パート.BASS) || ( ( ( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( 0xC5 <= nChannel && nChannel <= 0xC6) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel)))
 				{
-                    if ((((160 <= nChannel && nChannel <= 168) || (197 <= nChannel && nChannel <= 198) || (200 <= nChannel && nChannel <= 207) || (218 <= nChannel && nChannel <= 223) || (225 <= nChannel && nChannel <= 232)) && chip.nチャンネル番号 == nChannel))
+                    if( ( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( ( ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel ) )
                     {
 					    break;
                     }
@@ -1741,7 +1741,7 @@ namespace DTXMania
 						}
 						continue;
 					}
-                    else if ((nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || (((32 <= nChannel && nChannel <= 40) || (147 <= nChannel && nChannel <= 159) || (169 <= nChannel && nChannel <= 175) || (208 <= nChannel && nChannel <= 211)) && chip.nチャンネル番号 == nChannel))
+                    else if ((nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || ( ( ( 0x20 <= nChannel && nChannel <= 0x28 ) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel))
                     {
                         if( chip.n発声時刻ms > nTime)
                         {
@@ -1774,16 +1774,15 @@ namespace DTXMania
 							(
 								( ( nChannel == 0x2f ) && ( chip.e楽器パート == E楽器パート.GUITAR ) ) ||
 								( ( ( nChannel >= 0x20 ) && ( nChannel <= 0x28 ) ) ||
-                                ( 147 <= nChannel && nChannel <= 159 ) ||
-                                ( 169 <= nChannel && nChannel <= 175 ) ||
-                                ( 208 <= nChannel && nChannel <= 211 )
+                                ( 0x93 <= nChannel && nChannel <= 0x9F ) ||
+                                ( 0xA9 <= nChannel && nChannel <= 0xAF ) ||
+                                ( 0xD0 <= nChannel && nChannel <= 0xD3 )
                                 && ( chip.nチャンネル番号 == nChannel ) )
 							)
 							||
 							(
 								( ( nChannel == 0xaf ) && ( chip.e楽器パート == E楽器パート.BASS ) ) ||
 								( ( ( nChannel >= 0xA0 ) && ( nChannel <= 0xa8 ) ) ||
-                                ( 0xA0 <= nChannel && nChannel <= 0xA8 ) ||
                                 ( 0xC5 <= nChannel && nChannel <= 0xC6 ) ||
                                 ( 0xC8 <= nChannel && nChannel <= 0xCF ) ||
                                 ( 0xDA <= nChannel && nChannel <= 0xDF ) ||
@@ -2989,15 +2988,15 @@ namespace DTXMania
                         case 0xA4:
                             bGtBsR = true;
                             break;
-                        case 165:
+                        case 0xA5:
                             bGtBsR = true;
                             bGtBsB = true;
                             break;
-                        case 166:
+                        case 0xA6:
                             bGtBsR = true;
                             bGtBsG = true;
                             break;
-                        case 167:
+                        case 0xA7:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsB = true;
@@ -3007,7 +3006,7 @@ namespace DTXMania
                         case 0xA8:
                             bGtBsW = true;
                             break;
-                        case 169:
+                        case 0xA9:
                             bGtBsR = true;
                             bGtBsB = true;
                             bGtBsP = true;
@@ -3017,72 +3016,74 @@ namespace DTXMania
                             bGtBsG = true;
                             bGtBsP = true;
                             break;
-                        case 171:
+                        case 0xAB:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
-                        case 172:
+                        case 0xAC:
                             bGtBsY = true;
                             bGtBsP = true;
                             break;
-                        case 173:
+                        case 0xAD:
                             bGtBsB = true;
                             bGtBsY = true;
                             bGtBsP = true;
                             break;
-                        case 174:
+                        case 0xAE:
                             bGtBsG = true;
                             bGtBsY = true;
                             bGtBsP = true;
                             break;
-                        case 175:
+                        case 0xAF:
                             bGtBsG = true;
                             bGtBsB = true;
                             bGtBsY = true;
                             bGtBsP = true;
                             break;
-                        case 197:
+
+                        case 0xC5:
                             bGtBsY = true;
                             break;
-                        case 198:
+                        case 0xC6:
                             bGtBsB = true;
                             bGtBsY = true;
                             break;
-                        case 200:
+
+                        case 0xC8:
                             bGtBsG = true;
                             bGtBsY = true;
                             break;
-                        case 201:
+                        case 0xC9:
                             bGtBsG = true;
                             bGtBsB = true;
                             bGtBsY = true;
                             break;
-                        case 202:
+                        case 0xCA:
                             bGtBsR = true;
                             bGtBsY = true;
                             break;
-                        case 203:
+                        case 0xCB:
                             bGtBsR = true;
                             bGtBsB = true;
                             bGtBsY = true;
                             break;
-                        case 204:
+                        case 0xCC:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsY = true;
                             break;
-                        case 205:
+                        case 0xCD:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsB = true;
                             bGtBsY = true;
                             break;
-                        case 206:
+                        case 0xCE:
                             bGtBsP = true;
                             break;
-                        case 207:
+                        case 0xCF:
                             bGtBsB = true;
                             bGtBsP = true;
                             break;
@@ -3135,7 +3136,7 @@ namespace DTXMania
                             bGtBsG = true;
                             bGtBsP = true;
                             break;
-                        case 223:
+                        case 0xDF:
                             bGtBsR = true;
                             bGtBsG = true;
                             bGtBsB = true;
@@ -3145,12 +3146,12 @@ namespace DTXMania
                             bGtBsY = true;
                             bGtBsP = true;
                             break;
-                        case 226:
+                        case 0xE2:
                             bGtBsB = true;
                             bGtBsY = true;
                             bGtBsP = true;
                             break;
-                        case 227:
+                        case 0xE3:
                             bGtBsG = true;
                             bGtBsY = true;
                             bGtBsP = true;
@@ -3300,6 +3301,7 @@ namespace DTXMania
                         bChipHasB = true;
                         break;
                     case 0x28:
+                        bChipHasW = true;
                         break;
                     default:
                         switch (nチャンネル番号)
@@ -3447,7 +3449,7 @@ namespace DTXMania
                                 bChipHasB = true;
                                 bChipHasY = true;
                                 break;
-                            case 202:
+                            case 0xCA:
                                 bChipHasR = true;
                                 bChipHasY = true;
                                 break;
@@ -3456,12 +3458,12 @@ namespace DTXMania
                                 bChipHasB = true;
                                 bChipHasY = true;
                                 break;
-                            case 204:
+                            case 0xCC:
                                 bChipHasR = true;
                                 bChipHasG = true;
                                 bChipHasY = true;
                                 break;
-                            case 205:
+                            case 0xCD:
                                 bChipHasR = true;
                                 bChipHasG = true;
                                 bChipHasB = true;
@@ -4423,6 +4425,7 @@ namespace DTXMania
                     this.actRGB.Push( P );
                 }
 
+                //バグが起こる場所(推定)　こ↑こ↓から
                 if( bAutoBassR && bIsAutoPlay.BsR )
                 {
                     this.actLaneFlushGB.Start( 5 );
@@ -4448,6 +4451,7 @@ namespace DTXMania
                     this.actLaneFlushGB.Start( 9 );
                     this.actRGB.Push( P );
                 }
+                //バグが起こる場所(推定)　こ↑こ↓まで
             }
 //			else
 			{
@@ -4546,6 +4550,9 @@ namespace DTXMania
                                     bChipHasG = true;
                                     bChipHasB = true;
                                     break;
+                                case 0x28:
+                                    bChipHasW = true;
+                                    break;
                                 default:
                                     switch ( pChip.nチャンネル番号 )
                                     {
@@ -4636,6 +4643,9 @@ namespace DTXMania
                                             bChipHasB = true;
                                             break;
                                         //OK
+                                        case 0xA8:
+                                            bChipHasW = true;
+                                            break;
 
                                         case 0xA9:
                                             bChipHasR = true;

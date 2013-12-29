@@ -165,7 +165,7 @@ namespace DTXMania
 
                 this.t進行描画・グラフ();
 
-				this.t進行描画・コンボ();
+
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
@@ -236,6 +236,7 @@ namespace DTXMania
                 this.t進行描画・判定ライン();
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
+                this.t進行描画・コンボ();
                 this.t進行描画・RGBボタン();
 				this.t進行描画・演奏情報();
 				//this.t進行描画・Wailing枠();

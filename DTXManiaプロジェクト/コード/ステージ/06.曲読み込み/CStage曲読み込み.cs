@@ -680,7 +680,7 @@ namespace DTXMania
                             CDTXMania.DTX.tギターとベースのランダム化(E楽器パート.GUITAR, CDTXMania.ConfigIni.eRandom.Guitar);
                             CDTXMania.DTX.tギターとベースのランダム化(E楽器パート.BASS, CDTXMania.ConfigIni.eRandom.Bass);
 
-                            if (CDTXMania.ConfigIni.bギタレボモード)
+                            if (CDTXMania.ConfigIni.bGuitar有効)
                                 CDTXMania.stage演奏ギター画面.On活性化();
                             else
                                 CDTXMania.stage演奏ドラム画面.On活性化();
