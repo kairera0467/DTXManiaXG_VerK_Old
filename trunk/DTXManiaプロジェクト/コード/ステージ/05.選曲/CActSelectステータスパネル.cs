@@ -497,7 +497,7 @@ namespace DTXMania
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], string.Format("{0,2:00}", n難易度小数[i]));
                                 this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
                             }
-                            else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM || !CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.b譜面がある.Drums )
+                            else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE && !CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.b譜面がある.Drums || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM )
                             {
                                 this.t大文字表示(419 + (i * 143), 62 - y差分[i], ("-"));
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], ("--"));
@@ -539,7 +539,7 @@ namespace DTXMania
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], string.Format("{0,2:00}", n難易度小数[i]));
                                 this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
                             }
-                            else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM || !CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.b譜面がある.Guitar )
+                            else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE && !CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.b譜面がある.Guitar || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM )
                             {
                                 this.t大文字表示(419 + (i * 143), 62 - y差分[i], ("-"));
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], ("--"));
@@ -567,7 +567,7 @@ namespace DTXMania
 
                                 this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 290 + (i * 143), 598 - y差分[ i ], new Rectangle(145, 54, 7, 8));
                             }
-                            else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM || !CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.b譜面がある.Bass )
+                            else if (CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE && !CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.b譜面がある.Bass || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM )
                             {
                                 this.t大文字表示(268 + (i * 143), 566 - y差分[i], ("-"));
                                 this.t小文字表示(298 + (i * 143), 580 - y差分[i], ("--"));
