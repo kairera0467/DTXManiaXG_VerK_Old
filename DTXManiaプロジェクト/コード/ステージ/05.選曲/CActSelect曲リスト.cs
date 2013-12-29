@@ -2079,7 +2079,9 @@ namespace DTXMania
             float f拡大率X = (width <= n最大幅px) ? 0.5f : (((float)n最大幅px / (float)width) * 0.5f);	// 長い文字列は横方向に圧縮。
 
             CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
-            tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( f拡大率X, 0.5f, 1f );
+
+            if( tx文字テクスチャ != null )
+                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( f拡大率X, 0.5f, 1f );
 
             //prvFont.Dispose();
             bmp.Dispose();
