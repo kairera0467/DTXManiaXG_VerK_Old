@@ -992,7 +992,7 @@ namespace DTXMania
 			this.str曲データ検索パス = @".\";
 			this.b全画面モード = false;
 			this.b垂直帰線待ちを行う = true;
-            this.b縮小文字のアンチエイリアスを有効にする = false;
+            this.b縮小文字のアンチエイリアスを有効にする = true;
             this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
             this.n初期ウィンドウ開始位置Y = 0;
             this.bDirectShowMode = false;
@@ -1195,9 +1195,9 @@ namespace DTXMania
 			this.bUseBoxDefSkin = true;					// #28195 2012.5.6 yyagi box.defによるスキン切替機能を使用するか否か
             this.bTight = false;                        // #29500 2012.9.11 kairera0467
             this.nSoundDeviceType = (int)ESoundDeviceTypeForConfig.ACM; // #24820 2012.12.23 yyagi 初期値はACM
-            this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
+//          this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
             this.nASIODevice = 0;                       // #24820 2013.1.17 yyagi
-            //this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
+//          this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
             this.bDynamicBassMixerManagement = true;    //
             this.bTimeStretch = false;					// #23664 2013.2.24 yyagi 初期値はfalse (再生速度変更を、ピッチ変更にて行う)
 
@@ -1415,13 +1415,14 @@ namespace DTXMania
 			sw.WriteLine();
             #endregion
             sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
+            sw.WriteLine( "; 文字やネームプレートなどの縮小している画像に対してアンチエイリアス処理をします。" );
             sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine("; DirectShowでのワイドクリップ再生 (0:OFF, 1:ON)");
+            sw.WriteLine( "; DirectShowでのワイドクリップ再生 (0:OFF, 1:ON)");
             sw.WriteLine( "DirectShowMode={0}", this.bDirectShowMode ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine("; 選曲画面の難易度表示をXG表示にする (0:OFF, 1:ON)");
-            sw.WriteLine("Difficlty={0}", this.b難易度表示をXG表示にする ? 1 : 0);
+            sw.WriteLine( "; 選曲画面の難易度表示をXG表示にする (0:OFF, 1:ON)");
+            sw.WriteLine( "Difficlty={0}", this.b難易度表示をXG表示にする ? 1 : 0);
             sw.WriteLine();
 			sw.WriteLine( "; 背景画像の半透明割合(0:透明～255:不透明)" );
 			sw.WriteLine( "; Transparency for background image in playing screen.(0:tranaparent - 255:no transparent)" );
@@ -2751,9 +2752,13 @@ namespace DTXMania
 											{
 												this.nRisky = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nRisky );
 											}
-                                            else if (str3.Equals("HAZARD"))				// #29500 2012.9.11 kairera0467
+                                            else if( str3.Equals( "HAZARD" ) )				// #29500 2012.9.11 kairera0467
                                             {
-                                                this.bHAZARD = C変換.bONorOFF(str4[0]);
+                                                this.bHAZARD = C変換.bONorOFF( str4[ 0 ] );
+                                            }
+                                            else if( str3.Equals( "AssignToLBD" ) )
+                                            {
+                                                this.bAssignToLBD.Drums = C変換.bONorOFF( str4[ 0 ] );
                                             }
                                             else if (str3.Equals("JudgeLine"))
                                             {

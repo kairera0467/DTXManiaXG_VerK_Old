@@ -242,8 +242,11 @@ namespace DTXMania
             if( this.tx選択されている曲の曲名 != null )
             {   
                 this.tx選択されている曲の曲名.Dispose();
-                this.tx選択されている曲のアーティスト名.Dispose();
                 this.tx選択されている曲の曲名 = null;
+            }
+            if( this.tx選択されている曲のアーティスト名 != null )
+            {
+                this.tx選択されている曲のアーティスト名.Dispose();
                 this.tx選択されている曲のアーティスト名 = null;
             }
 			if( ( this.r現在選択中の曲.list子リスト != null ) && ( this.r現在選択中の曲.list子リスト.Count > 0 ) )
@@ -282,8 +285,11 @@ namespace DTXMania
             if( this.tx選択されている曲の曲名 != null )
             {   
                 this.tx選択されている曲の曲名.Dispose();
-                this.tx選択されている曲のアーティスト名.Dispose();
                 this.tx選択されている曲の曲名 = null;
+            }
+            if( this.tx選択されている曲のアーティスト名 != null )
+            {
+                this.tx選択されている曲のアーティスト名.Dispose();
                 this.tx選択されている曲のアーティスト名 = null;
             }
             if ( this.r現在選択中の曲.r親ノード != null )
@@ -531,6 +537,8 @@ namespace DTXMania
 				nCurrentPosition = index;
 				nNumOfItems = list.Count;
 			}
+            CDTXMania.tテクスチャの解放( ref this.tx選択されている曲の曲名 );
+            CDTXMania.tテクスチャの解放( ref this.tx選択されている曲のアーティスト名 );
 		}
 
 		// CActivity 実装
@@ -575,7 +583,8 @@ namespace DTXMania
 				return;
 
 			CDTXMania.t安全にDisposeする( ref this.ft曲リスト用フォント );
-            this.prvFont.Dispose();
+            if( this.prvFont != null )
+                this.prvFont.Dispose();
 
 			for( int i = 0; i < 13; i++ )
 				this.ct登場アニメ用[ i ] = null;
@@ -601,6 +610,7 @@ namespace DTXMania
             this.tx帯 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_backpanel.png" ) );
             this.tx色帯 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_ColorBar.png" ) );
             this.txランプ用帯 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_lamppanel.png" ));
+            
             this.txクリアランプ = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_Clearlamp.png") );
             #region[ テクスチャの復元 ]
             int nKeys = this.dicThumbnail.Count;
@@ -701,10 +711,10 @@ namespace DTXMania
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txアーティスト名 );
             }
 
-            if( this.tx選択されている曲の曲名 != null )
+            if( this.tx選択されている曲の曲名 != null || this.tx選択されている曲のアーティスト名 != null )
             {   
-                this.tx選択されている曲の曲名.Dispose();
-                this.tx選択されている曲のアーティスト名.Dispose();
+                CDTXMania.tテクスチャの解放( ref this.tx選択されている曲の曲名 );
+                CDTXMania.tテクスチャの解放( ref this.tx選択されている曲のアーティスト名 );
                 this.tx選択されている曲の曲名 = null;
                 this.tx選択されている曲のアーティスト名 = null;
             }
@@ -1172,7 +1182,7 @@ namespace DTXMania
                             //-----------------
                             for( int la = 0; la < 5 ; la++ )
                             {
-                                if( CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null && CDTXMania.stage選曲.r現在選択中の曲.arスコア != null )
+                                if( this.txクリアランプ != null && CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null && CDTXMania.stage選曲.r現在選択中の曲.arスコア[ la ] != null )
                                     this.txクリアランプ.t2D描画(CDTXMania.app.Device, 506, 292 - la * 13, new Rectangle((CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.最大スキル.Drums != 0 ? 11 + la * 11 : 0), ( CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.フルコンボ.Drums ? 10 : 0), 11, 10));
                             }
                             if( this.txTumbnail[ nパネル番号 ] != null )
@@ -1187,11 +1197,14 @@ namespace DTXMania
                             #endregion
 							#region [ タイトル名テクスチャを描画。]
 							//-----------------
-                            this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
-                            this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strアーティスト名 );
+                            if( this.stバー情報[ nパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ nパネル番号 ].strタイトル文字列 != null )
+                                this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
+                            if( this.stバー情報[ nパネル番号 ].strアーティスト名 != "" && this.stバー情報[ nパネル番号 ].strアーティスト名 != null )
+                                this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strアーティスト名 );
+
 						    if( this.tx選択されている曲の曲名 != null )
 							    this.tx選択されている曲の曲名.t2D描画( CDTXMania.app.Device, 552, 210 );
-                            if (this.tx選択されている曲のアーティスト名 != null)
+                            if( this.tx選択されている曲のアーティスト名 != null )
                                 this.tx選択されている曲のアーティスト名.t2D描画(CDTXMania.app.Device, 770 - this.stバー情報[ nパネル番号 ].nアーティスト名テクスチャの長さdot, 470);
                             //if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
 							//	this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, 556, 210 );
@@ -1351,15 +1364,15 @@ namespace DTXMania
                     {
                         if( this.txランプ用帯 != null )
                             this.txランプ用帯.t3D描画( CDTXMania.app.Device, barL );   //右の帯。
-                        for (int la = 0; la < 5; la++)
+                        //for (int la = 0; la < 5; la++)
                         {
                             //if( this.stバー情報[ 6 ].ar難易度ラベル[ la ] != null )
                             {
-                                var lamp = SlimDX.Matrix.Identity;
-                                lamp *= SlimDX.Matrix.Translation(
-                                ( this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x ) )) * CTexture.f画面比率,
-                                ( this.stマトリックス座標[i].y + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y ) ) ) * CTexture.f画面比率 - 1f - la * 13f,
-                                ( this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z ) ) ) * CTexture.f画面比率);
+                                //var lamp = SlimDX.Matrix.Identity;
+                                //lamp *= SlimDX.Matrix.Translation(
+                                //( this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x ) )) * CTexture.f画面比率,
+                                //( this.stマトリックス座標[i].y + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y ) ) ) * CTexture.f画面比率 - 1f - la * 13f,
+                                //( this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z ) ) ) * CTexture.f画面比率);
 
                                 //this.txクリアランプ.t3D描画( CDTXMania.app.Device, lamp, new Rectangle((CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.最大スキル.Drums != 0 ? 11 + la * 11 : 0), (CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.フルコンボ.Drums ? 10 : 0), 11, 10));
                             }
@@ -1385,7 +1398,7 @@ namespace DTXMania
 
                         for( int la = 0; la < 5 ; la++ )
                         {
-                            if( CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null && CDTXMania.stage選曲.r現在選択中の曲.arスコア != null )
+                            if( this.txクリアランプ != null && CDTXMania.stage選曲.r現在選択中の曲.ar難易度ラベル[ la ] != null && CDTXMania.stage選曲.r現在選択中の曲.arスコア[ la ] != null )
                                 this.txクリアランプ.t2D描画(CDTXMania.app.Device, 506, 292 - la * 13, new Rectangle((CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.最大スキル.Drums != 0 ? 11 + la * 11 : 0), ( CDTXMania.stage選曲.r現在選択中の曲.arスコア[la].譜面情報.フルコンボ.Drums ? 10 : 0), 11, 10));
                         }
                         if( this.txTumbnail[ nパネル番号 ] != null )
@@ -1400,11 +1413,11 @@ namespace DTXMania
                         #endregion
 						#region [ タイトル名テクスチャを描画。]
 						//-----------------
-                        if( this.tx選択されている曲の曲名 == null )
-                        {
+                        if( this.stバー情報[ nパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ nパネル番号 ].strタイトル文字列 != null )
                             this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
+                        if( this.stバー情報[ nパネル番号 ].strアーティスト名 != "" && this.stバー情報[ nパネル番号 ].strアーティスト名 != null )
                             this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strアーティスト名 );
-                        }
+
 						if( this.tx選択されている曲の曲名 != null )
 							this.tx選択されている曲の曲名.t2D描画( CDTXMania.app.Device, 552, 210 );
                         if( this.tx選択されている曲のアーティスト名 != null )
@@ -1426,6 +1439,7 @@ namespace DTXMania
                             this.txランプ用帯.t3D描画( CDTXMania.app.Device, bar );   //右の帯。
                         if( this.tx選曲パネル != null )
                             this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 761, 233, new Rectangle(304, 70, 59, 242));
+
                         #region [ ジャケット画像の描画 ]
                         //-----------------
                         if( this.txパネル != null )
@@ -2039,7 +2053,9 @@ namespace DTXMania
             //PrivateFontの試験運転も兼ねて。
             //CPrivateFastFont
             prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
-            Bitmap bmp = prvFont.DrawPrivateFont( str文字, Color.Black, Color.Transparent );
+            Bitmap bmp;
+            
+            bmp = prvFont.DrawPrivateFont( str文字, Color.Black, Color.Transparent );
 
             SizeF sz曲名;
 
@@ -2074,6 +2090,7 @@ namespace DTXMania
         {
             //t3D描画の仕様上左詰や右詰が面倒になってしまうので、
             //パネルにあらかじめ曲名とアーティスト名を埋め込んでおく。
+            /*
             if( nバー番号 < 0 || nバー番号 > 12 )
 				return;
             try
@@ -2137,7 +2154,7 @@ namespace DTXMania
 				Trace.TraceError( "曲名テクスチャの作成に失敗しました。[{0}]", str曲名 );
 				this.stバー情報[ nバー番号 ].txタイトル名 = null;
 			}
-
+            */
         }
 		private void t曲名バーの生成( int nバー番号, string str曲名, Color color )
 		{
