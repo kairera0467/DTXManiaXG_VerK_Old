@@ -593,14 +593,16 @@ namespace DTXMania
                     }
 				}
 
-                if (CDTXMania.stage選曲.r現在選択中の曲 != null)
+                if( CDTXMania.stage選曲.r現在選択中の曲 != null )
                 {
+                    double nBPM = cスコア.譜面情報.Bpm;
+                    nBPM = Math.Round( nBPM, 0 );
                     string strBPM;
                     switch (CDTXMania.stage選曲.r現在選択中の曲.eノード種別)
                     {
                         case C曲リストノード.Eノード種別.SCORE:
                             {
-                                strBPM = cスコア.譜面情報.Bpm.ToString();
+                                strBPM = nBPM.ToString();
                                 break;
                             }
                         default:

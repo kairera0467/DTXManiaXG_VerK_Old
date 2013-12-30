@@ -1047,13 +1047,13 @@ namespace DTXMania
 				{
 					if ( this.txEnumeratingSongs != null )
 					{
-						this.txEnumeratingSongs.t2D描画( CDTXMania.app.Device, 320, 160 );
+						this.txEnumeratingSongs.t2D描画( CDTXMania.app.Device, 530, 240 );
 					}
 				}
 				else
 				{
 					if ( this.txSongNotFound != null )
-						this.txSongNotFound.t2D描画( CDTXMania.app.Device, 320, 160 );
+						this.txSongNotFound.t2D描画( CDTXMania.app.Device, 500, 190 );
 				}
 				//-----------------
 				#endregion

@@ -559,7 +559,7 @@ namespace DTXMania
 							{	// [BD]x2 スクロール速度変更
 								CommandHistory.Add( E楽器パート.BASS, EパッドFlag.P );
 								EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.P, EパッドFlag.P };
-								if ( CommandHistory.CheckCommand( comChangeScrollSpeed, E楽器パート.GUITAR ) )
+								if ( CommandHistory.CheckCommand( comChangeScrollSpeed, E楽器パート.BASS ) )
 								{
 									// Debug.WriteLine( "ドラムススクロール速度変更" );
 									// CDTXMania.ConfigIni.n譜面スクロール速度.Drums = ( CDTXMania.ConfigIni.n譜面スクロール速度.Drums + 1 ) % 0x10;
