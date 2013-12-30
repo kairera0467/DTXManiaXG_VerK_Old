@@ -395,9 +395,9 @@ namespace DTXMania
                         y差分[i] += 10;
                     }
                 }
-                if ( this.tx難易度パネル != null )
+                if ( this.tx難易度パネル != null && CDTXMania.stage選曲.r現在選択中の曲 != null )
                 {
-                    if (CDTXMania.ConfigIni.bDrums有効 && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM )
+                    if( CDTXMania.ConfigIni.bDrums有効 && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM )
                     {
                         if( CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 == 100 )
                         {
