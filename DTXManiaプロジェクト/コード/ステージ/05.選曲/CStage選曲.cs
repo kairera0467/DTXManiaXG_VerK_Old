@@ -651,13 +651,13 @@ namespace DTXMania
 								}
 							}
 							#endregion
-							#region [ BD HT Drums: ソート画面 ]
-							if ( CDTXMania.Pad.b押されている( E楽器パート.DRUMS, Eパッド.BD ) && CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.HT ) )
-							{	// [BD]+[HT] 未使用
+							#region [ HT HT Drums: ソート画面 ]
+							if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.HT ) )
+							{	// [HT]x2 ソート画面        2013.12.31.kairera0467
 								//
-								//CommandHistory.Add( E楽器パート.DRUMS, EパッドFlag.HT );
-								//EパッドFlag[] comSort = new EパッドFlag[] { EパッドFlag.BD, EパッドFlag.HT };
-								//if ( CommandHistory.CheckCommand( comSort, E楽器パート.DRUMS ) )
+								CommandHistory.Add( E楽器パート.DRUMS, EパッドFlag.HT );
+								EパッドFlag[] comSort = new EパッドFlag[] { EパッドFlag.HT, EパッドFlag.HT };
+								if ( CommandHistory.CheckCommand( comSort, E楽器パート.DRUMS ) )
 								{
 									CDTXMania.Skin.sound変更音.t再生する();
 									this.actSortSongs.tActivatePopupMenu( E楽器パート.DRUMS, ref this.act曲リスト );
