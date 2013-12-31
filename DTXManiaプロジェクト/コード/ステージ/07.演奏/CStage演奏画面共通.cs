@@ -1345,7 +1345,14 @@ namespace DTXMania
                 case E楽器パート.UNKNOWN:
                     if( pChip.nチャンネル番号 == 0x4F )
                     {
-
+                        switch( eJudgeResult )
+                        {
+                            case E判定.Perfect:
+                            case E判定.Great:
+                                {
+                                }
+                                break;
+                        }
                     }
                     break;
                 default:
