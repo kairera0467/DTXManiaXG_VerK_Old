@@ -2748,6 +2748,10 @@ namespace DTXMania
                                             {
                                                 this.bHAZARD = C変換.bONorOFF(str4[0]);
                                             }
+                                            else if( str3.Equals( "AssignToLBD" ) )
+                                            {
+                                                this.bAssignToLBD.Drums = C変換.bONorOFF( str4[ 0 ] );
+                                            }
                                             else if (str3.Equals("JudgeLine"))
                                             {
                                                 this.nJudgeLine = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine);
