@@ -3620,22 +3620,22 @@ namespace DTXMania
 							{
                                 if (inst == E楽器パート.GUITAR)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 88, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Guitar ? 244 : 88 ), y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 959, y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Bass ? 1115 : 959 ), y - chipHeight / 2, new Rectangle(0, 0, 38, 10));
                                 }
 							}
 							if ( bChipHasG )
 							{
                                 if (inst == E楽器パート.GUITAR)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 127, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Guitar ? 205 : 127 ), y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
                                 }
                                 else if(inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 998, y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Bass ? 1076 : 998 ), y - chipHeight / 2, new Rectangle(38, 0, 38, 10));
                                 }
 							}
 							if ( bChipHasB )
@@ -3653,22 +3653,22 @@ namespace DTXMania
                             {
                                 if (inst == E楽器パート.GUITAR)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 205, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Guitar ? 127 : 205 ), y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1076, y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Bass ? 998 : 1076 ), y - chipHeight / 2, new Rectangle(114, 0, 38, 10));
                                 }
                             }
                             if ( bChipHasP )
                             {
                                 if (inst == E楽器パート.GUITAR)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 244, y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Guitar ? 88 : 244 ), y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
                                 }
                                 else if (inst == E楽器パート.BASS)
                                 {
-                                    this.txチップ.t2D描画(CDTXMania.app.Device, 1115, y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
+                                    this.txチップ.t2D描画(CDTXMania.app.Device, ( CDTXMania.ConfigIni.bLeft.Bass ? 959 : 1115 ), y - chipHeight / 2, new Rectangle(152, 0, 38, 10));
                                 }
                             }
 						}
