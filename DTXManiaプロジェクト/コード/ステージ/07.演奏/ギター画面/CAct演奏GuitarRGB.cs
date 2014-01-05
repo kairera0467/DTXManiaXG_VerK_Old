@@ -31,7 +31,7 @@ namespace DTXMania
 					{
 						int index = CDTXMania.ConfigIni.bLeft.Guitar ? ( 2 - j ) : j;
 						Rectangle rectangle = new Rectangle( index * 24, 0, 0x18, 0x20 );
-						if( base.b押下状態[ index ] )
+						//if( base.b押下状態[ index ] )
 						{
 							rectangle.Y += 0x20;
 						}
@@ -42,7 +42,7 @@ namespace DTXMania
 					}
                     if (base.txRGB != null)
                     {
-                        base.txRGB.t2D描画( CDTXMania.app.Device, 80 , 42, new Rectangle(0, 0, 210, 64) );
+                        base.txRGB.t2D描画( CDTXMania.app.Device, 80 , 42, new Rectangle( 0,( CDTXMania.ConfigIni.bLeft.Guitar ? 64 : 0 ), 210, 64) );
                     }
 				}
 				if( CDTXMania.DTX.bチップがある.Bass )
@@ -51,7 +51,7 @@ namespace DTXMania
 					{
 						int index = CDTXMania.ConfigIni.bLeft.Guitar ? ( 2 - j ) : j;
 						Rectangle rectangle = new Rectangle( index * 24, 0, 0x18, 0x20 );
-						if( base.b押下状態[ index ] )
+						//if( base.b押下状態[ index ] )
 						{
 							rectangle.Y += 0x20;
 						}
@@ -62,7 +62,7 @@ namespace DTXMania
 					}
                     if (base.txRGB != null)
                     {
-                        base.txRGB.t2D描画( CDTXMania.app.Device, 950 , 42, new Rectangle(0, 0, 210, 64) );
+                        base.txRGB.t2D描画( CDTXMania.app.Device, 950 , 42, new Rectangle( 0,( CDTXMania.ConfigIni.bLeft.Bass ? 64 : 0 ), 210, 64) );
                     }
 				}
 				for( int i = 0; i < 10; i++ )
