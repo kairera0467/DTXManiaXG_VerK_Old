@@ -1522,13 +1522,9 @@ namespace DTXMania
 			sw.WriteLine( "SoundMonitorBass={0}", this.b演奏音を強調する.Bass ? 1 : 0 );
 			sw.WriteLine();
             #endregion
-            sw.WriteLine( "; ドラムの表示可能な最小コンボ数(1～99999)" );
+            sw.WriteLine( "; 表示可能な最小コンボ数(1～99999)" );
 			sw.WriteLine( "MinComboDrums={0}", this.n表示可能な最小コンボ数.Drums );
-			sw.WriteLine();
-			sw.WriteLine( "; ギターの表示可能な最小コンボ数(1～99999)" );
 			sw.WriteLine( "MinComboGuitar={0}", this.n表示可能な最小コンボ数.Guitar );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースの表示可能な最小コンボ数(1～99999)" );
 			sw.WriteLine( "MinComboBass={0}", this.n表示可能な最小コンボ数.Bass );
 			sw.WriteLine();
 			sw.WriteLine( "; 演奏情報を表示する (0:OFF, 1:ON)" );
@@ -1661,43 +1657,29 @@ namespace DTXMania
 			sw.WriteLine( "; DARKモード(0:OFF, 1:HALF, 2:FULL)" );
 			sw.WriteLine( "Dark={0}", (int) this.eDark );
 			sw.WriteLine();
-			sw.WriteLine( "; ギターSUDDENモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ギター/ベースSUDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarSudden={0}", this.bSudden.Guitar ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースSUDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassSudden={0}", this.bSudden.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ギターHIDDENモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ギター/ベースHIDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarHidden={0}", this.bHidden.Guitar ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースHIDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassHidden={0}", this.bHidden.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ドラムREVERSEモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; REVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "DrumsReverse={0}", this.bReverse.Drums ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ギターREVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarReverse={0}", this.bReverse.Guitar ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースREVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassReverse={0}", this.bReverse.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ギターRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom)" );
+			sw.WriteLine( "; ギター/ベースRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom)" );
 			sw.WriteLine( "GuitarRandom={0}", (int) this.eRandom.Guitar );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom)" );
 			sw.WriteLine( "BassRandom={0}", (int) this.eRandom.Bass );
 			sw.WriteLine();
-			sw.WriteLine( "; ギターLIGHTモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ギター/ベースLIGHTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarLight={0}", this.bLight.Guitar ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースLIGHTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassLight={0}", this.bLight.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ギターLEFTモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ギター/ベースLEFTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarLeft={0}", this.bLeft.Guitar ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ベースLEFTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassLeft={0}", this.bLeft.Bass ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; RISKYモード(0:OFF, 1-10)" );									// #23559 2011.6.23 yyagi
@@ -1718,19 +1700,13 @@ namespace DTXMania
 			sw.WriteLine( "; ドラム判定文字表示位置(0:レーン上,1:判定ライン上,2:表示OFF)" );
 			sw.WriteLine( "DrumsPosition={0}", (int) this.判定文字表示位置.Drums );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
+			sw.WriteLine( "; ギター/ベース判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
 			sw.WriteLine( "GuitarPosition={0}", (int) this.判定文字表示位置.Guitar );
-			sw.WriteLine();
-			sw.WriteLine( "; ベース判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
 			sw.WriteLine( "BassPosition={0}", (int) this.判定文字表示位置.Bass );
 			sw.WriteLine();
-			sw.WriteLine( "; ドラム譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
+			sw.WriteLine( "; 譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
 			sw.WriteLine( "DrumsScrollSpeed={0}", this.n譜面スクロール速度.Drums );
-			sw.WriteLine();
-			sw.WriteLine( "; ギター譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
 			sw.WriteLine( "GuitarScrollSpeed={0}", this.n譜面スクロール速度.Guitar );
-			sw.WriteLine();
-			sw.WriteLine( "; ベース譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
 			sw.WriteLine( "BassScrollSpeed={0}", this.n譜面スクロール速度.Bass );
 			sw.WriteLine();
 			sw.WriteLine( "; 演奏速度(5～40)(→x5/20～x40/20)" );
@@ -1750,7 +1726,7 @@ namespace DTXMania
             #region[DTXManiaXG追加オプション]
             //sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
             sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
-            //sw.WriteLine();
+            sw.WriteLine();
             sw.WriteLine("; dkdk仕様変更(0:デフォルト, 1:始動足変更, 2:dkdk1レーン化)");
             sw.WriteLine("DkdkType={0}", (int)this.eDkdkType.Drums);
             sw.WriteLine();
@@ -1795,7 +1771,7 @@ namespace DTXMania
             sw.WriteLine( "; BPMバーの表示(0:表示する, 1:左のみ表示, 2:表示しない)");
             sw.WriteLine("BPMBar={0}", (int)this.eBPMbar); ;
             sw.WriteLine();
-            sw.WriteLine("; ドラムレーンタイプ(0:A, 1:B, 2:C )");
+            sw.WriteLine("; ドラムレーンタイプ(0:A, 1:B, 2:C 3:D )");
             sw.WriteLine("DrumsLaneType={0}", (int)this.eLaneType.Drums);
             sw.WriteLine();
             sw.WriteLine("; ネームプレートタイプ");
@@ -1980,7 +1956,8 @@ namespace DTXMania
             sw.Write( "LBD=" );
             this.tキーの書き出し( sw, this.KeyAssign.Drums.LBD );
 			sw.WriteLine();
-			#endregion
+            sw.WriteLine();
+            #endregion
 			#region [ GuitarKeyAssign ]
 			sw.WriteLine( "[GuitarKeyAssign]" );
 			sw.WriteLine();
