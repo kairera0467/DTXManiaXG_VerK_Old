@@ -170,6 +170,7 @@ namespace DTXMania
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
+                this.t進行描画・RGBボタン();
                 #region[ シャッター ]
                 //CLASSICシャッター(レーンシャッター)は未実装。
                 //if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false )))
@@ -216,15 +217,15 @@ namespace DTXMania
                         }
                     }
                 }
-                double dbシャッターIN_Guitar = ( base.nShutterInPosY.Guitar * 7.2 );
+                double dbシャッターIN_Guitar = (base.nShutterInPosY.Guitar * 7.2);
                 double dbシャッターIN_Bass = ( base.nShutterInPosY.Bass * 7.2 );
                 if( this.txシャッター != null )
                 {
-                    this.txシャッター.t2D描画( CDTXMania.app.Device, 80, ( int )( -720 + dbシャッターIN_Guitar ) );
-                    this.txシャッター.t2D描画( CDTXMania.app.Device, 952, ( int )( -720 + dbシャッターIN_Bass ) );
+                    this.txシャッター.t2D描画( CDTXMania.app.Device, 80, 42 + ( int )( -720 + dbシャッターIN_Guitar ) );
+                    this.txシャッター.t2D描画( CDTXMania.app.Device, 952, 42 + ( int )( -720 + dbシャッターIN_Bass ) );
                 }
                 
-                double dbシャッターOUT_Guitar = 720 - ( base.nShutterOutPosY.Guitar );
+                double dbシャッターOUT_Guitar = 720 - ( base.nShutterOutPosY.Guitar * 7.2f );
                 double dbシャッターOUT_Bass = 720 - ( base.nShutterOutPosY.Bass * 7.2f );
                 if( this.txシャッター != null )
                 {
@@ -237,7 +238,6 @@ namespace DTXMania
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
                 this.t進行描画・コンボ();
-                this.t進行描画・RGBボタン();
 				this.t進行描画・演奏情報();
 				//this.t進行描画・Wailing枠();
 
