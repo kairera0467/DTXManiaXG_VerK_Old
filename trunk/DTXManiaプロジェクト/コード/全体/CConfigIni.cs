@@ -1809,6 +1809,8 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; レーンフラッシュ表示");
             sw.WriteLine("DrumsLaneFlush={0}", this.bLaneFlush.Drums ? 1 : 0);
+            sw.WriteLine("GuitarLaneFlush={0}", this.bLaneFlush.Guitar ? 1 : 0);
+            sw.WriteLine("BassLaneFlush={0}", this.bLaneFlush.Bass ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; ペダル部分のラグ時間調整");
             sw.WriteLine("; 入力が遅い場合、マイナス方向に調節してください。");
@@ -2852,6 +2854,14 @@ namespace DTXMania
                                             else if (str3.Equals("DrumsLaneFlush"))
                                             {
                                                 this.bLaneFlush.Drums = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("GuitarLaneFlush"))
+                                            {
+                                                this.bLaneFlush.Guitar = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("BassLaneFlush"))
+                                            {
+                                                this.bLaneFlush.Bass = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals( "JudgeFrames"))
                                             {
