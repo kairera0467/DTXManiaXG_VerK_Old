@@ -152,6 +152,7 @@ namespace DTXMania
                                 this.n現在選択中の曲の最高ランク難易度毎[ j ][ i ] = ( DTXMania.CScoreIni.tランク値を計算して返す( 0, c曲リストノード.arスコア[ j ].譜面情報.最大スキル[ i ] ) == (int)DTXMania.CScoreIni.ERANK.S && DTXMania.CScoreIni.tランク値を計算して返す( 0,  c曲リストノード.arスコア[ j ].譜面情報.最大スキル[ i ] ) >= 95 ? DTXMania.CScoreIni.tランク値を計算して返す( 0, cスコア.譜面情報.最大スキル[ i ] ) : c曲リストノード.arスコア[ j ].譜面情報.最大ランク[ i ]);
                             }
                             this.b現在選択中の曲がフルコンボ難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.フルコンボ[i];
+                            this.b現在選択中の曲に譜面がある[j][i] = c曲リストノード.arスコア[j].譜面情報.b譜面がある[i];
                         }
                         else
                         {
@@ -314,23 +315,38 @@ namespace DTXMania
                     
                     //if( CDTXMania.stage選曲.act曲リスト.b登場アニメ全部完了 )
                     {
-                        if( CDTXMania.ConfigIni.bDrums有効 && CDTXMania.ConfigIni.bGuitar有効 == false )
+                            var mat1 = Matrix.Identity;
+                            mat1 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                            mat1 *= Matrix.RotationY(0.0f);
+                            mat1 *= Matrix.RotationZ(0.0f);
+                            mat1 *= Matrix.Translation(0f, 260f, 0f);
+
+                            var mat2 = Matrix.Identity;
+                            mat2 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                            mat2 *= Matrix.RotationY(0.0f);
+                            mat2 *= Matrix.RotationZ(0.0f);
+                            mat2 *= Matrix.Translation(0f, -240f, 0f);
+
+                        if( CDTXMania.ConfigIni.bDrums有効 )
                         {
-                            var mat = Matrix.Identity;
-                            mat *= Matrix.RotationX( 1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 * 0.016f ));
-                            mat *= Matrix.RotationY( 0.0f );
-                            mat *= Matrix.RotationZ( 0.0f );
-                            mat *= Matrix.Translation( 0f, 260f, 0f );
-                            
                             if( CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 != 100 )
-                                this.txパネル本体.t3D描画( CDTXMania.app.Device, mat , new Rectangle( 0, 0, 1280, 200 ) );
+                                this.txパネル本体.t3D描画( CDTXMania.app.Device, mat1 , new Rectangle( 0, 0, 1280, 200 ) );
                             else
 					            this.txパネル本体.t2D描画( CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 1280, 200) );
                         }
-                        else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                        else if ( CDTXMania.ConfigIni.bGuitar有効 == true )
                         {
-                            this.txパネル本体.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 200, 1280, 200));
-                            this.txパネル本体.t2D描画(CDTXMania.app.Device, 0, 500, new Rectangle(0, 400, 1280, 200));
+                            if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
+                            {
+                                this.txパネル本体.t3D描画(CDTXMania.app.Device, mat1 , new Rectangle(0, 200, 1280, 200));
+                                this.txパネル本体.t3D描画(CDTXMania.app.Device, mat2 , new Rectangle(0, 400, 1280, 200));
+
+                            }
+                            else
+                            {
+                                this.txパネル本体.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 200, 1280, 200));
+                                this.txパネル本体.t2D描画(CDTXMania.app.Device, 0, 500, new Rectangle(0, 400, 1280, 200));
+                            }
                         }
                     }
                         /*
@@ -361,12 +377,18 @@ namespace DTXMania
                 if ( this.txHSアイコン != null )
                 {
                     var mat1 = Matrix.Identity;
-
                     mat1 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
                     mat1 *= Matrix.RotationY(0.0f);
                     mat1 *= Matrix.RotationZ(0.0f);
                     mat1 *= Matrix.Scaling(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
                     mat1 *= Matrix.Translation(519f, 374f, 0f);
+
+                    var mat2 = Matrix.Identity;
+                    mat2 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                    mat2 *= Matrix.RotationY(0.0f);
+                    mat2 *= Matrix.RotationZ(0.0f);
+                    mat2 *= Matrix.Scaling(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
+                    mat2 *= Matrix.Translation(670f, -129f, 0f);
 
                     this.txHSアイコン.vc拡大縮小倍率 = new SlimDX.Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
                     if( CDTXMania.ConfigIni.bDrums有効 )
@@ -378,8 +400,16 @@ namespace DTXMania
                     }
                     else
                     {
-                        this.txHSアイコン.t2D描画(CDTXMania.app.Device, 1067, 62, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
-                        this.txHSアイコン.t2D描画(CDTXMania.app.Device, 916, 565, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+                        if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
+                        {
+                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
+                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat2, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+                        }
+                        else
+                        {
+                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 1067, 62, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
+                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 916, 565, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+                        }
                     }
                 }
                 //-----------------
@@ -401,16 +431,11 @@ namespace DTXMania
                     {
                         if( CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 == 100 )
                         {
-                            if (this.str難易度ラベル[0] != null)
-                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 346 + this.n本体X, 43 - y差分[0], new Rectangle(0, 0, 132, 98));
-                            if (this.str難易度ラベル[1] != null)
-                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 489 + this.n本体X, 43 - y差分[1], new Rectangle(0, 98, 132, 98));
-                            if (this.str難易度ラベル[2] != null)
-                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 632 + this.n本体X, 43 - y差分[2], new Rectangle(0, 196, 132, 98));
-                            if (this.str難易度ラベル[3] != null)
-                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 775 + this.n本体X, 43 - y差分[3], new Rectangle(0, 294, 132, 98));
-                            if (this.str難易度ラベル[4] != null)
-                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 918 + this.n本体X, 43 - y差分[4], new Rectangle(0, 392, 132, 98));
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (this.str難易度ラベル[i] != null || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM)
+                                    this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 346 + (143 * i) + this.n本体X, 43 - y差分[i], new Rectangle(0, 0 + (98 * i), 132, 98));
+                            }
                         }
                         else
                         {
@@ -429,27 +454,44 @@ namespace DTXMania
                     }
                     else if (CDTXMania.ConfigIni.bGuitar有効)
                     {
-                        if (this.str難易度ラベル[0] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 346 + this.n本体X, 43 - y差分[0], new Rectangle(0, 0, 132, 98));
-                        if (this.str難易度ラベル[1] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 489 + this.n本体X, 43 - y差分[1], new Rectangle(0, 98, 132, 98));
-                        if (this.str難易度ラベル[2] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 632 + this.n本体X, 43 - y差分[2], new Rectangle(0, 196, 132, 98));
-                        if (this.str難易度ラベル[3] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 775 + this.n本体X, 43 - y差分[3], new Rectangle(0, 294, 132, 98));
-                        if (this.str難易度ラベル[4] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 918 + this.n本体X, 43 - y差分[4], new Rectangle(0, 392, 132, 98));
+                        if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 == 100)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (this.str難易度ラベル[i] != null || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM)
+                                    this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 346 + (143 * i) + this.n本体X, 43 - y差分[i], new Rectangle(0, 0 + (98 * i), 132, 98));
 
-                        if (this.str難易度ラベル[0] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 197 + this.n本体X, 546 - y差分[0], new Rectangle(0, 0, 132, 98));
-                        if (this.str難易度ラベル[1] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 339 + this.n本体X, 546 - y差分[1], new Rectangle(0, 98, 132, 98));
-                        if (this.str難易度ラベル[2] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 482 + this.n本体X, 546 - y差分[2], new Rectangle(0, 196, 132, 98));
-                        if (this.str難易度ラベル[3] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 625 + this.n本体X, 546 - y差分[3], new Rectangle(0, 294, 132, 98));
-                        if (this.str難易度ラベル[4] != null)
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 768 + this.n本体X, 546 - y差分[4], new Rectangle(0, 392, 132, 98));
+                                if (this.str難易度ラベル[i] != null || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM)
+                                    this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 197 + (143 * i) + this.n本体X, 546 - y差分[i], new Rectangle(0, 0 + (98 * i), 132, 98));
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                var mat1 = Matrix.Identity;
+                                mat1 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                                mat1 *= Matrix.RotationY(0.0f);
+                                mat1 *= Matrix.RotationZ(0.0f);
+                                mat1 *= Matrix.Translation(-228f + (i * 143f), 268f + y差分[i], 0f);
+
+                                var mat2 = Matrix.Identity;
+                                mat2 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                                mat2 *= Matrix.RotationY(0.0f);
+                                mat2 *= Matrix.RotationZ(0.0f);
+                                mat2 *= Matrix.Translation(-377f + (i * 143f), -235f + y差分[i], 0f);
+
+
+                                if (this.str難易度ラベル[i] != null)
+                                    this.tx難易度パネル.t3D描画(CDTXMania.app.Device, mat1 , new Rectangle(0, 0 + (98 * i), 132, 98));
+
+                                if (this.str難易度ラベル[i] != null)
+                                    this.tx難易度パネル.t3D描画(CDTXMania.app.Device, mat2 , new Rectangle(0, 0 + (98 * i), 132, 98));
+                            }
+                        }
+                    
+
+
                     }
                 }
                 //-----------------
@@ -485,27 +527,28 @@ namespace DTXMania
                             else if (n選択中の曲のレベル難易度毎[i] < 100)
                             {
                                 n難易度整数[i] = (int)this.n選択中の曲のレベル難易度毎[i] / 10;
-                                n難易度小数[i] = (n選択中の曲のレベル難易度毎[i] - (n難易度整数[i] * 10)) * 10 + (n現在選択中の曲のレベル小数点難易度毎DGB[i].Drums != 0 ? n現在選択中の曲のレベル小数点難易度毎DGB[i].Drums : 0 );
+                                n難易度小数[i] = (n選択中の曲のレベル難易度毎[i] - (n難易度整数[i] * 10)) * 10 + (n現在選択中の曲のレベル小数点難易度毎DGB[i].Drums != 0 ? n現在選択中の曲のレベル小数点難易度毎DGB[i].Drums : 0);
                             }
 
-                            if (this.str難易度ラベル[i] != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 != C曲リストノード.Eノード種別.RANDOM)
+                            if (this.str難易度ラベル[i] != null && this.b現在選択中の曲に譜面がある[i].Drums)
                             {
                                 this.t大文字表示(419 + (i * 143), 62 - y差分[i], string.Format("{0:0}", n難易度整数[i]));
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], string.Format("{0,2:00}", n難易度小数[i]));
                                 this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
                             }
-                            else if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM && !CDTXMania.stage選曲.bスクロール中 ) //2013.12.31.kairera0467 とりあえずこれで対策。
+                            else if ( (this.str難易度ラベル[i] != null && !this.b現在選択中の曲に譜面がある[i].Drums) || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM) //2013.12.31.kairera0467 とりあえずこれで対策。
                             {
                                 this.t大文字表示(419 + (i * 143), 62 - y差分[i], ("-"));
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], ("--"));
 
+
                                 var mat = Matrix.Identity;
-                                mat *= Matrix.RotationX( 1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 * 0.016f ));
-                                mat *= Matrix.RotationY( 0.0f );
-                                mat *= Matrix.RotationZ( 0.0f );
-                                mat *= Matrix.Translation( -197f + (i * 143f), 262f + y差分[ i ], 0f );
-                            
-                                if( CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 != 100 )
+                                mat *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                                mat *= Matrix.RotationY(0.0f);
+                                mat *= Matrix.RotationZ(0.0f);
+                                mat *= Matrix.Translation(-197f + (i * 143f), 262f + y差分[i], 0f);
+
+                                if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
                                     this.tx難易度数字XG.t3D描画(CDTXMania.app.Device, mat, new Rectangle(145, 54, 7, 8));
                                 else
                                     this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
@@ -529,13 +572,13 @@ namespace DTXMania
                                 n難易度小数[i] = (this.n現在選択中の曲のレベル難易度毎DGB[i].Guitar - (n難易度整数[i] * 10)) * 10;
                             }
 
-                            if (this.str難易度ラベル[i] != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 != C曲リストノード.Eノード種別.RANDOM)
+                            if ( this.str難易度ラベル[i] != null && this.b現在選択中の曲に譜面がある[i].Guitar )
                             {
                                 this.t大文字表示(419 + (i * 143), 62 - y差分[i], string.Format("{0:0}", n難易度整数[i]));
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], string.Format("{0,2:00}", n難易度小数[i]));
                                 this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
                             }
-                            else if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM && !CDTXMania.stage選曲.bスクロール中 ) //2013.12.31.kairera0467 とりあえずこれで対策。
+                            else if ( (this.str難易度ラベル[i] != null && !this.b現在選択中の曲に譜面がある[i].Guitar) || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM )
                             {
                                 this.t大文字表示(419 + (i * 143), 62 - y差分[i], ("-"));
                                 this.t小文字表示(448 + (i * 143), 80 - y差分[i], ("--"));
@@ -555,30 +598,32 @@ namespace DTXMania
                                 n難易度小数Bass[i] = (this.n現在選択中の曲のレベル難易度毎DGB[i].Bass - (n難易度整数Bass[i] * 10)) * 10;
                             }
 
-                            if (this.str難易度ラベル[i] != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 != C曲リストノード.Eノード種別.RANDOM)
+                            if ( this.str難易度ラベル[i] != null && this.b現在選択中の曲に譜面がある[i].Bass )
                             {
                                 this.t大文字表示(268 + (i * 143), 566 - y差分[i], string.Format("{0:0}", n難易度整数Bass[i]));
                                 this.t小文字表示(298 + (i * 143), 583 - y差分[i], string.Format("{0,2:00}", n難易度小数Bass[i]));
 
                                 this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 290 + (i * 143), 598 - y差分[i], new Rectangle(145, 54, 7, 8));
                             }
-                            else if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM && !CDTXMania.stage選曲.bスクロール中 ) //2013.12.31.kairera0467 とりあえずこれで対策。
+                            else if ((this.str難易度ラベル[i] != null && !this.b現在選択中の曲に譜面がある[i].Bass) || CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.RANDOM)
                             {
                                 this.t大文字表示(268 + (i * 143), 566 - y差分[i], ("-"));
-                                this.t小文字表示( 298 + ( i * 143 ), 580 - y差分[ i ], ( "--" ) );
-                                this.tx難易度数字XG.t2D描画( CDTXMania.app.Device, 290 + ( i * 143 ), 596 - y差分[ i ], new Rectangle( 145, 54, 7, 8 ) );
+                                this.t小文字表示(298 + (i * 143), 580 - y差分[i], ("--"));
+                                this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 290 + (i * 143), 596 - y差分[i], new Rectangle(145, 54, 7, 8));
+
 
                                 var mat = Matrix.Identity;
-                                mat *= Matrix.RotationX( 1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 * 0.016f ));
-                                mat *= Matrix.RotationY( 0.0f );
-                                mat *= Matrix.RotationZ( 0.0f );
-                                mat *= Matrix.Translation( -197f + (i * 143f), 262f + y差分[ i ], 0f );
-                            
-                                if( CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 != 100 )
+                                mat *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
+                                mat *= Matrix.RotationY(0.0f);
+                                mat *= Matrix.RotationZ(0.0f);
+                                mat *= Matrix.Translation(-197f + (i * 143f), 262f + y差分[i], 0f);
+
+                                if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
                                     this.tx難易度数字XG.t3D描画(CDTXMania.app.Device, mat, new Rectangle(145, 54, 7, 8));
                                 else
                                     this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 440 + (i * 143), 94 - y差分[i], new Rectangle(145, 54, 7, 8));
                             }
+
                         }
                     }
 				}
@@ -643,7 +688,7 @@ namespace DTXMania
                         }
                     }
                 }
-                else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                else if ( CDTXMania.ConfigIni.bGuitar有効 == true)
                 {
                     for (int i = 0; i < 5; i++)
                     {
@@ -674,18 +719,19 @@ namespace DTXMania
                             }
                             if (this.txゲージ用数字他 != null && this.str難易度ラベル[i] != null)
                             {
-                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (353 + (i * 143)), 104 - y差分[i], new Rectangle(42 + nMaxRank * 32, 0, 32, 32));
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (353 + (i * 143)), 104 - y差分[i], new Rectangle(42 + (nMaxRank * 32), 0, 32, 32));
                             }
                         }
                     }
 
                 }
-                else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
+                else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true )
                 {
                     for (int i = 0; i < 5; i++)
                     {
                         int nMaxRankG = this.n現在選択中の曲の最高ランク難易度毎[i].Guitar;
                         int nMaxRankB = this.n現在選択中の曲の最高ランク難易度毎[i].Bass;
+
                         if (nMaxRankG != 99)
                         {
                             if (nMaxRankG < 0)
@@ -698,9 +744,27 @@ namespace DTXMania
                             }
                             if (this.txゲージ用数字他 != null && this.str難易度ラベル[i] != null)
                             {
-                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (353 + (i * 143)), 104 - y差分[i], new Rectangle(42 + nMaxRankG * 32, 0, 32, 32));
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (353 + (i * 143)), 104 - y差分[i], new Rectangle(42 + (nMaxRankG * 32), 0, 32, 32));
                             }
                         }
+
+                        if (nMaxRankB != 99)
+                        {
+                            if (nMaxRankB < 0)
+                            {
+                                nMaxRankB = 0;
+                            }
+                            if (nMaxRankB > 6)
+                            {
+                                nMaxRankB = 6;
+                            }
+                            if (this.txゲージ用数字他 != null && this.str難易度ラベル[i] != null)
+                            {
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (204 + (i * 143)), 607 - y差分[i], new Rectangle(42 + (nMaxRankB * 32), 0, 32, 32));
+                            }
+                        }
+
+
                     }
                 }
 				//-----------------
@@ -708,18 +772,46 @@ namespace DTXMania
 				#region [ 選択曲の FullCombo の 描画 ]
 				//-----------------
 				//Rectangle rectFullCombo = new Rectangle( 60, 0x30, 60, 0x18 );
-				for( int i = 0; i < 5; i++ )
-				{
-					if( this.b現在選択中の曲がフルコンボ難易度毎[ i ].Drums && this.str難易度ラベル[i] != null )
-					{
-						//int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
-						int x = 386 + ( i  * 143);
-						if( this.txゲージ用数字他 != null )
-						{
-							this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, x, 106 - y差分[ i ], new Rectangle(0, 0, 42, 32) );
-						}
-					}
-				}
+                if (CDTXMania.ConfigIni.bDrums有効)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (this.b現在選択中の曲がフルコンボ難易度毎[i].Drums && this.str難易度ラベル[i] != null)
+                        {
+                            //int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
+                            int x = 386 + (i * 143);
+                            if (this.txゲージ用数字他 != null)
+                            {
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, x, 106 - y差分[i], new Rectangle(0, 0, 42, 32));
+                            }
+                        }
+                    }
+                }
+                else if ( CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true )
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (this.b現在選択中の曲がフルコンボ難易度毎[i].Guitar)
+                        {
+                            //int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
+                            int x = 386 + (i * 143);
+                            if (this.txゲージ用数字他 != null)
+                            {
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, x, 106 - y差分[i], new Rectangle(0, 0, 42, 32));
+                            }
+                        }
+
+                        if (this.b現在選択中の曲がフルコンボ難易度毎[i].Bass && this.str難易度ラベル[i] != null)
+                        {
+                            //int[ , ] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x3f, 0x20 } };
+                            int x = 237 + (i * 143);
+                            if (this.txゲージ用数字他 != null)
+                            {
+                                this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, x, 609 - y差分[i], new Rectangle(0, 0, 42, 32));
+                            }
+                        }
+                    }
+                }
 				//-----------------
 				#endregion
 			}
@@ -758,6 +850,7 @@ namespace DTXMania
 
 		private STDGBVALUE<bool> b現在選択中の曲がフルコンボ;
         private STDGBVALUE<bool>[] b現在選択中の曲がフルコンボ難易度毎 = new STDGBVALUE<bool>[5];
+        private STDGBVALUE<bool>[] b現在選択中の曲に譜面がある = new STDGBVALUE<bool>[5];
         private STDGBVALUE<int>[] n現在選択中の曲のレベル難易度毎DGB = new STDGBVALUE<int>[5];
         private STDGBVALUE<int>[] n現在選択中の曲のレベル小数点難易度毎DGB = new STDGBVALUE<int>[5];
 		private CCounter ct登場アニメ用;
