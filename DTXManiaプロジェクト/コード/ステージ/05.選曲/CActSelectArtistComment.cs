@@ -22,6 +22,7 @@ namespace DTXMania
 			if( cスコア != null )
 			{
 				Bitmap image = new Bitmap( 1, 1 );
+                /*
 				CDTXMania.tテクスチャの解放( ref this.txArtist );
 				this.strArtist = cスコア.譜面情報.アーティスト名;
 				if( ( this.strArtist != null ) && ( this.strArtist.Length > 0 ) )
@@ -51,6 +52,7 @@ namespace DTXMania
 						this.txArtist = null;
 					}
 				}
+                */
 				CDTXMania.tテクスチャの解放( ref this.txComment );
 				this.strComment = cスコア.譜面情報.コメント;
 				if( ( this.strComment != null ) && ( this.strComment.Length > 0 ) )
@@ -112,7 +114,7 @@ namespace DTXMania
 				image.Dispose();
 				if( this.txComment != null )
 				{
-					this.ctComment = new CCounter( -740, (int) ( ( ( ( this.nComment行数 - 1 ) * this.nテクスチャの最大幅 ) + this.nComment最終行の幅 ) * this.txComment.vc拡大縮小倍率.X ), 10, CDTXMania.Timer );
+					this.ctComment = new CCounter( -210, (int) ( ( ( ( this.nComment行数 - 1 ) * this.nテクスチャの最大幅 ) + this.nComment最終行の幅 ) * this.txComment.vc拡大縮小倍率.X ), 10, CDTXMania.Timer );
 				}
 			}
 		}
@@ -123,9 +125,11 @@ namespace DTXMania
 		public override void On活性化()
 		{
 			this.ft描画用フォント = new Font( "MS PGothic", 26f, GraphicsUnit.Pixel );
+            /*
 			this.txArtist = null;
-			this.txComment = null;
 			this.strArtist = "";
+            */
+			this.txComment = null;
 			this.strComment = "";
 			this.nComment最終行の幅 = 0;
 			this.nComment行数 = 0;
@@ -135,7 +139,7 @@ namespace DTXMania
 		}
 		public override void On非活性化()
 		{
-			CDTXMania.tテクスチャの解放( ref this.txArtist );
+//			CDTXMania.tテクスチャの解放( ref this.txArtist );
 			CDTXMania.tテクスチャの解放( ref this.txComment );
 			if( this.ft描画用フォント != null )
 			{
@@ -157,7 +161,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				CDTXMania.tテクスチャの解放( ref this.txArtist );
+//				CDTXMania.tテクスチャの解放( ref this.txArtist );
 				CDTXMania.tテクスチャの解放( ref this.txComment );
 				base.OnManagedリソースの解放();
 			}
@@ -170,17 +174,26 @@ namespace DTXMania
 				{
 					this.ctComment.t進行Loop();
 				}
+                /*
 				if( this.txArtist != null )
 				{
 					int x = 1260 - ( (int) ( this.txArtist.szテクスチャサイズ.Width * this.txArtist.vc拡大縮小倍率.X ) );		// #27648 2012.3.14 yyagi: -12 for scrollbar
 					int y = 350;
 					this.txArtist.t2D描画( CDTXMania.app.Device, x, y );
 				}
-				if( ( this.txComment != null ) && ( ( this.ctComment.n現在の値 + 750 ) >= 0 ) )
+                */
+
+                if ( this.txComment != null /* && (this.txComment.szテクスチャサイズ.Width * this.txComment.vc拡大縮小倍率.X) < 211 */ )
+                {
+//                    int x = 560 - ((int)(this.txComment.szテクスチャサイズ.Width * this.txComment.vc拡大縮小倍率.X));		// #27648 2012.3.14 yyagi: -12 for scrollbar
+//                    int y = 500;
+                    this.txComment.t2D描画(CDTXMania.app.Device, 560, 500);
+                }
+				else if( this.txComment != null /* && ( ( this.ctComment.n現在の値 + 750 ) >= 0 ) */ )
 				{
-					int num3 = 510;
-					int num4 = 367;
-					Rectangle rectangle = new Rectangle( this.ctComment.n現在の値, 0, 750, (int) this.ft描画用フォント.Size );
+					int num3 = 560;
+					int num4 = 500;
+					Rectangle rectangle = new Rectangle( this.ctComment.n現在の値, 0, 210, (int) this.ft描画用フォント.Size );
 					if( rectangle.X < 0 )
 					{
 						num3 += -rectangle.X;
@@ -223,9 +236,11 @@ namespace DTXMania
 		private int nComment最終行の幅;
 		private const int nComment表示幅 = 510;
 		private int nテクスチャの最大幅;
-		private string strArtist;
-		private string strComment;
+        /*
+        private string strArtist;
 		private CTexture txArtist;
+        */
+		private string strComment;
 		private CTexture txComment;
 		//-----------------
 		#endregion
