@@ -71,7 +71,6 @@ namespace DTXMania
 			public double Bpm;
 			public int Duration;
             public STDGBVALUE<bool> b完全にCLASSIC譜面である;
-            public STDGBVALUE<bool> b譜面がある;
 
 			[Serializable]
 			[StructLayout( LayoutKind.Sequential )]
@@ -280,11 +279,6 @@ namespace DTXMania
 			this.譜面情報.Bpm = 120.0;
 			this.譜面情報.Duration = 0;
             this.譜面情報.b完全にCLASSIC譜面である.Drums = false;
-            this.譜面情報.b完全にCLASSIC譜面である.Guitar = false;
-            this.譜面情報.b完全にCLASSIC譜面である.Bass = false;
-            this.譜面情報.b譜面がある.Drums = false;
-            this.譜面情報.b譜面がある.Guitar = false;
-            this.譜面情報.b譜面がある.Bass = false;
 		}
 	}
 }

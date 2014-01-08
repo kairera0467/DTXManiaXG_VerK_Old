@@ -31,7 +31,7 @@ namespace DTXMania
 						{
 							if( r歓声Chip != null )
 							{
-								CDTXMania.DTX.tチップの再生( r歓声Chip, CSound管理.rc演奏用タイマ.nシステム時刻, (int) Eレーン.BGM, CDTXMania.DTX.nモニタを考慮した音量( E楽器パート.UNKNOWN ) );
+								CDTXMania.DTX.tチップの再生( r歓声Chip, CDTXMania.Timer.nシステム時刻, (int) Eレーン.BGM, CDTXMania.DTX.nモニタを考慮した音量( E楽器パート.UNKNOWN ) );
 								return;
 							}
 							CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = ( part == E楽器パート.GUITAR ) ? -50 : 50;
@@ -87,18 +87,17 @@ namespace DTXMania
 					{
 						if( ( this.ct進行用[ (int) e楽器パート2, m ] != null ) && !this.ct進行用[ (int) e楽器パート2, m ].b停止中 )
 						{
-                            //XGではレーン自体の幅が40pxほど。
-							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 180 : 1050 ) + 0x71;
+							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 0x1a : 480 ) + 0x71;
 							int num6 = 0;
 							int num7 = 0;
 							int num8 = this.ct進行用[ (int) e楽器パート2, m ].n現在の値;
 							if( num8 < 100 )
 							{
-								num6 = (int) ( 120.0 + ( 290.0 * Math.Cos( Math.PI / 2 * ( ( (double) num8 ) / 100.0 ) ) ) );
+								num6 = (int) ( 64.0 + ( 290.0 * Math.Cos( Math.PI / 2 * ( ( (double) num8 ) / 100.0 ) ) ) );
 							}
 							else if( num8 < 150 )
 							{
-								num6 = (int) ( 120.0 + ( ( 150 - num8 ) * Math.Sin( ( Math.PI * ( ( num8 - 100 ) % 0x19 ) ) / 25.0 ) ) );
+								num6 = (int) ( 64.0 + ( ( 150 - num8 ) * Math.Sin( ( Math.PI * ( ( num8 - 100 ) % 0x19 ) ) / 25.0 ) ) );
 							}
 							else if( num8 < 200 )
 							{
@@ -110,12 +109,12 @@ namespace DTXMania
 							}
 							if( CDTXMania.ConfigIni.bReverse[ (int) e楽器パート2 ] )
 							{
-								num6 = ( 409 - num6 ) - 0xf4;
+								num6 = ( 0x199 - num6 ) - 0xf4;
 							}
 							Rectangle rectangle = new Rectangle( 0, 0, 0x1a, 0x7a );
-							if( ( 720 - num6 ) < rectangle.Bottom )
+							if( ( 0x199 - num6 ) < rectangle.Bottom )
 							{
-								rectangle.Height = ( 720 - num6 ) - rectangle.Top;
+								rectangle.Height = ( 0x199 - num6 ) - rectangle.Top;
 							}
 							if( num6 < 0 )
 							{
@@ -129,9 +128,9 @@ namespace DTXMania
 							}
 							num7 = 0;
 							rectangle = new Rectangle( 0x1a, 0, 0x1a, 0x7a );
-							if( ( 720 - ( num6 + 0x7a ) ) < rectangle.Bottom )
+							if( ( 0x199 - ( num6 + 0x7a ) ) < rectangle.Bottom )
 							{
-								rectangle.Height = ( 720 - ( num6 + 0x7a ) ) - rectangle.Top;
+								rectangle.Height = ( 0x199 - ( num6 + 0x7a ) ) - rectangle.Top;
 							}
 							if( ( num6 + 0x7a ) < 0 )
 							{

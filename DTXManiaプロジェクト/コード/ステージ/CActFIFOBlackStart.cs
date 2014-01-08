@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.IO;
 using System.Diagnostics;
 using FDK;
 
@@ -30,6 +31,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.tx黒タイル64x64 );
+                CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
+                CDTXMania.tテクスチャの解放( ref this.txジャケット );
 				base.On非活性化();
 			}
 		}
@@ -54,6 +57,24 @@ namespace DTXMania
 			{
                 this.tx黒幕.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - this.counter.n現在の値) * 0xff) / 100) : ((this.counter.n現在の値 * 0xff) / 100);
                 this.tx黒幕.t2D描画(CDTXMania.app.Device, 0, 0);
+                string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
+                if (!File.Exists(path))
+                {
+                    //Trace.TraceWarning("ファイルが存在しません。({0})", new object[] { path });
+                    this.txジャケット = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\5_preimage default.png"));
+                }
+                else
+                {
+                    this.txジャケット = CDTXMania.tテクスチャの生成(path);
+                }
+                if( this.txジャケット != null )
+                {
+                    this.txジャケット.vc拡大縮小倍率.X = 0.96f;
+                    this.txジャケット.vc拡大縮小倍率.Y = 0.96f;
+                    this.txジャケット.fZ軸中心回転 = 0.28f;
+                    this.txジャケット.n透明度 = (this.mode == EFIFOモード.フェードイン) ? (((100 - this.counter.n現在の値) * 0xff) / 100) : ((this.counter.n現在の値 * 0xff) / 100);
+                    this.txジャケット.t2D描画(CDTXMania.app.Device, 620, 40);
+                }
 			}
             else if (this.tx黒幕 == null)
             {
@@ -78,10 +99,11 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private CCounter counter;
+		public CCounter counter;
 		private EFIFOモード mode;
 		private CTexture tx黒タイル64x64;
         private CTexture tx黒幕;
+        private CTexture txジャケット;
 		//-----------------
 		#endregion
 	}

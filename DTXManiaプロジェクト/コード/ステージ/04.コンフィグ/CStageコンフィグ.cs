@@ -28,7 +28,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actFIFO = new CActFIFOWhite() );
 			base.list子Activities.Add( this.actList = new CActConfigList() );
 			base.list子Activities.Add( this.actKeyAssign = new CActConfigKeyAssign() );
-			base.list子Activities.Add( this.actオプションパネル = new CActオプションパネル() );
+			//base.list子Activities.Add( this.actオプションパネル = new CActオプションパネル() );
 			base.b活性化してない = true;
 		}
 		
@@ -92,14 +92,6 @@ namespace DTXMania
 				}
 				base.On非活性化();
 			}
-            catch ( UnauthorizedAccessException e )
-            {
-                Trace.TraceError( e.Message + "ファイルが読み取り専用になっていないか、管理者権限がないと書き込めなくなっていないか等を確認して下さい" );
-            }
-            catch ( Exception e )
-            {
-                Trace.TraceError( e.Message );
-            }
 			finally
 			{
 				Trace.TraceInformation( "コンフィグステージの非活性化を完了しました。" );
@@ -241,7 +233,7 @@ namespace DTXMania
 			#endregion
 			#region [ オプションパネル ]
 			//---------------------
-			this.actオプションパネル.On進行描画();
+			//this.actオプションパネル.On進行描画();
 			//---------------------
 			#endregion
 			#region [ フェードイン・アウト ]
@@ -266,10 +258,6 @@ namespace DTXMania
 			//---------------------
 			#endregion
 
-            #region [ Enumerating Songs ]
-			// CActEnumSongs側で表示する
-			#endregion
-
 			// キー入力
 
 			if( ( base.eフェーズID != CStage.Eフェーズ.共通_通常状態 )
@@ -277,82 +265,78 @@ namespace DTXMania
 				|| CDTXMania.act現在入力を占有中のプラグイン != null )
 				return 0;
 
-			// 曲データの一覧取得中は、キー入力を無効化する
-			if ( !CDTXMania.EnumSongs.IsEnumerating || CDTXMania.actEnumSongs.bコマンドでの曲データ取得 != true )
+			if( ( CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Escape ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) ) || CDTXMania.Pad.b押されたGB( Eパッド.LC ) )
 			{
-				if ( ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) ) || CDTXMania.Pad.b押されたGB( Eパッド.FT ) )
+				CDTXMania.Skin.sound取消音.t再生する();
+				if( !this.bメニューにフォーカス中 )
 				{
-					CDTXMania.Skin.sound取消音.t再生する();
-					if ( !this.bメニューにフォーカス中 )
+					if( this.eItemPanelモード == EItemPanelモード.キーコード一覧 )
 					{
-						if ( this.eItemPanelモード == EItemPanelモード.キーコード一覧 )
-						{
-							CDTXMania.stageコンフィグ.tアサイン完了通知();
-							return 0;
-						}
-						if ( !this.actList.bIsKeyAssignSelected && !this.actList.bIsFocusingParameter )	// #24525 2011.3.15 yyagi, #32059 2013.9.17 yyagi
-						{
-							this.bメニューにフォーカス中 = true;
-						}
-						this.t説明文パネルに現在選択されているメニューの説明を描画する();
-						this.actList.tEsc押下();								// #24525 2011.3.15 yyagi ESC押下時の右メニュー描画用
+						CDTXMania.stageコンフィグ.tアサイン完了通知();
+						return 0;
 					}
-					else
+					if ( this.actList.bIsKeyAssignSelected == false )		// #24525 2011.3.15 yyagi
 					{
-						this.actFIFO.tフェードアウト開始();
-						base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+						this.bメニューにフォーカス中 = true;
 					}
+					this.t説明文パネルに現在選択されているメニューの説明を描画する();
+					this.actList.tEsc押下();								// #24525 2011.3.15 yyagi ESC押下時の右メニュー描画用
 				}
-				else if ( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) || ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) ) )
+				else
 				{
-					if ( this.n現在のメニュー番号 == 4 )
+					this.actFIFO.tフェードアウト開始();
+					base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+				}
+			}
+			else if( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Return) ) ) )
+			{
+				if( this.n現在のメニュー番号 == 4 )
+				{
+					CDTXMania.Skin.sound曲決定.t再生する();
+					this.actFIFO.tフェードアウト開始();
+					base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+				}
+				else if( this.bメニューにフォーカス中 )
+				{
+					CDTXMania.Skin.sound決定音.t再生する();
+					this.bメニューにフォーカス中 = false;
+					this.t説明文パネルに現在選択されている項目の説明を描画する();
+				}
+				else
+				{
+					switch( this.eItemPanelモード )
 					{
-						CDTXMania.Skin.sound決定音.t再生する();
-						this.actFIFO.tフェードアウト開始();
-						base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
-					}
-					else if ( this.bメニューにフォーカス中 )
-					{
-						CDTXMania.Skin.sound決定音.t再生する();
-						this.bメニューにフォーカス中 = false;
-						this.t説明文パネルに現在選択されている項目の説明を描画する();
-					}
-					else
-					{
-						switch ( this.eItemPanelモード )
-						{
-							case EItemPanelモード.パッド一覧:
-								bool bIsKeyAssignSelectedBeforeHitEnter = this.actList.bIsKeyAssignSelected;	// #24525 2011.3.15 yyagi
-								this.actList.tEnter押下();
-								if ( this.actList.b現在選択されている項目はReturnToMenuである )
+						case EItemPanelモード.パッド一覧:
+							bool bIsKeyAssignSelectedBeforeHitEnter = this.actList.bIsKeyAssignSelected;	// #24525 2011.3.15 yyagi
+							this.actList.tEnter押下();
+							if( this.actList.b現在選択されている項目はReturnToMenuである )
+							{
+								this.t説明文パネルに現在選択されているメニューの説明を描画する();
+								if ( bIsKeyAssignSelectedBeforeHitEnter == false )							// #24525 2011.3.15 yyagi
 								{
-									this.t説明文パネルに現在選択されているメニューの説明を描画する();
-									if ( bIsKeyAssignSelectedBeforeHitEnter == false )							// #24525 2011.3.15 yyagi
-									{
-										this.bメニューにフォーカス中 = true;
-									}
+									this.bメニューにフォーカス中 = true;
 								}
-								break;
+							}
+							break;
 
-							case EItemPanelモード.キーコード一覧:
-								this.actKeyAssign.tEnter押下();
-								break;
-						}
+						case EItemPanelモード.キーコード一覧:
+							this.actKeyAssign.tEnter押下();
+							break;
 					}
 				}
-				this.ctキー反復用.Up.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.UpArrow ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
-				this.ctキー反復用.R.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.HH ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
-				if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
-				{
-					this.tカーソルを上へ移動する();
-				}
-				this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
-				this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.SD ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
-				if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
-				{
-					this.tカーソルを下へ移動する();
-				}
-            }
+			}
+			this.ctキー反復用.Up.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.UpArrow ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
+			this.ctキー反復用.R.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.HH ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
+			if( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
+			{
+				this.tカーソルを上へ移動する();
+			}
+			this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
+			this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.BD ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
+			if( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
+			{
+				this.tカーソルを下へ移動する();
+			}
 			return 0;
 		}
 
@@ -422,7 +406,6 @@ namespace DTXMania
 		private CActFIFOWhite actFIFO;
 		private CActConfigKeyAssign actKeyAssign;
 		private CActConfigList actList;
-        private CActオプションパネル actオプションパネル;
 		private bool bメニューにフォーカス中;
 		private STキー反復用カウンタ ctキー反復用;
 		private const int DESC_H = 0x80;

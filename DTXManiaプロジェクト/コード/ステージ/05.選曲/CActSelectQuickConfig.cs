@@ -359,19 +359,16 @@ namespace DTXMania
                         {
                             CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 3;
                             CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
-                            CDTXMania.ConfigIni.bLaneFlush[ nCurrentTarget ] = false;
                         }
                         else if (d == Eダークモード.HALF)
                         {
                             CDTXMania.ConfigIni.nLaneDisp[ nCurrentTarget ] = 1;
                             CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = true;
-                            CDTXMania.ConfigIni.bLaneFlush[ nCurrentTarget ] = true;
                         }
                         else
                         {
                             CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 0;
                             CDTXMania.ConfigIni.bJudgeLineDisp[nCurrentTarget] = true;
-                            CDTXMania.ConfigIni.bLaneFlush[ nCurrentTarget ] = true;
                         }
 					}
 					break;

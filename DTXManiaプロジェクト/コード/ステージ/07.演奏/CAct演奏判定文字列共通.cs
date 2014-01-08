@@ -84,11 +84,11 @@ namespace DTXMania
 				this.st判定文字列[ i ].rc = r[i];
 			}
 
-			this.stLag数値 = new STlag数値[ 15 * 2 ];		// #25370 2011.2.1 yyagi
-			for ( int i = 0; i < 15; i++ )
+			this.stLag数値 = new STlag数値[ 12 * 2 ];		// #25370 2011.2.1 yyagi
+			for ( int i = 0; i < 12; i++ )
 			{
 				this.stLag数値[ i      ].rc = new Rectangle( ( i % 4 ) * 15     , ( i / 4 ) * 19     , 15, 19 );	// plus numbers
-				this.stLag数値[ i + 15 ].rc = new Rectangle( ( i % 4 ) * 15 + 64, ( i / 4 ) * 19 + 64, 15, 19 );	// minus numbers
+				this.stLag数値[ i + 12 ].rc = new Rectangle( ( i % 4 ) * 15 + 64, ( i / 4 ) * 19 + 64, 15, 19 );	// minus numbers
 			}
 			base.b活性化してない = true;
 		}
@@ -132,21 +132,20 @@ namespace DTXMania
 				this.st状態[ i ].ct進行 = new CCounter();
 			}
 
-            this.stレーンサイズ = new STレーンサイズ[15];
+            this.stレーンサイズ = new STレーンサイズ[12];
                 STレーンサイズ stレーンサイズ = new STレーンサイズ();
                 //                                LC          HH          SD            BD          HT           LT           FT            CY          LP             RD
-                int[,] sizeXW = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 582, 60 }, { 528, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
-                int[,] sizeXW_B = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 478, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
-                int[,] sizeXW_C = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
-                int[,] sizeXW_D = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 582, 60 }, { 476, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 528, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+                int[,] sizeXW = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 582, 60 }, { 528, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+                int[,] sizeXW_B = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 478, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, };
+                int[,] sizeXW_C = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, };
+                int[,] sizeXW_D = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 582, 60 }, { 476, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 528, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, };
 
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < 12; i++)
                 {
                     this.stレーンサイズ[i] = new STレーンサイズ();
-                    if( CDTXMania.ConfigIni.bDrums有効 )
                     {
                         this.stレーンサイズ[i] = default(CAct演奏Drums判定文字列.STレーンサイズ);
-                        switch ( CDTXMania.ConfigIni.eLaneType.Drums )
+                        switch (CDTXMania.ConfigIni.eLaneType.Drums)
                         {
                             case Eタイプ.A:
                                 this.stレーンサイズ[i].x = sizeXW[i, 0];
@@ -193,10 +192,9 @@ namespace DTXMania
 			{
                 if (CDTXMania.ConfigIni.nJudgeFrames > 1)
                 {
-                    //this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
-                    //2013.8.2 kairera0467 CStage演奏画面共通側で読み込むテスト。
                 }
                 else
                 {

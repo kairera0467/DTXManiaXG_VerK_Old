@@ -21,11 +21,21 @@ namespace DTXMania
             this.n火薬カウント = 0;
             base.On活性化();
         }
+        public override void On非活性化()
+        {
+            for( int i = 0; i < 256; i++ )
+            {
+                this.b爆発した[ i ] = false;
+                base.bn00コンボに到達した[i].Drums = false;
+            }
+            base.nコンボカウント.Drums = 0;
+            this.n火薬カウント = 0;
+            base.On非活性化();
+        }
 
         public void Start( int nCombo値 )
         {
             this.n火薬カウント = nCombo値 / 100;
-
  
             for (int j = 0; j < 1; j++)
             {
@@ -118,7 +128,8 @@ namespace DTXMania
                         }
                         if (this.txComboBom != null)
                         {
-                            this.txComboBom.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, (340 * num1), 360, 340));
+                            this.txComboBom.t2D描画(CDTXMania.app.Device, x - 70, y - 50, new Rectangle(0, (340 * num1), 360, 340));
+                            this.txComboBom.vc拡大縮小倍率 = new SlimDX.Vector3(1.5f, 1.5f, 1f);
                         }
                     }
                 }

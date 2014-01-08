@@ -68,7 +68,7 @@ namespace DTXMania
 						}
 						if( base.txScore != null )
 						{
-							//base.txScore.t2D描画( CDTXMania.app.Device, this.ptSCORE[ i - 1 ].X + ( k * 26 ), this.ptSCORE[ i - 1 ].Y, rectangle );
+							base.txScore.t2D描画( CDTXMania.app.Device, this.ptSCORE[ i - 1 ].X + ( k * 26 ), this.ptSCORE[ i - 1 ].Y, rectangle );
                             base.txScore.vc拡大縮小倍率.X = 0.85f;
                             base.txScore.vc拡大縮小倍率.Y = 0.85f;
 						}

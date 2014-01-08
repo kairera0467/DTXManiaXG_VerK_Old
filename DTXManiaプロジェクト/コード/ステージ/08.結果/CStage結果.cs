@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using FDK;
-using DirectShowLib;
 using SlimDX.Direct3D9;
 
 namespace DTXMania
@@ -89,7 +88,7 @@ namespace DTXMania
                     {
                         CScoreIni.C演奏記録 part = this.st演奏記録[i];
                         bool bIsAutoPlay = true;
-                        switch ( i )
+                        switch (i)
                         {
                             case 0:
                                 bIsAutoPlay = CDTXMania.ConfigIni.bドラムが全部オートプレイである;
@@ -110,13 +109,13 @@ namespace DTXMania
                         this.fMiss率[i] = bIsAutoPlay ? 0f : ((100f * part.nMiss数) / ((float)part.n全チップ数));
                         this.bオート[i] = bIsAutoPlay;	// #23596 10.11.16 add ikanick そのパートがオートなら1
                         //        10.11.17 change (int to bool) ikanick
-                        if (CDTXMania.ConfigIni.nSkillMode == 1)
+                        if (CDTXMania.ConfigIni.nSkillMode == 0)
                         {
-                            this.nランク値[ i ] = CScoreIni.tランク値を計算して返す( part );
+                            this.nランク値[i] = CScoreIni.tランク値を計算して返す(part);
                         }
-                        else if (CDTXMania.ConfigIni.nSkillMode == 0)
+                        else if (CDTXMania.ConfigIni.nSkillMode == 1)
                         {
-                            this.nランク値[ i ] = CScoreIni.t旧ランク値を計算して返す(part);
+                            this.nランク値[i] = CScoreIni.t旧ランク値を計算して返す(part);
                         }
                     }
                 }
@@ -126,60 +125,60 @@ namespace DTXMania
 
 				#region [ .score.ini の作成と出力 ]
 				//---------------------
-                string str = CDTXMania.DTX.strファイル名の絶対パス + ".score.ini";
+				string str = CDTXMania.DTX.strファイル名の絶対パス + ".score.ini";
 				CScoreIni ini = new CScoreIni( str );
-                
-                bool[] b今までにフルコンボしたことがある = new bool[] { false, false, false };
-				for( int i = 0; i < 3; i++ )
-				{
-					// フルコンボチェックならびに新記録ランクチェックは、ini.Record[] が、スコアチェックや演奏型スキルチェックの IF 内で書き直されてしまうよりも前に行う。(2010.9.10)
 
-				    b今までにフルコンボしたことがある[ i ] = ini.stセクション[ i * 2 ].bフルコンボである | ini.stセクション[ i * 2 + 1 ].bフルコンボである;
-
-				    #region [deleted by #24459]
-			//	if( this.nランク値[ i ] <= CScoreIni.tランク値を計算して返す( ini.stセクション[ ( i * 2 ) + 1 ] ) )
-			//	{
-			//		this.b新記録ランク[ i ] = true;
-		    //		}
-			    #endregion
-					// #24459 上記の条件だと[HiSkill.***]でのランクしかチェックしていないので、BestRankと比較するよう変更。
-
-                    if( !this.bオート[ i ] || !CDTXMania.ConfigIni.bAutoAddGage )
+				bool[] b今までにフルコンボしたことがある = new bool[] { false, false, false };
+                if (!CDTXMania.ConfigIni.bドラムが全部オートプレイである || !CDTXMania.ConfigIni.bギターが全部オートプレイである || !CDTXMania.ConfigIni.bベースが全部オートプレイである)
+                {
+                    for (int i = 0; i < 3; i++)
                     {
-			            if ( this.nランク値[ i ] >= 0 && ini.stファイル.BestRank[ i ] > this.nランク値[ i ] )		// #24459 2011.3.1 yyagi update BestRank
-					    {
-    						this.b新記録ランク[ i ] = true;
-	    					ini.stファイル.BestRank[ i ] = this.nランク値[ i ];
-		    			}
 
-			    		// 新記録スコアチェック
-				    	if( this.st演奏記録[ i ].nスコア > ini.stセクション[ i * 2 ].nスコア )
-					    {
-					        this.b新記録スコア[ i ] = true;
-					        ini.stセクション[ i * 2 ] = this.st演奏記録[ i ];
-					    }
+                        // フルコンボチェックならびに新記録ランクチェックは、ini.Record[] が、スコアチェックや演奏型スキルチェックの IF 内で書き直されてしまうよりも前に行う。(2010.9.10)
+
+                        b今までにフルコンボしたことがある[i] = ini.stセクション[i * 2].bフルコンボである | ini.stセクション[i * 2 + 1].bフルコンボである;
+
+                        #region [deleted by #24459]
+                        //		if( this.nランク値[ i ] <= CScoreIni.tランク値を計算して返す( ini.stセクション[ ( i * 2 ) + 1 ] ) )
+                        //		{
+                        //			this.b新記録ランク[ i ] = true;
+                        //		}
+                        #endregion
+                        // #24459 上記の条件だと[HiSkill.***]でのランクしかチェックしていないので、BestRankと比較するよう変更。
+                        if (this.nランク値[i] >= 0 && ini.stファイル.BestRank[i] > this.nランク値[i])		// #24459 2011.3.1 yyagi update BestRank
+                        {
+                            this.b新記録ランク[i] = true;
+                            ini.stファイル.BestRank[i] = this.nランク値[i];
+                        }
+
+                        // 新記録スコアチェック
+                        if (this.st演奏記録[i].nスコア > ini.stセクション[i * 2].nスコア)
+                        {
+                            this.b新記録スコア[i] = true;
+                            ini.stセクション[i * 2] = this.st演奏記録[i];
+                        }
 
                         // 新記録スキルチェック
-                        if ( this.st演奏記録[ i ].db演奏型スキル値 > ini.stセクション[ ( i * 2 ) + 1 ].db演奏型スキル値 )
+                        if (this.st演奏記録[i].db演奏型スキル値 > ini.stセクション[(i * 2) + 1].db演奏型スキル値)
                         {
-                            this.b新記録スキル[ i ] = true;
-                            ini.stセクション[ ( i * 2 ) + 1 ] = this.st演奏記録[ i ];
+                            this.b新記録スキル[i] = true;
+                            ini.stセクション[(i * 2) + 1] = this.st演奏記録[i];
+                        }
+                        // ラストプレイ #23595 2011.1.9 ikanick
+                        // オートじゃなければプレイ結果を書き込む
+                        if (this.bオート[i] == false)
+                        {
+                            ini.stセクション[i + 6] = this.st演奏記録[i];
                         }
 
-			    		// ラストプレイ #23595 2011.1.9 ikanick
-                        // オートじゃなければプレイ結果を書き込む
-                        if( this.bオート[ i ] == false ) {
-                            ini.stセクション[ i + 6 ] = this.st演奏記録[ i ];
-                        }
-                    
                         // #23596 10.11.16 add ikanick オートじゃないならクリア回数を1増やす
                         //        11.02.05 bオート to t更新条件を取得する use      ikanick
-					    bool[] b更新が必要か否か = new bool[ 3 ];
-					    CScoreIni.t更新条件を取得する( out b更新が必要か否か[ 0 ], out b更新が必要か否か[ 1 ], out b更新が必要か否か[ 2 ] );
+                        bool[] b更新が必要か否か = new bool[3];
+                        CScoreIni.t更新条件を取得する(out b更新が必要か否か[0], out b更新が必要か否か[1], out b更新が必要か否か[2]);
 
-                        if ( b更新が必要か否か[ i ] )
+                        if (b更新が必要か否か[i])
                         {
-                            switch ( i )
+                            switch (i)
                             {
                                 case 0:
                                     ini.stファイル.ClearCountDrums++;
@@ -194,23 +193,21 @@ namespace DTXMania
                                     throw new Exception("クリア回数増加のk(0-2)が範囲外です。");
                             }
                         }
+
+                        //---------------------------------------------------------------------/
                     }
-                    //---------------------------------------------------------------------/
                     if( CDTXMania.ConfigIni.bScoreIniを出力する )
                     {
-				        ini.t書き出し( str );
+                        ini.t書き出し(str);
                     }
                 }
 				//---------------------
 				#endregion
 
 				#region [ リザルト画面への演奏回数の更新 #24281 2011.1.30 yyagi]
-                if( CDTXMania.ConfigIni.bScoreIniを出力する )
-                {
-                    this.n演奏回数.Drums = ini.stファイル.PlayCountDrums;
-                    this.n演奏回数.Guitar = ini.stファイル.PlayCountGuitar;
-                    this.n演奏回数.Bass = ini.stファイル.PlayCountBass;
-                }
+				this.n演奏回数.Drums = ini.stファイル.PlayCountDrums;
+				this.n演奏回数.Guitar = ini.stファイル.PlayCountGuitar;
+				this.n演奏回数.Bass = ini.stファイル.PlayCountBass;
 				#endregion
 				#region [ 選曲画面の譜面情報の更新 ]
 				//---------------------
@@ -241,35 +238,6 @@ namespace DTXMania
 				}
 				//---------------------
 				#endregion
-                #region [ #RESULTSOUND_xx の再生（あれば）]
-                    //---------------------
-                    int rank = CScoreIni.t総合ランク値を計算して返す(this.st演奏記録.Drums, this.st演奏記録.Guitar, this.st演奏記録.Bass);
-
-                    if (rank == 99)	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-                    {
-                        rank = 6;
-                    }
-
-                    if (string.IsNullOrEmpty(CDTXMania.DTX.RESULTSOUND[rank]))
-                    {
-                        CDTXMania.Skin.bgm結果画面.t再生する();
-                        this.rResultSound = null;
-                    }
-                    else
-                    {
-                        string str2 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.RESULTSOUND[rank];
-                        try
-                        {
-                            this.rResultSound = CDTXMania.Sound管理.tサウンドを生成する(str2);
-                        }
-                        catch
-                        {
-                            Trace.TraceError("サウンドの生成に失敗しました。({0})", new object[] { str2 });
-                            this.rResultSound = null;
-                        }
-                    }
-                    //---------------------
-                    #endregion
 
 				base.On活性化();
 			}
@@ -292,7 +260,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\8_background.mp4" ), CDTXMania.app.WindowHandle, true );
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_background.jpg" ) );
                 switch (CDTXMania.stage結果.n総合ランク値)
                 {
@@ -342,8 +309,6 @@ namespace DTXMania
                 }
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_header panel.png" ), true );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_footer panel.png" ), true );
-                //this.tx中央パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_center panel.png"));
-                this.txリザルトパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_result panel.png"));
 				//this.txオプションパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen option panels.png" ) );
 				base.OnManagedリソースの作成();
 			}
@@ -356,14 +321,11 @@ namespace DTXMania
 				{
 					this.ct登場用 = null;
 				}
-                CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
-                //CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
-                CDTXMania.tテクスチャの解放( ref this.txリザルトパネル );
-                //CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
-                base.OnManagedリソースの解放();
+				//CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
+				base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
@@ -373,36 +335,12 @@ namespace DTXMania
 				int num;
 				if( base.b初めての進行描画 )
 				{
-					this.ct登場用 = new CCounter( 0, 5000, 1, CDTXMania.Timer );
-                    if( File.Exists( CSkin.Path(@"Graphics\7_StageClear.mp4" ) ) )
-                        this.actFO.tフェードイン開始();
-                    else
-                        this.actFI.tフェードイン開始();
+					this.ct登場用 = new CCounter( 0, 100, 5, CDTXMania.Timer );
+                    CDTXMania.Skin.soundステージクリア音.t再生する();
+                    this.actFI.tフェードイン開始(false);
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
-					if( this.rResultSound != null )
-					{
-						this.rResultSound.t再生を開始する();
-					}
-
 					base.b初めての進行描画 = false;
 				}
-                if( this.ds背景動画 != null )
-                {
-                    this.ds背景動画.t再生開始();
-                    this.ds背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
-                    this.ds背景動画.bループ再生 = true;
-                    
-                    if (this.lDshowPosition == this.lStopPosition)
-                    {
-                        this.ds背景動画.MediaSeeking.SetPositions(
-                        DsLong.FromInt64((long)(0)),
-                        AMSeekingSeekingFlags.AbsolutePositioning,
-                        0,
-                        AMSeekingSeekingFlags.NoPositioning);
-                    }
-                    
-                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
-                }
 				this.bアニメが完了 = true;
 				if( this.ct登場用.b進行中 )
 				{
@@ -421,14 +359,7 @@ namespace DTXMania
 
 				if( this.tx背景 != null )
 				{
-                    if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
-                    {
-                        this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
-                    }
-                    else
-                    {
-					    this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
-                    }
+					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 				}
 				if( this.ct登場用.b進行中 && ( this.tx上部パネル != null ) )
 				{
@@ -446,22 +377,8 @@ namespace DTXMania
 				}
 				if( this.tx下部パネル != null )
 				{
-					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
+					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
 				}
-                if (this.actRank.On進行描画() == 0)
-                {
-                    this.bアニメが完了 = false;
-                }
-                //if( this.tx中央パネル != null )
-                //    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
-                if( this.txリザルトパネル != null )
-                {
-                    this.txリザルトパネル.t2D描画( CDTXMania.app.Device, 453, 11 );
-                    if ( CDTXMania.ConfigIni.bGuitar有効 )
-                    {
-                        this.txリザルトパネル.t2D描画(CDTXMania.app.Device, 106, 430);
-                    }
-                }
 				if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
@@ -470,22 +387,16 @@ namespace DTXMania
 				{
 					this.bアニメが完了 = false;
 				}
+                if (this.actRank.On進行描画() == 0)
+                {
+                    this.bアニメが完了 = false;
+                }
 				if( base.eフェーズID == CStage.Eフェーズ.共通_フェードイン )
 				{
-                    if( File.Exists( CSkin.Path(@"Graphics\7_StageClear.mp4" ) ) )
-                    {
-		    			if( this.actFO.On進行描画() != 0 )
-	    				{
-    						base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
-					    }
-                    }
-                    else
-                    {
-		    			if( this.actFI.On進行描画() != 0 )
-	    				{
-    						base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
-					    }
-                    }
+					if( this.actFI.On進行描画() != 0 )
+					{
+						base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
+					}
 				}
 				else if( ( base.eフェーズID == CStage.Eフェーズ.共通_フェードアウト ) )			//&& ( this.actFO.On進行描画() != 0 ) )
 				{
@@ -502,6 +413,7 @@ namespace DTXMania
 				#endregion
 
 				// キー入力
+
 				if( CDTXMania.act現在入力を占有中のプラグイン == null )
 				{
 					if( CDTXMania.ConfigIni.bドラム打音を発声する && CDTXMania.ConfigIni.bDrums有効 )
@@ -559,7 +471,7 @@ namespace DTXMania
 												break;
 										}
 									}
-									if( ( ( rChip != null ) && ( rChip.nチャンネル番号 >= 0x11 ) ) && ( rChip.nチャンネル番号 <= 0x1c ) )
+									if( ( ( rChip != null ) && ( rChip.nチャンネル番号 >= 0x11 ) ) && ( rChip.nチャンネル番号 <= 0x1b ) )
 									{
 										int nLane = this.nチャンネル0Atoレーン07[ rChip.nチャンネル番号 - 0x11 ];
 										if( ( nLane == 1 ) && ( ( rChip.nチャンネル番号 == 0x11 ) || ( ( rChip.nチャンネル番号 == 0x18 ) && ( this.n最後に再生したHHのチャンネル番号 != 0x18 ) ) ) )
@@ -576,10 +488,7 @@ namespace DTXMania
 					}
 					if( ( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Return ) ) ) && !this.bアニメが完了 )
 					{
-                        if (File.Exists(CSkin.Path(@"Graphics\7_StageClear.mp4")))
-                            this.actFO.tフェードイン完了();
-                        else
-                            this.actFI.tフェードイン完了();
+						this.actFI.tフェードイン完了();					// #25406 2011.6.9 yyagi
 						this.actResultImage.tアニメを完了させる();
 						this.actParameterPanel.tアニメを完了させる();
 						this.actRank.tアニメを完了させる();
@@ -625,14 +534,14 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		public CCounter ct登場用;
+		private CCounter ct登場用;
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private CActFIFOWhite actFI;
 		private CActFIFOBlack actFO;
 		private CActオプションパネル actOption;
 		private CActResultParameterPanel actParameterPanel;
 		private CActResultRank actRank;
-		public CActResultImage actResultImage;
+		private CActResultImage actResultImage;
 		private CActResultSongBar actSongBar;
 		private bool bアニメが完了;
 		private bool bIsCheckedWhetherResultScreenShouldSaveOrNot;				// #24509 2011.3.14 yyagi
@@ -643,11 +552,6 @@ namespace DTXMania
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
-        private CTexture txリザルトパネル;
-
-        private CDirectShow ds背景動画;
-        private long lDshowPosition;
-        private long lStopPosition;
 
 		#region [ #24609 リザルト画像をpngで保存する ]		// #24609 2011.3.14 yyagi; to save result screen in case BestRank or HiSkill.
 		/// <summary>

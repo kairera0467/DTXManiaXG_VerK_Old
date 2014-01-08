@@ -763,10 +763,7 @@ namespace DTXCreator.譜面
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "CY",  0x16, 0x16, false, Color.FromArgb( alpha, 0x9f, 0x9f, 0xff), 0, width, Cレーン.ELaneType.Drums, true ) );
             this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "RD",  0x19, 0x19, false, Color.FromArgb( alpha, 0, 0xff, 0xff), 0, width, Cレーン.ELaneType.Drums, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "FI",  0x53, 0x53, true,  Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
-            this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN1",  0x4F, 0x4F, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
-            this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN2",  0x4E, 0x4E, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
-            this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN3",  0x4D, 0x4D, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
-            this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN4",  0x4C, 0x4C, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN",  0x4F, 0x4F, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
 
             this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "MLC", 0x87, 0x87, true,  Color.FromArgb( alpha, 0xdf, 0x5f, 0x7f), 0, width, Cレーン.ELaneType.Drums, true ) );
             this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "MHH", 0x84, 0x84, false, Color.FromArgb( alpha, 0, 0xff, 0xff), 0, width, Cレーン.ELaneType.Drums, true));
@@ -811,18 +808,10 @@ namespace DTXCreator.譜面
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "S32", 0x92, 0x92, false, Color.FromArgb( alpha, 160, 160, 160 ), 0, 0, Cレーン.ELaneType.SE6_32, false ) );
 
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtV, "GtV", 0,    0,    true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-            /*
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtR, "GtR", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtG, "GtG", 0,    0,    false, Color.FromArgb( alpha, 0, 0xff, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtB, "GtB", 0,    0,    false, Color.FromArgb( alpha, 0, 0x80, 0xff ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-            */
-            this.listレーン.Add( new Cレーン( Cレーン.E種別.GtR, "GtR", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtG, "GtG", 0,    0,    false, Color.FromArgb( alpha, 0, 0xff, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtB, "GtB", 0,    0,    false, Color.FromArgb( alpha, 0, 0x80, 0xff ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-            this.listレーン.Add( new Cレーン( Cレーン.E種別.GtG, "GtY", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtB, "GtP", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0x9f, 0xcf ), 0, width, Cレーン.ELaneType.Guitar, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.GtW, "GtW", 0x28, 0x28, true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Guitar, true ) );
-
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsV, "BsV", 0,    0,    true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Bass, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsR, "BsR", 0,    0,    false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Bass, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsG, "BsG", 0,    0,    false, Color.FromArgb( alpha, 0, 0xff, 0 ), 0, width, Cレーン.ELaneType.Bass, true ) );

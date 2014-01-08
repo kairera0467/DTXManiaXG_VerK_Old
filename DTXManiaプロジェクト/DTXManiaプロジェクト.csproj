@@ -39,13 +39,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;_TEST_ENGLISH_ TEST_Direct3D9Ex_</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;TEST_ENGLISH_ TEST_Direct3D9Ex_</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>0219</NoWarn>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -60,7 +59,7 @@
   <ItemGroup>
     <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\trunk\実行時フォルダ\DirectShowLib-2005.dll</HintPath>
+      <HintPath>..\実行時フォルダ\DirectShowLib-2005.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SlimDXc_net20x86_Jun2010, Version=1002.0.10.43, Culture=neutral, PublicKeyToken=53d0e4ef1f1579f5, processorArchitecture=x86">
@@ -113,6 +112,7 @@
     <Compile Include="コード\ステージ\01.起動\CStage起動.cs" />
     <Compile Include="コード\ステージ\02.タイトル\CActEnumSongs.cs" />
     <Compile Include="コード\ステージ\02.タイトル\CStageタイトル.cs" />
+    <None Include="コード\ステージ\03.オプション\CActOptionList" />
     <Compile Include="コード\ステージ\03.オプション\CStageオプション.cs" />
     <Compile Include="コード\ステージ\04.コンフィグ\CActConfigKeyAssign.cs" />
     <Compile Include="コード\ステージ\04.コンフィグ\CActConfigList.cs" />
@@ -146,10 +146,10 @@
     <Compile Include="コード\ステージ\07.演奏\CAct演奏判定文字列共通.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏演奏情報.cs" />
     <Compile Include="コード\ステージ\07.演奏\CStage演奏画面共通.cs" />
-    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarグラフ.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarRGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarWailingBonus.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarグラフ.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarゲージ.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarコンボ.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarスコア.cs" />
@@ -159,7 +159,6 @@
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitar判定文字列.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CStage演奏ギター画面.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏ステージ失敗.cs" />
-    <None Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drumsフィルインエフェクト2" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏AVI.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsRGB.cs" />
@@ -204,7 +203,6 @@
     <Compile Include="コード\全体\CPrivateFastFont.cs" />
     <Compile Include="コード\全体\CPrivateFont.cs" />
     <Compile Include="コード\全体\CSkin.cs" />
-    <Compile Include="コード\ステージ\07.演奏\CAct演奏Dshow.cs" />
     <Compile Include="コード\全体\Cメインウィンドウ.cs">
       <SubType>Form</SubType>
     </Compile>

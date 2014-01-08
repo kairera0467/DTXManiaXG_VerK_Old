@@ -791,11 +791,6 @@ namespace DTXMania
 			cスコア.譜面情報.演奏履歴.行5 = br.ReadString();
 			cスコア.譜面情報.レベルを非表示にする = br.ReadBoolean();
             cスコア.譜面情報.b完全にCLASSIC譜面である.Drums = br.ReadBoolean();
-            cスコア.譜面情報.b完全にCLASSIC譜面である.Guitar = br.ReadBoolean();
-            cスコア.譜面情報.b完全にCLASSIC譜面である.Bass = br.ReadBoolean();
-            cスコア.譜面情報.b譜面がある.Drums = br.ReadBoolean();
-            cスコア.譜面情報.b譜面がある.Guitar = br.ReadBoolean();
-            cスコア.譜面情報.b譜面がある.Bass = br.ReadBoolean();
 			cスコア.譜面情報.曲種別 = (CDTX.E種別) br.ReadInt32();
 			cスコア.譜面情報.Bpm = br.ReadDouble();
 			cスコア.譜面情報.Duration = br.ReadInt32();
@@ -853,9 +848,6 @@ namespace DTXMania
                                     c曲リストノード.arスコア[ i ].譜面情報.レベルDec.Drums = cdtx.LEVELDEC.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベルを非表示にする = cdtx.HIDDENLEVEL;
                                     c曲リストノード.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums = (cdtx2.bチップがある.LeftCymbal == false && cdtx2.bチップがある.LP == false && cdtx2.bチップがある.LBD == false && cdtx2.bチップがある.FT == false && cdtx2.bチップがある.Ride == false) ? true : false;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Drums = cdtx2.bチップがある.Drums;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Guitar = cdtx2.bチップがある.Guitar;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Bass = cdtx2.bチップがある.Bass;
 									c曲リストノード.arスコア[ i ].譜面情報.曲種別 = cdtx.e種別;
 									c曲リストノード.arスコア[ i ].譜面情報.Bpm = cdtx.BPM;
 									c曲リストノード.arスコア[ i ].譜面情報.Duration = 0;	//  (cdtx.listChip == null)? 0 : cdtx.listChip[ cdtx.listChip.Count - 1 ].n発声時刻ms;
@@ -1132,8 +1124,6 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Bass );
                     bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Drums );
-                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Guitar );
-                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Bass );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Bass );
@@ -1153,11 +1143,6 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.演奏履歴.行5 );
 					bw.Write( node.arスコア[ i ].譜面情報.レベルを非表示にする );
                     bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums );
-                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Guitar );
-                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Bass );
-                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Drums );
-                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Guitar );
-                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Bass );
 					bw.Write( (int) node.arスコア[ i ].譜面情報.曲種別 );
 					bw.Write( node.arスコア[ i ].譜面情報.Bpm );
 					bw.Write( node.arスコア[ i ].譜面情報.Duration );
@@ -1668,9 +1653,9 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 						ini.stセクション[ n ].b演奏にマウスを使用した )
                     {
                         // (A) 全オートじゃないようなので、演奏結果情報を有効としてランクを算出する。
-                        if ( CDTXMania.ConfigIni.nSkillMode == 0 )
+                        if (CDTXMania.ConfigIni.nSkillMode == 0)
                         {
-                            score.譜面情報.最大ランク[ n楽器番号 ] =
+                            score.譜面情報.最大ランク[n楽器番号] =
                             CScoreIni.t旧ランク値を計算して返す(
                                 ini.stセクション[n].n全チップ数,
                                 ini.stセクション[n].nPerfect数,
@@ -1680,29 +1665,30 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
                                 ini.stセクション[n].nMiss数
                                 );
                         }
-                        else if( CDTXMania.ConfigIni.nSkillMode == 1 )
+                        else
                         {
-                            score.譜面情報.最大ランク[ n楽器番号 ] =
+                            score.譜面情報.最大ランク[n楽器番号] =
                             CScoreIni.tランク値を計算して返す(
-                                ini.stセクション[ n ].n全チップ数,
-                                ini.stセクション[ n ].nPerfect数,
-                                ini.stセクション[ n ].nGreat数,
-                                ini.stセクション[ n ].nGood数,
-                                ini.stセクション[ n ].nPoor数,
-                                ini.stセクション[ n ].nMiss数,
-                                ini.stセクション[ n ].n最大コンボ数
+                                ini.stセクション[n].n全チップ数,
+                                ini.stセクション[n].nPerfect数,
+                                ini.stセクション[n].nGreat数,
+                                ini.stセクション[n].nGood数,
+                                ini.stセクション[n].nPoor数,
+                                ini.stセクション[n].nMiss数,
+                                ini.stセクション[n].n最大コンボ数
                                 );
                         }
                     }
 					else
 					{
 						// (B) 全オートらしいので、ランクは無効とする。
+
 						score.譜面情報.最大ランク[ n楽器番号 ] = (int) CScoreIni.ERANK.UNKNOWN;
 					}
 					//-----------------
 					#endregion
 					score.譜面情報.最大スキル[ n楽器番号 ] = ini.stセクション[ n ].db演奏型スキル値;
-                    score.譜面情報.最大曲別スキル[ n楽器番号 ] = ini.stセクション[ n ].dbゲーム型スキル値;
+                    score.譜面情報.最大曲別スキル[n楽器番号] = ini.stセクション[n].dbゲーム型スキル値;
 					score.譜面情報.フルコンボ[ n楽器番号 ] = ini.stセクション[ n ].bフルコンボである;
 				}
 				score.譜面情報.演奏回数.Drums = ini.stファイル.PlayCountDrums;

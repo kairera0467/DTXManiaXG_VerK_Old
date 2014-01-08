@@ -340,25 +340,27 @@ namespace DTXMania
 								this.padCY_Decide = value;
 								return;
 
+                            case (int) EKeyConfigPad.LP:
+                                this.padLP = value;
+                                return;
+
 							case (int) EKeyConfigPad.HHO:
 								this.padHHO_Y = value;
 								return;
                             
-                            case (int) EKeyConfigPad.RD:
-								this.padRD = value;
-								return;
-                            
-                            case (int) EKeyConfigPad.LC:
-								this.padLC_P = value;
-								return;
-                            
-                            case (int) EKeyConfigPad.LP:
-                                this.padLP = value;
-                                return;
-                            
                             case (int) EKeyConfigPad.LBD:
 								this.padLBD = value;
 								return;
+
+							case (int) EKeyConfigPad.RD:
+								this.padRD = value;
+								return;
+
+							case (int) EKeyConfigPad.LC:
+								this.padLC_P = value;
+								return;
+
+
 
 							case (int) EKeyConfigPad.Capture:
 								this.padCapture = value;
@@ -508,7 +510,6 @@ namespace DTXMania
         public bool bHAZARD;
         public int nSoundDeviceType; // #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
         public int nWASAPIBufferSizeMs; // #24820 2013.1.15 yyagi WASAPIのバッファサイズ
-        //public int nASIOBufferSizeMs; // #24820 2012.12.28 yyagi ASIOのバッファサイズ
         public int nASIODevice; // #24820 2013.1.17 yyagi ASIOデバイス
         public bool bDynamicBassMixerManagement; // #24820
         public Eタイプ eBPMbar;
@@ -560,18 +561,19 @@ namespace DTXMania
 		public string strDTXManiaのバージョン;
 		public string str曲データ検索パス;
 		public string str選曲リストフォント;
+        public string str曲名表示フォント;
         public string strCardName;
         public string strGroupName;
 		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
 		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
         public int nMovieMode;
         public int nJudgeLine;
-        public STDGBVALUE<int> nShutterInSide;
-        public STDGBVALUE<int> nShutterOutSide;
+        public int nShutterInSide;
+        public int nShutterOutSide;
         public bool bCLASSIC譜面判別を有効にする;
         public bool bMutingLP;
-        public bool bLivePoint;
-        public bool bSkillModeを自動切換えする;
+        public bool bShowMusicInfo;
+        public bool bShowScore;
 
         #region[ 画像関連 ]
         public int nJudgeFrames;
@@ -992,7 +994,7 @@ namespace DTXMania
 			this.str曲データ検索パス = @".\";
 			this.b全画面モード = false;
 			this.b垂直帰線待ちを行う = true;
-            this.b縮小文字のアンチエイリアスを有効にする = true;
+            this.b縮小文字のアンチエイリアスを有効にする = false;
             this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
             this.n初期ウィンドウ開始位置Y = 0;
             this.bDirectShowMode = false;
@@ -1001,10 +1003,8 @@ namespace DTXMania
             this.nMovieMode = 1;
             this.nMovieAlpha = 0;
             this.nJudgeLine = 0;
-            this.nShutterInSide = new STDGBVALUE<int>();
-            this.nShutterInSide.Drums = 0;
-            this.nShutterOutSide = new STDGBVALUE<int>();
-            this.nShutterOutSide.Drums = 0;
+            this.nShutterInSide = 0;
+            this.nShutterOutSide = 0;
 			this.nフレーム毎スリープms = -1;			// #xxxxx 2011.11.27 yyagi add
 			this.n非フォーカス時スリープms = 1;			// #23568 2010.11.04 ikanick add
 			this._bGuitar有効 = false;
@@ -1056,11 +1056,8 @@ namespace DTXMania
             this.bJudgeLineDisp = new STDGBVALUE<bool>();
             this.bJudgeLineDisp.Drums = true;
             this.bJudgeLineDisp.Guitar = true;
-            this.bJudgeLineDisp.Bass = true;
             this.bLaneFlush = new STDGBVALUE<bool>();
             this.bLaneFlush.Drums = true;
-            this.bLaneFlush.Guitar = true;
-            this.bLaneFlush.Bass = true;
 
             this.nJudgeFrames = 24;
             this.nJudgeInterval = 14;
@@ -1088,6 +1085,7 @@ namespace DTXMania
 			this.n表示可能な最小コンボ数.Guitar = 2;
 			this.n表示可能な最小コンボ数.Bass = 2;
 			this.str選曲リストフォント = "MS PGothic";
+            this.str曲名表示フォント = "MS PGothic";
 			this.n選曲リストフォントのサイズdot = 20;
 			this.b選曲リストフォントを太字にする = true;
 			this.n自動再生音量 = 80;
@@ -1120,10 +1118,9 @@ namespace DTXMania
 				this.nInputAdjustTimeMs[ i ] = 0;
                 this.nJudgeLinePosOffset[i] = 0;
 			}
-			this.n演奏速度 = 20;
             this.ドラムコンボ文字の表示位置 = Eドラムコンボ文字の表示位置.RIGHT;
+			this.n演奏速度 = 20;
             this.bCLASSIC譜面判別を有効にする = false;
-            this.bSkillModeを自動切換えする = false;
             this.bMutingLP = true;
             #region [ AutoPlay ]
             this.bAutoPlay = new STAUTOPLAY();
@@ -1182,7 +1179,8 @@ namespace DTXMania
 			this.nShowLagType = (int) EShowLagType.OFF;	// #25370 2011.6.3 yyagi ズレ時間表示
 			this.bIsAutoResultCapture = false;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能ON/OFF
 
-            this.bLivePoint = true;
+            this.bShowScore = true;
+            this.bShowMusicInfo = true;
 			this.bバッファ入力を行う = true;
 			this.bIsSwappedGuitarBass = false;			// #24063 2011.1.16 yyagi ギターとベースの切り替え
 			this.bIsAllowedDoubleClickFullscreen = true;	// #26752 2011.11.26 ダブルクリックでのフルスクリーンモード移行を許可
@@ -1195,9 +1193,8 @@ namespace DTXMania
 			this.bUseBoxDefSkin = true;					// #28195 2012.5.6 yyagi box.defによるスキン切替機能を使用するか否か
             this.bTight = false;                        // #29500 2012.9.11 kairera0467
             this.nSoundDeviceType = (int)ESoundDeviceTypeForConfig.ACM; // #24820 2012.12.23 yyagi 初期値はACM
-//          this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
+            this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
             this.nASIODevice = 0;                       // #24820 2013.1.17 yyagi
-//          this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
             this.bDynamicBassMixerManagement = true;    //
             this.bTimeStretch = false;					// #23664 2013.2.24 yyagi 初期値はfalse (再生速度変更を、ピッチ変更にて行う)
 
@@ -1390,13 +1387,6 @@ namespace DTXMania
             sw.WriteLine("ASIODevice={0}", (int)this.nASIODevice);
             sw.WriteLine();
 
-			//sw.WriteLine( "; ASIO使用時のサウンドバッファサイズ" );
-			//sw.WriteLine( "; (0=デバイスに設定されている値を使用, 1～9999=バッファサイズ(単位:ms)の手動指定" );
-			//sw.WriteLine( "; ASIO Sound Buffer Size." );
-			//sw.WriteLine( "; (0=Use the value specified to the device, 1-9999=specify the buffer size(ms) by yourself)" );
-			//sw.WriteLine( "ASIOBufferSizeMs={0}", (int) this.nASIOBufferSizeMs );
-			//sw.WriteLine();
-
             //sw.WriteLine("; Bass.Mixの制御を動的に行うか否か。");
             //sw.WriteLine("; ONにすると、ギター曲などチップ音の多い曲も再生できますが、画面が少しがたつきます。");
             //sw.WriteLine("; (0=行わない, 1=行う)");
@@ -1415,14 +1405,13 @@ namespace DTXMania
 			sw.WriteLine();
             #endregion
             sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
-            sw.WriteLine( "; 文字やネームプレートなどの縮小している画像に対してアンチエイリアス処理をします。" );
             sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine( "; DirectShowでのワイドクリップ再生 (0:OFF, 1:ON)");
+            sw.WriteLine("; DirectShowでのワイドクリップ再生 (0:OFF, 1:ON)");
             sw.WriteLine( "DirectShowMode={0}", this.bDirectShowMode ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine( "; 選曲画面の難易度表示をXG表示にする (0:OFF, 1:ON)");
-            sw.WriteLine( "Difficlty={0}", this.b難易度表示をXG表示にする ? 1 : 0);
+            sw.WriteLine("; 選曲画面の難易度表示をXG表示にする (0:OFF, 1:ON)");
+            sw.WriteLine("Difficlty={0}", this.b難易度表示をXG表示にする ? 1 : 0);
             sw.WriteLine();
 			sw.WriteLine( "; 背景画像の半透明割合(0:透明～255:不透明)" );
 			sw.WriteLine( "; Transparency for background image in playing screen.(0:tranaparent - 255:no transparent)" );
@@ -1502,8 +1491,11 @@ namespace DTXMania
 			sw.WriteLine( "HitSound={0}", this.bドラム打音を発声する ? 1 : 0 );
 			sw.WriteLine();
             #endregion
-            sw.WriteLine( "; LivePointの表示(0:OFF, 1:ON)");
-            sw.WriteLine( "LivePoint={0}", this.bLivePoint ? 1 : 0);
+            sw.WriteLine( "; スコアの表示(0:OFF, 1:ON)" );
+            sw.WriteLine( "ShowScore={0}", this.bShowScore ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine( "; 演奏中の曲情報の表示(0:OFF, 1:ON)" );
+            sw.WriteLine( "ShowMusicInfo={0}", this.bShowMusicInfo ? 1 : 0);
             sw.WriteLine();
 			sw.WriteLine( "; 演奏記録（～.score.ini）の出力 (0:OFF, 1:ON)" );
 			sw.WriteLine( "SaveScoreIni={0}", this.bScoreIniを出力する ? 1 : 0 );
@@ -1522,9 +1514,13 @@ namespace DTXMania
 			sw.WriteLine( "SoundMonitorBass={0}", this.b演奏音を強調する.Bass ? 1 : 0 );
 			sw.WriteLine();
             #endregion
-            sw.WriteLine( "; 表示可能な最小コンボ数(1～99999)" );
+            sw.WriteLine( "; ドラムの表示可能な最小コンボ数(1～99999)" );
 			sw.WriteLine( "MinComboDrums={0}", this.n表示可能な最小コンボ数.Drums );
+			sw.WriteLine();
+			sw.WriteLine( "; ギターの表示可能な最小コンボ数(1～99999)" );
 			sw.WriteLine( "MinComboGuitar={0}", this.n表示可能な最小コンボ数.Guitar );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースの表示可能な最小コンボ数(1～99999)" );
 			sw.WriteLine( "MinComboBass={0}", this.n表示可能な最小コンボ数.Bass );
 			sw.WriteLine();
 			sw.WriteLine( "; 演奏情報を表示する (0:OFF, 1:ON)" );
@@ -1536,6 +1532,9 @@ namespace DTXMania
             sw.WriteLine( "; Font name for select song item." );
 			sw.WriteLine( "SelectListFontName={0}", this.str選曲リストフォント );
 			sw.WriteLine();
+            sw.WriteLine("; 読み込み画面、演奏画面、ネームプレート、リザルト画面の曲名で使用するフォント名");
+            sw.WriteLine( "DisplayFontName={0}", this.str曲名表示フォント);
+            sw.WriteLine();
 			sw.WriteLine( "; 選曲リストのフォントのサイズ[dot]" );
             sw.WriteLine( "; Font size[dot] for select song item." );
 			sw.WriteLine( "SelectListFontSize={0}", this.n選曲リストフォントのサイズdot );
@@ -1657,29 +1656,49 @@ namespace DTXMania
 			sw.WriteLine( "; DARKモード(0:OFF, 1:HALF, 2:FULL)" );
 			sw.WriteLine( "Dark={0}", (int) this.eDark );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースSUDDENモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ドラムSUDDENモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "DrumsSudden={0}", this.bSudden.Drums ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ギターSUDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarSudden={0}", this.bSudden.Guitar ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースSUDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassSudden={0}", this.bSudden.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースHIDDENモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ドラムHIDDENモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "DrumsHidden={0}", this.bHidden.Drums ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ギターHIDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarHidden={0}", this.bHidden.Guitar ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースHIDDENモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassHidden={0}", this.bHidden.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; REVERSEモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ドラムREVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "DrumsReverse={0}", this.bReverse.Drums ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ギターREVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarReverse={0}", this.bReverse.Guitar ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースREVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassReverse={0}", this.bReverse.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom)" );
+			sw.WriteLine( "; ギターRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom)" );
 			sw.WriteLine( "GuitarRandom={0}", (int) this.eRandom.Guitar );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom)" );
 			sw.WriteLine( "BassRandom={0}", (int) this.eRandom.Bass );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースLIGHTモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ギターLIGHTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarLight={0}", this.bLight.Guitar ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースLIGHTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassLight={0}", this.bLight.Bass ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースLEFTモード(0:OFF, 1:ON)" );
+			sw.WriteLine( "; ギターLEFTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "GuitarLeft={0}", this.bLeft.Guitar ? 1 : 0 );
+			sw.WriteLine();
+			sw.WriteLine( "; ベースLEFTモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "BassLeft={0}", this.bLeft.Bass ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; RISKYモード(0:OFF, 1-10)" );									// #23559 2011.6.23 yyagi
@@ -1700,13 +1719,19 @@ namespace DTXMania
 			sw.WriteLine( "; ドラム判定文字表示位置(0:レーン上,1:判定ライン上,2:表示OFF)" );
 			sw.WriteLine( "DrumsPosition={0}", (int) this.判定文字表示位置.Drums );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベース判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
+			sw.WriteLine( "; ギター判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
 			sw.WriteLine( "GuitarPosition={0}", (int) this.判定文字表示位置.Guitar );
+			sw.WriteLine();
+			sw.WriteLine( "; ベース判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
 			sw.WriteLine( "BassPosition={0}", (int) this.判定文字表示位置.Bass );
 			sw.WriteLine();
-			sw.WriteLine( "; 譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
+			sw.WriteLine( "; ドラム譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
 			sw.WriteLine( "DrumsScrollSpeed={0}", this.n譜面スクロール速度.Drums );
+			sw.WriteLine();
+			sw.WriteLine( "; ギター譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
 			sw.WriteLine( "GuitarScrollSpeed={0}", this.n譜面スクロール速度.Guitar );
+			sw.WriteLine();
+			sw.WriteLine( "; ベース譜面スクロール速度(0:x0.5, 1:x1.0, 2:x1.5,…,1999:x1000.0)" );
 			sw.WriteLine( "BassScrollSpeed={0}", this.n譜面スクロール速度.Bass );
 			sw.WriteLine();
 			sw.WriteLine( "; 演奏速度(5～40)(→x5/20～x40/20)" );
@@ -1724,7 +1749,7 @@ namespace DTXMania
 			sw.WriteLine();
 
             #region[DTXManiaXG追加オプション]
-            //sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
+            sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
             sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
             sw.WriteLine();
             sw.WriteLine("; dkdk仕様変更(0:デフォルト, 1:始動足変更, 2:dkdk1レーン化)");
@@ -1756,28 +1781,16 @@ namespace DTXMania
             sw.WriteLine("DrumSetMoves={0}", this.bドラムセットを動かす ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; シャッターINSIDE(0～100)");
-            sw.WriteLine("DrumsShutterIn={0}", (int)this.nShutterInSide.Drums);
-            sw.WriteLine("GuitarShutterIn={0}", (int)this.nShutterInSide.Guitar);
-            sw.WriteLine("BassShutterIn={0}", (int)this.nShutterInSide.Bass);
+            sw.WriteLine("ShutterIn={0}", (int)this.nShutterInSide);
             sw.WriteLine();
             sw.WriteLine("; シャッターOUTSIDE(0～100)");
-            sw.WriteLine("DrumsShutterOut={0}", (int)this.nShutterOutSide.Drums);
-            sw.WriteLine("GuitarShutterOut={0}", (int)this.nShutterOutSide.Guitar);
-            sw.WriteLine("BassShutterOut={0}", (int)this.nShutterOutSide.Bass);
+            sw.WriteLine("ShutterOut={0}", (int)this.nShutterOutSide);
             sw.WriteLine();
             sw.WriteLine( "; ボーナス演出の表示(0:表示しない, 1:表示する)");
             sw.WriteLine("DrumsStageEffect={0}", this.ボーナス演出を表示する ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine( "; BPMバーの表示(0:表示する, 1:左のみ表示, 2:表示しない)");
-            sw.WriteLine("BPMBar={0}", (int)this.eBPMbar); ;
-            sw.WriteLine();
-            sw.WriteLine("; ドラムレーンタイプ(0:A, 1:B, 2:C 3:D )");
+            sw.WriteLine("; ドラムレーンタイプ(0:A, 1:B, 2:C )");
             sw.WriteLine("DrumsLaneType={0}", (int)this.eLaneType.Drums);
-            sw.WriteLine();
-            sw.WriteLine("; ネームプレートタイプ");
-            sw.WriteLine("; 0:タイプA XG2風の表示がされます。 ");
-            sw.WriteLine("; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれます。");
-            sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate.Drums);
             sw.WriteLine();
             sw.WriteLine("; CLASSIC譜面判別");
             sw.WriteLine("CLASSIC={0}", this.bCLASSIC譜面判別を有効にする ? 1 : 0);
@@ -1785,14 +1798,10 @@ namespace DTXMania
             sw.WriteLine("; スキルモード(0:旧仕様, 1:XG仕様)");
             sw.WriteLine("SkillMode={0}", (int)this.nSkillMode);
             sw.WriteLine();
-            sw.WriteLine("; スキルモードの自動切換え(0:OFF, 1:ON)");
-            sw.WriteLine("SwitchSkillMode={0}", this.bSkillModeを自動切換えする ? 1 : 0);
-            sw.WriteLine();
             sw.WriteLine("; アタックエフェクトタイプ");
             sw.WriteLine("; 0:ALL 粉と爆発エフェクトを表示します。");
-            sw.WriteLine("; 1:ChipOFF チップのエフェクトを消します。");
-            sw.WriteLine("; 2:EffectOnly 粉を消します。");
-            sw.WriteLine("; 3:ALLOFF すべて消します。");
+            sw.WriteLine("; 1:EffectOnly 粉を消します。");
+            sw.WriteLine("; 2:ALLOFF すべて消します。");
             sw.WriteLine("AttackEffectType={0}", (int)this.eAttackEffectType);
             sw.WriteLine();
             sw.WriteLine("; レーン表示");
@@ -1804,17 +1813,13 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; 判定ライン表示");
             sw.WriteLine("DrumsJudgeLineDisp={0}", this.bJudgeLineDisp.Drums ? 1 : 0);
-            sw.WriteLine("GuitarJudgeLineDisp={0}", this.bJudgeLineDisp.Guitar ? 1 : 0);
-            sw.WriteLine("BassJudgeLineDisp={0}", this.bJudgeLineDisp.Bass ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; レーンフラッシュ表示");
             sw.WriteLine("DrumsLaneFlush={0}", this.bLaneFlush.Drums ? 1 : 0);
-            sw.WriteLine("GuitarLaneFlush={0}", this.bLaneFlush.Guitar ? 1 : 0);
-            sw.WriteLine("BassLaneFlush={0}", this.bLaneFlush.Bass ? 1 : 0);
             sw.WriteLine();
             sw.WriteLine("; ペダル部分のラグ時間調整");
             sw.WriteLine("; 入力が遅い場合、マイナス方向に調節してください。");
-            sw.WriteLine("PedalLagTime={0}", this.nPedalLagTime );
+            sw.WriteLine("PedalLagTime={0}", this.nPedalLagTime);
             #endregion
 
             //sw.WriteLine( ";-------------------" );
@@ -1958,8 +1963,7 @@ namespace DTXMania
             sw.Write( "LBD=" );
             this.tキーの書き出し( sw, this.KeyAssign.Drums.LBD );
 			sw.WriteLine();
-            sw.WriteLine();
-            #endregion
+			#endregion
 			#region [ GuitarKeyAssign ]
 			sw.WriteLine( "[GuitarKeyAssign]" );
 			sw.WriteLine();
@@ -2042,16 +2046,13 @@ namespace DTXMania
 			if( this.bConfigIniが存在している )
 			{
 				string str;
-				//this.tキーアサインを全部クリアする();
-				StreamReader reader = new StreamReader( this.ConfigIniファイル名, Encoding.GetEncoding( "Shift_JIS" ) );
+				this.tキーアサインを全部クリアする();
+				StreamReader reader = new StreamReader( this.ConfigIniファイル名, Encoding.GetEncoding( "shift-jis" ) );
 				str = reader.ReadToEnd();
 				t文字列から読み込み( str );
 				CDTXVersion version = new CDTXVersion( this.strDTXManiaのバージョン );
 				if( version.n整数部 <= 69 )
 				{
-                    //Ver.Kでは公式とバージョンの書き方が違う影響で、
-                    //この分岐文では正常に分岐してくれない(?)
-                    
 					//this.tデフォルトのキーアサインに設定する();
 				}
 			}
@@ -2210,7 +2211,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("NameColor"))
                                             {
-                                                this.nNameColor = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 19, 0);
+                                                this.nNameColor = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9, 0);
                                             }
                                             else if (str3.Equals("SkinChangeByBoxDef"))
                                             {
@@ -2266,9 +2267,13 @@ namespace DTXMania
                                             {
                                                 this.nInfoType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 1, (int)this.nInfoType);
                                             }
-                                            else if (str3.Equals("LivePoint"))
+                                            else if ( str3.Equals( "ShowScore" ) )
                                             {
-                                                this.bLivePoint = C変換.bONorOFF(str4[0]);
+                                                this.bShowScore = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if ( str3.Equals( "ShowMusicInfo" ) )
+                                            {
+                                                this.bShowMusicInfo = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("DoubleClickFullScreen"))	// #26752 2011.11.27 yyagi
                                             {
@@ -2291,10 +2296,6 @@ namespace DTXMania
                                                 string[] asiodev = CEnumerateAllAsioDevices.GetAllASIODevices();
                                                 this.nASIODevice = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, asiodev.Length - 1, this.nASIODevice);
                                             }
-                                            //else if (str3.Equals("ASIOBufferSizeMs"))
-                                            //{
-                                            //    this.nASIOBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9999, this.nASIOBufferSizeMs);
-                                            //}
                                             //else if (str3.Equals("DynamicBassMixerManagement"))
                                             //{
                                             //    this.bDynamicBassMixerManagement = C変換.bONorOFF(str4[0]);
@@ -2450,6 +2451,10 @@ namespace DTXMania
                                             else if (str3.Equals("SelectListFontName"))
                                             {
                                                 this.str選曲リストフォント = str4;
+                                            }
+                                            else if (str3.Equals("DisplayFontName"))
+                                            {
+                                                this.str曲名表示フォント = str4;
                                             }
                                             else if (str3.Equals("SelectListFontSize"))
                                             {
@@ -2639,6 +2644,10 @@ namespace DTXMania
                                             {
                                                 this.bGraph.Bass = C変換.bONorOFF(str4[0]);
                                             }
+											else if( str3.Equals( "DrumsSudden" ) )
+											{
+												this.bSudden.Drums = C変換.bONorOFF( str4[ 0 ] );
+											}
 											else if( str3.Equals( "GuitarSudden" ) )
 											{
 												this.bSudden.Guitar = C変換.bONorOFF( str4[ 0 ] );
@@ -2646,6 +2655,10 @@ namespace DTXMania
 											else if( str3.Equals( "BassSudden" ) )
 											{
 												this.bSudden.Bass = C変換.bONorOFF( str4[ 0 ] );
+											}
+											else if( str3.Equals( "DrumsHidden" ) )
+											{
+												this.bHidden.Drums = C変換.bONorOFF( str4[ 0 ] );
 											}
 											else if( str3.Equals( "GuitarHidden" ) )
 											{
@@ -2731,9 +2744,9 @@ namespace DTXMania
 											{
 												this.nRisky = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nRisky );
 											}
-                                            else if( str3.Equals( "HAZARD" ) )				// #29500 2012.9.11 kairera0467
+                                            else if (str3.Equals("HAZARD"))				// #29500 2012.9.11 kairera0467
                                             {
-                                                this.bHAZARD = C変換.bONorOFF( str4[ 0 ] );
+                                                this.bHAZARD = C変換.bONorOFF(str4[0]);
                                             }
                                             else if( str3.Equals( "AssignToLBD" ) )
                                             {
@@ -2743,29 +2756,13 @@ namespace DTXMania
                                             {
                                                 this.nJudgeLine = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine);
                                             }
-                                            else if ( str3.Equals( "DrumsShutterIn" ) )
+                                            else if (str3.Equals("ShutterIn"))
                                             {
-                                                this.nShutterInSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Drums );
+                                                this.nShutterInSide = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 0xfff, this.nShutterInSide);
                                             }
-                                            else if ( str3.Equals( "DrumsShutterOut" ) )
+                                            else if (str3.Equals("ShutterOut"))
                                             {
-                                                this.nShutterOutSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Drums );
-                                            }
-                                            else if ( str3.Equals( "GuitarShutterIn" ) )
-                                            {
-                                                this.nShutterInSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Guitar );
-                                            }
-                                            else if ( str3.Equals( "GuitarShutterOut" ) )
-                                            {
-                                                this.nShutterOutSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
-                                            }
-                                            else if ( str3.Equals( "BassShutterIn" ) )
-                                            {
-                                                this.nShutterInSide.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Bass );
-                                            }
-                                            else if ( str3.Equals( "BassShutterOut" ) )
-                                            {
-                                                this.nShutterOutSide.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
+                                                this.nShutterOutSide = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, -100, 100, this.nShutterOutSide);
                                             }
                                             else if (str3.Equals("DrumsLaneType"))
                                             {
@@ -2791,9 +2788,9 @@ namespace DTXMania
                                             {
                                                 this.ボーナス演出を表示する = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("BPMBar"))
+                                            else if (str3.Equals("BPMbar"))
                                             {
-                                                this.eBPMbar = ( Eタイプ )C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eBPMbar);
+                                                this.eBPMbar = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eBPMbar);
                                             }
                                             else if (str3.Equals("CLASSIC"))
                                             {
@@ -2806,10 +2803,6 @@ namespace DTXMania
                                             else if (str3.Equals("SkillMode"))
                                             {
                                                 this.nSkillMode = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 1, (int)this.nSkillMode);
-                                            }
-                                            else if (str3.Equals("SwitchSkillMode"))
-                                            {
-                                                this.bSkillModeを自動切換えする = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("NumOfLanes"))
                                             {
@@ -2839,31 +2832,15 @@ namespace DTXMania
                                             {
                                                 this.nLaneDisp.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Drums);
                                             }
-                                            else if( str3.Equals( "DrumsJudgeLineDisp" ) )
+                                            else if (str3.Equals("DrumsJudgeLineDisp"))
                                             {
                                                 this.bJudgeLineDisp.Drums = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if( str3.Equals( "GuitarJudgeLineDisp" ) )
-                                            {
-                                                this.bJudgeLineDisp.Guitar = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if( str3.Equals( "BassJudgeLineDisp" ) )
-                                            {
-                                                this.bJudgeLineDisp.Bass = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("DrumsLaneFlush"))
                                             {
                                                 this.bLaneFlush.Drums = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("GuitarLaneFlush"))
-                                            {
-                                                this.bLaneFlush.Guitar = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if (str3.Equals("BassLaneFlush"))
-                                            {
-                                                this.bLaneFlush.Bass = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if (str3.Equals( "JudgeFrames"))
+                                            else if (str3.Equals("JudgeFrames"))
                                             {
                                                 this.nJudgeFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeFrames );
                                             }
@@ -3164,20 +3141,12 @@ namespace DTXMania
 										}
 										else if( str3.Equals( "G" ) )
 										{
-										    this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.G );
+										this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.G );
 										}
 										else if( str3.Equals( "B" ) )
 										{
 											this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.B );
 										}
-                                        else if( str3.Equals( "Y" ) )
-                                        {
-                                            this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.Y );
-                                        }
-                                        else if( str3.Equals( "P" ) ) 
-                                        {
-                                            this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.P );
-                                        }
 										else if( str3.Equals( "Pick" ) )
 										{
 											this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.Pick );

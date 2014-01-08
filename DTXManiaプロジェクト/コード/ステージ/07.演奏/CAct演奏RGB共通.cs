@@ -7,12 +7,9 @@ namespace DTXMania
 {
 	internal class CAct演奏RGB共通 : CActivity
 	{
-        //こっちではほとんどやることなんてないんだけどね・・・・
-        //一応暫定対応として押している状態を取得&発信しているだけ。
-
 		// プロパティ
 
-		public bool[] b押下状態 = new bool[ 10 ];
+		protected bool[] b押下状態 = new bool[ 10 ];
 		protected CTexture txRGB;
 
 

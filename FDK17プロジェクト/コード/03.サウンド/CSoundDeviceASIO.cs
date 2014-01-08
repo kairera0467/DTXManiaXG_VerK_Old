@@ -104,15 +104,15 @@ namespace FDK
 			// BASS のバージョンチェック。
 			int nBASSVersion = Utils.HighWord( Bass.BASS_GetVersion() );
 			if( nBASSVersion != Bass.BASSVERSION )
-				throw new DllNotFoundException( string.Format( "bass.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSVersion, Bass.BASSVERSION ) );
+				throw new DllNotFoundException( string.Format( "bass.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSVersion, Bass.BASSVERSION ) );
 
 			int nBASSMixVersion = Utils.HighWord( BassMix.BASS_Mixer_GetVersion() );
 			if( nBASSMixVersion != BassMix.BASSMIXVERSION )
-				throw new DllNotFoundException( string.Format( "bassmix.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSMixVersion, BassMix.BASSMIXVERSION ) );
+				throw new DllNotFoundException( string.Format( "bassmix.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSMixVersion, BassMix.BASSMIXVERSION ) );
 
 			int nBASSASIO = Utils.HighWord( BassAsio.BASS_ASIO_GetVersion() );
 			if( nBASSASIO != BassAsio.BASSASIOVERSION )
-				throw new DllNotFoundException( string.Format( "bassasio.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSASIO, BassAsio.BASSASIOVERSION ) );
+				throw new DllNotFoundException( string.Format( "bassasio.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSASIO, BassAsio.BASSASIOVERSION ) );
 			#endregion
 
 			// BASS の設定。
@@ -129,6 +129,7 @@ namespace FDK
 			if( !Bass.BASS_Init( nデバイス, n周波数, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero ) )
 				throw new Exception( string.Format( "BASS の初期化に失敗しました。(BASS_Init)[{0}]", Bass.BASS_ErrorGetCode().ToString() ) );
 
+Debug.WriteLine( "BASS_Init()完了。" );
 			#region [ デバッグ用: ASIOデバイスのenumerateと、ログ出力 ]
 //			CEnumerateAllAsioDevices.GetAllASIODevices();
 //Debug.WriteLine( "BassAsio.BASS_ASIO_GetDeviceInfo():" );

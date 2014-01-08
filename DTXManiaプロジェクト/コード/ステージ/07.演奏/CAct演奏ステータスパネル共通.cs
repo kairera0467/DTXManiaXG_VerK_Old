@@ -16,8 +16,6 @@ namespace DTXMania
             this.stパネルマップ = null;
             this.stパネルマップ = new STATUSPANEL[12];		// yyagi: 以下、手抜きの初期化でスマン
             // { "DTXMANIA", 0 }, { "EXTREME", 1 }, ... みたいに書きたいが・・・
-
-            //2013.09.07.kairera0467 画像の順番もこの並びになるので、難易度ラベルを追加する時は12以降に追加した方が画像編集でも助かります。
             string[] labels = new string[12] {
             "DTXMANIA",     //0
             "DEBUT",        //1
@@ -78,8 +76,6 @@ namespace DTXMania
         public override void On活性化()
         {
             this.nCurrentScore = 0L;
-            this.n現在のスコアGuitar = 0L;
-            this.n現在のスコアBass = 0L;
             this.nStatus = 0;
             this.nIndex = 0;
             base.On活性化();
@@ -94,8 +90,6 @@ namespace DTXMania
             public int status;
         }
         public long nCurrentScore;
-        public long n現在のスコアGuitar;
-        public long n現在のスコアBass;
         public int nIndex;
         public int nStatus;
         public STATUSPANEL[] stパネルマップ;

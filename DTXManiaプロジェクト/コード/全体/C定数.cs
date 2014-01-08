@@ -236,7 +236,7 @@ namespace DTXMania
 		CY,
         LP,
 		RD,		// 将来の独立レーン化/独立AUTO設定を見越して追加
-        LBD = 10,
+        LBD,
 		Guitar,	// AUTOレーン判定を容易にするため、便宜上定義しておく(未使用)
 		Bass,	// (未使用)
 		GtR,
