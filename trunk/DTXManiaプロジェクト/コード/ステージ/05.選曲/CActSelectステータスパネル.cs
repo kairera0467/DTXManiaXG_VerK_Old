@@ -151,6 +151,7 @@ namespace DTXMania
                             {
                                 this.n現在選択中の曲の最高ランク難易度毎[ j ][ i ] = ( DTXMania.CScoreIni.tランク値を計算して返す( 0, c曲リストノード.arスコア[ j ].譜面情報.最大スキル[ i ] ) == (int)DTXMania.CScoreIni.ERANK.S && DTXMania.CScoreIni.tランク値を計算して返す( 0,  c曲リストノード.arスコア[ j ].譜面情報.最大スキル[ i ] ) >= 95 ? DTXMania.CScoreIni.tランク値を計算して返す( 0, cスコア.譜面情報.最大スキル[ i ] ) : c曲リストノード.arスコア[ j ].譜面情報.最大ランク[ i ]);
                             }
+                            this.db現在選択中の曲の最高スキル値難易度毎[ j ][ i ] = c曲リストノード.arスコア[ j ].譜面情報.最大スキル[i];
                             this.b現在選択中の曲がフルコンボ難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.フルコンボ[i];
                             this.b現在選択中の曲に譜面がある[j][i] = c曲リストノード.arスコア[j].譜面情報.b譜面がある[i];
                         }
@@ -174,7 +175,7 @@ namespace DTXMania
                             nLevel = 999;
                         }
                         this.n選択中の曲のレベル難易度毎[i] = nLevel;
-                        this.db現在選択中の曲の最高スキル値難易度毎[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大スキル.Drums;
+
                         this.db現在選択中の曲の曲別スキル値難易度毎[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大曲別スキル.Drums;
                     }
                     else
@@ -212,6 +213,7 @@ namespace DTXMania
                 {
                     this.n現在選択中の曲のレベル難易度毎DGB[j][i] = 0;
                     this.n現在選択中の曲のレベル小数点難易度毎DGB[j][i] = 0;
+                    this.db現在選択中の曲の最高スキル値難易度毎[j][i] = 0.0;
                     this.n現在選択中の曲の最高ランク難易度毎[j][i] = (int)CScoreIni.ERANK.UNKNOWN;
                     this.b現在選択中の曲がフルコンボ難易度毎[j][i] = false;
                 }
@@ -220,7 +222,7 @@ namespace DTXMania
 			{
 				this.str難易度ラベル[ j ] = "";
                 this.n選択中の曲のレベル難易度毎[ j ] = 0;
-                this.db現在選択中の曲の最高スキル値難易度毎[j] = 0.0;
+
                 this.db現在選択中の曲の曲別スキル値難易度毎[j] = 0.0;
 			}
 			this.n難易度開始文字位置 = 0;
@@ -666,7 +668,7 @@ namespace DTXMania
                            db現在の曲のレベルXG[i] = this.n選択中の曲のレベル難易度毎[i] / 100.0;
                         }
 
-                        double db1 = Math.Max(this.db現在選択中の曲の最高スキル値難易度毎[0] * db現在の曲のレベルXG[0] * 20, this.db現在選択中の曲の曲別スキル値難易度毎[1] * db現在の曲のレベルXG[1] * 20);
+                        double db1 = Math.Max(this.db現在選択中の曲の最高スキル値難易度毎[0].Drums * db現在の曲のレベルXG[0] * 20, this.db現在選択中の曲の曲別スキル値難易度毎[1] * db現在の曲のレベルXG[1] * 20);
                         double db2 = Math.Max(this.db現在選択中の曲の曲別スキル値難易度毎[2] * db現在の曲のレベルXG[2] * 20, this.db現在選択中の曲の曲別スキル値難易度毎[3] * db現在の曲のレベルXG[3] * 20);
                         double dbA = Math.Max(db1, db2);
                         double db曲別スキル = Math.Max(dbA, this.db現在選択中の曲の曲別スキル値難易度毎[4] * db現在の曲のレベルXG[4] * 20);
@@ -682,7 +684,7 @@ namespace DTXMania
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i] != 0.00)
+                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i].Drums != 0.00)
                         {
                             this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i]));
                         }
@@ -692,7 +694,7 @@ namespace DTXMania
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i] != 0.00)
+                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i].Drums != 0.00)
                         {
                             //this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i]));
                         }
@@ -857,7 +859,7 @@ namespace DTXMania
 		private CCounter ct難易度スクロール用;
 		private CCounter ct難易度矢印用;
 		private STDGBVALUE<double> db現在選択中の曲の最高スキル値;
-        private double[] db現在選択中の曲の最高スキル値難易度毎 = new double[5];
+        private STDGBVALUE<double>[] db現在選択中の曲の最高スキル値難易度毎 = new STDGBVALUE<double>[5];
         private double[] db現在選択中の曲の曲別スキル値難易度毎 = new double[5];
         private STDGBVALUE<double> db現在選択中の曲の曲別スキル;
 		private STDGBVALUE<int> n現在選択中の曲のレベル;
