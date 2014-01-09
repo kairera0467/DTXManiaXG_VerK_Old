@@ -686,17 +686,22 @@ namespace DTXMania
                     {
                         if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i].Drums != 0.00)
                         {
-                            this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i]));
+                            this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i].Drums));
                         }
                     }
                 }
-                else if ( CDTXMania.ConfigIni.bGuitar有効 == true)
+                else if ( CDTXMania.ConfigIni.bGuitar有効 )
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i].Drums != 0.00)
+                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i].Guitar != 0.00)
                         {
-                            //this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i]));
+                            this.t達成率表示(429 + (i * 143), 120 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i].Guitar));
+                        }
+
+                        if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i].Bass != 0.00)
+                        {
+                            this.t達成率表示(280 + (i * 143), 623 - y差分[i], string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i].Bass));
                         }
                     }
                 }
