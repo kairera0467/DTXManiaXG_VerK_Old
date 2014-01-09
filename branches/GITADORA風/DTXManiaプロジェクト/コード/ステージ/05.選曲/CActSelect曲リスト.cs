@@ -875,6 +875,9 @@ namespace DTXMania
 				return 0;
 			}
 
+            int i選曲バーX座標 = 673; //選曲バーの座標用
+            int i選択曲バーX座標 = 610; //選択曲バーの座標用
+
 			if( !this.b登場アニメ全部完了 )
 			{
 				#region [ (1) 登場アニメフェーズの描画。]
@@ -896,19 +899,19 @@ namespace DTXMania
 							int width = (int) ( 425.0 / Math.Sin( Math.PI * 3 / 5 ) );
 							int x = 410 - ( (int) ( width * db回転率 ) );
 							int y = 300;
-							this.tバーの描画( 410, 270, this.stバー情報[ nパネル番号 ].eバー種別, true );
+                            this.tバーの描画(i選択曲バーX座標, 270, this.stバー情報[nパネル番号].eバー種別, true);
 							//-----------------
 							#endregion
 							#region [ タイトル名テクスチャを描画。]
 							//-----------------
 							if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
-								this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, 530 , 300 );
+                                this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, i選択曲バーX座標 + 120, 300);
 							//-----------------
 							#endregion
 							#region [ スキル値を描画。]
 							//-----------------
 							if( ( this.stバー情報[ nパネル番号 ].eバー種別 == Eバー種別.Score ) && ( this.e楽器パート != E楽器パート.UNKNOWN ) )
-								this.tスキル値の描画( 490, 312 , this.stバー情報[ nパネル番号 ].nスキル値[ (int) this.e楽器パート ] );
+                                this.tスキル値の描画( i選択曲バーX座標 + 80, 312, this.stバー情報[nパネル番号].nスキル値[(int)this.e楽器パート]);
 							//-----------------
 							#endregion
 						}
@@ -919,7 +922,8 @@ namespace DTXMania
 							#region [ バーテクスチャの描画。]
 							//-----------------
 							int width = (int) ( ( (double) ( ( 720 - this.ptバーの基本座標[ i ].X ) + 1 ) ) / Math.Sin( Math.PI * 3 / 5 ) );
-							int x = 720 - ( (int) ( width * db回転率 ) );
+//							int x = 720 - ( (int) ( width * db回転率 ) );
+                            int x = i選曲バーX座標 + 500 - (int)(db割合0to1 * 500);
 							int y = this.ptバーの基本座標[ i ].Y;
 							this.tバーの描画( x, y, this.stバー情報[ nパネル番号 ].eバー種別, false );
 							//-----------------
@@ -955,28 +959,31 @@ namespace DTXMania
 					int nパネル番号 = ( ( ( this.n現在の選択行 - 5 ) + i ) + 13 ) % 13;
 					int n見た目の行番号 = i;
 					int n次のパネル番号 = ( this.n現在のスクロールカウンタ <= 0 ) ? ( ( i + 1 ) % 13 ) : ( ( ( i - 1 ) + 13 ) % 13 );
-					int x = this.ptバーの基本座標[ n見た目の行番号 ].X + ( (int) ( ( this.ptバーの基本座標[ n次のパネル番号 ].X - this.ptバーの基本座標[ n見た目の行番号 ].X ) * ( ( (double) Math.Abs( this.n現在のスクロールカウンタ ) ) / 100.0 ) ) );
+//					int x = this.ptバーの基本座標[ n見た目の行番号 ].X + ( (int) ( ( this.ptバーの基本座標[ n次のパネル番号 ].X - this.ptバーの基本座標[ n見た目の行番号 ].X ) * ( ( (double) Math.Abs( this.n現在のスクロールカウンタ ) ) / 100.0 ) ) );
+                    int x = i選曲バーX座標;
 					int y = this.ptバーの基本座標[ n見た目の行番号 ].Y + ( (int) ( ( this.ptバーの基本座標[ n次のパネル番号 ].Y - this.ptバーの基本座標[ n見た目の行番号 ].Y ) * ( ( (double) Math.Abs( this.n現在のスクロールカウンタ ) ) / 100.0 ) ) );
-		
+
 					if( ( i == 5 ) && ( this.n現在のスクロールカウンタ == 0 ) )
 					{
 						// (A) スクロールが停止しているときの選択曲バーの描画。
 
 						#region [ バーテクスチャを描画。]
 						//-----------------
-						this.tバーの描画( 410, 270, this.stバー情報[ nパネル番号 ].eバー種別, true );
+                        this.tバーの描画(i選択曲バーX座標, 270, this.stバー情報[nパネル番号].eバー種別, true);
 						//-----------------
 						#endregion
 						#region [ タイトル名テクスチャを描画。]
 						//-----------------
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
-							this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, 530, 300 );
-						//-----------------
+                            this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, i選択曲バーX座標 + 120, 300);
+                        if (this.stバー情報[nパネル番号].txタイトル名 != null)
+                            this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, 60, 530);
+                        //-----------------
 						#endregion
 						#region [ スキル値を描画。]
 						//-----------------
 						if( ( this.stバー情報[ nパネル番号 ].eバー種別 == Eバー種別.Score ) && ( this.e楽器パート != E楽器パート.UNKNOWN ) )
-							this.tスキル値の描画( 490, 312, this.stバー情報[ nパネル番号 ].nスキル値[ (int) this.e楽器パート ] );
+                            this.tスキル値の描画(i選択曲バーX座標 + 80, 312, this.stバー情報[nパネル番号].nスキル値[(int)this.e楽器パート]);
 						//-----------------
 						#endregion
 					}
