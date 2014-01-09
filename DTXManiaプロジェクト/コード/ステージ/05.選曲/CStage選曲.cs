@@ -225,7 +225,6 @@ namespace DTXMania
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), false );
 				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
-				this.txFLIP = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -238,7 +237,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
 				CDTXMania.tテクスチャの解放( ref this.txコメントバー );
-				CDTXMania.tテクスチャの解放( ref this.txFLIP );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -291,19 +289,14 @@ namespace DTXMania
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
 				this.actステータスパネル.On進行描画();
-				this.act演奏履歴パネル.On進行描画();
 				this.actPresound.On進行描画();
 				if( this.txコメントバー != null )
 				{
-                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 484, 342);
+                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 646, 342);
 				}
 				this.actArtistComment.On進行描画();
+				this.act演奏履歴パネル.On進行描画();
 				this.actオプションパネル.On進行描画();
-				if ( this.txFLIP != null && CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.16 yyagi
-				{
-					Rectangle rect = new Rectangle(0x1f, 0x31, 20, 11);
-					this.txFLIP.t2D描画( CDTXMania.app.Device, 80, 654, rect );
-				}
 				this.actShowCurrentPosition.On進行描画();								// #27648 2011.3.28 yyagi
 
 				switch ( base.eフェーズID )
@@ -701,7 +694,6 @@ namespace DTXMania
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
-		private CTexture txFLIP;
 
 		private struct STCommandTime		// #24063 2011.1.16 yyagi コマンド入力時刻の記録用
 		{

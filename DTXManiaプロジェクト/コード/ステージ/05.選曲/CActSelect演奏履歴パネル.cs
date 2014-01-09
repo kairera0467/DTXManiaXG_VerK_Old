@@ -100,15 +100,15 @@ namespace DTXMania
 				this.ct登場アニメ用.t進行();
 				if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 == null ) )
 				{
-					this.n本体X = 810;
-					this.n本体Y = 0x22e;
+					this.n本体X = 210;
+					this.n本体Y = 0x23a;
 				}
 				else
 				{
 					double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 					double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
-					this.n本体X = 810;
-					this.n本体Y = 0x22e + ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
+					this.n本体X = 210;
+					this.n本体Y = 0x23a + ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 				}
 				if( this.txパネル本体 != null )
 				{

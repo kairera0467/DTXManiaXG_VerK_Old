@@ -59,8 +59,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage panel.png" ), false );
-				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
-				this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
+//				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
+//				this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
 				this.txプレビュー画像 = null;
 				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
 				this.sfAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
@@ -77,8 +77,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
-				CDTXMania.tテクスチャの解放( ref this.txセンサ );
-				CDTXMania.tテクスチャの解放( ref this.txセンサ光 );
+//				CDTXMania.tテクスチャの解放( ref this.txセンサ );
+//				CDTXMania.tテクスチャの解放( ref this.txセンサ光 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像がないときの画像 );
 				if( this.sfAVI画像 != null )
@@ -135,8 +135,8 @@ namespace DTXMania
 				this.t描画処理・パネル本体();
 				this.t描画処理・ジャンル文字列();
 				this.t描画処理・プレビュー画像();
-				this.t描画処理・センサ光();
-				this.t描画処理・センサ本体();
+//				this.t描画処理・センサ光();
+//				this.t描画処理・センサ本体();
 			}
 			return 0;
 		}
@@ -162,8 +162,8 @@ namespace DTXMania
 		private CTexture r表示するプレビュー画像;
 		private Surface sfAVI画像;
 		private string str現在のファイル名;
-		private CTexture txセンサ;
-		private CTexture txセンサ光;
+//		private CTexture txセンサ;
+//		private CTexture txセンサ光;
 		private CTexture txパネル本体;
 		private CTexture txプレビュー画像;
 		private CTexture txプレビュー画像がないときの画像;
@@ -440,9 +440,10 @@ namespace DTXMania
 						str = "Unknown";
 						break;
 				}
-				CDTXMania.act文字コンソール.tPrint( this.n本体X + 0x12, this.n本体Y - 1, C文字コンソール.Eフォント種別.赤細, str );
+				CDTXMania.act文字コンソール.tPrint( this.n本体X + 0x12, this.n本体Y - 30, C文字コンソール.Eフォント種別.赤細, str );
 			}
 		}
+        /*
 		private void t描画処理・センサ光()
 		{
 			int num = this.ctセンサ光.n現在の値;
@@ -485,6 +486,7 @@ namespace DTXMania
 				this.txセンサ.t2D描画( CDTXMania.app.Device, x, y, this.rcセンサ本体下半分 );
 			}
 		}
+         */
 		private void t描画処理・パネル本体()
 		{
 			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
