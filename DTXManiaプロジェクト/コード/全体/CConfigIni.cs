@@ -1815,6 +1815,7 @@ namespace DTXMania
             sw.WriteLine("; ペダル部分のラグ時間調整");
             sw.WriteLine("; 入力が遅い場合、マイナス方向に調節してください。");
             sw.WriteLine("PedalLagTime={0}", this.nPedalLagTime );
+            sw.WriteLine();
             #endregion
 
             //sw.WriteLine( ";-------------------" );
@@ -1822,21 +1823,29 @@ namespace DTXMania
             #region[ 画像周り ]
             sw.WriteLine( ";判定画像のコマ数" );
             sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
-            sw.WriteLine( ";判定画像の1コマのフレーム数" );
+            sw.WriteLine();
+            sw.WriteLine(";判定画像の1コマのフレーム数");
             sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
-            sw.WriteLine( ";判定画像の1コマの幅" );
+            sw.WriteLine();
+            sw.WriteLine(";判定画像の1コマの幅");
             sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
-            sw.WriteLine( ";判定画像の1コマの高さ" );
+            sw.WriteLine();
+            sw.WriteLine(";判定画像の1コマの高さ");
             sw.WriteLine( "JudgeHeight={0}", this.nJudgeHeight );
-            sw.WriteLine( ";アタックエフェクトのコマ数" );
+            sw.WriteLine();
+            sw.WriteLine(";アタックエフェクトのコマ数");
             sw.WriteLine( "ExplosionFrames={0}", (int)this.nExplosionFrames );
-            sw.WriteLine( ";アタックエフェクトの1コマのフレーム数" );
+            sw.WriteLine();
+            sw.WriteLine(";アタックエフェクトの1コマのフレーム数");
             sw.WriteLine( "ExplosionInterval={0}", (int)this.nExplosionInterval );
-            sw.WriteLine( ";アタックエフェクトの1コマの幅" );
+            sw.WriteLine();
+            sw.WriteLine(";アタックエフェクトの1コマの幅");
             sw.WriteLine( "ExplosionWidgh={0}", this.nExplosionWidgh );
-            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
+            sw.WriteLine();
+            sw.WriteLine(";アタックエフェクトの1コマの高さ");
             sw.WriteLine( "ExplosionHeight={0}", this.nExplosionHeight );
-            sw.WriteLine( ";-------------------" );
+            sw.WriteLine();
+            sw.WriteLine(";-------------------");
             #endregion
 			#region [ AutoPlay ]
 			sw.WriteLine( "[AutoPlay]" );
