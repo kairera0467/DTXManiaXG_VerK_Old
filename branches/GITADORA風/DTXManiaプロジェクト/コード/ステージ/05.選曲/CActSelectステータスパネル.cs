@@ -407,7 +407,6 @@ namespace DTXMania
 				#endregion
 				#region [ 選択曲の FullCombo の 描画 ]
 				//-----------------
-				Rectangle rectFullCombo = new Rectangle( 770, 0, 110, 70 );
 				for( int i = 0; i < 3; i++ )
 				{
 					if( this.b現在選択中の曲がフルコンボ[ i ] )
@@ -415,10 +414,13 @@ namespace DTXMania
                         int[,] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x66, -0x07 } };
 						int x = this.n本体X + 0x52;
 						int y = this.n本体Y + 0x5f + ( 0x27 * i ) + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i ];
+                        Rectangle rectFullCombo = new Rectangle(770, 0, 110, 70);
+
+                        if ( this.db現在選択中の曲の最高スキル値[i] == 100 )
+                            rectFullCombo = new Rectangle(880, 0, 110, 70);
+
                         if (this.txスキルアイコン != null)
-						{
 							this.txスキルアイコン.t2D描画( CDTXMania.app.Device, x, y, rectFullCombo );
-						}
 					}
 				}
 				//-----------------
