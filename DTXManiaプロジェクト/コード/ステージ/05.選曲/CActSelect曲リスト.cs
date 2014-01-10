@@ -976,7 +976,7 @@ namespace DTXMania
 						//-----------------
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
                             this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, i選択曲バーX座標 + 120, 300);
-                        if (this.stバー情報[nパネル番号].txタイトル名 != null)
+                        if (this.stバー情報[nパネル番号].txタイトル名 != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE)
                             this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, 60, 530);
                         //-----------------
 						#endregion
