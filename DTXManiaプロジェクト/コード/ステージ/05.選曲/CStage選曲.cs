@@ -230,7 +230,7 @@ namespace DTXMania
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), false );
 				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
-				this.txFLIP = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
+//				this.txFLIP = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -243,7 +243,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
 				CDTXMania.tテクスチャの解放( ref this.txコメントバー );
-				CDTXMania.tテクスチャの解放( ref this.txFLIP );
+//				CDTXMania.tテクスチャの解放( ref this.txFLIP );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -333,11 +333,13 @@ namespace DTXMania
 				}
 				this.actArtistComment.On進行描画();
 				//this.actオプションパネル.On進行描画();
+                /*
 				if ( this.txFLIP != null && CDTXMania.ConfigIni.bIsSwappedGuitarBass )	// #24063 2011.1.16 yyagi
 				{
 					Rectangle rect = new Rectangle(0x1f, 0x31, 20, 11);
 					this.txFLIP.t2D描画( CDTXMania.app.Device, 80, 654, rect );
 				}
+                 */
 				this.actShowCurrentPosition.On進行描画();								// #27648 2011.3.28 yyagi
 
 				switch ( base.eフェーズID )
@@ -763,7 +765,7 @@ namespace DTXMania
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
-		private CTexture txFLIP;
+//		private CTexture txFLIP;
         private CDirectShow ds背景動画;
         private long lDshowPosition;
         private long lStopPosition;
