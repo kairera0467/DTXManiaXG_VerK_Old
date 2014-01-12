@@ -307,7 +307,7 @@ namespace DTXMania
 			{
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
-                //this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
+                this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
                 if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strDTXフォルダのパス ) )
 			    {
     			    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
@@ -633,7 +633,7 @@ namespace DTXMania
             {
                 this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
-                //this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
+                this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
                 //this.tパスを指定してサムネイル画像を生成する(i, this.stバー情報[i].strDTXフォルダのパス, this.stバー情報[i].eバー種別);
                 if( this.stバー情報[ i ].strDTXフォルダのパス != null )
                 {
@@ -899,7 +899,7 @@ namespace DTXMania
                         this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
 						this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
-                        //this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
+                        this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
                         if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strDTXフォルダのパス ) )
 				        {
@@ -975,7 +975,7 @@ namespace DTXMania
                         this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
 						this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
-                        //this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
+                        this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
                         if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strDTXフォルダのパス ) )
 				        {
@@ -1122,7 +1122,7 @@ namespace DTXMania
                                     ( this.stマトリックス座標[ i ].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     ( this.stマトリックス座標[ i ].y + 2 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                     ( this.stマトリックス座標[ i ].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.txパネル.t3D描画(CDTXMania.app.Device, mat);
+                                this.stバー情報[nパネル番号].txパネル.t3D描画(CDTXMania.app.Device, mat);
                             }
                             if( this.txTumbnail[nパネル番号] != null )
                             {
@@ -1151,7 +1151,7 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].y + 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
+                                //this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
                             }
                             if (this.stバー情報[nパネル番号].txアーティスト名 != null)
                             {
@@ -1162,7 +1162,7 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].y - 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
+                                //this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
                             }
                             //-----------------
                             #endregion
@@ -1245,7 +1245,7 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].y + 2 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.txパネル.t3D描画(CDTXMania.app.Device, mat);
+                                this.stバー情報[nパネル番号].txパネル.t3D描画(CDTXMania.app.Device, mat);
                             }
                             if( this.txTumbnail[ nパネル番号 ] != null )
                             {
@@ -1277,7 +1277,7 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].y + 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
+                                //this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
                             }
                             if (this.stバー情報[nパネル番号].txアーティスト名 != null)
                             {
@@ -1288,7 +1288,7 @@ namespace DTXMania
                                     (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].y - 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                     (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                                this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
+                                //this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
                             }
 							//-----------------
 							#endregion
@@ -1333,7 +1333,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y + 2 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.txパネル.t3D描画(CDTXMania.app.Device, mat);
+                            this.stバー情報[ nパネル番号 ].txパネル.t3D描画(CDTXMania.app.Device, mat);
                         }
                         if (this.txTumbnail[nパネル番号] != null)
                         {
@@ -1362,7 +1362,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y + 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
+                            //this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
                         }
                         if (this.stバー情報[nパネル番号].txアーティスト名 != null)
                         {
@@ -1373,7 +1373,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y - 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
+                            //this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
                         }
                         //-----------------
                         #endregion
@@ -1409,7 +1409,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.txパネル.t3D描画(CDTXMania.app.Device, mat);
+                            this.stバー情報[nパネル番号].txパネル.t3D描画(CDTXMania.app.Device, mat);
                         }
                         if( this.tx選曲パネル != null )
                             this.tx選曲パネル.t2D描画(CDTXMania.app.Device, 457, 163, new Rectangle(0, 0, 363, 368));
@@ -1469,7 +1469,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y + 2 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.txパネル.t3D描画(CDTXMania.app.Device, mat);
+                            this.stバー情報[nパネル番号].txパネル.t3D描画(CDTXMania.app.Device, mat);
                         }
                         if( this.txTumbnail[nパネル番号] != null )
                         {
@@ -1498,7 +1498,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y + 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
+                            //this.stバー情報[nパネル番号].txタイトル名.t3D描画(CDTXMania.app.Device, mat);
                         }
                         if( this.stバー情報[nパネル番号].txアーティスト名 != null )
                         {
@@ -1509,7 +1509,7 @@ namespace DTXMania
                                 (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].y - 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
                                 (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                            this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
+                            //this.stバー情報[nパネル番号].txアーティスト名.t3D描画(CDTXMania.app.Device, mat);
                         }
                         //-----------------
                         #endregion
@@ -1775,7 +1775,7 @@ namespace DTXMania
         private CTexture tx選択されている曲のアーティスト名;
         private CTexture txクリアランプ;
         //CPrivateFont prvFont;
-        CPrivateFastFont prvFont;
+        private CPrivateFastFont prvFont;
 
 		private int nCurrentPosition = 0;
 		private int nNumOfItems = 0;
@@ -1921,6 +1921,7 @@ namespace DTXMania
 				
                 this.stバー情報[ i ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
                 //this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strDTXフォルダのパス, this.stバー情報[ i ].eバー種別 );
+                this.tパネルの生成(i, song.strタイトル, this.stバー情報[i].strアーティスト名, song.col文字色);
                 if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strDTXフォルダのパス ) )
 				{
 			       //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
@@ -2111,7 +2112,7 @@ namespace DTXMania
         {
             //t3D描画の仕様上左詰や右詰が面倒になってしまうので、
             //パネルにあらかじめ曲名とアーティスト名を埋め込んでおく。
-            /*
+            
             if( nバー番号 < 0 || nバー番号 > 12 )
 				return;
             try
@@ -2140,7 +2141,7 @@ namespace DTXMania
 					g.PageUnit = GraphicsUnit.Pixel;
 					sz曲名 = g.MeasureString( str曲名, this.ft曲リスト用フォント );
                     szアーティスト名 = g.MeasureString( strアーティスト名, this.ft曲リスト用フォント );
-                    this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int) g.MeasureString( str曲名, this.ft曲リスト用フォント ).Width;
+                    this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int) g.MeasureString( strアーティスト名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ) ).Width;
 				}
 				//-----------------
 				#endregion
@@ -2159,9 +2160,9 @@ namespace DTXMania
 					graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 					float y = ( ( ( float ) bmp.Height ) ) - ( ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot ) );
 					//graphics.DrawString( str曲名, this.ft曲リスト用フォント, new SolidBrush( this.color文字影 ), (float) 2f, (float) ( y + 2f ) );
-					graphics.DrawString( str曲名, this.ft曲リスト用フォント, new SolidBrush( color ), 5f, y );
-                    graphics.DrawString( strアーティスト名, this.ft曲リスト用フォント, new SolidBrush( this.color文字影 ), (float)234f, 258f);
-                    graphics.DrawString( strアーティスト名, this.ft曲リスト用フォント, new SolidBrush( Color.White ), 234f, 258f );
+					graphics.DrawString( str曲名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( color ), 5f, y - 2 );
+                    graphics.DrawString( strアーティスト名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( Color.White ), (float)218f - this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot, 255f);
+                    //graphics.DrawString( strアーティスト名, this.ft曲リスト用フォント, new SolidBrush( Color.White ), 234f, 258f );
 
 					CDTXMania.t安全にDisposeする( ref this.stバー情報[ nバー番号 ].txパネル );
 
@@ -2173,9 +2174,9 @@ namespace DTXMania
             catch( CTextureCreateFailedException )
 			{
 				Trace.TraceError( "曲名テクスチャの作成に失敗しました。[{0}]", str曲名 );
-				this.stバー情報[ nバー番号 ].txタイトル名 = null;
+				this.stバー情報[ nバー番号 ].txパネル = null;
 			}
-            */
+            
         }
 		private void t曲名バーの生成( int nバー番号, string str曲名, Color color )
 		{
