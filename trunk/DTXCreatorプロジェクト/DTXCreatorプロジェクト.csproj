@@ -298,7 +298,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FDK17プロジェクト\FDK19.csproj">
       <Project>{BCD40908-F3E2-4707-BFAA-1DD99DF6357D}</Project>
-      <Name>FDK17</Name>
+      <Name>FDK19</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
