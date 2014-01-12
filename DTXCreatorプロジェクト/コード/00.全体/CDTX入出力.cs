@@ -1597,8 +1597,8 @@ namespace DTXCreator
 				}
 				return true;
 			}
-			if( ( nCh >= 0xa0 ) && ( nCh <= 0xa7 ) )
-			{
+            if ((nCh >= 160 && nCh <= 167) || (nCh >= 197 && nCh <= 198) || (nCh >= 200 && nCh <= 207) || (nCh >= 218 && nCh <= 223) || (nCh >= 225 && nCh <= 232))
+            {
 				C小節 c小節2 = this.tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( nBar );
 				int num12 = 0;
 				while( ( num12 = strパラメータ.IndexOf( '_' ) ) != -1 )
@@ -3137,8 +3137,8 @@ namespace DTXCreator
 						}
 					}
 				}
-				bool[] flagArray2 = new bool[ 8 ];
-				for( int num26 = 0; num26 < 8; num26++ )
+				bool[] flagArray2 = new bool[ 255 ];
+				for( int num26 = 0; num26 < 255; num26++ )
 				{
 					flagArray2[ num26 ] = false;
 				}
@@ -3153,15 +3153,15 @@ namespace DTXCreator
 						flagArray2[ numArray[ num27, 1 ] ] = true;
 					}
 				}
-				StringBuilder[] builderArray2 = new StringBuilder[ 8 ];
-				for( int num28 = 0; num28 < 8; num28++ )
+				StringBuilder[] builderArray2 = new StringBuilder[ 255 ];
+				for( int num28 = 0; num28 < 255; num28++ )
 				{
 					builderArray2[ num28 ] = new StringBuilder();
 				}
 				for( int num29 = 0; num29 < num23; num29++ )
 				{
 					int num30 = ( numArray[ num29, 1 ] == 0xff ) ? 160 : ( numArray[ num29, 1 ] + 160 );
-					for( int num31 = 0; num31 < 8; num31++ )
+					for( int num31 = 0; num31 < 255; num31++ )
 					{
 						if( flagArray2[ num31 ] )
 						{
@@ -3176,14 +3176,115 @@ namespace DTXCreator
 						}
 					}
 				}
-				for( int num32 = 0; num32 < 8; num32++ )
-				{
-					if( builderArray2[ num32 ].Length != 0 )
-					{
-						sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 160 + num32 ), builderArray2[ num32 ].ToString() );
-					}
-				}
-			}
+                for (int num32 = 0; num32 < 255; num32++)
+                {
+                    if (builderArray2[num32].Length != 0)
+                    {
+                        int num33 = 0;
+                        if (num32 < 16)
+                        {
+                            num33 = num32 + 160;
+                        }
+                        if (num32 == 16)
+                        {
+                            num33 = 197;
+                        }
+                        if (num32 == 17)
+                        {
+                            num33 = 198;
+                        }
+                        if (num32 == 18)
+                        {
+                            num33 = 200;
+                        }
+                        if (num32 == 19)
+                        {
+                            num33 = 201;
+                        }
+                        if (num32 == 20)
+                        {
+                            num33 = 202;
+                        }
+                        if (num32 == 21)
+                        {
+                            num33 = 203;
+                        }
+                        if (num32 == 22)
+                        {
+                            num33 = 204;
+                        }
+                        if (num32 == 23)
+                        {
+                            num33 = 205;
+                        }
+                        if (num32 == 32)
+                        {
+                            num33 = 206;
+                        }
+                        if (num32 == 33)
+                        {
+                            num33 = 207;
+                        }
+                        if (num32 == 34)
+                        {
+                            num33 = 218;
+                        }
+                        if (num32 == 35)
+                        {
+                            num33 = 219;
+                        }
+                        if (num32 == 36)
+                        {
+                            num33 = 220;
+                        }
+                        if (num32 == 37)
+                        {
+                            num33 = 221;
+                        }
+                        if (num32 == 38)
+                        {
+                            num33 = 222;
+                        }
+                        if (num32 == 39)
+                        {
+                            num33 = 223;
+                        }
+                        if (num32 == 48)
+                        {
+                            num33 = 225;
+                        }
+                        if (num32 == 49)
+                        {
+                            num33 = 226;
+                        }
+                        if (num32 == 50)
+                        {
+                            num33 = 227;
+                        }
+                        if (num32 == 51)
+                        {
+                            num33 = 228;
+                        }
+                        if (num32 == 52)
+                        {
+                            num33 = 229;
+                        }
+                        if (num32 == 53)
+                        {
+                            num33 = 230;
+                        }
+                        if (num32 == 54)
+                        {
+                            num33 = 231;
+                        }
+                        if (num32 == 55)
+                        {
+                            num33 = 232;
+                        }
+                        sw.WriteLine("#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す(c小節.n小節番号0to3599), C変換.str数値を16進数2桁に変換して返す(num33), builderArray2[num32].ToString());
+                    }
+                }
+            }
 		}
 		private bool tDTX出力・全チップ・解像度をＮ分の１にできる( int N, ref int[ , ] arrチップ配列, int n現在の解像度 )
 		{
