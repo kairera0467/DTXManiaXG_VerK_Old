@@ -60,11 +60,19 @@ namespace DTXMania
                 //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
                 if( base.n現在のLivePoint.Drums >= 0 )
                 {
-                    for (int i = 0; i < 16; i++ )
+                    for (int i = 0; i < 5; i++ )
                     {
                         if (this.n現在のLivePoint.Drums >= 20 + ( 20 * i ) )
                         {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体X + 1, 574 + n本体Y - ( 38 * i ), new Rectangle(71, 536, 46, 44));
+                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体X + 1, 574 + n本体Y - (41 * i), new Rectangle(71, 536, 46, 44));
+                        }
+                        if (this.n現在のLivePoint.Drums >= 120 + (20 * i))
+                        {
+                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体X + 1, 368 + n本体Y - (41 * i), new Rectangle(71, 580, 46, 44));
+                        }
+                        if (this.n現在のLivePoint.Drums >= 220 + (20 * i))
+                        {
+                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体X + 1, 162 + n本体Y - (41 * i), new Rectangle(71, 624, 46, 44));
                         }
                     }
                 }
