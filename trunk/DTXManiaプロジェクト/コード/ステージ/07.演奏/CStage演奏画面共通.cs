@@ -624,6 +624,7 @@ namespace DTXMania
 		public CAct演奏ステータスパネル共通 actStatusPanels;
 		protected CAct演奏WailingBonus共通 actWailingBonus;
 		public CAct演奏スクロール速度 act譜面スクロール速度;
+        public CAct演奏LivePoint共通 actLivePoint;
 		protected bool bPAUSE;
 		protected STDGBVALUE<bool> b演奏にMIDI入力を使った;
 		protected STDGBVALUE<bool> b演奏にキーボードを使った;
@@ -1103,13 +1104,13 @@ namespace DTXMania
                                 this.L最後に再生したHHの実WAV番号.Clear();
                                 this.n最後に再生したHHのチャンネル番号 = pChip.nチャンネル番号;
                             }
-                            if (nLane == 0 && CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if( nLane == 0 && CDTXMania.ConfigIni.bドラムセットを動かす )
                             {
-                                this.actAVI.ct左シンバル.n現在の値 = 0;
+                                CDTXMania.stage演奏ドラム画面.actDrumSet.ct左シンバル.n現在の値 = 0;
                             }
                             if (nLane == 7 && CDTXMania.ConfigIni.bドラムセットを動かす)
                             {
-                                this.actAVI.ct右シンバル.n現在の値 = 0;
+                                CDTXMania.stage演奏ドラム画面.actDrumSet.ct右シンバル.n現在の値 = 0;
                             }
                            switch (index)
                             {
@@ -1622,47 +1623,49 @@ namespace DTXMania
             }
             #endregion
             #region[LivePoint]
-            if (pChip.e楽器パート != E楽器パート.UNKNOWN)
+            if( pChip.e楽器パート != E楽器パート.UNKNOWN )
             {
-                for (int i = 0; i < 3; i++)
+                for( int i = 0; i < 3; i++ )
                 {
                     STDGBVALUE<double> dbLPDelta = new STDGBVALUE<double>();
-                    double[] db1打あたりのLP = new Double[3]; 
-                    db1打あたりのLP[0] = 300.0 / (CDTXMania.DTX.n可視チップ数.Drums * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
-                    db1打あたりのLP[1] = 300.0 / (CDTXMania.DTX.n可視チップ数.Guitar * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
-                    db1打あたりのLP[2] = 300.0 / (CDTXMania.DTX.n可視チップ数.Bass * 0.8);//ここでLPの基準値を作成。いわば1打あたりのLP値。
-                    if (eJudgeResult == E判定.Perfect)
+                    double[] db1打あたりのLP = new Double[ 3 ];
+
+                    //ここでLPの基準値を作成。つまり1打あたりのLP値。
+                    db1打あたりのLP[0] = 300.0 / ( CDTXMania.DTX.n可視チップ数.Drums * 0.8 );
+                    db1打あたりのLP[1] = 300.0 / ( CDTXMania.DTX.n可視チップ数.Guitar * 0.8 );
+                    db1打あたりのLP[2] = 300.0 / ( CDTXMania.DTX.n可視チップ数.Bass * 0.8 );
+                    if( eJudgeResult == E判定.Perfect )
                     {
-                        dbLPDelta[i] = db1打あたりのLP[i] * 1.0;
+                        dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
                     }
-                    else if (eJudgeResult == E判定.Great)
+                    else if( eJudgeResult == E判定.Great )
                     {
-                        dbLPDelta[i] = db1打あたりのLP[i] * 1.0;
+                        dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
                     }
-                    else if (eJudgeResult == E判定.Good)
+                    else if( eJudgeResult == E判定.Good )
                     {
-                        dbLPDelta[i] = db1打あたりのLP[i] * 1.0;
+                        dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
                     }
-                    else if (eJudgeResult == E判定.Poor)
+                    else if( eJudgeResult == E判定.Poor )
                     {
-                        if (this.actAVI.LivePoint[i] >= 1)
+                        if (this.actLivePoint.n現在のLivePoint[ i ] >= 1)
                         {
-                            dbLPDelta[i] = -1.0;
+                            dbLPDelta[ i ] = -1.0;
                         }
                     }
-                    else if (eJudgeResult == E判定.Miss)
+                    else if( eJudgeResult == E判定.Miss )
                     {
-                        if (this.actAVI.LivePoint[i] >= 2)
-                            dbLPDelta[i] = -2.0;
+                        if (this.actLivePoint.n現在のLivePoint[ i ] >= 2)
+                            dbLPDelta[ i ] = -2.0;
                     }
-                    else if (eJudgeResult == E判定.Auto)
+                    else if( eJudgeResult == E判定.Auto )
                     {
-                        dbLPDelta[i] = 0;
+                        dbLPDelta[ i ] = 0;
                     }
 
-                    if (this.actAVI.LivePoint[i] <= 300)
+                    if( this.actLivePoint.n現在のLivePoint[ i ] <= 300 )
                     {
-                        this.actAVI.LivePoint[i] += dbLPDelta[i];
+                        this.actLivePoint.n現在のLivePoint[ i ] += dbLPDelta[ i ];
                     }
                 }
             }

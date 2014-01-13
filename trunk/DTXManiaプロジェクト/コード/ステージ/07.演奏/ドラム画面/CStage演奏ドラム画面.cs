@@ -22,6 +22,7 @@ namespace DTXMania
 			base.eステージID = CStage.Eステージ.演奏;
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			base.b活性化してない = true;
+            base.list子Activities.Add( this.actDrumSet = new CAct演奏Drumsドラムセット() );
 			base.list子Activities.Add( this.actPad = new CAct演奏Drumsパッド() );
 			base.list子Activities.Add( this.actCombo = new CAct演奏DrumsコンボDGB() );
 			base.list子Activities.Add( this.actDANGER = new CAct演奏DrumsDanger() );
@@ -34,6 +35,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏DrumsレーンフラッシュGB() );
 			base.list子Activities.Add( this.actRGB = new CAct演奏DrumsRGB() );
 			base.list子Activities.Add( this.actScore = new CAct演奏Drumsスコア() );
+            base.list子Activities.Add( this.actLivePoint = new CAct演奏DrumsLivePoint() );
 			base.list子Activities.Add( this.actStatusPanels = new CAct演奏Drumsステータスパネル() );
 			base.list子Activities.Add( this.actWailingBonus = new CAct演奏DrumsWailingBonus() );
 			base.list子Activities.Add( this.act譜面スクロール速度 = new CAct演奏スクロール速度() );
@@ -154,7 +156,7 @@ namespace DTXMania
                     // ものすごく待たされる(2回目以降と比べると2,3桁tick違う)。そこで最初の画面フェードインの間に
                     // 一発Start()を掛けてJITの結果を生成させておく。
 
-                    this.actAVI.LivePoint.Drums = 0;
+                    this.actLivePoint.n現在のLivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     double UnitTime;
                     UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
@@ -454,6 +456,7 @@ namespace DTXMania
         private CActLVLNFont actLVFont;
 		public CAct演奏Drumsグラフ actGraph;   // #24074 2011.01.23 add ikanick
 		public CAct演奏Drumsパッド actPad;
+        public CAct演奏Drumsドラムセット actDrumSet;
 		public bool bフィルイン中;
         public bool bフィルイン終了;
         public bool bサビ区間;
@@ -761,6 +764,10 @@ namespace DTXMania
         {
             this.actPad.On進行描画();
         }
+        public void t進行描画・ドラムセット()
+        {
+            this.actDrumSet.On進行描画();
+        }
         protected override void t進行描画・パネル文字列()
         {
             base.t進行描画・パネル文字列( 912, 640 );
@@ -831,11 +838,11 @@ namespace DTXMania
                     {
                         case Eパッド.LC:
                             if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct左シンバル.n現在の値 = 0;
+                                this.actDrumSet.ct左シンバル.n現在の値 = 0;
                             break;
                         case Eパッド.CY:
                             if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct右シンバル.n現在の値 = 0;
+                                this.actDrumSet.ct右シンバル.n現在の値 = 0;
                             break;
                     }
                     switch (((Eパッド)nPad))
@@ -2271,11 +2278,11 @@ namespace DTXMania
                     {
                         case Eパッド.LC:
                             if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct左シンバル.n現在の値 = 0;
+                                this.actDrumSet.ct左シンバル.n現在の値 = 0;
                             break;
                         case Eパッド.CY:
                             if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
-                                this.actAVI.ct右シンバル.n現在の値 = 0;
+                                this.actDrumSet.ct右シンバル.n現在の値 = 0;
                             break;
                     }
 
