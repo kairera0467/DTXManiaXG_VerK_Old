@@ -362,20 +362,7 @@ namespace DTXMania
                 }
                 this.txDShow汎用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
 
-                string pathBPMFL = CSkin.Path(@"Graphics\7_BPMbar_Flush_L.png");
-                string pathBPMFR = CSkin.Path(@"Graphics\7_BPMbar_Flush_R.png");
-                string pathBPMbarL = CSkin.Path(@"Graphics\7_BPMbarL.png");
-                string pathBPMbarR = CSkin.Path(@"Graphics\7_BPMbarR.png");
-                if(File.Exists(pathBPMbarL) && File.Exists(pathBPMbarR))
-                {
-                    this.txBPMバー左 = CDTXMania.tテクスチャの生成(pathBPMbarL);
-                    this.txBPMバー右 = CDTXMania.tテクスチャの生成(pathBPMbarR);
-                }
-                if (File.Exists(pathBPMFL) && File.Exists(pathBPMFR))
-                {
-                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成(pathBPMFL);
-                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成(pathBPMFR);
-                }
+
 
                 for (int i = 0; i < 1; i++)
                 {
@@ -418,28 +405,17 @@ namespace DTXMania
 
                 CDTXMania.tテクスチャの解放(ref this.txレーンの影);
 
-                CDTXMania.tテクスチャの解放(ref this.txBPMバー左);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバー右);
                 CDTXMania.tテクスチャの解放( ref this.txバートップ );
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
                 //CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
-                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ左 );
-                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ右 );
+
                 CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
                 base.OnManagedリソースの解放();
             }
         }
         public unsafe int t進行描画(int x, int y)
         {
-            int num1 = 0;
-            if (CDTXMania.ConfigIni.bDrums有効 == true)
-            {
-                num1 = (int)CDTXMania.stage演奏ドラム画面.ctBPMバー.db現在の値;
-            }
-            else if (CDTXMania.ConfigIni.bDrums有効 == false && CDTXMania.ConfigIni.bGuitar有効 == true)
-            {
-                num1 = (int)CDTXMania.stage演奏ギター画面.ctBPMバー.n現在の値;
-            }
+
             if (this.txDShow汎用 != null && ( CDTXMania.ConfigIni.bDrums有効 ? CDTXMania.stage演奏ドラム画面.ct登場用.b終了値に達した : CDTXMania.stage演奏ギター画面.ct登場用.b終了値に達した ) )
             {
                 #region[ 汎用動画 ]
@@ -835,11 +811,12 @@ namespace DTXMania
                         }
                     }
                     #endregion
-                    if (this.txバートップ != null)
+                    if (this.txバートップ != null && CDTXMania.ConfigIni.bDrums有効 )
                     {
                         //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
                         this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
                         this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
+                        CDTXMania.stage演奏ドラム画面.actBPMBar.On進行描画();
                     }
                     long lPos = 0;
                     //if (this.dsBGV != null)
@@ -849,46 +826,6 @@ namespace DTXMania
                         //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
                     //}
 
-                    if ((this.txBPMバー左 != null && this.txBPMバー右 != null) && CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 >= 11)
-                    {
-                        if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
-                        {
-
-                            if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
-                            {
-                                this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                                if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
-                                {
-                                    {
-                                        this.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                        this.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 54);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                            }
-
-                            if (CDTXMania.stage演奏ドラム画面.bサビ区間 == true)
-                            {
-                                this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                                if (this.txBPMバーフラッシュ右 != null && this.txBPMバーフラッシュ左 != null)
-                                {
-                                    this.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                    this.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 908 - (1 * num1), 54);
-                                }
-                            }
-                            else
-                            {
-                                this.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                            }
-                        }
-                        else if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.B)
-                        {
-                            this.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                        }
-                    }
                     if (CDTXMania.ConfigIni.bLivePoint)
                     {
                         if ( CDTXMania.ConfigIni.bDrums有効 )
@@ -1216,10 +1153,7 @@ namespace DTXMania
         private CTexture tx黒幕;
 
         private CTexture txバートップ;
-        private CTexture txBPMバー左;
-        private CTexture txBPMバー右;
-        private CTexture txBPMバーフラッシュ左;
-        private CTexture txBPMバーフラッシュ右;
+
         
         private CTexture txlanes;
         

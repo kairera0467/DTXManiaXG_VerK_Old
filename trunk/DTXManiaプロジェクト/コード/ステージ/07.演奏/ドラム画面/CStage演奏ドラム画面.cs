@@ -22,6 +22,7 @@ namespace DTXMania
 			base.eステージID = CStage.Eステージ.演奏;
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			base.b活性化してない = true;
+            base.list子Activities.Add( this.actBPMBar = new CAct演奏DrumsBPMバー() );
             base.list子Activities.Add( this.actDrumSet = new CAct演奏Drumsドラムセット() );
 			base.list子Activities.Add( this.actPad = new CAct演奏Drumsパッド() );
 			base.list子Activities.Add( this.actCombo = new CAct演奏DrumsコンボDGB() );
@@ -158,11 +159,11 @@ namespace DTXMania
 
                     this.actLivePoint.n現在のLivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
-                    double UnitTime;
-                    UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
-                    this.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
 
-                    this.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                    this.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
+
+                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -277,6 +278,7 @@ namespace DTXMania
                 this.t進行描画・背景();
                 this.t進行描画・MIDIBGM();
                 this.t進行描画・AVI();
+                //this.actBPMBar.On進行描画();  //2014.01.14.kairera0467 今のところはウィンドウにしたクリップと重なるのでNG。
                 this.t進行描画・レーンフラッシュD();
                 this.t進行描画・譜面スクロール速度();
                 this.t進行描画・チップアニメ();
@@ -380,7 +382,7 @@ namespace DTXMania
                 {
                     this.bサビ区間 = true;
                     UnitTime = 0.015;
-                    ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
                     //this.actFOClear.tフェードアウト開始();
                     if ((this.actGauge.IsFailed(E楽器パート.DRUMS)) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                     {
@@ -844,11 +846,11 @@ namespace DTXMania
                     switch (((Eパッド)nPad))
                     {
                         case Eパッド.LC:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if ( CDTXMania.ConfigIni.bドラムセットを動かす)
                                 this.actDrumSet.ct左シンバル.n現在の値 = 0;
                             break;
                         case Eパッド.CY:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if (CDTXMania.ConfigIni.bドラムセットを動かす)
                                 this.actDrumSet.ct右シンバル.n現在の値 = 0;
                             break;
                     }
