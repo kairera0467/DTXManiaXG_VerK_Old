@@ -364,7 +364,6 @@ namespace DTXMania
 				this.queWailing[ i ] = null;
 			}
 			this.ctWailingチップ模様アニメ = null;
-            this.ctBPMバー = null;
 			this.ctチップ模様アニメ.Drums = null;
 			this.ctチップ模様アニメ.Guitar = null;
 			this.ctチップ模様アニメ.Bass = null;
@@ -625,13 +624,14 @@ namespace DTXMania
 		protected CAct演奏WailingBonus共通 actWailingBonus;
 		public CAct演奏スクロール速度 act譜面スクロール速度;
         public CAct演奏LivePoint共通 actLivePoint;
+        public CAct演奏BPMバー共通 actBPMBar;
 		protected bool bPAUSE;
 		protected STDGBVALUE<bool> b演奏にMIDI入力を使った;
 		protected STDGBVALUE<bool> b演奏にキーボードを使った;
 		protected STDGBVALUE<bool> b演奏にジョイパッドを使った;
 		protected STDGBVALUE<bool> b演奏にマウスを使った;
 		protected CCounter ctWailingチップ模様アニメ;
-        public CCounter ctBPMバー;
+
         public CCounter ct登場用;
         public CCounter ctコンボ動作タイマ;
 
@@ -1191,6 +1191,14 @@ namespace DTXMania
                         int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Drums;
                         eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
                         this.actJudgeString.Start( this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11], bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag );
+
+                        if (eJudgeResult == E判定.Auto)
+                        {
+                            if(pChip.nチャンネル番号 == 0x1A)
+                                CDTXMania.stage演奏ドラム画面.actDrumSet.ct左シンバル.n現在の値 = 0;
+                            else if(pChip.nチャンネル番号 == 0x16)
+                                CDTXMania.stage演奏ドラム画面.actDrumSet.ct右シンバル.n現在の値 = 0;
+                        }
                     }
                     break;
 
@@ -2414,7 +2422,7 @@ namespace DTXMania
                             pChip.bHit = true;
                             this.actPlayInfo.dbBPM = (pChip.n整数値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
                             CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0 ));
-                            CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
+                            this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
                             CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
                         }
                         break;
@@ -2476,7 +2484,7 @@ namespace DTXMania
                             {
                                 this.actPlayInfo.dbBPM = (dTX.listBPM[pChip.n整数値・内部番号].dbBPM値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
                                 CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
-                                CDTXMania.stage演奏ドラム画面.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
+                                this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
                                 CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
                             }
                         }
@@ -3835,9 +3843,9 @@ namespace DTXMania
 			{
 				this.ctWailingチップ模様アニメ.t進行Loop();
 			}
-            if (this.ctBPMバー != null)
+            if (this.actBPMBar.ctBPMバー != null)
             {
-                this.ctBPMバー.t進行LoopDb();
+                this.actBPMBar.ctBPMバー.t進行LoopDb();
                 this.ctコンボ動作タイマ.t進行LoopDb();
             }
             if(CDTXMania.ConfigIni.bDrums有効)  //2013.05.16.kairera0467 ギター側のアニメーションは未実装なのでとりあえず。

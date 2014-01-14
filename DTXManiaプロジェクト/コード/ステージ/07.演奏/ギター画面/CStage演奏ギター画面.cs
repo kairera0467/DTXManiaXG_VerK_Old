@@ -20,6 +20,7 @@ namespace DTXMania
 			base.eステージID = CStage.Eステージ.演奏;
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			base.b活性化してない = true;
+            base.list子Activities.Add( this.actBPMBar = new CAct演奏BPMバー共通() );
 			base.list子Activities.Add( this.actStageFailed = new CAct演奏ステージ失敗() );
 			base.list子Activities.Add( this.actDANGER = new CAct演奏GuitarDanger() );
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
@@ -29,6 +30,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.act譜面スクロール速度 = new CAct演奏スクロール速度() );
 			base.list子Activities.Add( this.actStatusPanels = new CAct演奏Guitarステータスパネル() );
 			base.list子Activities.Add( this.actWailingBonus = new CAct演奏GuitarWailingBonus() );
+            base.list子Activities.Add( this.actLivePoint = new CAct演奏GuitarLivePoint() );
 			base.list子Activities.Add( this.actScore = new CAct演奏Guitarスコア() );
 			base.list子Activities.Add( this.actRGB = new CAct演奏GuitarRGB() );
 			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏GuitarレーンフラッシュGB() );
@@ -124,7 +126,7 @@ namespace DTXMania
                     int UnitTime;
                     double BPM = CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM;
                     UnitTime = (int)((60 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 8 * 600));
-                    this.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
+                    this.actBPMBar.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ.Bass = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ[ 0 ] = null;
@@ -222,19 +224,15 @@ namespace DTXMania
                     }
                 }
 
-                    double dbシャッターIN_Guitar = (base.nShutterInPosY.Guitar * 7.2);
-                    double dbシャッターOUT_Guitar = 720 - (base.nShutterOutPosY.Guitar * 7.2f);
-
+                double dbシャッターIN_Guitar = (base.nShutterInPosY.Guitar * 7.2);
+                double dbシャッターOUT_Guitar = 720 - (base.nShutterOutPosY.Guitar * 7.2f);
                 if ( CDTXMania.ConfigIni.bReverse.Guitar )
                 {
                     dbシャッターIN_Guitar = (base.nShutterOutPosY.Guitar * 7.2f);
                     dbシャッターOUT_Guitar = 720 - (base.nShutterInPosY.Guitar * 7.2);
                 }
-
-
-                    double dbシャッターIN_Bass = (base.nShutterInPosY.Bass * 7.2);
-                    double dbシャッターOUT_Bass = 720 - (base.nShutterOutPosY.Bass * 7.2f);
-
+                double dbシャッターIN_Bass = (base.nShutterInPosY.Bass * 7.2);
+                double dbシャッターOUT_Bass = 720 - (base.nShutterOutPosY.Bass * 7.2f);
                 if ( CDTXMania.ConfigIni.bReverse.Bass )
                 {
                     dbシャッターIN_Bass = (base.nShutterOutPosY.Bass * 7.2f);
@@ -246,8 +244,7 @@ namespace DTXMania
                     this.txシャッター.t2D描画( CDTXMania.app.Device, 80, 42 + ( int )( -720 + dbシャッターIN_Guitar ) );
                     this.txシャッター.t2D描画( CDTXMania.app.Device, 80, ( int )dbシャッターOUT_Guitar );
                 }
-
-                if (this.txシャッター != null && CDTXMania.DTX.bチップがある.Bass)
+                if( this.txシャッター != null && CDTXMania.DTX.bチップがある.Bass )
                 {
                     this.txシャッター.t2D描画( CDTXMania.app.Device, 952, 42 + ( int )( -720 + dbシャッターIN_Bass ) );
                     this.txシャッター.t2D描画( CDTXMania.app.Device, 952, ( int )dbシャッターOUT_Bass );
@@ -300,6 +297,7 @@ namespace DTXMania
         private CTexture txレーン;
         private CTexture txシャッター;
         public CAct演奏Guitarグラフ actGraph;
+        public bool bサビ区間;
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
 		{

@@ -273,8 +273,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
             {
-                int num1 = CDTXMania.stage演奏ドラム画面.ctBPMバー.n現在の値;
-
+                //int num1 = CDTXMania.stage演奏ドラム画面.actBPMBar.ctBPMバー.n現在の値;
 
                 if (base.b初めての進行描画)
                 {

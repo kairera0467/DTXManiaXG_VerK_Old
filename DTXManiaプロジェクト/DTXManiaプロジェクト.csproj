@@ -146,6 +146,8 @@
     <Compile Include="コード\ステージ\07.演奏\CAct演奏判定文字列共通.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏演奏情報.cs" />
     <Compile Include="コード\ステージ\07.演奏\CStage演奏画面共通.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarBPMバー.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarLivePoint.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarグラフ.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarRGB.cs" />
@@ -157,12 +159,12 @@
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarチップファイア.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarレーンフラッシュGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitar判定文字列.cs" />
-    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarLivePoint.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CStage演奏ギター画面.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏ステージ失敗.cs" />
     <None Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drumsフィルインエフェクト2" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏AVI.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏LivePoint共通.cs" />
+    <Compile Include="コード\ステージ\07.演奏\CAct演奏BPMバー共通.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsRGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsWailingBonus.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CStage演奏ドラム画面.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drumsドラムセット.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsLivePoint.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsBPMバー.cs" />
     <Compile Include="コード\ステージ\08.結果\CActResultImage.cs" />
     <Compile Include="コード\ステージ\08.結果\CActResultParameterPanel.cs" />
     <Compile Include="コード\ステージ\08.結果\CActResultRank.cs" />
