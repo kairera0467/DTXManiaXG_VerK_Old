@@ -146,7 +146,7 @@ namespace DTXMania
                 this.bIsFinishedFadeout = false;
                 this.bエクセ = false;
                 this.bフルコン = false;
-                if( base.b初めての進行描画 )
+                if (base.b初めての進行描画)
                 {
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
@@ -162,23 +162,23 @@ namespace DTXMania
                     UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
                     this.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
 
-                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                    this.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctWailingチップ模様アニメ = new CCounter(0, 4, 50, CDTXMania.Timer);
 
 
-                    if( this.tx判定画像anime != null && this.txボーナスエフェクト != null )
+                    if (this.tx判定画像anime != null && this.txボーナスエフェクト != null)
                     {
-                        this.tx判定画像anime.t2D描画( CDTXMania.app.Device, 1280, 720 );
-                        this.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 1280, 720 );
+                        this.tx判定画像anime.t2D描画(CDTXMania.app.Device, 1280, 720);
+                        this.txボーナスエフェクト.t2D描画(CDTXMania.app.Device, 1280, 720);
                     }
                     base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                     this.actFI.tフェードイン開始();
                     this.ct登場用.t進行();
 
-//					if ( this.bDTXVmode )
+                    //					if ( this.bDTXVmode )
                     {
                         #region [テストコード: 再生開始小節の変更]
 #if false
@@ -283,15 +283,15 @@ namespace DTXMania
                 bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
-                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && 
-                    ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && 
-                    ( CDTXMania.DTX.bチップがある.FT == false ) && 
-                    ( CDTXMania.DTX.bチップがある.Ride == false ) && 
-                    ( CDTXMania.DTX.bチップがある.LP == false ) &&
-                    ( CDTXMania.DTX.bチップがある.LBD == false ) &&
-                    ( CDTXMania.DTX.b強制的にXG譜面にする == false )))
+                if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true) &&
+                    ((CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
+                    (CDTXMania.DTX.bチップがある.FT == false) &&
+                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.LP == false) &&
+                    (CDTXMania.DTX.bチップがある.LBD == false) &&
+                    (CDTXMania.DTX.b強制的にXG譜面にする == false)))
                 {
-                    if ( this.txLaneCover != null )
+                    if (this.txLaneCover != null)
                     {
                         //旧画像
                         //this.txLaneCover.t2D描画(CDTXMania.app.Device, 295, 0);
@@ -333,13 +333,29 @@ namespace DTXMania
                         }
                     }
                 }
-                double dbシャッターIN = (base.nShutterInPosY.Drums * 7.2);
-                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
-                this.actLVFont.t文字列描画( 564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString() );
 
-                double dbシャッターOUT = 720 - (base.nShutterOutPosY.Drums * 7.2f);
-                this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
-                this.actLVFont.t文字列描画( 564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString() );
+                    double dbシャッターIN = (base.nShutterInPosY.Drums * 7.2);
+                    double dbシャッターOUT = 720 - (base.nShutterOutPosY.Drums * 7.2f);
+
+                if ( CDTXMania.ConfigIni.bReverse.Drums )
+                {
+                    dbシャッターIN = (base.nShutterOutPosY.Drums * 7.2f);
+                    this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
+                    this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
+
+                    dbシャッターOUT = 720 - (base.nShutterInPosY.Drums * 7.2);
+                    this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
+                    this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
+                }
+                else
+                {
+                    this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
+                    this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
+
+                    this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
+                    this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
+                }
+                
                 #endregion
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
@@ -347,20 +363,11 @@ namespace DTXMania
                 this.t進行描画・DANGER();
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
 
-                #region[ XG2 ]
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                {
-                    this.t進行描画・ステータスパネル();
-                    if (CDTXMania.ConfigIni.bGraph.Drums == true || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT)
+                this.t進行描画・ステータスパネル();
+
+                if ( CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.A || CDTXMania.ConfigIni.bGraph.Drums == true || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT )
                         this.t進行描画・コンボ();
-                }
-                #endregion
-                //XG1
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                {
-                    this.t進行描画・ステータスパネル();
-                    this.t進行描画・コンボ();
-                }
+
                 this.t進行描画・ゲージ();
                 this.t進行描画・演奏情報();
                 this.t進行描画・判定文字列1・通常位置指定の場合();
