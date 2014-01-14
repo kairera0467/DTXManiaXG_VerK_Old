@@ -60,7 +60,7 @@
   <ItemGroup>
     <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\trunk\実行時フォルダ\DirectShowLib-2005.dll</HintPath>
+      <HintPath>..\..\..\..\dotnet\DirectShowLibV2-1\lib\DirectShowLib-2005.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SlimDXc_net20x86_Jun2010, Version=1002.0.10.43, Culture=neutral, PublicKeyToken=53d0e4ef1f1579f5, processorArchitecture=x86">
@@ -157,6 +157,7 @@
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarチップファイア.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarレーンフラッシュGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitar判定文字列.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarLivePoint.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CStage演奏ギター画面.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏ステージ失敗.cs" />
     <None Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drumsフィルインエフェクト2" />

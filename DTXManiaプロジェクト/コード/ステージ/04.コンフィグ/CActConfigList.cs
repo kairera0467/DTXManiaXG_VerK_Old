@@ -2253,12 +2253,20 @@ namespace DTXMania
                             {
                                 int nシャッターIN = (int)(this.iDrumsShutterInPos.n現在の値 * 7.2);
                                 int nシャッターOUT = 720 - (int)(this.iDrumsShutterOutPos.n現在の値 * 7.2f);
+
+                                if (CDTXMania.ConfigIni.bReverse.Drums)
+                                {
+                                    nシャッターIN = (int)(this.iDrumsShutterOutPos.n現在の値 * 7.2f);
+                                    nシャッターOUT = 720 - (int)(this.iDrumsShutterInPos.n現在の値 * 7.2);
+                                }
+
                                 this.txレーン.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 70, 720));
 
                                 this.txシャッター.t2D描画(CDTXMania.app.Device, 0, (int)(-720 + nシャッターIN), new Rectangle(0, 0, 70, 720));
                                 this.txシャッター.t2D描画(CDTXMania.app.Device, 0, nシャッターOUT, new Rectangle(0, 0, 70, 720));
+
                                 if( this.iDrumsJudgeLineDisp.bON == true )
-                                    this.tx判定ライン.t2D描画(CDTXMania.app.Device, 0, CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561 - this.iDrumsJudgeLinePos.n現在の値, new Rectangle(0, 0, 70, 8));
+                                    this.tx判定ライン.t2D描画(CDTXMania.app.Device, 0, CDTXMania.ConfigIni.bReverse.Drums ? 159 + this.iDrumsJudgeLinePos.n現在の値 : 561 - this.iDrumsJudgeLinePos.n現在の値, new Rectangle(0, 0, 70, 8));
                             }
                         }
 						break;
