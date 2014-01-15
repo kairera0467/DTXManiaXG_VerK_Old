@@ -43,7 +43,6 @@ namespace DTXMania
 			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actFOClear = new CActFIFOWhite() );
             base.list子Activities.Add( this.actFOStageClear = new CActFIFOWhiteClear());
-            base.list子Activities.Add(this.actLivePoint = new CAct演奏GuitarLivePoint());
 		}
 
 

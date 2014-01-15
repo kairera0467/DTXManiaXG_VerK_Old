@@ -454,15 +454,61 @@ namespace DTXMania
                 }
                 //if( this.tx中央パネル != null )
                 //    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
-                if( this.txリザルトパネル != null )
+
+                #region [ 本体位置 ]
+                int n本体1X = 0;
+                int n本体1Y = 0;
+
+                int n本体2X = 0;
+                int n本体2Y = 0;
+
+                int n本体3X = 0;
+                int n本体3Y = 0;
+
+
+                if (CDTXMania.ConfigIni.bDrums有効)
                 {
-                    this.txリザルトパネル.t2D描画( CDTXMania.app.Device, 453, 11 );
-                    if ( CDTXMania.ConfigIni.bGuitar有効 )
+                    n本体1X = 453;
+                    n本体1Y = 11;
+                }
+                else if (CDTXMania.ConfigIni.bGuitar有効)
+                {
+                    if ( CDTXMania.DTX.bチップがある.Guitar )
                     {
-                        this.txリザルトパネル.t2D描画(CDTXMania.app.Device, 106, 430);
+                        n本体1X = 453;
+                        n本体1Y = 11;
+                    }
+
+                    if ( CDTXMania.DTX.bチップがある.Bass )
+                    {
+                        n本体2X = 106;
+                        n本体2Y = 430;
+                    }
+
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass && CDTXMania.DTX.bチップがある.Guitar && CDTXMania.DTX.bチップがある.Bass)
+                    {
+                        n本体3X = n本体1X;
+                        n本体3Y = n本体1Y;
+                        n本体1X = n本体2X;
+                        n本体1Y = n本体2Y;
+                        n本体2X = n本体3X;
+                        n本体2Y = n本体3Y;
                     }
                 }
-				if ( this.actParameterPanel.On進行描画() == 0 )
+                #endregion
+
+                if (this.txリザルトパネル != null && n本体1X != 0)
+                {
+                    this.txリザルトパネル.t2D描画(CDTXMania.app.Device, n本体1X, n本体1Y);
+                }
+
+                if (this.txリザルトパネル != null && n本体2X != 0)
+                {
+                    this.txリザルトパネル.t2D描画(CDTXMania.app.Device, n本体2X, n本体2Y);
+                }
+                
+
+                if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
 				}
