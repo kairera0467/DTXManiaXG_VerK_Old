@@ -322,13 +322,9 @@ namespace DTXMania
                     if (this.txPart != null)
                     {
                         if (CDTXMania.ConfigIni.bDrums有効)
-                        {
                             this.txPart.t2D描画(CDTXMania.app.Device, this.n本体1X + 347, this.n本体1Y + 8, new Rectangle(0, 0, 140, 20));
-                        }
                         else
-                        {
                             this.txPart.t2D描画(CDTXMania.app.Device, this.n本体1X + 347, this.n本体1Y + 8, new Rectangle(0, 20, 140, 20));
-                        }
                     }
                 }
 
@@ -341,7 +337,7 @@ namespace DTXMania
                         this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体2X + 487, this.n本体2Y + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
 
                     if ( this.txPart != null )
-                        this.txPart.t2D描画(CDTXMania.app.Device, this.n本体1X + 347, this.n本体1Y + 8, new Rectangle(0, 40, 140, 20));
+                        this.txPart.t2D描画(CDTXMania.app.Device, this.n本体2X + 347, this.n本体2Y + 8, new Rectangle(0, 40, 140, 20));
                 }
 
                 for (int i = 0; i < 1; i++)
