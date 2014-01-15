@@ -128,48 +128,6 @@ namespace DTXMania
 		public override void On活性化()
 		{
 
-            #region [ 本体位置 ]
-            this.n本体1X = 0;
-            this.n本体1Y = 0;
-
-            this.n本体2X = 0;
-            this.n本体2Y = 0;
-
-            this.n本体3X = 0;
-            this.n本体3Y = 0;
-
-
-            if (CDTXMania.ConfigIni.bDrums有効)
-            {
-                this.n本体1X = 453;
-                this.n本体1Y = 11;
-            }
-            else if (CDTXMania.ConfigIni.bGuitar有効)
-            {
-                if (CDTXMania.DTX.bチップがある.Guitar)
-                {
-                    this.n本体1X = 453;
-                    this.n本体1Y = 11;
-                }
-
-                if (CDTXMania.DTX.bチップがある.Bass)
-                {
-                    this.n本体2X = 106;
-                    this.n本体2Y = 430;
-                }
-
-                if (CDTXMania.ConfigIni.bIsSwappedGuitarBass && CDTXMania.DTX.bチップがある.Guitar && CDTXMania.DTX.bチップがある.Bass)
-                {
-                    this.n本体3X = this.n本体1X;
-                    this.n本体3Y = this.n本体1Y;
-                    this.n本体1X = this.n本体2X;
-                    this.n本体1Y = this.n本体2Y;
-                    this.n本体2X = this.n本体3X;
-                    this.n本体2Y = this.n本体3Y;
-                }
-            }
-            #endregion
-
             this.n本体X = 0x1d5;
             this.n本体Y = 0x11b;
             this.nAlbumWidth = 102;
@@ -197,7 +155,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txリザルト画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
-                this.txDifficulty = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_Difficulty.png" ) );
                 this.txLevel = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_LevelNumber.png" ) );
 				this.sfリザルトAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1;
@@ -264,7 +221,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
                 CDTXMania.tテクスチャの解放( ref this.txリザルト画像 );
                 CDTXMania.tテクスチャの解放( ref this.txリザルト画像がないときの画像 );
-                CDTXMania.tテクスチャの解放( ref this.txDifficulty );
                 if (this.sfリザルトAVI画像 != null)
                 {
                     this.sfリザルトAVI画像.Dispose();
@@ -361,11 +317,6 @@ namespace DTXMania
             this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体X + this.nAlbumWidth ) + 3, this.n本体Y + 0x3f);
             //this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
 
-            if (this.txDifficulty != null && this.n本体1X != 0)
-                this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体1X + 487, this.n本体1Y + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
-            if (this.txDifficulty != null && this.n本体2X != 0)
-                this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体2X + 487, this.n本体2Y + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
-
             this.txDrumSpeed.vc拡大縮小倍率.X = 0.7619048f;
             this.txDrumSpeed.vc拡大縮小倍率.Y = 0.6666667f;
             this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 0x43c, 60);
@@ -399,12 +350,6 @@ namespace DTXMania
         private int n前回描画したフレーム番号;
         private int n本体X;
         private int n本体Y;
-        private int n本体1X;
-        private int n本体1Y;
-        private int n本体2X;
-        private int n本体2Y;
-        private int n本体3X;
-        private int n本体3Y;
         private IntPtr pAVIBmp;
         private CTexture r表示するリザルト画像;
         private Surface sfリザルトAVI画像;
@@ -416,7 +361,6 @@ namespace DTXMania
         private CTexture txSongName;
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
-        private CTexture txDifficulty;
 
         private Bitmap b中央パネル;
         private Image i中央パネル;
