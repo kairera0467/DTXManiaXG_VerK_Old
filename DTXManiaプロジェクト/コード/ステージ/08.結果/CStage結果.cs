@@ -343,7 +343,6 @@ namespace DTXMania
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_header panel.png" ), true );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_footer panel.png" ), true );
                 //this.tx中央パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_center panel.png"));
-                this.txリザルトパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_result panel.png"));
 				//this.txオプションパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen option panels.png" ) );
 				base.OnManagedリソースの作成();
 			}
@@ -361,7 +360,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
                 //CDTXMania.tテクスチャの解放( ref this.tx中央パネル );
-                CDTXMania.tテクスチャの解放( ref this.txリザルトパネル );
                 //CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
                 base.OnManagedリソースの解放();
 			}
@@ -454,59 +452,6 @@ namespace DTXMania
                 }
                 //if( this.tx中央パネル != null )
                 //    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
-
-                #region [ 本体位置 ]
-                int n本体1X = 0;
-                int n本体1Y = 0;
-
-                int n本体2X = 0;
-                int n本体2Y = 0;
-
-                int n本体3X = 0;
-                int n本体3Y = 0;
-
-
-                if (CDTXMania.ConfigIni.bDrums有効)
-                {
-                    n本体1X = 453;
-                    n本体1Y = 11;
-                }
-                else if (CDTXMania.ConfigIni.bGuitar有効)
-                {
-                    if ( CDTXMania.DTX.bチップがある.Guitar )
-                    {
-                        n本体1X = 453;
-                        n本体1Y = 11;
-                    }
-
-                    if ( CDTXMania.DTX.bチップがある.Bass )
-                    {
-                        n本体2X = 106;
-                        n本体2Y = 430;
-                    }
-
-                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass && CDTXMania.DTX.bチップがある.Guitar && CDTXMania.DTX.bチップがある.Bass)
-                    {
-                        n本体3X = n本体1X;
-                        n本体3Y = n本体1Y;
-                        n本体1X = n本体2X;
-                        n本体1Y = n本体2Y;
-                        n本体2X = n本体3X;
-                        n本体2Y = n本体3Y;
-                    }
-                }
-                #endregion
-
-                if (this.txリザルトパネル != null && n本体1X != 0)
-                {
-                    this.txリザルトパネル.t2D描画(CDTXMania.app.Device, n本体1X, n本体1Y);
-                }
-
-                if (this.txリザルトパネル != null && n本体2X != 0)
-                {
-                    this.txリザルトパネル.t2D描画(CDTXMania.app.Device, n本体2X, n本体2Y);
-                }
-                
 
                 if ( this.actParameterPanel.On進行描画() == 0 )
 				{
@@ -689,7 +634,6 @@ namespace DTXMania
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
-        private CTexture txリザルトパネル;
 
         private CDirectShow ds背景動画;
         private long lDshowPosition;
