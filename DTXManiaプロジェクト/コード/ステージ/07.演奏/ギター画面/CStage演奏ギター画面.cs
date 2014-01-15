@@ -89,6 +89,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
+                this.bサビ区間 = false;
 				//this.t背景テクスチャの生成();
 				this.txチップ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Chips_Guitar.png" ) );
                 this.txレーン = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_lanes_Guitar.png") );
@@ -122,10 +123,12 @@ namespace DTXMania
 				{
                     CSound管理.rc演奏用タイマ.tリセット();
 					CDTXMania.Timer.tリセット();
+
                     int UnitTime;
                     double BPM = CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM;
                     UnitTime = (int)((60 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 8 * 600));
                     this.actBPMBar.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
+
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ.Bass = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ[ 0 ] = null;
