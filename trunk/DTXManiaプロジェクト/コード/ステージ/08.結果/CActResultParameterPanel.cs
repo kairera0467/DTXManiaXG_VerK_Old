@@ -178,44 +178,54 @@ namespace DTXMania
 		{
 
             #region [ 本体位置 ]
+
+            int n上X = 453;
+            int n上Y = 11;
+
+            int n下X = 106;
+            int n下Y = 430;
+
             this.n本体1X = 2000;
             this.n本体1Y = 2000;
 
             this.n本体2X = 2000;
             this.n本体2Y = 2000;
 
-            this.n本体3X = 0;
-            this.n本体3Y = 0;
-
-
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n本体1X = 453;
-                this.n本体1Y = 11;
+                this.n本体1X = n上X;
+                this.n本体1Y = n上Y;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
                 if (CDTXMania.DTX.bチップがある.Guitar)
                 {
-                    this.n本体1X = 453;
-                    this.n本体1Y = 11;
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体1X = n下X;
+                        this.n本体1Y = n下Y;
+                    }
+                    else
+                    {
+                        this.n本体1X = n上X;
+                        this.n本体1Y = n上Y;
+                    }
                 }
 
                 if (CDTXMania.DTX.bチップがある.Bass)
                 {
-                    this.n本体2X = 106;
-                    this.n本体2Y = 430;
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体2X = n上X;
+                        this.n本体2Y = n上Y;
+                    }
+                    else
+                    {
+                        this.n本体2X = n下X;
+                        this.n本体2Y = n下Y;
+                    }
                 }
 
-                if (CDTXMania.ConfigIni.bIsSwappedGuitarBass && CDTXMania.DTX.bチップがある.Guitar && CDTXMania.DTX.bチップがある.Bass)
-                {
-                    this.n本体3X = this.n本体1X;
-                    this.n本体3Y = this.n本体1Y;
-                    this.n本体1X = this.n本体2X;
-                    this.n本体1Y = this.n本体2Y;
-                    this.n本体2X = this.n本体3X;
-                    this.n本体2Y = this.n本体3Y;
-                }
             }
             #endregion
 
@@ -617,7 +627,9 @@ namespace DTXMania
                         this.b新記録音再生済み = true;
                     }
                 }
-                if( this.ct表示用.n現在の値 >= 900 )
+
+                #region [ フルコンボ ]
+                if ( this.ct表示用.n現在の値 >= 900 )
                 { 
 
                     for (int j = 0; j < 3; j++)
@@ -754,6 +766,8 @@ namespace DTXMania
                     }
 
                 }
+                #endregion
+
             if (!this.ct表示用.b終了値に達した)
             {
                 return 0;
@@ -781,8 +795,6 @@ namespace DTXMania
         private int n本体1Y;
         private int n本体2X;
         private int n本体2Y;
-        private int n本体3X;
-        private int n本体3Y;
         private readonly Point[] ptFullCombo位置;
         private CSound sdDTXで指定されたフルコンボ音;
         private readonly ST文字位置[] st小文字位置;
