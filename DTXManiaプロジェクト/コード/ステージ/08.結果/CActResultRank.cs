@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.IO;
 using SlimDX;
 using FDK;
 
@@ -9,21 +10,21 @@ namespace DTXMania
 {
 	internal class CActResultRank : CActivity
 	{
+
 		// コンストラクタ
 
 		public CActResultRank()
 		{
-			base.b活性化してない = true;
+            base.b活性化してない = true;
 		}
-
 
 		// メソッド
 
 		public void tアニメを完了させる()
 		{
 			this.ctランク表示.n現在の値 = this.ctランク表示.n終了値;
-		}
-
+            this.ct表示用.n現在の値 = this.ct表示用.n終了値;
+        }
 
 		// CActivity 実装
 
@@ -82,7 +83,10 @@ namespace DTXMania
             }
             #endregion
 
-			base.On活性化();
+            this.sdDTXで指定されたフルコンボ音 = null;
+            this.bフルコンボ音再生済み = false;
+            this.bエクセレント音再生済み = false;
+            base.On活性化();
 		}
 		public override void On非活性化()
 		{
@@ -90,12 +94,25 @@ namespace DTXMania
 			{
 				this.ctランク表示 = null;
 			}
-			base.On非活性化();
+            if (this.ct表示用 != null)
+            {
+                this.ct表示用 = null;
+            }
+            if (this.sdDTXで指定されたフルコンボ音 != null)
+            {
+                CDTXMania.Sound管理.tサウンドを破棄する(this.sdDTXで指定されたフルコンボ音);
+                this.sdDTXで指定されたフルコンボ音 = null;
+            }
+            base.On非活性化();
 		}
 		public override void OnManagedリソースの作成()
 		{
 			if( !base.b活性化してない )
 			{
+
+                this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult fullcombo.png"));
+                this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
+
                 if (CDTXMania.ConfigIni.bDrums有効)
                 {
                     switch (CDTXMania.stage結果.n総合ランク値)
@@ -218,7 +235,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				CDTXMania.tテクスチャの解放( ref this.txランク文字1P );
+                CDTXMania.tテクスチャの解放(ref this.txFullCombo);
+                CDTXMania.tテクスチャの解放(ref this.txExcellent);
+                CDTXMania.tテクスチャの解放(ref this.txランク文字1P);
                 CDTXMania.tテクスチャの解放( ref this.txランク文字2P );
 				base.OnManagedリソースの解放();
 			}
@@ -232,10 +251,12 @@ namespace DTXMania
 			if( base.b初めての進行描画 )
 			{
                 this.ctランク表示 = new CCounter(0, 0x3e8, 2, CDTXMania.Timer);
-				base.b初めての進行描画 = false;
+                this.ct表示用 = new CCounter(0, 1000, 3, CDTXMania.Timer);
+                base.b初めての進行描画 = false;
 			}
 			this.ctランク表示.t進行();
-			if( this.ctランク表示.n現在の値 >= 500 )
+            this.ct表示用.t進行();
+            if (this.ctランク表示.n現在の値 >= 500)
 			{
 				double num2 = ( (double) ( this.ctランク表示.n現在の値 - 500 ) ) / 500.0;
                 if ( this.txランク文字1P != null && this.n本体1Y != 0 )
@@ -247,6 +268,147 @@ namespace DTXMania
                     this.txランク文字2P.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体2Y, new Rectangle(0, 0, (int)((double)txランク文字1P.sz画像サイズ.Width * num2), this.txランク文字1P.sz画像サイズ.Height));
                 }
 			}
+
+            #region [ フルコンボ ]
+            if (this.ct表示用.n現在の値 >= 900)
+            {
+
+                for (int j = 0; j < 1; j++)
+                {
+
+                    if (j == 2)
+                    {
+                        this.n本体X = this.n本体2X;
+                        this.n本体Y = this.n本体2Y;
+                    }
+                    else
+                    {
+                        this.n本体X = this.n本体1X;
+                        this.n本体Y = this.n本体1Y;
+                    }
+
+                    int num14 = 82 + this.n本体X;
+                    int num15 = 152 + this.n本体Y;
+
+                    if (this.n本体X != 0 && CDTXMania.ConfigIni.bDrums有効)
+                    {
+                        if (CDTXMania.stage結果.st演奏記録[0].nPerfect数 == CDTXMania.stage結果.st演奏記録[0].n全チップ数)
+                        {
+                            if (this.ct表示用.b終了値に達した)
+                            {
+                                if (this.txExcellent != null)
+                                {
+                                    this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                                }
+                                if (!this.bエクセレント音再生済み)
+                                {
+                                    if (((CDTXMania.DTX.SOUND_FULLCOMBO != null) && (CDTXMania.DTX.SOUND_FULLCOMBO.Length > 0)) && File.Exists(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO))
+                                    {
+                                        try
+                                        {
+                                            if (this.sdDTXで指定されたフルコンボ音 != null)
+                                            {
+                                                CDTXMania.Sound管理.tサウンドを破棄する(this.sdDTXで指定されたフルコンボ音);
+                                                this.sdDTXで指定されたフルコンボ音 = null;
+                                            }
+                                            this.sdDTXで指定されたフルコンボ音 = CDTXMania.Sound管理.tサウンドを生成する(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO);
+                                            if (this.sdDTXで指定されたフルコンボ音 != null)
+                                            {
+                                                this.sdDTXで指定されたフルコンボ音.t再生を開始する();
+                                            }
+                                        }
+                                        catch
+                                        {
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CDTXMania.Skin.soundエクセレント音.t再生する();
+                                    }
+                                    this.bエクセレント音再生済み = true;
+                                }
+                            }
+                            else
+                            {
+                                double num12 = ((double)(this.ct表示用.n現在の値 - 900)) / 100.0;
+                                float num13 = (float)(1.1 - 0.1);
+                                if (this.txExcellent != null)
+                                {
+                                    this.txExcellent.vc拡大縮小倍率 = new Vector3(num13, num13, 1f);
+                                    this.txExcellent.n透明度 = (int)(255.0 * num12);
+                                    this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                                }
+                            }
+                            if (this.ct表示用.b終了値に達した)
+                            {
+
+                            }
+                        }
+                        else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[0].nPerfect数 != CDTXMania.stage結果.st演奏記録[0].n全チップ数)
+                        {
+                            if (this.ct表示用.b終了値に達した)
+                            {
+                                if (this.txFullCombo != null)
+                                {
+                                    this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                                }
+                                if (!this.bフルコンボ音再生済み)
+                                {
+                                    if (((CDTXMania.DTX.SOUND_FULLCOMBO != null) && (CDTXMania.DTX.SOUND_FULLCOMBO.Length > 0)) && File.Exists(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO))
+                                    {
+                                        try
+                                        {
+                                            if (this.sdDTXで指定されたフルコンボ音 != null)
+                                            {
+                                                CDTXMania.Sound管理.tサウンドを破棄する(this.sdDTXで指定されたフルコンボ音);
+                                                this.sdDTXで指定されたフルコンボ音 = null;
+                                            }
+                                            this.sdDTXで指定されたフルコンボ音 = CDTXMania.Sound管理.tサウンドを生成する(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO);
+                                            if (this.sdDTXで指定されたフルコンボ音 != null)
+                                            {
+                                                this.sdDTXで指定されたフルコンボ音.t再生を開始する();
+                                            }
+                                        }
+                                        catch
+                                        {
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CDTXMania.Skin.soundフルコンボ音.t再生する();
+                                    }
+                                    this.bフルコンボ音再生済み = true;
+                                }
+                            }
+                            else
+                            {
+                                double num12 = ((double)(this.ct表示用.n現在の値 - 900)) / 100.0;
+                                float num13 = (float)(1.1 - 0.1);
+                                if (this.txFullCombo != null)
+                                {
+                                    this.txFullCombo.vc拡大縮小倍率 = new Vector3(num13, num13, 1f);
+                                    this.txFullCombo.n透明度 = (int)(255.0 * num12);
+                                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
+                                    {
+                                        num14 = 650;
+                                        num15 = 526;
+                                    }
+                                    else
+                                    {
+                                        num14 = this.n本体X + ((int)((this.txFullCombo.sz画像サイズ.Width * (1f - num13)) / 2f));
+                                        num15 = this.n本体Y + ((int)((this.txFullCombo.sz画像サイズ.Height * (1f - num13)) / 2f));
+                                    }
+                                    this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            #endregion
+
 			if( !this.ctランク表示.b終了値に達した )
 			{
 				return 0;
@@ -259,14 +421,22 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private CCounter ctランク表示;
-		private int n本体1X;
+        private bool bフルコンボ音再生済み;
+        private bool bエクセレント音再生済み;
+        private CCounter ctランク表示;
+        private CCounter ct表示用;
+        private int n本体X;
+        private int n本体Y;
+        private int n本体1X;
 		private int n本体1Y;
         private int n本体2X;
         private int n本体2Y;
         private CTexture txランク文字1P;
         private CTexture txランク文字2P;
-		//-----------------
+        private CSound sdDTXで指定されたフルコンボ音;
+        private CTexture txExcellent;
+        private CTexture txFullCombo;
+        //-----------------
 		#endregion
 	}
 }
