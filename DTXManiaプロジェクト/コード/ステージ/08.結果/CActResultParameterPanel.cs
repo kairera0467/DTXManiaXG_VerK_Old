@@ -184,16 +184,19 @@ namespace DTXMania
             int n下X = 106;
             int n下Y = 430;
 
-            this.n本体1X = 2000;
-            this.n本体1Y = 2000;
+            this.n本体0X = 0;
+            this.n本体0Y = 0;
 
-            this.n本体2X = 2000;
-            this.n本体2Y = 2000;
+            this.n本体1X = 0;
+            this.n本体1Y = 0;
+
+            this.n本体2X = 0;
+            this.n本体2Y = 0;
 
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n本体1X = n上X;
-                this.n本体1Y = n上Y;
+                this.n本体0X = n上X;
+                this.n本体0Y = n上Y;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
@@ -275,345 +278,181 @@ namespace DTXMania
 		}
         public override int On進行描画()
         {
-                if (base.b活性化してない)
-                {
-                    return 0;
-                }
-                if (base.b初めての進行描画)
-                {
-                    this.ct表示用 = new CCounter(0, 1000, 3, CDTXMania.Timer);
-                    base.b初めての進行描画 = false;
-                }
+            if (base.b活性化してない)
+            {
+                return 0;
+            }
+            if (base.b初めての進行描画)
+            {
+                this.ct表示用 = new CCounter(0, 1000, 3, CDTXMania.Timer);
+                base.b初めての進行描画 = false;
+            }
 
-                this.ct表示用.t進行();
-                double dbドラムメーター = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
-                double dbギターメーター = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Guitar.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Guitar.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
-                double dbベースメーター = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Bass.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Bass.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
+            this.ct表示用.t進行();
 
-                int num = this.ct表示用.n現在の値;
+            int[] x = new int[3];
+            int[] y = new int[3];
 
-                if ((CDTXMania.Input管理.Keyboard.bキーが押されている(0x3c)))
-                {
-                    //F7
-                    //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
-                    //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
-                    //CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
-                    //CDTXMania.ConfigIni.nヒット範囲ms.Perfect = 1000;
-                    //this.ct表示用.n現在の値 = 0;
-                    //CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 = 80.0;
-                }
+            x[0] = n本体0X;
+            x[1] = n本体1X;
+            x[2] = n本体2X;
 
+            y[0] = n本体0Y;
+            y[1] = n本体1Y;
+            y[2] = n本体2Y;
 
-                if ( n本体1X != 2000 )
-                {
-                    if ( this.txリザルトパネル != null )
-                        this.txリザルトパネル.t2D描画(CDTXMania.app.Device, n本体1X, n本体1Y);
+            double[] dbメーター = new double[3];
 
-                    if ( txDifficulty != null )
-                        this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体1X + 487, this.n本体1Y + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
+            dbメーター[0] = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
+            dbメーター[1] = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Guitar.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Guitar.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
+            dbメーター[2] = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Bass.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Bass.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
 
-                    if (this.txPart != null)
-                    {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                            this.txPart.t2D描画(CDTXMania.app.Device, this.n本体1X + 347, this.n本体1Y + 8, new Rectangle(0, 0, 140, 20));
-                        else
-                            this.txPart.t2D描画(CDTXMania.app.Device, this.n本体1X + 347, this.n本体1Y + 8, new Rectangle(0, 20, 140, 20));
-                    }
-                }
+            int num = this.ct表示用.n現在の値;
 
-                if ( n本体2X != 2000 )
+            if ((CDTXMania.Input管理.Keyboard.bキーが押されている(0x3c)))
+            {
+                //F7
+                //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
+                //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                //CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
+                //CDTXMania.ConfigIni.nヒット範囲ms.Perfect = 1000;
+                //this.ct表示用.n現在の値 = 0;
+                //CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 = 80.0;
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+
+                if (x[i] != 0)
                 {
                     if (this.txリザルトパネル != null)
-                        this.txリザルトパネル.t2D描画(CDTXMania.app.Device, n本体2X, n本体2Y);
+                        this.txリザルトパネル.t2D描画(CDTXMania.app.Device, x[i], y[i]);
 
                     if (txDifficulty != null)
-                        this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体2X + 487, this.n本体2Y + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
+                        this.txDifficulty.t2D描画(CDTXMania.app.Device, x[i] + 487, y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
 
-                    if ( this.txPart != null )
-                        this.txPart.t2D描画(CDTXMania.app.Device, this.n本体2X + 347, this.n本体2Y + 8, new Rectangle(0, 40, 140, 20));
-                }
+                    if (this.txPart != null)
+                        this.txPart.t2D描画(CDTXMania.app.Device, x[i] + 347, y[i] + 8, new Rectangle(0, 0 + (20 * i), 140, 20));
 
-                
-                {
-                    int x1 = this.n本体1X + 507;
-                    int y1 = this.n本体1Y + 35;
-                    int x2 = this.n本体2X + 507;
-                    int y2 = this.n本体2Y + 35;
-
-                    if (CDTXMania.ConfigIni.bDrums有効)
+                    if (CDTXMania.stage結果.st演奏記録[i].nPerfect数 == CDTXMania.stage結果.st演奏記録[i].n全チップ数)
                     {
-                        if ( CDTXMania.stage結果.st演奏記録.Drums.nPerfect数 == CDTXMania.stage結果.st演奏記録.Drums.n全チップ数 )
-                        {
-                            this.txNewRecord.t2D描画(CDTXMania.app.Device, this.n本体1X + 79, this.n本体1Y + 29, new Rectangle(0, 12, 72, 26));
-                            this.t特大文字表示(x1 - 248, y1 - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録.Drums.dbゲーム型スキル値));
-                        }
-                        else
-                        {
-                            this.t特大文字表示(x1 - 438, y1 - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 / 100.0));
-                            this.t特大文字表示(x1 - 248, y1 - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録.Drums.dbゲーム型スキル値));
-                        }
+                        this.txNewRecord.t2D描画(CDTXMania.app.Device, x[i] + 79, y[i] + 29, new Rectangle(0, 12, 72, 26));
+                        this.t特大文字表示(x[i] + 259, y[i] + 32, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[i].dbゲーム型スキル値));
                     }
-                    else if (CDTXMania.ConfigIni.bGuitar有効)
+                    else
                     {
+                        this.t特大文字表示(x[i] + 69, y[i] + 31, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録[i].db演奏型スキル値 / 100.0));
+                        this.t特大文字表示(x[i] + 259, y[i] + 32, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[i].dbゲーム型スキル値));
+                    }
 
-                        if (CDTXMania.stage結果.st演奏記録.Guitar.nPerfect数 == CDTXMania.stage結果.st演奏記録.Guitar.n全チップ数)
-                        {
-                            this.txNewRecord.t2D描画(CDTXMania.app.Device, this.n本体1X + 79, this.n本体1Y + 29, new Rectangle(0, 12, 72, 26));
-                            this.t特大文字表示(x1 - 248, y1 - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録.Guitar.dbゲーム型スキル値));
-                        }
-                        else
-                        {
-                            this.t特大文字表示(x1 - 438, y1 - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録.Guitar.db演奏型スキル値 / 100.0));
-                            this.t特大文字表示(x1 - 248, y1 - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録.Guitar.dbゲーム型スキル値));
-                        }
+                    if (CDTXMania.stage結果.b新記録スキル[i])
+                    {
+                        this.txNewRecord.t2D描画(CDTXMania.app.Device, x[i] + 16, y[i] + 56, new Rectangle(0, 0, 111, 12));
+                    }
 
-                        if (CDTXMania.stage結果.st演奏記録.Bass.nPerfect数 == CDTXMania.stage結果.st演奏記録.Bass.n全チップ数)
-                        {
-                            this.txNewRecord.t2D描画(CDTXMania.app.Device, this.n本体2X + 79, this.n本体2Y + 29, new Rectangle(0, 12, 72, 26));
-                            this.t特大文字表示(x2 - 248, y2 - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録.Bass.dbゲーム型スキル値));
-                        }
-                        else
-                        {
-                            this.t特大文字表示(x2 - 438, y2 - 4, string.Format("{0,-6:##0.00%}", CDTXMania.stage結果.st演奏記録.Bass.db演奏型スキル値 / 100.0));
-                            this.t特大文字表示(x2 - 248, y2 - 3, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録.Bass.dbゲーム型スキル値));
-                        }
-                    }
-                    if ( CDTXMania.stage結果.b新記録スキル.Drums || CDTXMania.stage結果.b新記録スキル.Guitar )
-                    {
-                        this.txNewRecord.t2D描画(CDTXMania.app.Device, this.n本体1X + 16, this.n本体1Y + 56, new Rectangle(0, 0, 111, 12));
-                    }
-                    if ( CDTXMania.stage結果.b新記録スキル.Bass )
-                    {
-                        this.txNewRecord.t2D描画(CDTXMania.app.Device, this.n本体2X + 16, this.n本体2Y + 56, new Rectangle(0, 0, 111, 12));
-                    }
                     if (num >= 0)
                     {
-                        if( CDTXMania.ConfigIni.bDrums有効 )
-                        {
-                            this.t大文字表示(x1, y1, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Drums.nPerfect数));
-                            this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, n本体1X + 12, n本体1Y + 70, new Rectangle(0, 0, (int)dbドラムメーター, 56));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x1, y1, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nPerfect数));
-                            this.t大文字表示(x2, y2, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nPerfect数));
-                            this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, n本体1X + 12, n本体1Y + 70, new Rectangle(0, 0, (int)dbギターメーター, 56));
-                            this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, n本体2X + 12, n本体2Y + 70, new Rectangle(0, 0, (int)dbベースメーター, 56));
-                        }
-
+                        this.t大文字表示(x[i] + 507, y[i] + 35, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPerfect数));
+                        this.tx達成率ゲージ.t2D描画(CDTXMania.app.Device, x[i] + 12, y[i] + 70, new Rectangle(0, 0, (int)dbメーター[i], 56));
+                        this.t小文字表示(x[i] + 507 + 0x40, y[i] + 35, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率[i]));
                     }
                     if (num >= 100)
                     {
-                        if( CDTXMania.ConfigIni.bDrums有効 )
-                        {
-                            this.t大文字表示(x1, y1 + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Drums.nGreat数));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x1, y1 + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nGreat数));
-                            this.t大文字表示(x2, y2 + 0x19, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nGreat数));
-                        }
+                        this.t大文字表示(x[i] + 507, y[i] + 35 + 25, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGreat数));
+                        this.t小文字表示(x[i] + 507 + 0x40, y[i] + 35 + 0x19, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率[i]));
                     }
                     if (num >= 200)
                     {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            this.t大文字表示(x1, y1 + 50, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Drums.nGood数));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x1, y1 + 50, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nGood数));
-                            this.t大文字表示(x2, y2 + 50, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nGood数));
-                        }
+                        this.t大文字表示(x[i] + 507, y[i] + 35 + 50, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nGood数));
+                        this.t小文字表示(x[i] + 507 + 0x40, y[i] + 35 + 50, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率[i]));
                     }
                     if (num >= 300)
                     {
-                        if( CDTXMania.ConfigIni.bDrums有効 )
-                        {
-                            this.t大文字表示(x1, y1 + 0x4b, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Drums.nPoor数));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x1, y1 + 0x4b, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nPoor数));
-                            this.t大文字表示(x2, y2 + 0x4b, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nPoor数));
-                        }
+                        this.t大文字表示(x[i] + 507, y[i] + 35 + 75, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nPoor数));
+                        this.t小文字表示(x[i] + 507 + 0x40, y[i] + 35 + 0x4b, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率[i]));
                     }
                     if (num >= 400)
                     {
-                        if( CDTXMania.ConfigIni.bDrums有効 )
-                        {
-                            this.t大文字表示(x1, y1 + 100, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Drums.nMiss数));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x1, y1 + 100, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Guitar.nMiss数));
-                            this.t大文字表示(x2, y2 + 100, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録.Bass.nMiss数));
-                        }
-                    }
-                    if (num >= 0)
-                    {
-                        if( CDTXMania.ConfigIni.bDrums有効 )
-                        {
-                            this.t小文字表示(x1 + 0x40, y1, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率.Drums));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x1 + 0x40, y1, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率.Guitar));
-                            this.t小文字表示(x2 + 0x40, y2, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPerfect率.Bass));
-                        }
-                    }
-                    if (num >= 100)
-                    {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 0x19, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率.Drums));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 0x19, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率.Guitar));
-                            this.t小文字表示(x2 + 0x40, y2 + 0x19, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGreat率.Bass));
-                        }
-                    }
-                    if (num >= 200)
-                    {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 50, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率.Drums));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 50, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率.Guitar));
-                            this.t小文字表示(x2 + 0x40, y2 + 50, string.Format("{0,3:##0}%", CDTXMania.stage結果.fGood率.Bass));
-                        }
-                    }
-                    if (num >= 300)
-                    {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 0x4b, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率.Drums));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 0x4b, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率.Guitar));
-                            this.t小文字表示(x2 + 0x40, y2 + 0x4b, string.Format("{0,3:##0}%", CDTXMania.stage結果.fPoor率.Bass));
-                        }
-                    }
-                    if (num >= 400)
-                    {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 100, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率.Drums));
-                        }
-                        else
-                        {
-                            this.t小文字表示(x1 + 0x40, y1 + 100, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率.Guitar));
-                            this.t小文字表示(x2 + 0x40, y2 + 100, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率.Bass));
-                        }
+                        this.t大文字表示(x[i] + 507, y[i] + 35 + 100, string.Format("{0,5:####0}%", CDTXMania.stage結果.st演奏記録[i].nMiss数));
+                        this.t小文字表示(x[i] + 507 + 0x40, y[i] + 35 + 100, string.Format("{0,3:##0}%", CDTXMania.stage結果.fMiss率[i]));
                     }
                     if (num >= 500)
                     {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            this.t大文字表示(x1 - 0x2c, y1 + 0x7d, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録.Drums.n最大コンボ数));
-                            this.t小文字表示(x1 + 0x40, y1 + 0x7d, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録.Drums.n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録.Drums.n全チップ数)) * 100f));
-                        }
-                        else
-                        {
-                            this.t大文字表示(x1 - 0x2c, y1 + 0x7d, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録.Guitar.n最大コンボ数));
-                            this.t小文字表示(x1 + 0x40, y1 + 0x7d, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録.Guitar.n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録.Guitar.n全チップ数)) * 100f));
-
-                            this.t大文字表示(x2 - 0x2c, y2 + 0x7d, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録.Bass.n最大コンボ数));
-                            this.t小文字表示(x2 + 0x40, y2 + 0x7d, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録.Bass.n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録.Bass.n全チップ数)) * 100f));
-                        }
+                        this.t大文字表示(x[i] + 507 - 0x2c, y[i] + 35 + 0x7d, string.Format("{0,9:########0}", CDTXMania.stage結果.st演奏記録[i].n最大コンボ数));
+                        this.t小文字表示(x[i] + 507 + 0x40, y[i] + 35 + 0x7d, string.Format("{0,3:##0}%", (((float)CDTXMania.stage結果.st演奏記録[i].n最大コンボ数) / ((float)CDTXMania.stage結果.st演奏記録[i].n全チップ数)) * 100f));
                     }
                     if (num >= 600)
                     {
-                        if (CDTXMania.ConfigIni.bDrums有効)
-                        {
-                            if (CDTXMania.ConfigIni.nSkillMode == 0)
-                                this.t特大文字表示(x1 - 126, y1 + 173, string.Format("{0,10:#########0}", CDTXMania.stage結果.st演奏記録.Drums.nスコア), true);
-                            else
-                                this.t特大文字表示(x1 - 58, y1 + 173, string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録.Drums.nスコア), true);
-                        }
+                        if (CDTXMania.ConfigIni.nSkillMode == 0)
+                            this.t特大文字表示(x[i] + 507 - 126, y[i] + 35 + 173, string.Format("{0,10:#########0}", CDTXMania.stage結果.st演奏記録[i].nスコア), true);
                         else
+                            this.t特大文字表示(x[i] + 507 - 58, y[i] + 35 + 173, string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[i].nスコア), true);
+                    }
+                    if (this.ct表示用.n現在の値 >= 700)
+                    {
+                        if (CDTXMania.stage結果.b新記録スキル[i] == true && !this.b新記録音再生済み)
                         {
-                            if (CDTXMania.ConfigIni.nSkillMode == 0)
-                                this.t特大文字表示(x1 - 126, y1 + 173, string.Format("{0,10:#########0}", CDTXMania.stage結果.st演奏記録.Guitar.nスコア), true);
-                            else
-                                this.t特大文字表示(x1 - 58, y1 + 173, string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録.Guitar.nスコア), true);
-
-                            if (CDTXMania.ConfigIni.nSkillMode == 0)
-                                this.t特大文字表示(x2 - 126, y2 + 173, string.Format("{0,10:#########0}", CDTXMania.stage結果.st演奏記録.Bass.nスコア), true);
-                            else
-                                this.t特大文字表示(x2 - 58, y2 + 173, string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録.Bass.nスコア), true);
-
+                            CDTXMania.Skin.sound新記録音.t再生する();
+                            this.b新記録音再生済み = true;
                         }
                     }
-                    if (num >= 700)
-                    {
-                    }
-                    if (num >= 800)
-                    {
-                    }
                 }
-                if( this.ct表示用.n現在の値 < 700 )
+            }
+            
+                int num5 = this.ct表示用.n現在の値 / 100;
+                double num6 = 1.0 - (((double)(this.ct表示用.n現在の値 % 100)) / 100.0);
+                int height = 20;
+
+                int[] n白X = new int[3];
+                int[] n白Y = new int[3];
+
+                n白X[0] = this.n本体0X + 393;
+                n白X[1] = this.n本体1X + 393;
+                n白X[2] = this.n本体2X + 393;
+
+                n白Y[0] = this.n本体0Y + 35 + (num5 * 24);
+                n白Y[1] = this.n本体1Y + 35 + (num5 * 24);
+                n白Y[2] = this.n本体2Y + 35 + (num5 * 24);
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (x[i] != 0)
                 {
-                    int num5 = this.ct表示用.n現在の値 / 100;
-                    double num6 = 1.0 - (((double)(this.ct表示用.n現在の値 % 100)) / 100.0);
-                    int n白1X = this.n本体1X + 393;
-                    int n白1Y = this.n本体1Y + 35 + (num5 * 24);
-                    int n白2X = this.n本体2X + 393;
-                    int n白2Y = this.n本体2Y + 35 + (num5 * 24);
-                    int height = 20;
-                    if (this.txWhite != null)
+                    if (this.ct表示用.n現在の値 < 700)
                     {
-                        this.txWhite.n透明度 = (int)(255.0 * num6);
-                    }
-                    Rectangle rectangle = new Rectangle(0, 0, 222, height);
-                    if (num5 >= 2)
-                    {
-                        if (num5 < 3)
+                        if (this.txWhite != null)
                         {
-                            n白1Y++;
-                            n白2Y++;
+                            this.txWhite.n透明度 = (int)(255.0 * num6);
                         }
-                        else if (num5 < 4)
+                        Rectangle rectangle = new Rectangle(0, 0, 222, height);
+                        if (num5 >= 2)
                         {
-                            n白1Y += 2;
-                            n白2Y += 2;
+                            if (num5 < 3)
+                            {
+                                n白Y[i]++;
+                            }
+                            else if (num5 < 4)
+                            {
+                                n白Y[i] += 2;
+                            }
+                            else if (num5 < 5)
+                            {
+                                n白Y[i] += 3;
+                            }
+                            else if (num5 < 6)
+                            {
+                                n白Y[i] += 4;
+                            }
+                            else if (num5 < 7)
+                            {
+                                n白Y[i] += 5;
+                                rectangle.Height = 56;
+                            }
                         }
-                        else if (num5 < 5)
-                        {
-                            n白1Y += 3;
-                            n白2Y += 3;
-                        }
-                        else if (num5 < 6)
-                        {
-                            n白1Y += 4;
-                            n白2Y += 4;
-                        }
-                        else if (num5 < 7)
-                        {
-                            n白1Y += 5;
-                            n白2Y += 5;
-                            rectangle.Height = 56;
-                        }
-                    }
-                    this.txWhite.t2D描画(CDTXMania.app.Device, n白1X, n白1Y, rectangle);
-
-                    if ( CDTXMania.ConfigIni.bGuitar有効 )
-                        this.txWhite.t2D描画(CDTXMania.app.Device, n白2X, n白2Y, rectangle);
-                }
-
-                if( this.ct表示用.n現在の値 >= 700 )
-                {
-                    if( CDTXMania.stage結果.b新記録スキル.Drums == true && !this.b新記録音再生済み )
-                    {
-                        CDTXMania.Skin.sound新記録音.t再生する();
-                        this.b新記録音再生済み = true;
+                        this.txWhite.t2D描画(CDTXMania.app.Device, n白X[i], n白Y[i], rectangle);
                     }
                 }
-
+            }
 
             if (!this.ct表示用.b終了値に達した)
             {
@@ -634,6 +473,8 @@ namespace DTXMania
 
         private bool b新記録音再生済み;
         private CCounter ct表示用;
+        private int n本体0X;
+        private int n本体0Y;
         private int n本体1X;
         private int n本体1Y;
         private int n本体2X;

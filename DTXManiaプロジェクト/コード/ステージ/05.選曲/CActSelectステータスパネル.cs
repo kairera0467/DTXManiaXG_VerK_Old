@@ -163,10 +163,25 @@ namespace DTXMania
 				}
 				for( int i = 0; i < 5; i++ )
 				{
-                    if (c曲リストノード.arスコア[ i ] != null)
+                    if (c曲リストノード.arスコア[i] != null)
                     {
+                        int nLevel = c曲リストノード.arスコア[i].譜面情報.レベル.Drums;
+                        if (nLevel < 0)
+                        {
 
-                        this.db現在選択中の曲の曲別スキル値難易度毎[ i ] = c曲リストノード.arスコア[ i ].譜面情報.最大曲別スキル.Drums;
+                            nLevel = 0;
+
+                        }
+
+                        if (nLevel > 999)
+                        {
+
+                            nLevel = 999;
+
+                        }
+                        this.n選択中の曲のレベル難易度毎[i] = nLevel;
+
+                        this.db現在選択中の曲の曲別スキル値難易度毎[i] = c曲リストノード.arスコア[i].譜面情報.最大曲別スキル.Drums;
                     }
                     else
                     {
@@ -786,7 +801,6 @@ namespace DTXMania
                         {
                             if( this.db現在選択中の曲の最高スキル値難易度毎[ i ].Drums == 100 && this.str難易度ラベル[ i ] != null )
                             {
-                                int x = 386 + (i * 143);
                                 if (this.txゲージ用数字他 != null)
                                 {
                                     this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, 40 + this.n本体ドラムX + ( i * 143 ), 63 + this.n本体ドラムY - y差分[ i ], new Rectangle( 266, 0, 42, 32 ) );
@@ -794,7 +808,6 @@ namespace DTXMania
                             }
                             else if( this.b現在選択中の曲がフルコンボ難易度毎[ i ].Drums && this.str難易度ラベル[ i ] != null )
                             {
-                                int x = 386 + (i * 143);
                                 if( this.txゲージ用数字他 != null )
                                 {
                                     this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, 40 + this.n本体ドラムX + ( i * 143 ), 63 + this.n本体ドラムY - y差分[ i ], new Rectangle( 0, 0, 42, 32 ) );
@@ -809,7 +822,6 @@ namespace DTXMania
                         {
                             if( this.db現在選択中の曲の最高スキル値難易度毎[ i ].Guitar == 100 )
                             {
-                                int x = 386 + (i * 143);
                                 if( this.txゲージ用数字他 != null )
                                 {
                                     this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, 40 + this.n本体ギターX + ( i * 143 ), 63 + this.n本体ギターY - y差分[ i ], new Rectangle( 266, 0, 42, 32 ) );
@@ -817,7 +829,6 @@ namespace DTXMania
                             }
                             else if( this.b現在選択中の曲がフルコンボ難易度毎[i].Guitar )
                             {
-                                int x = 386 + (i * 143);
                                 if( this.txゲージ用数字他 != null )
                                 {
                                     this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, 40 + this.n本体ギターX + ( i * 143 ), 63 + this.n本体ギターY - y差分[ i ], new Rectangle( 0, 0, 42, 32 ) );
@@ -826,7 +837,6 @@ namespace DTXMania
 
                             if( this.db現在選択中の曲の最高スキル値難易度毎[ i ].Bass == 100 )
                             {
-                                int x = 386 + (i * 143);
                                 if( this.txゲージ用数字他 != null )
                                 {
                                     this.txゲージ用数字他.t2D描画( CDTXMania.app.Device, 40 + this.n本体ベースX + ( i * 143 ), 63 + this.n本体ベースY - y差分[ i ], new Rectangle( 266, 0, 42, 32 ) );
