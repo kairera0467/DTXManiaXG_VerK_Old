@@ -159,7 +159,6 @@ namespace DTXMania
             st文字位置34.pt = new Point(90, 0);
             st文字位置Array3[11] = st文字位置34;
             this.st特大文字位置 = st文字位置Array3;
-            this.ptFullCombo位置 = new Point[] { new Point(220, 160), new Point(0xdf, 0xed), new Point(0x141, 0xed) };
             base.b活性化してない = true;
 		}
 
@@ -229,12 +228,6 @@ namespace DTXMania
             }
             #endregion
 
-			this.n本体X = 0;
-			this.n本体Y = 0;
-
-			this.sdDTXで指定されたフルコンボ音 = null;
-			this.bフルコンボ音再生済み = false;
-            this.bエクセレント音再生済み = false;
             this.b新記録音再生済み = false;
 			base.On活性化();
 		}
@@ -243,11 +236,6 @@ namespace DTXMania
 			if( this.ct表示用 != null )
 			{
 				this.ct表示用 = null;
-			}
-			if( this.sdDTXで指定されたフルコンボ音 != null )
-			{
-				CDTXMania.Sound管理.tサウンドを破棄する( this.sdDTXで指定されたフルコンボ音 );
-				this.sdDTXで指定されたフルコンボ音 = null;
 			}
 			base.On非活性化();
 		}
@@ -258,8 +246,6 @@ namespace DTXMania
                 this.tx文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_numbers.png"));
                 this.tx文字[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_numbers_em.png"));
                 this.tx文字[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_numbers_large.png"));
-                this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult fullcombo.png"));
-                this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
                 this.txNewRecord = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_New Record.png"));
                 this.txWhite = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\Tile white 64x64.png"));
                 this.tx達成率ゲージ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_gauge.jpg"));
@@ -278,8 +264,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx文字[ 0 ] );
 				CDTXMania.tテクスチャの解放( ref this.tx文字[ 1 ] );
                 CDTXMania.tテクスチャの解放( ref this.tx文字[ 2 ] );
-				CDTXMania.tテクスチャの解放( ref this.txFullCombo );
-                CDTXMania.tテクスチャの解放( ref this.txExcellent );
                 CDTXMania.tテクスチャの解放( ref this.txNewRecord );
 				CDTXMania.tテクスチャの解放( ref this.txWhite );
                 CDTXMania.tテクスチャの解放( ref this.tx達成率ゲージ );
@@ -307,7 +291,6 @@ namespace DTXMania
                 double dbベースメーター = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Bass.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Bass.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
 
                 int num = this.ct表示用.n現在の値;
-                Point[] pointArray = new Point[] { new Point(507, 35), new Point(1547, 30), new Point(1547, 30) };
 
                 if ((CDTXMania.Input管理.Keyboard.bキーが押されている(0x3c)))
                 {
@@ -352,8 +335,6 @@ namespace DTXMania
 
                 for (int i = 0; i < 1; i++)
                 {
-                    int x = this.n本体1X + pointArray[i].X;
-                    int y = this.n本体1Y + pointArray[i].Y;
                     int x1 = this.n本体1X + 507;
                     int y1 = this.n本体1Y + 35;
                     int x2 = this.n本体2X + 507;
@@ -628,145 +609,6 @@ namespace DTXMania
                     }
                 }
 
-                #region [ フルコンボ ]
-                if ( this.ct表示用.n現在の値 >= 900 )
-                { 
-
-                    for (int j = 0; j < 3; j++)
-                    {
-
-                        if(CDTXMania.stage結果.st演奏記録[0].nPerfect数 == CDTXMania.stage結果.st演奏記録[0].n全チップ数)
-                        {
-                            if (this.ct表示用.b終了値に達した)
-                            {
-                                if (this.txExcellent != null)
-                                {
-                                    this.txExcellent.t2D描画(CDTXMania.app.Device, 220, 160);
-                                }
-                                if (!this.bエクセレント音再生済み)
-                                {
-                                    if (((CDTXMania.DTX.SOUND_FULLCOMBO != null) && (CDTXMania.DTX.SOUND_FULLCOMBO.Length > 0)) && File.Exists(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO))
-                                    {
-                                        try
-                                        {
-                                            if (this.sdDTXで指定されたフルコンボ音 != null)
-                                            {
-                                                CDTXMania.Sound管理.tサウンドを破棄する(this.sdDTXで指定されたフルコンボ音);
-                                                this.sdDTXで指定されたフルコンボ音 = null;
-                                            }
-                                            this.sdDTXで指定されたフルコンボ音 = CDTXMania.Sound管理.tサウンドを生成する(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO);
-                                            if (this.sdDTXで指定されたフルコンボ音 != null)
-                                            {
-                                                this.sdDTXで指定されたフルコンボ音.t再生を開始する();
-                                            }
-                                        }
-                                        catch
-                                        {
-                                        }
-                                    }
-                                    else
-                                    {
-                                        CDTXMania.Skin.soundエクセレント音.t再生する();
-                                    }
-                                    this.bエクセレント音再生済み = true;
-                                }
-                            }
-                            else
-                            {
-                                double num12 = ((double)(this.ct表示用.n現在の値 - 900)) / 100.0;
-                                float num13 = (float)(1.1 - 0.1);
-                                if (this.txExcellent != null)
-                                {
-                                    this.txExcellent.vc拡大縮小倍率 = new Vector3(num13, num13, 1f);
-                                    this.txExcellent.n透明度 = (int)(255.0 * num12);
-                                    this.txExcellent.t2D描画(CDTXMania.app.Device, 220, 160);
-                                }
-                            }
-                            if (this.ct表示用.b終了値に達した)
-                            {
-
-                            }
-                        }
-                        else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[0].nPerfect数 != CDTXMania.stage結果.st演奏記録[0].n全チップ数)
-                        {
-                            if (this.ct表示用.b終了値に達した)
-                            {
-                                if (this.txFullCombo != null)
-                                {
-                                    int num14;
-                                    int num15;
-                                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                                    {
-                                        num14 = 650;
-                                        num15 = 526;
-                                    }
-                                    else
-                                    {
-                                        num14 = (this.n本体X + this.ptFullCombo位置[j].X);
-                                        num15 = (this.n本体Y + this.ptFullCombo位置[j].Y);
-                                    }
-                                    this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
-                                }
-                                if (!this.bフルコンボ音再生済み)
-                                {
-                                    if (((CDTXMania.DTX.SOUND_FULLCOMBO != null) && (CDTXMania.DTX.SOUND_FULLCOMBO.Length > 0)) && File.Exists(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO))
-                                    {
-                                        try
-                                        {
-                                            if (this.sdDTXで指定されたフルコンボ音 != null)
-                                            {
-                                                CDTXMania.Sound管理.tサウンドを破棄する(this.sdDTXで指定されたフルコンボ音);
-                                                this.sdDTXで指定されたフルコンボ音 = null;
-                                            }
-                                            this.sdDTXで指定されたフルコンボ音 = CDTXMania.Sound管理.tサウンドを生成する(CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO);
-                                            if (this.sdDTXで指定されたフルコンボ音 != null)
-                                            {
-                                                this.sdDTXで指定されたフルコンボ音.t再生を開始する();
-                                            }
-                                        }
-                                        catch
-                                        {
-                                        }
-                                    }
-                                    else
-                                    {
-                                        CDTXMania.Skin.soundフルコンボ音.t再生する();
-                                    }
-                                    this.bフルコンボ音再生済み = true;
-                                }
-                            }
-                            else
-                            {
-                                double num12 = ((double)(this.ct表示用.n現在の値 - 900)) / 100.0;
-                                float num13 = (float)(1.1 - 0.1);
-                                if (this.txFullCombo != null)
-                                {
-                                    this.txFullCombo.vc拡大縮小倍率 = new Vector3(num13, num13, 1f);
-                                    this.txFullCombo.n透明度 = (int)(255.0 * num12);
-                                    int num14;
-                                    int num15;
-                                    if (CDTXMania.ConfigIni.eNamePlate.Drums >= Eタイプ.C)
-                                    {
-                                        num14 = 650;
-                                        num15 = 526;
-                                    }
-                                    else
-                                    {
-                                        num14 = (this.n本体X + this.ptFullCombo位置[j].X) + ((int)((this.txFullCombo.sz画像サイズ.Width * (1f - num13)) / 2f));
-                                        num15 = (this.n本体Y + this.ptFullCombo位置[j].Y) + ((int)((this.txFullCombo.sz画像サイズ.Height * (1f - num13)) / 2f));
-                                    }
-                                    this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
-                                }
-                            }
-                        }
-                        else
-                        {
-
-                        }
-                    }
-
-                }
-                #endregion
 
             if (!this.ct表示用.b終了値に達した)
             {
@@ -786,23 +628,15 @@ namespace DTXMania
 		}
 
         private bool b新記録音再生済み;
-        private bool bフルコンボ音再生済み;
-        private bool bエクセレント音再生済み;
         private CCounter ct表示用;
-        private int n本体X;
-        private int n本体Y;
         private int n本体1X;
         private int n本体1Y;
         private int n本体2X;
         private int n本体2Y;
-        private readonly Point[] ptFullCombo位置;
-        private CSound sdDTXで指定されたフルコンボ音;
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
         private readonly ST文字位置[] st特大文字位置;
-        private CTexture txExcellent;
         private CTexture txNewRecord;
-        private CTexture txFullCombo;
         private CTexture txWhite;
         private CTexture txパネル本体;
         private CTexture tx達成率ゲージ;
