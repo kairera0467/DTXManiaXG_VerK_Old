@@ -271,7 +271,7 @@ namespace DTXMania
                 {
                     this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
                     //this.txグラフ.n透明度 = 192;
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 969, 650 - (int)(556f * this.dbグラフ値現在_表示G / 100), rectangle);
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 359, 650 - (int)(556f * this.dbグラフ値現在_表示G / 100), rectangle);
                 }
 				for( int k = 0; k < 32; k++ )
 				{
@@ -296,7 +296,7 @@ namespace DTXMania
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1.4f, 1f, 1f);
                     //this.txグラフ.n透明度 = 128;
                     //this.txグラフ.b加算合成 = true;
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 969, 650 - (int)(556f * this.dbグラフ値現在_表示G / 100), rectangle);
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 359, 650 - (int)(556f * this.dbグラフ値現在_表示G / 100), rectangle);
                     //this.txグラフ.b加算合成 = false;
                 }
                 // --目標値
@@ -327,7 +327,7 @@ namespace DTXMania
                     this.txグラフ.n透明度 = 48;
                     //this.txグラフ.b加算合成 = true;
                     //this.txグラフ.t2D描画(CDTXMania.app.Device, 969, 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 969, 650 - (int)(556f * this.dbグラフ値比較G / 100), new Rectangle(138, 0, 72, (int)(556f * this.dbグラフ値比較G / 100)));
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 359, 650 - (int)(556f * this.dbグラフ値比較G / 100), new Rectangle(138, 0, 72, (int)(556f * this.dbグラフ値比較G / 100)));
                 }
                 /*
 				for( int k = 32; k < 64; k++ )

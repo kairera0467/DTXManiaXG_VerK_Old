@@ -338,7 +338,7 @@ namespace DTXMania
 		}
         private void t進行描画・グラフ()
         {
-            if ( CDTXMania.ConfigIni.bGraph.Guitar )
+            if ( CDTXMania.ConfigIni.bGraph.Guitar && CDTXMania.DTX.bチップがある.Guitar && !CDTXMania.DTX.bチップがある.Bass )
             {
                 this.actGraph.On進行描画();
                 this.actGraph.db現在の判定数合計G = this.nヒット数・Auto含む.Guitar.Perfect + this.nヒット数・Auto含む.Guitar.Great + this.nヒット数・Auto含む.Guitar.Good + this.nヒット数・Auto含む.Guitar.Miss + this.nヒット数・Auto含む.Guitar.Poor;
