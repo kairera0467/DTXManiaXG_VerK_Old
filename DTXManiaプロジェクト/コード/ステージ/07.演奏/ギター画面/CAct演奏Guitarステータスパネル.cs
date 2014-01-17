@@ -61,6 +61,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Score numbers_Guitar.png" ) );
+                this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Difficulty.png"));
+                this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part.png"));
                 this.b4font = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.b4font);
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -126,6 +128,8 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txパネル );
                 CDTXMania.tテクスチャの解放( ref this.tx曲名パネル );
                 CDTXMania.tテクスチャの解放( ref this.txScore );
+                CDTXMania.tテクスチャの解放(ref this.txDifficulty);
+                CDTXMania.tテクスチャの解放(ref this.txPart);
 
                 this.ftDisplayFont.Dispose();
                 this.ftNameFont.Dispose();
@@ -144,6 +148,13 @@ namespace DTXMania
 				if( this.txパネル != null && CDTXMania.DTX.bチップがある.Guitar )
 				{
 			        this.txパネル.t2D描画( CDTXMania.app.Device, this.n本体1X, this.n本体Y );
+
+                    if (this.txDifficulty != null)
+                        this.txDifficulty.t2D描画(CDTXMania.app.Device, 7 + this.n本体1X, 91 + this.n本体Y, new Rectangle(0, 0 + (this.nStatus * 38), 234, 38));
+
+                    if (this.txPart != null)
+                        this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体1X, 91 + this.n本体Y, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 76 : 38, 234, 38));
+
 					int guitar = CDTXMania.ConfigIni.n譜面スクロール速度.Guitar;
                     #region[ スコア表示 ]
                     this.n現在のスコアGuitar = (long)CDTXMania.stage演奏ギター画面.actScore.n現在表示中のスコア.Guitar;
@@ -172,10 +183,10 @@ namespace DTXMania
                             }
                             if (this.txScore != null)
                             {
-                                this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体1X + (i * 25), 185 + this.n本体Y, rectangle);
+//                                this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体1X + (i * 25), 185 + this.n本体Y, rectangle);
 
-                                /*
                                 SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
+                                /*
                                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                                 {
                                     matScoreXG *= SlimDX.Matrix.Translation(-1220 + (i * 30), 120 + CDTXMania.stage演奏ギター画面.actScore.x位置[i].Guitar, 0);
@@ -184,14 +195,14 @@ namespace DTXMania
                                     this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                                 }
                                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                                 */
                                 {
-                                    matScoreXG *= SlimDX.Matrix.Translation(-1370 + (i * 30), 50 + CDTXMania.stage演奏ギター画面.actScore.x位置[i].Guitar, 0);
-                                    matScoreXG *= SlimDX.Matrix.Scaling(0.3f, 0.62f, 1f);
-                                    matScoreXG *= SlimDX.Matrix.RotationY(-0.8f);
+                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体1X)/0.7f) + (i * 25), 360 - (185 + 12 + this.n本体Y), 0);
+                                    matScoreXG *= SlimDX.Matrix.Scaling(0.7f, 1f, 1f);
                                     //matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
                                     this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                                  }
-                                 */
+                                 
 
                             }
                         }
@@ -249,6 +260,13 @@ namespace DTXMania
                 if (this.txパネル != null && CDTXMania.DTX.bチップがある.Bass)
                 {
                     this.txパネル.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体Y);
+
+                    if (this.txDifficulty != null)
+                        this.txDifficulty.t2D描画(CDTXMania.app.Device, 7 + this.n本体2X, 91 + this.n本体Y, new Rectangle(0, 0 + (this.nStatus * 38), 234, 38));
+
+                    if (this.txPart != null)
+                        this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体2X, 91 + this.n本体Y, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 38 : 76, 234, 38));
+
                     int bass = CDTXMania.ConfigIni.n譜面スクロール速度.Bass;
                     #region[ スコア表示 ]
                     this.n現在のスコアBass = (long)CDTXMania.stage演奏ギター画面.actScore.n現在表示中のスコア.Bass;
@@ -277,10 +295,10 @@ namespace DTXMania
                             }
                             if (this.txScore != null)
                             {
-                                this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体2X + (i * 25), 185 + this.n本体Y, rectangle);
+//                                this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体2X + (i * 25), 185 + this.n本体Y, rectangle);
 
-                                /*
                                 SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
+                                /*
                                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                                 {
                                     matScoreXG *= SlimDX.Matrix.Translation(-1220 + (i * 30), 120 + CDTXMania.stage演奏ギター画面.actScore.x位置[i].Bass, 0);
@@ -289,14 +307,14 @@ namespace DTXMania
                                     this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                                 }
                                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                                 */
                                 {
-                                    matScoreXG *= SlimDX.Matrix.Translation(-1370 + (i * 30), 50 + CDTXMania.stage演奏ギター画面.actScore.x位置[i].Bass, 0);
-                                    matScoreXG *= SlimDX.Matrix.Scaling(0.3f, 0.62f, 1f);
-                                    matScoreXG *= SlimDX.Matrix.RotationY(-0.8f);
+                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体2X)/0.7f) + (i * 25), 360 - (185 + 12 + this.n本体Y), 0);
+                                    matScoreXG *= SlimDX.Matrix.Scaling(0.7f, 1f, 1f);
+                                    //matScoreXG *= SlimDX.Matrix.RotationY(-0.8f);
                                     //matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
                                     this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                                 }
-                                 */
                             }
                         }
                     }
@@ -396,8 +414,9 @@ namespace DTXMania
         //private Image iDifficulty;
         private CTexture txScore;
         //private CTexture txDummy;
-        //private CTexture txDifficulty;
-		//-----------------
+        private CTexture txDifficulty;
+        private CTexture txPart;
+        //-----------------
 		#endregion
 	}
 }
