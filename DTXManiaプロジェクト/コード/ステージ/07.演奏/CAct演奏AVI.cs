@@ -977,12 +977,22 @@ namespace DTXMania
                         }
                     }
                     #endregion
-
-                        #region[ ギター時 ]
-                    if ( CDTXMania.ConfigIni.bGuitar有効 )
+                    #region[ ギター時 ]
+                    if (CDTXMania.ConfigIni.bGuitar有効)
                     {
+
+                        #region[ 本体位置 ]
                         this.n本体X = 427;
                         this.n本体Y = 0;
+
+                        int nグラフX = 313;
+
+                        if (CDTXMania.ConfigIni.bGraph.Guitar && !CDTXMania.DTX.bチップがある.Bass)
+                            this.n本体X = this.n本体X + nグラフX;
+
+                        if (CDTXMania.ConfigIni.bGraph.Bass && !CDTXMania.DTX.bチップがある.Guitar)
+                            this.n本体X = this.n本体X - nグラフX;
+                        #endregion
 
                         if (this.fAVIアスペクト比 > 1.77f)
                         {
@@ -1040,7 +1050,7 @@ namespace DTXMania
                             }
                         }
                     }
-                        #endregion
+                    #endregion
                     this.tx描画用.vc拡大縮小倍率 = this.vector;
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
