@@ -28,110 +28,115 @@ namespace DTXMania
                     base.b初めての進行描画 = false;
                 }
 
-                //ゲージ部分
-                if (this.txLivePointゲージ != null)
-                {
-                    this.txLivePointゲージ.t2D描画(CDTXMania.app.Device, n本体ギターX, n本体ギターY, new Rectangle(0, 0, 71, 668));
-                    this.txLivePointゲージ.t2D描画(CDTXMania.app.Device, n本体ベースX, n本体ベースY, new Rectangle(0, 0, 71, 668));
-                }
-
                 #region[Guitar]
-                string strG = string.Format("{0,3:##0}", base.n現在のLivePoint.Guitar);
-                for (int i = 0; i < 3; i++)
+                if (CDTXMania.DTX.bチップがある.Guitar)
                 {
-                    Rectangle rectangle;
-                    char ch = strG[i];
-                    if (ch.Equals(' '))
+                    if (this.txLivePointゲージ != null)
+                        this.txLivePointゲージ.t2D描画(CDTXMania.app.Device, n本体ギターX, n本体ギターY, new Rectangle(0, 0, 71, 668));
+
+                    string strG = string.Format("{0,3:##0}", base.n現在のLivePoint.Guitar);
+                    for (int i = 0; i < 3; i++)
                     {
-                        rectangle = new Rectangle(72, 250, 17, 25);
-                    }
-                    else
-                    {
-                        int num3 = int.Parse(strG.Substring(i, 1));
-                        if (num3 < 5)
+                        Rectangle rectangle;
+                        char ch = strG[i];
+                        if (ch.Equals(' '))
                         {
-                            rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            rectangle = new Rectangle(72, 250, 17, 25);
                         }
                         else
                         {
-                            rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            int num3 = int.Parse(strG.Substring(i, 1));
+                            if (num3 < 5)
+                            {
+                                rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            }
+                            else
+                            {
+                                rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            }
+                        }
+                        if (base.txLivePoint != null)
+                        {
+                            this.txLivePoint.t2D描画(CDTXMania.app.Device, 9 + n本体ギターX + (i * 18), 633 + n本体ギターY, rectangle);
                         }
                     }
-                    if (base.txLivePoint != null)
+                    #region[箱]
+                    //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
+                    if (base.n現在のLivePoint.Guitar >= 0)
                     {
-                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 9 + n本体ギターX + (i * 18), 633 + n本体ギターY, rectangle);
-                    }
-                }
-                #region[箱]
-                //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                if (base.n現在のLivePoint.Guitar >= 0)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (this.n現在のLivePoint.Guitar >= 20 + (20 * i))
+                        for (int i = 0; i < 5; i++)
                         {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 574 + n本体ギターY - (41 * i), new Rectangle(71, 536, 46, 44));
-                        }
-                        if (this.n現在のLivePoint.Guitar >= 120 + (20 * i))
-                        {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 368 + n本体ギターY - (41 * i), new Rectangle(71, 580, 46, 44));
-                        }
-                        if (this.n現在のLivePoint.Guitar >= 220 + (20 * i))
-                        {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 162 + n本体ギターY - (41 * i), new Rectangle(71, 624, 46, 44));
+                            if (this.n現在のLivePoint.Guitar >= 20 + (20 * i))
+                            {
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 574 + n本体ギターY - (41 * i), new Rectangle(71, 536, 46, 44));
+                            }
+                            if (this.n現在のLivePoint.Guitar >= 120 + (20 * i))
+                            {
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 368 + n本体ギターY - (41 * i), new Rectangle(71, 580, 46, 44));
+                            }
+                            if (this.n現在のLivePoint.Guitar >= 220 + (20 * i))
+                            {
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 162 + n本体ギターY - (41 * i), new Rectangle(71, 624, 46, 44));
+                            }
                         }
                     }
+                    #endregion
                 }
                 #endregion
-                                #endregion
                 #region[Bass]
-                string strB = string.Format("{0,3:##0}", base.n現在のLivePoint.Bass);
-                for (int i = 0; i < 3; i++)
+                if (CDTXMania.DTX.bチップがある.Bass)
                 {
-                    Rectangle rectangle;
-                    char ch = strB[i];
-                    if (ch.Equals(' '))
+                    if (this.txLivePointゲージ != null)
+                        this.txLivePointゲージ.t2D描画(CDTXMania.app.Device, n本体ベースX, n本体ベースY, new Rectangle(0, 0, 71, 668));
+
+                    string strB = string.Format("{0,3:##0}", base.n現在のLivePoint.Bass);
+                    for (int i = 0; i < 3; i++)
                     {
-                        rectangle = new Rectangle(72, 250, 17, 25);
-                    }
-                    else
-                    {
-                        int num3 = int.Parse(strB.Substring(i, 1));
-                        if (num3 < 5)
+                        Rectangle rectangle;
+                        char ch = strB[i];
+                        if (ch.Equals(' '))
                         {
-                            rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            rectangle = new Rectangle(72, 250, 17, 25);
                         }
                         else
                         {
-                            rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            int num3 = int.Parse(strB.Substring(i, 1));
+                            if (num3 < 5)
+                            {
+                                rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            }
+                            else
+                            {
+                                rectangle = new Rectangle(72, (num3 * 25), 17, 25);
+                            }
+                        }
+                        if (base.txLivePoint != null)
+                        {
+                            this.txLivePoint.t2D描画(CDTXMania.app.Device, 9 + n本体ベースX + (i * 18), 633 + n本体ベースY, rectangle);
                         }
                     }
-                    if (base.txLivePoint != null)
+                    #region[箱]
+                    //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
+                    if (base.n現在のLivePoint.Guitar >= 0)
                     {
-                        this.txLivePoint.t2D描画(CDTXMania.app.Device, 9 + n本体ベースX + (i * 18), 633 + n本体ベースY, rectangle);
-                    }
-                }
-                #region[箱]
-                //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                if (base.n現在のLivePoint.Guitar >= 0)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (this.n現在のLivePoint.Bass >= 20 + (20 * i))
+                        for (int i = 0; i < 5; i++)
                         {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ベースX + 1, 574 + n本体ベースY - (41 * i), new Rectangle(71, 536, 46, 44));
-                        }
-                        if (this.n現在のLivePoint.Bass >= 120 + (20 * i))
-                        {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ベースX + 1, 368 + n本体ベースY - (41 * i), new Rectangle(71, 580, 46, 44));
-                        }
-                        if (this.n現在のLivePoint.Bass >= 220 + (20 * i))
-                        {
-                            this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ベースX + 1, 162 + n本体ベースY - (41 * i), new Rectangle(71, 624, 46, 44));
+                            if (this.n現在のLivePoint.Bass >= 20 + (20 * i))
+                            {
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ベースX + 1, 574 + n本体ベースY - (41 * i), new Rectangle(71, 536, 46, 44));
+                            }
+                            if (this.n現在のLivePoint.Bass >= 120 + (20 * i))
+                            {
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ベースX + 1, 368 + n本体ベースY - (41 * i), new Rectangle(71, 580, 46, 44));
+                            }
+                            if (this.n現在のLivePoint.Bass >= 220 + (20 * i))
+                            {
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ベースX + 1, 162 + n本体ベースY - (41 * i), new Rectangle(71, 624, 46, 44));
+                            }
                         }
                     }
+                    #endregion
                 }
-                #endregion
                 #endregion
             }
             return 0;
