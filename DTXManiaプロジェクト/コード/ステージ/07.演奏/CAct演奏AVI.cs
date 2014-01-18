@@ -860,18 +860,18 @@ namespace DTXMania
                     #region[ スキルメーター有効 ]
                     if ( CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効 )
                     {
-                        this.n本体X = 4;
-                        this.n本体Y = 401;
+                        this.n本体X = 2;
+                        this.n本体Y = 402;
 
-                        if ( this.fAVIアスペクト比 > (256f/255f) )
+                        if ( this.fAVIアスペクト比 > 0.96f )
                         {
-                            this.ratio2 = 256f / ((float)this.framewidth);
-                            this.position2 = 21 + this.n本体Y + (int)((266f - (this.frameheight * this.ratio2)) / 2f);
+                            this.ratio2 = 260f / ((float)this.framewidth);
+                            this.position2 = 20 + this.n本体Y + (int)((270f - (this.frameheight * this.ratio2)) / 2f);
                         }
                         else
                         {
-                            this.ratio2 = 266f / ((float)this.frameheight);
-                            this.position2 = 9 + this.n本体X + (int)((256 - (this.framewidth * this.ratio2)) / 2f);
+                            this.ratio2 = 270f / ((float)this.frameheight);
+                            this.position2 = 5 + this.n本体X + (int)((260 - (this.framewidth * this.ratio2)) / 2f);
                         }
                         if (this.txクリップパネル != null)
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y);
@@ -885,27 +885,27 @@ namespace DTXMania
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
                                 if( this.dsBGV.dshow.b上下反転 )
                                 {
-                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 9 + this.n本体X, this.position2 );
+                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                                 }
                                 else if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
                                 {
-                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 9 + this.n本体X, this.position2 );
+                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                                 }
                             }
-                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < (256f/255f) )
+                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 0.96f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 424 );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 20 + this.n本体Y );
                             }
                         }
                         else
                         {
-                            if (this.fAVIアスペクト比 < (256f / 255f))
+                            if (this.fAVIアスペクト比 < 0.96f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 23 + this.n本体Y );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 20 + this.n本体Y );
                             }
                             else
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 9 + this.n本体X, this.position2 );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                             }
                         }
                     }
@@ -913,18 +913,18 @@ namespace DTXMania
                     #region[ スキルメーター無効 ]
                     else if( !CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効 )
                     {
-                        this.n本体X = 856;
+                        this.n本体X = 854;
                         this.n本体Y = 142;
 
-                        if ( this.fAVIアスペクト比 > 1.75f )
+                        if ( this.fAVIアスペクト比 > 1.77f )
                         {
-                            this.ratio2 = 420f / ((float)this.framewidth);
-                            this.position2 = 26 + this.n本体Y + (int)((240f - (this.frameheight * this.ratio2)) / 2f);
+                            this.ratio2 = 416f / ((float)this.framewidth);
+                            this.position2 = 30 + this.n本体Y + (int)((234f - (this.frameheight * this.ratio2)) / 2f);
                         }
                         else
                         {
-                            this.ratio2 = 240f / ((float)this.frameheight);
-                            this.position2 = 2 + this.n本体X + (int)((420f - (this.framewidth * this.ratio2)) / 2f);
+                            this.ratio2 = 234f / ((float)this.frameheight);
+                            this.position2 = 5 + this.n本体X + (int)((416f - (this.framewidth * this.ratio2)) / 2f);
                         }
                         if (this.txクリップパネル != null)
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y); 
@@ -937,27 +937,27 @@ namespace DTXMania
                                 this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
                                 if( this.dsBGV.dshow.b上下反転 )
                                 {
-                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 2 + this.n本体X, this.position2 );
+                                    this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                                 }
                                 else if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode )
                                 {
-                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 2 + this.n本体X, this.position2 );
+                                    this.tx描画用.t2D描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                                 }
                             }
-                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 1.75f )
+                            else if( this.n総移動時間ms != -1 && this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 26 + this.n本体Y );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 30 + this.n本体Y );
                             }
                         }
                         else
                         {
-                            if( this.fAVIアスペクト比 < 1.75f )
+                            if( this.fAVIアスペクト比 < 1.77f )
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 26 + this.n本体Y );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 30 + this.n本体Y );
                             }
                             else
                             {
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 2 + this.n本体X, this.position2 );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                             }
                         }
                     }
@@ -967,8 +967,8 @@ namespace DTXMania
                     {
 
                         #region[ 本体位置 ]
-                        this.n本体X = 375;
-                        this.n本体Y = 47;
+                        this.n本体X = 380;
+                        this.n本体Y = 50;
 
                         int nグラフX = 313;
 
@@ -979,15 +979,15 @@ namespace DTXMania
                             this.n本体X = this.n本体X - nグラフX;
                         #endregion
 
-                        if (this.fAVIアスペクト比 > 1.8f)
+                        if (this.fAVIアスペクト比 > 1.77f)
                         {
-                            this.ratio2 = 468f / ((float)this.framewidth);
-                            this.position2 = 5 + this.n本体Y + (int)((261f - (this.frameheight * this.ratio2)) / 2f);
+                            this.ratio2 = 460f / ((float)this.framewidth);
+                            this.position2 = 5 + this.n本体Y + (int)((258f - (this.frameheight * this.ratio2)) / 2f);
                         }
                         else
                         {
-                            this.ratio2 = 261f / ((float)this.frameheight);
-                            this.position2 = 30 + this.n本体X + (int)((468f - (this.framewidth * this.ratio2)) / 2f);
+                            this.ratio2 = 258f / ((float)this.frameheight);
+                            this.position2 = 30 + this.n本体X + (int)((460f - (this.framewidth * this.ratio2)) / 2f);
                         }
                         if (this.txクリップパネル != null)
                             this.txクリップパネル.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y);
@@ -1014,7 +1014,7 @@ namespace DTXMania
                         }
                         else
                         {
-                            if (this.fAVIアスペクト比 < 1.8f)
+                            if (this.fAVIアスペクト比 < 1.77f)
                             {
                                 this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 5 + this.n本体Y);
                             }
