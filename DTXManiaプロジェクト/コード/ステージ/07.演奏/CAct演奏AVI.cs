@@ -827,10 +827,8 @@ namespace DTXMania
                 }
                 if (this.txバートップ != null && CDTXMania.ConfigIni.bGuitar有効)
                 {
-                    if (CDTXMania.DTX.bチップがある.Guitar)
-                    {
-                        CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
-                    }
+
+                    CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
                 }
                 long lPos = 0;
                 //if (this.dsBGV != null)
