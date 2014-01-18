@@ -2424,9 +2424,19 @@ namespace DTXMania
                         {
                             pChip.bHit = true;
                             this.actPlayInfo.dbBPM = (pChip.n整数値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                            CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0 ));
-                            this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
-                            CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+
+                            if( CDTXMania.ConfigIni.bDrums有効 )
+                            {
+                                this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0 ));
+                                CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                            }
+                            else if( CDTXMania.ConfigIni.bGuitar有効 )
+                            {
+                                this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0 ));
+                                CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                            }
                         }
                         break;
                     #endregion
@@ -2486,9 +2496,19 @@ namespace DTXMania
                             if (dTX.listBPM.ContainsKey(pChip.n整数値・内部番号))
                             {
                                 this.actPlayInfo.dbBPM = (dTX.listBPM[pChip.n整数値・内部番号].dbBPM値 * (((double)configIni.n演奏速度) / 20.0)) + dTX.BASEBPM;
-                                CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
-                                this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
-                                CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+
+                                if( CDTXMania.ConfigIni.bDrums有効 )
+                                {
+                                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                    CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0 ));
+                                    CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                                }
+                                else if( CDTXMania.ConfigIni.bGuitar有効 )
+                                {
+                                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                    CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0 ));
+                                    CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                                }
                             }
                         }
                         break;

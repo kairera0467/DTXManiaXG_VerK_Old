@@ -14,44 +14,44 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 int num1 = (int)base.ctBPMバー.db現在の値;
-                if ((base.txBPMバー左 != null && base.txBPMバー右 != null) && CDTXMania.stage演奏ギター画面.ct登場用.n現在の値 >= 11)
+                if ((base.txBPMバー左 != null && base.txBPMバー右 != null))// && CDTXMania.stage演奏ギター画面.ct登場用.n現在の値 >= 11)
                 {
                     if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.A)
                     {
 
                         if (CDTXMania.stage演奏ギター画面.bサビ区間 == true)
                         {
-                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, 60, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                             if( base.txBPMバーフラッシュ右 != null && base.txBPMバーフラッシュ左 != null )
                             {
                                 {
                                     base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                    base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 54);
+                                    base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 56);
                                 }
                             }
                         }
                         else
                         {
-                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, 60, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                         }
 
                         if (CDTXMania.stage演奏ギター画面.bサビ区間 == true)
                         {
-                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, 331, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                             if (base.txBPMバーフラッシュ右 != null && base.txBPMバーフラッシュ左 != null)
                             {
                                 base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 908 - (1 * num1), 54);
+                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 331 - (1 * num1), 56);
                             }
                         }
                         else
                         {
-                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, 896, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, 331, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                         }
                     }
                     else if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.B)
                     {
-                        base.txBPMバー左.t2D描画(CDTXMania.app.Device, 232, 54, new Rectangle(0, 0 + (600 * num1), 19, 600));
+                        base.txBPMバー左.t2D描画(CDTXMania.app.Device, 60, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                     }
                 }
 			}
