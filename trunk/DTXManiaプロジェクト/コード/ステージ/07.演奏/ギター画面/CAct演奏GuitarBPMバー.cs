@@ -23,26 +23,37 @@ namespace DTXMania
                         {
                             base.txBPMバー左.t2D描画(CDTXMania.app.Device, 60, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                             base.txBPMバー右.t2D描画(CDTXMania.app.Device, 331, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
+
+                            if (CDTXMania.stage演奏ギター画面.bサビ区間)
+                            {
+                                if (base.txBPMバーフラッシュ右 != null && base.txBPMバーフラッシュ左 != null)
+                                {
+                                    base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                    base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 56);
+
+                                    base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                    base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 331 - (1 * num1), 56);
+                                }
+                            }
                         }
 
                         if (CDTXMania.DTX.bチップがある.Bass)
                         {
                             base.txBPMバー左.t2D描画(CDTXMania.app.Device, 930, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
                             base.txBPMバー右.t2D描画(CDTXMania.app.Device, 1200, 56, new Rectangle(0, 0 + (600 * num1), 19, 600));
-                        }
 
-                        if (CDTXMania.stage演奏ギター画面.bサビ区間)
-                        {
-                            if (base.txBPMバーフラッシュ右 != null && base.txBPMバーフラッシュ左 != null)
+                            if (CDTXMania.stage演奏ギター画面.bサビ区間)
                             {
-                                base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 56);
+                                if (base.txBPMバーフラッシュ右 != null && base.txBPMバーフラッシュ左 != null)
+                                {
+                                    base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                    base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 1079 + (1 * num1), 56);
 
-                                base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 331 - (1 * num1), 56);
+                                    base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                    base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 1201 - (1 * num1), 56);
+                                }
                             }
                         }
-
 
                     }
                     else if (CDTXMania.ConfigIni.eBPMbar == Eタイプ.B)
@@ -65,8 +76,8 @@ namespace DTXMania
 
                             if (CDTXMania.stage演奏ギター画面.bサビ区間 && base.txBPMバーフラッシュ左 != null)
                             {
-                                base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 331 - (1 * num1), 56);
+                                base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
+                                base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 1079 + (1 * num1), 56);
                             }
                         }
                     }
