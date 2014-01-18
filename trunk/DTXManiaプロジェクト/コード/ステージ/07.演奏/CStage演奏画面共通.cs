@@ -1104,13 +1104,16 @@ namespace DTXMania
                                 this.L最後に再生したHHの実WAV番号.Clear();
                                 this.n最後に再生したHHのチャンネル番号 = pChip.nチャンネル番号;
                             }
-                            if( nLane == 0 && CDTXMania.ConfigIni.bドラムセットを動かす )
+                            if( CDTXMania.ConfigIni.bDrums有効 )
                             {
-                                CDTXMania.stage演奏ドラム画面.actDrumSet.ct左シンバル.n現在の値 = 0;
-                            }
-                            if (nLane == 7 && CDTXMania.ConfigIni.bドラムセットを動かす)
-                            {
-                                CDTXMania.stage演奏ドラム画面.actDrumSet.ct右シンバル.n現在の値 = 0;
+                                if( nLane == 0 && CDTXMania.ConfigIni.bドラムセットを動かす )
+                                {
+                                    CDTXMania.stage演奏ドラム画面.actDrumSet.ct左シンバル.n現在の値 = 0;
+                                }
+                                if (nLane == 7 && CDTXMania.ConfigIni.bドラムセットを動かす )
+                                {
+                                    CDTXMania.stage演奏ドラム画面.actDrumSet.ct右シンバル.n現在の値 = 0;
+                                }
                             }
                            switch (index)
                             {
