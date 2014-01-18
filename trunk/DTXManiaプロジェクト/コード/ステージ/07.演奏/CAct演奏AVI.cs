@@ -797,7 +797,8 @@ namespace DTXMania
                             }
                         }
                     }
-                    #region [ Failed(RISKY1)時の背景 ]
+                }
+                #region [ Failed(RISKY1)時の背景 ]
                     if(CDTXMania.ConfigIni.bDrums有効 == true)
                     {
                         if ( CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums <= 0.0 )
@@ -817,31 +818,37 @@ namespace DTXMania
                         }
                     }
                     #endregion
-                    if (this.txバートップ != null && CDTXMania.ConfigIni.bDrums有効 )
+                if (this.txバートップ != null && CDTXMania.ConfigIni.bDrums有効 )
+                {
+                    //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
+                    this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
+                    this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
+                    CDTXMania.stage演奏ドラム画面.actBPMBar.On進行描画();
+                }
+                if (this.txバートップ != null && CDTXMania.ConfigIni.bGuitar有効)
+                {
+                    if (CDTXMania.DTX.bチップがある.Guitar)
                     {
-                        //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
-                        CDTXMania.stage演奏ドラム画面.actBPMBar.On進行描画();
+                        CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
                     }
-                    long lPos = 0;
-                    //if (this.dsBGV != null)
-                    //{
-                        //this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
-                        //CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
-                        //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
-                    //}
+                }
+                long lPos = 0;
+                //if (this.dsBGV != null)
+                //{
+                    //this.dsBGV.dshow.MediaSeeking.GetCurrentPosition(out lPos);
+                    //CDTXMania.act文字コンソール.tPrint(0, 360, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", lPos));
+                    //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
+                //}
 
-                    if (CDTXMania.ConfigIni.bLivePoint)
+                if (CDTXMania.ConfigIni.bLivePoint)
+                {
+                    if ( CDTXMania.ConfigIni.bDrums有効 )
                     {
-                        if ( CDTXMania.ConfigIni.bDrums有効 )
-                        {
-                            CDTXMania.stage演奏ドラム画面.actLivePoint.On進行描画();
-                        }
-                        else if (CDTXMania.ConfigIni.bGuitar有効)
-                        {
-                            CDTXMania.stage演奏ギター画面.actLivePoint.On進行描画();
-                        }
+                        CDTXMania.stage演奏ドラム画面.actLivePoint.On進行描画();
+                    }
+                    else if (CDTXMania.ConfigIni.bGuitar有効)
+                    {
+                        CDTXMania.stage演奏ギター画面.actLivePoint.On進行描画();
                     }
                 }
                 //CDTXMania.act文字コンソール.tPrint(200, 0, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", this.actFill.lDshowPosition));

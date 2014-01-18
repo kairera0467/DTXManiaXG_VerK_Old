@@ -20,7 +20,7 @@ namespace DTXMania
 			base.eステージID = CStage.Eステージ.演奏;
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			base.b活性化してない = true;
-            base.list子Activities.Add( this.actBPMBar = new CAct演奏BPMバー共通() );
+            base.list子Activities.Add( this.actBPMBar = new CAct演奏GuitarBPMバー() );
 			base.list子Activities.Add( this.actStageFailed = new CAct演奏ステージ失敗() );
 			base.list子Activities.Add( this.actDANGER = new CAct演奏GuitarDanger() );
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
@@ -124,10 +124,8 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.tリセット();
 					CDTXMania.Timer.tリセット();
 
-                    int UnitTime;
-                    double BPM = CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM;
-                    UnitTime = (int)((60 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 8 * 600));
-                    this.actBPMBar.ctBPMバー = new CCounter(1, 14, UnitTime, CDTXMania.Timer);
+                    this.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
 
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ.Bass = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
@@ -300,6 +298,7 @@ namespace DTXMania
         private CTexture txシャッター;
         public CAct演奏Guitarグラフ actGraph;
         public bool bサビ区間;
+        public double UnitTime;
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
 		{
