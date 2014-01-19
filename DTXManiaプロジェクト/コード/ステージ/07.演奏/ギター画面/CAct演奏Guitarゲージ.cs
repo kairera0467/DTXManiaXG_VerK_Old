@@ -72,28 +72,28 @@ namespace DTXMania
                     #region [ ギターのゲージ ]
                     if (base.txgbg != null && CDTXMania.DTX.bチップがある.Guitar)
                     {
-                        base.txgbg.t2D描画(CDTXMania.app.Device, 76, 0, new Rectangle(0, 0, 349, 42));
+                        base.txgbg.t2D描画(CDTXMania.app.Device, 65, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
                             base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Guitar;
-                            base.txgbar.t2D描画(CDTXMania.app.Device, 89, 8, new Rectangle(0, 0, 318, 26));
+                            base.txgbar.t2D描画(CDTXMania.app.Device, 83, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 89, 8, new Rectangle(0, 0x1a, 0x1f8, 0x1a));
+                        base.txgbar.t2D描画(CDTXMania.app.Device, 84, 10, new Rectangle(0, 0x1a, 0x1f8, 26));
                     }
                     #endregion
 
                     #region [ ベースのゲージ ]
                     if (base.txgbg != null && CDTXMania.DTX.bチップがある.Bass)
                     {
-                        base.txgbg.t2D描画(CDTXMania.app.Device, 864, 0, new Rectangle(0, 0, 349, 42));
+                        base.txgbg.t2D描画(CDTXMania.app.Device, 859, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
                             base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
                             base.txgbar.t2D描画(CDTXMania.app.Device, 877, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 877, 8, new Rectangle(0, 0x1a, 504, 0x1a));
+                        base.txgbar.t2D描画(CDTXMania.app.Device, 878, 10, new Rectangle(0, 0x1a, 504, 26));
                     }
                     #endregion
                 }
@@ -109,20 +109,20 @@ namespace DTXMania
                             base.txgbar.t2D描画(CDTXMania.app.Device, 13, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 13, 8, new Rectangle(0, 0x1a, 0x1f8, 0x1a));
+                        base.txgbar.t2D描画(CDTXMania.app.Device, 13, 10, new Rectangle(0, 0x1a, 0x1f8, 0x1a));
                     }
                     #endregion
                     #region [ ベースのゲージ ]
                     if ( base.txgbg != null && CDTXMania.DTX.bチップがある.Bass )
                     {
-                        base.txgbg.t2D描画(CDTXMania.app.Device, 938, 0, new Rectangle(0, 0, 349, 42));
+                        base.txgbg.t2D描画(CDTXMania.app.Device, 934, 0, new Rectangle(0, 0, 349, 42));
                         if (base.dbゲージ値 > 0.0)
                         {
                             base.txgbar.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
-                            base.txgbar.t2D描画(CDTXMania.app.Device, 938 +13, 8, new Rectangle(0, 0, 318, 26));
+                            base.txgbar.t2D描画(CDTXMania.app.Device, 934 +13, 8, new Rectangle(0, 0, 318, 26));
                         }
                         base.txgbar.vc拡大縮小倍率.X = 1f;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 938 + 13, 8, new Rectangle(0, 0x1a, 0x1f8, 0x1a));
+                        base.txgbar.t2D描画(CDTXMania.app.Device, 934 + 13, 10, new Rectangle(0, 0x1a, 0x1f8, 0x1a));
                     }
                     #endregion
                 }
