@@ -53,6 +53,7 @@ namespace DTXMania
                 if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                 {
                     this.txDifficulty = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Difficulty_XG.png" ) );
+                    this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part_XG.png"));
                 }
                 else
                 {
@@ -378,6 +379,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txnameplate );
                 CDTXMania.tテクスチャの解放( ref this.txNamePlate );
                 CDTXMania.tテクスチャの解放( ref this.txDifficulty );
+                CDTXMania.tテクスチャの解放( ref this.txPart );
                 CDTXMania.tテクスチャの解放( ref this.txDummy );
                 CDTXMania.tテクスチャの解放( ref this.txScore );
                 this.iNamePlate.Dispose();
@@ -428,6 +430,8 @@ namespace DTXMania
                 else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                 {
                     this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nStatus * 64 ), 194, 64 ) );
+                    if ( this.txPart != null )
+                    this.txPart.t3D描画(CDTXMania.app.Device, mat, new Rectangle(0, 0, 194, 64));
                 }
                     
                 this.txDummy.t3D描画( CDTXMania.app.Device, identity );
@@ -571,6 +575,7 @@ namespace DTXMania
         private string strPlayerName;
         private CTexture txDummy;
         private CTexture txDifficulty;
+        private CTexture txPart;
         private CTexture txnameplate;
         private CTexture txNamePlate;
         private CTexture txScore;

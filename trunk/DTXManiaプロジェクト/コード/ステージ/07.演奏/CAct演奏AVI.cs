@@ -975,7 +975,7 @@ namespace DTXMania
                         this.n本体X = 380;
                         this.n本体Y = 50;
 
-                        int nグラフX = 313;
+                        int nグラフX = 267;
 
                         if (CDTXMania.ConfigIni.bGraph.Guitar && !CDTXMania.DTX.bチップがある.Bass)
                             this.n本体X = this.n本体X + nグラフX;
