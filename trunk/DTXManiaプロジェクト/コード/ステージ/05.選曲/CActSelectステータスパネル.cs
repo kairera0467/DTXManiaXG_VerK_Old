@@ -280,7 +280,7 @@ namespace DTXMania
 
             if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
             {
-                this.n本体ギターX = 197;
+                this.n本体ギターX = 218;
                 this.n本体ギターY = 546;
                 this.n本体ベースX = 346;
                 this.n本体ベースY = 43;
@@ -289,7 +289,7 @@ namespace DTXMania
             {
                 this.n本体ギターX = 346;
                 this.n本体ギターY = 43;
-                this.n本体ベースX = 197;
+                this.n本体ベースX = 218;
                 this.n本体ベースY = 546;
             }
 
@@ -426,7 +426,7 @@ namespace DTXMania
                     mat2 *= Matrix.RotationY(0.0f);
                     mat2 *= Matrix.RotationZ(0.0f);
                     mat2 *= Matrix.Scaling(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
-                    mat2 *= Matrix.Translation(670f, -129f, 0f);
+                    mat2 *= Matrix.Translation(637f, -129f, 0f);
 
                     this.txHSアイコン.vc拡大縮小倍率 = new SlimDX.Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
                     if( CDTXMania.ConfigIni.bDrums有効 )
@@ -446,7 +446,7 @@ namespace DTXMania
                         else
                         {
                             this.txHSアイコン.t2D描画(CDTXMania.app.Device, 1067, 62, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
-                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 916, 565, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 939, 565, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
                         }
                     }
                 }
@@ -519,7 +519,7 @@ namespace DTXMania
                                 mat2 *= Matrix.RotationX(1.60f - (float)((float)CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 0.016f));
                                 mat2 *= Matrix.RotationY(0.0f);
                                 mat2 *= Matrix.RotationZ(0.0f);
-                                mat2 *= Matrix.Translation(-377f + (i * 143f), -235f + y差分[i], 0f);
+                                mat2 *= Matrix.Translation(-355f + (i * 143f), -235f + y差分[i], 0f);
 
 
                                 if (this.str難易度ラベル[i] != null)
