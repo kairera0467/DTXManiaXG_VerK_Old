@@ -14,7 +14,8 @@ namespace DTXMania
 
 		public bool[] b押下状態 = new bool[ 10 ];
 		protected CTexture txRGB;
-
+        protected CTexture txシャッター;
+        protected CTexture txレーン;
 
 		// コンストラクタ
 
@@ -47,7 +48,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 this.txRGB = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_RGB buttons.png"));
-				base.OnManagedリソースの作成();
+                this.txシャッター = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_shutter_GB.png"));
+                this.txレーン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar.png"));
+                base.OnManagedリソースの作成();
 			}
 		}
 		public override void OnManagedリソースの解放()
@@ -55,7 +58,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txRGB );
-				base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放(ref this.txシャッター);
+                CDTXMania.tテクスチャの解放(ref this.txレーン);
+                base.OnManagedリソースの解放();
 			}
 		}
 	}
