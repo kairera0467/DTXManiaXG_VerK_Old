@@ -426,13 +426,15 @@ namespace DTXMania
                     mat2 *= Matrix.RotationY(0.0f);
                     mat2 *= Matrix.RotationZ(0.0f);
                     mat2 *= Matrix.Scaling(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
-                    mat2 *= Matrix.Translation(637f, -129f, 0f);
+                    mat2 *= Matrix.Translation(300f, 200f, 0f);
 
                     this.txHSアイコン.vc拡大縮小倍率 = new SlimDX.Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
                     if( CDTXMania.ConfigIni.bDrums有効 )
                     {
                         if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
-                            this.txHSアイコン.t3D描画( CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Drums > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Drums) * 48), 42, 48) );
+                        {
+//                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Drums > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Drums) * 48), 42, 48));
+                        }
                         else
                             this.txHSアイコン.t2D描画(CDTXMania.app.Device, 1067, 62, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Drums > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Drums) * 48), 42, 48));
                     }
@@ -440,8 +442,8 @@ namespace DTXMania
                     {
                         if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
                         {
-                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
-                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat2, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+//                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
+//                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat2, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
                         }
                         else
                         {

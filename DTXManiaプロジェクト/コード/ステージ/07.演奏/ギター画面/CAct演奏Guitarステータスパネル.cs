@@ -173,11 +173,11 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
-                    if (this.nStrlengthbydot > 216)
+                    if (this.nStrlengthbydot > 212)
                     {
-                        gSongPanel.ScaleTransform(216f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
+                        gSongPanel.ScaleTransform(212f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
                         //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 68f );
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 20f / (216f / (float)this.nStrlengthbydot), 73f);
+                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 22f / (212f / (float)this.nStrlengthbydot), 73f);
                         gSongPanel.ResetTransform();
                     }
                     else
@@ -192,7 +192,7 @@ namespace DTXMania
                     {
                         gSongPanel.ScaleTransform(250.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
                         //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 20f / (250f / (float)this.nStrlengthbydot), 18f);
+                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 250f / (250f / (float)this.nStrlengthbydot), 18f);
                         gSongPanel.ResetTransform();
                     }
                     else
