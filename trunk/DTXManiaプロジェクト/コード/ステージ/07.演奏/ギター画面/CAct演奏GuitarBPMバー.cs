@@ -18,7 +18,7 @@ namespace DTXMania
                 int nギター左X = 60;
                 int nギター右X = 331;
                 int nベース左X = 930;
-                int nベース右X = 1200;
+                int nベース右X = 1201;
                 int nバーY = 54;
 
                 if ((base.txBPMバー左 != null && base.txBPMバー右 != null))// && CDTXMania.stage演奏ギター画面.ct登場用.n現在の値 >= 11)

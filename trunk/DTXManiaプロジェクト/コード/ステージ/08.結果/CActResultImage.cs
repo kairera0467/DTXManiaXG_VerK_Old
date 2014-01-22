@@ -130,8 +130,8 @@ namespace DTXMania
 
             this.n本体X = 0x1d5;
             this.n本体Y = 0x11b;
-            this.nAlbumWidth = 102;
-            this.nAlbumHeight = 102;
+            this.nAlbumWidth = 128;
+            this.nAlbumHeight = 128;
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
             base.On活性化();
@@ -272,7 +272,7 @@ namespace DTXMania
                 {
                     this.r表示するリザルト画像.vc拡大縮小倍率.X = ((float)this.nAlbumWidth) / ((float)width);
                     this.r表示するリザルト画像.vc拡大縮小倍率.Y = ((float)this.nAlbumHeight) / ((float)height);
-                    this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 469, 283, new Rectangle(0, 0, width, height));
+                    this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 436, 271, new Rectangle(0, 0, width, height));
                 }
             }
             float num;
