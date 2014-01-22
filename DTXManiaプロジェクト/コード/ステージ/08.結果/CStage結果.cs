@@ -446,10 +446,6 @@ namespace DTXMania
 				{
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 				}
-                if (this.actRank.On進行描画() == 0)
-                {
-                    this.bアニメが完了 = false;
-                }
                 //if( this.tx中央パネル != null )
                 //    this.tx中央パネル.t2D描画( CDTXMania.app.Device, 0, 267 );
 
@@ -461,6 +457,10 @@ namespace DTXMania
 				{
 					this.bアニメが完了 = false;
 				}
+                if (this.actRank.On進行描画() == 0)
+                {
+                    this.bアニメが完了 = false;
+                }
 				if( base.eフェーズID == CStage.Eフェーズ.共通_フェードイン )
 				{
                     if( File.Exists( CSkin.Path(@"Graphics\7_StageClear.mp4" ) ) )

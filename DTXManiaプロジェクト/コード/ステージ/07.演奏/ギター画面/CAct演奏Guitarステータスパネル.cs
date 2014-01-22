@@ -26,8 +26,8 @@ namespace DTXMania
 
                 this.n本体Y = 211;
 
-                this.nグラフSX = 313;
-                this.nグラフNX = 135;
+                this.nグラフSX = 135;
+                this.nグラフNX = 313;
             }
             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
             {
@@ -45,30 +45,28 @@ namespace DTXMania
 
             if (!CDTXMania.DTX.bチップがある.Guitar || !CDTXMania.DTX.bチップがある.Bass)
             {
-                if (CDTXMania.ConfigIni.bGraph.Guitar && !CDTXMania.DTX.bチップがある.Bass)
+                if (CDTXMania.ConfigIni.bGraph.Guitar)
                     this.n本体1X = this.n本体1X + this.nグラフNX;
 
-                if (CDTXMania.ConfigIni.bGraph.Bass && !CDTXMania.DTX.bチップがある.Guitar)
+                if (CDTXMania.ConfigIni.bGraph.Bass)
                     this.n本体2X = this.n本体2X - this.nグラフNX;
 
                 if (CDTXMania.ConfigIni.bGraph.Guitar || CDTXMania.ConfigIni.bGraph.Bass)
-                        this.n本体0X = this.n本体0X + this.nグラフSX;
+                    this.n本体0X = this.n本体0X + this.nグラフSX;
             }
 
             #endregion
 
-            this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+            float fNameFontサイズ = 0;
 
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-            {
-                this.ftNameFont = new Font("Arial", 26f, FontStyle.Bold, GraphicsUnit.Pixel);
-                this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 18f, FontStyle.Regular, GraphicsUnit.Pixel);
-            }
+                fNameFontサイズ = 26;
             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-            {
-                this.ftNameFont = new Font("Arial", 33f, FontStyle.Bold, GraphicsUnit.Pixel);
-                this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
-            }
+                fNameFontサイズ = 33;
+            
+            this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftNameFont = new Font("Arial", fNameFontサイズ, FontStyle.Bold, GraphicsUnit.Pixel);
+            this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
 
             this.ftLevelFont = new Font("Impact", 26f, FontStyle.Regular);
             this.ftDifficultyL = new Font("Arial", 30f, FontStyle.Bold);
@@ -172,39 +170,37 @@ namespace DTXMania
 
                 #region[ 曲名 ]
                 this.nStrlengthbydot = (int)gSongPanel.MeasureString(this.strPanelString, this.ftDisplayFont).Width;
-                if (this.nStrlengthbydot > 240)
-                {
-                    gSongPanel.ScaleTransform(240.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                    {
-                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 68f );
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 16f / (240f / (float)this.nStrlengthbydot), 78f);
-                        gSongPanel.ResetTransform();
-                    }
-                    else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                    {
-                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 250f / (240f / (float)this.nStrlengthbydot), 18f);
-                        gSongPanel.ResetTransform();
-                    }
-                }
-                else
-                {
-                    if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                    {
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)16f, (float)78f);
 
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                {
+                    if (this.nStrlengthbydot > 216)
+                    {
+                        gSongPanel.ScaleTransform(216f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
+                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 68f );
+                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 20f / (216f / (float)this.nStrlengthbydot), 73f);
+                        gSongPanel.ResetTransform();
                     }
-                    else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                    else
+                    {
+                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)18f, (float)73f);
+                    }
+
+                }
+                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                {
+                    if (this.nStrlengthbydot > 250)
+                    {
+                        gSongPanel.ScaleTransform(250.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
+                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
+                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 20f / (250f / (float)this.nStrlengthbydot), 18f);
+                        gSongPanel.ResetTransform();
+                    }
+                    else
                     {
                         gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)250f, (float)18f);
                     }
                 }
                 #endregion
-
-
-
-
 
                 #endregion
 

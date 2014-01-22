@@ -350,7 +350,11 @@ namespace DTXMania
             {
                 this.txレーンの影 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
 
-                this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
+                if (CDTXMania.ConfigIni.bDrums有効)
+                    this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
+                else if (CDTXMania.ConfigIni.bGuitar有効)
+                    this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops_Guitar.png"));
+
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
 
                 if (CDTXMania.ConfigIni.bGuitar有効)
@@ -827,6 +831,11 @@ namespace DTXMania
                 }
                 if (this.txバートップ != null && CDTXMania.ConfigIni.bGuitar有効)
                 {
+                    if (CDTXMania.DTX.bチップがある.Guitar)
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 640, 720));
+
+                    if (CDTXMania.DTX.bチップがある.Bass)
+                        this.txバートップ.t2D描画(CDTXMania.app.Device, 640, 0, new Rectangle(640, 0, 640, 720));
 
                     CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
                 }
