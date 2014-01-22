@@ -336,16 +336,17 @@ namespace DTXMania
                     }
                 }
 
-                    double dbシャッターIN = (base.nShutterInPosY.Drums * 7.2);
-                    double dbシャッターOUT = 720 - (base.nShutterOutPosY.Drums * 7.2f);
+                double db倍率 = 7.2;
+                double dbシャッターIN = (base.nShutterInPosY.Drums * db倍率);
+                double dbシャッターOUT = 720 - (base.nShutterOutPosY.Drums * db倍率);
 
                 if ( CDTXMania.ConfigIni.bReverse.Drums )
                 {
-                    dbシャッターIN = (base.nShutterOutPosY.Drums * 7.2f);
+                    dbシャッターIN = (base.nShutterOutPosY.Drums * db倍率);
                     this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
                     this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
 
-                    dbシャッターOUT = 720 - (base.nShutterInPosY.Drums * 7.2);
+                    dbシャッターOUT = 720 - (base.nShutterInPosY.Drums * db倍率);
                     this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
                     this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
                 }

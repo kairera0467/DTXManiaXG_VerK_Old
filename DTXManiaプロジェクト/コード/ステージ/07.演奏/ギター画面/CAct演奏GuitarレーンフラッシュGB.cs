@@ -43,13 +43,11 @@ namespace DTXMania
                 if (CDTXMania.DTX.bチップがある.Guitar)
                 {
                     this.txレーン.t2D描画(CDTXMania.app.Device, 86, 104, new Rectangle(0, 0, 246, 566));
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 67, 670, new Rectangle(0, 567, 265, 50));
                     this.txレーン.t2D描画(CDTXMania.app.Device, 288, 42, new Rectangle(0, 618, 48, 62));
                 }
                 if (CDTXMania.DTX.bチップがある.Bass)
                 {
                     this.txレーン.t2D描画(CDTXMania.app.Device, 956, 104, new Rectangle(0, 0, 246, 566));
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 937, 670, new Rectangle(0, 567, 265, 50));
                     this.txレーン.t2D描画(CDTXMania.app.Device, 1158, 42, new Rectangle(0, 618, 48, 62));
                 }
                 //---------------
