@@ -285,7 +285,7 @@ namespace DTXMania
 					{
 						if ( this.txヒットバー != null && CDTXMania.ConfigIni.bJudgeLineDisp.Guitar )
 						{
-							this.txヒットバー.t2D描画( CDTXMania.app.Device, 80, y, new Rectangle( 0, i * 6, 252, 6 ) );
+							this.txヒットバー.t2D描画( CDTXMania.app.Device, 79, y, new Rectangle( 0, i * 6, 252, 6 ) );
 						}
 					}
 				}
@@ -296,7 +296,7 @@ namespace DTXMania
 					{
 						if ( this.txヒットバー != null && CDTXMania.ConfigIni.bJudgeLineDisp.Bass )
 						{
-                            this.txヒットバー.t2D描画(CDTXMania.app.Device, 948, y, new Rectangle(0, j * 6, 252, 6));
+                            this.txヒットバー.t2D描画(CDTXMania.app.Device, 949, y, new Rectangle(0, j * 6, 252, 6));
 						}
 					}
 				}
