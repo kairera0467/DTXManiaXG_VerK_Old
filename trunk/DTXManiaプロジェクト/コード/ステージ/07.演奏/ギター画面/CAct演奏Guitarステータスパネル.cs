@@ -86,8 +86,6 @@ namespace DTXMania
                     this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part_XG.png"));
 
                 this.b4font = new Bitmap(1, 1);
-                Graphics graphics = Graphics.FromImage(this.b4font);
-                graphics.PageUnit = GraphicsUnit.Pixel;
 
                 this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
                 this.strGroupName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
@@ -178,7 +176,6 @@ namespace DTXMania
                     if (this.nStrlengthbydot > 212)
                     {
                         gSongPanel.ScaleTransform(212f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 68f );
                         gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 22f / (212f / (float)this.nStrlengthbydot), 73f);
                         gSongPanel.ResetTransform();
                     }
@@ -193,7 +190,6 @@ namespace DTXMania
                     if (this.nStrlengthbydot > 250)
                     {
                         gSongPanel.ScaleTransform(250.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                        //graphics.DrawString( this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f );
                         gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 250f / (250f / (float)this.nStrlengthbydot), 18f);
                         gSongPanel.ResetTransform();
                     }
@@ -235,7 +231,7 @@ namespace DTXMania
                 }
 
 
-                int width = (int)graphics.MeasureString(this.stパネルマップ[this.nIndex].label.Substring(0, 3) + "   ", this.ftLevelFont).Width;
+                int width = (int)graphics2.MeasureString(this.stパネルマップ[this.nIndex].label.Substring(0, 3) + "   ", this.ftLevelFont).Width;
                 //数字の描画部分。その左側。
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                     (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
