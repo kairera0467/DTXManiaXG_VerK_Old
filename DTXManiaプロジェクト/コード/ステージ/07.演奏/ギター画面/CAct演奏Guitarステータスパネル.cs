@@ -71,6 +71,7 @@ namespace DTXMania
             this.ftLevelFont = new Font("Impact", 26f, FontStyle.Regular);
             this.ftDifficultyL = new Font("Arial", 30f, FontStyle.Bold);
             this.ftDifficultyS = new Font("Arial", 20f, FontStyle.Bold);
+            this.nDifficulty = CDTXMania.nSongDifficulty;
             base.On活性化();
         }
 		public override void OnManagedリソースの作成()
@@ -80,15 +81,9 @@ namespace DTXMania
                 this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Score numbers_Guitar.png" ) );
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                {
-                    this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Difficulty.png"));
                     this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part.png"));
-                }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                {
-                    this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Difficulty_XG.png"));
                     this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part_XG.png"));
-                }
 
                 this.b4font = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.b4font);
@@ -104,24 +99,31 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
-                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar.png"));
                     this.bNamePlate = new Bitmap(250, 266);
                     gNamePlate = Graphics.FromImage(this.bNamePlate);
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar.png"));
                     gNamePlate.DrawImage(this.iNamePlate, 0, 0, 250, 266);
+                    this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty.png"));
+                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 38), 234, 38);
+                    gNamePlate.DrawImage(this.iDifficulty, 7, 91, Rect, GraphicsUnit.Pixel);
                     gNamePlate.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)48f, (float)57f);
                     gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 16f, 30f);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar_XG.png"));
                     this.bNamePlate = new Bitmap(250, 297);
                     gNamePlate = Graphics.FromImage(this.bNamePlate);
+                    this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar_XG.png"));
                     gNamePlate.DrawImage(this.iNamePlate, 0, 0, 250, 297);
+                    this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty_XG.png"));
+                    Rectangle Rect = new Rectangle(0, 2 + (this.nDifficulty * 64), 234, 60);
+                    gNamePlate.DrawImage(this.iDifficulty, 6, 50, Rect, GraphicsUnit.Pixel);
                     gNamePlate.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)52f, (float)6f);
                 }
 
                 gNamePlate.Dispose();
                 this.iNamePlate.Dispose();
+                this.iDifficulty.Dispose();
                 #endregion
 
                 #region[ 曲名パネル ]
@@ -206,12 +208,10 @@ namespace DTXMania
 
                 #region[ ギターレベル ] //未実装
 
-                this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 Graphics graphics2 = Graphics.FromImage(this.b4font);
                 this.bDifficulty = new Bitmap(0x170, 0x103);
                 graphics2.PageUnit = GraphicsUnit.Pixel;
                 graphics2 = Graphics.FromImage(this.bDifficulty);
-                graphics2.DrawImage(this.iDifficulty, 0, 0, 0x170, 0x103);
 
                 string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Guitar) / 10f);
                 if (CDTXMania.DTX.LEVEL.Guitar > 100)
@@ -280,7 +280,6 @@ namespace DTXMania
                 }
 
                 graphics2.Dispose();
-                this.iDifficulty.Dispose();
 
                 #endregion
 
@@ -307,7 +306,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txパネル );
                 CDTXMania.tテクスチャの解放( ref this.tx曲名パネル );
                 CDTXMania.tテクスチャの解放( ref this.txScore );
-                CDTXMania.tテクスチャの解放( ref this.txDifficulty );
                 CDTXMania.tテクスチャの解放( ref this.txDummy );
                 CDTXMania.tテクスチャの解放( ref this.txPart );
 
@@ -328,14 +326,6 @@ namespace DTXMania
 				if( this.txパネル != null && CDTXMania.DTX.bチップがある.Guitar )
 				{
 			        this.txパネル.t2D描画( CDTXMania.app.Device, this.n本体1X, this.n本体Y );
-
-                    if (this.txDifficulty != null)
-                    {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                            this.txDifficulty.t2D描画(CDTXMania.app.Device, 7 + this.n本体1X, 91 + this.n本体Y, new Rectangle(0, 0 + (this.nStatus * 38), 234, 38));
-                        else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                            this.txDifficulty.t2D描画(CDTXMania.app.Device, 6 + this.n本体1X, 50 + this.n本体Y, new Rectangle(0, 2 + (this.nStatus * 64), 234, 60));
-                    }
 
                     if (this.txPart != null)
                     {
@@ -426,14 +416,6 @@ namespace DTXMania
                 if (this.txパネル != null && CDTXMania.DTX.bチップがある.Bass)
                 {
                     this.txパネル.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体Y);
-
-                    if (this.txDifficulty != null)
-                    {
-                        if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                            this.txDifficulty.t2D描画(CDTXMania.app.Device, 7 + this.n本体2X, 91 + this.n本体Y, new Rectangle(0, 0 + (this.nStatus * 38), 234, 38));
-                        else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                            this.txDifficulty.t2D描画(CDTXMania.app.Device, 6 + this.n本体2X, 50 + this.n本体Y, new Rectangle(0, 2 + (this.nStatus * 64), 234, 60));
-                    }
 
                     if (this.txPart != null)
                     {
@@ -535,7 +517,6 @@ namespace DTXMania
 		//    public int status;
 		//}
 
-		//private int nStatus;
 		//private STATUSPANEL[] stパネルマップ;
         private int n本体0X;
         private int n本体0Y;
@@ -545,6 +526,7 @@ namespace DTXMania
         private int nグラフSX;
         private int nグラフNX;
         private int nStrlengthbydot;
+        private int nDifficulty;
         private CTexture txパネル;
         private CTexture tx曲名パネル;
         private Bitmap b4font;
@@ -568,7 +550,6 @@ namespace DTXMania
         private Image iDifficulty;
         private CTexture txScore;
         private CTexture txDummy;
-        private CTexture txDifficulty;
         private CTexture txPart;
         //-----------------
 		#endregion

@@ -41,8 +41,8 @@ namespace DTXMania
                     this.ftDifficultyS = new Font( "Arial", 20f, FontStyle.Bold );
                 }
             }
-            CDTXMania.nSongDifficulty = this.nStatus;
-            CDTXMania.strSongDifficulyName = this.stパネルマップ[ this.nStatus ].label;
+            this.nDifficulty = CDTXMania.nSongDifficulty;
+            CDTXMania.strSongDifficulyName = this.stパネルマップ[ this.nDifficulty ].label;
             base.On活性化();
         }
         public override void OnManagedリソースの作成()
@@ -425,11 +425,11 @@ namespace DTXMania
                 this.txNamePlate.t3D描画( CDTXMania.app.Device, identity );
                 if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                 {
-                    this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nStatus * 38 ), 146, 38 ) );
+                    this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nDifficulty * 38 ), 146, 38 ) );
                 }
                 else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                 {
-                    this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nStatus * 64 ), 194, 64 ) );
+                    this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nDifficulty * 64 ), 194, 64 ) );
                     if ( this.txPart != null )
                     this.txPart.t3D描画(CDTXMania.app.Device, mat, new Rectangle(0, 0, 194, 64));
                 }
@@ -568,6 +568,7 @@ namespace DTXMania
         private Image iRisky;
         private Image iNamePlate;
         private Image iDifficulty;
+        private int nDifficulty;
         private int nCurrentDrumspeed;
         private int nStrlengthbydot;
         private string strGroupName;
