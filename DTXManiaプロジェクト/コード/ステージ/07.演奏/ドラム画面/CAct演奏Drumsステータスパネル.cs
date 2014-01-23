@@ -50,16 +50,17 @@ namespace DTXMania
             if( !base.b活性化してない )
             {
                 this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_score numbers.png" ) );
-                if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                this.iDifficulty = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
+                this.iPart = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    this.txDifficulty = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Difficulty_XG.png" ) );
-                    this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part_XG.png"));
+                    this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty_XG.png"));
+                    this.iPart = Image.FromFile(CSkin.Path(@"Graphics\7_Part_XG.png"));
                 }
                 else
                 {
-                    this.txDifficulty = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Difficulty.png" ) );
+                    this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty.png"));
                 }
-                this.iDifficulty = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
                 #region[ ネームプレート本体 ]
                 this.iNamePlate = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
                 if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
@@ -111,7 +112,23 @@ namespace DTXMania
                 graphics = Graphics.FromImage( this.bNamePlate );
                 graphics2 = Graphics.FromImage( this.bDifficulty );
                 graphics.DrawImage( this.iNamePlate, 0, 0, 0x170, 0x103 );
-                graphics2.DrawImage( this.iDifficulty, 0, 0, 0x170, 0x103 );
+
+                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                {
+                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 38);
+                    graphics2.DrawImage(this.iDifficulty, 7, 167, Rect, GraphicsUnit.Pixel);
+                }
+                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                {
+                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 64), 194, 60);
+                    graphics2.DrawImage(this.iDifficulty, 7, 142, Rect, GraphicsUnit.Pixel);
+                    if (this.iPart != null)
+                    {
+                        Rectangle RectP = new Rectangle(0, 0, 194, 60);
+                        graphics2.DrawImage(this.iPart, 7, 142, RectP, GraphicsUnit.Pixel);
+                    }
+                }
+
                 this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
 
                 #region[ ネームカラー ]
@@ -360,6 +377,7 @@ namespace DTXMania
                 this.iAlbum.Dispose();
                 this.iNamePlate.Dispose();
                 this.iDifficulty.Dispose();
+                this.iPart.Dispose();
 
                 //ここで使用したフォント3つはここで開放。
                 this.ftLevelFont.Dispose();
@@ -376,16 +394,14 @@ namespace DTXMania
                 //テクスチャ5枚
                 //イメージ 6枚(ジャケット画像はここで解放しない)
                 //フォント 5個
-                CDTXMania.tテクスチャの解放( ref this.txnameplate );
                 CDTXMania.tテクスチャの解放( ref this.txNamePlate );
-                CDTXMania.tテクスチャの解放( ref this.txDifficulty );
-                CDTXMania.tテクスチャの解放( ref this.txPart );
                 CDTXMania.tテクスチャの解放( ref this.txDummy );
                 CDTXMania.tテクスチャの解放( ref this.txScore );
                 this.iNamePlate.Dispose();
                 this.iDrumspeed.Dispose();
                 this.iRisky.Dispose();
                 this.iDifficulty.Dispose();
+                this.iPart.Dispose();
 
                 this.ftDifficultyS.Dispose();
                 this.ftDifficultyL.Dispose();
@@ -402,39 +418,21 @@ namespace DTXMania
             if( !base.b活性化してない )
             {
                 SlimDX.Matrix identity = SlimDX.Matrix.Identity;
-                SlimDX.Matrix identity2 = SlimDX.Matrix.Identity;
-                SlimDX.Matrix mat = SlimDX.Matrix.Identity;
                 if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
                 {
                     identity *= SlimDX.Matrix.Translation( -1135, 150, 0 );
                     identity *= SlimDX.Matrix.Scaling( 0.338f, 0.62f, 1f );
                     identity *= SlimDX.Matrix.RotationY( -0.8f );
-                    mat *= SlimDX.Matrix.Translation( -1247, 120, 0 );
-                    mat *= SlimDX.Matrix.Scaling( 0.33f, 0.56f, 1.0f );
-                    mat *= SlimDX.Matrix.RotationY( -0.8f );
                 }
                 else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                 {
                     identity *= SlimDX.Matrix.Translation( -991, 225, 0 );
                     identity *= SlimDX.Matrix.Scaling( 0.385f, 0.61f, 1.0f );
                     identity *= SlimDX.Matrix.RotationY( -0.60f );
-                    mat *= SlimDX.Matrix.Translation( -1052, 160, 0 );
-                    mat *= SlimDX.Matrix.Scaling( 0.40f, 0.64f, 1.0f );
-                    mat *= SlimDX.Matrix.RotationY( -0.60f );
                 }
                 this.txNamePlate.t3D描画( CDTXMania.app.Device, identity );
-                if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
-                {
-                    this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nDifficulty * 38 ), 146, 38 ) );
-                }
-                else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
-                {
-                    this.txDifficulty.t3D描画( CDTXMania.app.Device, mat, new Rectangle( 0, 0 + ( this.nDifficulty * 64 ), 194, 64 ) );
-                    if ( this.txPart != null )
-                    this.txPart.t3D描画(CDTXMania.app.Device, mat, new Rectangle(0, 0, 194, 64));
-                }
-                    
                 this.txDummy.t3D描画( CDTXMania.app.Device, identity );
+
                 if ( this.nCurrentDrumspeed != CDTXMania.ConfigIni.n譜面スクロール速度.Drums )
                 {
                     Graphics graphics = Graphics.FromImage( this.bNamePlate );
@@ -568,6 +566,7 @@ namespace DTXMania
         private Image iRisky;
         private Image iNamePlate;
         private Image iDifficulty;
+        private Image iPart;
         private int nDifficulty;
         private int nCurrentDrumspeed;
         private int nStrlengthbydot;
@@ -575,9 +574,6 @@ namespace DTXMania
         private string strPanelString;
         private string strPlayerName;
         private CTexture txDummy;
-        private CTexture txDifficulty;
-        private CTexture txPart;
-        private CTexture txnameplate;
         private CTexture txNamePlate;
         private CTexture txScore;
         private CPrivateFastFont pfNameFont;
