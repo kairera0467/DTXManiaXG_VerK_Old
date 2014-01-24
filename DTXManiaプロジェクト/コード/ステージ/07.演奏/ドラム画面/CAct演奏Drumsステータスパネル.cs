@@ -110,13 +110,15 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
-                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 37);
-                    gNamePlate.DrawImage(this.iDifficulty, 7, 167, Rect, GraphicsUnit.Pixel);
+                    Rectangle Rect1 = new Rectangle(7, 167, 150, 38);
+                    Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 38);
+                    gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 64), 194, 63);
-                    gNamePlate.DrawImage(this.iDifficulty, 7, 142, Rect, GraphicsUnit.Pixel);
+                    Rectangle Rect1 = new Rectangle(7, 142, 194, 60);
+                    Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 60), 194, 60);
+                    gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                     if (this.iPart != null)
                     {
                         Rectangle RectP = new Rectangle(0, 0, 194, 60);
@@ -203,12 +205,22 @@ namespace DTXMania
                         clNameColorLower = Color.FromArgb(255, 255, 241, 200 );
                         break;
                 }
+
+                Bitmap bmpCardName = new Bitmap( 1, 1 );
+
+                if (CDTXMania.ConfigIni.nNameColor >= 11)
+                {
+                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
+                }
+                else
+                {
+                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent);
+                }
                 //--------------------
                 #endregion
 
                 #region[ 名前、グループ名 ]
                 //2013.09.07.kairera0467 できればこの辺のメンテナンスが楽にできるよう、コードを簡略にしたいが・・・・
-                Bitmap bmpCardName = new Bitmap( 1, 1 );
                 Bitmap bmpSongTitle = new Bitmap( 1, 1 );
                 #region[ 曲名 ]
                 if( this.nStrlengthbydot > 240 )
@@ -241,29 +253,12 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
-                    if (CDTXMania.ConfigIni.nNameColor >= 11)
-                    {
-                        bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
-                    }
-                    else
-                    {
-                        bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent);
-                    }
                     gNamePlate.DrawImage(bmpCardName, 42f, 126f);
                     gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 54f, 105f);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    if (CDTXMania.ConfigIni.nNameColor >= 11)
-                    {
-                        bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
-                    }
-                    else
-                    {
-                        bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent);
-                    }
                     gNamePlate.DrawImage(bmpCardName, 46f, 92f);
-                    gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 54f, 500f);
                 }
                 #endregion
 
