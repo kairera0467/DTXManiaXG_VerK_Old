@@ -50,7 +50,6 @@ namespace DTXMania
             if( !base.b活性化してない )
             {
                 this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_score numbers.png" ) );
-                this.iDifficulty = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
                 this.iPart = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {

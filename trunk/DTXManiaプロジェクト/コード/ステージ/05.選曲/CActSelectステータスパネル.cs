@@ -252,7 +252,8 @@ namespace DTXMania
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_difficulty panel.png"));
                 this.tx難易度数字XG = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\6_LevelNumber.png"));
                 this.txHSアイコン = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_panel_icons.jpg"));
-                this.txBPM数字 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_BPMfont.png") );
+                this.txRISKYアイコン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_panel_icons2.jpg"));
+                this.txBPM数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_BPMfont.png"));
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -268,6 +269,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
                 CDTXMania.tテクスチャの解放( ref this.tx難易度数字XG );
                 CDTXMania.tテクスチャの解放( ref this.txHSアイコン );
+                CDTXMania.tテクスチャの解放( ref this.txRISKYアイコン );
                 CDTXMania.tテクスチャの解放( ref this.txBPM数字 );
 				base.OnManagedリソースの解放();
 			}
@@ -447,11 +449,41 @@ namespace DTXMania
                         }
                         else
                         {
-                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 1067, 62, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
-                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 939, 565, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+                            this.txHSアイコン.t2D描画(CDTXMania.app.Device, 1067,  62, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
+                            this.txHSアイコン.t2D描画(CDTXMania.app.Device,  939, 565, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
                         }
                     }
                 }
+
+                if (this.txRISKYアイコン != null)
+                {
+                    this.txRISKYアイコン.vc拡大縮小倍率 = new SlimDX.Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
+                    if (CDTXMania.ConfigIni.bDrums有効)
+                    {
+                        if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
+                        {
+                            //                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Drums > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Drums) * 48), 42, 48));
+                        }
+                        else
+                            this.txRISKYアイコン.t2D描画(CDTXMania.app.Device, 1151, 63, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
+                    }
+                    else
+                    {
+                        if (CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 != 100)
+                        {
+                            //                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat1, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Guitar > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Guitar) * 48), 42, 48));
+                            //                            this.txHSアイコン.t3D描画(CDTXMania.app.Device, mat2, new Rectangle(0, 0 + (((CDTXMania.ConfigIni.n譜面スクロール速度.Bass > 15) ? 15 : CDTXMania.ConfigIni.n譜面スクロール速度.Bass) * 48), 42, 48));
+                        }
+                        else
+                        {
+                            this.txRISKYアイコン.t2D描画(CDTXMania.app.Device, 1151,  63, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
+                            this.txRISKYアイコン.t2D描画(CDTXMania.app.Device, 1024, 565, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
+                        }
+                    }
+
+                }
+
+
                 //-----------------
                 #endregion
 
