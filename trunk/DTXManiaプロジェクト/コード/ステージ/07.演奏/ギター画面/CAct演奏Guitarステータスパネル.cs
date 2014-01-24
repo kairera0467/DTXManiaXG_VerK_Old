@@ -57,15 +57,16 @@ namespace DTXMania
 
             #endregion
 
-            float fNameFontサイズ = 0;
+            int fNameFontサイズ = 0;
 
             if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 fNameFontサイズ = 26;
             else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 fNameFontサイズ = 33;
-            
-            this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            this.pfNameFont = new CPrivateFastFont(new FontFamily("Arial"), fNameFontサイズ, FontStyle.Bold); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
             this.ftNameFont = new Font("Arial", fNameFontサイズ, FontStyle.Bold, GraphicsUnit.Pixel);
+            this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
 
             this.ftLevelFont = new Font("Impact", 26f, FontStyle.Regular);
@@ -94,8 +95,99 @@ namespace DTXMania
 
                 //ギターベースの有無を判断する仕様を考えて、生成などは分けておく。
 
-                #region[ ギターNamePlate ]
-                    Graphics gNamePlate = Graphics.FromImage(this.b4font);
+                #region[ ネームカラー ]
+                //--------------------
+                Color clNameColor = Color.White;
+                Color clNameColorLower = Color.White;
+                switch (CDTXMania.ConfigIni.nNameColor)
+                {
+                    case 0:
+                        clNameColor = Color.White;
+                        break;
+                    case 1:
+                        clNameColor = Color.LightYellow;
+                        break;
+                    case 2:
+                        clNameColor = Color.Yellow;
+                        break;
+                    case 3:
+                        clNameColor = Color.Green;
+                        break;
+                    case 4:
+                        clNameColor = Color.Blue;
+                        break;
+                    case 5:
+                        clNameColor = Color.Purple;
+                        break;
+                    case 6:
+                        clNameColor = Color.Red;
+                        break;
+                    case 7:
+                        clNameColor = Color.Brown;
+                        break;
+                    case 8:
+                        clNameColor = Color.Silver;
+                        break;
+                    case 9:
+                        clNameColor = Color.Gold;
+                        break;
+
+                    case 10:
+                        clNameColor = Color.White;
+                        break;
+                    case 11:
+                        clNameColor = Color.LightYellow;
+                        clNameColorLower = Color.White;
+                        break;
+                    case 12:
+                        clNameColor = Color.Yellow;
+                        clNameColorLower = Color.White;
+                        break;
+                    case 13:
+                        clNameColor = Color.FromArgb(0, 255, 33);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 14:
+                        clNameColor = Color.FromArgb(0, 38, 255);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 15:
+                        clNameColor = Color.FromArgb(72, 0, 255);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 16:
+                        clNameColor = Color.FromArgb(255, 255, 0, 0);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 17:
+                        clNameColor = Color.FromArgb(255, 232, 182, 149);
+                        clNameColorLower = Color.FromArgb(255, 122, 69, 26);
+                        break;
+                    case 18:
+                        clNameColor = Color.FromArgb(246, 245, 255);
+                        clNameColorLower = Color.FromArgb(125, 128, 137);
+                        break;
+                    case 19:
+                        clNameColor = Color.FromArgb(255, 238, 196, 85);
+                        clNameColorLower = Color.FromArgb(255, 255, 241, 200);
+                        break;
+                }
+
+                Bitmap bmpCardName = new Bitmap(1, 1);
+
+                if (CDTXMania.ConfigIni.nNameColor >= 11)
+                {
+                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
+                }
+                else
+                {
+                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent);
+                }
+                //--------------------
+                #endregion
+
+                #region[ NamePlate ]
+                Graphics gNamePlate = Graphics.FromImage(this.b4font);
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
@@ -104,8 +196,9 @@ namespace DTXMania
                     this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar.png"));
                     gNamePlate.DrawImage(this.iNamePlate, 0, 0, 250, 266);
                     this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty.png"));
-                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 38), 234, 37);
-                    gNamePlate.DrawImage(this.iDifficulty, 7, 91, Rect, GraphicsUnit.Pixel);
+                    Rectangle Rect1 = new Rectangle(7, 91, 234, 38);
+                    Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 38), 234, 38);
+                    gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                     gNamePlate.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)48f, (float)57f);
                     gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 16f, 30f);
                 }
@@ -116,8 +209,9 @@ namespace DTXMania
                     this.iNamePlate = Image.FromFile(CSkin.Path(@"Graphics\7_nameplate_Guitar_XG.png"));
                     gNamePlate.DrawImage(this.iNamePlate, 0, 0, 250, 297);
                     this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty_XG.png"));
-                    Rectangle Rect = new Rectangle(0, 2 + (this.nDifficulty * 64), 234, 60);
-                    gNamePlate.DrawImage(this.iDifficulty, 6, 50, Rect, GraphicsUnit.Pixel);
+                    Rectangle Rect1 = new Rectangle(6, 50, 234, 60);
+                    Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 60), 234, 60);
+                    gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                     gNamePlate.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)52f, (float)6f);
                 }
 
@@ -375,6 +469,7 @@ namespace DTXMania
                 this.iSongPanel.Dispose();
                 this.iAlbum.Dispose();
 
+                this.pfNameFont.Dispose();
                 this.ftDisplayFont.Dispose();
                 this.ftNameFont.Dispose();
 
@@ -395,9 +490,10 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txPart );
 
                 this.ftDisplayFont.Dispose();
-                this.ftNameFont.Dispose();
                 this.ftLevelFont.Dispose();
-				base.OnManagedリソースの解放();
+                this.pfNameFont.Dispose();
+                this.ftNameFont.Dispose();
+                base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
@@ -664,8 +760,8 @@ namespace DTXMania
         private Font ftDifficultyL;
         private Font ftDifficultyS;
         private Font ftDisplayFont;
-        private Font ftNameFont;
         private Font ftGroupFont;
+        private Font ftNameFont;
         private Font ftLevelFont;
         private string strGroupName;
         private string strPanelString;
@@ -680,6 +776,7 @@ namespace DTXMania
         private CTexture txLevelG;
         private CTexture txLevelB;
         private CTexture txPart;
+        private CPrivateFastFont pfNameFont;
         //-----------------
 		#endregion
 	}
