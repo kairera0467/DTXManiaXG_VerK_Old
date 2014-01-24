@@ -247,14 +247,14 @@ namespace DTXMania
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                        gLevelG.DrawString(strG.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 88f + widthG, 89f);
+                        gLevelG.DrawString(strG.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 91f + widthG, 89f);
                     else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         gLevelG.DrawString(strG.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 44f + widthG, 66f);
                 }
                 else
                 {
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                        gLevelG.DrawString(strG.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 88f + widthG, 89f);
+                        gLevelG.DrawString(strG.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 91f + widthG, 89f);
                     else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         gLevelG.DrawString(strG.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 44f + widthG, 66f);
                 }
@@ -326,14 +326,14 @@ namespace DTXMania
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                        gLevelB.DrawString(strB.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 88f + widthB, 89f);
+                        gLevelB.DrawString(strB.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 91f + widthB, 89f);
                     else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         gLevelB.DrawString(strB.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 44f + widthB, 66f);
                 }
                 else
                 {
                     if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                        gLevelB.DrawString(strB.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 88f + widthB, 89f);
+                        gLevelB.DrawString(strB.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 91f + widthB, 89f);
                     else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                         gLevelB.DrawString(strB.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 44f + widthB, 66f);
                 }
@@ -671,8 +671,6 @@ namespace DTXMania
         private string strPanelString;
         private string strPlayerName;
         private Image iAlbum;
-        //private Image iDrumspeed;
-        //private Image iRisky;
         private Image iNamePlate;
         private Image iSongPanel;
         private Image iDifficulty;

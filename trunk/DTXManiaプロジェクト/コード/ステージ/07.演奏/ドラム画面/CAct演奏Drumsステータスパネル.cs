@@ -110,12 +110,12 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                 {
-                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 38);
+                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 37);
                     gNamePlate.DrawImage(this.iDifficulty, 7, 167, Rect, GraphicsUnit.Pixel);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 64), 194, 60);
+                    Rectangle Rect = new Rectangle(0, 0 + (this.nDifficulty * 64), 194, 63);
                     gNamePlate.DrawImage(this.iDifficulty, 7, 142, Rect, GraphicsUnit.Pixel);
                     if (this.iPart != null)
                     {

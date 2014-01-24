@@ -132,8 +132,63 @@ namespace DTXMania
             this.n本体Y = 0x11b;
             this.nAlbumWidth = 128;
             this.nAlbumHeight = 128;
+
+            #region [ 本体位置 ]
+
+            int n上X = 453;
+            int n上Y = 11;
+
+            int n下X = 106;
+            int n下Y = 430;
+
+            this.n本体0X = 0;
+            this.n本体0Y = 0;
+
+            this.n本体1X = 0;
+            this.n本体1Y = 0;
+
+            this.n本体2X = 0;
+            this.n本体2Y = 0;
+
+            if (CDTXMania.ConfigIni.bDrums有効)
+            {
+                this.n本体0X = n上X;
+                this.n本体0Y = n上Y;
+            }
+            else if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                if (CDTXMania.DTX.bチップがある.Guitar)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体1X = n下X;
+                        this.n本体1Y = n下Y;
+                    }
+                    else
+                    {
+                        this.n本体1X = n上X;
+                        this.n本体1Y = n上Y;
+                    }
+                }
+
+                if (CDTXMania.DTX.bチップがある.Bass)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体2X = n上X;
+                        this.n本体2Y = n上Y;
+                    }
+                    else
+                    {
+                        this.n本体2X = n下X;
+                        this.n本体2Y = n下Y;
+                    }
+                }
+
+            }
+            #endregion
+
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
             base.On活性化();
 
 		}
@@ -202,12 +257,7 @@ namespace DTXMania
                 //this.txSongLevel = new CTexture(CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat, false);
                 graphics.Dispose();
                 bitmap3.Dispose();
-                Bitmap bitmap4 = new Bitmap(0x2a, 0x30);
-                graphics = Graphics.FromImage(bitmap4);
-                graphics.DrawImage(this.iDrumSpeed, new Rectangle(0, 0, 0x2a, 0x30), new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 0x30, 0x2a, 0x30), GraphicsUnit.Pixel);
-                this.txDrumSpeed = new CTexture(CDTXMania.app.Device, bitmap4, CDTXMania.TextureFormat, false);
                 graphics.Dispose();
-                bitmap4.Dispose();
                 bmpCardName.Dispose();
                 i中央パネル.Dispose();
 
@@ -230,7 +280,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
                 //CDTXMania.tテクスチャの解放( ref this.txSongLevel );
                     
-                CDTXMania.tテクスチャの解放( ref this.txDrumSpeed );
                 base.OnManagedリソースの解放();
             }
         }
@@ -277,49 +326,64 @@ namespace DTXMania
             }
             float num;
 
-            STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
-            n表記するLEVEL.Drums = CDTXMania.DTX.LEVEL.Drums / 10.0;
-            n表記するLEVEL.Drums += ( CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0 : 0 );
-            int DTXLevel = CDTXMania.DTX.LEVEL.Drums;
-            double DTXLevelDeci = (DTXLevel * 10 - CDTXMania.DTX.LEVEL.Drums);
+            int[] x = new int[3];
+            int[] y = new int[3];
 
-            string strLevel = string.Format( "{0:0.00}", n表記するLEVEL.Drums );
+            x[0] = n本体0X;
+            x[1] = n本体1X;
+            x[2] = n本体2X;
 
-            if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+            y[0] = n本体0Y;
+            y[1] = n本体1Y;
+            y[2] = n本体2Y;
+
+            for (int i = 0; i < 3; i++)
             {
-                num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums);
-            }
-            else
-            {
-                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums > 100)
+
+                if (x[i] != 0)
                 {
-                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 100.0f;
-                }
-                else
-                {
-                    num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル.Drums) / 10f + (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec.Drums / 100.0f : 0);
-                }
-            }
+                    STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
+                    n表記するLEVEL[i] = CDTXMania.DTX.LEVEL[i] / 10.0;
+                    n表記するLEVEL[i] += (CDTXMania.DTX.LEVELDEC[i] != 0 ? CDTXMania.DTX.LEVELDEC[i] / 100.0 : 0);
+                    int DTXLevel = CDTXMania.DTX.LEVEL[i];
+                    double DTXLevelDeci = (DTXLevel * 10 - CDTXMania.DTX.LEVEL[i]);
 
-            if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
-            {
-                //    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-                this.t大文字表示(1106, 22, num.ToString());
-            }
-            else
-            {
-                //    graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-                this.t大文字表示(1106, 22, string.Format(num.ToString().Substring(0, 1)));
-                this.txLevel.t2D描画(CDTXMania.app.Device, 1126, 22, new Rectangle(160, 16, 6, 16));
-                this.t小文字表示(1133, 24, string.Format(string.Format("{0,0:00}", strLevel.Substring(1, 3))));
+                    string strLevel = string.Format("{0:0.00}", n表記するLEVEL[i]);
+
+                    if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                    {
+                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]);
+                    }
+                    else
+                    {
+                        if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i] > 100)
+                        {
+                            num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]) / 100.0f;
+                        }
+                        else
+                        {
+                            num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]) / 10f + (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec[i] != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec[i] / 100.0f : 0);
+                        }
+                    }
+
+                    if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                    {
+                        //    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
+                        this.t大文字表示(x[i] + 653, y[i] + 11, num.ToString());
+                    }
+                    else
+                    {
+                        //    graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
+                        this.t大文字表示(x[i] + 653, y[i] + 11, string.Format(num.ToString().Substring(0, 1)));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, x[i] + 673, y[i] + 11, new Rectangle(160, 16, 6, 16));
+                        this.t小文字表示(x[i] + 680, y[i] + 13, string.Format(string.Format("{0,0:00}", strLevel.Substring(1, 3))));
+                    }
+                }
             }
 
             this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体X + this.nAlbumWidth ) + 3, this.n本体Y + 0x3f);
             //this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
 
-            this.txDrumSpeed.vc拡大縮小倍率.X = 0.7619048f;
-            this.txDrumSpeed.vc拡大縮小倍率.Y = 0.6666667f;
-            this.txDrumSpeed.t2D描画(CDTXMania.app.Device, 0x43c, 60);
 			if( !this.ct登場用.b終了値に達した )
 			{
 				return 0;
@@ -342,7 +406,6 @@ namespace DTXMania
         private Bitmap bmSongNameLength;
         private bool b動画フレームを作成した;
         public CCounter ct登場用;
-        private Image iDrumSpeed;
         private int nAlbumHeight;
         private int nAlbumWidth;
         private long nAVI再生開始時刻;
@@ -350,13 +413,18 @@ namespace DTXMania
         private int n前回描画したフレーム番号;
         private int n本体X;
         private int n本体Y;
+        private int n本体0X;
+        private int n本体0Y;
+        private int n本体1X;
+        private int n本体1Y;
+        private int n本体2X;
+        private int n本体2Y;
         private IntPtr pAVIBmp;
         private CTexture r表示するリザルト画像;
         private Surface sfリザルトAVI画像;
         private string strAVIファイル名;
         private string strSongName;
         private System.Drawing.Font ftSongNameFont;
-        private CTexture txDrumSpeed;
         private CTexture txLevel;
         private CTexture txSongName;
         private CTexture txリザルト画像;
