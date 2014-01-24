@@ -109,6 +109,7 @@ namespace DTXMania
             st文字位置22.pt = new Point(70, 0x36);
             st文字位置Array2[10] = st文字位置22;
             this.st小文字位置 = st文字位置Array2;
+
             ST文字位置[] st文字位置Array3 = new ST文字位置[12];
             ST文字位置 st文字位置23 = new ST文字位置();
             st文字位置23.ch = '0';
@@ -255,6 +256,8 @@ namespace DTXMania
                 this.txDifficulty = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_Difficulty.png"));
                 this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_Part.png"));
                 this.txリザルトパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_result panel.png"));
+                this.txHiSpeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
+                this.txRisky = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_panel_icons2.jpg"));
 
                 base.OnManagedリソースの作成();
 			}
@@ -270,9 +273,11 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txNewRecord );
 				CDTXMania.tテクスチャの解放( ref this.txWhite );
                 CDTXMania.tテクスチャの解放( ref this.tx達成率ゲージ );
-                CDTXMania.tテクスチャの解放(ref this.txDifficulty);
-                CDTXMania.tテクスチャの解放(ref this.txPart);
-                CDTXMania.tテクスチャの解放(ref this.txリザルトパネル);
+                CDTXMania.tテクスチャの解放( ref this.txDifficulty );
+                CDTXMania.tテクスチャの解放( ref this.txPart );
+                CDTXMania.tテクスチャの解放( ref this.txHiSpeed );
+                CDTXMania.tテクスチャの解放( ref this.txRisky );
+                CDTXMania.tテクスチャの解放( ref this.txリザルトパネル );
                 base.OnManagedリソースの解放();
 			}
 		}
@@ -292,6 +297,7 @@ namespace DTXMania
 
             int[] x = new int[3];
             int[] y = new int[3];
+            int[] z = new int[3];
 
             x[0] = n本体0X;
             x[1] = n本体1X;
@@ -301,11 +307,23 @@ namespace DTXMania
             y[1] = n本体1Y;
             y[2] = n本体2Y;
 
+            if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+            {
+                z[0] = 0;
+                z[1] = 2;
+                z[2] = 1;
+            }
+            else
+            {
+                z[0] = 0;
+                z[1] = 1;
+                z[2] = 2;
+            }
+
             double[] dbメーター = new double[3];
 
-            dbメーター[0] = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Drums.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
-            dbメーター[1] = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Guitar.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Guitar.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
-            dbメーター[2] = ((3.5 * ((CDTXMania.stage結果.st演奏記録.Bass.b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録.Bass.db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
+            this.txHiSpeed.vc拡大縮小倍率 = new SlimDX.Vector3(32.0f / 42.0f, 32.0f / 48.0f, 1.0f);
+            this.txRisky.vc拡大縮小倍率 = new SlimDX.Vector3(32.0f / 42.0f, 32.0f / 48.0f, 1.0f);
 
             int num = this.ct表示用.n現在の値;
 
@@ -325,14 +343,23 @@ namespace DTXMania
 
                 if (x[i] != 0)
                 {
+
+                    dbメーター[i] = ((3.5 * ((CDTXMania.stage結果.st演奏記録[i].b全AUTOじゃない ? CDTXMania.stage結果.st演奏記録[i].db演奏型スキル値 : 100.0))) / 500.0) * (this.ct表示用.n現在の値 > 500 ? 500 : this.ct表示用.n現在の値);
+
                     if (this.txリザルトパネル != null)
                         this.txリザルトパネル.t2D描画(CDTXMania.app.Device, x[i], y[i]);
 
                     if (txDifficulty != null)
-                        this.txDifficulty.t2D描画(CDTXMania.app.Device, x[i] + 487, y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 140, 20));
+                        this.txDifficulty.t2D描画(CDTXMania.app.Device, x[i] + 510, y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 120, 20));
 
                     if (this.txPart != null)
-                        this.txPart.t2D描画(CDTXMania.app.Device, x[i] + 347, y[i] + 8, new Rectangle(0, 0 + (20 * i), 140, 20));
+                        this.txPart.t2D描画(CDTXMania.app.Device, x[i] + 388, y[i] + 8, new Rectangle(0, 0 + (20 * i), 120, 20));
+
+                    if (this.txHiSpeed != null)
+                        this.txHiSpeed.t2D描画(CDTXMania.app.Device, x[i] + 631, y[i] + 49, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度[z[i]] * 0x30, 0x2a, 0x30));
+
+                    if (this.txRisky != null)
+                        this.txRisky.t2D描画(CDTXMania.app.Device, x[i] + 631, y[i] + 83, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
 
                     if (CDTXMania.stage結果.st演奏記録[i].nPerfect数 == CDTXMania.stage結果.st演奏記録[i].n全チップ数)
                     {
@@ -487,7 +514,9 @@ namespace DTXMania
         private CTexture txパネル本体;
         private CTexture tx達成率ゲージ;
         private CTexture txDifficulty;
+        private CTexture txHiSpeed;
         private CTexture txPart;
+        private CTexture txRisky;
         private CTexture txリザルトパネル;
         private CTexture[] tx文字;
 
