@@ -22,6 +22,7 @@ namespace DTXMania
         public override void OnManagedリソースの作成()
         {
             this.txレーン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar.png"));
+            this.txレーンダーク = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar_Dark.png"));
             this.txレーンフラッシュ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_guitar line.png"));
 
             base.OnManagedリソースの作成();
@@ -29,6 +30,7 @@ namespace DTXMania
         public override void OnManagedリソースの解放()
         {
             CDTXMania.tテクスチャの解放( ref this.txレーン );
+            CDTXMania.tテクスチャの解放( ref this.txレーンダーク );
             CDTXMania.tテクスチャの解放( ref this.txレーンフラッシュ );
             base.OnManagedリソースの解放();
         }
@@ -42,13 +44,13 @@ namespace DTXMania
                 //レ－ンのみ先に描画しておく。
                 if (CDTXMania.DTX.bチップがある.Guitar)
                 {
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 86, 104, new Rectangle(0, 0, 246, 566));
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 288, 42, new Rectangle(0, 618, 48, 62));
+                    this.txレーン.t2D描画(CDTXMania.app.Device, 67, 42);
+                    //this.txレーンダーク.t2D描画(CDTXMania.app.Device, 67, 42);    ダーク時にはこちらを使用
                 }
                 if (CDTXMania.DTX.bチップがある.Bass)
                 {
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 956, 104, new Rectangle(0, 0, 246, 566));
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 1158, 42, new Rectangle(0, 618, 48, 62));
+                    this.txレーン.t2D描画(CDTXMania.app.Device, 937, 42);
+                    //this.txレーンダーク.t2D描画(CDTXMania.app.Device, 937, 42);    ダーク時にはこちらを使用
                 }
                 //---------------
                 #endregion
@@ -137,6 +139,7 @@ namespace DTXMania
 		private readonly int[,] nRGBのX座標 = new int[ , ] { { 0, 39, 78, 117, 156, 0, 39, 78, 117, 156 }, { 156, 117, 78, 39, 0, 156, 117, 78, 39, 0 } };
 
         private CTexture txレーン;
+        private CTexture txレーンダーク;
         private CTexture txレーンフラッシュ;
 		//-----------------
 		#endregion
