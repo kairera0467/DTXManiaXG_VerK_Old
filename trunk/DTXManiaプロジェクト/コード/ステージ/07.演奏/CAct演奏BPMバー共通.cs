@@ -32,6 +32,8 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
+            this.ctBPMバー = null;
+            this.UnitTime = 0.0;
 			base.On活性化();
 		}
 		public override void OnManagedリソースの作成()
