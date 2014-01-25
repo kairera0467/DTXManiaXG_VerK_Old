@@ -121,7 +121,7 @@ namespace DTXMania
 
                     if (base.txRGB != null && nシャッター上_Guitar == 0)
                     {
-                        base.txRGB.t2D描画( CDTXMania.app.Device, 80 , 42, new Rectangle( 0,( CDTXMania.ConfigIni.bLeft.Guitar ? 64 : 0 ), 210, 64) );
+                        base.txRGB.t2D描画( CDTXMania.app.Device, 67 , 42, new Rectangle( 0,( CDTXMania.ConfigIni.bLeft.Guitar ? 64 : 0 ), 277, 64) );
                     }
                     else if (base.txシャッター != null)
                     {
@@ -130,7 +130,7 @@ namespace DTXMania
 
                     if (base.txRGB != null && nシャッター下_Guitar == 0)
                     {
-                        base.txレーン.t2D描画(CDTXMania.app.Device, 67, 670, new Rectangle(0, 567, 265, 50));
+                        base.txRGB.t2D描画(CDTXMania.app.Device, 67, 670, new Rectangle(0, 128, 277, 50));
                     }
                     else if (base.txシャッター != null)
                     {
@@ -157,7 +157,7 @@ namespace DTXMania
 
                     if (base.txRGB != null && nシャッター上_Bass == 0)
                     {
-                        base.txRGB.t2D描画( CDTXMania.app.Device, 950 , 42, new Rectangle( 0,( CDTXMania.ConfigIni.bLeft.Bass ? 64 : 0 ), 210, 64) );
+                        base.txRGB.t2D描画( CDTXMania.app.Device, 937 , 42, new Rectangle( 0,( CDTXMania.ConfigIni.bLeft.Bass ? 64 : 0 ), 277, 64) );
                     }
                     else if (base.txシャッター != null)
                     {
@@ -166,7 +166,7 @@ namespace DTXMania
 
                     if (base.txRGB != null && nシャッター下_Bass == 0)
                     {
-                        base.txレーン.t2D描画(CDTXMania.app.Device, 937, 670, new Rectangle(0, 567, 265, 50));
+                        base.txRGB.t2D描画(CDTXMania.app.Device, 937, 670, new Rectangle(0, 128, 277, 50));
                     }
                     else  if (base.txシャッター != null)
                     {
