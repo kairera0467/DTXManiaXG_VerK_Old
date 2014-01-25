@@ -57,15 +57,7 @@ namespace DTXMania
 
             #endregion
 
-            int fNameFontサイズ = 0;
-
-            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
-                fNameFontサイズ = 26;
-            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                fNameFontサイズ = 33;
-
-            this.pfNameFont = new CPrivateFastFont(new FontFamily("Arial"), fNameFontサイズ, FontStyle.Bold); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
-            this.ftNameFont = new Font("Arial", fNameFontサイズ, FontStyle.Bold, GraphicsUnit.Pixel);
+            this.pfNameFont = new CPrivateFastFont(new FontFamily("Arial"), 24, FontStyle.Bold); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
             this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
 
@@ -199,7 +191,7 @@ namespace DTXMania
                     Rectangle Rect1 = new Rectangle(7, 91, 234, 38);
                     Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 38), 234, 38);
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
-                    gNamePlate.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)48f, (float)57f);
+                    gNamePlate.DrawImage(bmpCardName, 44f, 46f);
                     gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 16f, 30f);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
@@ -212,7 +204,7 @@ namespace DTXMania
                     Rectangle Rect1 = new Rectangle(6, 50, 234, 60);
                     Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 60), 234, 60);
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
-                    gNamePlate.DrawString(this.strPlayerName, this.ftNameFont, Brushes.White, (float)52f, (float)6f);
+                    gNamePlate.DrawImage(bmpCardName, 45f, 0f);
                 }
 
                 this.iNamePlate.Dispose();
@@ -471,7 +463,6 @@ namespace DTXMania
 
                 this.pfNameFont.Dispose();
                 this.ftDisplayFont.Dispose();
-                this.ftNameFont.Dispose();
 
 				base.OnManagedリソースの作成();
 			}
@@ -492,7 +483,6 @@ namespace DTXMania
                 this.ftDisplayFont.Dispose();
                 this.ftLevelFont.Dispose();
                 this.pfNameFont.Dispose();
-                this.ftNameFont.Dispose();
                 base.OnManagedリソースの解放();
 			}
 		}
@@ -527,7 +517,7 @@ namespace DTXMania
                         if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                             this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体1X, 91 + this.n本体Y, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 76 : 38, 234, 38));
                         else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体1X, 50 + this.n本体Y, new Rectangle(0, 2 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 128 : 64), 234, 60));
+                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体1X, 50 + this.n本体Y, new Rectangle(0, 0 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 120 : 60), 234, 60));
                     }
 
                     this.nCurrentGuitarSpeed = CDTXMania.ConfigIni.n譜面スクロール速度.Guitar;
@@ -628,7 +618,7 @@ namespace DTXMania
                         if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
                             this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体2X, 91 + this.n本体Y, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 38 : 76, 234, 38));
                         else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
-                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体2X, 50 + this.n本体Y, new Rectangle(0, 2 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 64 : 128), 234, 60));
+                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体2X, 50 + this.n本体Y, new Rectangle(0, 0 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 60 : 120), 234, 60));
                     }
 
                     this.nCurrentBassSpeed = CDTXMania.ConfigIni.n譜面スクロール速度.Bass;
@@ -761,7 +751,6 @@ namespace DTXMania
         private Font ftDifficultyS;
         private Font ftDisplayFont;
         private Font ftGroupFont;
-        private Font ftNameFont;
         private Font ftLevelFont;
         private string strGroupName;
         private string strPanelString;
