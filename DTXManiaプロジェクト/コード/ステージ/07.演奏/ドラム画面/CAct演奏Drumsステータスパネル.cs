@@ -116,13 +116,13 @@ namespace DTXMania
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
                 {
-                    Rectangle Rect1 = new Rectangle(7, 142, 194, 60);
+                    Rectangle Rect1 = new Rectangle(7, 138, 194, 60);
                     Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 60), 194, 60);
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                     if (this.iPart != null)
                     {
                         Rectangle RectP = new Rectangle(0, 0, 194, 60);
-                        gNamePlate.DrawImage(this.iPart, 7, 142, RectP, GraphicsUnit.Pixel);
+                        gNamePlate.DrawImage(this.iPart, 7, 140, RectP, GraphicsUnit.Pixel);
                     }
                 }
 
@@ -297,7 +297,7 @@ namespace DTXMania
                     if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                         gNamePlate.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 18f + width, 164f);
                     else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
-                        gNamePlate.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 24f + width, 158f);
+                        gNamePlate.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 24f + width, 154f);
                 }
                 else
                 {
@@ -305,7 +305,7 @@ namespace DTXMania
                         gNamePlate.DrawString(str.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 12.0f + width, 164f);
 
                     else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
-                        gNamePlate.DrawString(str.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 14.0f + width, 134f);
+                        gNamePlate.DrawString(str.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 14.0f + width, 130f);
                 }
                 width += ( int )gNamePlate.MeasureString( str.Substring( 0, 1 ), this.ftDifficultyL ).Width;
 
@@ -324,7 +324,7 @@ namespace DTXMania
                     if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
                         gNamePlate.DrawString(str.Substring(1, 3), this.ftDifficultyS, Brushes.Black, width, 176f);
                     else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
-                        gNamePlate.DrawString(str.Substring(1, 3), this.ftDifficultyS, Brushes.Black, 2f + width, 170f);
+                        gNamePlate.DrawString(str.Substring(1, 3), this.ftDifficultyS, Brushes.Black, 2f + width, 166f);
                 }
 
                 //ジャケット画像描画部
