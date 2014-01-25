@@ -122,7 +122,7 @@ namespace DTXMania
                     if (this.iPart != null)
                     {
                         Rectangle RectP = new Rectangle(0, 0, 194, 60);
-                        gNamePlate.DrawImage(this.iPart, 7, 140, RectP, GraphicsUnit.Pixel);
+                        gNamePlate.DrawImage(this.iPart, 7, 138, RectP, GraphicsUnit.Pixel);
                     }
                 }
 

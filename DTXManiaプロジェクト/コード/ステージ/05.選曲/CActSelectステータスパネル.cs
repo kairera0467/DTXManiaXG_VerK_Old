@@ -141,7 +141,7 @@ namespace DTXMania
                         if (c曲リストノード.arスコア[j] != null)
                         {
                             this.n現在選択中の曲のレベル難易度毎DGB[j][i] = c曲リストノード.arスコア[j].譜面情報.レベル[i];
-                            this.n現在選択中の曲のレベル小数点難易度毎DGB[j][i] = c曲リストノード.arスコア[j].譜面情報.レベルDec.Drums;
+                            this.n現在選択中の曲のレベル小数点難易度毎DGB[j][i] = c曲リストノード.arスコア[j].譜面情報.レベルDec[i];
                             //this.n現在選択中の曲の最高ランク難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.最大ランク[i];
                             if ( CDTXMania.ConfigIni.nSkillMode == 0 )
                             {
@@ -821,8 +821,6 @@ namespace DTXMania
                                     this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (7 + this.n本体ベースX + (i * 143)), 61 + this.n本体ベースY - y差分[i], new Rectangle(42 + (nMaxRankB * 32), 0, 32, 32));
                                 }
                             }
-
-
                         }
                     }
                     //-----------------
