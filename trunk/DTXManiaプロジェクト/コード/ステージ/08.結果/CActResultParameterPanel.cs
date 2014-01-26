@@ -349,7 +349,7 @@ namespace DTXMania
                     if (this.txリザルトパネル != null)
                         this.txリザルトパネル.t2D描画(CDTXMania.app.Device, x[i], y[i]);
 
-                    if (txDifficulty != null)
+                    if (this.txDifficulty != null)
                         this.txDifficulty.t2D描画(CDTXMania.app.Device, x[i] + 510, y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 120, 20));
 
                     if (this.txPart != null)
