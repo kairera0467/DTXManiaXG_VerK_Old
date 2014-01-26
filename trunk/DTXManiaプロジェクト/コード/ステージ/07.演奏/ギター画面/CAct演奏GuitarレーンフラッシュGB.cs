@@ -62,20 +62,17 @@ namespace DTXMania
 						E楽器パート e楽器パート = ( i < 5 ) ? E楽器パート.GUITAR : E楽器パート.BASS;
 						CTexture texture = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? base.txFlush[ ( i % 5 ) + 5 ] : base.txFlush[ i % 5 ];
 						int num2 = CDTXMania.ConfigIni.bLeft[ (int) e楽器パート ] ? 1 : 0;
-						for( int j = 0; j < 5; j++ )
+						//int x = ( ( ( i < 5 ) ? 88 : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 37 * base.ct進行[ i ].n現在の値 ) / 100 );
+                        int x = (((i < 5) ? 88 : 958) + this.nRGBのX座標[num2, i] + ( ( 19 * base.ct進行[ i ].n現在の値 ) / 70 ));
+                        int x2 = ((i < 5) ? 88 : 954);
+		                int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? 414 : 100;
+                        int y2 = CDTXMania.ConfigIni.bReverse[(int)e楽器パート] ? 414 : 104;
+						if( texture != null && CDTXMania.ConfigIni.bLaneFlush[ (int) e楽器パート ] )
 						{
-							//int x = ( ( ( i < 5 ) ? 88 : 480 ) + this.nRGBのX座標[ num2, i ] ) + ( ( 37 * base.ct進行[ i ].n現在の値 ) / 100 );
-                            int x = (((i < 5) ? 88 : 958) + this.nRGBのX座標[num2, i] + ( ( 19 * base.ct進行[ i ].n現在の値 ) / 70 ));
-                            int x2 = ((i < 5) ? 88 : 954);
-							int y = CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] ? ( 317 + ( j * 118 ) ) : 100 + ( j * 118 );
-                            int y2 = CDTXMania.ConfigIni.bReverse[(int)e楽器パート] ? 317 : 104;
-							if( texture != null && CDTXMania.ConfigIni.bLaneFlush[ (int) e楽器パート ] )
-							{
-                                texture.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( j * 37, 0, ( 37 * ( 70 - base.ct進行[ i ].n現在の値)) / 70, 118 ) );
-                                //if( j == 4 )
-                                    //this.txレーンフラッシュ.t2D描画( CDTXMania.app.Device, x2 + ( ( i < 5 ? i : i - 5 ) * 39 ), y2, new Rectangle( i * 39, 0, 41, 566 ) );
-							}
-						}
+                            texture.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 37, 0, ( 37 * ( 70 - base.ct進行[ i ].n現在の値)) / 70, 256 ) );
+                            //if( j == 4 )
+                                //this.txレーンフラッシュ.t2D描画( CDTXMania.app.Device, x2 + ( ( i < 5 ? i : i - 5 ) * 39 ), y2, new Rectangle( i * 39, 0, 41, 566 ) );
+				        }
                         base.ct進行[ i ].t進行();
 						if( base.ct進行[ i ].b終了値に達した )
 						{
