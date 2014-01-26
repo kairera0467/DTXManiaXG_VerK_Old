@@ -1801,6 +1801,8 @@ namespace DTXMania
             sw.WriteLine("; 2:LINE OFF 小節線を消します。");
             sw.WriteLine("; 3:ALL OFF すべて消します。");
             sw.WriteLine("DrumsLaneDisp={0}", (int)this.nLaneDisp.Drums);
+            sw.WriteLine("GuitarLaneDisp={0}", (int)this.nLaneDisp.Guitar);
+            sw.WriteLine("BassLaneDisp={0}", (int)this.nLaneDisp.Bass);
             sw.WriteLine();
             sw.WriteLine("; 判定ライン表示");
             sw.WriteLine("DrumsJudgeLineDisp={0}", this.bJudgeLineDisp.Drums ? 1 : 0);
@@ -2848,7 +2850,15 @@ namespace DTXMania
                                             {
                                                 this.nLaneDisp.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Drums);
                                             }
-                                            else if( str3.Equals( "DrumsJudgeLineDisp" ) )
+                                            else if (str3.Equals("GuitarLaneDisp"))
+                                            {
+                                                this.nLaneDisp.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Guitar);
+                                            }
+                                            else if (str3.Equals("BassLaneDisp"))
+                                            {
+                                                this.nLaneDisp.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, (int)this.nLaneDisp.Bass);
+                                            }
+                                            else if (str3.Equals("DrumsJudgeLineDisp"))
                                             {
                                                 this.bJudgeLineDisp.Drums = C変換.bONorOFF(str4[0]);
                                             }
