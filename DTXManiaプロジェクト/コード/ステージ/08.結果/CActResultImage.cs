@@ -130,8 +130,17 @@ namespace DTXMania
 
             this.n本体X = 0x1d5;
             this.n本体Y = 0x11b;
-            this.nAlbumWidth = 128;
-            this.nAlbumHeight = 128;
+
+            if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+            {
+                this.nAlbumWidth = 102;
+                this.nAlbumHeight = 102;
+            }
+            else
+            {
+                this.nAlbumWidth = 128;
+                this.nAlbumHeight = 128;
+            }
 
             #region [ 本体位置 ]
 

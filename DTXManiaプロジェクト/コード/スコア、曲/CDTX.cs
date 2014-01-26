@@ -1296,6 +1296,7 @@ namespace DTXMania
 		public string strフォルダ名;
 		public string TITLE;
         public bool b強制的にXG譜面にする;
+        public bool bVol137to100;
 #if TEST_NOTEOFFMODE
 		public STLANEVALUE<bool> b演奏で直前の音を消音する;
 //		public bool bHH演奏で直前のHHを消音する;
@@ -1363,6 +1364,7 @@ namespace DTXMania
 			this.nRESULTMOVIE用優先順位 = new int[ 7 ];
 			this.nRESULTSOUND用優先順位 = new int[ 7 ];
             this.b強制的にXG譜面にする = false;
+            this.bVol137to100 = false;
 
 			#region [ 2011.1.1 yyagi GDA->DTX変換テーブル リファクタ後 ]
 			STGDAPARAM[] stgdaparamArray = new STGDAPARAM[] {		// GDA->DTX conversion table
@@ -4647,6 +4649,11 @@ namespace DTXMania
                     this.t入力・パラメータ食い込みチェック( "FORCINGXG", ref strコマンド, ref strパラメータ );
 					this.b強制的にXG譜面にする = strパラメータ.ToLower().Equals( "on" );
                 }
+                else if( strコマンド.StartsWith( "VOL7FTO64" ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "VOL7FTO64", ref strコマンド, ref strパラメータ );
+                    this.bVol137to100 = strパラメータ.ToLower().Equals( "on" );
+                }
 				else if( !this.bヘッダのみ )		// ヘッダのみの解析の場合、以下は無視。
 				{
 					#region [ PANEL ]
@@ -6147,7 +6154,8 @@ namespace DTXMania
 			int n音量;
 			if( int.TryParse( strパラメータ, out n音量 ) )
 			{
-				n音量 = Math.Min( Math.Max( n音量, 0 ), 100 );	// 0～100に丸める。
+                if( !bVol137to100 )
+				    n音量 = Math.Min( Math.Max( n音量, 0 ), 100 );	// 0～100に丸める。
 
 				if( this.n無限管理VOL[ zz ] == -zz )	// 初期状態では n無限管理VOL[zz] = - zz である。この場合、#WAVVOLzz, #VOLUMEzz がまだ出現していないことを意味する。
 				{
@@ -6164,6 +6172,16 @@ namespace DTXMania
 
 			return true;
 		}
+
+        private int tWAVVolMax137toMax100( int nMax137Vol )
+        {
+            int nMax100Vol;
+
+            nMax100Vol = (int)( 100.0 / nMax137Vol );
+
+            return nMax100Vol;
+        }
+
 		private bool t入力・行解析・チップ配置( string strコマンド, string strパラメータ, string strコメント )
 		{
 			// (1) コマンドを処理。
