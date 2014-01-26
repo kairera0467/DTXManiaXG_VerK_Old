@@ -44,13 +44,17 @@ namespace DTXMania
                 //レ－ンのみ先に描画しておく。
                 if (CDTXMania.DTX.bチップがある.Guitar)
                 {
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 67, 42);
-                    //this.txレーンダーク.t2D描画(CDTXMania.app.Device, 67, 42);    ダーク時にはこちらを使用
+                    if ( CDTXMania.ConfigIni.nLaneDisp.Guitar == 0 || CDTXMania.ConfigIni.nLaneDisp.Guitar == 2 )
+                        this.txレーン.t2D描画(CDTXMania.app.Device, 67, 42);
+                    else
+                        this.txレーンダーク.t2D描画(CDTXMania.app.Device, 67, 42);
                 }
                 if (CDTXMania.DTX.bチップがある.Bass)
                 {
-                    this.txレーン.t2D描画(CDTXMania.app.Device, 937, 42);
-                    //this.txレーンダーク.t2D描画(CDTXMania.app.Device, 937, 42);    ダーク時にはこちらを使用
+                    if ( CDTXMania.ConfigIni.nLaneDisp.Bass == 0 || CDTXMania.ConfigIni.nLaneDisp.Bass == 2 )
+                        this.txレーン.t2D描画(CDTXMania.app.Device, 937, 42);
+                    else
+                        this.txレーンダーク.t2D描画(CDTXMania.app.Device, 937, 42);
                 }
                 //---------------
                 #endregion

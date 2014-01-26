@@ -1107,17 +1107,35 @@ namespace DTXMania
 				"Guitar chips are hidden by approaching\nto the hit bar. " );
 			this.list項目リスト.Add( this.iGuitarHidden );
 
-            //レーン表示
+            //----------DisplayOption----------
 
-            this.iGuitarLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Guitar,
-                "レーンフラッシュの表示 / 非表示を切り替えます。",
-                "Toggle LaneFlush" );
-            this.list項目リスト.Add( this.iGuitarLaneFlush );
+            this.iGuitarDark = new CItemList("       Dark", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eDark,
+                 "レーン表示のオプションをまとめて切り替えます。\n" +
+                 "HALF: レーンが表示されな\nくなります。\n" +
+                 "FULL: さらに小節線、拍線、判定ラ\n" +
+                 "インも表示されなくなります。",
+                 "OFF: all display parts are shown.\nHALF: lanes and gauge are\n disappeared.\nFULL: additionaly to HALF, bar/beat\n lines, hit bar are disappeared.",
+                 new string[] { "OFF", "HALF", "FULL" });
+            this.list項目リスト.Add(this.iGuitarDark);
+
+            this.iGuitarLaneDisp = new CItemList("LaneDisp", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nLaneDisp.Guitar,
+                "レーンの縦線と小節線の表示を切り替えます。\n" +
+                "LANE OFF:レーン背景を表示しません。\n" +
+                "LINE OFF:小節線を表示しません。\n" +
+                "OFF:レーン背景、小節線を表示しません。",
+                "",
+                new string[] { "ON", "LANE OFF", "LINE OFF", "OFF" });
+            this.list項目リスト.Add(this.iGuitarLaneDisp);
 
             this.iGuitarJudgeLineDisp = new CItemToggle( "JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Guitar,
                 "判定ラインの表示 / 非表示を切り替えます。",
                 "Toggle JudgeLine");
             this.list項目リスト.Add( this.iGuitarJudgeLineDisp );
+
+            this.iGuitarLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Guitar,
+                "レーンフラッシュの表示 / 非表示を切り替えます。",
+                "Toggle LaneFlush" );
+            this.list項目リスト.Add( this.iGuitarLaneFlush );
 
 			this.iGuitarReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Guitar,
 				"ギターチップが譜面の上から下に流\nれるようになります。",
@@ -1275,20 +1293,35 @@ namespace DTXMania
 				"Bass chips are hidden by approaching\nto the hit bar." );
 			this.list項目リスト.Add( this.iBassHidden );
 
-            //レーン表示
+            //----------DisplayOption----------
 
-            this.iBassLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Bass,
-                "レーンフラッシュの表示 / 非表示を切り替えます。",
-                "Toggle LaneFlush" );
-            this.list項目リスト.Add( this.iBassLaneFlush );
+            this.iBassDark = new CItemList("       Dark", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eDark,
+                 "レーン表示のオプションをまとめて切り替えます。\n" +
+                 "HALF: レーンが表示されな\nくなります。\n" +
+                 "FULL: さらに小節線、拍線、判定ラ\n" +
+                 "インも表示されなくなります。",
+                 "OFF: all display parts are shown.\nHALF: lanes and gauge are\n disappeared.\nFULL: additionaly to HALF, bar/beat\n lines, hit bar are disappeared.",
+                 new string[] { "OFF", "HALF", "FULL" });
+            this.list項目リスト.Add(this.iBassDark);
 
+            this.iBassLaneDisp = new CItemList("LaneDisp", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nLaneDisp.Bass,
+                "レーンの縦線と小節線の表示を切り替えます。\n" +
+                "LANE OFF:レーン背景を表示しません。\n" +
+                "LINE OFF:小節線を表示しません。\n" +
+                "OFF:レーン背景、小節線を表示しません。",
+                "",
+                new string[] { "ON", "LANE OFF", "LINE OFF", "OFF" });
+            this.list項目リスト.Add(this.iBassLaneDisp);
 
             this.iBassJudgeLineDisp = new CItemToggle("JudgeLineDisp", CDTXMania.ConfigIni.bJudgeLineDisp.Bass,
                 "判定ラインの表示 / 非表示を切り替えます。",
                 "Toggle JudgeLine");
             this.list項目リスト.Add(this.iBassJudgeLineDisp);
 
-
+            this.iBassLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Bass,
+                "レーンフラッシュの表示 / 非表示を切り替えます。",
+                "Toggle LaneFlush" );
+            this.list項目リスト.Add( this.iBassLaneFlush );
 
 			this.iBassReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Bass,
 				"ベースチップが譜面の上から下に流\nれるようになります。",
@@ -1627,8 +1660,29 @@ namespace DTXMania
                     else
                     {
                         this.iGuitarLaneDisp.n現在選択されている項目番号 = 0;
-                        this.iDrumsJudgeLineDisp.bON = true;
-                        this.iDrumsLaneFlush.bON = true;
+                        this.iGuitarJudgeLineDisp.bON = true;
+                        this.iGuitarLaneFlush.bON = true;
+                    }
+                }
+                else if (this.list項目リスト[this.n現在の選択項目] == this.iBassDark)					// #27029 2012.1.4 from
+                {
+                    if (this.iBassDark.n現在選択されている項目番号 == (int)Eダークモード.FULL)
+                    {
+                        this.iBassLaneDisp.n現在選択されている項目番号 = 3;
+                        this.iBassJudgeLineDisp.bON = false;
+                        this.iBassLaneFlush.bON = false;
+                    }
+                    else if (this.iBassDark.n現在選択されている項目番号 == (int)Eダークモード.HALF)
+                    {
+                        this.iBassLaneDisp.n現在選択されている項目番号 = 1;
+                        this.iBassJudgeLineDisp.bON = true;
+                        this.iBassLaneFlush.bON = true;
+                    }
+                    else
+                    {
+                        this.iBassLaneDisp.n現在選択されている項目番号 = 0;
+                        this.iBassJudgeLineDisp.bON = true;
+                        this.iBassLaneFlush.bON = true;
                     }
                 }
                 #endregion
@@ -2744,6 +2798,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass = this.iBassInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
 
             CDTXMania.ConfigIni.bLaneFlush.Bass = this.iBassLaneFlush.bON;
+            CDTXMania.ConfigIni.nLaneDisp.Bass = this.iBassLaneDisp.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bJudgeLineDisp.Bass = this.iBassJudgeLineDisp.bON;
             CDTXMania.ConfigIni.nShutterInSide.Bass = this.iBassShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide.Bass = this.iBassShutterOutPos.n現在の値;
@@ -2839,6 +2894,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.bGraph.Guitar = this.iGuitarGraph.bON;
 
             CDTXMania.ConfigIni.bLaneFlush.Guitar = this.iGuitarLaneFlush.bON;
+            CDTXMania.ConfigIni.nLaneDisp.Guitar = this.iGuitarLaneDisp.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bJudgeLineDisp.Guitar = this.iGuitarJudgeLineDisp.bON;
             CDTXMania.ConfigIni.nShutterInSide.Guitar = this.iGuitarShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide.Guitar = this.iGuitarShutterOutPos.n現在の値;
