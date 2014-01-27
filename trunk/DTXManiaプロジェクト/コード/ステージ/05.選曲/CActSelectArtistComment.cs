@@ -114,7 +114,7 @@ namespace DTXMania
 				image.Dispose();
 				if( this.txComment != null )
 				{
-					this.ctComment = new CCounter( -210, (int) ( ( ( ( this.nComment行数 - 1 ) * this.nテクスチャの最大幅 ) + this.nComment最終行の幅 ) * this.txComment.vc拡大縮小倍率.X ), 10, CDTXMania.Timer );
+					this.ctComment = new CCounter( -215, (int) ( ( ( ( this.nComment行数 - 1 ) * this.nテクスチャの最大幅 ) + this.nComment最終行の幅 ) * this.txComment.vc拡大縮小倍率.X ), 10, CDTXMania.Timer );
 				}
 			}
 		}
@@ -183,43 +183,29 @@ namespace DTXMania
 				}
                 */
 
-                if ( this.txComment != null /* && (this.txComment.szテクスチャサイズ.Width * this.txComment.vc拡大縮小倍率.X) < 211 */ )
+                if ( this.txComment != null && (this.txComment.szテクスチャサイズ.Width * this.txComment.vc拡大縮小倍率.X) < 215 )
                 {
-//                    int x = 560 - ((int)(this.txComment.szテクスチャサイズ.Width * this.txComment.vc拡大縮小倍率.X));		// #27648 2012.3.14 yyagi: -12 for scrollbar
-//                    int y = 500;
                     this.txComment.t2D描画(CDTXMania.app.Device, 560, 500);
                 }
-				else if( this.txComment != null /* && ( ( this.ctComment.n現在の値 + 750 ) >= 0 ) */ )
+				else if( this.txComment != null )
 				{
-					int num3 = 560;
-					int num4 = 500;
-					Rectangle rectangle = new Rectangle( this.ctComment.n現在の値, 0, 210, (int) this.ft描画用フォント.Size );
-					if( rectangle.X < 0 )
-					{
-						num3 += -rectangle.X;
-						rectangle.Width -= -rectangle.X;
-						rectangle.X = 0;
-					}
-					int num5 = ( (int) ( ( (float) rectangle.X ) / this.txComment.vc拡大縮小倍率.X ) ) / this.nテクスチャの最大幅;
-					Rectangle rectangle2 = new Rectangle();
-					while( rectangle.Width > 0 )
-					{
-						rectangle2.X = ( (int) ( ( (float) rectangle.X ) / this.txComment.vc拡大縮小倍率.X ) ) % this.nテクスチャの最大幅;
-						rectangle2.Y = num5 * ( (int) this.ft描画用フォント.Size );
-						int num6 = ( ( num5 + 1 ) == this.nComment行数 ) ? this.nComment最終行の幅 : this.nテクスチャの最大幅;
-						int num7 = num6 - rectangle2.X;
-						rectangle2.Width = num7;
-						rectangle2.Height = (int) this.ft描画用フォント.Size;
-						this.txComment.t2D描画( CDTXMania.app.Device, num3, num4, rectangle2 );
-						if( ++num5 == this.nComment行数 )
-						{
-							break;
-						}
-						int num8 = (int) ( rectangle2.Width * this.txComment.vc拡大縮小倍率.X );
-						rectangle.X += num8;
-						rectangle.Width -= num8;
-						num3 += num8;
-					}
+
+                    int num3 = 560;
+                    int num4 = 500;
+                    float num5 = this.txComment.vc拡大縮小倍率.X;
+
+                    Rectangle rectangle = new Rectangle((int)(((float)this.ctComment.n現在の値)/num5), 0, (int)(215f / num5), (int)this.ft描画用フォント.Size);
+                    if (rectangle.X < 0)
+                    {
+                        num3 -= (int) (rectangle.X * num5);
+                        rectangle.Width += rectangle.X;
+                        rectangle.X = 0;
+                    }
+                    if (rectangle.Right >= this.nComment最終行の幅)
+                    {
+                        rectangle.Width -= rectangle.Right - this.nComment最終行の幅;
+                    }
+                    this.txComment.t2D描画(CDTXMania.app.Device, num3, num4, rectangle);
 				}
 			}
 			return 0;
