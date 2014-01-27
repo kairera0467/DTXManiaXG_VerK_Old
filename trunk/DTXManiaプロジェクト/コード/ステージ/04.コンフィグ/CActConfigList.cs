@@ -1167,9 +1167,9 @@ namespace DTXMania
             //RISKY
 
 			this.iGuitarPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.判定文字表示位置.Guitar,
-				"ギターの判定文字の表示位置を指定\nします。\n  P-A: レーン上\n  P-B: COMBO の下\n  OFF: 表示しない",
-				"The position to show judgement mark.\n(Perfect, Great, ...)\n\n P-A: on the lanes.\n P-B: under the COMBO indication.\n OFF: no judgement mark.",
-				new string[] { "P-A", "P-B", "OFF" } );
+                "ギターの判定文字の表示位置を指定\nします。\n  P-A: レーン上\n  P-B: COMBO の下\n  P-C: 判定ライン上\n  OFF: 表示しない",
+                "The position to show judgement mark.\n(Perfect, Great, ...)\n\n P-A: on the lanes.\n P-B: under the COMBO indication.\n P-C: on the JudgeLine.\n OFF: no judgement mark.",
+                new string[] { "P-A", "P-B", "P-C", "OFF" });
 			this.list項目リスト.Add( this.iGuitarPosition );
 
             //実機ではここにオートオプションが入る。
@@ -1359,10 +1359,10 @@ namespace DTXMania
 
 			this.iBassPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常,
 				(int) CDTXMania.ConfigIni.判定文字表示位置.Bass,
-				"ベースの判定文字の表示位置を指定\nします。\n  P-A: レーン上\n  P-B: COMBO の下\n  OFF: 表示しない",
-				"The position to show judgement mark.\n(Perfect, Great, ...)\n\n P-A: on the lanes.\n P-B: under the COMBO indication.\n OFF: no judgement mark.",
-				new string[] { "P-A", "P-B", "OFF" } );
-			this.list項目リスト.Add( this.iBassPosition );
+                "ベースの判定文字の表示位置を指定\nします。\n  P-A: レーン上\n  P-B: COMBO の下\n  P-C: 判定ライン上\n  OFF: 表示しない",
+                "The position to show judgement mark.\n(Perfect, Great, ...)\n\n P-A: on the lanes.\n P-B: under the COMBO indication.\n P-C: on the JudgeLine.\n OFF: no judgement mark.",
+                new string[] { "P-A", "P-B", "P-C", "OFF" });
+            this.list項目リスト.Add(this.iBassPosition);
 
 			this.iBassRandom = new CItemList( "Random", CItemBase.Eパネル種別.通常,
 				(int) CDTXMania.ConfigIni.eRandom.Bass,
@@ -2827,7 +2827,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bSudden.Bass = this.iBassSudden.bON;
 			CDTXMania.ConfigIni.bHidden.Bass = this.iBassHidden.bON;
 			CDTXMania.ConfigIni.bReverse.Bass = this.iBassReverse.bON;
-			CDTXMania.ConfigIni.判定文字表示位置.Bass = (E判定文字表示位置) this.iBassPosition.n現在選択されている項目番号;
+			CDTXMania.ConfigIni.判定文字表示位置.Bass = (Eタイプ) this.iBassPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.eRandom.Bass = (Eランダムモード) this.iBassRandom.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bLight.Bass = this.iBassLight.bON;
 			CDTXMania.ConfigIni.bLeft.Bass = this.iBassLeft.bON;
@@ -2858,7 +2858,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n譜面スクロール速度.Drums = this.iDrumsScrollSpeed.n現在の値;
 			CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置) this.iDrumsComboPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bReverse.Drums = this.iDrumsReverse.bON;
-			CDTXMania.ConfigIni.判定文字表示位置.Drums = (E判定文字表示位置) this.iDrumsPosition.n現在選択されている項目番号;
+			CDTXMania.ConfigIni.判定文字表示位置.Drums = (Eタイプ) this.iDrumsPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums = this.iDrumsInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
 			CDTXMania.ConfigIni.bGraph.Drums = this.iDrumsGraph.bON;// #24074 2011.01.23 add ikanick
@@ -2919,7 +2919,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bSudden.Guitar = this.iGuitarSudden.bON;
 			CDTXMania.ConfigIni.bHidden.Guitar = this.iGuitarHidden.bON;
 			CDTXMania.ConfigIni.bReverse.Guitar = this.iGuitarReverse.bON;
-			CDTXMania.ConfigIni.判定文字表示位置.Guitar = (E判定文字表示位置) this.iGuitarPosition.n現在選択されている項目番号;
+			CDTXMania.ConfigIni.判定文字表示位置.Guitar = (Eタイプ) this.iGuitarPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.eRandom.Guitar = (Eランダムモード) this.iGuitarRandom.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bLight.Guitar = this.iGuitarLight.bON;
 			CDTXMania.ConfigIni.bLeft.Guitar = this.iGuitarLeft.bON;

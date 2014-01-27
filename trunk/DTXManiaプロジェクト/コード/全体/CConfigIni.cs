@@ -563,7 +563,7 @@ namespace DTXMania
         public string strCardName;
         public string strGroupName;
 		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
-		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
+        public STDGBVALUE<Eタイプ> 判定文字表示位置;
         public int nMovieMode;
         public int nJudgeLine;
         public STDGBVALUE<int> nShutterInSide;
@@ -1098,7 +1098,7 @@ namespace DTXMania
 			this.eRandom = new STDGBVALUE<Eランダムモード>();
 			this.bLight = new STDGBVALUE<bool>();
 			this.bLeft = new STDGBVALUE<bool>();
-			this.判定文字表示位置 = new STDGBVALUE<E判定文字表示位置>();
+            this.判定文字表示位置 = new STDGBVALUE<Eタイプ>();
 			this.n譜面スクロール速度 = new STDGBVALUE<int>();
 			this.nInputAdjustTimeMs = new STDGBVALUE<int>();	// #23580 2011.1.3 yyagi
             this.nJudgeLinePosOffset = new STDGBVALUE<int>(); // #31602 2013.6.23 yyagi
@@ -1111,7 +1111,7 @@ namespace DTXMania
 				this.eRandom[ i ] = Eランダムモード.OFF;
 				this.bLight[ i ] = false;
 				this.bLeft[ i ] = false;
-				this.判定文字表示位置[ i ] = E判定文字表示位置.レーン上;
+				this.判定文字表示位置[ i ] = Eタイプ.A;
 				this.n譜面スクロール速度[ i ] = 1;
 				this.nInputAdjustTimeMs[ i ] = 0;
                 this.nJudgeLinePosOffset[i] = 0;
@@ -1696,7 +1696,7 @@ namespace DTXMania
 			sw.WriteLine( "; ドラム判定文字表示位置(0:レーン上,1:判定ライン上,2:表示OFF)" );
 			sw.WriteLine( "DrumsPosition={0}", (int) this.判定文字表示位置.Drums );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベース判定文字表示位置(0:レーン上,1:判定ライン横,2:表示OFF)" );
+			sw.WriteLine( "; ギター/ベース判定文字表示位置(0:レーン上, 1:レーン横, 2:判定ライン上, 3:表示OFF)" );
 			sw.WriteLine( "GuitarPosition={0}", (int) this.判定文字表示位置.Guitar );
 			sw.WriteLine( "BassPosition={0}", (int) this.判定文字表示位置.Bass );
 			sw.WriteLine();
@@ -2704,15 +2704,15 @@ namespace DTXMania
                                             }
 											else if( str3.Equals( "DrumsPosition" ) )
 											{
-												this.判定文字表示位置.Drums = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.判定文字表示位置.Drums );
+                                                this.判定文字表示位置.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.判定文字表示位置.Drums);
 											}
 											else if( str3.Equals( "GuitarPosition" ) )
 											{
-												this.判定文字表示位置.Guitar = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.判定文字表示位置.Guitar );
+                                                this.判定文字表示位置.Guitar = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.判定文字表示位置.Guitar);
 											}
 											else if( str3.Equals( "BassPosition" ) )
 											{
-												this.判定文字表示位置.Bass = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.判定文字表示位置.Bass );
+                                                this.判定文字表示位置.Bass = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.判定文字表示位置.Bass);
 											}
 											else if( str3.Equals( "DrumsScrollSpeed" ) )
 											{

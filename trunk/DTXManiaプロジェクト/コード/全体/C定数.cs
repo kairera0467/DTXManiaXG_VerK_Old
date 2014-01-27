@@ -190,14 +190,6 @@ namespace DTXMania
 		Auto
 	}
 
-
-
-	internal enum E判定文字表示位置
-	{
-		レーン上,
-		判定ライン上または横,
-		表示OFF
-	}
 	internal enum EAVI種別
 	{
 		Unknown,

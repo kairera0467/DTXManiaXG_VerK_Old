@@ -102,7 +102,7 @@ namespace DTXMania
 			{
 				throw new IndexOutOfRangeException( "有効範囲は 0～14 です。" );
 			}
-			if( ( ( nLane >= 10 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.表示OFF ) ) && ( ( ( nLane != 13 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != E判定文字表示位置.表示OFF ) ) && ( ( nLane != 14 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != E判定文字表示位置.表示OFF ) ) ) )
+			if( ( ( nLane >= 10 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != Eタイプ.C ) ) && ( ( ( nLane != 13 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != Eタイプ.D ) ) && ( ( nLane != 14 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != Eタイプ.D ) ) ) )
 			{
                 if (CDTXMania.ConfigIni.nJudgeFrames > 1)
                 {

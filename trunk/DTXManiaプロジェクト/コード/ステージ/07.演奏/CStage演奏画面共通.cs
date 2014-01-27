@@ -3955,14 +3955,14 @@ namespace DTXMania
 		}
 		protected void t進行描画・判定文字列1・通常位置指定の場合()
 		{
-			if ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.判定ライン上または横 )
+			if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != Eタイプ.B )
 			{
 				this.actJudgeString.On進行描画();
 			}
 		}
 		protected void t進行描画・判定文字列2・判定ライン上指定の場合()
 		{
-			if ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) == E判定文字表示位置.判定ライン上または横 )
+			if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) == Eタイプ.B )
 			{
 				this.actJudgeString.On進行描画();
 			}
