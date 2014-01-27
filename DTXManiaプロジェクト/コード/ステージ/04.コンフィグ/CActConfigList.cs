@@ -405,7 +405,7 @@ namespace DTXMania
             this.list項目リスト.Add(this.iSystemASIOBufferSizeMs);
             */
 
-            this.iDrumsNamePlateType = new CItemList("NamePlateType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNamePlate.Drums,
+            this.iSystemNamePlateType = new CItemList("NamePlateType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNamePlate,
                 "演奏画面の構成を変更します。\n" +
                 "Type-A: XG2風の表示です。\n" +
                 "Type-B: XG1風の表示です。\n",
@@ -413,7 +413,7 @@ namespace DTXMania
                 "Type-A: XG2\n" +
                 "Type-B: XG1\n",
                 new string[] { "Type-A", "Type-B" });
-            this.list項目リスト.Add(this.iDrumsNamePlateType);
+            this.list項目リスト.Add(this.iSystemNamePlateType);
 
 			this.iSystemSkinSubfolder = new CItemList( "Skin (General)", CItemBase.Eパネル種別.通常, nSkinIndex,
                 "スキン切替：スキンを切り替えます。\n" +
@@ -2539,7 +2539,7 @@ namespace DTXMania
         private CItemToggle iMutingLP;
         private CItemList   iSystemBPMbar;
         private CItemToggle iSystemClassicNotes;
-        private CItemList   iDrumsNamePlateType;
+        private CItemList   iSystemNamePlateType;
 
         private int iSystemSoundType_initial;
         private int iSystemWASAPIBufferSizeMs_initial;
@@ -2792,7 +2792,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.nInfoType = this.iInfoType.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;										// #23559 2911.7.27 yyagi
 
-            CDTXMania.ConfigIni.eNamePlate.Drums = (Eタイプ)this.iDrumsNamePlateType.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.eNamePlate = (Eタイプ)this.iSystemNamePlateType.n現在選択されている項目番号;
             CDTXMania.ConfigIni.strSystemSkinSubfolderFullName = skinSubFolders[nSkinIndex];				// #28195 2012.5.2 yyagi
 			CDTXMania.Skin.SetCurrentSkinSubfolderFullName( CDTXMania.ConfigIni.strSystemSkinSubfolderFullName, true );
 			CDTXMania.ConfigIni.bUseBoxDefSkin = this.iSystemUseBoxDefSkin.bON;								// #28195 2012.5.6 yyagi

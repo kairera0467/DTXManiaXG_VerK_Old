@@ -513,7 +513,7 @@ namespace DTXMania
         public bool bDynamicBassMixerManagement; // #24820
         public Eタイプ eBPMbar;
         public Eタイプ eAttackEffectType;
-        public STDGBVALUE<Eタイプ> eNamePlate;
+        public Eタイプ eNamePlate;
         public STDGBVALUE<Eタイプ> eNumOfLanes;
         public STDGBVALUE<Eタイプ> eDkdkType;
         public STDGBVALUE<Eタイプ> eLaneType;
@@ -1021,10 +1021,7 @@ namespace DTXMania
             this.eAttackEffectType = Eタイプ.A;
             this.eLaneType = new STDGBVALUE<Eタイプ>();
             this.eLaneType.Drums = Eタイプ.A;
-            this.eNamePlate = new STDGBVALUE<Eタイプ>();
-            this.eNamePlate.Drums = Eタイプ.A;
-            this.eNamePlate.Guitar = Eタイプ.A;
-            this.eNamePlate.Bass = Eタイプ.A;
+            this.eNamePlate = Eタイプ.A;
             this.eHHOGraphics = new STDGBVALUE<Eタイプ>();
             this.eHHOGraphics.Drums = Eタイプ.A;
             this.eLBDGraphics = new STDGBVALUE<Eタイプ>();
@@ -1776,7 +1773,7 @@ namespace DTXMania
             sw.WriteLine("; ネームプレートタイプ");
             sw.WriteLine("; 0:タイプA XG2風の表示がされます。 ");
             sw.WriteLine("; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれます。");
-            sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate.Drums);
+            sw.WriteLine("NamePlateType={0}", (int)this.eNamePlate);
             sw.WriteLine();
             sw.WriteLine("; CLASSIC譜面判別");
             sw.WriteLine("CLASSIC={0}", this.bCLASSIC譜面判別を有効にする ? 1 : 0);
@@ -2783,7 +2780,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("NamePlateType"))
                                             {
-                                                this.eNamePlate.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eNamePlate.Drums);
+                                                this.eNamePlate = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eNamePlate);
                                             }
                                             else if (str3.Equals("RDPosition"))
                                             {

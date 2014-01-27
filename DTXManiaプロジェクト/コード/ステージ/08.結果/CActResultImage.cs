@@ -131,7 +131,7 @@ namespace DTXMania
             this.n本体X = 0x1d5;
             this.n本体Y = 0x11b;
 
-            if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+            if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
             {
                 this.nAlbumWidth = 102;
                 this.nAlbumHeight = 102;

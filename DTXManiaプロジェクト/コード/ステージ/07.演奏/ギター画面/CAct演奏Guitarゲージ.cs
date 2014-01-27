@@ -67,7 +67,7 @@ namespace DTXMania
 				this.ct本体移動.t進行Loop();
 				this.ct本体振動.t進行Loop();
 
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
                     #region [ ギターのゲージ ]
                     if (base.txgbg != null && CDTXMania.DTX.bチップがある.Guitar)
@@ -97,7 +97,7 @@ namespace DTXMania
                     }
                     #endregion
                 }
-                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
                     #region [ ギターのゲージ ]
                     if ( base.txgbg != null && CDTXMania.DTX.bチップがある.Guitar )

@@ -22,7 +22,7 @@ namespace DTXMania
 
             this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 20, FontStyle.Bold ); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
             this.pfSongTitleFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 22, FontStyle.Regular );
-            if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+            if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
             {
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 
                     ( CDTXMania.DTX.bチップがある.LeftCymbal == false ) && 
@@ -51,7 +51,7 @@ namespace DTXMania
             {
                 this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_score numbers.png" ) );
                 this.iPart = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
                     this.iDifficulty = Image.FromFile(CSkin.Path(@"Graphics\7_Difficulty_XG.png"));
                     this.iPart = Image.FromFile(CSkin.Path(@"Graphics\7_Part_XG.png"));
@@ -62,7 +62,7 @@ namespace DTXMania
                 }
                 #region[ ネームプレート本体 ]
                 this.iNamePlate = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
-                if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                 {
                     this.iNamePlate = Image.FromFile( CSkin.Path( @"Graphics\7_nameplate.png" ) );
                     if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 
@@ -76,7 +76,7 @@ namespace DTXMania
                             this.iNamePlate = Image.FromFile( CSkin.Path( @"Graphics\7_nameplate_cls.png" ) );
                     }
                 }
-                else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                 {
                     this.iNamePlate = Image.FromFile( CSkin.Path( @"Graphics\7_nameplate_XG.png" ) );
                     if(CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 
@@ -108,13 +108,13 @@ namespace DTXMania
                 gNamePlate = Graphics.FromImage( this.bNamePlate );
                 gNamePlate.DrawImage(this.iNamePlate, 0, 0, 0x170, 0x103);
 
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
                     Rectangle Rect1 = new Rectangle(7, 167, 150, 38);
                     Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 38);
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                 }
-                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
                     Rectangle Rect1 = new Rectangle(7, 138, 194, 60);
                     Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 60), 194, 60);
@@ -226,12 +226,12 @@ namespace DTXMania
                 if( this.nStrlengthbydot > 240 )
                 {
                     gNamePlate.ScaleTransform(240.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                    if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                     {
                         gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 62f);
                         gNamePlate.ResetTransform();
                     }
-                    else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                     {
                         gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 54f);
                         gNamePlate.ResetTransform();
@@ -239,24 +239,24 @@ namespace DTXMania
                 }
                 else
                 {
-                    if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                     {
                         gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 65f);
 
                     }
-                    else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                     {
                         gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f);
                     }
                 }
                 #endregion
 
-                if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
                     gNamePlate.DrawImage(bmpCardName, 42f, 126f);
                     gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 54f, 105f);
                 }
-                else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
                     gNamePlate.DrawImage(bmpCardName, 46f, 92f);
                 }
@@ -294,17 +294,17 @@ namespace DTXMania
                     ( CDTXMania.DTX.bチップがある.Ride == false ) &&
                     ( CDTXMania.DTX.b強制的にXG譜面にする == false) )
                 {
-                    if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                         gNamePlate.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 18f + width, 164f);
-                    else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                         gNamePlate.DrawString(str.Substring(0, 2), this.ftDifficultyL, Brushes.Black, 24f + width, 154f);
                 }
                 else
                 {
-                    if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                         gNamePlate.DrawString(str.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 12.0f + width, 164f);
 
-                    else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                         gNamePlate.DrawString(str.Substring(0, 1), this.ftDifficultyL, Brushes.Black, 14.0f + width, 130f);
                 }
                 width += ( int )gNamePlate.MeasureString( str.Substring( 0, 1 ), this.ftDifficultyL ).Width;
@@ -321,9 +321,9 @@ namespace DTXMania
                 }
                 else
                 {
-                    if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                         gNamePlate.DrawString(str.Substring(1, 3), this.ftDifficultyS, Brushes.Black, width, 176f);
-                    else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                         gNamePlate.DrawString(str.Substring(1, 3), this.ftDifficultyS, Brushes.Black, 2f + width, 166f);
                 }
 
@@ -338,13 +338,13 @@ namespace DTXMania
                     this.iAlbum = Image.FromFile( path );
                 }
 
-                if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                 {
                     gNamePlate.DrawImage( this.iAlbum,     new Rectangle( 6, 0x11, 0x45, 0x4b ),  new Rectangle( 0, 0, this.iAlbum.Width, this.iAlbum.Height ), GraphicsUnit.Pixel );
                     gNamePlate.DrawImage( this.iDrumspeed, new Rectangle( 209, 156, 42, 48 ),     new Rectangle( 0, ( ( this.nCurrentDrumspeed > 15 ) ? 15 : this.nCurrentDrumspeed ) * 0x30, 0x2a, 0x30 ), GraphicsUnit.Pixel );
                     gNamePlate.DrawImage( this.iRisky,     new Rectangle( 260, 156, 42, 48 ),     new Rectangle( 0, ( ( CDTXMania.ConfigIni.nRisky > 10 ) ? 10 : CDTXMania.ConfigIni.nRisky ) * 48, 42, 48 ), GraphicsUnit.Pixel );
                 }
-                else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                 {
                     gNamePlate.DrawImage( this.iAlbum,     new Rectangle( 6, 9, 0x45, 0x4b ), new Rectangle( 0, 0, this.iAlbum.Width, this.iAlbum.Height ), GraphicsUnit.Pixel );
                     gNamePlate.DrawImage( this.iDrumspeed, new Rectangle( 210, 141, 42, 48 ), new Rectangle( 0, ( ( this.nCurrentDrumspeed > 15 ) ? 15 : this.nCurrentDrumspeed ) * 0x30, 0x2a, 0x30 ), GraphicsUnit.Pixel );
@@ -400,13 +400,13 @@ namespace DTXMania
             if( !base.b活性化してない )
             {
                 SlimDX.Matrix identity = SlimDX.Matrix.Identity;
-                if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                 {
                     identity *= SlimDX.Matrix.Translation( -1135, 150, 0 );
                     identity *= SlimDX.Matrix.Scaling( 0.338f, 0.62f, 1f );
                     identity *= SlimDX.Matrix.RotationY( -0.8f );
                 }
-                else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                 {
                     identity *= SlimDX.Matrix.Translation( -991, 225, 0 );
                     identity *= SlimDX.Matrix.Scaling( 0.385f, 0.61f, 1.0f );
@@ -418,12 +418,12 @@ namespace DTXMania
                 {
                     Graphics gNamePlate = Graphics.FromImage( this.bNamePlate );
                     this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
-                    if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                     {
                         gNamePlate.DrawImage( this.iDrumspeed, new Rectangle( 209, 156, 42, 48 ), new Rectangle( 0, ( ( this.nCurrentDrumspeed > 15 ) ? 15 : this.nCurrentDrumspeed ) * 0x30, 0x2a, 0x30 ), GraphicsUnit.Pixel );
                         gNamePlate.DrawImage( this.iRisky,     new Rectangle( 260, 156, 42, 48 ), new Rectangle( 0, ( ( CDTXMania.ConfigIni.nRisky > 10 ) ? 10 : CDTXMania.ConfigIni.nRisky ) * 48, 42, 48 ), GraphicsUnit.Pixel );
                     }
-                    else if(CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                    else if(CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                     {
                         gNamePlate.DrawImage( this.iDrumspeed, new Rectangle( 210, 141, 42, 48 ), new Rectangle( 0, ( ( this.nCurrentDrumspeed > 15 ) ? 15 : this.nCurrentDrumspeed ) * 0x30, 0x2a, 0x30 ), GraphicsUnit.Pixel );
                         gNamePlate.DrawImage( this.iRisky,     new Rectangle( 260, 141, 42, 48 ), new Rectangle( 0, ( ( CDTXMania.ConfigIni.nRisky > 10 ) ? 10 : CDTXMania.ConfigIni.nRisky ) * 48, 42, 48 ), GraphicsUnit.Pixel );
@@ -461,14 +461,14 @@ namespace DTXMania
                         if (this.txScore != null)
                         {
                             SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
-                            if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A)
+                            if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-1220 + (i * 30), 120 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.34f, 0.62f, 1.0f);
                                 matScoreXG *= SlimDX.Matrix.RotationY(-0.60f);
                                 this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
-                            else if (CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B)
+                            else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-1370 + (i * 30), 50 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.3f, 0.62f, 1f);
@@ -505,14 +505,14 @@ namespace DTXMania
                         if( this.txScore != null )
                         {
                             SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
-                            if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.A )
+                            if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-870 + (i * 30), 114 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.47f, 0.65f, 1.0f);
                                 matScoreXG *= SlimDX.Matrix.RotationY(-0.60f);
                                 this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
-                            else if( CDTXMania.ConfigIni.eNamePlate.Drums == Eタイプ.B )
+                            else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-974 + (i * 30), 50 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.42f, 0.62f, 1f);
