@@ -504,7 +504,7 @@ namespace DTXMania
 		public int nウインドウwidth;				// #23510 2010.10.31 yyagi add
 		public int nウインドウheight;				// #23510 2010.10.31 yyagi add
         public bool ボーナス演出を表示する;
-        public bool bドラムセットを動かす;
+        public Eタイプ eドラムセットを動かす;
         public bool bHAZARD;
         public int nSoundDeviceType; // #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
         public int nWASAPIBufferSizeMs; // #24820 2013.1.15 yyagi WASAPIのバッファサイズ
@@ -1093,7 +1093,6 @@ namespace DTXMania
 			this.n自動再生音量 = 80;
 			this.n手動再生音量 = 100;
 			this.bログ出力 = true;
-            this.bドラムセットを動かす = true;
             this.b難易度表示をXG表示にする = false;
 			this.b演奏音を強調する = new STDGBVALUE<bool>();
 			this.bSudden = new STDGBVALUE<bool>();
@@ -1752,8 +1751,8 @@ namespace DTXMania
             sw.WriteLine();
             #endregion
             #region[ ver.K追加オプション ]
-            sw.WriteLine("; 動くドラムセット(0:OFF, 1:ON)");
-            sw.WriteLine("DrumSetMoves={0}", this.bドラムセットを動かす ? 1 : 0);
+            sw.WriteLine("; 動くドラムセット(0:ON, 1:OFF, 2:NONE)");
+            sw.WriteLine("DrumSetMoves={0}", (int)this.eドラムセットを動かす);
             sw.WriteLine();
             sw.WriteLine("; シャッターINSIDE(0～100)");
             sw.WriteLine("DrumsShutterIn={0}", (int)this.nShutterInSide.Drums);
@@ -1768,7 +1767,7 @@ namespace DTXMania
             sw.WriteLine( "; ボーナス演出の表示(0:表示しない, 1:表示する)");
             sw.WriteLine("DrumsStageEffect={0}", this.ボーナス演出を表示する ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine( "; BPMバーの表示(0:表示する, 1:左のみ表示, 2:表示しない)");
+            sw.WriteLine("; BPMバーの表示(0:表示する, 1:左のみ表示, 2:動くバーを表示しない, 3:表示しない)");
             sw.WriteLine("BPMBar={0}", (int)this.eBPMbar); ;
             sw.WriteLine();
             sw.WriteLine("; ドラムレーンタイプ(0:A, 1:B, 2:C 3:D )");
@@ -2796,7 +2795,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("MoveDrumSet"))
                                             {
-                                                this.bドラムセットを動かす = C変換.bONorOFF(str4[0]);
+                                                this.eドラムセットを動かす = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eドラムセットを動かす);
                                             }
                                             else if (str3.Equals("DrumsStageEffect"))
                                             {
@@ -2804,7 +2803,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("BPMBar"))
                                             {
-                                                this.eBPMbar = ( Eタイプ )C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eBPMbar);
+                                                this.eBPMbar = ( Eタイプ )C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eBPMbar);
                                             }
                                             else if (str3.Equals("CLASSIC"))
                                             {

@@ -847,11 +847,11 @@ namespace DTXMania
                     switch (((Eパッド)nPad))
                     {
                         case Eパッド.LC:
-                            if ( CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if ( CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.A )
                                 this.actDrumSet.ct左シンバル.n現在の値 = 0;
                             break;
                         case Eパッド.CY:
-                            if (CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if (CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.A )
                                 this.actDrumSet.ct右シンバル.n現在の値 = 0;
                             break;
                     }
@@ -2287,11 +2287,11 @@ namespace DTXMania
                     switch (((Eパッド)nPad))
                     {
                         case Eパッド.LC:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.A )
                                 this.actDrumSet.ct左シンバル.n現在の値 = 0;
                             break;
                         case Eパッド.CY:
-                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.bドラムセットを動かす)
+                            if (CDTXMania.ConfigIni.bドラム打音を発声する == false && CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.A )
                                 this.actDrumSet.ct右シンバル.n現在の値 = 0;
                             break;
                     }
