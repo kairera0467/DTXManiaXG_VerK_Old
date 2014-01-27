@@ -203,23 +203,29 @@ namespace DTXMania
 						{
 							if( j == 14 )
 							{
-								if( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.表示OFF )
+								if( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.D )
 								{
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.レーン上 ) ? 1000 : 770;
-								num6 = CDTXMania.ConfigIni.bReverse.Bass ? 450 : 300;
+								num5 = ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.B ) ? 770 : 1020;
+                                if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.C )
+								    num6 = CDTXMania.ConfigIni.bReverse.Bass ? 650 : 80;
+                                else
+                                    num6 = CDTXMania.ConfigIni.bReverse.Bass ? 450 : 300;
 							}
 							else if( j == 13 )
 							{
-								if( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.表示OFF )
+								if( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.D )
 								{
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.レーン上 ) ? 160 : 420;
-								num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 450 : 300;
+								num5 = ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.B ) ? 420 : 160;
+                                if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.C )
+								    num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 650 : 80;
+                                else
+                                    num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 450 : 300;
 							}
 
                             int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;

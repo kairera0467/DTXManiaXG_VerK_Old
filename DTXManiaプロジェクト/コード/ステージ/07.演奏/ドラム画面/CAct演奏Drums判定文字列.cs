@@ -129,24 +129,24 @@ namespace DTXMania
                         if (j < 10)
                         {
                             num5 = base.stレーンサイズ[j].x;
-                            num6 = CDTXMania.ConfigIni.bReverse.Drums ? ((CDTXMania.ConfigIni.判定文字表示位置.Drums == E判定文字表示位置.レーン上) ? (240 + (this.n文字の縦表示位置[j] * 0x20)) : 50) : ((CDTXMania.ConfigIni.判定文字表示位置.Drums == E判定文字表示位置.レーン上) ? (base.iP_A + (this.n文字の縦表示位置[j] * 0x20)) : base.iP_B);
+                            num6 = CDTXMania.ConfigIni.bReverse.Drums ? ((CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? (240 + (this.n文字の縦表示位置[j] * 0x20)) : 50) : ((CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? (base.iP_A + (this.n文字の縦表示位置[j] * 0x20)) : base.iP_B);
                         }
                         else if (j == 11)
                         {
-                            if (CDTXMania.ConfigIni.判定文字表示位置.Bass == E判定文字表示位置.表示OFF)
+                            if (CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.D)
                             {
                                 continue;
                             }
                             num5 = base.stレーンサイズ[j].x;
-                            num6 = CDTXMania.ConfigIni.bReverse.Bass ? (((CDTXMania.ConfigIni.判定文字表示位置.Bass == E判定文字表示位置.レーン上) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Bass == E判定文字表示位置.レーン上) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
+                            num6 = CDTXMania.ConfigIni.bReverse.Bass ? (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
                         }
                         else if (j == 10)
                         {
-                            if (CDTXMania.ConfigIni.判定文字表示位置.Guitar == E判定文字表示位置.表示OFF)
+                            if (CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.D)
                             {
                                 continue;
                             }
-                            if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != E判定文字表示位置.判定ライン上または横)))
+                            if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != Eタイプ.B)))
                             {
                                 num5 = 0x198;
                                 num6 = 0x93;
@@ -154,7 +154,7 @@ namespace DTXMania
                             else
                             {
                                 num5 = this.stレーンサイズ[j].x;
-                                num6 = CDTXMania.ConfigIni.bReverse.Guitar ? (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == E判定文字表示位置.レーン上) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == E判定文字表示位置.レーン上) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
+                                num6 = CDTXMania.ConfigIni.bReverse.Guitar ? (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
                             }
                         }
 

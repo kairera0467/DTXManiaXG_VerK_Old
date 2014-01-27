@@ -497,7 +497,7 @@ namespace DTXMania
 		{
 			#region [ 事前チェック。]
 			//-----------------
-			if( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == E判定文字表示位置.表示OFF )
+			if( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.D )
 				return;		// 表示OFF。
 
 			if( nCombo値 == 0 )
@@ -599,7 +599,7 @@ namespace DTXMania
 		{
 			#region [ 事前チェック。]
 			//-----------------
-			if( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == E判定文字表示位置.表示OFF )
+			if( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.D )
 				return;		// 表示OFF。
 
 			if( nCombo値 == 0 )

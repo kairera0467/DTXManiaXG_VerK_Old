@@ -63,8 +63,6 @@ namespace DTXMania
 					this.txオプションパネル.t2D描画( device, 0x372, 0x20, this.rcReverse[ configIni.bReverse.Guitar ? 1 : 0 ] );
 					this.txオプションパネル.t2D描画( device, 0x372, 50, this.rcReverse[ configIni.bReverse.Bass ? 1 : 0 ] );
 					this.txオプションパネル.t2D描画( device, 930, 14, this.rcPosition[ (int) configIni.判定文字表示位置.Drums ] );
-					this.txオプションパネル.t2D描画( device, 930, 0x20, this.rcPosition[ (int) configIni.判定文字表示位置.Guitar ] );
-					this.txオプションパネル.t2D描画( device, 930, 50, this.rcPosition[ (int) configIni.判定文字表示位置.Bass ] );
 					this.txオプションパネル.t2D描画( device, 0x3d2, 14, this.rcTight[ configIni.bTight ? 1 : 0 ] );
 					this.txオプションパネル.t2D描画( device, 0x3d2, 0x20, this.rcRandom[ (int) configIni.eRandom.Guitar ] );
 					this.txオプションパネル.t2D描画( device, 0x3d2, 50, this.rcRandom[ (int) configIni.eRandom.Bass ] );
