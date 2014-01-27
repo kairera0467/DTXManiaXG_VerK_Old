@@ -80,7 +80,7 @@ namespace DTXMania
                     this.nバスドラムY = 517 - CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 3 ].nY座標オフセットdot;
                     this.nロータムY = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 5 ].nY座標オフセットdot;
                     this.nフロアタムY = 490 + CDTXMania.stage演奏ドラム画面.actPad.stパッド状態[ 6 ].nY座標オフセットdot;
-                    if( CDTXMania.ConfigIni.bドラムセットを動かす == false )
+                    if( CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.B )
                     {
                         this.nスネアY = 490;
                         this.nハイタムY = 491;

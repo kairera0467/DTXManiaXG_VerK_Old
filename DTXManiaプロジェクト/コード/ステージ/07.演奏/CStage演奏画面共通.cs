@@ -1106,11 +1106,11 @@ namespace DTXMania
                             }
                             if( CDTXMania.ConfigIni.bDrums有効 )
                             {
-                                if( nLane == 0 && CDTXMania.ConfigIni.bドラムセットを動かす )
+                                if( nLane == 0 && CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.A )
                                 {
                                     CDTXMania.stage演奏ドラム画面.actDrumSet.ct左シンバル.n現在の値 = 0;
                                 }
-                                if (nLane == 7 && CDTXMania.ConfigIni.bドラムセットを動かす )
+                                if (nLane == 7 && CDTXMania.ConfigIni.eドラムセットを動かす == Eタイプ.A )
                                 {
                                     CDTXMania.stage演奏ドラム画面.actDrumSet.ct右シンバル.n現在の値 = 0;
                                 }
