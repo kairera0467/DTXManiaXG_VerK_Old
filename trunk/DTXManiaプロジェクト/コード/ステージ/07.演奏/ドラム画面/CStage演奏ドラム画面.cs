@@ -368,7 +368,7 @@ namespace DTXMania
 
                 this.t進行描画・ステータスパネル();
 
-                if ( CDTXMania.ConfigIni.eNamePlate.Drums != Eタイプ.A || CDTXMania.ConfigIni.bGraph.Drums == true || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT )
+                if ( CDTXMania.ConfigIni.eNamePlate != Eタイプ.A || CDTXMania.ConfigIni.bGraph.Drums == true || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT )
                         this.t進行描画・コンボ();
 
                 this.t進行描画・ゲージ();
