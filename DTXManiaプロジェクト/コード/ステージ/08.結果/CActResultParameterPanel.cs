@@ -350,7 +350,7 @@ namespace DTXMania
                         this.txリザルトパネル.t2D描画(CDTXMania.app.Device, x[i], y[i]);
 
                     if (this.txDifficulty != null)
-                        this.txDifficulty.t2D描画(CDTXMania.app.Device, x[i] + 510, y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 120, 20));
+                        this.txDifficulty.t2D描画(CDTXMania.app.Device, x[i] + 510, y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, this.txDifficulty.szテクスチャサイズ.Width, 20));
 
                     if (this.txPart != null)
                         this.txPart.t2D描画(CDTXMania.app.Device, x[i] + 388, y[i] + 8, new Rectangle(0, 0 + (20 * i), 120, 20));
