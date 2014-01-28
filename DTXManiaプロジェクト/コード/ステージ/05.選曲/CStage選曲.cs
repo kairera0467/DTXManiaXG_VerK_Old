@@ -640,7 +640,7 @@ namespace DTXMania
 									this.actSortSongs.tActivatePopupMenu( E楽器パート.BASS, ref this.act曲リスト );
 							}
 							#endregion
-							#region [ HT HT Drums: ソート画面 ]
+							#region [ HTx2 Drums: ソート画面 ]
 							if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.HT ) )
 							{	// [HT]x2 ソート画面        2013.12.31.kairera0467
 								//
