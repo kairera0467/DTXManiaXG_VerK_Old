@@ -358,30 +358,29 @@ namespace DTXMania
 					#endregion
 					if ( !this.actSortSongs.bIsActivePopupMenu && !this.actQuickConfig.bIsActivePopupMenu )
 					{
-						#region [ ESC ]
-						if ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape ) || ( ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || CDTXMania.Pad.b押されたGB( Eパッド.Cancel ) ) && ( ( this.act曲リスト.r現在選択中の曲 != null ) && ( this.act曲リスト.r現在選択中の曲.r親ノード == null ) ) ) )
-						{	// [ESC]
-							CDTXMania.Skin.sound取消音.t再生する();
-							this.eフェードアウト完了時の戻り値 = E戻り値.タイトルに戻る;
-							this.actFIFO.tフェードアウト開始();
-							base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
-							return 0;
-						}
-						#endregion
-						#region [ Shift-F1: CONFIG画面 ]
-						if ( ( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightShift ) || CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftShift ) ) &&
-							CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F1 ) )
-						{	// [SHIFT] + [F1] CONFIG
-							this.actPresound.tサウンド停止();
-							this.eフェードアウト完了時の戻り値 = E戻り値.コンフィグ呼び出し;	// #24525 2011.3.16 yyagi: [SHIFT]-[F1]でCONFIG呼び出し
-							this.actFIFO.tフェードアウト開始();
-							base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
-							CDTXMania.Skin.sound取消音.t再生する();
-							return 0;
-						}
-						#endregion
-						#region [ Shift-F2: 未使用 ]
-						// #24525 2011.3.16 yyagi: [SHIFT]+[F2]は廃止(将来発生するかもしれない別用途のためにキープ)
+                        #region [ ESC ]
+                        if (CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.Escape) || ((CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.LC) || CDTXMania.Pad.b押されたGB(Eパッド.Pick)) && ((this.act曲リスト.r現在選択中の曲 != null) && (this.act曲リスト.r現在選択中の曲.r親ノード == null))))
+                        {	// [ESC]
+                            CDTXMania.Skin.sound取消音.t再生する();
+                            this.eフェードアウト完了時の戻り値 = E戻り値.タイトルに戻る;
+                            this.actFIFO.tフェードアウト開始();
+                            base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+                            return 0;
+                        }
+                        #endregion
+                        #region [ CONFIG画面 ]
+                        if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.Help))
+                        {	// [SHIFT] + [F1] CONFIG
+                            this.actPresound.tサウンド停止();
+                            this.eフェードアウト完了時の戻り値 = E戻り値.コンフィグ呼び出し;	// #24525 2011.3.16 yyagi: [SHIFT]-[F1]でCONFIG呼び出し
+                            this.actFIFO.tフェードアウト開始();
+                            base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
+                            CDTXMania.Skin.sound取消音.t再生する();
+                            return 0;
+                        }
+                        #endregion
+                        #region [ Shift-F2: 未使用 ]
+                        // #24525 2011.3.16 yyagi: [SHIFT]+[F2]は廃止(将来発生するかもしれない別用途のためにキープ)
                         /*
                         if ((CDTXMania.Input管理.Keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightShift) || CDTXMania.Input管理.Keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftShift)) &&
                             CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F2))
@@ -394,84 +393,84 @@ namespace DTXMania
                             return 0;
                         }
 						*/
-						#endregion
-						if ( this.act曲リスト.r現在選択中の曲 != null )
-						{
-							#region [ Decide ]
-							if ( ( CDTXMania.Pad.b押されたDGB( Eパッド.Decide ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) ||
-								( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) )
-							{
-								if ( this.act曲リスト.r現在選択中の曲 != null )
-								{
-									switch ( this.act曲リスト.r現在選択中の曲.eノード種別 )
-									{
-										case C曲リストノード.Eノード種別.SCORE:
+                        #endregion
+                        if (this.act曲リスト.r現在選択中の曲 != null)
+                        {
+                            #region [ Decide ]
+                            if ((CDTXMania.Pad.b押されたDGB(Eパッド.Decide) || CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.CY) || CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.RD)) ||
+                                (CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された((int)SlimDX.DirectInput.Key.Return)))
+                            {
+                                if (this.act曲リスト.r現在選択中の曲 != null)
+                                {
+                                    switch (this.act曲リスト.r現在選択中の曲.eノード種別)
+                                    {
+                                        case C曲リストノード.Eノード種別.SCORE:
                                             CDTXMania.Skin.sound決定音.t再生する();
-											this.t曲を選択する();
-											break;
+                                            this.t曲を選択する();
+                                            break;
 
-										case C曲リストノード.Eノード種別.SCORE_MIDI:
+                                        case C曲リストノード.Eノード種別.SCORE_MIDI:
                                             CDTXMania.Skin.sound決定音.t再生する();
-											this.t曲を選択する();
-											break;
+                                            this.t曲を選択する();
+                                            break;
 
-										case C曲リストノード.Eノード種別.BOX:
-											{
+                                        case C曲リストノード.Eノード種別.BOX:
+                                            {
                                                 CDTXMania.Skin.sound決定音.t再生する();
-												bool bNeedChangeSkin = this.act曲リスト.tBOXに入る();
-												if ( bNeedChangeSkin )
-												{
-													this.eフェードアウト完了時の戻り値 = E戻り値.スキン変更; 
-													base.eフェーズID = Eフェーズ.選曲_NowLoading画面へのフェードアウト;
-												}
-											}
-											break;
+                                                bool bNeedChangeSkin = this.act曲リスト.tBOXに入る();
+                                                if (bNeedChangeSkin)
+                                                {
+                                                    this.eフェードアウト完了時の戻り値 = E戻り値.スキン変更;
+                                                    base.eフェーズID = Eフェーズ.選曲_NowLoading画面へのフェードアウト;
+                                                }
+                                            }
+                                            break;
 
-										case C曲リストノード.Eノード種別.BACKBOX:
-											{
+                                        case C曲リストノード.Eノード種別.BACKBOX:
+                                            {
                                                 CDTXMania.Skin.sound取消音.t再生する();
-												bool bNeedChangeSkin = this.act曲リスト.tBOXを出る();
-												if ( bNeedChangeSkin )
-												{
-													this.eフェードアウト完了時の戻り値 = E戻り値.スキン変更; 
-													base.eフェーズID = Eフェーズ.選曲_NowLoading画面へのフェードアウト;
-												}
-											}
-											break;
+                                                bool bNeedChangeSkin = this.act曲リスト.tBOXを出る();
+                                                if (bNeedChangeSkin)
+                                                {
+                                                    this.eフェードアウト完了時の戻り値 = E戻り値.スキン変更;
+                                                    base.eフェーズID = Eフェーズ.選曲_NowLoading画面へのフェードアウト;
+                                                }
+                                            }
+                                            break;
 
-										case C曲リストノード.Eノード種別.RANDOM:
+                                        case C曲リストノード.Eノード種別.RANDOM:
                                             CDTXMania.Skin.sound決定音.t再生する();
-											this.t曲をランダム選択する();
-											break;
-									}
-								}
-							}
-							#endregion
-							#region [ Up ]
-							this.ctキー反復用.Up.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.UpArrow ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
-							this.ctキー反復用.R.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.R ), new CCounter.DGキー処理( this.tカーソルを上へ移動する ) );
-							if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.SD ) )
-							{
-								this.tカーソルを上へ移動する();
-							}
-							#endregion
-							#region [ Down ]
-							this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
+                                            this.t曲をランダム選択する();
+                                            break;
+                                    }
+                                }
+                            }
+                            #endregion
+                            #region [ Up ]
+                            this.ctキー反復用.Up.tキー反復(CDTXMania.Input管理.Keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.UpArrow), new CCounter.DGキー処理(this.tカーソルを上へ移動する));
+                            this.ctキー反復用.R.tキー反復(CDTXMania.Pad.b押されているGB(Eパッド.R), new CCounter.DGキー処理(this.tカーソルを上へ移動する));
+                            if (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.SD))
+                            {
+                                this.tカーソルを上へ移動する();
+                            }
+                            #endregion
+                            #region [ Down ]
+                            this.ctキー反復用.Down.tキー反復(CDTXMania.Input管理.Keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.DownArrow), new CCounter.DGキー処理(this.tカーソルを下へ移動する));
                             this.ctキー反復用.B.tキー反復(CDTXMania.Pad.b押されているGB(Eパッド.G), new CCounter.DGキー処理(this.tカーソルを下へ移動する));
                             if (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.FT))
                             {
                                 this.tカーソルを下へ移動する();
                             }
-							#endregion
-							#region [ Upstairs ]
-							if ( ( ( this.act曲リスト.r現在選択中の曲 != null ) && ( this.act曲リスト.r現在選択中の曲.r親ノード != null ) ) && ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || CDTXMania.Pad.b押されたGB( Eパッド.Cancel ) ) )
-							{
-								this.actPresound.tサウンド停止();
-								CDTXMania.Skin.sound取消音.t再生する();
-								this.act曲リスト.tBOXを出る();
-								this.t選択曲変更通知();
-							}
-							#endregion
+                            #endregion
+                            #region [ Upstairs ]
+                            if (((this.act曲リスト.r現在選択中の曲 != null) && (this.act曲リスト.r現在選択中の曲.r親ノード != null)) && (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.LC) || CDTXMania.Pad.b押されたGB(Eパッド.Pick)))
+                            {
+                                this.actPresound.tサウンド停止();
+                                CDTXMania.Skin.sound取消音.t再生する();
+                                this.act曲リスト.tBOXを出る();
+                                this.t選択曲変更通知();
+                            }
+                            #endregion
                             #region [ BDx2: 簡易CONFIG ]
                             if (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.BD))
                             {	// [BD]x2 スクロール速度変更
@@ -496,6 +495,63 @@ namespace DTXMania
                                     Debug.WriteLine("ドラムス難易度変更");
                                     this.act曲リスト.t難易度レベルをひとつ進める();
                                     //CDTXMania.Skin.sound変更音.t再生する();
+                                }
+                            }
+                            #endregion
+                            #region [ Bx2 Guitar: 難易度変更 ]
+                            if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.B))	// #24177 2011.1.17 yyagi || -> &&
+                            {	// [B]x2 ギター難易度変更
+                                CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.B);
+                                EパッドFlag[] comChangeDifficultyG = new EパッドFlag[] { EパッドFlag.B, EパッドFlag.B };
+                                if (CommandHistory.CheckCommand(comChangeDifficultyG, E楽器パート.GUITAR))
+                                {
+                                    Debug.WriteLine("ギター難易度変更");
+                                    this.act曲リスト.t難易度レベルをひとつ進める();
+                                    //CDTXMania.Skin.sound変更音.t再生する();
+                                }
+                            }
+                            #endregion
+                            #region [ Bx2 Bass: 難易度変更 ]
+                            if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.B))		// #24177 2011.1.17 yyagi || -> &&
+                            {	// [B]x2 ベース難易度変更
+                                CommandHistory.Add(E楽器パート.BASS, EパッドFlag.B);
+                                EパッドFlag[] comChangeDifficultyB = new EパッドFlag[] { EパッドFlag.B, EパッドFlag.B };
+                                if (CommandHistory.CheckCommand(comChangeDifficultyB, E楽器パート.BASS))
+                                {
+                                    Debug.WriteLine("ベース難易度変更");
+                                    this.act曲リスト.t難易度レベルをひとつ進める();
+                                    //CDTXMania.Skin.sound変更音.t再生する();
+                                }
+                            }
+                            #endregion
+                            #region [ Yx2 Guitar: ギターとベースを入れ替え ]
+                            if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.Y))
+                            {	// Pick, Y, Y, Pick で、ギターとベースを入れ替え
+                                CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.Y);
+                                EパッドFlag[] comSwapGtBs1 = new EパッドFlag[] { EパッドFlag.Y, EパッドFlag.Y };
+                                if (CommandHistory.CheckCommand(comSwapGtBs1, E楽器パート.GUITAR))
+                                {
+                                    Debug.WriteLine("ギターとベースの入れ替え1");
+                                    CDTXMania.Skin.sound変更音.t再生する();
+                                    // ギターとベースのキーを入れ替え
+                                    //CDTXMania.ConfigIni.SwapGuitarBassKeyAssign();
+                                    CDTXMania.ConfigIni.bIsSwappedGuitarBass = !CDTXMania.ConfigIni.bIsSwappedGuitarBass;
+                                }
+                            }
+                            #endregion
+                            #region [ Yx2 Bass: ギターとベースを入れ替え ]
+                            if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.Y))
+                            {	// ベース[Pick]: コマンドとしてEnqueue
+                                CommandHistory.Add(E楽器パート.BASS, EパッドFlag.Y);
+                                // Pick, Y, Y, Pick で、ギターとベースを入れ替え
+                                EパッドFlag[] comSwapGtBs1 = new EパッドFlag[] { EパッドFlag.Y, EパッドFlag.Y };
+                                if (CommandHistory.CheckCommand(comSwapGtBs1, E楽器パート.BASS))
+                                {
+                                    Debug.WriteLine("ギターとベースの入れ替え2");
+                                    CDTXMania.Skin.sound変更音.t再生する();
+                                    // ギターとベースのキーを入れ替え
+                                    //CDTXMania.ConfigIni.SwapGuitarBassKeyAssign();
+                                    CDTXMania.ConfigIni.bIsSwappedGuitarBass = !CDTXMania.ConfigIni.bIsSwappedGuitarBass;
                                 }
                             }
                             #endregion
@@ -527,90 +583,21 @@ namespace DTXMania
                                 }
                             }
                             #endregion
-                            #region [ Bx2 Guitar: 難易度変更 ]
-                            if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.B))	// #24177 2011.1.17 yyagi || -> &&
-                            {	// [B]x2 ギター難易度変更
-                                CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.B);
-                                EパッドFlag[] comChangeDifficultyG = new EパッドFlag[] { EパッドFlag.B, EパッドFlag.B };
-                                if (CommandHistory.CheckCommand(comChangeDifficultyG, E楽器パート.GUITAR))
-                                {
-                                    Debug.WriteLine("ギター難易度変更");
-                                    this.act曲リスト.t難易度レベルをひとつ進める();
-                                    //CDTXMania.Skin.sound変更音.t再生する();
-                                }
-                            }
-                            #endregion
-                            #region [ Bx2 Bass: 難易度変更 ]
-                            if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.B))		// #24177 2011.1.17 yyagi || -> &&
-                            {	// [B]x2 ベース難易度変更
-                                CommandHistory.Add(E楽器パート.BASS, EパッドFlag.B);
-                                EパッドFlag[] comChangeDifficultyB = new EパッドFlag[] { EパッドFlag.B, EパッドFlag.B };
-                                if (CommandHistory.CheckCommand(comChangeDifficultyB, E楽器パート.BASS))
-                                {
-                                    Debug.WriteLine("ベース難易度変更");
-                                    this.act曲リスト.t難易度レベルをひとつ進める();
-                                    //CDTXMania.Skin.sound変更音.t再生する();
-                                }
-                            }
-                            #endregion
-                            #region [ Y Y Guitar: ギターとベースを入れ替え ]
-                            if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.Y))
-                            {	// Pick, Y, Y, Pick で、ギターとベースを入れ替え
-                                CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.Y);
-                                EパッドFlag[] comSwapGtBs1 = new EパッドFlag[] { EパッドFlag.Y, EパッドFlag.Y };
-                                if (CommandHistory.CheckCommand(comSwapGtBs1, E楽器パート.GUITAR))
-                                {
-                                    Debug.WriteLine("ギターとベースの入れ替え1");
-                                    CDTXMania.Skin.sound変更音.t再生する();
-                                    // ギターとベースのキーを入れ替え
-                                    //CDTXMania.ConfigIni.SwapGuitarBassKeyAssign();
-                                    CDTXMania.ConfigIni.bIsSwappedGuitarBass = !CDTXMania.ConfigIni.bIsSwappedGuitarBass;
-                                }
-                            }
-                            #endregion
-                            #region [ Y Y Bass: ギターとベースを入れ替え ]
-                            if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.Y))
-                            {	// ベース[Pick]: コマンドとしてEnqueue
-                                CommandHistory.Add(E楽器パート.BASS, EパッドFlag.Y);
-                                // Pick, Y, Y, Pick で、ギターとベースを入れ替え
-                                EパッドFlag[] comSwapGtBs1 = new EパッドFlag[] { EパッドFlag.Y, EパッドFlag.Y };
-                                if (CommandHistory.CheckCommand(comSwapGtBs1, E楽器パート.BASS))
-                                {
-                                    Debug.WriteLine("ギターとベースの入れ替え2");
-                                    CDTXMania.Skin.sound変更音.t再生する();
-                                    // ギターとベースのキーを入れ替え
-                                    //CDTXMania.ConfigIni.SwapGuitarBassKeyAssign();
-                                    CDTXMania.ConfigIni.bIsSwappedGuitarBass = !CDTXMania.ConfigIni.bIsSwappedGuitarBass;
-                                }
-                            }
-                            #endregion
-                            #region [ Pick x2 Guitar: ソート画面 ]
-                            if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.Pick))
+                            #region [ Y P Guitar: ソート画面 ]
+                            if (CDTXMania.Pad.b押されている(E楽器パート.GUITAR, Eパッド.Y) && CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.P))
                             {	// ギター[Pick]: コマンドとしてEnqueue
-                                CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.Pick);
-                                // ギター Pick x2 で、ソート画面に遷移
-                                EパッドFlag[] comSortGt = new EパッドFlag[] { EパッドFlag.Pick, EパッドFlag.Pick };
-                                if (CommandHistory.CheckCommand(comSortGt, E楽器パート.GUITAR))
-                                {
-                                    CDTXMania.Skin.sound変更音.t再生する();
-                                    this.actSortSongs.tActivatePopupMenu(E楽器パート.GUITAR, ref this.act曲リスト);
-                                }
+                                CDTXMania.Skin.sound変更音.t再生する();
+                                this.actSortSongs.tActivatePopupMenu(E楽器パート.GUITAR, ref this.act曲リスト);
                             }
                             #endregion
-                            #region [ Pick x2 Bass: ソート画面 ]
-                            if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.Pick))
+                            #region [ Y P Bass: ソート画面 ]
+                            if (CDTXMania.Pad.b押されている(E楽器パート.BASS, Eパッド.Y) && CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.P))
                             {	// ベース[Pick]: コマンドとしてEnqueue
-                                CommandHistory.Add(E楽器パート.BASS, EパッドFlag.Pick);
-                                // ベース Pick x2 で、ソート画面に遷移
-                                EパッドFlag[] comSortBs = new EパッドFlag[] { EパッドFlag.Pick, EパッドFlag.Pick };
-                                if (CommandHistory.CheckCommand(comSortBs, E楽器パート.BASS))
-                                {
-                                    CDTXMania.Skin.sound変更音.t再生する();
-                                    this.actSortSongs.tActivatePopupMenu(E楽器パート.BASS, ref this.act曲リスト);
-                                }
+                                CDTXMania.Skin.sound変更音.t再生する();
+                                this.actSortSongs.tActivatePopupMenu(E楽器パート.BASS, ref this.act曲リスト);
                             }
                             #endregion
-                            #region [ HT HT Drums: ソート画面 ]
+                            #region [ HTx2 Drums: ソート画面 ]
                             if (CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.HT))
                             {	// [HT]x2 ソート画面        2013.12.31.kairera0467
                                 //

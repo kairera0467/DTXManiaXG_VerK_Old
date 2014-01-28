@@ -298,7 +298,6 @@ namespace DTXMania
                     }
                     #endregion
 
-
 					#region [ キー入力: 決定 ]
 					// E楽器パート eInst = E楽器パート.UNKNOWN;
 					ESortAction eAction = ESortAction.END;

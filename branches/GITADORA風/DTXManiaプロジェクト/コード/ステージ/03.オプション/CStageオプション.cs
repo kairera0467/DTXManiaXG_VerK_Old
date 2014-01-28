@@ -265,7 +265,7 @@ namespace DTXMania
 				|| CDTXMania.act現在入力を占有中のプラグイン != null )
 				return 0;
 
-			if( ( CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Escape ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) ) || CDTXMania.Pad.b押されたGB( Eパッド.LC ) )
+			if( ( CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Escape ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) ) || CDTXMania.Pad.b押されたGB( Eパッド.Pick ) )
 			{
 				CDTXMania.Skin.sound取消音.t再生する();
 				if( !this.bメニューにフォーカス中 )
