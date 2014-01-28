@@ -2790,7 +2790,7 @@ namespace DTXMania
                                             {
                                                 this.bTight = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("MoveDrumSet"))
+                                            else if (str3.Equals("DrumSetMoves"))
                                             {
                                                 this.eドラムセットを動かす = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eドラムセットを動かす);
                                             }
