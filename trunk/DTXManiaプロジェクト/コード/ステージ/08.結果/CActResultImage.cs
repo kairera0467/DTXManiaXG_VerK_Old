@@ -330,7 +330,17 @@ namespace DTXMania
                 {
                     this.r表示するリザルト画像.vc拡大縮小倍率.X = ((float)this.nAlbumWidth) / ((float)width);
                     this.r表示するリザルト画像.vc拡大縮小倍率.Y = ((float)this.nAlbumHeight) / ((float)height);
-                    this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, 436, 271, new Rectangle(0, 0, width, height));
+
+                    int nアルバムX = 436;
+                    int nアルバムY = 271;
+
+                    if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
+                    {
+                        nアルバムX = 449;
+                        nアルバムY = 284;
+                    }
+
+                    this.r表示するリザルト画像.t2D描画(CDTXMania.app.Device, nアルバムX, nアルバムY, new Rectangle(0, 0, width, height));
                 }
             }
             float num;

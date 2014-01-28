@@ -350,14 +350,14 @@ namespace DTXMania
             {
                 this.txレーンの影 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
 
-                if (CDTXMania.ConfigIni.bDrums有効)
+                if ( CDTXMania.ConfigIni.bDrums有効 )
                     this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
                 else if (CDTXMania.ConfigIni.bGuitar有効)
                     this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops_Guitar.png"));
 
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
 
-                if (CDTXMania.ConfigIni.bGuitar有効)
+                if ( CDTXMania.ConfigIni.bGuitar有効 )
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelC.png"));
                 }
@@ -637,8 +637,17 @@ namespace DTXMania
                             }
                             else
                             {
-                                this.tx描画用.vc拡大縮小倍率 = this.vclip;
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                if (CDTXMania.ConfigIni.bDrums有効)
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = this.vclip;
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                }
+                                else if (CDTXMania.ConfigIni.bGuitar有効)
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                                    this.PositionG = (int)((1280f - (float)(this.framewidth)) / 2f);
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, this.PositionG, 0);
+                                }
                             }
                             #endregion
                         }
@@ -688,8 +697,19 @@ namespace DTXMania
                                 this.bフレームを作成した = false;
                                 this.tx描画用.vc拡大縮小倍率 = this.vclip;
                             }
-                            if( this.bFullScreen )
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 882, 0 );
+                            if (this.bFullScreen)
+                            {
+                                if (CDTXMania.ConfigIni.bDrums有効)
+                                {
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                }
+                                else if (CDTXMania.ConfigIni.bGuitar有効)
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                                    this.PositionG = (int)((1280f - (float)(this.framewidth)) / 2f);
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, this.PositionG, 0);
+                                }
+                            }
                             #endregion
                         }
                         #endregion
@@ -739,7 +759,7 @@ namespace DTXMania
                         }
                     }
                 }
-                if (CDTXMania.ConfigIni.bDrums有効 == true)
+                if (CDTXMania.ConfigIni.bDrums有効)
                 {
                     if ( CDTXMania.ConfigIni.eドラムセットを動かす != Eタイプ.C )
                         CDTXMania.stage演奏ドラム画面.t進行描画・ドラムセット();
@@ -804,7 +824,7 @@ namespace DTXMania
                     }
                 }
                 #region [ Failed(RISKY1)時の背景 ]
-                    if(CDTXMania.ConfigIni.bDrums有効 == true)
+                    if( CDTXMania.ConfigIni.bDrums有効 )
                     {
                         if ( CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums <= 0.0 )
                         {
@@ -1148,6 +1168,7 @@ namespace DTXMania
         private int n表示側終了位置Y;
         private int n本体X;
         private int n本体Y;
+        private int PositionG;
         private long lDshowPosition;
         private long lStopPosition;
         public IntPtr pBmp;
