@@ -88,7 +88,7 @@ namespace DTXMania
         private readonly Rectangle[] rcHS = new Rectangle[] { new Rectangle(0, 0, 0x30, 0x12), new Rectangle(0, 0x12, 0x30, 0x12), new Rectangle(0, 0x24, 0x30, 0x12), new Rectangle(0, 0x36, 0x30, 0x12) };
         private readonly Rectangle[] rcLeft = new Rectangle[] { new Rectangle(0xc0, 0x6c, 0x30, 0x12), new Rectangle(240, 0x6c, 0x30, 0x12) };
         private readonly Rectangle[] rcLight = new Rectangle[] { new Rectangle(240, 0x48, 0x30, 0x12), new Rectangle(240, 90, 0x30, 0x12) };
-        private readonly Rectangle[] rcPosition = new Rectangle[] { new Rectangle(0, 0x48, 0x30, 0x12), new Rectangle(0, 90, 0x30, 0x12), new Rectangle(0, 0x6c, 0x30, 0x12) };
+        private readonly Rectangle[] rcPosition = new Rectangle[] { new Rectangle(0, 0x48, 0x30, 0x12), new Rectangle(0, 90, 0x30, 0x12), new Rectangle(0, 0x6c, 0x30, 0x12), new Rectangle(47, 72, 0x30, 0x12) };
         private readonly Rectangle[] rcRandom = new Rectangle[] { new Rectangle(0x90, 0x48, 0x30, 0x12), new Rectangle(0x90, 90, 0x30, 0x12), new Rectangle(0x90, 0x6c, 0x30, 0x12), new Rectangle(0x90, 0x7e, 0x30, 0xb6) };
         private readonly Rectangle[] rcReverse = new Rectangle[] { new Rectangle(0x30, 0x24, 0x30, 0x12), new Rectangle(0x30, 0x36, 0x30, 0x12) };
         private readonly Rectangle[] rcTight = new Rectangle[] { new Rectangle(0xc0, 0x48, 0x30, 0x12), new Rectangle(0xc0, 90, 0x30, 0x12) };
