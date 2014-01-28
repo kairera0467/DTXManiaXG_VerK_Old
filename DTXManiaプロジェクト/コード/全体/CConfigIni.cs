@@ -131,22 +131,22 @@ namespace DTXMania
 				{
 					get
 					{
-						return this.padFT_Cancel;
+                        return this.padFT_Help;
 					}
 					set
 					{
-						this.padFT_Cancel = value;
+                        this.padFT_Help = value;
 					}
 				}
-				public CConfigIni.CKeyAssign.STKEYASSIGN[] Cancel
+                public CConfigIni.CKeyAssign.STKEYASSIGN[] Help
 				{
 					get
 					{
-						return this.padFT_Cancel;
+                        return this.padFT_Help;
 					}
 					set
 					{
-						this.padFT_Cancel = value;
+                        this.padFT_Help = value;
 					}
 				}
 				public CConfigIni.CKeyAssign.STKEYASSIGN[] CY
@@ -283,7 +283,7 @@ namespace DTXMania
 								return this.padLT_Wail;
 
 							case (int) EKeyConfigPad.FT:
-								return this.padFT_Cancel;
+                                return this.padFT_Help;
 
 							case (int) EKeyConfigPad.CY:
 								return this.padCY_Decide;
@@ -333,7 +333,7 @@ namespace DTXMania
 								return;
 
 							case (int) EKeyConfigPad.FT:
-								this.padFT_Cancel = value;
+                                this.padFT_Help = value;
 								return;
 
 							case (int) EKeyConfigPad.CY:
@@ -372,7 +372,7 @@ namespace DTXMania
 				//-----------------
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padBD_B;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padCY_Decide;
-				private CConfigIni.CKeyAssign.STKEYASSIGN[] padFT_Cancel;
+                private CConfigIni.CKeyAssign.STKEYASSIGN[] padFT_Help;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padHH_R;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padHHO_Y;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padHT_Pick;
@@ -1994,9 +1994,6 @@ namespace DTXMania
 			sw.Write( "Decide=" );
 			this.tキーの書き出し( sw, this.KeyAssign.Guitar.Decide );
 			sw.WriteLine();
-			sw.Write( "Cancel=" );
-			this.tキーの書き出し( sw, this.KeyAssign.Guitar.Cancel );
-			sw.WriteLine();
 			sw.WriteLine();
 			#endregion
 			#region [ BassKeyAssign ]
@@ -2026,9 +2023,6 @@ namespace DTXMania
 			sw.Write( "Decide=" );
 			this.tキーの書き出し( sw, this.KeyAssign.Bass.Decide );
 			sw.WriteLine();
-			sw.Write( "Cancel=" );
-			this.tキーの書き出し( sw, this.KeyAssign.Bass.Cancel );
-			sw.WriteLine();
 			sw.WriteLine();
 			#endregion
 			#region [ SystemkeyAssign ]
@@ -2036,6 +2030,12 @@ namespace DTXMania
 			sw.WriteLine();
 			sw.Write( "Capture=" );
 			this.tキーの書き出し( sw, this.KeyAssign.System.Capture );
+			sw.WriteLine();
+			sw.Write( "Help=" );
+			this.tキーの書き出し( sw, this.KeyAssign.Guitar.Help );
+			sw.WriteLine();
+			sw.Write( "Pause=" );
+			this.tキーの書き出し( sw, this.KeyAssign.Bass.Help );
 			sw.WriteLine();
 			sw.WriteLine();
 			#endregion
@@ -3161,10 +3161,6 @@ namespace DTXMania
 											{
 												this.tキーの読み出しと設定( str4, this.KeyAssign.Guitar.Decide );
 											}
-											else if( str3.Equals( "Cancel" ) )
-											{
-												this.tキーの読み出しと設定( str4, this.KeyAssign.Guitar.Cancel );
-											}
 											continue;
 										}
 									//-----------------------------
@@ -3205,10 +3201,6 @@ namespace DTXMania
 										{
 											this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.Decide );
 										}
-										else if( str3.Equals( "Cancel" ) )
-										{
-											this.tキーの読み出しと設定( str4, this.KeyAssign.Bass.Cancel );
-										}
 										continue;
 									//-----------------------------
 									#endregion
@@ -3220,7 +3212,15 @@ namespace DTXMania
 										{
 											this.tキーの読み出しと設定( str4, this.KeyAssign.System.Capture );
 										}
-										continue;
+                                        else if (str3.Equals("Help"))
+                                        {
+                                            this.tキーの読み出しと設定(str4, this.KeyAssign.Guitar.Help);
+                                        }
+                                        else if (str3.Equals("Pause"))
+                                        {
+                                            this.tキーの読み出しと設定(str4, this.KeyAssign.Bass.Help);
+                                        }
+                                        continue;
 									//-----------------------------
 									#endregion
 
@@ -3408,27 +3408,26 @@ namespace DTXMania
 HH=K033,M042,M093
 SD=K012,K013,M025,M026,M027,M028,M029,M031,M032,M034,M037,M038,M040,M0113
 BD=K0126,K048,M033,M035,M036,M0112
-HT=K031,K015,K011,K016,M048,M050
-LT=K023,K017,M047
-FT=K022,K019,M041,M043,M045
-CY=K047,K020,M049,M052,M055,M057,M091
+HT=K031,K015,M048,M050
+LT=K011,K016,M047
+FT=K023,K017,M041,M043,M045
+CY=K022,K019,M049,M052,M055,M057,M091
 HO=K028,M046,M092
-RD=K0111,K021,M051,M053,M059,M089
+RD=K047,K020,M051,M053,M059,M089
 LC=K035,K010
 LP=K087
 LBD=K077
 
 [GuitarKeyAssign]
 
-R=K055
-G=K056,J012
-B=K057
-Y=K058
-P=K059
+R=K054
+G=K055,J012
+B=K056
+Y=K057
+P=K058
 Pick=K0115,K046,J06
 Wail=K0116
 Decide=K060
-Cancel=K061
 
 [BassKeyAssign]
 
@@ -3440,10 +3439,11 @@ P=K094
 Pick=K0103,K0100,J08
 Wail=K089
 Decide=K096
-Cancel=K097
 
 [SystemKeyAssign]
 Capture=K065
+Help=K064
+Pause=K0110
 ";
 			t文字列から読み込み( strDefaultKeyAssign );
 		}

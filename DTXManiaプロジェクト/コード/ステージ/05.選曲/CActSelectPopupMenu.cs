@@ -240,9 +240,8 @@ namespace DTXMania
 			{
 				if ( this.bキー入力待ち )
 				{
-					#region [ Shift-F1: CONFIG画面 ]
-					if ( ( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightShift ) || CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftShift ) ) &&
-						CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F1 ) )
+					#region [ CONFIG画面 ]
+					if ( CDTXMania.Pad.b押された( E楽器パート.GUITAR, Eパッド.Help ) )
 					{	// [SHIFT] + [F1] CONFIG
 						CDTXMania.Skin.sound取消音.t再生する();
 						tCancel();
@@ -252,7 +251,7 @@ namespace DTXMania
 					#region [ キー入力: キャンセル ]
 					else if ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape )
 						|| CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC )
-						|| CDTXMania.Pad.b押されたGB( Eパッド.Cancel ) )
+						|| CDTXMania.Pad.b押されたGB( Eパッド.Pick ) )
 					{	// キャンセル
 						CDTXMania.Skin.sound取消音.t再生する();
 						tCancel();
@@ -272,6 +271,33 @@ namespace DTXMania
                         }
                     }
                     #endregion
+                    #region [ Px2 Guitar: 簡易CONFIG ]
+                    if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.P))
+                    {	// [BD]x2 スクロール速度変更
+                        CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.P);
+                        EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.P, EパッドFlag.P };
+                        if (CommandHistory.CheckCommand(comChangeScrollSpeed, E楽器パート.GUITAR))
+                        {
+                            CDTXMania.Skin.sound変更音.t再生する();
+                            tBDContinuity();
+                            this.bIsActivePopupMenu = false;
+                        }
+                    }
+                    #endregion
+                    #region [ Px2 Bass: 簡易CONFIG ]
+                    if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.P))
+                    {	// [BD]x2 スクロール速度変更
+                        CommandHistory.Add(E楽器パート.BASS, EパッドFlag.P);
+                        EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.P, EパッドFlag.P };
+                        if (CommandHistory.CheckCommand(comChangeScrollSpeed, E楽器パート.BASS))
+                        {
+                            CDTXMania.Skin.sound変更音.t再生する();
+                            tBDContinuity();
+                            this.bIsActivePopupMenu = false;
+                        }
+                    }
+                    #endregion
+
 
 					#region [ キー入力: 決定 ]
 					// E楽器パート eInst = E楽器パート.UNKNOWN;
@@ -309,7 +335,7 @@ namespace DTXMania
 					#endregion
 					#region [ キー入力: 次に移動 ]
 					this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.t次に移動 ) );
-					this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.B ), new CCounter.DGキー処理( this.t次に移動 ) );
+					this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.G ), new CCounter.DGキー処理( this.t次に移動 ) );
 					if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
 					{
 						this.t次に移動();
