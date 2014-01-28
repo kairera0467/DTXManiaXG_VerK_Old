@@ -1545,9 +1545,9 @@ namespace DTXMania
 			{
 				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Decide );
 			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarCancel )
+			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarHelp )
 			{
-				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Cancel );
+				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.Help );
 			}
 
 
@@ -1583,9 +1583,9 @@ namespace DTXMania
 			{
 				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.Decide );
 			}
-			else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassCancel )
+			else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassHelp )
 			{
-				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.Cancel );
+				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.BASS, EKeyConfigPad.Help );
 			}
 			else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignSystemCapture )
 			{
@@ -1790,10 +1790,21 @@ namespace DTXMania
 				"左側のメニューに戻ります。",
 				"Return to left menu." );
 			this.list項目リスト.Add( this.iKeyAssignSystemReturnToMenu );
+
 			this.iKeyAssignSystemCapture = new CItemBase( "Capture",
 				"キャプチャキー設定：\n画面キャプチャのキーの割り当てを設\n定します。",
 				"Capture key assign:\nTo assign key for screen capture.\n (You can use keyboard only. You can't\nuse pads to capture screenshot." );
 			this.list項目リスト.Add( this.iKeyAssignSystemCapture );
+
+            this.iKeyAssignGuitarHelp = new CItemBase("Help",
+                "ヘルプボタンのキー設定：\nヘルプボタンへのキーの割り当\nてを設定します。",
+                "Help button key assign:\nTo assign key/pads for Help button.");
+            this.list項目リスト.Add(this.iKeyAssignGuitarHelp);
+
+            this.iKeyAssignBassHelp = new CItemBase("Pause",
+                "一時停止キー設定：\n 一時停止キーの割り当てを設定します。",
+                "Pause key assign:\n To assign key/pads for Pause button.");
+            this.list項目リスト.Add(this.iKeyAssignBassHelp);
 
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignSystem;
@@ -1809,54 +1820,67 @@ namespace DTXMania
 				"左側のメニューに戻ります。",
 				"Return to left menu.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsReturnToMenu);
+
 			this.iKeyAssignDrumsLC = new CItemBase( "LeftCymbal",
 				"ドラムのキー設定：\n左シンバルへのキーの割り当てを設\n定します。",
 				"Drums key assign:\nTo assign key/pads for LeftCymbal\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsLC);
+
 			this.iKeyAssignDrumsHHC = new CItemBase( "HiHat(Close)",
 				"ドラムのキー設定：\nハイハット（クローズ）へのキーの割り\n当てを設定します。",
 				"Drums key assign:\nTo assign key/pads for HiHat(Close)\n button.");
 			this.list項目リスト.Add( this.iKeyAssignDrumsHHC );
+
 			this.iKeyAssignDrumsHHO = new CItemBase( "HiHat(Open)",
 				"ドラムのキー設定：\nハイハット（オープン）へのキーの割り\n当てを設定します。",
 				"Drums key assign:\nTo assign key/pads for HiHat(Open)\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsHHO);
+
 			this.iKeyAssignDrumsSD = new CItemBase( "Snare",
 				"ドラムのキー設定：\nスネアへのキーの割り当てを設定し\nます。",
 				"Drums key assign:\nTo assign key/pads for Snare button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsSD);
+
 			this.iKeyAssignDrumsBD = new CItemBase( "Bass",
 				"ドラムのキー設定：\nバスドラムへのキーの割り当てを設定\nします。",
 				"Drums key assign:\nTo assign key/pads for Bass button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsBD);
+
 			this.iKeyAssignDrumsHT = new CItemBase( "HighTom",
 				"ドラムのキー設定：\nハイタムへのキーの割り当てを設定\nします。",
 				"Drums key assign:\nTo assign key/pads for HighTom\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsHT);
+
 			this.iKeyAssignDrumsLT = new CItemBase( "LowTom",
 				"ドラムのキー設定：\nロータムへのキーの割り当てを設定\nします。",
 				"Drums key assign:\nTo assign key/pads for LowTom button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsLT);
+
 			this.iKeyAssignDrumsFT = new CItemBase( "FloorTom",
 				"ドラムのキー設定：\nフロアタムへのキーの割り当てを設\n定します。",
 				"Drums key assign:\nTo assign key/pads for FloorTom\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsFT);
+
 			this.iKeyAssignDrumsCY = new CItemBase( "RightCymbal",
 				"ドラムのキー設定：\n右シンバルへのキーの割り当てを設\n定します。",
 				"Drums key assign:\nTo assign key/pads for RightCymbal\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsCY);
+
 			this.iKeyAssignDrumsRD = new CItemBase( "RideCymbal",
 				"ドラムのキー設定：\nライドシンバルへのキーの割り当て\nを設定します。",
 				"Drums key assign:\nTo assign key/pads for RideCymbal\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsRD);
+
 			this.iKeyAssignDrumsLP = new CItemBase( "LeftPedal",									// #27029 2012.1.4 from
-				"ドラムのキー設定：\n左ペダルへのキーの\n割り当てを設定します。",	//
-				"Drums key assign:\nTo assign key/pads for HiHatPedal\n button." );					//
-			this.list項目リスト.Add(this.iKeyAssignDrumsLP );										//
+				"ドラムのキー設定：\n左ペダルへのキーの\n割り当てを設定します。",
+				"Drums key assign:\nTo assign key/pads for HiHatPedal\n button." );
+			this.list項目リスト.Add(this.iKeyAssignDrumsLP );
+
             this.iKeyAssignDrumsLBD = new CItemBase("LeftBassDrum",
                 "ドラムのキー設定：\n左バスドラムへのキーの割り当てを設\n定します。",
                 "Drums key assign:\nTo assign key/pads for RightCymbal\n button.");
             this.list項目リスト.Add(this.iKeyAssignDrumsLBD);
+
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignDrums;
 		}
@@ -1871,42 +1895,47 @@ namespace DTXMania
 				"左側のメニューに戻ります。",
 				"Return to left menu.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarReturnToMenu);
+
 			this.iKeyAssignGuitarR = new CItemBase( "R",
 				"ギターのキー設定：\nRボタンへのキーの割り当てを設定し\nます。",
 				"Guitar key assign:\nTo assign key/pads for R button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarR);
+
 			this.iKeyAssignGuitarG = new CItemBase( "G",
 				"ギターのキー設定：\nGボタンへのキーの割り当てを設定し\nます。",
 				"Guitar key assign:\nTo assign key/pads for G button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarG);
+
 			this.iKeyAssignGuitarB = new CItemBase( "B",
 				"ギターのキー設定：\nBボタンへのキーの割り当てを設定し\nます。",
 				"Guitar key assign:\nTo assign key/pads for B button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarB);
+
             this.iKeyAssignGuitarY = new CItemBase( "Y",
 				"ギターのキー設定：\nYボタンへのキーの割り当てを設定し\nます。",
 				"Guitar key assign:\nTo assign key/pads for Y button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarY);
+
 			this.iKeyAssignGuitarP = new CItemBase( "P",
 				"ギターのキー設定：\nPボタンへのキーの割り当てを設定し\nます。",
 				"Guitar key assign:\nTo assign key/pads for P button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarP);
+
 			this.iKeyAssignGuitarPick = new CItemBase( "Pick",
 				"ギターのキー設定：\nピックボタンへのキーの割り当てを設\n定します。",
 				"Guitar key assign:\nTo assign key/pads for Pick button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarPick);
+
 			this.iKeyAssignGuitarWail = new CItemBase( "Wailing",
 				"ギターのキー設定：\nWailingボタンへのキーの割り当てを\n設定します。",
 				"Guitar key assign:\nTo assign key/pads for Wailing button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarWail);
+
 			this.iKeyAssignGuitarDecide = new CItemBase( "Decide",
 				"ギターのキー設定：\n決定ボタンへのキーの割り当てを設\n定します。",
 				"Guitar key assign:\nTo assign key/pads for Decide button.");
 			this.list項目リスト.Add(this.iKeyAssignGuitarDecide);
-			this.iKeyAssignGuitarCancel = new CItemBase( "Cancel",
-				"ギターのキー設定：\nキャンセルボタンへのキーの割り当\nてを設定します。",
-				"Guitar key assign:\nTo assign key/pads for Cancel button.");
-			this.list項目リスト.Add(this.iKeyAssignGuitarCancel);
+
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignGuitar;
 		}
@@ -1921,42 +1950,47 @@ namespace DTXMania
 				"左側のメニューに戻ります。",
 				"Return to left menu." );
 			this.list項目リスト.Add( this.iKeyAssignBassReturnToMenu );
+
 			this.iKeyAssignBassR = new CItemBase( "R",
 				"ベースのキー設定：\nRボタンへのキーの割り当てを設定し\nます。",
 				"Bass key assign:\nTo assign key/pads for R button." );
 			this.list項目リスト.Add( this.iKeyAssignBassR );
+
 			this.iKeyAssignBassG = new CItemBase( "G",
 				"ベースのキー設定：\nGボタンへのキーの割り当てを設定し\nます。",
 				"Bass key assign:\nTo assign key/pads for G button." );
 			this.list項目リスト.Add( this.iKeyAssignBassG );
+
 			this.iKeyAssignBassB = new CItemBase( "B",
 				"ベースのキー設定：\nBボタンへのキーの割り当てを設定し\nます。",
 				"Bass key assign:\nTo assign key/pads for B button." );
 			this.list項目リスト.Add( this.iKeyAssignBassB );
+
             this.iKeyAssignBassY = new CItemBase( "Y",
 				"ベースのキー設定：\nYボタンへのキーの割り当てを設定し\nます。",
 				"Bass key assign:\nTo assign key/pads for Y button." );
 			this.list項目リスト.Add( this.iKeyAssignBassY );
+
 			this.iKeyAssignBassP = new CItemBase( "P",
 				"ベースのキー設定：\nPボタンへのキーの割り当てを設定し\nます。",
 				"Bass key assign:\nTo assign key/pads for P button." );
 			this.list項目リスト.Add( this.iKeyAssignBassP );
+
 			this.iKeyAssignBassPick = new CItemBase( "Pick",
 				"ベースのキー設定：\nピックボタンへのキーの割り当てを設\n定します。",
 				"Bass key assign:\nTo assign key/pads for Pick button." );
 			this.list項目リスト.Add( this.iKeyAssignBassPick );
+
 			this.iKeyAssignBassWail = new CItemBase( "Wailing",
 				"ベースのキー設定：\nWailingボタンへのキーの割り当てを設\n定します。",
 				"Bass key assign:\nTo assign key/pads for Wailing button." );
 			this.list項目リスト.Add( this.iKeyAssignBassWail );
+
 			this.iKeyAssignBassDecide = new CItemBase( "Decide",
 				"ベースのキー設定：\n決定ボタンへのキーの割り当てを設\n定します。",
 				"Bass key assign:\nTo assign key/pads for Decide button." );
 			this.list項目リスト.Add( this.iKeyAssignBassDecide );
-			this.iKeyAssignBassCancel = new CItemBase( "Cancel",
-				"ベースのキー設定：\nキャンセルボタンへのキーの割り当\nてを設定します。",
-				"Bass key assign:\nTo assign key/pads for Cancel button." );
-			this.list項目リスト.Add( this.iKeyAssignBassCancel );
+
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignBass;
         }
@@ -2450,16 +2484,20 @@ namespace DTXMania
 		private Eメニュー種別 eメニュー種別;
 		private CItemBase iKeyAssignSystemCapture;			// #24609
 		private CItemBase iKeyAssignSystemReturnToMenu;		// #24609
-        private CItemBase iKeyAssignBassP;
-        private CItemBase iKeyAssignBassY;
-		private CItemBase iKeyAssignBassB;
-		private CItemBase iKeyAssignBassCancel;
-		private CItemBase iKeyAssignBassDecide;
-		private CItemBase iKeyAssignBassG;
-		private CItemBase iKeyAssignBassPick;
+
+        private CItemBase iKeyAssignGuitarHelp;
+        private CItemBase iKeyAssignBassHelp;
+
 		private CItemBase iKeyAssignBassR;
-		private CItemBase iKeyAssignBassReturnToMenu;
+		private CItemBase iKeyAssignBassG;
+		private CItemBase iKeyAssignBassB;
+        private CItemBase iKeyAssignBassY;
+        private CItemBase iKeyAssignBassP;
+		private CItemBase iKeyAssignBassPick;
 		private CItemBase iKeyAssignBassWail;
+		private CItemBase iKeyAssignBassDecide;
+		private CItemBase iKeyAssignBassReturnToMenu;
+
 		public CItemBase iKeyAssignDrumsBD;
 		public CItemBase iKeyAssignDrumsCY;
 	    public CItemBase iKeyAssignDrumsFT;
@@ -2474,16 +2512,16 @@ namespace DTXMania
 		public CItemBase iKeyAssignDrumsLP;	// #27029 2012.1.4 from
         public CItemBase iKeyAssignDrumsLBD;
 
-        private CItemBase iKeyAssignGuitarP;
-        private CItemBase iKeyAssignGuitarY;
-		private CItemBase iKeyAssignGuitarB;
-		private CItemBase iKeyAssignGuitarCancel;
-		private CItemBase iKeyAssignGuitarDecide;
-		private CItemBase iKeyAssignGuitarG;
-		private CItemBase iKeyAssignGuitarPick;
 		private CItemBase iKeyAssignGuitarR;
-		private CItemBase iKeyAssignGuitarReturnToMenu;
+		private CItemBase iKeyAssignGuitarG;
+ 		private CItemBase iKeyAssignGuitarB;
+        private CItemBase iKeyAssignGuitarY;
+        private CItemBase iKeyAssignGuitarP;
+		private CItemBase iKeyAssignGuitarPick;
 		private CItemBase iKeyAssignGuitarWail;
+		private CItemBase iKeyAssignGuitarDecide;
+		private CItemBase iKeyAssignGuitarReturnToMenu;
+
 		private CItemToggle iLogOutputLog;
 		private CItemToggle iSystemAdjustWaves;
 		private CItemToggle iSystemAudienceSound;

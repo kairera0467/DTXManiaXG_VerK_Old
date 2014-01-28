@@ -1063,7 +1063,7 @@ namespace DTXMania
                     this.tx描画用.vc拡大縮小倍率 = this.vector;
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
-                if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))
+                if ( CDTXMania.Pad.b押された( E楽器パート.BASS, Eパッド.Help ) )
                 {
                     if (this.b再生トグル == false)
                     {
