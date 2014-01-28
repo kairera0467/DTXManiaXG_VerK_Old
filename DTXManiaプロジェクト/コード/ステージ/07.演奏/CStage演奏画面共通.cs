@@ -1820,7 +1820,7 @@ namespace DTXMania
         protected void tキー入力()
         {
             IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
-            if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.F1))
+            if ( CDTXMania.Pad.b押された( E楽器パート.BASS, Eパッド.Help ) )
             {	// shift+f1 (pause)
                 this.bPAUSE = !this.bPAUSE;
                 if (this.bPAUSE)
@@ -1863,7 +1863,7 @@ namespace DTXMania
                     ドラムスクロール速度ダウン();
                 }
 
-                else if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.Delete))
+                else if ( CDTXMania.Pad.b押された( E楽器パート.GUITAR, Eパッド.Help ) )
                 {	// del (debug info)
                     CDTXMania.ConfigIni.b演奏情報を表示する = !CDTXMania.ConfigIni.b演奏情報を表示する;
                 }

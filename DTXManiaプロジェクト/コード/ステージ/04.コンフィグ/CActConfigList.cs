@@ -1380,7 +1380,7 @@ namespace DTXMania
             }
             else if (this.list項目リスト[this.n現在の選択項目] == this.iKeyAssignGuitarCancel)
             {
-                CDTXMania.stageコンフィグ.tパッド選択通知(EKeyConfigPart.GUITAR, EKeyConfigPad.Cancel);
+                CDTXMania.stageコンフィグ.tパッド選択通知(EKeyConfigPart.GUITAR, EKeyConfigPad.Help);
             }
 
 
@@ -1418,7 +1418,7 @@ namespace DTXMania
             }
             else if (this.list項目リスト[this.n現在の選択項目] == this.iKeyAssignBassCancel)
             {
-                CDTXMania.stageコンフィグ.tパッド選択通知(EKeyConfigPart.BASS, EKeyConfigPad.Cancel);
+                CDTXMania.stageコンフィグ.tパッド選択通知(EKeyConfigPart.BASS, EKeyConfigPad.Help);
             }
             else if (this.list項目リスト[this.n現在の選択項目] == this.iKeyAssignSystemCapture)
             {
@@ -1610,6 +1610,14 @@ namespace DTXMania
                 "キャプチャキー設定：\n画面キャプチャのキーの割り当てを設\n定します。",
                 "Capture key assign:\nTo assign key for screen capture.\n (You can use keyboard only. You can't\nuse pads to capture screenshot.");
             this.list項目リスト.Add(this.iKeyAssignSystemCapture);
+            this.iKeyAssignGuitarCancel = new CItemBase("Help",
+                "ヘルプボタンのキー設定：\nヘルプボタンへのキーの割り当てを設定します。",
+                "Help bottun assign:\nTo assign key/pads for Help button.");
+            this.list項目リスト.Add(this.iKeyAssignGuitarCancel);
+            this.iKeyAssignBassCancel = new CItemBase("Pause",
+                "一時停止キー設定：\n一時停止キーの割り当てを設定します。",
+                "Pause key assign:\nTo assign key/pads for Pause button.");
+            this.list項目リスト.Add(this.iKeyAssignBassCancel);
 
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignSystem;
@@ -1719,10 +1727,6 @@ namespace DTXMania
                 "ギターのキー設定：\n決定ボタンへのキーの割り当てを設\n定します。",
                 "Guitar key assign:\nTo assign key/pads for Decide button.");
             this.list項目リスト.Add(this.iKeyAssignGuitarDecide);
-            this.iKeyAssignGuitarCancel = new CItemBase("Cancel",
-                "ギターのキー設定：\nキャンセルボタンへのキーの割り当\nてを設定します。",
-                "Guitar key assign:\nTo assign key/pads for Cancel button.");
-            this.list項目リスト.Add(this.iKeyAssignGuitarCancel);
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignGuitar;
         }
@@ -1769,10 +1773,6 @@ namespace DTXMania
                 "ベースのキー設定：\n決定ボタンへのキーの割り当てを設\n定します。",
                 "Bass key assign:\nTo assign key/pads for Decide button.");
             this.list項目リスト.Add(this.iKeyAssignBassDecide);
-            this.iKeyAssignBassCancel = new CItemBase("Cancel",
-                "ベースのキー設定：\nキャンセルボタンへのキーの割り当\nてを設定します。",
-                "Bass key assign:\nTo assign key/pads for Cancel button.");
-            this.list項目リスト.Add(this.iKeyAssignBassCancel);
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignBass;
         }
