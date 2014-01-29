@@ -81,7 +81,7 @@ namespace DTXMania
                     
                     
                 }
-                else if (CDTXMania.ConfigIni.nInfoType == 1 && CDTXMania.ConfigIni.bGraph.Drums != true)
+                else if (CDTXMania.ConfigIni.nInfoType == 1 && !CDTXMania.ConfigIni.bGraph有効)
                 {
                     
                     y += 0x153;

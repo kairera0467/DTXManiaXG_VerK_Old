@@ -481,7 +481,7 @@ namespace DTXMania
 		public bool bSTAGEFAILED有効;
 		public STDGBVALUE<bool> bSudden;
 		public bool bTight;
-		public STDGBVALUE<bool> bGraph;     // #24074 2011.01.23 add ikanick
+		public bool bGraph有効;     // #24074 2011.01.23 add ikanick
 		public bool bWave再生位置自動調整機能有効;
 		public bool bシンバルフリー;
 		public bool bストイックモード;
@@ -1716,9 +1716,7 @@ namespace DTXMania
 
             // #24074 2011.01.23 add ikanick
 			sw.WriteLine( "; グラフ表示(0:OFF, 1:ON)" );
-			sw.WriteLine( "DrumsGraph={0}", this.bGraph.Drums ? 1 : 0 );
-            sw.WriteLine( "GuitarGraph={0}", this.bGraph.Guitar ? 1 : 0);
-            sw.WriteLine( "BassGraph={0}", this.bGraph.Bass ? 1 : 0);
+			sw.WriteLine( "SkillMater={0}", this.bGraph有効 ? 1 : 0 );
 			sw.WriteLine();
 
             #region[DTXManiaXG追加オプション]
@@ -2640,18 +2638,10 @@ namespace DTXMania
 											{
 												this.bTight = C変換.bONorOFF( str4[ 0 ] );
 											}
-											else if( str3.Equals( "DrumsGraph" ) )  // #24074 2011.01.23 addikanick
+											else if( str3.Equals( "SkillMater" ) )  // #24074 2011.01.23 addikanick
 											{
-												this.bGraph.Drums = C変換.bONorOFF( str4[ 0 ] );
+												this.bGraph有効 = C変換.bONorOFF( str4[ 0 ] );
 											}
-                                            else if (str3.Equals( "GuitarGraph" ))  // #24074 2011.01.23 addikanick
-                                            {
-                                                this.bGraph.Guitar = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if (str3.Equals( "BassGraph" ))  // #24074 2011.01.23 addikanick
-                                            {
-                                                this.bGraph.Bass = C変換.bONorOFF(str4[0]);
-                                            }
 											else if( str3.Equals( "GuitarSudden" ) )
 											{
 												this.bSudden.Guitar = C変換.bONorOFF( str4[ 0 ] );

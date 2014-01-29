@@ -368,7 +368,7 @@ namespace DTXMania
 
                 this.t進行描画・ステータスパネル();
 
-                if ( CDTXMania.ConfigIni.eNamePlate != Eタイプ.A || CDTXMania.ConfigIni.bGraph.Drums == true || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT )
+                if (CDTXMania.ConfigIni.eNamePlate != Eタイプ.A || CDTXMania.ConfigIni.bGraph有効 || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT)
                         this.t進行描画・コンボ();
 
                 this.t進行描画・ゲージ();
@@ -759,7 +759,7 @@ namespace DTXMania
 
 		private void t進行描画・グラフ()        
         {
-            if( CDTXMania.ConfigIni.bGraph.Drums )
+            if (CDTXMania.ConfigIni.bGraph有効)
             {
                 this.actGraph.On進行描画();
                 this.actGraph.db現在の判定数合計 = this.nヒット数・Auto含む.Drums.Perfect + this.nヒット数・Auto含む.Drums.Great + this.nヒット数・Auto含む.Drums.Good + this.nヒット数・Auto含む.Drums.Miss + this.nヒット数・Auto含む.Drums.Poor;
