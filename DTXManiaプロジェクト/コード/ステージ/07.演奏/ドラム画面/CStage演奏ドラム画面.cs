@@ -30,7 +30,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actChipFireD = new CAct演奏DrumsチップファイアD() );
             base.list子Activities.Add( this.actChipFireGB = new CAct演奏DrumsチップファイアGB());
             base.list子Activities.Add( this.actGauge = new CAct演奏Drumsゲージ() );
-            base.list子Activities.Add( this.actGraph = new CAct演奏Drumsグラフ() ); // #24074 2011.01.23 add ikanick
+            base.list子Activities.Add( this.actGraph = new CAct演奏スキルメーター() ); // #24074 2011.01.23 add ikanick
 			base.list子Activities.Add( this.actJudgeString = new CAct演奏Drums判定文字列() );
 			base.list子Activities.Add( this.actLaneFlushD = new CAct演奏DrumsレーンフラッシュD() );
 			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏DrumsレーンフラッシュGB() );
@@ -464,7 +464,7 @@ namespace DTXMania
         public int nパフェ数;
 		private CAct演奏DrumsチップファイアD actChipFireD;
         private CActLVLNFont actLVFont;
-		public CAct演奏Drumsグラフ actGraph;   // #24074 2011.01.23 add ikanick
+        public CAct演奏スキルメーター actGraph;   // #24074 2011.01.23 add ikanick
 		public CAct演奏Drumsパッド actPad;
         public CAct演奏Drumsドラムセット actDrumSet;
 		public bool bフィルイン中;
