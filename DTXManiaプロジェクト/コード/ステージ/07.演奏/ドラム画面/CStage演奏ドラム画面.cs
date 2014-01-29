@@ -1084,6 +1084,41 @@ namespace DTXMania
                                 E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
                                 switch (eBDGroup)
                                 {
+                                    case EBDGroup.BDとLPで打ち分ける:
+                                        #region[ BD & LBD | LP ]
+                                        if( e判定BD != E判定.Miss && e判定LBD != E判定.Miss )
+                                        {
+                                            if( chipBD.n発声位置 < chipLP.n発声位置 )
+                                            {
+                                                this.tドラムヒット処理( nTime, Eパッド.BD, chipBD, inputEvent.nVelocity );
+                                            }
+                                            else if( chipBD.n発声位置 > chipLBD.n発声位置 )
+                                            {
+                                                this.tドラムヒット処理( nTime, Eパッド.BD, chipLBD, inputEvent.nVelocity );
+                                            }
+                                            else
+                                            {
+                                                this.tドラムヒット処理( nTime, Eパッド.BD, chipBD, inputEvent.nVelocity);
+                                                this.tドラムヒット処理( nTime, Eパッド.BD, chipLBD, inputEvent.nVelocity);
+                                            }
+                                            bHitted = true;
+                                        }
+                                        else if( e判定BD != E判定.Miss)
+                                        {
+                                            this.tドラムヒット処理( nTime, Eパッド.BD, chipBD, inputEvent.nVelocity);
+                                            bHitted = true;
+                                        }
+                                        else if( e判定LBD != E判定.Miss)
+                                        {
+                                            this.tドラムヒット処理( nTime, Eパッド.BD, chipLBD, inputEvent.nVelocity);
+                                            bHitted = true;
+                                        }
+                                        if( bHitted )
+                                            continue;
+                                        else
+                                            break;
+                                        #endregion
+
                                     case EBDGroup.左右ペダルのみ打ち分ける:
                                         #region[ BDのヒット処理]
                                         if (e判定BD != E判定.Miss)
@@ -1207,8 +1242,9 @@ namespace DTXMania
                                         {
                                             continue;
                                         }
-                                        #endregion
                                         break;
+                                        #endregion
+
 
                                     default:
                                         #region [ 全部打ち分け時のヒット処理 ]
@@ -2028,6 +2064,7 @@ namespace DTXMania
                                         #endregion
                                         break;
 
+                                    case EBDGroup.BDとLPで打ち分ける:
                                     default:
                                         #region [ 全部打ち分け時のヒット処理 ]
                                         //-----------------------------
@@ -2063,6 +2100,41 @@ namespace DTXMania
                                 E判定 e判定LBD = (chipLBD != null) ? this.e指定時刻からChipのJUDGEを返す(nTime, chipLBD, nInputAdjustTime + nPedalLagTime) : E判定.Miss;
                                 switch (eBDGroup)
                                 {
+                                    case EBDGroup.BDとLPで打ち分ける:
+                                        #region[ BD & LBD | LP ]
+                                        if( e判定BD != E判定.Miss && e判定LBD != E判定.Miss )
+                                        {
+                                            if( chipBD.n発声位置 < chipLBD.n発声位置 )
+                                            {
+                                                this.tドラムヒット処理( nTime, Eパッド.LBD, chipBD, inputEvent.nVelocity );
+                                            }
+                                            else if( chipBD.n発声位置 > chipLBD.n発声位置 )
+                                            {
+                                                this.tドラムヒット処理( nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity );
+                                            }
+                                            else
+                                            {
+                                                this.tドラムヒット処理( nTime, Eパッド.LBD, chipBD, inputEvent.nVelocity );
+                                                this.tドラムヒット処理( nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity );
+                                            }
+                                            bHitted = true;
+                                        }
+                                        else if( e判定BD != E判定.Miss )
+                                        {
+                                            this.tドラムヒット処理( nTime, Eパッド.LBD, chipBD, inputEvent.nVelocity);
+                                            bHitted = true;
+                                        }
+                                        else if( e判定LBD != E判定.Miss )
+                                        {
+                                            this.tドラムヒット処理( nTime, Eパッド.LBD, chipLBD, inputEvent.nVelocity);
+                                            bHitted = true;
+                                        }
+                                        if( bHitted )
+                                            continue;
+                                        else
+                                            break;
+                                        #endregion
+
                                     case EBDGroup.左右ペダルのみ打ち分ける:
                                         #region[ LPのヒット処理]
                                         if (e判定LP != E判定.Miss && e判定LBD != E判定.Miss)
