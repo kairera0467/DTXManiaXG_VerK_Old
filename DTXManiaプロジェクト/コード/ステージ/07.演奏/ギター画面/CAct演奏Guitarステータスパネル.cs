@@ -43,16 +43,34 @@ namespace DTXMania
                 this.nグラフNX = 267;
             }
 
-            if (!CDTXMania.DTX.bチップがある.Guitar || !CDTXMania.DTX.bチップがある.Bass)
+            if (CDTXMania.ConfigIni.bGraph有効)
             {
-                if (CDTXMania.ConfigIni.bGraph有効)
-                    this.n本体1X = this.n本体1X + this.nグラフNX;
-
-                if (CDTXMania.ConfigIni.bGraph有効)
-                    this.n本体2X = this.n本体2X - this.nグラフNX;
-
-                if (CDTXMania.ConfigIni.bGraph有効)
-                    this.n本体0X = this.n本体0X + this.nグラフSX;
+                if (!CDTXMania.DTX.bチップがある.Bass)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体2X = this.n本体2X - this.nグラフNX;
+                        this.n本体0X = this.n本体0X - this.nグラフSX;
+                    }
+                    else
+                    {
+                        this.n本体1X = this.n本体1X + this.nグラフNX;
+                        this.n本体0X = this.n本体0X + this.nグラフSX;
+                    }
+                }
+                else if (!CDTXMania.DTX.bチップがある.Guitar)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体1X = this.n本体1X + this.nグラフNX;
+                        this.n本体0X = this.n本体0X + this.nグラフSX;
+                    }
+                    else
+                    {
+                        this.n本体2X = this.n本体2X - this.nグラフNX;
+                        this.n本体0X = this.n本体0X - this.nグラフSX;
+                    }
+                }
             }
 
             #endregion
