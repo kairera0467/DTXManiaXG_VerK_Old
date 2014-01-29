@@ -25,6 +25,7 @@ namespace DTXMania
 	public enum EBDGroup		// #27029 2012.1.4 from add
 	{
 		打ち分ける,
+        BDとLPで打ち分ける,
 		左右ペダルのみ打ち分ける,
         どっちもBD
 	}

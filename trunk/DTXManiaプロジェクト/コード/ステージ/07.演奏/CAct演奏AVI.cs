@@ -721,7 +721,10 @@ namespace DTXMania
 
                 if ( CDTXMania.DTX.listBMP.Count >= 1 && CDTXMania.ConfigIni.bBGA有効 == true)
                 {
-                    CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
+                    if (CDTXMania.ConfigIni.bDrums有効)
+                        CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
+                    else
+                        CDTXMania.stage演奏ギター画面.actBGA.t進行描画(503, 0);
                 }
 
                 if( CDTXMania.ConfigIni.ボーナス演出を表示する == true )
@@ -1134,6 +1137,7 @@ namespace DTXMania
 
         #region [ private ]
         //-----------------
+        public CAct演奏BGA actBGA;
         public CAct演奏Drumsフィルインエフェクト actFill;
 
         private bool bFullScreen;

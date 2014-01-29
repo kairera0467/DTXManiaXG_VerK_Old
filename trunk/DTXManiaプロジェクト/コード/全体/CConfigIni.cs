@@ -1445,8 +1445,8 @@ namespace DTXMania
             sw.WriteLine("; CY/RD Grouping       (0:CY|RD, 1:CY&RD)");
             sw.WriteLine("CYGroup={0}", (int)this.eCYGroup);
             sw.WriteLine();
-			sw.WriteLine( "; LP/LBD/BD 打ち分けモード(0:LP|LBD|BD, 1:LP&(LBD|BD), 2:LP&LBD&BD)" );		// #27029 2012.1.4 from
-            sw.WriteLine( "; LP/LBD/BD Grouping     (0:LP|LBD|BD, 1:LP&(LBD|BD), 2:LP&LBD&BD)");
+			sw.WriteLine( "; LP/LBD/BD 打ち分けモード(0:LP|LBD|BD, 1:LP|(LBD&BD), 2:LP&(LBD|BD), 3:LP&LBD&BD)" );		// #27029 2012.1.4 from
+            sw.WriteLine( "; LP/LBD/BD Grouping     (0:LP|LBD|BD, 1:LP(LBD&BD), 2:LP&(LBD|BD), 3:LP&LBD&BD)");
 			sw.WriteLine( "BDGroup={0}", (int) this.eBDGroup );				// 
 			sw.WriteLine();													//
 			sw.WriteLine( "; 打ち分け時の再生音の優先順位(HHGroup)(0:Chip>Pad, 1:Pad>Chip)" );
@@ -2364,7 +2364,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("BDGroup"))		// #27029 2012.1.4 from
                                             {
-                                                this.eBDGroup = (EBDGroup)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eBDGroup);
+                                                this.eBDGroup = (EBDGroup)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eBDGroup);
                                             }
                                             else if (str3.Equals("HitSoundPriorityHH"))
                                             {

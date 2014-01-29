@@ -975,9 +975,19 @@ namespace DTXMania
 						#region [ タイトル名テクスチャを描画。]
 						//-----------------
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
-                            this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, i選択曲バーX座標 + 120, 300);
-                        if (this.stバー情報[nパネル番号].txタイトル名 != null && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE)
-                            this.stバー情報[nパネル番号].txタイトル名.t2D描画(CDTXMania.app.Device, 60, 530);
+                            this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, i選択曲バーX座標 + 120, 300 );
+                        if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE )
+                        {
+                            this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
+                            if( this.tx選択中の曲名テクスチャ != null )
+                                this.tx選択中の曲名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 530 );
+
+                            this.tx選択中のアーティスト名テクスチャ = this.t指定された文字テクスチャを生成する( CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.アーティスト名 );
+                            if( this.tx選択中のアーティスト名テクスチャ != null )
+                                this.tx選択中のアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 560 );
+
+                        }
+
                         //-----------------
 						#endregion
 						#region [ スキル値を描画。]
@@ -1163,8 +1173,11 @@ namespace DTXMania
 		private CTexture txSongNotFound, txEnumeratingSongs;
 		private CTexture txスキル数字;
 		private CTexture txアイテム数数字;
+        private CTexture tx選択中の曲名テクスチャ;
+        private CTexture tx選択中のアーティスト名テクスチャ;
 		private STバー tx曲名バー;
 		private ST選曲バー tx選曲バー;
+        private CPrivateFastFont prvFont;
 
 		private int nCurrentPosition = 0;
 		private int nNumOfItems = 0;
@@ -1342,6 +1355,48 @@ namespace DTXMania
                     //-----------------
                     #endregion
                 }
+        }
+        private CTexture t指定された文字テクスチャを生成する( string str文字 )
+        {
+            //2013.09.05.kairera0467 中央にしか使用することはないので、色は黒固定。
+            //現在は機能しない(面倒なので実装してない)が、そのうち使用する予定。
+            //PrivateFontの試験運転も兼ねて。
+            //CPrivateFastFont
+            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
+            Bitmap bmp;
+            
+            bmp = prvFont.DrawPrivateFont( str文字, Color.White, Color.Black );
+
+            SizeF sz曲名;
+
+            #region [ 曲名表示に必要となるサイズを取得する。]
+            //-----------------
+            using( var bmpDummy = new Bitmap(1, 1) )
+            {
+                var g = Graphics.FromImage( bmpDummy );
+                g.PageUnit = GraphicsUnit.Pixel;
+                sz曲名 = g.MeasureString( str文字, this.ft曲リスト用フォント);
+                //this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int)g.MeasureString(str文字, this.ft曲リスト用フォント).Width;
+            }
+            //-----------------
+            #endregion
+            int n最大幅px = 500;
+            int height = 25;
+            int width = (int)((sz曲名.Width + 2) * 0.5f);
+            if (width > (CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2))
+                width = CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2;	// 右端断ち切れ仕方ないよね
+
+            float f拡大率X = (width <= n最大幅px) ? 0.5f : (((float)n最大幅px / (float)width) * 0.5f);	// 長い文字列は横方向に圧縮。
+
+            CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
+
+            if( tx文字テクスチャ != null )
+                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( f拡大率X, 0.5f, 1f );
+
+            //prvFont.Dispose();
+            bmp.Dispose();
+
+            return tx文字テクスチャ;
         }
 		private void t曲名バーの生成( int nバー番号, string str曲名, Color color )
 		{
