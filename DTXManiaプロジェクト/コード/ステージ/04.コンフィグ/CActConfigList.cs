@@ -732,15 +732,16 @@ namespace DTXMania
 				new string[] { "CY-0", "CY-1" } );
 			this.list項目リスト.Add( this.iSystemCYGroup );
 
-			this.iSystemBDGroup = new CItemList( "BD Group", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eBDGroup,		// #27029 2012.1.4 from
-				"フットペダル打ち分け設定：\n" +
-				"左ペダル、左バスドラ、右バスドラの打ち分け\n" +
-				"方法を指定します。\n" +
-				"  BD-0 ... LP | LBD |BD\n" +
-				"  BD-1 ... LP & LBD |BD\n" + 
-				"  BD-2 ... LP & LBD &BD\n",
-				new string[] { "BD-0", "BD-1","BD-2" } );
-			this.list項目リスト.Add( this.iSystemBDGroup );
+            this.iSystemBDGroup = new CItemList("BD Group", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eBDGroup,		// #27029 2012.1.4 from
+                "フットペダル打ち分け設定：\n" +
+                "左ペダル、左バスドラ、右バスドラの打ち分け\n" +
+                "方法を指定します。\n" +
+                "  BD-0 ... LP | LBD | BD\n" +
+                "  BD-1 ... LP | LBD & BD" +
+                "  BD-2 ... LP & LBD | BD\n" +
+                "  BD-3 ... LP & LBD & BD\n",
+                new string[] { "BD-0", "BD-1", "BD-2", "BD-3" });
+            this.list項目リスト.Add(this.iSystemBDGroup);
 
 			this.iSystemCymbalFree = new CItemToggle( "CymbalFree", CDTXMania.ConfigIni.bシンバルフリー,
 				"シンバルフリーモード：\n" +
