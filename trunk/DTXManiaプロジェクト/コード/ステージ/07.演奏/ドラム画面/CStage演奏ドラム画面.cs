@@ -2788,7 +2788,7 @@ namespace DTXMania
 			if ( configIni.bDrums有効 )
 			{
 				#region [ Sudden処理 ]
-				if ((configIni.nHidSud == 2) || (configIni.nHidSud == 3))
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 2) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
 				{
 					if ( pChip.nバーからの距離dot.Drums < 200 )
 					{
@@ -2808,7 +2808,7 @@ namespace DTXMania
 				}
 				#endregion
 				#region [ Hidden処理 ]
-                if ((configIni.nHidSud == 1) || (configIni.nHidSud == 3))
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 1) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
 				{
 					if ( pChip.nバーからの距離dot.Drums < 100 )
 					{
@@ -2822,7 +2822,7 @@ namespace DTXMania
 				}
 				#endregion
                 #region [ ステルス処理 ]
-                if (configIni.nHidSud == 4)
+                if (CDTXMania.ConfigIni.nHidSud.Drums == 4)
                 {
                         pChip.b可視 = false;
                 }

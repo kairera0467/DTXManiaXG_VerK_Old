@@ -587,7 +587,7 @@ namespace DTXMania
         public STDGBVALUE<int> nInputAdjustTimeMs;	// #23580 2011.1.3 yyagi タイミングアジャスト機能
         public STDGBVALUE<int> nJudgeLinePosOffset; // #31602 2013.6.23 yyagi 判定ライン表示位置のオフセット
         public int nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
-        public int nHidSud;
+        public STDGBVALUE<int> nHidSud;
         public bool bIsAutoResultCapture;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能のON/OFF制御
 		public int nPoliphonicSounds;				// #28228 2012.5.1 yyagi レーン毎の最大同時発音数
 		public bool bバッファ入力を行う;
@@ -1692,8 +1692,10 @@ namespace DTXMania
             sw.WriteLine(": TIGHT mode. 0=OFF, 1=ON ");
             sw.WriteLine("DrumsTight={0}", this.bTight ? 1 : 0 );									//
             sw.WriteLine();
-            sw.WriteLine("; Hidden/Sudden");
-            sw.WriteLine("HiddenSudden={0}", (int)this.nHidSud);
+            sw.WriteLine("; Hidden/Sudden (ギター/ベースは未実装)");
+            sw.WriteLine("DrumsHiddenSudden={0}", (int)this.nHidSud.Drums);
+            sw.WriteLine("GuitarHiddenSudden={0}", (int)this.nHidSud.Guitar);
+            sw.WriteLine("BassHiddenSudden={0}", (int)this.nHidSud.Bass);
             sw.WriteLine();
 			sw.WriteLine( "; ドラム判定文字表示位置(0:レーン上,1:判定ライン上,2:表示OFF)" );
 			sw.WriteLine( "DrumsPosition={0}", (int) this.判定文字表示位置.Drums );
@@ -2694,9 +2696,17 @@ namespace DTXMania
 											{
 												this.bLeft.Bass = C変換.bONorOFF( str4[ 0 ] );
 											}
-                                            else if (str3.Equals( "HiddenSudden") )
+                                            else if (str3.Equals( "DrumsHiddenSudden") )
                                             {
-                                                this.nHidSud = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 5, this.nHidSud);
+                                                this.nHidSud.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 5, this.nHidSud.Drums);
+                                            }
+                                            else if (str3.Equals( "GuitarHiddenSudden") )
+                                            {
+                                                this.nHidSud.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 5, this.nHidSud.Guitar);
+                                            }
+                                            else if (str3.Equals( "BassHiddenSudden") )
+                                            {
+                                                this.nHidSud.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 5, this.nHidSud.Bass);
                                             }
 											else if( str3.Equals( "DrumsPosition" ) )
 											{

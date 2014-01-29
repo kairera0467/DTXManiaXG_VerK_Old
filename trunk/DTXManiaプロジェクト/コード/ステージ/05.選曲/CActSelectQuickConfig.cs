@@ -111,7 +111,10 @@ namespace DTXMania
 				"Note: It also changes the songs' pitch." ) );
 			#endregion
 			#region [ 個別 Sud/Hid ]
-			l.Add( new CItemList( "HID/SUD", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nHidSud, "", "", new string[] { "OFF", "HIDDEN", "SUDDEN", "HID/SUD","STEALTH" } ) );
+			l.Add( new CItemList( "HID/SUD", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nHidSud[ nInst ], 
+                "",
+                "", 
+                new string[] { "OFF", "HIDDEN", "SUDDEN", "HID/SUD","STEALTH" } ) );
             //ドラム、ギター、ベースでのHIDDEN/SUDDENの設定の分離を考えなければならない。
 			#endregion
 			#region [ 共通 SET切り替え/More/Return ]
@@ -357,7 +360,7 @@ namespace DTXMania
 
                         if (d == Eダークモード.FULL)
                         {
-                            CDTXMania.ConfigIni.nLaneDisp[nCurrentTarget] = 3;
+                            CDTXMania.ConfigIni.nLaneDisp[ nCurrentTarget ] = 3;
                             CDTXMania.ConfigIni.bJudgeLineDisp[ nCurrentTarget ] = false;
                             CDTXMania.ConfigIni.bLaneFlush[ nCurrentTarget ] = false;
                         }
@@ -386,7 +389,7 @@ namespace DTXMania
 					CDTXMania.ConfigIni.n演奏速度 = (int) GetObj現在値( (int) EOrder.PlaySpeed );
 					break;
 				case (int) EOrder.SuddenHidden:
-                    CDTXMania.ConfigIni.nHidSud = (CDTXMania.ConfigIni.nHidSud + 1) % 5;
+                    CDTXMania.ConfigIni.nHidSud[ nCurrentTarget ] = (CDTXMania.ConfigIni.nHidSud[ nCurrentTarget ] + 1) % 5;
                     //CDTXMania.ConfigIni.nHidSud = (int) GetObj現在値((int) EOrder.SuddenHidden);
 					break;
 				case (int) EOrder.ConfSet:			// CONF-SET切り替え
