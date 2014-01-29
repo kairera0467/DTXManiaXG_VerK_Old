@@ -154,9 +154,13 @@ namespace DTXMania
 
             if (CDTXMania.ConfigIni.bGuitar有効)
             {
-                if (CDTXMania.DTX.bチップがある.Guitar && !CDTXMania.DTX.bチップがある.Bass)
+                if (!CDTXMania.DTX.bチップがある.Bass)
                     j = 1;
-                else if (CDTXMania.DTX.bチップがある.Bass && !CDTXMania.DTX.bチップがある.Guitar)
+                else if (!CDTXMania.DTX.bチップがある.Guitar)
+                    j = 2;
+                else if (!CDTXMania.ConfigIni.bギターが全部オートプレイである && CDTXMania.ConfigIni.bベースが全部オートプレイである)
+                    j = 1;
+                else if (CDTXMania.ConfigIni.bギターが全部オートプレイである && !CDTXMania.ConfigIni.bベースが全部オートプレイである)
                     j = 2;
             }
 
