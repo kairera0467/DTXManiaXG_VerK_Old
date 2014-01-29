@@ -565,7 +565,7 @@ namespace DTXMania
             */
             #endregion
 
-            this.iDrumsHIDSUD = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud,
+            this.iDrumsHIDSUD = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud.Drums,
                 "HIDDEN:チップが途中から見えなくなります。\n"+
                 "SUDDEN:チップが途中まで見えません。\n"+
                 "HID-SUD:HIDDEN、SUDDENの両方が適用\n"+
@@ -1101,6 +1101,19 @@ namespace DTXMania
 				"To change the scroll speed for the\nguitar lanes.\nYou can set it from x0.5 to x1000.0.\n(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iGuitarScrollSpeed );
 
+            this.iGuitarHIDSUD = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud.Guitar,
+                "HIDDEN:チップが途中から見えなくなります。\n" +
+                "SUDDEN:チップが途中まで見えません。\n" +
+                "HID-SUD:HIDDEN、SUDDENの両方が適用\n" +
+                "されます。\n" +
+                "STEALTH:チップがずっと表示されません。\n" +
+                "(現在は未実装)",
+                "The display position for Drums Combo.\n" +
+                "Note that it doesn't take effect\n" +
+                " at Autoplay ([Left] is forcely used).",
+                new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
+            this.list項目リスト.Add(this.iGuitarHIDSUD);
+
 			this.iGuitarSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Guitar,
 				"ギターチップがヒットバー付近にくる\nまで表示されなくなります。",
 				"Guitar chips are disappered until they\ncome near the hit bar, and suddenly\nappears." );
@@ -1294,6 +1307,19 @@ namespace DTXMania
 				"演奏時のベース譜面のスクロールの\n速度を指定します。\nx0.5 ～ x1000.0 までを指定可能です。",
 				"To change the scroll speed for the\nbass lanes.\nYou can set it from x0.5 to x1000.0.\n(ScrollSpeed=x0.5 means half speed)" );
 			this.list項目リスト.Add( this.iBassScrollSpeed );
+
+            this.iBassHIDSUD = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud.Bass,
+                "HIDDEN:チップが途中から見えなくなります。\n" +
+                "SUDDEN:チップが途中まで見えません。\n" +
+                "HID-SUD:HIDDEN、SUDDENの両方が適用\n" +
+                "されます。\n" +
+                "STEALTH:チップがずっと表示されません。\n" +
+                "(現在は未実装)",
+                "The display position for Drums Combo.\n" +
+                "Note that it doesn't take effect\n" +
+                " at Autoplay ([Left] is forcely used).",
+                new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
+            this.list項目リスト.Add(this.iBassHIDSUD);
 
 			this.iBassSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Bass,
 				"ベースチップがヒットバー付近にくる\nまで表示されなくなります。",
@@ -2856,7 +2882,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.BsPick = this.iBassPick.bON;
 			CDTXMania.ConfigIni.bAutoPlay.BsW = this.iBassW.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Bass = this.iBassScrollSpeed.n現在の値;
-			CDTXMania.ConfigIni.bSudden.Bass = this.iBassSudden.bON;
+            CDTXMania.ConfigIni.nHidSud.Bass = this.iBassHIDSUD.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.bSudden.Bass = this.iBassSudden.bON;
 			CDTXMania.ConfigIni.bHidden.Bass = this.iBassHidden.bON;
 			CDTXMania.ConfigIni.bReverse.Bass = this.iBassReverse.bON;
 			CDTXMania.ConfigIni.判定文字表示位置.Bass = (Eタイプ) this.iBassPosition.n現在選択されている項目番号;
@@ -2894,7 +2921,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.判定文字表示位置.Drums = (Eタイプ) this.iDrumsPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums = this.iDrumsInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
-            CDTXMania.ConfigIni.nHidSud = this.iDrumsHIDSUD.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.nHidSud.Drums = this.iDrumsHIDSUD.n現在選択されている項目番号;
 
 			CDTXMania.ConfigIni.eHHGroup = (EHHGroup) this.iSystemHHGroup.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.eFTGroup = (EFTGroup) this.iSystemFTGroup.n現在選択されている項目番号;
@@ -2947,7 +2974,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.GtPick = this.iGuitarPick.bON;
 			CDTXMania.ConfigIni.bAutoPlay.GtW = this.iGuitarW.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Guitar = this.iGuitarScrollSpeed.n現在の値;
-			CDTXMania.ConfigIni.bSudden.Guitar = this.iGuitarSudden.bON;
+            CDTXMania.ConfigIni.nHidSud.Guitar = this.iGuitarHIDSUD.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.bSudden.Guitar = this.iGuitarSudden.bON;
 			CDTXMania.ConfigIni.bHidden.Guitar = this.iGuitarHidden.bON;
 			CDTXMania.ConfigIni.bReverse.Guitar = this.iGuitarReverse.bON;
 			CDTXMania.ConfigIni.判定文字表示位置.Guitar = (Eタイプ) this.iGuitarPosition.n現在選択されている項目番号;
