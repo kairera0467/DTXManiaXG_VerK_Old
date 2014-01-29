@@ -361,7 +361,7 @@ namespace DTXMania
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelC.png"));
                 }
-                else if( CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効 )
+                else if (CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効)
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelB.png"));
                 }
@@ -882,7 +882,7 @@ namespace DTXMania
                 //CDTXMania.act文字コンソール.tPrint(200, 0, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", this.actFill.lDshowPosition));
                 //コンボ、ネームプレート
                 //グラフ無効&ネームプレートA,C
-                if (CDTXMania.ConfigIni.bGraph.Drums == false && CDTXMania.ConfigIni.eNamePlate == Eタイプ.A && CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 == Eドラムコンボ文字の表示位置.RIGHT )
+                if (CDTXMania.ConfigIni.bGraph有効 == false && CDTXMania.ConfigIni.eNamePlate == Eタイプ.A && CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 == Eドラムコンボ文字の表示位置.RIGHT)
                 {
                     CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 }
@@ -893,7 +893,7 @@ namespace DTXMania
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                     this.tx描画用.n透明度 = 0xff;
                     #region[ スキルメーター有効 ]
-                    if ( CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効 )
+                    if (CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効)
                     {
                         this.n本体X = 2;
                         this.n本体Y = 402;
@@ -946,7 +946,7 @@ namespace DTXMania
                     }
                     #endregion
                     #region[ スキルメーター無効 ]
-                    else if( !CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効 )
+                    else if (!CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効)
                     {
                         this.n本体X = 854;
                         this.n本体Y = 142;
@@ -1007,10 +1007,10 @@ namespace DTXMania
 
                         int nグラフX = 267;
 
-                        if (CDTXMania.ConfigIni.bGraph.Guitar && !CDTXMania.DTX.bチップがある.Bass)
+                        if (CDTXMania.ConfigIni.bGraph有効 && !CDTXMania.DTX.bチップがある.Bass)
                             this.n本体X = this.n本体X + nグラフX;
 
-                        if (CDTXMania.ConfigIni.bGraph.Bass && !CDTXMania.DTX.bチップがある.Guitar)
+                        if (CDTXMania.ConfigIni.bGraph有効 && !CDTXMania.DTX.bチップがある.Guitar)
                             this.n本体X = this.n本体X - nグラフX;
                         #endregion
 

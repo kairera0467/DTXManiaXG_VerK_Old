@@ -150,7 +150,7 @@ namespace DTXMania
 
             x本体[0] = 900;
             x本体[1] = 290;
-            x本体[2] = 610;
+            x本体[2] = 574;
 
             if (CDTXMania.ConfigIni.bGuitar有効)
             {

@@ -45,13 +45,13 @@ namespace DTXMania
 
             if (!CDTXMania.DTX.bチップがある.Guitar || !CDTXMania.DTX.bチップがある.Bass)
             {
-                if (CDTXMania.ConfigIni.bGraph.Guitar)
+                if (CDTXMania.ConfigIni.bGraph有効)
                     this.n本体1X = this.n本体1X + this.nグラフNX;
 
-                if (CDTXMania.ConfigIni.bGraph.Bass)
+                if (CDTXMania.ConfigIni.bGraph有効)
                     this.n本体2X = this.n本体2X - this.nグラフNX;
 
-                if (CDTXMania.ConfigIni.bGraph.Guitar || CDTXMania.ConfigIni.bGraph.Bass)
+                if (CDTXMania.ConfigIni.bGraph有効)
                     this.n本体0X = this.n本体0X + this.nグラフSX;
             }
 

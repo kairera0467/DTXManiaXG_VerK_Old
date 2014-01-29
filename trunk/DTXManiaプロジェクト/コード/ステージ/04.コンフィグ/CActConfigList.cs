@@ -398,6 +398,13 @@ namespace DTXMania
             this.list項目リスト.Add(this.iSystemASIOBufferSizeMs);
             */
 
+                // #24074 2011.01.23 add ikanick
+                this.iSystemGraph = new CItemToggle("SkillMater", CDTXMania.ConfigIni.bGraph有効,
+                    "最高スキルと比較できるグラフを表示します。\n" +
+                    "オートプレイだと表示されません。",
+                    "To draw Graph  or not.\n");
+                this.list項目リスト.Add(this.iSystemGraph);
+
             this.iSystemNamePlateType = new CItemList("NamePlateType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eNamePlate,
                 "演奏画面の構成を変更します。\n" +
                 "Type-A: XG2風の表示です。\n" +
@@ -1020,13 +1027,6 @@ namespace DTXMania
                 new string[] {"OFF","Pad","Pedal","All"});
             this.list項目リスト.Add(this.iDrumsMirror);
 
-            // #24074 2011.01.23 add ikanick
-            this.iDrumsGraph = new CItemToggle("Graph", CDTXMania.ConfigIni.bGraph.Drums,
-                "最高スキルと比較できるグラフを表示します。\n"+
-                "オートプレイだと表示されません。",
-                "To draw Graph  or not.\n");
-            this.list項目リスト.Add(this.iDrumsGraph);
-
 			this.iDrumsGoToKeyAssign = new CItemBase( "Drums Keys", CItemBase.Eパネル種別.通常,
 				"ドラムのキー入力に関する項目を設定します。",
 				"Settings for the drums key/pad inputs." );
@@ -1185,15 +1185,6 @@ namespace DTXMania
 				"ギターの RGBYP の並びが左右反転し\nます。（左利きモード）",
 				"Lane order 'R-G-B-Y-P' becomes 'P-Y-B-G-R'\nfor lefty." );
 			this.list項目リスト.Add( this.iGuitarLeft );
-
-            //MovieMode(総合で設定するため個別には実装しない。)
-            //SkillMeter(後々実装)
-            this.iGuitarGraph = new CItemToggle("Graph", CDTXMania.ConfigIni.bGraph.Guitar,
-                "最高スキルと比較できるグラフを表示します。\n" +
-                "オートプレイだと表示されません。",
-                "To draw Graph \n" +
-                " or not.");
-            this.list項目リスト.Add(this.iGuitarGraph);
 
             //比較対象(そもそも比較グラフさえ完成していない)
             //シャッタータイプ
@@ -2579,6 +2570,7 @@ namespace DTXMania
         private CItemList   iSystemBPMbar;
         private CItemToggle iSystemClassicNotes;
         private CItemList   iSystemNamePlateType;
+        private CItemToggle iSystemGraph;        // #24074 2011.01.23 add ikanick
 
         private int iSystemSoundType_initial;
         private int iSystemWASAPIBufferSizeMs_initial;
@@ -2668,7 +2660,6 @@ namespace DTXMania
 		private CItemInteger iDrumsScrollSpeed;
 		private CItemToggle iDrumsSnare;
 		private CItemToggle iDrumsTight;
-		private CItemToggle iDrumsGraph;        // #24074 2011.01.23 add ikanick
         private CItemToggle iDrumsStageEffect;
         private CItemList iDrumsMoveDrumSet;
         private CItemList iDrumsMirror;
@@ -2703,7 +2694,6 @@ namespace DTXMania
 		private CItemToggle iGuitarLight;
 		private CItemList iGuitarPosition;
 		private CItemList iGuitarRandom;
-        private CItemToggle iGuitarGraph;
 		private CItemBase iGuitarReturnToMenu;
 		private CItemToggle iGuitarReverse;
 		private CItemInteger iGuitarScrollSpeed;
@@ -2808,7 +2798,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAVI有効 = this.iSystemAVI.bON;
 			CDTXMania.ConfigIni.bBGA有効 = this.iSystemBGA.bON;
             CDTXMania.ConfigIni.bDirectShowMode = this.iSystemDirectShowMode.bON;
-//			CDTXMania.ConfigIni.bGraph有効 = this.iSystemGraph.bON;#24074 2011.01.23 comment-out ikanick オプション(Drums)へ移行
+			CDTXMania.ConfigIni.bGraph有効 = this.iSystemGraph.bON;
 			CDTXMania.ConfigIni.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = this.iSystemPreviewSoundWait.n現在の値;
 			CDTXMania.ConfigIni.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms = this.iSystemPreviewImageWait.n現在の値;
 			CDTXMania.ConfigIni.b演奏情報を表示する = this.iSystemDebugInfo.bON;
@@ -2903,7 +2893,6 @@ namespace DTXMania
 			CDTXMania.ConfigIni.判定文字表示位置.Drums = (Eタイプ) this.iDrumsPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums = this.iDrumsInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
-			CDTXMania.ConfigIni.bGraph.Drums = this.iDrumsGraph.bON;// #24074 2011.01.23 add ikanick
             CDTXMania.ConfigIni.nHidSud = this.iDrumsHIDSUD.n現在選択されている項目番号;
 
 			CDTXMania.ConfigIni.eHHGroup = (EHHGroup) this.iSystemHHGroup.n現在選択されている項目番号;
@@ -2965,7 +2954,6 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bLight.Guitar = this.iGuitarLight.bON;
 			CDTXMania.ConfigIni.bLeft.Guitar = this.iGuitarLeft.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar = this.iGuitarInputAdjustTimeMs.n現在の値;	// #23580 2011.1.3 yyagi
-            CDTXMania.ConfigIni.bGraph.Guitar = this.iGuitarGraph.bON;
 
             CDTXMania.ConfigIni.bLaneFlush.Guitar = this.iGuitarLaneFlush.bON;
             CDTXMania.ConfigIni.nLaneDisp.Guitar = this.iGuitarLaneDisp.n現在選択されている項目番号;
