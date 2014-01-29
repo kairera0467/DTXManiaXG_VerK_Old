@@ -512,7 +512,7 @@ namespace DTXMania
         public int nASIODevice; // #24820 2013.1.17 yyagi ASIOデバイス
         public bool bDynamicBassMixerManagement; // #24820
         public Eタイプ eBPMbar;
-        public Eタイプ eAttackEffectType;
+        public STDGBVALUE<Eタイプ> eAttackEffect;
         public Eタイプ eNamePlate;
         public STDGBVALUE<Eタイプ> eNumOfLanes;
         public STDGBVALUE<Eタイプ> eDkdkType;
@@ -1018,7 +1018,9 @@ namespace DTXMania
             this.eRDPosition = ERDPosition.RCRD;
             this.nInfoType = 0;
             this.nSkillMode = 0;
-            this.eAttackEffectType = Eタイプ.A;
+            this.eAttackEffect.Drums = Eタイプ.A;
+            this.eAttackEffect.Guitar = Eタイプ.A;
+            this.eAttackEffect.Bass = Eタイプ.A;
             this.eLaneType = new STDGBVALUE<Eタイプ>();
             this.eLaneType.Drums = Eタイプ.A;
             this.eNamePlate = Eタイプ.A;
@@ -1732,8 +1734,8 @@ namespace DTXMania
             sw.WriteLine("; ドラムMIRRORモード(0:OFF, 1:Pad, 2:Pedal, 3:All)");
             sw.WriteLine("DrumsMirror={0}", (int)this.eMirror.Drums);
             sw.WriteLine();
-            sw.WriteLine("; ドラムRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom, 4:MasterRandom, 5:AnotherRandom)");
-            sw.WriteLine("DrumsRandom={0}", (int)this.eRandom.Drums);
+            sw.WriteLine("; ドラムパッドRANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom, 4:MasterRandom, 5:AnotherRandom)");
+            sw.WriteLine("DrumsRandomPad={0}", (int)this.eRandom.Drums);
             sw.WriteLine();
             sw.WriteLine("; ドラム足RANDOMモード(0:OFF, 1:Random, 2:SuperRandom, 3:HyperRandom, 4:MasterRandom, 5:AnotherRandom)");
             sw.WriteLine("DrumsRandomPedal={0}", (int)this.eRandomPedal.Drums);
@@ -1784,12 +1786,16 @@ namespace DTXMania
             sw.WriteLine("; スキルモードの自動切換え(0:OFF, 1:ON)");
             sw.WriteLine("SwitchSkillMode={0}", this.bSkillModeを自動切換えする ? 1 : 0);
             sw.WriteLine();
-            sw.WriteLine("; アタックエフェクトタイプ");
+            sw.WriteLine("; ドラム アタックエフェクトタイプ");
             sw.WriteLine("; 0:ALL 粉と爆発エフェクトを表示します。");
             sw.WriteLine("; 1:ChipOFF チップのエフェクトを消します。");
             sw.WriteLine("; 2:EffectOnly 粉を消します。");
             sw.WriteLine("; 3:ALLOFF すべて消します。");
-            sw.WriteLine("AttackEffectType={0}", (int)this.eAttackEffectType);
+            sw.WriteLine("DrumsAttackEffect={0}", (int)this.eAttackEffect.Drums);
+            sw.WriteLine();
+            sw.WriteLine("; ギター / ベース アタックエフェクトタイプ (0:OFF, 1:ON) (未実装)");
+            sw.WriteLine("GuitarAttackEffect={0}", (int)this.eAttackEffect.Guitar);
+            sw.WriteLine("BassAttackEffect={0}", (int)this.eAttackEffect.Bass);
             sw.WriteLine();
             sw.WriteLine("; レーン表示");
             sw.WriteLine("; 0:ALL ON レーン背景、小節線を表示します。");
@@ -2736,7 +2742,7 @@ namespace DTXMania
 											}
 											else if( str3.Equals( "Risky" ) )					// #2359 2011.6.23  yyagi
 											{
-												this.nRisky = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nRisky );
+												this.nRisky = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 10, this.nRisky );
 											}
                                             else if( str3.Equals( "HAZARD" ) )				// #29500 2012.9.11 kairera0467
                                             {
@@ -2830,7 +2836,7 @@ namespace DTXMania
                                             {
                                                 this.eMirror.Drums = (Eミラーモード)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eMirror.Drums);
                                             }
-                                            else if (str3.Equals("DrumsRandom"))
+                                            else if (str3.Equals("DrumsRandomPad"))
                                             {
                                                 this.eRandom.Drums = (Eランダムモード)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 5, (int)this.eRandom.Drums);
                                             }
@@ -2838,9 +2844,17 @@ namespace DTXMania
                                             {
                                                 this.eRandomPedal.Drums = (Eランダムモード)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 5, (int)this.eRandomPedal.Drums);
                                             }
-                                            else if (str3.Equals("AttackEffectType"))
+                                            else if (str3.Equals("DrumsAttackEffect"))
                                             {
-                                                this.eAttackEffectType = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eAttackEffectType);
+                                                this.eAttackEffect.Drums = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)this.eAttackEffect.Drums);
+                                            }
+                                            else if (str3.Equals("GuitarAttackEffect"))
+                                            {
+                                                this.eAttackEffect.Guitar = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 1, (int)this.eAttackEffect.Guitar);
+                                            }
+                                            else if (str3.Equals("BassAttackEffect"))
+                                            {
+                                                this.eAttackEffect.Bass = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 1, (int)this.eAttackEffect.Bass);
                                             }
                                             else if (str3.Equals("DrumsLaneDisp"))
                                             {

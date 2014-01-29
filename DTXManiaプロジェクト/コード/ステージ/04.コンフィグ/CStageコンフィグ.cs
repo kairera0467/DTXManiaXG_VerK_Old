@@ -559,9 +559,10 @@ namespace DTXMania
 				switch( this.n現在のメニュー番号 )
 				{
 					case 0:
-						str[ 0, 0 ] = "システムに関係する項目を設定しま";
-						str[ 0, 1 ] = "す。";
+						str[ 0, 0 ] = "システムに関係する項目を設定します。";
+                        str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings for an overall systems.";
+                        str[ 1, 1 ] = "";
 						break;
 
 					//case 1:
@@ -585,8 +586,8 @@ namespace DTXMania
 					//    str[1, 1] = "";
 					//    break;
 					case 1:
-						str[ 0, 0 ] = "ドラムの演奏に関する項目を設定し";
-						str[ 0, 1 ] = "ます。";
+						str[ 0, 0 ] = "ドラムの演奏に関する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings to play the drums.";
 						str[ 1, 1 ] = "";
 						break;
@@ -599,15 +600,15 @@ namespace DTXMania
 						break;
 
 					case 3:
-						str[ 0, 0 ] = "ベースの演奏に関する項目を設定し";
-						str[ 0, 1 ] = "ます。";
+						str[ 0, 0 ] = "ベースの演奏に関する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings to play the bass.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 4:
-						str[ 0, 0 ] = "設定を保存し、コンフィグ画面を終了";
-						str[ 0, 1 ] = "します。";
+						str[ 0, 0 ] = "設定を保存し、コンフィグ画面を終了します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Save the settings and exit from";
 						str[ 1, 1 ] = "CONFIGURATION menu.";
 						break;
