@@ -86,7 +86,7 @@ namespace DTXMania
 				"FULL: additionaly to HALF, bar/beat\n" +
 				" lines, hit bar, pads are disappeared.",
 				new string[] { "OFF", "HALF", "FULL" } ) );
-			l.Add( new CItemInteger( "Risky", 0, 100, CDTXMania.ConfigIni.nRisky,
+			l.Add( new CItemInteger( "Risky", 0, 10, CDTXMania.ConfigIni.nRisky,
 				"Riskyモードの設定:\n" +
 				"1以上の値にすると、その回数分の\n" +
 				"Poor/MissでFAILEDとなります。\n" +
@@ -389,7 +389,35 @@ namespace DTXMania
 					CDTXMania.ConfigIni.n演奏速度 = (int) GetObj現在値( (int) EOrder.PlaySpeed );
 					break;
 				case (int) EOrder.SuddenHidden:
+                    {
                     CDTXMania.ConfigIni.nHidSud[ nCurrentTarget ] = (CDTXMania.ConfigIni.nHidSud[ nCurrentTarget ] + 1) % 5;
+
+                        if (CDTXMania.ConfigIni.nHidSud[ nCurrentTarget ] == 0)
+                        {
+                            CDTXMania.ConfigIni.bHidden[nCurrentTarget] = false;
+                            CDTXMania.ConfigIni.bSudden[nCurrentTarget] = false;
+                        }
+                        else if (CDTXMania.ConfigIni.nHidSud[nCurrentTarget] == 1)
+                        {
+                            CDTXMania.ConfigIni.bHidden[nCurrentTarget] = true;
+                            CDTXMania.ConfigIni.bSudden[nCurrentTarget] = false;
+                        }
+                        else if (CDTXMania.ConfigIni.nHidSud[nCurrentTarget] == 2)
+                        {
+                            CDTXMania.ConfigIni.bHidden[nCurrentTarget] = false;
+                            CDTXMania.ConfigIni.bSudden[nCurrentTarget] = true;
+                        }
+                        else if (CDTXMania.ConfigIni.nHidSud[nCurrentTarget] == 3)
+                        {
+                            CDTXMania.ConfigIni.bHidden[nCurrentTarget] = true;
+                            CDTXMania.ConfigIni.bSudden[nCurrentTarget] = true;
+                        }
+                        else if (CDTXMania.ConfigIni.nHidSud[nCurrentTarget] == 4)
+                        {
+                            CDTXMania.ConfigIni.bHidden[nCurrentTarget] = true;
+                            CDTXMania.ConfigIni.bSudden[nCurrentTarget] = true;
+                        }
+                    }
                     //CDTXMania.ConfigIni.nHidSud = (int) GetObj現在値((int) EOrder.SuddenHidden);
 					break;
 				case (int) EOrder.ConfSet:			// CONF-SET切り替え
