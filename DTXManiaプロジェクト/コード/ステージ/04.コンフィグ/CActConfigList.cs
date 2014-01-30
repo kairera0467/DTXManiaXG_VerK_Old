@@ -2097,7 +2097,7 @@ namespace DTXMania
                                         //this.iSystemWASAPIBufferSizeMs.n現在の値,
                                         0,
                                         this.iSystemASIODevice.n現在選択されている項目番号);
-                CDTXMania.app.AddSoundTypeToWindowTitle();
+                CDTXMania.app.ShowWindowTitleWithSoundType();
             }
             #endregion
             #region [ サウンドのタイムストレッチモード変更 ]

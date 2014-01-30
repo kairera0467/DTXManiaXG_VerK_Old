@@ -310,8 +310,7 @@ namespace DTXMania
             queueMixerSound = new Queue<stmixer>(64);
             bIsDirectSound = (CDTXMania.Sound管理.GetCurrentSoundDeviceType() == "DirectSound");
             db再生速度 = ((double)CDTXMania.ConfigIni.n演奏速度) / 20.0;
-            bValidScore = true;
-            bDTXVmode = false; // とりあえずfalse固定
+			bValidScore = (CDTXMania.DTXVmode.Enabled)? false : true;
 
 			#region [ 演奏開始前にmixer登録しておくべきサウンド(開幕してすぐに鳴らすことになるチップ音)を登録しておく ]
 			foreach ( CDTX.CChip pChip in listChip )
@@ -673,7 +672,7 @@ namespace DTXMania
         protected bool bIsDirectSound; //
         protected double db再生速度;
         protected bool bValidScore;
-        protected bool bDTXVmode;
+//      protected bool bDTXVmode;
         protected STDGBVALUE<int> nJudgeLinePosY_delta; // #31602 2013.6.23 yyagi 表示遅延対策として、判定ラインの表示位置をずらす機能を追加する
 
         private CCounter[] ctタイマー = new CCounter[3];
@@ -2907,6 +2906,177 @@ namespace DTXMania
 				}
 			}
 			return false;
+		}
+
+
+		public void t再読込()
+		{
+			CDTXMania.DTX.t全チップの再生停止();
+			this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.再読込・再演奏;
+			base.eフェーズID = CStage.Eフェーズ.演奏_再読込;
+		}
+
+		public void t停止()
+		{
+			CDTXMania.DTX.t全チップの再生停止();
+			this.n現在のトップChip = CDTXMania.DTX.listChip.Count - 1;	// 終端にシーク
+			actCombo.On活性化();	// コンボ初期化
+
+			// 自分自身のOn活性化()相当の処理もすべき。
+		}
+
+        public void t演奏位置の変更( int nStartBar )
+		{
+			// まず全サウンドオフにする
+			CDTXMania.DTX.t全チップの再生停止();
+
+
+			#region [ 再生開始小節の変更 ]
+			//int nStartBar = CDTXMania.DTXVmode.nStartBar + 1;	// +1が必要
+
+			#region [ 演奏済みフラグのついたChipをリセットする ]
+			for ( int i = 0; i < CDTXMania.DTX.listChip.Count; i++ )
+			{
+				CDTX.CChip pChip = CDTXMania.DTX.listChip[ i ];
+				if ( pChip.bHit )
+				{
+					CDTX.CChip p = (CDTX.CChip) pChip.Clone();
+					p.bHit = false;
+					CDTXMania.DTX.listChip[ i ] = p;
+				}
+			}
+			#endregion
+
+			#region [ 処理を開始するチップの特定 ]
+			//for ( int i = this.n現在のトップChip; i < CDTXMania.DTX.listChip.Count; i++ )
+			bool bSuccessSeek = false;
+			for ( int i = 0; i < CDTXMania.DTX.listChip.Count; i++ )
+			{
+				CDTX.CChip pChip = CDTXMania.DTX.listChip[ i ];
+				if ( pChip.n発声位置 < 384 * nStartBar )
+				{
+					continue;
+				}
+				else
+				{
+					bSuccessSeek = true;
+					this.n現在のトップChip = i;
+					break;
+				}
+			}
+			if ( !bSuccessSeek )
+			{
+				this.n現在のトップChip = CDTXMania.DTX.listChip.Count - 1;
+			}
+			#endregion
+
+			#region [ 演奏開始の発声時刻msを取得し、タイマに設定 ]
+			int nStartTime = CDTXMania.DTX.listChip[ this.n現在のトップChip ].n発声時刻ms;
+			CSound管理.rc演奏用タイマ.n現在時刻 = nStartTime;
+			CSound管理.rc演奏用タイマ.t一時停止();
+			#endregion
+
+			List<CSound> pausedCSound = new List<CSound>();
+
+			#region [ BGMの途中再生開始 (CDTXのt入力・行解析・チップ配置()で小節番号が+1されているのを削っておくこと) ]
+			foreach ( CDTX.CChip pChip in this.listChip )
+			{
+				if ( pChip.nチャンネル番号 == 0x01 )
+				{
+					CDTX.CWAV wc = CDTXMania.DTX.listWAV[ pChip.n整数値・内部番号 ];
+					int nDuration = ( wc.rSound[ 0 ] == null ) ? 0 : (int) ( wc.rSound[ 0 ].n総演奏時間ms / CDTXMania.DTX.db再生速度 );
+					//								if (wc.bIsBGMSound || wc.bIsGuitarSound || wc.bIsBassSound || wc.bIsBGMSound || wc.bIsSESound )
+					{
+						if ( ( pChip.n発声時刻ms + nDuration > 0 ) && ( pChip.n発声時刻ms <= nStartTime ) && ( nStartTime <= pChip.n発声時刻ms + nDuration ) )
+						{
+							if ( ( wc.bIsBGMSound && CDTXMania.ConfigIni.bBGM音を発声する ) || ( !wc.bIsBGMSound ) )
+							{
+								CDTXMania.DTX.tチップの再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, (int) Eレーン.BGM, CDTXMania.DTX.nモニタを考慮した音量( E楽器パート.UNKNOWN ) );
+								//CDTXMania.DTX.tチップの再生( pChip, CSound管理.rc演奏用タイマ.n現在時刻ms + pChip.n発声時刻ms, (int) Eレーン.BGM, CDTXMania.DTX.nモニタを考慮した音量( E楽器パート.UNKNOWN ) );
+								for ( int i = 0; i < wc.rSound.Length; i++ )
+								{
+									if ( wc.rSound[ i ] != null )
+									{
+										wc.rSound[ i ].t再生を一時停止する();
+										wc.rSound[ i ].t再生位置を変更する( nStartTime - pChip.n発声時刻ms );
+										pausedCSound.Add( wc.rSound[ i ] );
+									}
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+			#endregion
+			// 以下未実装 ここから
+			#region [ 演奏開始時点で既に演奏中になっているチップの再生とシーク (一つ手前のBGM処理のところに混ぜてもいいかも  ]
+			#endregion
+			#region [ 演奏開始時点で既に表示されているBGAの再生とシーク (BGAの動きの途中状況を反映すること) ]
+			#endregion
+			#region [ 演奏開始時点で既に表示されているAVIの再生とシーク (AVIの動きの途中状況を反映すること) ]
+			#endregion
+
+			// 未実装 ここまで
+			#region [ PAUSEしていたサウンドを一斉に再生再開する ]
+			foreach ( CSound cs in pausedCSound )
+			{
+				cs.tサウンドを再生する();
+			}
+			pausedCSound.Clear();
+			pausedCSound = null;
+			#endregion
+			CSound管理.rc演奏用タイマ.n現在時刻 = nStartTime;
+			CDTXMania.Timer.n現在時刻 = nStartTime;				// Debug表示のTime: 表記を正しくするために必要
+			CSound管理.rc演奏用タイマ.t再開();
+			#endregion
+		}
+
+
+		/// <summary>
+		/// DTXV用の設定をする。(全AUTOなど)
+		/// 設定のバックアップはしないので、あとでConfig.iniを上書き保存しないこと。
+		/// </summary>
+		protected void tDTXV用の設定()
+		{
+			CDTXMania.ConfigIni.bAutoPlay.HH = true;
+			CDTXMania.ConfigIni.bAutoPlay.SD = true;
+			CDTXMania.ConfigIni.bAutoPlay.BD = true;
+			CDTXMania.ConfigIni.bAutoPlay.HT = true;
+			CDTXMania.ConfigIni.bAutoPlay.LT = true;
+			CDTXMania.ConfigIni.bAutoPlay.CY = true;
+			CDTXMania.ConfigIni.bAutoPlay.FT = true;
+			CDTXMania.ConfigIni.bAutoPlay.RD = true;
+			CDTXMania.ConfigIni.bAutoPlay.LC = true;
+			CDTXMania.ConfigIni.bAutoPlay.GtR = true;
+			CDTXMania.ConfigIni.bAutoPlay.GtB = true;
+			CDTXMania.ConfigIni.bAutoPlay.GtB = true;
+			CDTXMania.ConfigIni.bAutoPlay.GtPick = true;
+			CDTXMania.ConfigIni.bAutoPlay.GtW = true;
+			CDTXMania.ConfigIni.bAutoPlay.BsR = true;
+			CDTXMania.ConfigIni.bAutoPlay.BsB = true;
+			CDTXMania.ConfigIni.bAutoPlay.BsB = true;
+			CDTXMania.ConfigIni.bAutoPlay.BsPick = true;
+			CDTXMania.ConfigIni.bAutoPlay.BsW = true;
+
+			CDTXMania.ConfigIni.bAVI有効 = true;
+			CDTXMania.ConfigIni.bBGA有効 = true;
+			for ( int i = 0; i < 3; i++ )
+			{
+				CDTXMania.ConfigIni.bGraph有効 = false;
+				CDTXMania.ConfigIni.bLeft[ i ] = false;
+				CDTXMania.ConfigIni.bLight[ i ] = false;
+				CDTXMania.ConfigIni.bReverse[ i ] = false;
+				CDTXMania.ConfigIni.nHidSud[ i ] = 0;
+			}
+
+			CDTXMania.ConfigIni.eDark = Eダークモード.OFF;
+
+			CDTXMania.ConfigIni.bScoreIniを出力する = false;
+			CDTXMania.ConfigIni.bSTAGEFAILED有効 = false;
+			CDTXMania.ConfigIni.bTight = false;
+			CDTXMania.ConfigIni.bストイックモード = false;
+			CDTXMania.ConfigIni.bドラム打音を発声する = true;
 		}
 
         public bool bCheckAutoPlay(CDTX.CChip pChip)

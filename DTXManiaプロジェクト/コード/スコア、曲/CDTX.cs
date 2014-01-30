@@ -480,7 +480,7 @@ namespace DTXMania
 			}
 
 		}
-		public class CChip : IComparable<CDTX.CChip>
+		public class CChip : IComparable<CDTX.CChip>, ICloneable
 		{
 			public bool bHit;
 			public bool b可視 = true;
@@ -806,6 +806,14 @@ namespace DTXMania
 			}
 			//-----------------
 			#endregion
+            /// <summary>
+			/// shallow copyです。
+			/// </summary>
+			/// <returns></returns>
+			public object Clone()
+			{
+				return MemberwiseClone();
+			}
 		}
 		public class CWAV : IDisposable
 		{
@@ -1297,6 +1305,7 @@ namespace DTXMania
 		public string TITLE;
         public bool b強制的にXG譜面にする;
         public bool bVol137to100;
+        public double dbDTXVPlaySpeed;
 #if TEST_NOTEOFFMODE
 		public STLANEVALUE<bool> b演奏で直前の音を消音する;
 //		public bool bHH演奏で直前のHHを消音する;
@@ -1366,6 +1375,7 @@ namespace DTXMania
             this.b強制的にXG譜面にする = false;
             this.bVol137to100 = false;
 
+
 			#region [ 2011.1.1 yyagi GDA->DTX変換テーブル リファクタ後 ]
 			STGDAPARAM[] stgdaparamArray = new STGDAPARAM[] {		// GDA->DTX conversion table
 				new STGDAPARAM("TC", 0x03),	new STGDAPARAM("BL", 0x02),	new STGDAPARAM("GS", 0x29),
@@ -1394,6 +1404,7 @@ namespace DTXMania
 			#endregion
 			this.nBGMAdjust = 0;
 			this.nPolyphonicSounds = CDTXMania.ConfigIni.nPoliphonicSounds;
+            this.dbDTXVPlaySpeed = 1.0f;
 #if TEST_NOTEOFFMODE
 			this.bHH演奏で直前のHHを消音する = true;
 			this.bGUITAR演奏で直前のGUITARを消音する = true;
@@ -4738,6 +4749,20 @@ namespace DTXMania
 					{
 						this.t入力・パラメータ食い込みチェック( "SOUND_AUDIENCE", ref strコマンド, ref strパラメータ );
 						this.SOUND_AUDIENCE = strパラメータ;
+					}
+					//-----------------
+					#endregion
+   					#region [ DTXVPLAYSPEED ]
+					//-----------------
+					else if ( strコマンド.StartsWith( "DTXVPLAYSPEED", StringComparison.OrdinalIgnoreCase ) )
+					{
+						this.t入力・パラメータ食い込みチェック( "DTXVPLAYSPEED", ref strコマンド, ref strパラメータ );
+
+						double dtxvplayspeed = 0.0;
+						if ( TryParse( strパラメータ, out dtxvplayspeed ) && dtxvplayspeed > 0.0 )
+						{
+							this.dbDTXVPlaySpeed = dtxvplayspeed;
+						}
 					}
 					//-----------------
 					#endregion
