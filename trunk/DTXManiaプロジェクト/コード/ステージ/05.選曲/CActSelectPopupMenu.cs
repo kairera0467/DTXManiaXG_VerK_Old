@@ -238,6 +238,10 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない && this.bIsActivePopupMenu )
 			{
+                n本体X = 500;
+                n本体Y = 150;
+
+
 				if ( this.bキー入力待ち )
 				{
 					#region [ CONFIG画面 ]
@@ -344,19 +348,19 @@ namespace DTXMania
 				#region [ ポップアップメニュー 背景描画 ]
 				if ( this.txPopupMenuBackground != null )
 				{
-					this.txPopupMenuBackground.t2D描画( CDTXMania.app.Device, 160, 40 );
+					this.txPopupMenuBackground.t2D描画( CDTXMania.app.Device, n本体X, n本体Y );
 				}
 				#endregion
 				#region [ ソートメニュータイトル描画 ]
-				int x = 240, y = 44;
+                int x = n本体X + 80, y = n本体Y + 4;
 				font.t文字列描画( x, y, strMenuTitle, false, 1.0f );
 				#endregion
 				#region [ カーソル描画 ]
 				if ( this.txCursor != null )
 				{
 					int height = 32;
-					int curX = 180;
-					int curY = 46 + ( height * ( this.n現在の選択行 + 1 ) );
+                    int curX = n本体X + 20;
+                    int curY = n本体Y + 6 + (height * (this.n現在の選択行 + 1));
 					this.txCursor.t2D描画( CDTXMania.app.Device, curX, curY, new Rectangle( 0, 0, 16, 32 ) );
 					curX += 0x10;
 					Rectangle rectangle = new Rectangle( 8, 0, 0x10, 0x20 );
@@ -372,7 +376,7 @@ namespace DTXMania
 				for ( int i = 0; i < lciMenuItems.Count; i++ )
 				{
 					bool bItemBold = ( i == nItemSelecting && !bShowAllItems ) ? true : false;
-					font.t文字列描画( 190, 80 + i * 32, lciMenuItems[i].str項目名, bItemBold, 1.0f );
+					font.t文字列描画( n本体X + 30, n本体Y + 40 + i * 32, lciMenuItems[i].str項目名, bItemBold, 1.0f );
 
 					bool bValueBold = (bItemBold || (i == nItemSelecting && bIsSelectingIntItem)) ? true : false;
 					if ( bItemBold || bShowAllItems )
@@ -397,7 +401,7 @@ namespace DTXMania
 								s = lciMenuItems[ i ].obj現在値().ToString();
 								break;
 						}
-						font.t文字列描画( 340, 80 + i * 32, s, bValueBold, 1.0f );
+						font.t文字列描画( n本体X + 180, n本体Y + 40 + i * 32, s, bValueBold, 1.0f );
 					}
 				}
 				#endregion
@@ -420,6 +424,9 @@ namespace DTXMania
 		private CTexture txPopupMenuBackground;
 		private CTexture txCursor;
 		private CActDFPFont font;
+
+        private int n本体X;
+        private int n本体Y;
 
 		private string strMenuTitle;
 		private List<CItemBase> lciMenuItems;

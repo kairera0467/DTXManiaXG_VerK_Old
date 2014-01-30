@@ -136,7 +136,7 @@ namespace DTXMania
                     this.txHitom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Dark.png"));
                 }
 
-				for( int i = 0; i < 16; i++ )
+				for( int i = 0; i < 22; i++ )
 				{
 					this.txFlush[ i ] = CDTXMania.tテクスチャの生成( CSkin.Path( this.strファイル名[ i ] ) );
 				}
@@ -147,7 +147,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				for( int i = 0; i < 16; i++ )
+				for( int i = 0; i < 22; i++ )
 				{
 					CDTXMania.tテクスチャの解放( ref this.txFlush[ i ] );
 				}
@@ -387,7 +387,7 @@ namespace DTXMania
                                     {
                                         if (this.txFlush[j + 11] != null)
                                         {
-                                            this.txFlush[j + 11].t2D描画(CDTXMania.app.Device, x + m, y, new Rectangle((k * 42) + 2, 0, ((w - m) < 0x2a) ? (w - m) : 0x2a, 128));
+                                            this.txFlush[j + 11].t2D描画(CDTXMania.app.Device, x + m, y, new Rectangle((k * 42), 0, ((w - m) < 0x2a) ? (w - m) : 0x2a, 128));
                                         }
                                     }
                                 }
