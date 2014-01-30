@@ -42,7 +42,7 @@ namespace DTXMania
         }
         public void Start( Eレーン lane, bool bフィルイン, bool b大波, bool b細波, int _nJudgeLinePosY_delta_Drums, bool b表示 )
         {
-			if (( this.tx火花 != null ) && CDTXMania.ConfigIni.eAttackEffectType != Eタイプ.D)
+			if (( this.tx火花 != null ) && CDTXMania.ConfigIni.eAttackEffect.Drums != Eタイプ.D)
 			{
                 nJudgeLinePosY_delta_Drums = _nJudgeLinePosY_delta_Drums;
 				for ( int j = 0; j < FIRE_MAX; j++ )
@@ -79,7 +79,7 @@ namespace DTXMania
 					}
 				}
 			}
-            if ((this.tx青い星 != null) && b表示 && (CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A || CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.B))
+            if ((this.tx青い星 != null) && b表示 && (CDTXMania.ConfigIni.eAttackEffect.Drums == Eタイプ.A || CDTXMania.ConfigIni.eAttackEffect.Drums == Eタイプ.B))
             {
                 for (int i = 0; i < 16; i++)
                 {
@@ -130,7 +130,7 @@ namespace DTXMania
                 }
             }
 
-            if (this.txNotes != null && b表示 && CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
+            if (this.txNotes != null && b表示 && CDTXMania.ConfigIni.eAttackEffect.Drums == Eタイプ.A)
             {
                 for (int i = 0; i < 1; i++)
                 {
@@ -562,7 +562,7 @@ namespace DTXMania
 
                 }
 
-                if (CDTXMania.ConfigIni.eAttackEffectType == Eタイプ.A)
+                if (CDTXMania.ConfigIni.eAttackEffect.Drums == Eタイプ.A)
                 {
                     for (int i = 0; i < 8; i++)
                     {
