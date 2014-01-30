@@ -710,7 +710,7 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 154, 369 };			// ドラム画面かギター画面かで変わる値
+					int[] y_base = { 154, 611 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
 					const int WailingWidth = 54;		// 4種全て同じ値

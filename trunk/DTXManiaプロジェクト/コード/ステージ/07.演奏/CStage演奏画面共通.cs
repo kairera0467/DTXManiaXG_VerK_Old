@@ -3291,14 +3291,50 @@ namespace DTXMania
 			if ( configIni.bGuitar有効 )
 			{
 				#region [ Hidden/Sudden処理 ]
-				if ( configIni.bSudden[ instIndex ] )
-				{
-					pChip.b可視 = pChip.nバーからの距離dot[ instIndex ] < 300;
-				}
-				if ( configIni.bHidden[ instIndex ] && ( pChip.nバーからの距離dot[ instIndex ] < 200 ) )
-				{
-					pChip.b可視 = false;
-				}
+				    #region [ Sudden処理 ]
+                    if ((CDTXMania.ConfigIni.nHidSud[ instIndex ] == 2) || (CDTXMania.ConfigIni.nHidSud[ instIndex ] == 3))
+				    {
+    					if ( pChip.nバーからの距離dot[ instIndex ] < 250 )
+	    				{
+		    				pChip.b可視 = true;
+			    			pChip.n透明度 = 0xff;
+				    	}
+    					else if ( pChip.nバーからの距離dot[ instIndex ] < 300 )
+	    				{
+		    				pChip.b可視 = true;
+			    			pChip.n透明度 = 0xff - ( (int) ( ( ( (double) ( pChip.nバーからの距離dot[ instIndex ] - 250 ) ) * 255.0 ) / 75.0 ) );
+				    	}
+    					else
+	    				{
+		    				pChip.b可視 = false;
+			    			pChip.n透明度 = 0;
+					    }
+				    }
+				    #endregion
+				    #region [ Hidden処理 ]
+                    if ((CDTXMania.ConfigIni.nHidSud[ instIndex ] == 1) || (CDTXMania.ConfigIni.nHidSud[ instIndex ] == 3))
+				    {
+					    if ( pChip.nバーからの距離dot[ instIndex ] < 150 )
+    					{
+	    					pChip.b可視 = false;
+		    			}
+			    		else if ( pChip.nバーからの距離dot[ instIndex ] < 200 )
+    					{
+	    					pChip.b可視 = true;
+		    				pChip.n透明度 = (int) ( ( ( (double) ( pChip.nバーからの距離dot[ instIndex ] - 150 ) ) * 255.0 ) / 75.0 );
+			    		}
+				    }
+				    #endregion
+                    #region [ ステルス処理 ]
+                    if (CDTXMania.ConfigIni.nHidSud[ instIndex ] == 4)
+                    {
+                            pChip.b可視 = false;
+                    }
+                    if (this.txチップ != null)
+                    {
+                        this.txチップ.n透明度 = pChip.n透明度;
+                    }
+                    #endregion
 				#endregion
 
 				bool bChipHasR = false;
@@ -3801,15 +3837,51 @@ namespace DTXMania
 			int indexInst = (int) inst;
 			if ( configIni.bGuitar有効 )
 			{
-				#region [ Sudden/Hidden処理 ]
-				if ( configIni.bSudden[indexInst] )
-				{
-					pChip.b可視 = pChip.nバーからの距離dot[indexInst] < 200;
-				}
-				if ( configIni.bHidden[indexInst] && ( pChip.nバーからの距離dot[indexInst] < 100 ) )
-				{
-					pChip.b可視 = false;
-				}
+				#region [ Hidden/Sudden処理 ]
+				    #region [ Sudden処理 ]
+                    if ((CDTXMania.ConfigIni.nHidSud[ indexInst ] == 2) || (CDTXMania.ConfigIni.nHidSud[ indexInst ] == 3))
+				    {
+    					if ( pChip.nバーからの距離dot[ indexInst ] < 250 )
+	    				{
+		    				pChip.b可視 = true;
+			    			pChip.n透明度 = 0xff;
+				    	}
+    					else if ( pChip.nバーからの距離dot[ indexInst ] < 300 )
+	    				{
+		    				pChip.b可視 = true;
+			    			pChip.n透明度 = 0xff - ( (int) ( ( ( (double) ( pChip.nバーからの距離dot[ indexInst ] - 250 ) ) * 255.0 ) / 75.0 ) );
+				    	}
+    					else
+	    				{
+		    				pChip.b可視 = false;
+			    			pChip.n透明度 = 0;
+					    }
+				    }
+				    #endregion
+				    #region [ Hidden処理 ]
+                    if ((CDTXMania.ConfigIni.nHidSud[ indexInst ] == 1) || (CDTXMania.ConfigIni.nHidSud[ indexInst ] == 3))
+				    {
+					    if ( pChip.nバーからの距離dot[ indexInst ] < 150 )
+    					{
+	    					pChip.b可視 = false;
+		    			}
+			    		else if ( pChip.nバーからの距離dot[ indexInst ] < 200 )
+    					{
+	    					pChip.b可視 = true;
+		    				pChip.n透明度 = (int) ( ( ( (double) ( pChip.nバーからの距離dot[ indexInst ] - 150 ) ) * 255.0 ) / 75.0 );
+			    		}
+				    }
+				    #endregion
+                    #region [ ステルス処理 ]
+                    if (CDTXMania.ConfigIni.nHidSud[ indexInst ] == 4)
+                    {
+                            pChip.b可視 = false;
+                    }
+                    if (this.txチップ != null)
+                    {
+                        this.txチップ.n透明度 = pChip.n透明度;
+                    }
+                    #endregion
 				#endregion
 				//
 				// ここにチップ更新処理が入る(overrideで入れる)。といっても座標とチップサイズが違うだけで処理はまるまる同じ。
