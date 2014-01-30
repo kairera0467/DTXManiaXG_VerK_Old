@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 using SlimDX.Direct3D9;
 using FDK;
 
@@ -147,6 +148,17 @@ namespace DTXMania
                     }
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					this.actFI.tフェードイン開始();
+
+                    if ( CDTXMania.DTXVmode.Enabled )			// DTXVモードなら
+					{
+						#region [ DTXV用の再生設定にする(全AUTOなど) ]
+						tDTXV用の設定();
+						CDTXMania.ConfigIni.n演奏速度 = (int) ( CDTXMania.DTX.dbDTXVPlaySpeed * 20 + 0.5 );
+						#endregion
+
+						t演奏位置の変更( CDTXMania.DTXVmode.nStartBar );
+					}
+
 					base.b初めての進行描画 = false;
 				}
 				if( CDTXMania.ConfigIni.bSTAGEFAILED有効 && ( base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
@@ -194,19 +206,28 @@ namespace DTXMania
                 flag2 = this.t進行描画・フェードイン・アウト();
                 if ( flag && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態 ) )
                 {
-                    this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
-                    base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-                    CDTXMania.Skin.soundステージクリア音.t再生する();
-                    this.actFOStageClear.tフェードアウト開始();
-                }
-				if( flag2 )
-				{
-                    if (!CDTXMania.Skin.soundステージクリア音.b再生中)
+                    if (CDTXMania.DTXVmode.Enabled)
                     {
-                        Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
-                        return (int)this.eフェードアウト完了時の戻り値;
+                        Thread.Sleep(5);
+                        // DTXCからの次のメッセージを待ち続ける
                     }
+                    else
+                    {
+                        this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
+                        base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
+                        CDTXMania.Skin.soundステージクリア音.t再生する();
+                        this.actFOStageClear.tフェードアウト開始();
+                    }
+                }
+				if ( this.eフェードアウト完了時の戻り値 == E演奏画面の戻り値.再読込・再演奏 )
+				{
+					flag2 = true;
 				}
+				if ( flag2 )
+				{
+					return (int) this.eフェードアウト完了時の戻り値;
+				}
+
                 ManageMixerQueue();
 
 				// キー入力

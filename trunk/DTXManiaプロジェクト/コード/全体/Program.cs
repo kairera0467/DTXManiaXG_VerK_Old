@@ -48,65 +48,65 @@ namespace DTXMania
 			if( mutex二重起動防止用.WaitOne( 0, false ) )
 			{
 				string newLine = Environment.NewLine;
-				bool flag = false;
+                bool bDLLnotfound = false;
 
 				#region [DLLの存在チェック]
 				if (!tDLLの存在チェック("SlimDX" + CDTXMania.SLIMDXDLL,
 					"SlimDX" + CDTXMania.SLIMDXDLL + ".dll またはその依存するdllが存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"SlimDX" + CDTXMania.SLIMDXDLL + ".dll, or its depended DLL, is not found." + newLine + "Please download DTXMania again."
-					)) flag = true;
+					)) bDLLnotfound = true;
 				if (!tDLLの存在チェック("FDK.dll",
 					"FDK.dll またはその依存するdllが存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"FDK.dll, or its depended DLL, is not found." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if( !tDLLの存在チェック( "xadec.dll",
 					"xadec.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"xadec.dll is not found." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if( !tDLLの存在チェック( "SoundDecoder.dll",
 					"SoundDecoder.dll またはその依存するdllが存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"SoundDecoder.dll, or its depended DLL, is not found." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if (!tDLLの存在チェック(CDTXMania.D3DXDLL,
 					CDTXMania.D3DXDLL + " が存在しません。" + newLine + "DirectX Redist フォルダの DXSETUP.exe を実行し、" + newLine + "必要な DirectX ランタイムをインストールしてください。",
 					CDTXMania.D3DXDLL + " is not found." + newLine + "Please execute DXSETUP.exe in \"DirectX Redist\" folder, to install DirectX runtimes required for DTXMania."
-					)) flag = true;
+					)) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "bass.dll",
 					"bass.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"baas.dll is not found." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "Bass.Net.dll",
 					"Bass.Net.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"Bass.Net.dll is not found." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "bassmix.dll",
 					"bassmix.dll を読み込めません。bassmix.dll か bass.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"bassmix.dll is not loaded. bassmix.dll or bass.dll must not exist." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "bassasio.dll",
 					"bassasio.dll を読み込めません。bassasio.dll か bass.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"bassasio.dll is not loaded. bassasio.dll or bass.dll must not exist." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "basswasapi.dll",
 					"basswasapi.dll を読み込めません。basswasapi.dll か bass.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"basswasapi.dll is not loaded. basswasapi.dll or bass.dll must not exist." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "bass_fx.dll",
 					"bass_fx.dll を読み込めません。bass_fx.dll か bass.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"bass_fx.dll is not loaded. bass_fx.dll or bass.dll must not exist." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				if ( !tDLLの存在チェック( "DirectShowLib-2005.dll",
 					"DirectShowLib-2005.dll が存在しません。" + newLine + "DTXManiaをダウンロードしなおしてください。",
 					"DirectShowLib-2005.dll is not found." + newLine + "Please download DTXMania again."
-					) ) flag = true;
+					) ) bDLLnotfound = true;
 				#endregion
-				if (!flag)
+				if (!bDLLnotfound)
 				{
 #if DEBUG && TEST_ENGLISH
 					Thread.CurrentThread.CurrentCulture = new CultureInfo( "en-US" );
 #endif
 
-					DWM.EnableComposition(false);	// Disable AeroGrass temporally
+					DWM.EnableComposition( false );	// Disable AeroGrass temporally
 
 					// BEGIN #23670 2010.11.13 from: キャッチされない例外は放出せずに、ログに詳細を出力する。
 					// BEGIM #24606 2011.03.08 from: DEBUG 時は例外発生箇所を直接デバッグできるようにするため、例外をキャッチしないようにする。
@@ -114,7 +114,7 @@ namespace DTXMania
 					try
 #endif
 					{
-						using( var mania = new CDTXMania() )
+						    using( var mania = new CDTXMania() )
 							mania.Run();
 
 						Trace.WriteLine( "" );
@@ -133,7 +133,7 @@ namespace DTXMania
 					// END #24606 2011.03.08 from
 					// END #23670 2010.11.13 from
 
-					if( Trace.Listeners.Count > 1 )
+					    if( Trace.Listeners.Count > 1 )
 						Trace.Listeners.RemoveAt( 1 );
 				}
 
@@ -143,6 +143,64 @@ namespace DTXMania
 				mutex二重起動防止用 = null;
 				
 				// END #24615 2011.03.09 from
+			}
+            else		// DTXManiaが既に起動中
+			{
+				
+				// → 引数が0個の時はそのまま終了
+				// 1個( コンパクトモード or DTXV -S) か2個 (DTXV -Nxxx ファイル名)のときは、そのプロセスにコマンドラインを丸々投げて終了する
+
+				#region [ 既に起動中のDTXManiaプロセスを検索する。]
+				// このやり方だと、ShowInTaskbar=falseでタスクバーに表示されないパターンの時に検索に失敗するようだが
+				// DTXManiaでそのパターンはない？のでこのままいく。
+				// FindWindowを使えばこのパターンにも対応できるが、C#でビルドするアプリはウインドウクラス名を自前指定できないので、これは使わない。
+
+				Process current = Process.GetCurrentProcess();
+				Process[] running = Process.GetProcessesByName( current.ProcessName );
+				Process target = null;
+				//IntPtr hWnd = FindWindow( null, "DTXMania .NET style release " + CDTXMania.VERSION );
+
+				foreach ( Process p in running )
+				{
+					if ( p.Id != current.Id )	// プロセス名は同じでかつ、プロセスIDが自分自身とは異なるものを探す
+					{
+						if ( p.MainModule.FileName == current.MainModule.FileName )
+						{
+							target = p;
+							break;
+						}
+					}
+				}
+				#endregion
+
+				#region [ 起動中のDTXManiaがいれば、そのプロセスにコマンドラインを投げる ]
+				if ( target != null )
+				{
+					string[] commandLineArgs = Environment.GetCommandLineArgs();
+					if ( commandLineArgs != null && commandLineArgs.Length > 1 )
+					{
+						string arg = null;
+						for ( int i = 1; i < commandLineArgs.Length; i++ )
+						{
+							if ( i == 1 )
+							{
+								arg += commandLineArgs[ i ];
+							}
+							else
+							{
+								arg += " " + "\"" + commandLineArgs[ i ] + "\"";
+							}
+						}
+
+//Debug.WriteLine( "Message=" + arg );
+
+						if ( arg != null )
+						{
+							FDK.CSendMessage.sendmessage( target.MainWindowHandle, current.MainWindowHandle, arg );
+						}
+					}
+				}
+				#endregion
 			}
 		}
 	}
