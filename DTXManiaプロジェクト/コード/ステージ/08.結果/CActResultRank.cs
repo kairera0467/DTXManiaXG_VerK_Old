@@ -291,12 +291,11 @@ namespace DTXMania
             y[2] = n本体2Y;
 
             #region [ フルコンボ ]
-            if (this.ct表示用.n現在の値 >= 900)
-            {
-
-                for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++)
+            {   
+                
+                if (this.ct表示用.n現在の値 >= 900)
                 {
-
                     int num14 = 82 + x[j];
                     int num15 = 152 + y[j];
 
