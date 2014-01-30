@@ -278,8 +278,8 @@ namespace DTXMania
 			this.tステータスパネルの選択();
 			this.tパネル文字列の設定();
             this.nJudgeLinePosY = 561 - CDTXMania.ConfigIni.nJudgeLine;
-            this.nShutterInPosY = CDTXMania.ConfigIni.nShutterInSide;
-            this.nShutterOutPosY = CDTXMania.ConfigIni.nShutterOutSide;
+            this.nShutterInPosY = CDTXMania.ConfigIni.nShutterInSide.Drums;
+            this.nShutterOutPosY = CDTXMania.ConfigIni.nShutterOutSide.Drums;
             this.actJudgeString.iP_A = this.nJudgeLinePosY - 0xbd;
             this.actJudgeString.iP_B = this.nJudgeLinePosY + 0x17;
 
@@ -1973,7 +1973,7 @@ namespace DTXMania
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterInSide = this.nShutterInPosY;
+                    CDTXMania.ConfigIni.nShutterInSide.Drums = this.nShutterInPosY;
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.NumberPad2))
                 {
@@ -2004,7 +2004,7 @@ namespace DTXMania
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterInSide = this.nShutterInPosY;
+                    CDTXMania.ConfigIni.nShutterInSide.Drums = this.nShutterInPosY;
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.NumberPad4))
                 {
@@ -2035,7 +2035,7 @@ namespace DTXMania
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterOutSide = this.nShutterOutPosY;
+                    CDTXMania.ConfigIni.nShutterOutSide.Drums = this.nShutterOutPosY;
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.NumberPad6))
                 {
@@ -2064,7 +2064,7 @@ namespace DTXMania
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nShutterOutSide = this.nShutterOutPosY;
+                    CDTXMania.ConfigIni.nShutterOutSide.Drums = this.nShutterOutPosY;
                 }
 
                 if (keyboard.bキーが押された(0x3a))
@@ -3804,14 +3804,14 @@ namespace DTXMania
 		}
 		protected void t進行描画・判定文字列1・通常位置指定の場合()
 		{
-			if ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.判定ライン上または横 )
+			if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != Eタイプ.B )
 			{
 				this.actJudgeString.On進行描画();
 			}
 		}
 		protected void t進行描画・判定文字列2・判定ライン上指定の場合()
 		{
-			if ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) == E判定文字表示位置.判定ライン上または横 )
+			if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) == Eタイプ.B )
 			{
 				this.actJudgeString.On進行描画();
 			}

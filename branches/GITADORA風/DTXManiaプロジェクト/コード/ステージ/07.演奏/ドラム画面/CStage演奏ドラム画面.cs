@@ -28,7 +28,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actChipFireD = new CAct演奏DrumsチップファイアD() );
             base.list子Activities.Add( this.actChipFireGB = new CAct演奏DrumsチップファイアGB());
             base.list子Activities.Add( this.actGauge = new CAct演奏Drumsゲージ() );
-            base.list子Activities.Add( this.actGraph = new CAct演奏Drumsグラフ() ); // #24074 2011.01.23 add ikanick
+            base.list子Activities.Add( this.actGraph = new CAct演奏スキルメーター() ); // #24074 2011.01.23 add ikanick
 			base.list子Activities.Add( this.actJudgeString = new CAct演奏Drums判定文字列() );
 			base.list子Activities.Add( this.actLaneFlushD = new CAct演奏DrumsレーンフラッシュD() );
 			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏DrumsレーンフラッシュGB() );
@@ -469,7 +469,7 @@ namespace DTXMania
         public int nミス数;
         public int nパフェ数;
 		private CAct演奏DrumsチップファイアD actChipFireD;
-		public CAct演奏Drumsグラフ actGraph;   // #24074 2011.01.23 add ikanick
+		public CAct演奏スキルメーター actGraph;   // #24074 2011.01.23 add ikanick
 		public CAct演奏Drumsパッド actPad;
 		public bool bフィルイン中;
         public bool bフィルイン終了;
@@ -758,7 +758,7 @@ namespace DTXMania
 
         private void t進行描画・グラフ()
         {
-            if (CDTXMania.ConfigIni.bGraph.Drums)
+            if (CDTXMania.ConfigIni.bGraph有効)
             {
                 this.actGraph.On進行描画();
                 this.actGraph.db現在の判定数合計 = this.nヒット数・Auto含む.Drums.Perfect + this.nヒット数・Auto含む.Drums.Great + this.nヒット数・Auto含む.Drums.Good + this.nヒット数・Auto含む.Drums.Miss + this.nヒット数・Auto含む.Drums.Poor;
@@ -2760,7 +2760,7 @@ namespace DTXMania
 			if ( configIni.bDrums有効 )
 			{
 				#region [ Sudden処理 ]
-				if ((configIni.nHidSud == 2) || (configIni.nHidSud == 3))
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 2) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
 				{
 					if ( pChip.nバーからの距離dot.Drums < 200 )
 					{
@@ -2780,7 +2780,7 @@ namespace DTXMania
 				}
 				#endregion
 				#region [ Hidden処理 ]
-                if ((configIni.nHidSud == 1) || (configIni.nHidSud == 3))
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 1) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
 				{
 					if ( pChip.nバーからの距離dot.Drums < 100 )
 					{
@@ -2794,7 +2794,7 @@ namespace DTXMania
 				}
 				#endregion
                 #region [ ステルス処理 ]
-                if (configIni.nHidSud == 4)
+                if (CDTXMania.ConfigIni.nHidSud.Drums == 4)
                 {
                         pChip.b可視 = false;
                 }

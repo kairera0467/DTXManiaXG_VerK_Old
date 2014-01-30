@@ -29,7 +29,6 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            this.n本体Y = 120;
             base.On活性化();
         }
 		public override void On非活性化()
@@ -120,7 +119,6 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private CCounter ctランク表示;
-		private int n本体Y;
 		private CTexture txランク文字;
 		//-----------------
 		#endregion

@@ -347,7 +347,7 @@ namespace DTXMania
             {
                 this.txドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
-                if (CDTXMania.ConfigIni.bGraph.Drums == true)
+                if (CDTXMania.ConfigIni.bGraph有効)
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelB.png"));
                 }
@@ -736,7 +736,7 @@ namespace DTXMania
                     this.tx描画用.vc拡大縮小倍率 = this.smallvc;
                     this.tx描画用.n透明度 = 0xff;
                     #region[ スキルメーター有効 ]
-                    if (CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効)
+                    if (CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効)
                     {
                         this.n本体X = 2;
                         this.n本体Y = 402;
@@ -789,7 +789,7 @@ namespace DTXMania
                     }
                     #endregion
                     #region[ スキルメーター無効 ]
-                    else if (!CDTXMania.ConfigIni.bGraph.Drums && CDTXMania.ConfigIni.bDrums有効)
+                    else if (!CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効)
                     {
                         this.n本体X = 854;
                         this.n本体Y = 142;

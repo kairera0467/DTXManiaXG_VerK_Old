@@ -1292,7 +1292,7 @@ namespace DTXMania
             sw.WriteLine("; 0=0% 10=100%");
             sw.WriteLine("MovieAlpha={0}", this.nMovieAlpha);
             sw.WriteLine();
-            sw.WriteLine("; プレイ中にDeleteキーを押したときに出てくる演奏情報の種類。");
+            sw.WriteLine("; プレイ中にHelpボタンを押したときに出てくる演奏情報の種類。");
             sw.WriteLine("; 0=デバッグ情報 1=判定情報");
             sw.WriteLine("InfoType={0}", this.nInfoType);
             sw.WriteLine();

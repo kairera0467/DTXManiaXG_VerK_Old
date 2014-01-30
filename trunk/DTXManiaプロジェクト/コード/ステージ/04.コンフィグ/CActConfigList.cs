@@ -269,7 +269,7 @@ namespace DTXMania
 				new string[] { "OFF", "ON", "GREAT-" } );
 			this.list項目リスト.Add( this.iSystemShowLag );
 
-			this.iSystemAutoResultCapture = new CItemToggle( "Autosaveresult", CDTXMania.ConfigIni.bIsAutoResultCapture,
+			this.iSystemAutoResultCapture = new CItemToggle( "AutoSaveResult", CDTXMania.ConfigIni.bIsAutoResultCapture,
 				"リザルト画像自動保存機能：\nONにすると、ハイスコア/ハイスキル時に\n自動でリザルト画像を曲データと同じ\nフォルダに保存します。",
 				"AutoSaveResult:\nTurn ON to save your result screen\n image automatically when you get\n hiscore/hiskill." );
 			this.list項目リスト.Add( this.iSystemAutoResultCapture );
@@ -434,7 +434,7 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iSystemUseBoxDefSkin );
 
             this.iInfoType = new CItemList("InfoType", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nInfoType,
-                "Deleteキーを押したときにでる\n" +
+                "Helpボタンを押したときにでる\n" +
                 "各種情報表示を変更できます。\n" +
                 "Type-A FPS、BGMアジャストなどの\n" +
                 "情報が出ます。\n" +
