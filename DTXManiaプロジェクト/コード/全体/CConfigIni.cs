@@ -1655,14 +1655,6 @@ namespace DTXMania
 			sw.WriteLine( "; DARKモード(0:OFF, 1:HALF, 2:FULL)" );
 			sw.WriteLine( "Dark={0}", (int) this.eDark );
 			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースSUDDENモード(0:OFF, 1:ON)" );
-			sw.WriteLine( "GuitarSudden={0}", this.bSudden.Guitar ? 1 : 0 );
-			sw.WriteLine( "BassSudden={0}", this.bSudden.Bass ? 1 : 0 );
-			sw.WriteLine();
-			sw.WriteLine( "; ギター/ベースHIDDENモード(0:OFF, 1:ON)" );
-			sw.WriteLine( "GuitarHidden={0}", this.bHidden.Guitar ? 1 : 0 );
-			sw.WriteLine( "BassHidden={0}", this.bHidden.Bass ? 1 : 0 );
-			sw.WriteLine();
 			sw.WriteLine( "; REVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "DrumsReverse={0}", this.bReverse.Drums ? 1 : 0 );
 			sw.WriteLine( "GuitarReverse={0}", this.bReverse.Guitar ? 1 : 0 );
@@ -1692,7 +1684,7 @@ namespace DTXMania
             sw.WriteLine(": TIGHT mode. 0=OFF, 1=ON ");
             sw.WriteLine("DrumsTight={0}", this.bTight ? 1 : 0 );									//
             sw.WriteLine();
-            sw.WriteLine("; Hidden/Sudden (ギター/ベースは未実装)");
+            sw.WriteLine("; Hidden/Sudden");
             sw.WriteLine("DrumsHiddenSudden={0}", (int)this.nHidSud.Drums);
             sw.WriteLine("GuitarHiddenSudden={0}", (int)this.nHidSud.Guitar);
             sw.WriteLine("BassHiddenSudden={0}", (int)this.nHidSud.Bass);
@@ -2643,22 +2635,6 @@ namespace DTXMania
 											else if( str3.Equals( "SkillMater" ) )  // #24074 2011.01.23 addikanick
 											{
 												this.bGraph有効 = C変換.bONorOFF( str4[ 0 ] );
-											}
-											else if( str3.Equals( "GuitarSudden" ) )
-											{
-												this.bSudden.Guitar = C変換.bONorOFF( str4[ 0 ] );
-											}
-											else if( str3.Equals( "BassSudden" ) )
-											{
-												this.bSudden.Bass = C変換.bONorOFF( str4[ 0 ] );
-											}
-											else if( str3.Equals( "GuitarHidden" ) )
-											{
-												this.bHidden.Guitar = C変換.bONorOFF( str4[ 0 ] );
-											}
-											else if( str3.Equals( "BassHidden" ) )
-											{
-												this.bHidden.Bass = C変換.bONorOFF( str4[ 0 ] );
 											}
 											else if( str3.Equals( "DrumsReverse" ) )
 											{
