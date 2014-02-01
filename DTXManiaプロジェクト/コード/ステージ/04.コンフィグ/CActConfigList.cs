@@ -274,6 +274,13 @@ namespace DTXMania
 				"AutoSaveResult:\nTurn ON to save your result screen\n image automatically when you get\n hiscore/hiskill." );
 			this.list項目リスト.Add( this.iSystemAutoResultCapture );
 
+            this.iSystemMusicNameDispDef = new CItemToggle("MusicNameDispDEF", CDTXMania.ConfigIni.b曲名表示をdefのものにする,
+                "表示される曲名をdefのものにします。\n" + 
+                "ただし選曲画面の表示は、defファイルの\n" +
+                "ものが優先されます。",
+                "");
+            this.list項目リスト.Add(this.iSystemMusicNameDispDef);
+
             this.iAutoAddGage = new CItemToggle("AutoAddGage", CDTXMania.ConfigIni.bAutoAddGage,
                 "AUTO判定でのゲージ加算の有無:\n" +
                 "ONの場合、AUTO判定もゲージに加算\n" +
@@ -2593,6 +2600,7 @@ namespace DTXMania
 		private CItemBase iSystemGoToKeyAssign;		// #24609
 
 		private CItemList iSystemGRmode;
+        private CItemToggle iSystemMusicNameDispDef;
 
 		//private CItemToggle iBassAutoPlay;
 		private CItemThreeState iBassAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2820,6 +2828,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.nASIODevice = this.iSystemASIODevice.n現在選択されている項目番号;			// #24820 2013.1.17 yyagi
             CDTXMania.ConfigIni.bTimeStretch = this.iSystemTimeStretch.bON; // #23664 2013.2.24 yyagi
             CDTXMania.ConfigIni.b難易度表示をXG表示にする = this.iSystemDifficlty.bON;
+            CDTXMania.ConfigIni.b曲名表示をdefのものにする = this.iSystemMusicNameDispDef.bON;
 
 
 //Trace.TraceInformation( "saved" );

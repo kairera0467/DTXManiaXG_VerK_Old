@@ -236,7 +236,7 @@ namespace DTXMania
 
                 CDTX cdtx = new CDTX( strDTXファイルパス, true );
 
-				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : CDTXMania.stage選曲.r確定された曲.strタイトル;
+				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : ( CDTXMania.ConfigIni.b曲名表示をdefのものにする ? CDTXMania.stage選曲.r確定された曲.strタイトル : CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.タイトル );
                 this.strアーティスト名 = cdtx.ARTIST;
                 for (int i = 0; i < 8; i++)
                 {
