@@ -573,6 +573,8 @@ namespace DTXMania
         public bool bLivePoint;
         public bool bSkillModeを自動切換えする;
 
+        public bool b曲名表示をdefのものにする;
+
         #region[ 画像関連 ]
         public int nJudgeFrames;
         public int nJudgeInterval;
@@ -1093,6 +1095,7 @@ namespace DTXMania
 			this.n手動再生音量 = 100;
 			this.bログ出力 = true;
             this.b難易度表示をXG表示にする = false;
+            this.b曲名表示をdefのものにする = false;
 			this.b演奏音を強調する = new STDGBVALUE<bool>();
 			this.bSudden = new STDGBVALUE<bool>();
 			this.bHidden = new STDGBVALUE<bool>();
@@ -1524,6 +1527,9 @@ namespace DTXMania
 			sw.WriteLine( "MinComboDrums={0}", this.n表示可能な最小コンボ数.Drums );
 			sw.WriteLine( "MinComboGuitar={0}", this.n表示可能な最小コンボ数.Guitar );
 			sw.WriteLine( "MinComboBass={0}", this.n表示可能な最小コンボ数.Bass );
+			sw.WriteLine();
+            sw.WriteLine( "; 曲名表示をdefファイルの曲名にする (0:OFF, 1:ON)" );
+			sw.WriteLine( "MusicNameDispDef={0}", this.b曲名表示をdefのものにする ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; 演奏情報を表示する (0:OFF, 1:ON)" );
             sw.WriteLine( "; Showing playing info on the playing screen. (0:OFF, 1:ON)" );
@@ -2447,6 +2453,10 @@ namespace DTXMania
                                             else if (str3.Equals("MinComboBass"))
                                             {
                                                 this.n表示可能な最小コンボ数.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 1, 0x1869f, this.n表示可能な最小コンボ数.Bass);
+                                            }
+                                            else if( str3.Equals( "MusicNameDispDef" ) )
+                                            {
+                                                this.b曲名表示をdefのものにする = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("ShowDebugStatus"))
                                             {
