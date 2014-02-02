@@ -2305,12 +2305,12 @@ namespace DTXMania
 		}
 		protected void tパネル文字列の設定()
 		{
-			this.actPanel.SetPanelString( string.IsNullOrEmpty( CDTXMania.DTX.PANEL ) ? CDTXMania.stage選曲.r確定された曲.strタイトル : CDTXMania.DTX.PANEL );
+			this.actPanel.SetPanelString( string.IsNullOrEmpty( CDTXMania.DTX.PANEL ) ? CDTXMania.DTX.TITLE : CDTXMania.DTX.PANEL );
 		}
 
 		protected void t進行描画・ゲージ()
 		{
-				this.actGauge.On進行描画();
+			this.actGauge.On進行描画();
 		}
 		protected void t進行描画・コンボ()
 		{
