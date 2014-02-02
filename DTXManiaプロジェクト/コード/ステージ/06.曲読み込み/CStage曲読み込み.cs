@@ -238,6 +238,7 @@ namespace DTXMania
 
 				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : ( CDTXMania.ConfigIni.b曲名表示をdefのものにする ? CDTXMania.stage選曲.r確定された曲.strタイトル : CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.タイトル );
                 this.strアーティスト名 = cdtx.ARTIST;
+
                 for (int i = 0; i < 8; i++)
                 {
                     this.st泡[i] = new ST泡();
@@ -267,10 +268,10 @@ namespace DTXMania
 					}
 				}
                 int LEVEL = cdtx.LEVEL.Drums;
-				cdtx.On非活性化();
-				base.On活性化();
                 if( !CDTXMania.bコンパクトモード )
                     this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
+				cdtx.On非活性化();
+				base.On活性化();
 			}
 			finally
 			{
@@ -318,55 +319,54 @@ namespace DTXMania
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"),false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
                 this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
-
-					try
+		        try
+				{
+					if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
 					{
-						if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
-						{
-							Bitmap image = new Bitmap( 1, 1 );
-                            Bitmap image2 = new Bitmap( 1, 1 );
-							Graphics graphics = Graphics.FromImage( image );
-                            Graphics graphics2 = Graphics.FromImage( image2 ); 
-							SizeF ef = graphics.MeasureString( this.str曲タイトル, this.ftタイトル表示用フォント );
-                            SizeF ef2 = graphics.MeasureString( this.strアーティスト名, this.ftアーティスト名表示フォント);
-							Size size = new Size( (int) Math.Ceiling( (double) ef.Width ), (int) Math.Ceiling( (double) ef.Height ) );
-                            Size size2 = new Size( (int)Math.Ceiling( (double) ef2.Width), (int) Math.Ceiling( (double) ef2.Height) );
-							graphics.Dispose();
-							image.Dispose();
-							image = new Bitmap( size.Width, size.Height );
+						Bitmap image = new Bitmap( 1, 1 );
+                        Bitmap image2 = new Bitmap( 1, 1 );
+						Graphics graphics = Graphics.FromImage( image );
+                        Graphics graphics2 = Graphics.FromImage( image2 ); 
+						SizeF ef = graphics.MeasureString( this.str曲タイトル, this.ftタイトル表示用フォント );
+                        SizeF ef2 = graphics.MeasureString( this.strアーティスト名, this.ftアーティスト名表示フォント);
+						Size size = new Size( (int) Math.Ceiling( (double) ef.Width ), (int) Math.Ceiling( (double) ef.Height ) );
+                        Size size2 = new Size( (int)Math.Ceiling( (double) ef2.Width), (int) Math.Ceiling( (double) ef2.Height) );
+						graphics.Dispose();
+						image.Dispose();
+						image = new Bitmap( size.Width, size.Height );
 
-                            if (string.IsNullOrEmpty(this.strアーティスト名))       //2012.02.11.kairera0467 アーティスト名が無かった場合の処理。
-                                image2 = new Bitmap( size.Width, size.Height );
-                            else
-                                image2 = new Bitmap( size2.Width, size2.Height );
+                        if (string.IsNullOrEmpty(this.strアーティスト名))       //2012.02.11.kairera0467 アーティスト名が無かった場合の処理。
+                            image2 = new Bitmap( size.Width, size.Height );
+                        else
+                            image2 = new Bitmap( size2.Width, size2.Height );
 
-							graphics = Graphics.FromImage( image );
-							graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                            graphics2 = Graphics.FromImage(image2);
-                            graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+						graphics = Graphics.FromImage( image );
+						graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                        graphics2 = Graphics.FromImage(image2);
+                        graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-							graphics.DrawString( this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, ( float ) 0f, ( float ) 0f );
-                            graphics2.DrawString( this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
-							graphics.Dispose();
-							this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
-							this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.42f, 0.5f, 1f );
-                            this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
-                            this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
-							image.Dispose();
-						}
-						else
-						{
-							this.txタイトル = null;
-                            this.txアーティスト = null;
-						}
+						graphics.DrawString( this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, ( float ) 0f, ( float ) 0f );
+                        graphics2.DrawString( this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
+						graphics.Dispose();
+						this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
+						this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.42f, 0.5f, 1f );
+                        this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
+                        this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
+						image.Dispose();
 					}
-					catch( CTextureCreateFailedException )
+					else
 					{
-						Trace.TraceError( "テクスチャの生成に失敗しました。({0})", new object[] { this.strSTAGEFILE } );
 						this.txタイトル = null;
                         this.txアーティスト = null;
-						this.tx背景 = null;
 					}
+				}
+				catch( CTextureCreateFailedException )
+				{
+					Trace.TraceError( "テクスチャの生成に失敗しました。({0})", new object[] { this.strSTAGEFILE } );
+					this.txタイトル = null;
+                    this.txアーティスト = null;
+			    	this.tx背景 = null;
+				}
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -401,7 +401,7 @@ namespace DTXMania
             //-----------------------------
             if (base.b初めての進行描画)
             {
-                Cスコア cスコア1 = CDTXMania.stage選曲.r確定されたスコア;
+                //Cスコア cスコア1 = CDTXMania.bコンパクトモード ? : CDTXMania.stage選曲.r確定されたスコア;
                 if (this.sd読み込み音 != null)
                 {
                     if (CDTXMania.Skin.sound曲読込開始音.b排他 && (CSkin.Cシステムサウンド.r最後に再生した排他システムサウンド != null))
@@ -432,14 +432,14 @@ namespace DTXMania
             #endregion
 
             #region [ ESC押下時は選曲画面に戻る ]
-            if (tキー入力())
+            if( tキー入力() )
             {
-                if (this.sd読み込み音 != null)
+                if( this.sd読み込み音 != null )
                 {
                     this.sd読み込み音.tサウンドを停止する();
                     this.sd読み込み音.t解放する();
                 }
-                return (int)E曲読込画面の戻り値.読込中止;
+                return ( int )E曲読込画面の戻り値.読込中止;
             }
 	        #endregion
 
@@ -506,6 +506,7 @@ namespace DTXMania
             string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
             CDTX cdtx = new CDTX(strDTXファイルパス, true);
+            bool bCLASSIC = CDTXMania.bコンパクトモード ? false : CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums;
             
             //後に変数にしてギターベースなどでも正常に表示できるようにする予定
             STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
@@ -527,7 +528,7 @@ namespace DTXMania
                 DTXLevelDeci = ( cdtx.LEVEL.Drums - DTXLevel * 10 );
             }
 
-            if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && !cdtx.b強制的にXG譜面にする )
+            if( bCLASSIC && !cdtx.b強制的にXG譜面にする )
             {
                 if( CDTXMania.ConfigIni.bDrums有効 )
                 {
