@@ -231,6 +231,7 @@ namespace FDK
 			#endregion
 			#region [ Win32メッセージをあるだけ処理。]
 			//-----------------
+            /*
 			CWin32.WindowMessage msg;
             
 			while( CWin32.PeekMessage( out msg, IntPtr.Zero, 0, 0, CWin32.PM_REMOVE ) )
@@ -238,7 +239,7 @@ namespace FDK
 				CWin32.TranslateMessage( ref msg );
 				CWin32.DispatchMessage( ref msg );
 			}
-            
+            */
 			//-----------------
 			#endregion
 
@@ -464,6 +465,7 @@ namespace FDK
 
 				#region [ Win32メッセージをあるだけ処理。]
 				//-----------------
+                /*
 				CWin32.WindowMessage msg;
 				while( CWin32.PeekMessage( out msg, IntPtr.Zero, 0, 0, CWin32.PM_REMOVE ) )
 				{
@@ -473,6 +475,7 @@ namespace FDK
 					CWin32.TranslateMessage( ref msg );
 					CWin32.DispatchMessage( ref msg );
 				}
+                */
 				//-----------------
 				#endregion
 

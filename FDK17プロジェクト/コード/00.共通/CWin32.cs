@@ -368,11 +368,6 @@ namespace FDK
 		[DllImport( "Kernel32.Dll" )]
 		public static unsafe extern void CopyMemory( void* pDest, void* pSrc, uint numOfBytes );
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern bool TranslateMessage(ref WindowMessage message);
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern Int32 DispatchMessage(ref WindowMessage message);
-
 		[DllImport( "user32.dll", CharSet = CharSet.Auto, SetLastError = true )]
 		public static extern uint SetWindowLong( IntPtr hWnd, int nIndex, uint dwNewLong );
 		[return: MarshalAs( UnmanagedType.Bool )]
@@ -491,13 +486,6 @@ namespace FDK
 			public uint dwProcessorLevel;
 			public uint dwProcessorRevision;
 		}
-        [StructLayout(LayoutKind.Sequential)]
-        public struct COPYDATA
-        {
-            public int dwData;
-            public int cbData;
-            public string lpData;
-        }
 		//-----------------
 		#endregion
 
