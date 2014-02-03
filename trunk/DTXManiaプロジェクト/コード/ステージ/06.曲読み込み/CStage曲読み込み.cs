@@ -557,8 +557,12 @@ namespace DTXMania
                     }
                 }
             }
-            if( CDTXMania.ConfigIni.bSkillModeを自動切換えする == true && CDTXMania.ConfigIni.bDrums有効 )
-                this.tSkillModeを譜面に応じて切り替える(cdtx);
+
+            if( !CDTXMania.bコンパクトモード )
+            {
+                if( CDTXMania.ConfigIni.bSkillModeを自動切換えする == true && CDTXMania.ConfigIni.bDrums有効 )
+                    this.tSkillModeを譜面に応じて切り替える(cdtx);
+            }
 
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
                 if (!File.Exists(path))
