@@ -89,32 +89,32 @@ namespace DTXMania
                 if (base.txgbg != null)
                 {
 
-                    base.txgbg.t2D描画(CDTXMania.app.Device, 294, 626);
+                    base.txgbg.t2D描画(CDTXMania.app.Device, 294, (CDTXMania.ConfigIni.bReverse.Drums ? 28 : 626));
                     base.txハイスピ.vc拡大縮小倍率 = new Vector3(0.76190476190476190476190476190476f, 0.66666666666666666666666666666667f, 1.0f);
-                    base.txハイスピ.t2D描画(CDTXMania.app.Device, 800, 634, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 48, 42, 48));
+                    base.txハイスピ.t2D描画(CDTXMania.app.Device, 800, (CDTXMania.ConfigIni.bReverse.Drums ? 35 : 634), new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 48, 42, 48));
                     if (base.dbゲージ値 > 0.0)
                     {
                         base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
                         if (base.db現在のゲージ値.Drums == 1.0)
                         {
-                            base.txゲージ.t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 0, 480, 31));
+                            base.txゲージ.t2D描画(CDTXMania.app.Device, 314, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 0, 480, 31));
                         }
                         else
                         {
-                            base.txgbar.t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 0, 480, 31));
+                            base.txgbar.t2D描画(CDTXMania.app.Device, 314, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 0, 480, 31));
                         }
                     }
                     base.txgbar.vc拡大縮小倍率.X = 1f;
                     base.txgbar.b加算合成 = true;
-                    base.txgbar.t2D描画(CDTXMania.app.Device, 314, 635, new Rectangle(0, 31, 480, 31));
+                    base.txgbar.t2D描画(CDTXMania.app.Device, 314, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 31, 480, 31));
                 }
                 if (base.db現在のゲージ値.Drums <= 0.3)
                 {
-                    this.txゲージマスク2.t2D描画(CDTXMania.app.Device, 259, (CDTXMania.ConfigIni.bReverse.Drums ? 17 :652));
+                    this.txゲージマスク2.t2D描画(CDTXMania.app.Device, 294, (CDTXMania.ConfigIni.bReverse.Drums ? 28 : 626));
                 }
                 if (base.db現在のゲージ値.Drums == 1.0)
                 {
-                    this.txゲージマスク.t2D描画(CDTXMania.app.Device, 259, (CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652));
+                    this.txゲージマスク.t2D描画(CDTXMania.app.Device, 294, (CDTXMania.ConfigIni.bReverse.Drums ? 28 : 626));
                 }
 			}
 			return 0;
