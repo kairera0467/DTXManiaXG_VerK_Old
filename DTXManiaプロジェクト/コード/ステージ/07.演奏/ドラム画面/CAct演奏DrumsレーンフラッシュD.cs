@@ -448,7 +448,7 @@ namespace DTXMania
                             {
                                 if (CDTXMania.ConfigIni.bReverse.Drums)
                                 {
-                                    int y = (k * 0x80) + ((this.ct進行[j].n現在の値 * 384) / 100);
+                                    int y = 32 + ((this.ct進行[j].n現在の値 * 740) / 100);
                                     for (int m = 0; m < w; m += 42)
                                     {
                                         if (this.txFlush[j + 11] != null)

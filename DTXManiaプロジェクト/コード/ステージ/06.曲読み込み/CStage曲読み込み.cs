@@ -236,7 +236,11 @@ namespace DTXMania
 
                 CDTX cdtx = new CDTX( strDTXファイルパス, true );
 
-				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : ( CDTXMania.ConfigIni.b曲名表示をdefのものにする ? CDTXMania.stage選曲.r確定された曲.strタイトル : CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.タイトル );
+                if ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
+                    this.str曲タイトル =  CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
+                else
+                    this.str曲タイトル = cdtx.TITLE;
+
                 this.strアーティスト名 = cdtx.ARTIST;
 
                 for (int i = 0; i < 8; i++)
@@ -310,7 +314,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txベースパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base panel.png"), false);
+                this.txベース曲パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base music panel.png"), false);
+                this.txベース難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base drum panel.png"), false);
+
                 this.txシンボル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_Symbol.png"), false);
                 this.txLevel = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_LevelNumber.png"), false);
 				this.tx背景 = CDTXMania.tテクスチャの生成( this.strSTAGEFILE, false );
@@ -324,39 +330,41 @@ namespace DTXMania
 					if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
 					{
 						Bitmap image = new Bitmap( 1, 1 );
-                        Bitmap image2 = new Bitmap( 1, 1 );
 						Graphics graphics = Graphics.FromImage( image );
-                        Graphics graphics2 = Graphics.FromImage( image2 ); 
 						SizeF ef = graphics.MeasureString( this.str曲タイトル, this.ftタイトル表示用フォント );
-                        SizeF ef2 = graphics.MeasureString( this.strアーティスト名, this.ftアーティスト名表示フォント);
 						Size size = new Size( (int) Math.Ceiling( (double) ef.Width ), (int) Math.Ceiling( (double) ef.Height ) );
-                        Size size2 = new Size( (int)Math.Ceiling( (double) ef2.Width), (int) Math.Ceiling( (double) ef2.Height) );
-						graphics.Dispose();
-						image.Dispose();
 						image = new Bitmap( size.Width, size.Height );
-
-                        if (string.IsNullOrEmpty(this.strアーティスト名))       //2012.02.11.kairera0467 アーティスト名が無かった場合の処理。
-                            image2 = new Bitmap( size.Width, size.Height );
-                        else
-                            image2 = new Bitmap( size2.Width, size2.Height );
-
 						graphics = Graphics.FromImage( image );
 						graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                        graphics2 = Graphics.FromImage(image2);
-                        graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-
 						graphics.DrawString( this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, ( float ) 0f, ( float ) 0f );
-                        graphics2.DrawString( this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
 						graphics.Dispose();
 						this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
 						this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.42f, 0.5f, 1f );
-                        this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
-                        this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
+						graphics.Dispose();
 						image.Dispose();
-					}
+                    }
 					else
 					{
 						this.txタイトル = null;
+					}
+
+                    if ((this.strアーティスト名 != null) && (this.strアーティスト名.Length > 0))
+                    {
+                        Bitmap image2 = new Bitmap( 1, 1 );
+                        Graphics graphics2 = Graphics.FromImage( image2 ); 
+                        SizeF ef2 = graphics2.MeasureString( this.strアーティスト名, this.ftアーティスト名表示フォント);
+                        Size size2 = new Size( (int)Math.Ceiling( (double) ef2.Width), (int) Math.Ceiling( (double) ef2.Height) );
+                        image2 = new Bitmap( size2.Width, size2.Height );
+                        graphics2 = Graphics.FromImage(image2);
+                        graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                        graphics2.DrawString( this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
+                        this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
+                        this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
+                        graphics2.Dispose();
+                        image2.Dispose();
+                    }
+					else
+					{
                         this.txアーティスト = null;
 					}
 				}
@@ -378,7 +386,8 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
                 CDTXMania.tテクスチャの解放( ref this.txヘッダーパネル );
                 CDTXMania.tテクスチャの解放( ref this.txジャケット );
-                CDTXMania.tテクスチャの解放( ref this.txベースパネル );
+                CDTXMania.tテクスチャの解放( ref this.txベース曲パネル );
+                CDTXMania.tテクスチャの解放( ref this.txベース難易度パネル );
 				CDTXMania.tテクスチャの解放( ref this.txタイトル );
                 CDTXMania.tテクスチャの解放( ref this.txアーティスト );
                 CDTXMania.tテクスチャの解放( ref this.txRISKY );
@@ -498,10 +507,15 @@ namespace DTXMania
                 }
             this.txシンボル.t2D描画(CDTXMania.app.Device, 422, 128);
 
-            this.txベースパネル.t2D描画(CDTXMania.app.Device, 0, 0);
-            this.txヘッダーパネル.t2D描画(CDTXMania.app.Device, 0, 0);
-            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 268, 194 , new Rectangle(130 , (this.nIndex * 72), 130 , 72));
+            this.txベース曲パネル.t2D描画(CDTXMania.app.Device, 503, 173);
 
+            if ( CDTXMania.ConfigIni.bDrums有効 )
+            {
+                this.txベース難易度パネル.t2D描画(CDTXMania.app.Device, 254, 183);
+                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 268, 194 , new Rectangle(130 , (this.nIndex * 72), 130 , 72));
+            }
+
+            this.txヘッダーパネル.t2D描画(CDTXMania.app.Device, 0, 0);
 
             string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
@@ -560,7 +574,7 @@ namespace DTXMania
 
             if( !CDTXMania.bコンパクトモード )
             {
-                if( CDTXMania.ConfigIni.bSkillModeを自動切換えする == true && CDTXMania.ConfigIni.bDrums有効 )
+                if( CDTXMania.ConfigIni.bSkillModeを自動切換えする && CDTXMania.ConfigIni.bDrums有効 )
                     this.tSkillModeを譜面に応じて切り替える(cdtx);
             }
 
@@ -574,12 +588,27 @@ namespace DTXMania
                 {
                     this.txジャケット = CDTXMania.tテクスチャの生成(path);
                 }
-                int y = 184;
-                if (this.txタイトル != null)
+
+                if ( this.txタイトル != null )
                 {
-                    this.txタイトル.t2D描画(CDTXMania.app.Device, (int)(510 + (this.txタイトル.vc拡大縮小倍率.X)), y);
-                    this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(792 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
+                    this.fタイトル長 = this.txタイトル.sz画像サイズ.Width * this.txタイトル.vc拡大縮小倍率.X;
+
+                    if (this.fタイトル長 > 277)
+                        this.txタイトル.vc拡大縮小倍率.X = 277f / this.txタイトル.sz画像サイズ.Width;
+
+                    this.txタイトル.t2D描画(CDTXMania.app.Device, 510, 184);
                 }
+
+                if ( this.txアーティスト != null )
+                {
+                    this.fアーティスト長 = this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X;
+
+                    if (this.fアーティスト長 > 277)
+                        this.txアーティスト.vc拡大縮小倍率.X = 277f / this.txアーティスト.sz画像サイズ.Width;
+
+                    this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(787 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
+                }
+                
                 //this.txジャケット.vc拡大縮小倍率.X = 0.689f;
                 //this.txジャケット.vc拡大縮小倍率.Y = 0.699f;
                 this.txジャケット.vc拡大縮小倍率.X = 280.0f / this.txジャケット.sz画像サイズ.Width;
@@ -588,16 +617,19 @@ namespace DTXMania
 
                 this.txジャケット.Dispose();
 
-                this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
-                this.nCurrentRISKY = CDTXMania.ConfigIni.nRisky;
-                if (CDTXMania.ConfigIni.nRisky > 10)
+                if (CDTXMania.ConfigIni.bDrums有効)
                 {
-                    nCurrentRISKY = 0;
+                    this.nCurrentDrumspeed = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
+                    this.nCurrentRISKY = CDTXMania.ConfigIni.nRisky;
+                    if (CDTXMania.ConfigIni.nRisky > 10)
+                    {
+                        nCurrentRISKY = 0;
+                    }
+                    this.txDrumspeed.vc拡大縮小倍率 = new Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
+                    this.txRISKY.vc拡大縮小倍率 = new Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
+                    this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298, new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
+                    this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
                 }
-                this.txDrumspeed.vc拡大縮小倍率 = new Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
-                this.txRISKY.vc拡大縮小倍率 = new Vector3(36.0f / 42.0f, 36.0f / 48.0f, 1.0f);
-                this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298 , new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
-                this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
             //-----------------------------
             #endregion
 
@@ -858,9 +890,12 @@ namespace DTXMania
 		private string strSTAGEFILE;
 		private string str曲タイトル;
         private string strアーティスト名;
-		private CTexture txタイトル;
+        private float fタイトル長;
+        private float fアーティスト長;
+        private CTexture txタイトル;
         private CTexture txアーティスト;
-        private CTexture txベースパネル;
+        private CTexture txベース曲パネル;
+        private CTexture txベース難易度パネル;
         private CTexture txヘッダーパネル;
         private CTexture tx難易度パネル;
         private CTexture txジャケット;

@@ -249,21 +249,25 @@ namespace DTXMania
                 #region[ 曲名パネル ]
                 Graphics gSongPanel = Graphics.FromImage(this.b4font);
 
+                if ( string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) || ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする ) )
+                    this.strPanelString = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
+                else
+                    this.strPanelString = CDTXMania.DTX.TITLE;
+
+                string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
+                if (!File.Exists(path))
+                {
+                    this.iAlbum = Image.FromFile(CSkin.Path(@"Graphics\5_preimage default.png"));
+                }
+                else
+                {
+                    this.iAlbum = Image.FromFile(path);
+                }
+
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
                     this.iSongPanel = Image.FromFile(CSkin.Path(@"Graphics\7_songpanel.png"));
-                    this.strPanelString = string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) ? "No Song Name" : ( CDTXMania.ConfigIni.b曲名表示をdefのものにする ? CDTXMania.stage選曲.r現在選択中の曲.strタイトル : CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.タイトル );
                     this.bSongPanel = new Bitmap(250, 112);
-
-                    string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
-                    if (!File.Exists(path))
-                    {
-                        this.iAlbum = Image.FromFile(CSkin.Path(@"Graphics\5_preimage default.png"));
-                    }
-                    else
-                    {
-                        this.iAlbum = Image.FromFile(path);
-                    }
 
                     gSongPanel = Graphics.FromImage(this.bSongPanel);
                     gSongPanel.DrawImage(this.iSongPanel, 0, 0, 250, 112);
@@ -272,18 +276,7 @@ namespace DTXMania
                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
                     this.iSongPanel = Image.FromFile(CSkin.Path(@"Graphics\7_songpanel_Guitar_XG.png"));
-                    this.strPanelString = string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) ? "No Song Name" : ( CDTXMania.ConfigIni.b曲名表示をdefのものにする ? CDTXMania.stage選曲.r現在選択中の曲.strタイトル : CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.タイトル );
                     this.bSongPanel = new Bitmap(518, 68);
-
-                    string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
-                    if (!File.Exists(path))
-                    {
-                        this.iAlbum = Image.FromFile(CSkin.Path(@"Graphics\5_preimage default.png"));
-                    }
-                    else
-                    {
-                        this.iAlbum = Image.FromFile(path);
-                    }
 
                     gSongPanel = Graphics.FromImage(this.bSongPanel);
                     gSongPanel.DrawImage(this.iSongPanel, 0, 0, 518, 68);
