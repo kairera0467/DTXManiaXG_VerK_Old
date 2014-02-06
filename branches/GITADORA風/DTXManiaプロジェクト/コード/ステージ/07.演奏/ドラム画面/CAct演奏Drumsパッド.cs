@@ -268,12 +268,12 @@ namespace DTXMania
                     int x = this.st基本位置[index].x;
                     int x2 = (this.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 32)) + this.stパッド状態[index].nX座標オフセットdot;
                     int x3 = (this.st基本位置[index].x + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 79)) - this.stパッド状態[index].nX座標オフセットdotFLIP;
-                    int y = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 50 : 560)) + this.stパッド状態[index].nY座標オフセットdot2;
-                    int y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 482)) + this.stパッド状態[index].nY座標オフセットdot;
-                    int yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 495)) + this.stパッド状態[index].nY座標オフセットdot;
-                    int yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 570)) - this.stパッド状態[index].nY座標オフセットdot;
-                    int yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 486)) + this.stパッド状態[index].nY座標オフセットdot;
-                    int yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? -10 : 470)) + this.stパッド状態[index].nY座標オフセットdot;
+                    int y = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 60 : 560)) + this.stパッド状態[index].nY座標オフセットdot2;
+                    int y2 = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 0 : 482)) + this.stパッド状態[index].nY座標オフセットdot;
+                    int yh = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 0 : 495)) + this.stパッド状態[index].nY座標オフセットdot;
+                    int yb = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 0 : 570)) - this.stパッド状態[index].nY座標オフセットdot;
+                    int yl = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 0 : 486)) + this.stパッド状態[index].nY座標オフセットdot;
+                    int yf = (this.st基本位置[index].y + (CDTXMania.ConfigIni.bReverse.Drums ? 0 : 470)) + this.stパッド状態[index].nY座標オフセットdot;
                     #region[レーン切り替え]
                     if ((index == 2) && ((CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B) || CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D))
                     {
@@ -422,8 +422,8 @@ namespace DTXMania
 		private long nY座標制御タイマ;
         private long nY座標制御タイマ2;
 		private long nフラッシュ制御タイマ;
-        private readonly int[] n描画順 = new int[] { 9, 3, 5, 4, 6, 2, 1, 8, 7, 0 };
-                                                  // LP       LT FT SD
+        private readonly int[] n描画順 = new int[] { 9, 3, 2, 6, 4, 5, 8, 7, 1, 0 };
+                                                  // LP BD SD FT HT LT RD CY HH LC
 		public STパッド状態[] stパッド状態 = new STパッド状態[ 0x13 ];
 		public readonly ST基本位置[] st基本位置;
 		private CTexture txパッド;
