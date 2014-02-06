@@ -199,7 +199,11 @@ namespace DTXMania
 
                 CDTX cdtx = new CDTX( strDTXファイルパス, true );
 
-				this.str曲タイトル = ( CDTXMania.bコンパクトモード ) ? cdtx.TITLE : CDTXMania.stage選曲.r確定された曲.strタイトル;
+                if ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
+                    this.str曲タイトル = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
+                else
+                    this.str曲タイトル = cdtx.TITLE;
+
                 this.strアーティスト名 = cdtx.ARTIST;
                 if (((cdtx.SOUND_NOWLOADING != null) && (cdtx.SOUND_NOWLOADING.Length > 0)) && File.Exists(cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING))
                 {

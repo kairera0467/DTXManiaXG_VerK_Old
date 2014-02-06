@@ -112,7 +112,6 @@
     <Compile Include="コード\ステージ\01.起動\CStage起動.cs" />
     <Compile Include="コード\ステージ\02.タイトル\CActEnumSongs.cs" />
     <Compile Include="コード\ステージ\02.タイトル\CStageタイトル.cs" />
-    <None Include="コード\ステージ\03.オプション\CActOptionList" />
     <Compile Include="コード\ステージ\03.オプション\CStageオプション.cs" />
     <Compile Include="コード\ステージ\04.コンフィグ\CActConfigKeyAssign.cs" />
     <Compile Include="コード\ステージ\04.コンフィグ\CActConfigList.cs" />

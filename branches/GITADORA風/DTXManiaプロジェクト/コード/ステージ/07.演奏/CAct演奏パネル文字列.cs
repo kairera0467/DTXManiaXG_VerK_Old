@@ -203,7 +203,12 @@ namespace DTXMania
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
 
                 graphics.PageUnit = GraphicsUnit.Pixel;
-                this.strSongName = string.IsNullOrEmpty(CDTXMania.DTX.TITLE) ? "No Song Name" : CDTXMania.stage選曲.r確定された曲.strタイトル;
+
+                if ( string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) || ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする ) )
+                    this.strSongName = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
+                else
+                    this.strSongName = CDTXMania.DTX.TITLE;
+
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
 

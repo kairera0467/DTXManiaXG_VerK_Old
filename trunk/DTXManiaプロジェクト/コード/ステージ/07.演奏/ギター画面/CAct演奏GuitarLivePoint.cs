@@ -15,10 +15,10 @@ namespace DTXMania
         {
 
             int n本体ギターX = 0;
-            int n本体ギターY = 52;
+            int n本体ギターY = 46;
 
             int n本体ベースX = 1209;
-            int n本体ベースY = 52;
+            int n本体ベースY = 46;
 
 
             if (!base.b活性化してない)

@@ -551,7 +551,7 @@ namespace DTXMania
 		{
 			try
 			{
-				var image = new Bitmap( 220 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
+				var image = new Bitmap( 250 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
 				var graphics = Graphics.FromImage( image );
 				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 				
@@ -593,8 +593,8 @@ namespace DTXMania
 						break;
 
 					case 2:
-						str[ 0, 0 ] = "ギターの演奏に関する項目を設定し";
-						str[ 0, 1 ] = "ます。";
+						str[ 0, 0 ] = "ギターの演奏に関する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings to play the guitar.";
 						str[ 1, 1 ] = "";
 						break;
