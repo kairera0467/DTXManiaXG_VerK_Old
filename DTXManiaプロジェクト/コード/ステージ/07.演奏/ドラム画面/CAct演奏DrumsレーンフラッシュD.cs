@@ -382,16 +382,15 @@ namespace DTXMania
                             {
                                 if (CDTXMania.ConfigIni.bReverse.Drums)
                                 {
-                                    int y = (k * 0x80) + ((this.ct進行[j].n現在の値 * 384) / 100);
+                                    int y = 32 + ((this.ct進行[j].n現在の値 * 740) / 100);
                                     for (int m = 0; m < w; m += 42)
                                     {
                                         if (this.txFlush[j + 11] != null)
                                         {
-                                            this.txFlush[j + 11].t2D描画(CDTXMania.app.Device, x + m, y, new Rectangle((k * 42), 0, ((w - m) < 0x2a) ? (w - m) : 0x2a, 128));
+                                            this.txFlush[j + 11].t2D描画(CDTXMania.app.Device, x + m, y, new Rectangle((k * 42), 0, ((w - m) < 42) ? (w - m) : 42, 128));
                                         }
                                     }
                                 }
-
                                 else
                                 {
                                     int num8 = (200 + (500)) - ((this.ct進行[j].n現在の値 * 740) / 100);

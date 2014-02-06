@@ -89,7 +89,6 @@ namespace DTXMania
                 "Risky mode:\nSet over 1, in case you'd like to specify\n the number of Poor/Miss times to be\n FAILED.\nSet 0 to disable Risky mode.");
             this.list項目リスト.Add(this.iSystemRisky);
 
-
             this.iSystemMovieMode = new CItemList("Movie Mode", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nMovieMode,
                 "Movie Mode:\n0 = 非表示\n1 = 全画面\n2 = ウインドウモード\n3 = 全画面&ウインドウ\n演奏中にF5キーで切り替え。",
                 new string[] { "Off", "Full Screen", "Window Mode", "Both" });
@@ -130,11 +129,6 @@ namespace DTXMania
                 "CLASSIC譜面の判別の有無を設定します。\n",
                 "Set the presence or absence of a determination of CLASSIC Score.");
             this.list項目リスト.Add(this.iSystemClassicNotes);
-
-            this.iSystemDifficlty = new CItemToggle("Difficlty", CDTXMania.ConfigIni.b難易度表示をXG表示にする,
-                "選曲画面での難易度表示方法を変更します。\nON でXG風3ケタ、\nOFF で従来の2ケタ表示になります。",
-                "");
-            this.list項目リスト.Add(this.iSystemDifficlty);
 
             this.iSystemFullscreen = new CItemToggle("Fullscreen", CDTXMania.ConfigIni.b全画面モード,
                 "画面モード設定：\n ON で全画面モード、\n OFF でウィンドウモードになります。",
@@ -267,6 +261,13 @@ namespace DTXMania
                 "AutoSaveResult:\nTurn ON to save your result screen\n image automatically when you get\n hiscore/hiskill.");
             this.list項目リスト.Add(this.iSystemAutoResultCapture);
 
+            this.iSystemMusicNameDispDef = new CItemToggle("MusicNameDispDEF", CDTXMania.ConfigIni.b曲名表示をdefのものにする,
+                "表示される曲名をdefのものにします。\n" +
+                "ただし選曲画面の表示は、defファイルの\n" +
+                "ものが優先されます。",
+                "");
+            this.list項目リスト.Add(this.iSystemMusicNameDispDef);
+
             this.iAutoAddGage = new CItemToggle("AutoAddGage", CDTXMania.ConfigIni.bAutoAddGage,
                 "AUTO判定でのゲージ加算の有無:\n" +
                 "ONの場合、AUTO判定もゲージに加算\n" +
@@ -274,18 +275,6 @@ namespace DTXMania
                 "If ON, will be added to the judgment also gauge AUTO.\n" +
                 "");
             this.list項目リスト.Add(this.iAutoAddGage);
-
-            this.iSystemShowScore = new CItemToggle("ShowScore", CDTXMania.ConfigIni.bShowScore,
-                "演奏中のスコアの表示の有無を設定します。\n",
-                "\n" +
-                "");
-            this.list項目リスト.Add(this.iSystemShowScore);
-
-            this.iSystemShowMusicInfo = new CItemToggle("ShowMusicInfo", CDTXMania.ConfigIni.bShowMusicInfo,
-                "OFFにすると演奏中のジャケット、曲情報を表示しません。",
-                ""
-                );
-            this.list項目リスト.Add(this.iSystemShowMusicInfo);
 
             this.iSystemBufferedInput = new CItemToggle("BufferedInput", CDTXMania.ConfigIni.bバッファ入力を行う,
                 "バッファ入力モード：\nON にすると、FPS を超える入力解像\n度を実現します。\nOFF にすると、入力解像度は FPS に\n等しくなります。",
@@ -385,11 +374,28 @@ namespace DTXMania
             this.list項目リスト.Add(this.iSystemASIOBufferSizeMs);
             */
 
+            #region [ GDオプション ]
+            this.iSystemDifficlty = new CItemToggle("Difficlty", CDTXMania.ConfigIni.b難易度表示をXG表示にする,
+                "選曲画面での難易度表示方法を変更します。\nON でXG風3ケタ、\nOFF で従来の2ケタ表示になります。",
+                "");
+            this.list項目リスト.Add(this.iSystemDifficlty);
+            
+            this.iSystemShowScore = new CItemToggle("ShowScore", CDTXMania.ConfigIni.bShowScore,
+                    "演奏中のスコアの表示の有無を設定します。\n",
+                    "");
+            this.list項目リスト.Add(this.iSystemShowScore);
+
+            this.iSystemShowMusicInfo = new CItemToggle("ShowMusicInfo", CDTXMania.ConfigIni.bShowMusicInfo,
+                    "OFFにすると演奏中のジャケット、曲情報を表示しません。",
+                    "");
+            this.list項目リスト.Add(this.iSystemShowMusicInfo);
+            #endregion
+
             // #24074 2011.01.23 add ikanick
             this.iSystemGraph = new CItemToggle("SkillMater", CDTXMania.ConfigIni.bGraph有効,
                 "最高スキルと比較できるグラフを表示します。\n" +
                 "オートプレイだと表示されません。",
-                "To draw Graph  or not.\n");
+                "To draw Graph  or not.");
             this.list項目リスト.Add(this.iSystemGraph);
 
             this.iSystemSkinSubfolder = new CItemList("Skin (General)", CItemBase.Eパネル種別.通常, nSkinIndex,
@@ -522,25 +528,6 @@ namespace DTXMania
                 "You can set it from x0.5 to x1000.0.\n" +
                 "(ScrollSpeed=x0.5 means half speed)");
             this.list項目リスト.Add(this.iDrumsScrollSpeed);
-
-            #region[旧HIDSUD]
-            /*
-			this.iDrumsSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Drums,
-				"ドラムチップが譜面の下の方から表\n" +
-				"示されるようになります。",
-				"Drums chips are disappered until they\n" +
-				"come near the hit bar, and suddenly\n" +
-				"appears." );
-			this.list項目リスト.Add( this.iDrumsSudden );
-
-			this.iDrumsHidden = new CItemToggle( "Hidden", CDTXMania.ConfigIni.bHidden.Drums,
-				"ドラムチップが譜面の下の方で表示\n" +
-				"されなくなります。",
-				"Drums chips are hidden by approaching\n" +
-				"to the hit bar. " );
-			this.list項目リスト.Add( this.iDrumsHidden );
-            */
-            #endregion
 
             this.iDrumsHIDSUD = new CItemList("HID-SUD", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.nHidSud.Drums,
                 "HIDDEN:チップが途中から見えなくなります。\n" +
@@ -1074,23 +1061,12 @@ namespace DTXMania
                 "SUDDEN:チップが途中まで見えません。\n" +
                 "HID-SUD:HIDDEN、SUDDENの両方が適用\n" +
                 "されます。\n" +
-                "STEALTH:チップがずっと表示されません。\n" +
-                "(現在は未実装)",
+                "STEALTH:チップがずっと表示されません。",
                 "The display position for Drums Combo.\n" +
                 "Note that it doesn't take effect\n" +
                 " at Autoplay ([Left] is forcely used).",
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
             this.list項目リスト.Add(this.iGuitarHIDSUD);
-
-            this.iGuitarSudden = new CItemToggle("Sudden", CDTXMania.ConfigIni.bSudden.Guitar,
-                "ギターチップがヒットバー付近にくる\nまで表示されなくなります。",
-                "Guitar chips are disappered until they\ncome near the hit bar, and suddenly\nappears.");
-            this.list項目リスト.Add(this.iGuitarSudden);
-
-            this.iGuitarHidden = new CItemToggle("Hidden", CDTXMania.ConfigIni.bHidden.Guitar,
-                "ギターチップがヒットバー付近で表示\nされなくなります。",
-                "Guitar chips are hidden by approaching\nto the hit bar. ");
-            this.list項目リスト.Add(this.iGuitarHidden);
 
             //----------DisplayOption----------
 
@@ -1281,23 +1257,12 @@ namespace DTXMania
                 "SUDDEN:チップが途中まで見えません。\n" +
                 "HID-SUD:HIDDEN、SUDDENの両方が適用\n" +
                 "されます。\n" +
-                "STEALTH:チップがずっと表示されません。\n" +
-                "(現在は未実装)",
+                "STEALTH:チップがずっと表示されません。",
                 "The display position for Drums Combo.\n" +
                 "Note that it doesn't take effect\n" +
                 " at Autoplay ([Left] is forcely used).",
                 new string[] { "OFF", "Hidden", "Sudden", "HidSud", "Stealth" });
             this.list項目リスト.Add(this.iBassHIDSUD);
-
-            this.iBassSudden = new CItemToggle("Sudden", CDTXMania.ConfigIni.bSudden.Bass,
-                "ベースチップがヒットバー付近にくる\nまで表示されなくなります。",
-                "Bass chips are disappered until they\ncome near the hit bar, and suddenly\nappears.");
-            this.list項目リスト.Add(this.iBassSudden);
-
-            this.iBassHidden = new CItemToggle("Hidden", CDTXMania.ConfigIni.bHidden.Bass,
-                "ベースチップがヒットバー付近で表示\nされなくなります。",
-                "Bass chips are hidden by approaching\nto the hit bar.");
-            this.list項目リスト.Add(this.iBassHidden);
 
             //----------DisplayOption----------
 
@@ -2104,7 +2069,8 @@ namespace DTXMania
                     //this.iSystemWASAPIBufferSizeMs.n現在の値,
                                         0,
                                         this.iSystemASIODevice.n現在選択されている項目番号);
-                CDTXMania.app.AddSoundTypeToWindowTitle();
+                //CDTXMania.app.ShowWindowTitleWithSoundType();   //XGオプション
+                CDTXMania.app.AddSoundTypeToWindowTitle();    //GDオプション
             }
             #endregion
             #region [ サウンドのタイムストレッチモード変更 ]
@@ -2541,7 +2507,6 @@ namespace DTXMania
         private CItemInteger iSystemPreviewSoundWait;
         private CItemToggle iSystemRandomFromSubBox;
         private CItemBase iSystemReturnToMenu;
-        //private CItemToggle iSystemLivePoint;
         private CItemToggle iSystemSaveScore;
         private CItemToggle iSystemSoundMonitorBass;
         private CItemToggle iSystemSoundMonitorDrums;
@@ -2560,14 +2525,15 @@ namespace DTXMania
         private CItemList iInfoType;
         private CItemToggle iAutoAddGage;
         private CItemList iSystemSkillMode;
-        private CItemToggle iSystemDifficlty;
         private CItemToggle iMutingLP;
-        //private CItemList iSystemBPMbar;
         private CItemToggle iSystemClassicNotes;
-        //private CItemList iSystemNamePlateType;
         private CItemToggle iSystemGraph;        // #24074 2011.01.23 add ikanick
+
+        #region [ GDオプション ]
+        private CItemToggle iSystemDifficlty;
         private CItemToggle iSystemShowScore;
         private CItemToggle iSystemShowMusicInfo;
+        #endregion
 
         private int iSystemSoundType_initial;
         private int iSystemWASAPIBufferSizeMs_initial;
@@ -2601,7 +2567,8 @@ namespace DTXMania
         private CItemBase iBassGoToKeyAssign;
         private CItemBase iSystemGoToKeyAssign;		// #24609
 
-        //private CItemList iSystemGRmode;
+        private CItemList iSystemGRmode;
+        private CItemToggle iSystemMusicNameDispDef;
 
         //private CItemToggle iBassAutoPlay;
         private CItemThreeState iBassAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2613,7 +2580,6 @@ namespace DTXMania
         private CItemToggle iBassPick;						//
         private CItemToggle iBassW;							//
 
-        private CItemToggle iBassHidden;
         private CItemList iBassHIDSUD;
         private CItemToggle iBassLeft;
         private CItemToggle iBassLight;
@@ -2622,7 +2588,6 @@ namespace DTXMania
         private CItemBase iBassReturnToMenu;
         private CItemToggle iBassReverse;
         private CItemInteger iBassScrollSpeed;
-        private CItemToggle iBassSudden;
         private CItemList iBassDark;
         private CItemList iBassLaneDisp;
         private CItemToggle iBassJudgeLineDisp;
@@ -2658,7 +2623,6 @@ namespace DTXMania
         private CItemToggle iDrumsSnare;
         private CItemToggle iDrumsTight;
         private CItemToggle iDrumsStageEffect;
-        //private CItemList iDrumsMoveDrumSet;
         private CItemList iDrumsMirror;
         private CItemList iDrumsRandomPad;
         private CItemList iDrumsRandomPedal;
@@ -2685,7 +2649,6 @@ namespace DTXMania
         private CItemToggle iGuitarPick;					//
         private CItemToggle iGuitarW;						//
 
-        private CItemToggle iGuitarHidden;
         private CItemList iGuitarHIDSUD;
         private CItemToggle iGuitarLeft;
         private CItemToggle iGuitarLight;
@@ -2694,7 +2657,6 @@ namespace DTXMania
         private CItemBase iGuitarReturnToMenu;
         private CItemToggle iGuitarReverse;
         private CItemInteger iGuitarScrollSpeed;
-        private CItemToggle iGuitarSudden;
         private CItemList iGuitarDark;
         private CItemList iGuitarLaneDisp;
         private CItemToggle iGuitarJudgeLineDisp;
@@ -2780,13 +2742,6 @@ namespace DTXMania
             //CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
             CDTXMania.ConfigIni.n演奏速度 = this.iCommonPlaySpeed.n現在の値;
 
-            //CDTXMania.ConfigIni.bGuitar有効 = (((this.iSystemGRmode.n現在選択されている項目番号 + 1) / 2) == 1);
-            //this.iSystemGuitar.bON;
-            //CDTXMania.ConfigIni.bDrums有効 = (((this.iSystemGRmode.n現在選択されている項目番号 + 1) % 2) == 1);
-            //this.iSystemDrums.bON;
-            CDTXMania.ConfigIni.bDrums有効 = true;
-
-
             CDTXMania.ConfigIni.b全画面モード = this.iSystemFullscreen.bON;
             CDTXMania.ConfigIni.bSTAGEFAILED有効 = this.iSystemStageFailed.bON;
             CDTXMania.ConfigIni.bランダムセレクトで子BOXを検索対象とする = this.iSystemRandomFromSubBox.bON;
@@ -2808,10 +2763,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.b歓声を発声する = this.iSystemAudienceSound.bON;
             CDTXMania.ConfigIni.eダメージレベル = (Eダメージレベル)this.iSystemDamageLevel.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bScoreIniを出力する = this.iSystemSaveScore.bON;
-            CDTXMania.ConfigIni.bShowScore = this.iSystemShowScore.bON;
-            CDTXMania.ConfigIni.bShowMusicInfo = this.iSystemShowMusicInfo.bON;
-            //CDTXMania.ConfigIni.bLivePoint = this.iSystemLivePoint.bON;
-            //CDTXMania.ConfigIni.eBPMbar = (Eタイプ)this.iSystemBPMbar.n現在選択されている項目番号;
 
             CDTXMania.ConfigIni.bログ出力 = this.iLogOutputLog.bON;
             CDTXMania.ConfigIni.n手動再生音量 = this.iSystemChipVolume.n現在の値;
@@ -2824,7 +2775,12 @@ namespace DTXMania
             CDTXMania.ConfigIni.nInfoType = this.iInfoType.n現在選択されている項目番号;
             CDTXMania.ConfigIni.nRisky = this.iSystemRisky.n現在の値;										// #23559 2911.7.27 yyagi
 
-            //CDTXMania.ConfigIni.eNamePlate = (Eタイプ)this.iSystemNamePlateType.n現在選択されている項目番号;
+            #region [ GDオプション ]
+            CDTXMania.ConfigIni.b難易度表示をXG表示にする = this.iSystemDifficlty.bON;
+            CDTXMania.ConfigIni.bShowScore = this.iSystemShowScore.bON;
+            CDTXMania.ConfigIni.bShowMusicInfo = this.iSystemShowMusicInfo.bON;
+            #endregion
+
             CDTXMania.ConfigIni.strSystemSkinSubfolderFullName = skinSubFolders[nSkinIndex];				// #28195 2012.5.2 yyagi
             CDTXMania.Skin.SetCurrentSkinSubfolderFullName(CDTXMania.ConfigIni.strSystemSkinSubfolderFullName, true);
             CDTXMania.ConfigIni.bUseBoxDefSkin = this.iSystemUseBoxDefSkin.bON;								// #28195 2012.5.6 yyagi
@@ -2836,7 +2792,7 @@ namespace DTXMania
             //CDTXMania.ConfigIni.nASIOBufferSizeMs = this.iSystemASIOBufferSizeMs.n現在の値; // #24820 2013.1.3 yyagi
             CDTXMania.ConfigIni.nASIODevice = this.iSystemASIODevice.n現在選択されている項目番号;			// #24820 2013.1.17 yyagi
             CDTXMania.ConfigIni.bTimeStretch = this.iSystemTimeStretch.bON; // #23664 2013.2.24 yyagi
-            CDTXMania.ConfigIni.b難易度表示をXG表示にする = this.iSystemDifficlty.bON;
+            CDTXMania.ConfigIni.b曲名表示をdefのものにする = this.iSystemMusicNameDispDef.bON;
 
 
             //Trace.TraceInformation( "saved" );
@@ -2857,8 +2813,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAutoPlay.BsW = this.iBassW.bON;
             CDTXMania.ConfigIni.n譜面スクロール速度.Bass = this.iBassScrollSpeed.n現在の値;
             CDTXMania.ConfigIni.nHidSud.Bass = this.iBassHIDSUD.n現在選択されている項目番号;
-            CDTXMania.ConfigIni.bSudden.Bass = this.iBassSudden.bON;
-            CDTXMania.ConfigIni.bHidden.Bass = this.iBassHidden.bON;
             CDTXMania.ConfigIni.bReverse.Bass = this.iBassReverse.bON;
             CDTXMania.ConfigIni.判定文字表示位置.Bass = (Eタイプ)this.iBassPosition.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eRandom.Bass = (Eランダムモード)this.iBassRandom.n現在選択されている項目番号;
@@ -2919,7 +2873,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bLaneFlush.Drums = this.iDrumsLaneFlush.bON;
 
             CDTXMania.ConfigIni.ボーナス演出を表示する = this.iDrumsStageEffect.bON;
-            //CDTXMania.ConfigIni.eドラムセットを動かす = (Eタイプ)this.iDrumsMoveDrumSet.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bMutingLP = this.iMutingLP.bON;
             CDTXMania.ConfigIni.bAssignToLBD.Drums = this.iDrumsAssignToLBD.bON;
 
@@ -2949,8 +2902,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAutoPlay.GtW = this.iGuitarW.bON;
             CDTXMania.ConfigIni.n譜面スクロール速度.Guitar = this.iGuitarScrollSpeed.n現在の値;
             CDTXMania.ConfigIni.nHidSud.Guitar = this.iGuitarHIDSUD.n現在選択されている項目番号;
-            CDTXMania.ConfigIni.bSudden.Guitar = this.iGuitarSudden.bON;
-            CDTXMania.ConfigIni.bHidden.Guitar = this.iGuitarHidden.bON;
             CDTXMania.ConfigIni.bReverse.Guitar = this.iGuitarReverse.bON;
             CDTXMania.ConfigIni.判定文字表示位置.Guitar = (Eタイプ)this.iGuitarPosition.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eRandom.Guitar = (Eランダムモード)this.iGuitarRandom.n現在選択されている項目番号;
