@@ -245,8 +245,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ));
-				this.txレベル数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect level numbers.png" ), false );
-				this.txスキルゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect skill gauge.png" ), false );
 				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill icon.png" ), false );
 				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect triangle arrow.png" ), false );
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_difficulty panel.png"));
@@ -262,8 +260,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
-				CDTXMania.tテクスチャの解放( ref this.txレベル数字 );
-				CDTXMania.tテクスチャの解放( ref this.txスキルゲージ );
 				CDTXMania.tテクスチャの解放( ref this.txゲージ用数字他 );
 				CDTXMania.tテクスチャの解放( ref this.tx難易度用矢印 );
                 CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
@@ -839,9 +835,7 @@ namespace DTXMania
         private readonly ST達成率数字[] st達成率数字 = new ST達成率数字[] { new ST達成率数字('0', new Rectangle(0, 62, 7, 16)), new ST達成率数字('1', new Rectangle(7, 62, 7, 16)), new ST達成率数字('2', new Rectangle(14, 62, 7, 16)), new ST達成率数字('3', new Rectangle(21, 62, 7, 16)), new ST達成率数字('4', new Rectangle(28, 62, 7, 16)), new ST達成率数字('5', new Rectangle(35, 62, 7, 16)), new ST達成率数字('6', new Rectangle(42, 62, 7, 16)), new ST達成率数字('7', new Rectangle(49, 62, 7, 16)), new ST達成率数字('8', new Rectangle(56, 62, 7, 16)), new ST達成率数字('9', new Rectangle(63, 62, 7, 16)), new ST達成率数字('%', new Rectangle(70, 62, 9, 16)), new ST達成率数字('.', new Rectangle(79, 62, 3, 16)) };
         private readonly Rectangle rcunused = new Rectangle(0, 0x21, 80, 15);
 		private CTexture txゲージ用数字他;
-		private CTexture txスキルゲージ;
 		private CTexture txパネル本体;
-		private CTexture txレベル数字;
 		private CTexture tx難易度用矢印;
         private CTexture tx難易度パネル;
         private CTexture tx難易度数字XG;
