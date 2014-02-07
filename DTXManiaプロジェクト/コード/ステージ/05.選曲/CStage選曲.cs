@@ -702,7 +702,7 @@ namespace DTXMania
 
 		private bool bBGM再生済み;
 		private STキー反復用カウンタ ctキー反復用;
-		private CCounter ct登場時アニメ用共通;
+		public CCounter ct登場時アニメ用共通;
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private Font ftフォント;
 		private CTexture txコメントバー;
