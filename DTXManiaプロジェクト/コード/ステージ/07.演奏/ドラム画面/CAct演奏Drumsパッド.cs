@@ -21,7 +21,7 @@ namespace DTXMania
             //LC
 			ST基本位置 st基本位置 = new ST基本位置();
 			st基本位置.x = 263;
-			st基本位置.y = 0;
+			st基本位置.y = 10;
 			st基本位置.rc = new Rectangle( 0, 0, 0x60, 0x60 );
 			st基本位置Array[ 0 ] = st基本位置;
 
@@ -35,53 +35,59 @@ namespace DTXMania
             //SD
 			ST基本位置 st基本位置3 = new ST基本位置();
 			st基本位置3.x = 446;
-			st基本位置3.y = 8;
-			st基本位置3.rc = new Rectangle( 192, 0, 0x60, 0x60 );
+			st基本位置3.y = 10;
+			st基本位置3.rc = new Rectangle( 0, 0x60, 0x60, 0x60 );
 			st基本位置Array[ 2 ] = st基本位置3;
 
             //BD
-
 			ST基本位置 st基本位置4 = new ST基本位置();
             st基本位置4.x = 565;
-            st基本位置4.y = 0x1b;
-            st基本位置4.rc = new Rectangle(0, 96, 0x60, 0x60);
+            st基本位置4.y = 10;
+            st基本位置4.rc = new Rectangle(0, 0xc0, 0x60, 0x60);
 			st基本位置Array[ 3 ] = st基本位置4;
 
             //HT
 			ST基本位置 st基本位置5 = new ST基本位置();
 			st基本位置5.x = 510;
-			st基本位置5.y = -4;
+			st基本位置5.y = 10;
 			st基本位置5.rc = new Rectangle( 0x60, 0x60, 0x60, 0x60 );
 			st基本位置Array[ 4 ] = st基本位置5;
 
             //LT
 			ST基本位置 st基本位置6 = new ST基本位置();
 			st基本位置6.x = 622;
-			st基本位置6.y = 4;
-			st基本位置6.rc = new Rectangle( 192, 96, 0x60, 0x60 );
+			st基本位置6.y = 10;
+			st基本位置6.rc = new Rectangle( 0xc0, 0x60, 0x60, 0x60 );
 			st基本位置Array[ 5 ] = st基本位置6;
 
+            //FT
 			ST基本位置 st基本位置7 = new ST基本位置();
 			st基本位置7.x = 672;
-			st基本位置7.y = 20;
-			st基本位置7.rc = new Rectangle( 0, 0xc0, 0x60, 0x60 );
+			st基本位置7.y = 10;
+			st基本位置7.rc = new Rectangle( 288, 0x60, 0x60, 0x60 );
 			st基本位置Array[ 6 ] = st基本位置7;
 
+            //CY
 			ST基本位置 st基本位置8 = new ST基本位置();
 			st基本位置8.x = 0x2df;
-			st基本位置8.y = 0;
-			st基本位置8.rc = new Rectangle( 0x60, 0xc0, 0x60, 0x60 );
+			st基本位置8.y = 10;
+			st基本位置8.rc = new Rectangle( 0xc0, 0, 0x60, 0x60 );
 			st基本位置Array[ 7 ] = st基本位置8;
+
+            //RD
 			ST基本位置 st基本位置9 = new ST基本位置();
 			st基本位置9.x = 0x317;
-			st基本位置9.y = 8;
-			st基本位置9.rc = new Rectangle( 192, 0xc0, 0x60, 0x60 );
+			st基本位置9.y = 10;
+			st基本位置9.rc = new Rectangle( 288, 0, 0x60, 0x60 );
 			st基本位置Array[ 8 ] = st基本位置9;
+
+            //LP
             ST基本位置 st基本位置10 = new ST基本位置();
             st基本位置10.x = 0x18c;
-            st基本位置10.y = 0x1b;
-            st基本位置10.rc = new Rectangle( 288, 0x60, 0x60, 0x60);
+            st基本位置10.y = 10;
+            st基本位置10.rc = new Rectangle( 0x60, 0xc0, 0x60, 0x60);
             st基本位置Array[ 9 ] = st基本位置10;
+
 			this.st基本位置 = st基本位置Array;
 			base.b活性化してない = true;
 		}

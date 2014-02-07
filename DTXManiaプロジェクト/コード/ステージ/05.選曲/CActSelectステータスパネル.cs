@@ -89,7 +89,6 @@ namespace DTXMania
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ), true );
 				this.txレベル数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect level numbers.png" ), false );
-//				this.txスキルゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect skill gauge.png" ), false );
                 this.txスキルアイコン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_skill icon.png"), false);
 				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_difficulty panel.png"));
@@ -103,7 +102,6 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.txレベル数字 );
-//				CDTXMania.tテクスチャの解放( ref this.txスキルゲージ );
                 CDTXMania.tテクスチャの解放(ref this.txスキルアイコン);
                 CDTXMania.tテクスチャの解放(ref this.txゲージ用数字他);
 				CDTXMania.tテクスチャの解放( ref this.tx難易度用矢印 );
@@ -460,15 +458,6 @@ namespace DTXMania
 					if ( this.n現在選択中の曲のレベル[ i ] != 0 )
 					{
 						double dMaxSkill = this.db現在選択中の曲の最高スキル値[ i ];
-                        /*
-						if( dMaxSkill != 0.0 )
-						{
-							int nDispPosX = this.n本体X + 200;
-							int nDispPosY = this.n本体Y + 79 + nDispPosYOffset[ ( CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0 ), i ];
-							this.txスキルゲージ.t2D描画( CDTXMania.app.Device, nDispPosX, nDispPosY,
-														new Rectangle( 0, 0, (int) ( 340.0 * dMaxSkill / 100.0 ), 14 ) );
-						}
-                         */
 						string sMaxSkillString = dMaxSkill.ToString( "##0.00" );
 						int nMaxSkillStringWidth = 0;
 						foreach( char ch in sMaxSkillString )
@@ -556,7 +545,6 @@ namespace DTXMania
         private readonly ST数字[] st数字 = new ST数字[] { new ST数字('0', new Rectangle(0, 0, 0x10, 0x11)), new ST数字('1', new Rectangle(0x10, 0, 0x10, 0x11)), new ST数字('2', new Rectangle(0x20, 0, 0x10, 0x11)), new ST数字('3', new Rectangle(0x30, 0, 0x10, 0x11)), new ST数字('4', new Rectangle(0x40, 0, 0x10, 0x11)), new ST数字('5', new Rectangle(80, 0, 0x10, 0x11)), new ST数字('6', new Rectangle(0, 0x11, 0x10, 0x10)), new ST数字('7', new Rectangle(0x10, 0x11, 0x10, 0x10)), new ST数字('8', new Rectangle(0x20, 0x11, 0x10, 0x10)), new ST数字('9', new Rectangle(0x30, 0x11, 0x10, 0x10)), new ST数字('.', new Rectangle(0x40, 0x11, 8, 0x10)), new ST数字('p', new Rectangle(0x48, 0x11, 30, 0x10)) };
         private readonly Rectangle rcunused = new Rectangle(0, 0x21, 80, 15);
 		private CTexture txゲージ用数字他;
-//		private CTexture txスキルゲージ;
         private CTexture txスキルアイコン;
 		private CTexture txパネル本体;
 		private CTexture txレベル数字;
