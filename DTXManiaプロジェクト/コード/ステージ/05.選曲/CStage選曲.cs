@@ -224,7 +224,6 @@ namespace DTXMania
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_header panel.png" ), false );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), false );
-				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -236,7 +235,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
-				CDTXMania.tテクスチャの解放( ref this.txコメントバー );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -273,7 +271,10 @@ namespace DTXMania
 				this.actPreimageパネル.On進行描画();
 			//	this.bIsEnumeratingSongs = !this.actPreimageパネル.bIsPlayingPremovie;				// #27060 2011.3.2 yyagi: #PREMOVIE再生中は曲検索を中断する
 
+				this.actステータスパネル.On進行描画();
+				this.actArtistComment.On進行描画();
 				this.act曲リスト.On進行描画();
+				this.act演奏履歴パネル.On進行描画();
 				int y = 0;
 				if( this.ct登場時アニメ用共通.b進行中 )
 				{
@@ -288,14 +289,7 @@ namespace DTXMania
 				if( this.tx下部パネル != null )
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
-				this.actステータスパネル.On進行描画();
 				this.actPresound.On進行描画();
-				if( this.txコメントバー != null )
-				{
-                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 646, 342);
-				}
-				this.actArtistComment.On進行描画();
-				this.act演奏履歴パネル.On進行描画();
 				this.actオプションパネル.On進行描画();
 				this.actShowCurrentPosition.On進行描画();								// #27648 2011.3.28 yyagi
 
@@ -705,7 +699,6 @@ namespace DTXMania
 		public CCounter ct登場時アニメ用共通;
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private Font ftフォント;
-		private CTexture txコメントバー;
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;

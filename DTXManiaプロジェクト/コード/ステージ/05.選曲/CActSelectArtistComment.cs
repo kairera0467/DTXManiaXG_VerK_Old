@@ -149,7 +149,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.t選択曲が変更された();
+                this.txコメントバー = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_comment bar.png"), true);
+                this.t選択曲が変更された();
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -159,27 +160,31 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txArtist );
 				CDTXMania.tテクスチャの解放( ref this.txComment );
-				base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放( ref this.txコメントバー );
+                base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
 		{
 			if( !base.b活性化してない )
 			{
-				if( this.ctComment.b進行中 )
+                if (this.txコメントバー != null)
+                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 646, 316);
+
+                if (this.ctComment.b進行中)
 				{
 					this.ctComment.t進行Loop();
 				}
 				if( this.txArtist != null )
 				{
-					int x = 1260 - ( (int) ( this.txArtist.szテクスチャサイズ.Width * this.txArtist.vc拡大縮小倍率.X ) );		// #27648 2012.3.14 yyagi: -12 for scrollbar
-					int y = 346;
+					int x = 1260 - 25 - ( (int) ( this.txArtist.szテクスチャサイズ.Width * this.txArtist.vc拡大縮小倍率.X ) );		// #27648 2012.3.14 yyagi: -12 for scrollbar
+					int y = 320;
 					this.txArtist.t2D描画( CDTXMania.app.Device, x, y );
                     //this.txArtist.t2D描画(CDTXMania.app.Device, 64, 570);
                 }
 
                     int num3 = 683;
-                    int num4 = 365;
+                    int num4 = 339;
 
                 if ((this.txComment != null) && ((this.txComment.szテクスチャサイズ.Width * this.txComment.vc拡大縮小倍率.X) < (1250 - num3)))
                 {
@@ -224,7 +229,8 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private CCounter ctComment;
+        private CTexture txコメントバー;
+        private CCounter ctComment;
 		private Font ft描画用フォント;
 		private int nComment行数;
 		private int nComment最終行の幅;
