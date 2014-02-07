@@ -518,8 +518,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-
-                this.tx曲名パネル.t2D描画(CDTXMania.app.Device, this.n本体0X, this.n本体0Y);
+                if ( CDTXMania.ConfigIni.bShowMusicInfo )
+                    this.tx曲名パネル.t2D描画(CDTXMania.app.Device, this.n本体0X, this.n本体0Y);
 
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
@@ -536,7 +536,7 @@ namespace DTXMania
                 this.txRisky.vc拡大縮小倍率 = new SlimDX.Vector3(32.0f / 42.0f, 32.0f / 48.0f, 1.0f);
 
                 //CDTXMania.act文字コンソール.tPrint(0, 100, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", CDTXMania.stage演奏ギター画面.bブーストボーナス ? 1 : 0));
-                if (this.txパネル != null && CDTXMania.DTX.bチップがある.Guitar && this.n本体1X != 0)
+                if ( this.txパネル != null && CDTXMania.DTX.bチップがある.Guitar && this.n本体1X != 0 && CDTXMania.ConfigIni.bShowScore )
 				{
 			        this.txパネル.t2D描画( CDTXMania.app.Device, this.n本体1X, this.n本体Y );
 
@@ -637,7 +637,7 @@ namespace DTXMania
                     #endregion
 				}
 
-                if (this.txパネル != null && CDTXMania.DTX.bチップがある.Bass && this.n本体2X != 0)
+                if ( this.txパネル != null && CDTXMania.DTX.bチップがある.Bass && this.n本体2X != 0 && CDTXMania.ConfigIni.bShowScore )
                 {
                     this.txパネル.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体Y);
 
