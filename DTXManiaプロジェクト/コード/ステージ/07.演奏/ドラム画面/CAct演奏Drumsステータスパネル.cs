@@ -419,7 +419,9 @@ namespace DTXMania
                     identity *= SlimDX.Matrix.Scaling( 0.385f, 0.61f, 1.0f );
                     identity *= SlimDX.Matrix.RotationY( -0.60f );
                 }
-                this.txNamePlate.t3D描画( CDTXMania.app.Device, identity );
+
+                if ( CDTXMania.ConfigIni.bShowMusicInfo )
+                    this.txNamePlate.t3D描画( CDTXMania.app.Device, identity );
 
                 if ( this.nCurrentDrumspeed != CDTXMania.ConfigIni.n譜面スクロール速度.Drums )
                 {
@@ -442,7 +444,7 @@ namespace DTXMania
 
                 #region[ スコア表示 ]
                 this.nCurrentScore = (long)CDTXMania.stage演奏ドラム画面.actScore.n現在表示中のスコア.Drums;
-                if (CDTXMania.ConfigIni.nSkillMode == 0)
+                if ( CDTXMania.ConfigIni.nSkillMode == 0 && CDTXMania.ConfigIni.bShowScore )
                 {
                     string str = this.nCurrentScore.ToString("0000000000");
                     for (int i = 0; i < 10; i++)
@@ -468,25 +470,29 @@ namespace DTXMania
                         if (this.txScore != null)
                         {
                             SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
-                            if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
+                            if ( !CDTXMania.ConfigIni.bShowMusicInfo )
+                            {
+                                matScoreXG *= SlimDX.Matrix.Translation((-615f + (i * 21f)) / 0.7f, 280, 0);
+                                matScoreXG *= SlimDX.Matrix.Scaling(0.7f, 1f, 1f);
+                            }
+                            else if ( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-1220 + (i * 30), 120 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.34f, 0.62f, 1.0f);
                                 matScoreXG *= SlimDX.Matrix.RotationY(-0.60f);
-                                this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
-                            else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
+                            else if ( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-1370 + (i * 30), 50 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.3f, 0.62f, 1f);
                                 matScoreXG *= SlimDX.Matrix.RotationY(-0.8f);
                                 //matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
-                                this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
+                            this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                         }
                     }
                 }
-                else if( CDTXMania.ConfigIni.nSkillMode == 1 )
+                else if ( CDTXMania.ConfigIni.nSkillMode == 1 && CDTXMania.ConfigIni.bShowScore )
                 {
                     string str = this.nCurrentScore.ToString("0000000");
                     for( int i = 0; i < 7; i++ )
@@ -512,12 +518,16 @@ namespace DTXMania
                         if( this.txScore != null )
                         {
                             SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
-                            if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
+                            if ( !CDTXMania.ConfigIni.bShowMusicInfo )
+                            {
+                                matScoreXG *= SlimDX.Matrix.Translation(-610 + (i * 30), 280, 0);
+                                matScoreXG *= SlimDX.Matrix.Scaling(1f, 1f, 1f);
+                            }
+                            else if ( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                             {
                                 matScoreXG *= SlimDX.Matrix.Translation(-870 + (i * 30), 114 + CDTXMania.stage演奏ドラム画面.actScore.x位置[i].Drums, 0);
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.47f, 0.65f, 1.0f);
                                 matScoreXG *= SlimDX.Matrix.RotationY(-0.60f);
-                                this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
                             else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                             {
@@ -525,8 +535,8 @@ namespace DTXMania
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.42f, 0.62f, 1f);
                                 matScoreXG *= SlimDX.Matrix.RotationY(-0.8f);
                                 //matScoreXG *= SlimDX.Matrix.RotationZ(-0.01f);
-                                this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                             }
+                            this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
                         }
                     }
                 }
