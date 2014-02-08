@@ -37,8 +37,9 @@ namespace DTXMania
 					this.n現在選択中の曲の最高ランク[ i ] = cスコア.譜面情報.最大ランク[ i ];
 					this.b現在選択中の曲がフルコンボ[ i ] = cスコア.譜面情報.フルコンボ[ i ];
 					this.db現在選択中の曲の最高スキル値[ i ] = cスコア.譜面情報.最大スキル[ i ];
-                    this.db現在選択中の曲の曲別スキル[i] = cスコア.譜面情報.最大曲別スキル[i];
-				}
+                    this.db現在選択中の曲の曲別スキル[ i ] = cスコア.譜面情報.最大曲別スキル[ i ];
+                    this.b現在選択中の曲に譜面がある[ i ] = cスコア.譜面情報.b譜面がある[ i ];
+                }
 				for( int i = 0; i < 5; i++ )
 				{
 					this.str難易度ラベル[ i ] = c曲リストノード.ar難易度ラベル[ i ];
@@ -88,9 +89,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ), true );
-				this.txレベル数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect level numbers.png" ), false );
-                this.txスキルアイコン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_skill icon.png"), false);
-				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
+                this.txレベル数字 = CDTXMania.tテクスチャの生成(CSkin.Path( @"Graphics\5_level number.png" ), false);
+                this.txスキルアイコン = CDTXMania.tテクスチャの生成(CSkin.Path( @"Graphics\5_skill icon.png" ), false);
+				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number.png" ), false );
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_difficulty panel.png"));
 				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect triangle arrow.png" ), false );
 				base.OnManagedリソースの作成();
@@ -297,8 +298,9 @@ namespace DTXMania
                         Rectangle rect百の位;
 						Rectangle rect十の位;
 						Rectangle rect一の位;
-						int nDispPosX = this.n本体X + 0x21;
-						int nDispPosY = this.n本体Y + 0x86 + (i * 0x27 ) + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass? 1 : 0), i ];
+                        Rectangle rect小数点 = this.rc数字[ 12 ];
+                        int nDispPosX = this.n本体X + 0x21;
+						int nDispPosY = this.n本体Y + 0x84 + (i * 0x27 ) + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass? 1 : 0), i ];
 						int nLevel = this.n現在選択中の曲のレベル[ i ];
                         double dbLevel = this.n現在選択中の曲のレベル[ i ] / 100;
 						if( nLevel < 0 )
@@ -309,11 +311,7 @@ namespace DTXMania
 						{
 							nLevel = 999;
 						}
-						// Lv25刻みで、白→オレンジ→黄色→赤、と色を変える
-						// 
-						int nRectOffsetX = ( ( nLevel / 25 ) < 2 ) ? 64 : 0;
-						int nRectOffsetY = ( ( ( nLevel / 25 ) % 2 ) == 0 ) ? 64 : 0;
-						if( nLevel == 0 )
+                        if ( nLevel == 0 )
 						{
                             rect百の位 = this.rc数字[ 11 ];
 							rect十の位 = this.rc数字[ 11 ];		// "--"
@@ -356,23 +354,17 @@ namespace DTXMania
                                 }
                             }
 						}
-                        rect百の位.X += nRectOffsetX;
-                        rect百の位.Y += nRectOffsetY;
-						rect十の位.X += nRectOffsetX;
-						rect十の位.Y += nRectOffsetY;
-						rect一の位.X += nRectOffsetX;
-						rect一の位.Y += nRectOffsetY;
                         if(CDTXMania.ConfigIni.b難易度表示をXG表示にする == true)
                         {
-                            this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 13, nDispPosY, rect百の位 );
-                            this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 4,  nDispPosY + 2, new Rectangle(42, 128, 14, 19));
-						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 5,  nDispPosY, rect十の位 );
-						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 18, nDispPosY, rect一の位 );
+                            this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 14, nDispPosY, rect百の位 );
+                            this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 02, nDispPosY, rect小数点 );
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 08, nDispPosY, rect十の位 );
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 24, nDispPosY, rect一の位 );
                         }
                         else
                         {
-						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX,      nDispPosY, rect十の位 );
-						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 13, nDispPosY, rect一の位 );
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX -  4, nDispPosY, rect十の位 );
+						    this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 12, nDispPosY, rect一の位 );
                         }
 					}
 				}
@@ -458,7 +450,7 @@ namespace DTXMania
 					if ( this.n現在選択中の曲のレベル[ i ] != 0 )
 					{
 						double dMaxSkill = this.db現在選択中の曲の最高スキル値[ i ];
-						string sMaxSkillString = dMaxSkill.ToString( "##0.00" );
+						string sMaxSkillString = dMaxSkill.ToString( "##0.00p" );
 						int nMaxSkillStringWidth = 0;
 						foreach( char ch in sMaxSkillString )
 						{
@@ -471,8 +463,8 @@ namespace DTXMania
 								}
 							}
 						}
-						int x = this.n本体X + 0x8a - nMaxSkillStringWidth / 2;
-                        int y = this.n本体Y + 0x88 + ( 0x27 * i ) + nDispPosYOffset[(CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i];
+						int x = this.n本体X + 0x86 - nMaxSkillStringWidth / 2;
+                        int y = this.n本体Y + 0x86 + ( 0x27 * i ) + nDispPosYOffset[(CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i];
 						foreach( char ch in sMaxSkillString )
 						{
 							for( int j = 0; j < 12; j++ )
@@ -530,6 +522,7 @@ namespace DTXMania
 		private CCounter ct難易度矢印用;
 		private STDGBVALUE<double> db現在選択中の曲の最高スキル値;
         private STDGBVALUE<double> db現在選択中の曲の曲別スキル;
+        private STDGBVALUE<bool> b現在選択中の曲に譜面がある;
 		private STDGBVALUE<int> n現在選択中の曲のレベル;
         private double n現在選択中の曲のBPM;
 		private STDGBVALUE<int> n現在選択中の曲の最高ランク;
@@ -539,10 +532,10 @@ namespace DTXMania
 		private int n本体X;
 		private int n本体Y;
         private readonly Rectangle[] rcランク = new Rectangle[] { new Rectangle(0, 0x30, 20, 15), new Rectangle(20, 0x30, 20, 15), new Rectangle(40, 0x30, 20, 15), new Rectangle(0, 0x3f, 20, 15), new Rectangle(20, 0x3f, 20, 15), new Rectangle(40, 0x3f, 20, 15), new Rectangle(0, 0x4e, 20, 15) };
-        private readonly Rectangle[] rc数字 = new Rectangle[] { new Rectangle(0, 0, 15, 0x13), new Rectangle(15, 0, 15, 0x13), new Rectangle(30, 0, 15, 0x13), new Rectangle(0x2d, 0, 15, 0x13), new Rectangle(0, 0x13, 15, 0x13), new Rectangle(15, 0x13, 15, 0x13), new Rectangle(30, 0x13, 15, 0x13), new Rectangle(0x2d, 0x13, 15, 0x13), new Rectangle(0, 0x26, 15, 0x13), new Rectangle(15, 0x26, 15, 0x13), new Rectangle(30, 0x26, 15, 0x13), new Rectangle(0x2d, 0x26, 15, 0x13) };
+        private readonly Rectangle[] rc数字 = new Rectangle[] { new Rectangle(0, 0, 16, 24), new Rectangle(0x10, 0, 16, 24), new Rectangle(0x20, 0, 16, 24), new Rectangle(0x30, 0, 16, 24), new Rectangle(0x40, 0, 16, 24), new Rectangle(0x50, 0, 16, 24), new Rectangle(0x60, 0, 16, 24), new Rectangle(0x70, 0, 16, 24), new Rectangle(0x80, 0, 16, 24), new Rectangle(0x90, 0, 16, 24), new Rectangle(0xa0, 0, 16, 24), new Rectangle(0xb0, 0, 16, 24), new Rectangle(0xc0, 0, 6, 24) };
 		private C曲リストノード r直前の曲;
 		public string[] str難易度ラベル = new string[] { "", "", "", "", "" };
-        private readonly ST数字[] st数字 = new ST数字[] { new ST数字('0', new Rectangle(0, 0, 0x10, 0x11)), new ST数字('1', new Rectangle(0x10, 0, 0x10, 0x11)), new ST数字('2', new Rectangle(0x20, 0, 0x10, 0x11)), new ST数字('3', new Rectangle(0x30, 0, 0x10, 0x11)), new ST数字('4', new Rectangle(0x40, 0, 0x10, 0x11)), new ST数字('5', new Rectangle(80, 0, 0x10, 0x11)), new ST数字('6', new Rectangle(0, 0x11, 0x10, 0x10)), new ST数字('7', new Rectangle(0x10, 0x11, 0x10, 0x10)), new ST数字('8', new Rectangle(0x20, 0x11, 0x10, 0x10)), new ST数字('9', new Rectangle(0x30, 0x11, 0x10, 0x10)), new ST数字('.', new Rectangle(0x40, 0x11, 8, 0x10)), new ST数字('p', new Rectangle(0x48, 0x11, 30, 0x10)) };
+        private readonly ST数字[] st数字 = new ST数字[] { new ST数字('0', new Rectangle(0, 0, 20, 26)), new ST数字('1', new Rectangle(20, 0, 20, 26)), new ST数字('2', new Rectangle(40, 0, 20, 26)), new ST数字('3', new Rectangle(60, 0, 20, 26)), new ST数字('4', new Rectangle(80, 0, 20, 26)), new ST数字('5', new Rectangle(100, 0, 20, 26)), new ST数字('6', new Rectangle(120, 0, 20, 26)), new ST数字('7', new Rectangle(140, 0, 20, 26)), new ST数字('8', new Rectangle(160, 0, 20, 26)), new ST数字('9', new Rectangle(180, 0, 20, 26)), new ST数字('.', new Rectangle(200, 0, 6, 26)), new ST数字('p', new Rectangle(206, 0, 20, 26)) };
         private readonly Rectangle rcunused = new Rectangle(0, 0x21, 80, 15);
 		private CTexture txゲージ用数字他;
         private CTexture txスキルアイコン;
