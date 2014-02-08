@@ -791,7 +791,13 @@ namespace DTXMania
 			cスコア.譜面情報.演奏履歴.行5 = br.ReadString();
 			cスコア.譜面情報.レベルを非表示にする = br.ReadBoolean();
             cスコア.譜面情報.b完全にCLASSIC譜面である.Drums = br.ReadBoolean();
-			cスコア.譜面情報.曲種別 = (CDTX.E種別) br.ReadInt32();
+            cスコア.譜面情報.b完全にCLASSIC譜面である.Drums = br.ReadBoolean();
+            cスコア.譜面情報.b完全にCLASSIC譜面である.Guitar = br.ReadBoolean();
+            cスコア.譜面情報.b完全にCLASSIC譜面である.Bass = br.ReadBoolean();
+            cスコア.譜面情報.b譜面がある.Drums = br.ReadBoolean();
+            cスコア.譜面情報.b譜面がある.Guitar = br.ReadBoolean();
+            cスコア.譜面情報.b譜面がある.Bass = br.ReadBoolean();
+            cスコア.譜面情報.曲種別 = (CDTX.E種別)br.ReadInt32();
 			cスコア.譜面情報.Bpm = br.ReadDouble();
 			cスコア.譜面情報.Duration = br.ReadInt32();
 
