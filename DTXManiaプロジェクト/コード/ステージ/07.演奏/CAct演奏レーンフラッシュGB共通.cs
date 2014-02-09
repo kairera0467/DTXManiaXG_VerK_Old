@@ -29,7 +29,7 @@ namespace DTXMania
 			{
 				throw new IndexOutOfRangeException( "有効範囲は 0～10 です。" );
 			}
-			this.ct進行[ nLane ] = new CCounter( 0, 100, 1, CDTXMania.Timer );
+			this.ct進行[ nLane ] = new CCounter( 0, 70, 1, CDTXMania.Timer );
 		}
 
 
@@ -64,8 +64,8 @@ namespace DTXMania
 				this.txFlush[ 5 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush red reverse.png" ) );
 				this.txFlush[ 6 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush green reverse.png" ) );
 				this.txFlush[ 7 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush blue reverse.png" ) );
-                this.txFlush[ 8 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush green reverse.png" ) );
-				this.txFlush[ 9 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush blue reverse.png" ) );
+                this.txFlush[ 8 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush yellow reverse.png" ) );
+				this.txFlush[ 9 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush purple reverse.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}

@@ -180,10 +180,6 @@ namespace DTXMania
                         {
                             fDamage = fDamageGaugeDelta[(int)4, (int)part];
                         }
-                        if (e今回の判定 == E判定.Miss && !bRisky)
-                        {
-                            fDamage *= fDamageLevelFactor[(int)CDTXMania.ConfigIni.eダメージレベル];
-                        }
                     }
                     else
                     {
@@ -202,10 +198,6 @@ namespace DTXMania
                         else
                         {
                             fDamage = fDamageGaugeDelta[(int)4, (int)part];
-                        }
-                        if (e今回の判定 == E判定.Miss && !bRisky)
-                        {
-                            fDamage *= fDamageLevelFactor[(int)CDTXMania.ConfigIni.eダメージレベル];
                         }
                     }
                     else
