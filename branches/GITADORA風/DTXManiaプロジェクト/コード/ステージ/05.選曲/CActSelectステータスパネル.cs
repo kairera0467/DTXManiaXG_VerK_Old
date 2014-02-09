@@ -38,7 +38,7 @@ namespace DTXMania
 					this.b現在選択中の曲がフルコンボ[ i ] = cスコア.譜面情報.フルコンボ[ i ];
 					this.db現在選択中の曲の最高スキル値[ i ] = cスコア.譜面情報.最大スキル[ i ];
                     this.db現在選択中の曲の曲別スキル[ i ] = cスコア.譜面情報.最大曲別スキル[ i ];
-                    this.b現在選択中の曲に譜面がある[ i ] = cスコア.譜面情報.b譜面がある[ i ];
+                    this.b現在選択中の曲に譜面がある[i] = cスコア.譜面情報.b譜面がある[ i ];
                 }
 				for( int i = 0; i < 5; i++ )
 				{
@@ -103,8 +103,8 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.txレベル数字 );
-                CDTXMania.tテクスチャの解放(ref this.txスキルアイコン);
-                CDTXMania.tテクスチャの解放(ref this.txゲージ用数字他);
+                CDTXMania.tテクスチャの解放( ref this.txスキルアイコン );
+                CDTXMania.tテクスチャの解放( ref this.txゲージ用数字他 );
 				CDTXMania.tテクスチャの解放( ref this.tx難易度用矢印 );
                 CDTXMania.tテクスチャの解放(ref this.tx難易度パネル);
 				base.OnManagedリソースの解放();
@@ -311,13 +311,13 @@ namespace DTXMania
 						{
 							nLevel = 999;
 						}
-                        if ( nLevel == 0 )
+                        if ( !this.b現在選択中の曲に譜面がある[ i ] )
 						{
                             rect百の位 = this.rc数字[ 11 ];
-							rect十の位 = this.rc数字[ 11 ];		// "--"
-							rect一の位 = this.rc数字[ 11 ];		// "-- "
+							rect十の位 = this.rc数字[ 11 ];		// "-"
+							rect一の位 = this.rc数字[ 11 ];		// "- "
 						}
-						else if( cスコア.譜面情報.レベルを非表示にする )
+                        else if ( cスコア.譜面情報.レベルを非表示にする || nLevel == 0 )
 						{
                             rect百の位 = this.rc数字[ 10 ];
 							rect十の位 = this.rc数字[ 10 ];		// "?"
