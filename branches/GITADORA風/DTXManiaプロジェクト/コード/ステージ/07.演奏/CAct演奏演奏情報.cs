@@ -68,7 +68,7 @@ namespace DTXMania
                     y -= 0x10;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Frame:         {0:####0} fps", CDTXMania.FPS.n現在のFPS));
                     y -= 0x10;
-                    /*
+                    
                     if (CDTXMania.ConfigIni.nSoundDeviceType != 0)
                     {
                         CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Sound CPU : {0:####0.00}%", CDTXMania.Sound管理.GetCPUusage()));
@@ -78,12 +78,12 @@ namespace DTXMania
                         CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Sound Streams: {0:####0}", CDTXMania.Sound管理.GetStreams()));
                         y -= 0x10;
                     }
-                    */
+                    
                     
                 }
-                    /*
-                else if (CDTXMania.ConfigIni.nInfoType == 1 )
+                else if (CDTXMania.ConfigIni.nInfoType == 1 && !CDTXMania.ConfigIni.bGraph有効)
                 {
+                    
                     y += 0x153;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Shutter OUT:   {0:####0}", CDTXMania.stage演奏ドラム画面.nShutterOutPosY));
                     y -= 0x10;
@@ -103,8 +103,8 @@ namespace DTXMania
                     y -= 0x10;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("PREFECT:       {0:###0}", this.nPERFECT数));
                     y -= 0x10;
+                    
                 }
-                     */
 			}
 		}
 	}

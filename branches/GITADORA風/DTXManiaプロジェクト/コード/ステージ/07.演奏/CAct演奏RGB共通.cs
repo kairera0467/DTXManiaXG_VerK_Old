@@ -7,11 +7,14 @@ namespace DTXMania
 {
 	internal class CAct演奏RGB共通 : CActivity
 	{
+        //こっちではほとんどやることなんてないんだけどね・・・・
+        //一応暫定対応として押している状態を取得&発信しているだけ。
+
 		// プロパティ
 
-		protected bool[] b押下状態 = new bool[ 10 ];
+		public bool[] b押下状態 = new bool[ 10 ];
 		protected CTexture txRGB;
-
+        protected CTexture txシャッター;
 
 		// コンストラクタ
 
@@ -44,7 +47,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 this.txRGB = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_RGB buttons.png"));
-				base.OnManagedリソースの作成();
+                this.txシャッター = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_shutter_GB.png"));
+                base.OnManagedリソースの作成();
 			}
 		}
 		public override void OnManagedリソースの解放()
@@ -52,7 +56,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txRGB );
-				base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放(ref this.txシャッター);
+                base.OnManagedリソースの解放();
 			}
 		}
 	}

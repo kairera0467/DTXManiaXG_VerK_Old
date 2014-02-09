@@ -347,7 +347,11 @@ namespace DTXMania
             {
                 this.txドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
-                if (CDTXMania.ConfigIni.bGraph有効)
+                if (CDTXMania.ConfigIni.bGuitar有効)
+                {
+                    this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelC.png"));
+                }
+                else if (CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効)
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelB.png"));
                 }
@@ -617,8 +621,17 @@ namespace DTXMania
                             }
                             else
                             {
-                                this.tx描画用.vc拡大縮小倍率 = this.vclip;
-                                this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                if (CDTXMania.ConfigIni.bDrums有効)
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = this.vclip;
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                }
+                                else if (CDTXMania.ConfigIni.bGuitar有効)
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                                    this.PositionG = (int)((1280f - (float)(this.framewidth)) / 2f);
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, this.PositionG, 0);
+                                }
                             }
                             #endregion
                         }
@@ -668,8 +681,19 @@ namespace DTXMania
                                 this.bフレームを作成した = false;
                                 this.tx描画用.vc拡大縮小倍率 = this.vclip;
                             }
-                            if( this.bFullScreen )
-                                this.tx描画用.t2D描画( CDTXMania.app.Device, 882, 0 );
+                            if (this.bFullScreen)
+                            {
+                                if (CDTXMania.ConfigIni.bDrums有効)
+                                {
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                }
+                                else if (CDTXMania.ConfigIni.bGuitar有効)
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                                    this.PositionG = (int)((1280f - (float)(this.framewidth)) / 2f);
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, this.PositionG, 0);
+                                }
+                            }
                             #endregion
                         }
                         #endregion
@@ -840,6 +864,69 @@ namespace DTXMania
                         }
                     }
                     #endregion
+                    #region[ ギター時 ]
+                    if (CDTXMania.ConfigIni.bGuitar有効)
+                    {
+
+                        #region[ 本体位置 ]
+                        this.n本体X = 380;
+                        this.n本体Y = 50;
+
+                        int nグラフX = 267;
+
+                        if (CDTXMania.ConfigIni.bGraph有効 && !CDTXMania.DTX.bチップがある.Bass)
+                            this.n本体X = this.n本体X + nグラフX;
+
+                        if (CDTXMania.ConfigIni.bGraph有効 && !CDTXMania.DTX.bチップがある.Guitar)
+                            this.n本体X = this.n本体X - nグラフX;
+                        #endregion
+
+                        if (this.fAVIアスペクト比 > 1.77f)
+                        {
+                            this.ratio2 = 460f / ((float)this.framewidth);
+                            this.position2 = 5 + this.n本体Y + (int)((258f - (this.frameheight * this.ratio2)) / 2f);
+                        }
+                        else
+                        {
+                            this.ratio2 = 258f / ((float)this.frameheight);
+                            this.position2 = 30 + this.n本体X + (int)((460f - (this.framewidth * this.ratio2)) / 2f);
+                        }
+                        if (this.txクリップパネル != null)
+                            this.txクリップパネル.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y);
+                        this.smallvc = new Vector3(this.ratio2, this.ratio2, 1f);
+                        this.tx描画用.vc拡大縮小倍率 = this.smallvc;
+                        if (CDTXMania.ConfigIni.bDirectShowMode)
+                        {
+                            if (this.dsBGV != null && this.bDShowクリップを再生している)
+                            {
+                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する(this.tx描画用);
+                                if (this.dsBGV.dshow.b上下反転)
+                                {
+                                    this.tx描画用.t2D上下反転描画(CDTXMania.app.Device, 30 + this.n本体X, this.position2);
+                                }
+                                else if (this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true)
+                                {
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 30 + this.n本体X, this.position2);
+                                }
+                            }
+                            else
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 5 + this.n本体Y);
+                            }
+                        }
+                        else
+                        {
+                            if (this.fAVIアスペクト比 < 1.77f)
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, this.position2, 5 + this.n本体Y);
+                            }
+                            else
+                            {
+                                this.tx描画用.t2D描画(CDTXMania.app.Device, 30 + this.n本体X, this.position2);
+                            }
+                        }
+                    }
+                    #endregion
                     this.tx描画用.vc拡大縮小倍率 = this.vector;
                 }
                 IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
@@ -941,6 +1028,7 @@ namespace DTXMania
         private int n表示側終了位置Y;
         private int n本体X;
         private int n本体Y;
+        private int PositionG;
         private long lDshowPosition;
         private long lStopPosition;
         public IntPtr pBmp;
