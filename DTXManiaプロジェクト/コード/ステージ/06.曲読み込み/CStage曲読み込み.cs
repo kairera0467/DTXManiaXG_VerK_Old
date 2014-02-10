@@ -251,10 +251,8 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                this.txベースパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base panel.png"), false);
                 this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_background.jpg"), false);
                 this.txLevel = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_LevelNumber.png"));
-                this.txヘッダーパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_header panel.png"), false);
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"), false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
 
@@ -313,9 +311,7 @@ namespace DTXMania
             {
                 //テクスチャ11枚
                 CDTXMania.tテクスチャの解放(ref this.tx背景);
-                CDTXMania.tテクスチャの解放(ref this.txヘッダーパネル);
                 CDTXMania.tテクスチャの解放(ref this.txジャケット);
-                CDTXMania.tテクスチャの解放(ref this.txベースパネル);
                 CDTXMania.tテクスチャの解放(ref this.txタイトル);
                 CDTXMania.tテクスチャの解放(ref this.txRISKY);
                 CDTXMania.tテクスチャの解放(ref this.txDrumspeed);
@@ -642,8 +638,6 @@ namespace DTXMania
         private string str曲タイトル;
         private string strアーティスト名;
         private CTexture txタイトル;
-        private CTexture txベースパネル;
-        private CTexture txヘッダーパネル;
         private CTexture txジャケット;
         private CTexture tx背景;
         private CTexture txDrumspeed;

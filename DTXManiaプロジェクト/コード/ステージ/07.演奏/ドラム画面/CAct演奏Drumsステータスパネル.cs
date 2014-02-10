@@ -24,6 +24,7 @@ namespace DTXMania
         {
             if( !base.b活性化してない )
             {
+                this.txジャケットパネル = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_JacketPanel.png") );
                 string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
                 if( !File.Exists( path ) )
                 {
@@ -40,6 +41,7 @@ namespace DTXMania
         {
             if( !base.b活性化してない )
             {
+                CDTXMania.tテクスチャの解放( ref this.txジャケットパネル );
                 CDTXMania.tテクスチャの解放( ref this.txジャケット画像 );
                 base.OnManagedリソースの解放();
             }
@@ -49,6 +51,9 @@ namespace DTXMania
         {
             if( !base.b活性化してない )
             {
+                if ( this.txジャケットパネル != null )
+                    this.txジャケットパネル.t2D描画(CDTXMania.app.Device, 985, 378);
+
                 //this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
                 //this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
                 //this.txジャケット画像.fZ軸中心回転 = 0.3f;
@@ -70,6 +75,7 @@ namespace DTXMania
         #region [ private ]
         //-----------------
         private CTexture txジャケット画像;
+        private CTexture txジャケットパネル;
         //-----------------
         #endregion
     }

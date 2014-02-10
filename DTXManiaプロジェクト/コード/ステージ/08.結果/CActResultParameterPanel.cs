@@ -176,6 +176,60 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
+            #region [ 本体位置 ]
+
+            int n上X = 186;
+            int n上Y = 249;
+
+            int n下X = 844;
+            int n下Y = 249;
+
+            this.n本体0X = 0;
+            this.n本体0Y = 0;
+
+            this.n本体1X = 0;
+            this.n本体1Y = 0;
+
+            this.n本体2X = 0;
+            this.n本体2Y = 0;
+
+            if (CDTXMania.ConfigIni.bDrums有効)
+            {
+                this.n本体0X = n上X;
+                this.n本体0Y = n上Y;
+            }
+            else if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                if (CDTXMania.DTX.bチップがある.Guitar)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体1X = n下X;
+                        this.n本体1Y = n下Y;
+                    }
+                    else
+                    {
+                        this.n本体1X = n上X;
+                        this.n本体1Y = n上Y;
+                    }
+                }
+
+                if (CDTXMania.DTX.bチップがある.Bass)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体2X = n上X;
+                        this.n本体2Y = n上Y;
+                    }
+                    else
+                    {
+                        this.n本体2X = n下X;
+                        this.n本体2Y = n下Y;
+                    }
+                }
+
+            }
+            #endregion
 			this.sdDTXで指定されたフルコンボ音 = null;
 			base.On活性化();
 		}
@@ -203,7 +257,6 @@ namespace DTXMania
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
                 this.txNewRecord = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_New Record.png"));
                 this.txWhite = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\Tile white 64x64.png"));
-                this.tx達成率ゲージ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_gauge.jpg"));
                 this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
                 this.txエキサイトゲージ = new CTexture[3];
                 this.txエキサイトゲージ[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
@@ -227,7 +280,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txExcellent);
                 CDTXMania.tテクスチャの解放(ref this.txNewRecord);
                 CDTXMania.tテクスチャの解放(ref this.txWhite);
-                CDTXMania.tテクスチャの解放(ref this.tx達成率ゲージ);
                 CDTXMania.tテクスチャの解放(ref this.txエキサイトゲージ[0]);
                 CDTXMania.tテクスチャの解放(ref this.txエキサイトゲージ[1]);
                 CDTXMania.tテクスチャの解放(ref this.txエキサイトゲージ[2]);
@@ -248,75 +300,82 @@ namespace DTXMania
                 base.b初めての進行描画 = false;
             }
             this.ct表示用.t進行();
-            double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値);
-            int num = this.ct表示用.n現在の値;
-            Point[] pointArray = new Point[] { new Point(960, 46), new Point(2000, 0x29), new Point(2000, 0x29) };
 
-            this.txスキルパネル.t2D描画(CDTXMania.app.Device, 186, 249);
-            this.t小文字表示(270, 322, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPerfect数・Auto含まない));
-            this.t小文字表示(270, 352, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGreat数・Auto含まない));
-            this.t小文字表示(270, 382, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nGood数・Auto含まない));
-            this.t小文字表示(270, 412, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nPoor数・Auto含まない));
-            this.t小文字表示(270, 442, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].nMiss数・Auto含まない));
-            this.t小文字表示(270, 472, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[0].n最大コンボ数));
+            int[] n本体X = new int[3];
 
+            n本体X[0] = n本体0X;
+            n本体X[1] = n本体1X;
+            n本体X[2] = n本体2X;
 
-            this.t小文字表示(354, 322, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPerfect率[0])));
-            this.t小文字表示(354, 352, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGreat率[0])));
-            this.t小文字表示(354, 382, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGood率[0])));
-            this.t小文字表示(354, 412, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPoor率[0])));
-            this.t小文字表示(354, 442, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fMiss率[0])));
-            this.t小文字表示(354, 472, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[0].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[0].n全チップ数))));
-
-            this.t大文字表示(242, 524, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].db演奏型スキル値));
-            this.t大文字表示(274, 596, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[0].dbゲーム型スキル値));
-
-            string str = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[0].nスコア);
-            for (int i = 0; i < 7; i++)
+            for (int j = 0; j < 3; j++)
             {
-                Rectangle rectangle;
-                char ch = str[i];
-                if (ch.Equals(' '))
+                if ( n本体X[j] != 0 )
                 {
-                    rectangle = new Rectangle(0, 0, 0, 0);
-                }
-                else
-                {
-                    int num4 = int.Parse(str.Substring(i, 1));
-                    rectangle = new Rectangle(num4 * 36, 0, 36, 50);
-                }
-                if (this.txスコア != null)
-                {
+                    double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値);
+                    int num = this.ct表示用.n現在の値;
 
-                    this.txスコア.t2D描画(CDTXMania.app.Device, 30 + (i * 34), 40, rectangle);
-                }
-            }
-            if (this.txスコア != null)
-            {
-                this.txスコア.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
-            }
+                    this.txスキルパネル.t2D描画(CDTXMania.app.Device, n本体X[j], 249);
+                    this.t小文字表示(84 + n本体X[j], 322, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPerfect数・Auto含まない));
+                    this.t小文字表示(84 + n本体X[j], 352, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGreat数・Auto含まない));
+                    this.t小文字表示(84 + n本体X[j], 382, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGood数・Auto含まない));
+                    this.t小文字表示(84 + n本体X[j], 412, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPoor数・Auto含まない));
+                    this.t小文字表示(84 + n本体X[j], 442, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nMiss数・Auto含まない));
+                    this.t小文字表示(84 + n本体X[j], 472, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].n最大コンボ数));
 
-            for (int i = 0; i < 1; i++)
-            {
-                if (CDTXMania.stage結果.b新記録スキル[i])
-                {
 
-                }
-            }
-            if (this.ct表示用.n現在の値 >= 900)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (CDTXMania.stage結果.st演奏記録[0].nPerfect数 == CDTXMania.stage結果.st演奏記録[0].n全チップ数)
+                    this.t小文字表示(168 + n本体X[j], 322, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPerfect率[j])));
+                    this.t小文字表示(168 + n本体X[j], 352, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGreat率[j])));
+                    this.t小文字表示(168 + n本体X[j], 382, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fGood率[j])));
+                    this.t小文字表示(168 + n本体X[j], 412, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fPoor率[j])));
+                    this.t小文字表示(168 + n本体X[j], 442, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fMiss率[j])));
+                    this.t小文字表示(168 + n本体X[j], 472, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[j].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[j].n全チップ数))));
+
+                    this.t大文字表示(56 + n本体X[j], 524, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値));
+                    this.t大文字表示(88 + n本体X[j], 596, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
+
+                    string str = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[j].nスコア);
+                    for (int i = 0; i < 7; i++)
                     {
-                        //えくせ
+                        Rectangle rectangle;
+                        char ch = str[i];
+                        if (ch.Equals(' '))
+                        {
+                            rectangle = new Rectangle(0, 0, 0, 0);
+                        }
+                        else
+                        {
+                            int num4 = int.Parse(str.Substring(i, 1));
+                            rectangle = new Rectangle(num4 * 36, 0, 36, 50);
+                        }
+                        if (this.txスコア != null)
+                        {
+                            this.txスコア.t2D描画(CDTXMania.app.Device, -156 + n本体X[j] + (i * 34), 40, rectangle);
+                        }
                     }
-                    else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[0].nPerfect数 != CDTXMania.stage結果.st演奏記録[0].n全チップ数)
+                    if (this.txスコア != null)
                     {
-                        //ふるこん
+                        this.txスコア.t2D描画(CDTXMania.app.Device, -156 + n本体X[j], 12, new Rectangle(0, 50, 86, 28));
+                    }
+
+                    for (int i = 0; i < 1; i++)
+                    {
+                        if (CDTXMania.stage結果.b新記録スキル[i])
+                        {
+
+                        }
+                    }
+                    if (this.ct表示用.n現在の値 >= 900)
+                    {
+                        if (CDTXMania.stage結果.st演奏記録[j].nPerfect数 == CDTXMania.stage結果.st演奏記録[j].n全チップ数)
+                        {
+                            //えくせ
+                        }
+                        else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[j].nPerfect数 != CDTXMania.stage結果.st演奏記録[j].n全チップ数)
+                        {
+                            //ふるこん
+                        }
                     }
                 }
-
             }
             if (!this.ct表示用.b終了値に達した)
             {
@@ -336,6 +395,12 @@ namespace DTXMania
 		}
 
         private CCounter ct表示用;
+        private int n本体0X;
+        private int n本体0Y;
+        private int n本体1X;
+        private int n本体1Y;
+        private int n本体2X;
+        private int n本体2Y;
         private readonly Point[] ptFullCombo位置;
         private CSound sdDTXで指定されたフルコンボ音;
         private readonly ST文字位置[] st小文字位置;
@@ -346,7 +411,6 @@ namespace DTXMania
         private CTexture txFullCombo;
         private CTexture txWhite;
         private CTexture txパネル本体;
-        private CTexture tx達成率ゲージ;
         private CTexture[] tx文字;
         private CTexture[] txエキサイトゲージ;
         private CTexture txスキルパネル;
