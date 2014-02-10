@@ -345,7 +345,7 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                this.txドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
+                //this.txドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Drums_black.png") );
                 if (CDTXMania.ConfigIni.bGuitar有効)
                 {
@@ -401,7 +401,7 @@ namespace DTXMania
                 CDTXMania.t安全にDisposeする(ref this.ds汎用);
                 //テクスチャ 17枚
                 CDTXMania.tテクスチャの解放(ref this.txScore);
-                CDTXMania.tテクスチャの解放(ref this.txドラム);
+                //CDTXMania.tテクスチャの解放(ref this.txドラム);
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
                 //CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
                 CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
@@ -745,10 +745,12 @@ namespace DTXMania
                 //コンボ、ジャケット画像
                 if( CDTXMania.ConfigIni.bShowMusicInfo )
                 {
+                    /*
                     if( this.txドラム != null )
                     {
                         this.txドラム.t2D描画(CDTXMania.app.Device, 0, 0);
                     }
+                     */
                     CDTXMania.stage演奏ドラム画面.actStatusPanels.On進行描画();
                 }
                 CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
@@ -1043,7 +1045,7 @@ namespace DTXMania
         private CTexture txlanes;
         private CTexture txScore;
         private CTexture txクリップパネル;
-        private CTexture txドラム;
+        //private CTexture txドラム;
         //private CTexture txフィルインエフェクト;
         private CTexture tx描画用;
         private CTexture tx描画用2;

@@ -41,7 +41,7 @@ namespace DTXMania
             this.ft表示用フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ft称号フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
-            this.txジャケットパネル = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\8_JacketPanel.png") );
+            this.txジャケットパネル = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_JacketPanel.png") );
             base.On活性化();
 
 		}
@@ -197,7 +197,7 @@ namespace DTXMania
 			int x = this.n本体X;
 			int y = this.n本体Y;
             this.txネームプレート用文字.t2D描画( CDTXMania.app.Device, 186, 256);
-            this.txジャケットパネル.t2D描画( CDTXMania.app.Device, 0, 0);
+            this.txジャケットパネル.t2D描画( CDTXMania.app.Device, 467, 287);
 			if( this.txリザルト画像 != null )
 			{
                 Matrix mat = Matrix.Identity;

@@ -369,8 +369,11 @@ namespace DTXMania
                     rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
                 }
 
+                if ( CDTXMania.ConfigIni.bDrums有効 )
+                    this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
+                else if ( CDTXMania.ConfigIni.bGuitar有効 )
+                    this.txSongName.t2D描画(CDTXMania.app.Device, 506, 630);
 
-                this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
                     this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
