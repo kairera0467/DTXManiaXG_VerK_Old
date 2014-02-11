@@ -428,7 +428,7 @@ namespace DTXMania
 		private long nY座標制御タイマ;
         private long nY座標制御タイマ2;
 		private long nフラッシュ制御タイマ;
-        private readonly int[] n描画順 = new int[] { 9, 3, 2, 6, 4, 5, 8, 7, 1, 0 };
+        private readonly int[] n描画順 = new int[] { 9, 3, 2, 6, 5, 4, 8, 7, 1, 0 };
                                                   // LP BD SD FT HT LT RD CY HH LC
 		public STパッド状態[] stパッド状態 = new STパッド状態[ 0x13 ];
 		public readonly ST基本位置[] st基本位置;
