@@ -107,6 +107,10 @@ namespace DTXMania
 
         public override void On活性化()
         {
+            this.n本体X[0] = 900;
+            this.n本体X[1] = 290;
+            this.n本体X[2] = 574;
+
             this.dbグラフ値目標 = 80f;
             this.dbグラフ値現在 = 0f;
             this.dbグラフ値比較 = 0f;
@@ -146,11 +150,6 @@ namespace DTXMania
         public override int On進行描画()
         {
             int j = 0;
-            int[] x本体 = new int[3];
-
-            x本体[0] = 900;
-            x本体[1] = 290;
-            x本体[2] = 574;
 
             if (CDTXMania.ConfigIni.bGuitar有効)
             {
@@ -212,15 +211,15 @@ namespace DTXMania
                 Rectangle rectangle = new Rectangle(900, 0, 380, 720);
                 if (this.txグラフ != null)
                 {
-                    this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x本体[j], 0, rectangle);
-                    this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, 141 + x本体[j], 650 - (int)(this.dbグラフ値現在 * 5.56), new Rectangle(499, 0, 201, (int)(this.dbグラフ値現在 * 5.56)));
+                    this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, this.n本体X[j], 0, rectangle);
+                    this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, 141 + this.n本体X[j], 650 - (int)(this.dbグラフ値現在 * 5.56), new Rectangle(499, 0, 201, (int)(this.dbグラフ値現在 * 5.56)));
                 }
 
-                this.t小文字表示(270 + x本体[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
+                this.t小文字表示(270 + this.n本体X[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
                 if (CDTXMania.ConfigIni.nInfoType == 0)
                 {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + x本体[j], 200, new Rectangle(336, 0, 162, 60));
-                    this.t小文字表示(250 + x本体[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 200, new Rectangle(336, 0, 162, 60));
+                    this.t小文字表示(250 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
                     if (this.dbグラフ値現在 > this.dbグラフ値目標)
                     {
                         this.tx比較.n透明度 = 128;
@@ -228,27 +227,27 @@ namespace DTXMania
                 }
                 else if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + x本体[j], 200, new Rectangle(336, 205, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + x本体[j], 280, new Rectangle(336, 265, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + x本体[j], 360, new Rectangle(336, 325, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + x本体[j], 440, new Rectangle(336, 385, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + x本体[j], 520, new Rectangle(336, 445, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 200, new Rectangle(336, 205, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 280, new Rectangle(336, 265, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 360, new Rectangle(336, 325, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 440, new Rectangle(336, 385, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 520, new Rectangle(336, 445, 162, 60));
 
                     if (j == 0)
                     {
-                        this.t小文字表示(250 + x本体[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Perfect));
-                        this.t小文字表示(250 + x本体[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Great));
-                        this.t小文字表示(250 + x本体[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Good));
-                        this.t小文字表示(250 + x本体[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Poor));
-                        this.t小文字表示(250 + x本体[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Miss));
+                        this.t小文字表示(250 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Perfect));
+                        this.t小文字表示(250 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Great));
+                        this.t小文字表示(250 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Good));
+                        this.t小文字表示(250 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Poor));
+                        this.t小文字表示(250 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Miss));
                     }
                     else
                     {
-                        this.t小文字表示(250 + x本体[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Perfect));
-                        this.t小文字表示(250 + x本体[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Great));
-                        this.t小文字表示(250 + x本体[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Good));
-                        this.t小文字表示(250 + x本体[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Poor));
-                        this.t小文字表示(250 + x本体[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Miss));
+                        this.t小文字表示(250 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Perfect));
+                        this.t小文字表示(250 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Great));
+                        this.t小文字表示(250 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Good));
+                        this.t小文字表示(250 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Poor));
+                        this.t小文字表示(250 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Miss));
                     }
                 }
 
@@ -260,13 +259,13 @@ namespace DTXMania
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(58f, 1f, 1f);
                     for (int i = 0; i < 20; i++)
                     {
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + x本体[j], 94 + (int)(29.26 * i), rectangle);
+                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], 94 + (int)(29.26 * i), rectangle);
                     }
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 230f, 1f);
                     for (int i = 0; i < 2; i++)
                     {
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + x本体[j] + (int)(29.26 * i), 94, rectangle);
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + x本体[j] + (int)(29.26 * i), 94, rectangle);
+                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j] + (int)(29.26 * i), 94, rectangle);
+                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j] + (int)(29.26 * i), 94, rectangle);
                     }
                 }
                 if (this.txグラフ != null)
@@ -295,7 +294,7 @@ namespace DTXMania
 
                     if (this.txグラフ != null)
                     {
-                        this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + x本体[j], 94 + (int)(58.52 * i), rectangle);
+                        this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], 94 + (int)(58.52 * i), rectangle);
 
                     }
                 }
@@ -314,7 +313,7 @@ namespace DTXMania
                 {
                     this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
                     //this.txグラフ.n透明度 = 192;
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + x本体[j], 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
                 }
                 for (int k = 0; k < 32; k++)
                 {
@@ -352,9 +351,9 @@ namespace DTXMania
                     if ((this.stフラッシュ[m].y >= 0) && (this.stフラッシュ[m].y + 3 < (int)(650f * this.dbグラフ値現在_表示 / 100)) && (this.txグラフ != null))
                     {
                         //this.txグラフ.n透明度 = this.stフラッシュ[ m ].Trans;
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + x本体[j], this.stフラッシュ[ m ].y + (620 - (int)(556f * this.dbグラフ値現在_表示 / 100)), rectangle);
+                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], this.stフラッシュ[ m ].y + (620 - (int)(556f * this.dbグラフ値現在_表示 / 100)), rectangle);
                         //this.txグラフ.n透明度 = this.stフラッシュ[ m ].Trans;
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + x本体[j], this.stフラッシュ[ m ].y + 2 + (620 - (int)(556f * this.dbグラフ値現在_表示 / 100)), rectangle);
+                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], this.stフラッシュ[ m ].y + 2 + (620 - (int)(556f * this.dbグラフ値現在_表示 / 100)), rectangle);
                     }
                     this.stフラッシュ[m].y += 5;
                     this.stフラッシュ[m].Trans -= 5;
@@ -366,7 +365,7 @@ namespace DTXMania
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1.4f, 1f, 1f);
                     //this.txグラフ.n透明度 = 128;
                     //this.txグラフ.b加算合成 = true;
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + x本体[j], 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
 
                 }
                 // --目標値
@@ -392,12 +391,12 @@ namespace DTXMania
                 {
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
                     //this.txグラフ.n透明度 = 192;
-                    //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + x本体[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
+                    //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1.4f, 1f, 1f);
                     this.txグラフ.n透明度 = 48;
                     //this.txグラフ.b加算合成 = true;
-                    //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + x本体[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + x本体[j], 650 - (int)(556f * this.dbグラフ値比較 / 100), new Rectangle(138, 0, 72, (int)(556f * this.dbグラフ値比較 / 100)));
+                    //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値比較 / 100), new Rectangle(138, 0, 72, (int)(556f * this.dbグラフ値比較 / 100)));
                 }
                 /*
 				for( int k = 32; k < 64; k++ )
@@ -412,7 +411,7 @@ namespace DTXMania
                         //this.txグラフ.n透明度 = 138 - 2 * this.stキラキラ[ k ].Trans;
                         if ( num2 < (2.3f * this.dbグラフ値目標_表示) )
                         {
-                            this.txグラフ.t2D描画(CDTXMania.app.Device, 75 +x本体[j] + num1, 318 - num2, rectangle);
+                            this.txグラフ.t2D描画(CDTXMania.app.Device, 75 +this.n本体X[j] + num1, 318 - num2, rectangle);
                         }
                     }
 				}
@@ -456,6 +455,7 @@ namespace DTXMania
         private double dbグラフ値直前;
         private int nグラフフラッシュct;
         private int n現在演奏されたノーツ数;
+        private STDGBVALUE<int> n本体X;
         private CTexture tx数字;
         private CTexture tx比較;
         private CTexture txグラフ;

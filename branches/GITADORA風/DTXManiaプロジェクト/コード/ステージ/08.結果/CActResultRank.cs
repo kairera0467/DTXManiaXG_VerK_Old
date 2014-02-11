@@ -31,25 +31,28 @@ namespace DTXMania
         {
             #region [ 本体位置 ]
 
+            int n中X = 480;
+            int n中Y = 50;
+
             int n上X = 300;
             int n上Y = -10;
 
             int n下X = 950;
             int n下Y = -10;
 
-            this.n本体0X = 0;
-            this.n本体0Y = 0;
+            this.n本体X[0] = 0;
+            this.n本体Y[0] = 0;
 
-            this.n本体1X = 0;
-            this.n本体1Y = 0;
+            this.n本体X[1] = 0;
+            this.n本体Y[1] = 0;
 
-            this.n本体2X = 0;
-            this.n本体2Y = 0;
+            this.n本体X[2] = 0;
+            this.n本体Y[2] = 0;
 
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n本体0X = 480;
-                this.n本体0Y = 50;
+                this.n本体X[0] = n中X;
+                this.n本体Y[0] = n中Y;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
@@ -57,13 +60,13 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体1X = n下X;
-                        this.n本体1Y = n下Y;
+                        this.n本体X[1] = n下X;
+                        this.n本体Y[1] = n下Y;
                     }
                     else
                     {
-                        this.n本体1X = n上X;
-                        this.n本体1Y = n上Y;
+                        this.n本体X[1] = n上X;
+                        this.n本体Y[1] = n上Y;
                     }
                 }
 
@@ -71,18 +74,23 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体2X = n上X;
-                        this.n本体2Y = n上Y;
+                        this.n本体X[2] = n上X;
+                        this.n本体Y[2] = n上Y;
                     }
                     else
                     {
-                        this.n本体2X = n下X;
-                        this.n本体2Y = n下Y;
+                        this.n本体X[2] = n下X;
+                        this.n本体Y[2] = n下Y;
                     }
                 }
 
             }
             #endregion
+
+            this.b全オート.Drums = CDTXMania.ConfigIni.bドラムが全部オートプレイである;
+            this.b全オート.Guitar = CDTXMania.ConfigIni.bギターが全部オートプレイである;
+            this.b全オート.Bass = CDTXMania.ConfigIni.bベースが全部オートプレイである;
+
             base.On活性化();
         }
 		public override void On非活性化()
@@ -97,120 +105,43 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if (CDTXMania.ConfigIni.bDrums有効)
+                for (int j = 0; j < 3; j++)
                 {
-                    switch (CDTXMania.stage結果.nランク値.Drums)
+                    switch (CDTXMania.stage結果.nランク値[j])
                     {
                         case 0:
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
                             break;
 
                         case 1:
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankS.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankS.png"));
                             break;
 
                         case 2:
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankA.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankA.png"));
                             break;
 
                         case 3:
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankB.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankB.png"));
                             break;
 
                         case 4:
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankC.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankC.png"));
                             break;
 
                         case 5:
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankD.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankD.png"));
                             break;
 
                         case 6:
                         case 99:	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-                            this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
-                            if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
-                                this.txランク文字0P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
+                            this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
+                            if (this.b全オート[j])
+                                this.txランク文字[j] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
                             break;
 
                         default:
-                            this.txランク文字0P = null;
-                            break;
-                    }
-                }
-                else if (CDTXMania.ConfigIni.bGuitar有効)
-                {
-                    switch (CDTXMania.stage結果.nランク値.Guitar)
-                    {
-                        case 0:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
-                            break;
-
-                        case 1:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankS.png"));
-                            break;
-
-                        case 2:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankA.png"));
-                            break;
-
-                        case 3:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankB.png"));
-                            break;
-
-                        case 4:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankC.png"));
-                            break;
-
-                        case 5:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankD.png"));
-                            break;
-
-                        case 6:
-                        case 99:	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
-                            if (CDTXMania.ConfigIni.bギターが全部オートプレイである)
-                                this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
-                            break;
-
-                        default:
-                            this.txランク文字1P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
-                            break;
-                    }
-                    switch (CDTXMania.stage結果.nランク値.Bass)
-                    {
-                        case 0:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
-                            break;
-
-                        case 1:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankS.png"));
-                            break;
-
-                        case 2:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankA.png"));
-                            break;
-
-                        case 3:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankB.png"));
-                            break;
-
-                        case 4:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankC.png"));
-                            break;
-
-                        case 5:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankD.png"));
-                            break;
-
-                        case 6:
-                        case 99:	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
-                            if (CDTXMania.ConfigIni.bベースが全部オートプレイである)
-                                this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankSS.png"));
-                            break;
-
-                        default:
-                            this.txランク文字2P = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
+                            this.txランク文字[j] = null;
                             break;
                     }
                 }
@@ -221,9 +152,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.tテクスチャの解放( ref this.txランク文字0P );
-                CDTXMania.tテクスチャの解放( ref this.txランク文字1P );
-                CDTXMania.tテクスチャの解放( ref this.txランク文字2P );
+                CDTXMania.t安全にDisposeする(ref this.txランク文字);
                 base.OnManagedリソースの解放();
 			}
 		}
@@ -239,21 +168,14 @@ namespace DTXMania
 				base.b初めての進行描画 = false;
 			}
 			this.ctランク表示.t進行();
-                if (this.txランク文字0P != null && this.n本体0X != 0)
+            for (int j = 0; j < 3; j++)
+            {
+                if (this.txランク文字[j] != null && this.n本体X[j] != 0)
                 {
-                    this.txランク文字0P.n透明度 = this.ctランク表示.n現在の値 * 2;
-                    this.txランク文字0P.t2D描画(CDTXMania.app.Device, this.n本体0X, this.n本体0Y);
+                    this.txランク文字[j].n透明度 = this.ctランク表示.n現在の値 * 2;
+                    this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j]);
                 }
-                if (this.txランク文字1P != null && this.n本体1X != 0)
-                {
-                    this.txランク文字1P.n透明度 = this.ctランク表示.n現在の値 * 2;
-                    this.txランク文字1P.t2D描画(CDTXMania.app.Device, this.n本体1X, this.n本体1Y);
-                }
-                if (this.txランク文字2P != null && this.n本体2X != 0)
-                {
-                    this.txランク文字2P.n透明度 = this.ctランク表示.n現在の値 * 2;
-                    this.txランク文字2P.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体2Y);
-                }
+            }
 			if( !this.ctランク表示.b終了値に達した )
 			{
 				return 0;
@@ -267,15 +189,10 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private CCounter ctランク表示;
-        private int n本体0X;
-        private int n本体0Y;
-        private int n本体1X;
-        private int n本体1Y;
-        private int n本体2X;
-        private int n本体2Y;
-        private CTexture txランク文字0P;
-        private CTexture txランク文字1P;
-        private CTexture txランク文字2P;
+        private STDGBVALUE<int> n本体X;
+        private STDGBVALUE<int> n本体Y;
+        private STDGBVALUE<bool> b全オート;
+        private STDGBVALUE<CTexture> txランク文字;
         //-----------------
 		#endregion
 	}
