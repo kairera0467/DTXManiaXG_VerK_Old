@@ -54,10 +54,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_gauge_bar.jpg" ) );
-                this.txgbg = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_background.jpg"));
+                this.txgbg = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
                 this.txgbar = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
-                this.txgbar2 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
+                this.txgbarf = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.jpg"));
                 this.txゲージマスク = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_mask.png"));
                 this.txゲージマスク2 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_mask2.png"));
 				base.OnManagedリソースの作成();
@@ -68,14 +67,13 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 //テクスチャ 7枚
-				CDTXMania.tテクスチャの解放( ref this.txゲージ );
-                CDTXMania.tテクスチャの解放( ref this.txgbg);
-                CDTXMania.tテクスチャの解放( ref this.txgbar);
-                CDTXMania.tテクスチャの解放( ref this.txgbar2);
+                CDTXMania.tテクスチャの解放( ref this.txgbg );
+                CDTXMania.tテクスチャの解放( ref this.txgbar );
+                CDTXMania.tテクスチャの解放( ref this.txgbarf );
                 CDTXMania.tテクスチャの解放( ref this.txゲージマスク );
-                CDTXMania.tテクスチャの解放( ref this.txゲージマスク2);
+                CDTXMania.tテクスチャの解放( ref this.txゲージマスク2 );
                 if (this.txハイスピ != null)
-                    CDTXMania.tテクスチャの解放( ref this.txハイスピ);
+                    CDTXMania.tテクスチャの解放( ref this.txハイスピ );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -89,13 +87,18 @@ namespace DTXMania
                     //A～C
                     base.txgbg.t2D描画(CDTXMania.app.Device, 0x102, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, 0x250, 0x2d));
 
-                    if (base.dbゲージ値 > 0.0)
+                    if ( base.dbゲージ値 == 1.0)
+                    {
+                        base.txgbarf.vc拡大縮小倍率.X = (float)base.dbゲージ値;
+                        base.txgbarf.t2D描画(CDTXMania.app.Device, 0x12f, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
+                    }
+                    else if (base.dbゲージ値 > 0.0)
                     {
                         base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
                         base.txgbar.t2D描画(CDTXMania.app.Device, 0x12f, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
                     }
-                    base.txgbar.vc拡大縮小倍率.X = 1f;
-                    base.txgbar2.t2D描画(CDTXMania.app.Device, 0x133, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 0x299), new Rectangle(0, 0x1a, 0x1f8, 0x1a));
+
+                    base.txgbg.t2D描画(CDTXMania.app.Device, 0x102, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, 0x250, 0x2d));
                 }
 
                 if (base.IsDanger(E楽器パート.DRUMS) && base.db現在のゲージ値.Drums >= 0.0)

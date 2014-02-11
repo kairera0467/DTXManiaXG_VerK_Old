@@ -18,26 +18,26 @@ namespace DTXMania
 
             if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
             {
-                this.n本体0X = 515;
-                this.n本体0Y = 521;
+                this.n本体X[0] = 515;
+                this.n本体NY = 521;
 
-                this.n本体1X = 337;
-                this.n本体2X = 693;
+                this.n本体X[1] = 337;
+                this.n本体X[2] = 693;
 
-                this.n本体Y = 211;
+                this.n本体SY = 211;
 
                 this.nグラフSX = 135;
                 this.nグラフNX = 313;
             }
             else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
             {
-                this.n本体0X = 381;
-                this.n本体0Y = 318;
+                this.n本体X[0] = 381;
+                this.n本体NY = 318;
 
-                this.n本体1X = 383;
-                this.n本体2X = 647;
+                this.n本体X[1] = 383;
+                this.n本体X[2] = 647;
 
-                this.n本体Y = 392;
+                this.n本体SY = 392;
 
                 this.nグラフSX = 267;
                 this.nグラフNX = 267;
@@ -49,43 +49,43 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体2X = this.n本体2X - this.nグラフNX;
-                        this.n本体0X = this.n本体0X - this.nグラフSX;
+                        this.n本体X[2] = this.n本体X[2] - this.nグラフNX;
+                        this.n本体X[0] = this.n本体X[0] - this.nグラフSX;
                     }
                     else
                     {
-                        this.n本体1X = this.n本体1X + this.nグラフNX;
-                        this.n本体0X = this.n本体0X + this.nグラフSX;
+                        this.n本体X[1] = this.n本体X[1] + this.nグラフNX;
+                        this.n本体X[0] = this.n本体X[0] + this.nグラフSX;
                     }
                 }
                 else if (!CDTXMania.DTX.bチップがある.Guitar)
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体1X = this.n本体1X + this.nグラフNX;
-                        this.n本体0X = this.n本体0X + this.nグラフSX;
+                        this.n本体X[1] = this.n本体X[1] + this.nグラフNX;
+                        this.n本体X[0] = this.n本体X[0] + this.nグラフSX;
                     }
                     else
                     {
-                        this.n本体2X = this.n本体2X - this.nグラフNX;
-                        this.n本体0X = this.n本体0X - this.nグラフSX;
+                        this.n本体X[2] = this.n本体X[2] - this.nグラフNX;
+                        this.n本体X[0] = this.n本体X[0] - this.nグラフSX;
                     }
                 }
                 else if (!CDTXMania.ConfigIni.bギターが全部オートプレイである && CDTXMania.ConfigIni.bベースが全部オートプレイである)
                 {
 
-                    this.n本体1X = this.n本体1X + this.nグラフNX;
-                    this.n本体2X = 0;
+                    this.n本体X[1] = this.n本体X[1] + this.nグラフNX;
+                    this.n本体X[2] = 0;
                     if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                        this.n本体0X = this.n本体0X + this.nグラフSX;
+                        this.n本体X[0] = this.n本体X[0] + this.nグラフSX;
 
                 }
                 else if (CDTXMania.ConfigIni.bギターが全部オートプレイである && !CDTXMania.ConfigIni.bベースが全部オートプレイである)
                 {
-                    this.n本体2X = this.n本体2X - this.nグラフNX;
-                    this.n本体1X = 0;
+                    this.n本体X[2] = this.n本体X[2] - this.nグラフNX;
+                    this.n本体X[1] = 0;
                     if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                        this.n本体0X = this.n本体0X - this.nグラフSX;
+                        this.n本体X[0] = this.n本体X[0] - this.nグラフSX;
                 }
 
             }
@@ -519,7 +519,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 if ( CDTXMania.ConfigIni.bShowMusicInfo )
-                    this.tx曲名パネル.t2D描画(CDTXMania.app.Device, this.n本体0X, this.n本体0Y);
+                    this.tx曲名パネル.t2D描画(CDTXMania.app.Device, this.n本体X[0], this.n本体NY);
 
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
@@ -536,30 +536,30 @@ namespace DTXMania
                 this.txRisky.vc拡大縮小倍率 = new SlimDX.Vector3(32.0f / 42.0f, 32.0f / 48.0f, 1.0f);
 
                 //CDTXMania.act文字コンソール.tPrint(0, 100, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", CDTXMania.stage演奏ギター画面.bブーストボーナス ? 1 : 0));
-                if ( this.txパネル != null && CDTXMania.DTX.bチップがある.Guitar && this.n本体1X != 0 && CDTXMania.ConfigIni.bShowScore )
+                if ( this.txパネル != null && CDTXMania.DTX.bチップがある.Guitar && this.n本体X[1] != 0 && CDTXMania.ConfigIni.bShowScore )
 				{
-			        this.txパネル.t2D描画( CDTXMania.app.Device, this.n本体1X, this.n本体Y );
+			        this.txパネル.t2D描画( CDTXMania.app.Device, this.n本体X[1], this.n本体SY );
 
                     if (this.txPart != null)
                     {
                         if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                            this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体1X, 91 + this.n本体Y, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 76 : 38, 234, 38));
+                            this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体X[1], 91 + this.n本体SY, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 76 : 38, 234, 38));
                         else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
-                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体1X, 50 + this.n本体Y, new Rectangle(0, 0 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 120 : 60), 234, 60));
+                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体X[1], 50 + this.n本体SY, new Rectangle(0, 0 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 120 : 60), 234, 60));
                     }
 
                     this.nCurrentGuitarSpeed = CDTXMania.ConfigIni.n譜面スクロール速度.Guitar;
 
                     if (this.txSpeed != null)
-                        this.txSpeed.t2D描画(CDTXMania.app.Device, this.nSpeedX + this.n本体1X, this.nSpeedY + this.n本体Y, new Rectangle(0, ((this.nCurrentGuitarSpeed > 15) ? 15 : this.nCurrentGuitarSpeed) * 0x30, 0x2a, 0x30));
+                        this.txSpeed.t2D描画(CDTXMania.app.Device, this.nSpeedX + this.n本体X[1], this.nSpeedY + this.n本体SY, new Rectangle(0, ((this.nCurrentGuitarSpeed > 15) ? 15 : this.nCurrentGuitarSpeed) * 0x30, 0x2a, 0x30));
 
                     if (this.txRisky != null)
-                        this.txRisky.t2D描画(CDTXMania.app.Device, 36 + this.nSpeedX + this.n本体1X, this.nSpeedY + this.n本体Y, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
+                        this.txRisky.t2D描画(CDTXMania.app.Device, 36 + this.nSpeedX + this.n本体X[1], this.nSpeedY + this.n本体SY, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
 
                     if (!CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                        this.txLevelG.t2D描画(CDTXMania.app.Device, this.n本体1X, this.n本体Y);
+                        this.txLevelG.t2D描画(CDTXMania.app.Device, this.n本体X[1], this.n本体SY);
                     else
-                        this.txLevelB.t2D描画(CDTXMania.app.Device, this.n本体1X, this.n本体Y);
+                        this.txLevelB.t2D描画(CDTXMania.app.Device, this.n本体X[1], this.n本体SY);
 
                 int guitar = CDTXMania.ConfigIni.n譜面スクロール速度.Guitar;
                     #region[ スコア表示 ]
@@ -592,9 +592,9 @@ namespace DTXMania
                                 SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
 
                                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体1X) / 0.7f) + (i * 25), 360 - (185 + 12 + this.n本体Y), 0);
+                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体X[1]) / 0.7f) + (i * 25), 360 - (185 + 12 + this.n本体SY), 0);
                                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
-                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体1X) / 0.7f) + (i * 25), 360 - (170 + 12 + this.n本体Y), 0);
+                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体X[1]) / 0.7f) + (i * 25), 360 - (170 + 12 + this.n本体SY), 0);
 
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.7f, 1f, 1f);
                                 this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
@@ -628,39 +628,39 @@ namespace DTXMania
                             if( this.txScore != null )
                             {
                                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体1X + (i * 25), 185 + this.n本体Y, rectangle);
+                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体X[1] + (i * 25), 185 + this.n本体SY, rectangle);
                                 else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
-                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体1X + (i * 25), 170 + this.n本体Y, rectangle);
+                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体X[1] + (i * 25), 170 + this.n本体SY, rectangle);
                            }
                         }
                     }
                     #endregion
 				}
 
-                if ( this.txパネル != null && CDTXMania.DTX.bチップがある.Bass && this.n本体2X != 0 && CDTXMania.ConfigIni.bShowScore )
+                if ( this.txパネル != null && CDTXMania.DTX.bチップがある.Bass && this.n本体X[2] != 0 && CDTXMania.ConfigIni.bShowScore )
                 {
-                    this.txパネル.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体Y);
+                    this.txパネル.t2D描画(CDTXMania.app.Device, this.n本体X[2], this.n本体SY);
 
                     if (this.txPart != null)
                     {
                         if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                            this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体2X, 91 + this.n本体Y, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 38 : 76, 234, 38));
+                            this.txPart.t2D描画(CDTXMania.app.Device, 7 + this.n本体X[2], 91 + this.n本体SY, new Rectangle(0, (CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 38 : 76, 234, 38));
                         else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
-                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体2X, 50 + this.n本体Y, new Rectangle(0, 0 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 60 : 120), 234, 60));
+                            this.txPart.t2D描画(CDTXMania.app.Device, 6 + this.n本体X[2], 50 + this.n本体SY, new Rectangle(0, 0 + ((CDTXMania.ConfigIni.bIsSwappedGuitarBass) ? 60 : 120), 234, 60));
                     }
 
                     this.nCurrentBassSpeed = CDTXMania.ConfigIni.n譜面スクロール速度.Bass;
 
                     if (this.txSpeed != null)
-                        this.txSpeed.t2D描画(CDTXMania.app.Device, this.nSpeedX + this.n本体2X, this.nSpeedY + this.n本体Y, new Rectangle(0, ((this.nCurrentBassSpeed > 15) ? 15 : this.nCurrentBassSpeed) * 0x30, 0x2a, 0x30));
+                        this.txSpeed.t2D描画(CDTXMania.app.Device, this.nSpeedX + this.n本体X[2], this.nSpeedY + this.n本体SY, new Rectangle(0, ((this.nCurrentBassSpeed > 15) ? 15 : this.nCurrentBassSpeed) * 0x30, 0x2a, 0x30));
 
                     if (this.txRisky != null)
-                        this.txRisky.t2D描画(CDTXMania.app.Device, 36 + this.nSpeedX + this.n本体2X, this.nSpeedY + this.n本体Y, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
+                        this.txRisky.t2D描画(CDTXMania.app.Device, 36 + this.nSpeedX + this.n本体X[2], this.nSpeedY + this.n本体SY, new Rectangle(0, ((CDTXMania.ConfigIni.nRisky > 10) ? 10 : CDTXMania.ConfigIni.nRisky) * 48, 42, 48));
 
                     if (!CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                        this.txLevelB.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体Y);
+                        this.txLevelB.t2D描画(CDTXMania.app.Device, this.n本体X[2], this.n本体SY);
                     else
-                        this.txLevelG.t2D描画(CDTXMania.app.Device, this.n本体2X, this.n本体Y);
+                        this.txLevelG.t2D描画(CDTXMania.app.Device, this.n本体X[2], this.n本体SY);
 
                     int bass = CDTXMania.ConfigIni.n譜面スクロール速度.Bass;
                     #region[ スコア表示 ]
@@ -693,9 +693,9 @@ namespace DTXMania
                                 SlimDX.Matrix matScoreXG = SlimDX.Matrix.Identity;
 
                                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体2X) / 0.7f) + (i * 25), 360 - (185 + 12 + this.n本体Y), 0);
+                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体X[2]) / 0.7f) + (i * 25), 360 - (185 + 12 + this.n本体SY), 0);
                                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
-                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体2X) / 0.7f) + (i * 25), 360 - (170 + 12 + this.n本体Y), 0);
+                                    matScoreXG *= SlimDX.Matrix.Translation(((-640 + 65 + 8 + this.n本体X[2]) / 0.7f) + (i * 25), 360 - (170 + 12 + this.n本体SY), 0);
 
                                 matScoreXG *= SlimDX.Matrix.Scaling(0.7f, 1f, 1f);
                                 this.txScore.t3D描画(CDTXMania.app.Device, matScoreXG, rectangle);
@@ -729,9 +729,9 @@ namespace DTXMania
                             if (this.txScore != null)
                             {
                                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体2X + (i * 25), 185 + this.n本体Y, rectangle);
+                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体X[2] + (i * 25), 185 + this.n本体SY, rectangle);
                                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
-                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体2X + (i * 25), 170 + this.n本体Y, rectangle);
+                                    this.txScore.t2D描画(CDTXMania.app.Device, 65 + this.n本体X[2] + (i * 25), 170 + this.n本体SY, rectangle);
                             }
                         }
                     }
@@ -755,11 +755,9 @@ namespace DTXMania
 		//}
 
 		//private STATUSPANEL[] stパネルマップ;
-        private int n本体0X;
-        private int n本体0Y;
-        private int n本体1X;
-        private int n本体2X;
-        private int n本体Y;
+        private STDGBVALUE<int> n本体X;
+        private int n本体SY;
+        private int n本体NY;
         private int nグラフSX;
         private int nグラフNX;
         private int nSpeedX;

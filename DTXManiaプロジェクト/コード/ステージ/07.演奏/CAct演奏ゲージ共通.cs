@@ -295,11 +295,10 @@ namespace DTXMania
 		public STDGBVALUE<double> db現在のゲージ値;
 		protected CCounter ct本体移動;
 		protected CCounter ct本体振動;
-		protected CTexture txゲージ;
         protected CTexture txゲージマスク;
         protected CTexture txゲージマスク2;
         protected CTexture txgbar;
-        protected CTexture txgbar2;
+        protected CTexture txgbarf;
         protected CTexture txgbg;
         protected CTexture txハイスピ;
 	}

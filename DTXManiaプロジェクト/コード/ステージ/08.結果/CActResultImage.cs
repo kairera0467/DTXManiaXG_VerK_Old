@@ -128,8 +128,8 @@ namespace DTXMania
 		public override void On活性化()
 		{
 
-            this.n本体X = 0x1d5;
-            this.n本体Y = 0x11b;
+            this.n本体0X = 0x1d5;
+            this.n本体0Y = 0x11b;
 
             if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
             {
@@ -150,19 +150,19 @@ namespace DTXMania
             int n下X = 106;
             int n下Y = 430;
 
-            this.n本体0X = 0;
-            this.n本体0Y = 0;
+            this.n本体X[0] = 0;
+            this.n本体Y[0] = 0;
 
-            this.n本体1X = 0;
-            this.n本体1Y = 0;
+            this.n本体X[1] = 0;
+            this.n本体Y[1] = 0;
 
-            this.n本体2X = 0;
-            this.n本体2Y = 0;
+            this.n本体X[2] = 0;
+            this.n本体Y[2] = 0;
 
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n本体0X = n上X;
-                this.n本体0Y = n上Y;
+                this.n本体X[0] = n上X;
+                this.n本体Y[0] = n上Y;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
@@ -170,13 +170,13 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体1X = n下X;
-                        this.n本体1Y = n下Y;
+                        this.n本体X[1] = n下X;
+                        this.n本体Y[1] = n下Y;
                     }
                     else
                     {
-                        this.n本体1X = n上X;
-                        this.n本体1Y = n上Y;
+                        this.n本体X[1] = n上X;
+                        this.n本体Y[1] = n上Y;
                     }
                 }
 
@@ -184,13 +184,13 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体2X = n上X;
-                        this.n本体2Y = n上Y;
+                        this.n本体X[2] = n上X;
+                        this.n本体Y[2] = n上Y;
                     }
                     else
                     {
-                        this.n本体2X = n下X;
-                        this.n本体2Y = n下Y;
+                        this.n本体X[2] = n下X;
+                        this.n本体Y[2] = n下Y;
                     }
                 }
 
@@ -350,21 +350,10 @@ namespace DTXMania
             }
             float num;
 
-            int[] x = new int[3];
-            int[] y = new int[3];
-
-            x[0] = n本体0X;
-            x[1] = n本体1X;
-            x[2] = n本体2X;
-
-            y[0] = n本体0Y;
-            y[1] = n本体1Y;
-            y[2] = n本体2Y;
-
             for (int i = 0; i < 3; i++)
             {
 
-                if (x[i] != 0)
+                if (this.n本体X[i] != 0)
                 {
                     STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
                     n表記するLEVEL[i] = CDTXMania.DTX.LEVEL[i] / 10.0;
@@ -393,19 +382,19 @@ namespace DTXMania
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
                     {
                         //    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-                        this.t大文字表示(x[i] + 653, y[i] + 11, num.ToString());
+                        this.t大文字表示(this.n本体X[i] + 653, this.n本体Y[i] + 11, num.ToString());
                     }
                     else
                     {
                         //    graphics.DrawString(string.Format("{0:0.00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
-                        this.t大文字表示(x[i] + 653, y[i] + 11, string.Format(num.ToString().Substring(0, 1)));
-                        this.txLevel.t2D描画(CDTXMania.app.Device, x[i] + 673, y[i] + 11, new Rectangle(160, 16, 6, 16));
-                        this.t小文字表示(x[i] + 680, y[i] + 13, string.Format(string.Format("{0,0:00}", strLevel.Substring(1, 3))));
+                        this.t大文字表示(this.n本体X[i] + 653, this.n本体Y[i] + 11, string.Format(num.ToString().Substring(0, 1)));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, this.n本体X[i] + 673, this.n本体Y[i] + 11, new Rectangle(160, 16, 6, 16));
+                        this.t小文字表示(this.n本体X[i] + 680, this.n本体Y[i] + 13, string.Format(string.Format("{0,0:00}", strLevel.Substring(1, 3))));
                     }
                 }
             }
 
-            this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体X + this.nAlbumWidth ) + 3, this.n本体Y + 0x3f);
+            this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ) + 3, this.n本体0Y + 0x3f);
             //this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
 
 			if( !this.ct登場用.b終了値に達した )
@@ -435,14 +424,10 @@ namespace DTXMania
         private long nAVI再生開始時刻;
         private int nSongNamePixelLength;
         private int n前回描画したフレーム番号;
-        private int n本体X;
-        private int n本体Y;
         private int n本体0X;
         private int n本体0Y;
-        private int n本体1X;
-        private int n本体1Y;
-        private int n本体2X;
-        private int n本体2Y;
+        private STDGBVALUE<int> n本体X;
+        private STDGBVALUE<int> n本体Y;
         private IntPtr pAVIBmp;
         private CTexture r表示するリザルト画像;
         private Surface sfリザルトAVI画像;
