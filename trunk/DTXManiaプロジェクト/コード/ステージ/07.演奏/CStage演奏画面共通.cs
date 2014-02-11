@@ -2324,6 +2324,92 @@ namespace DTXMania
 		{
 			this.actStatusPanels.On進行描画();
 		}
+
+        protected bool t進行描画・チップ・模様のみ( E楽器パート ePlayMode )
+		{
+			if ( ( base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED ) || ( base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト ) )
+			{
+				return true;
+			}
+            if ((this.n現在のトップChip == -1) || (this.n現在のトップChip >= listChip.Count))
+			{
+				return true;
+			}
+			if ( this.n現在のトップChip == -1 )
+			{
+				return true;
+			}
+
+            const double speed = 286;	// BPM150の時の1小節の長さ[dot]
+            //XGのHS4.5が1289。思えばBPMじゃなくて拍の長さが関係あるよね。
+
+			double ScrollSpeedDrums = ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.0 ) * 0.5 * 37.5 * speed / 60000.0;
+			double ScrollSpeedGuitar = ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Guitar + 1.0 ) * 0.5 * 0.5 * 37.5 * speed / 60000.0;
+			double ScrollSpeedBass = ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Bass + 1.0 ) * 0.5 * 0.5 * 37.5 * speed / 60000.0;
+
+			CDTX dTX = CDTXMania.DTX;
+			CConfigIni configIni = CDTXMania.ConfigIni;
+			for ( int nCurrentTopChip = this.n現在のトップChip; nCurrentTopChip < dTX.listChip.Count; nCurrentTopChip++ )
+			{
+				CDTX.CChip pChip = dTX.listChip[ nCurrentTopChip ];
+                //Debug.WriteLine( "nCurrentTopChip=" + nCurrentTopChip + ", ch=" + pChip.nチャンネル番号.ToString("x2") + ", 発音位置=" + pChip.n発声位置 + ", 発声時刻ms=" + pChip.n発声時刻ms );
+				pChip.nバーからの距離dot.Drums = (int) ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * ScrollSpeedDrums );
+                pChip.nバーからの距離dot.Guitar = (int)((pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻) * ScrollSpeedGuitar);
+                pChip.nバーからの距離dot.Bass = (int)((pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻) * ScrollSpeedBass);
+				if ( Math.Min( Math.Min( pChip.nバーからの距離dot.Drums, pChip.nバーからの距離dot.Guitar ), pChip.nバーからの距離dot.Bass ) > 600 )
+				{
+					break;
+				}
+//				if ( ( ( nCurrentTopChip == this.n現在のトップChip ) && ( pChip.nバーからの距離dot.Drums < -65 ) ) && pChip.bHit )
+				// #28026 2012.4.5 yyagi; 信心ワールドエンドの曲終了後リザルトになかなか行かない問題の修正
+				if ( ( dTX.listChip[ this.n現在のトップChip ].nバーからの距離dot.Drums < -65 ) && dTX.listChip[ this.n現在のトップChip ].bHit )
+				{
+//					nCurrentTopChip = ++this.n現在のトップChip;
+					++this.n現在のトップChip;
+					continue;
+				}
+
+				bool bPChipIsAutoPlay = bCheckAutoPlay( pChip );
+
+				int nInputAdjustTime = ( bPChipIsAutoPlay || (pChip.e楽器パート == E楽器パート.UNKNOWN) )? 0 : this.nInputAdjustTimeMs[ (int) pChip.e楽器パート ];
+
+				if ( ( ( pChip.e楽器パート != E楽器パート.UNKNOWN ) && !pChip.bHit ) &&
+                    ((pChip.nバーからの距離dot.Drums < 0) && (this.e指定時刻からChipのJUDGEを返す( CSound管理.rc演奏用タイマ.n現在時刻, pChip, nInputAdjustTime) == E判定.Miss)))
+				{
+                    this.tチップのヒット処理( CSound管理.rc演奏用タイマ.n現在時刻, pChip);
+				}
+				switch ( pChip.nチャンネル番号 )
+				{
+                    //描画順の都合上こちらから描画。
+
+					#region [ 11-1c: ドラム演奏 ]
+					case 0x11:	// ドラム演奏
+					case 0x12:
+					case 0x13:
+					case 0x14:
+					case 0x15:
+					case 0x16:
+					case 0x17:
+					case 0x18:
+					case 0x19:
+					case 0x1a:
+                    case 0x1b:
+                    case 0x1c:
+						this.t進行描画・チップ・模様のみ・ドラムス( configIni, ref dTX, ref pChip );
+						break;
+					#endregion
+                    #region [ その他(未定義) ]
+                    default:
+						if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
+						{
+							pChip.bHit = true;
+						}
+						break;
+					#endregion 
+				}
+			}
+			return false;
+		}
 		protected bool t進行描画・チップ( E楽器パート ePlayMode )
 		{
 			if ( ( base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED ) || ( base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト ) )
@@ -3454,6 +3540,7 @@ namespace DTXMania
 
 
 		protected abstract void t進行描画・チップ・ドラムス( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
+        protected abstract void t進行描画・チップ・模様のみ・ドラムス( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
 		//protected abstract void t進行描画・チップ・ギター( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
 		protected abstract void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst );
 

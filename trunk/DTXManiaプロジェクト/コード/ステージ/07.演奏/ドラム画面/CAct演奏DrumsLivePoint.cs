@@ -58,7 +58,7 @@ namespace DTXMania
                 }
                 #region[箱]
                 //まず箱を再現するためにはLPが一定以上になったら表示させるような仕掛けが必要。
-                if( base.n現在のLivePoint.Drums >= 0 )
+                if( base.n現在のLivePoint.Drums >= 0 && this.txLivePoint != null )
                 {
                     for (int i = 0; i < 5; i++ )
                     {
