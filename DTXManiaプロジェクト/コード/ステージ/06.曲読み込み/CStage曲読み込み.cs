@@ -215,8 +215,8 @@ namespace DTXMania
                 //2013.05.10.kairera0467.曲選択から持ってきた。
                 if (CDTXMania.ConfigIni.b選曲リストフォントを斜体にする) regular |= FontStyle.Italic;
                 if (CDTXMania.ConfigIni.b選曲リストフォントを太字にする) regular |= FontStyle.Bold;
-                this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
-                this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 40f, FontStyle.Bold, GraphicsUnit.Pixel);
+                this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 42f, FontStyle.Bold, GraphicsUnit.Pixel);
+                this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 42f, FontStyle.Bold, GraphicsUnit.Pixel);
 
                 if ( File.Exists( CSkin.Path(@"Graphics\6_background.mp4") ) && !CDTXMania.bコンパクトモード )
                 {
@@ -359,7 +359,7 @@ namespace DTXMania
                         graphics2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                         graphics2.DrawString( this.strアーティスト名, this.ftアーティスト名表示フォント, Brushes.White, (float)0f, (float)0f);
                         this.txアーティスト = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat);
-                        this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.5f, 0.5f, 1f);
+                        this.txアーティスト.vc拡大縮小倍率 = new Vector3(0.42f, 0.5f, 1f);
                         graphics2.Dispose();
                         image2.Dispose();
                     }
@@ -505,17 +505,22 @@ namespace DTXMania
                     }
 
                 }
-            this.txシンボル.t2D描画(CDTXMania.app.Device, 422, 128);
+            if( this.txシンボル != null )
+                this.txシンボル.t2D描画( CDTXMania.app.Device, 422, 128 );
 
-            this.txベース曲パネル.t2D描画(CDTXMania.app.Device, 503, 173);
+            if( this.txベース曲パネル != null )
+                this.txベース曲パネル.t2D描画( CDTXMania.app.Device, 503, 173 );
 
-            if ( CDTXMania.ConfigIni.bDrums有効 )
+            if( CDTXMania.ConfigIni.bDrums有効 )
             {
-                this.txベース難易度パネル.t2D描画(CDTXMania.app.Device, 254, 183);
-                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 268, 194 , new Rectangle(130 , (this.nIndex * 72), 130 , 72));
+                if( this.txベース難易度パネル != null )
+                    this.txベース難易度パネル.t2D描画( CDTXMania.app.Device, 254, 183 );
+                if( this.tx難易度パネル != null )
+                    this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194 , new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
             }
 
-            this.txヘッダーパネル.t2D描画(CDTXMania.app.Device, 0, 0);
+
+            this.txヘッダーパネル.t2D描画( CDTXMania.app.Device, 0, 0 );
 
             string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;

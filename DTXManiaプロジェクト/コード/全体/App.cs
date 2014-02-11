@@ -36,37 +36,6 @@ namespace DTXMania
         // オーバーライドメソッド 
 
         /// <summary>
-        /// <para>メインウィンドウの生成と各種初期化を行う。</para>
-        /// <para>Direct3D の生成の後に呼び出される。</para>
-        /// <para>エラー等でアプリを終了したい場合は例外を発生させ、正常に（無言で）終了したい場合は this.Window を null にして return すること。</para>
-        /// </summary>
-        protected override void On初期化()
-        {
-            #region [ プライマリアダプタのHALとフォーマットのチェックを行う。]
-            //-----------------
-            if (!this.Direct3D.CheckDeviceType(0, SlimDX.Direct3D9.DeviceType.Hardware, Format.X8R8G8B8, Format.X8R8G8B8, true) ||	// ウィンドウモード
-                !this.Direct3D.CheckDeviceType(0, SlimDX.Direct3D9.DeviceType.Hardware, Format.X8R8G8B8, Format.X8R8G8B8, false))	// 全画面モード
-            {
-                string msg = "プライマリディスプレイアダプタが、本ソフトの動作に必要な機能を満たしていません。";
-                MessageBox.Show(msg, "StrokeStyle<T> エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw new Exception(msg);
-            }
-            //-----------------
-            #endregion
-            #region [ Global.* を初期化する。--> コンストラクタへ移動 ]
-            //-----------------
-            //Global.t初期化( this );	
-            //-----------------
-            #endregion
-
-            #region [ ウィンドウを生成する。]
-            //-----------------
-            this.hWnd = this.Window.Handle;
-            //-----------------
-            #endregion
-        }
-
-        /// <summary>
         /// <para>Direct3Dデバイス（this.Device）に対するデフォルト設定を行う。</para>
         /// <para>Direct3Dデバイスのリセット・変更・再作成時に呼び出される。</para>
         /// </summary>
@@ -91,30 +60,6 @@ namespace DTXMania
         }
 
         //------------
-
-        /*
-        /// <summary>
-        /// <para>進行処理を行う。</para>
-        /// <para>ロックを得た進行スレッドにより実行される。</para>
-        /// </summary>
-        protected override void On進行()
-        {
-            switch ( CDTXMania.r現在のステージ.eステージID )
-            {
-
-                case CStage.Eステージ.演奏:
-                    {
-                        break;
-                    }
-                #region [ default ]
-                //-----------------
-                default:
-                    break;
-                //-----------------
-                #endregion
-            }
-        }
-        */
         public Size LogicalDisplaySize = new Size( 1280, 720 );
         /// <summary>
         /// <para>描画処理を行う。</para>
@@ -158,17 +103,6 @@ namespace DTXMania
                 //-----------------
                 #endregion
             }
-        }
-
-        /// <summary>
-        /// <para>アプリケーション全体のフローについて、現在の状態を管理し、状態に応じて各スレッドに指示を出す。</para>
-        /// </summary>
-        protected override void Onフロー制御()
-        {
-            // アプリの状態遷移図にそってフローが流れるようプログラミングする。
-            // lock してないことに注意。
-
-
         }
 
 

@@ -75,7 +75,6 @@ namespace DTXMania
 				this.ft表示用フォント.Dispose();
 				this.ft表示用フォント = null;
 			}
-            CDTXMania.tテクスチャの解放( ref this.txNamePlateXG3 );
 			this.ct進行用 = null;
 			base.On非活性化();
 		}
@@ -152,7 +151,6 @@ namespace DTXMania
 		private string strパネル文字列;
         private string strSongName;
 		private CTexture txPanel;
-        private CTexture txNamePlateXG3;
 
 		//-----------------
 		#endregion
