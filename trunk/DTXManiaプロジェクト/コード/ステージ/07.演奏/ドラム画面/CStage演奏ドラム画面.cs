@@ -204,7 +204,7 @@ namespace DTXMania
                 this.t進行描画・レーンフラッシュD();
                 this.t進行描画・譜面スクロール速度();
                 this.t進行描画・チップアニメ();
-                bIsFinishedPlaying = this.t進行描画・チップ・模様のみ( E楽器パート.DRUMS );
+                this.t進行描画・チップ・模様のみ( E楽器パート.DRUMS );
                 bIsFinishedPlaying = this.t進行描画・チップ( E楽器パート.DRUMS );
                 #region[ シャッター ]
                 //シャッターを使うのはLC、LP、FT、RDレーンのみ。その他のレーンでは一切使用しない。
@@ -2975,7 +2975,7 @@ namespace DTXMania
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
 			{
                 //this.tサウンド再生(pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量(E楽器パート.DRUMS));
-				//pChip.bHit = true;
+				pChip.bHit = true;
 			}
 		}
 		protected override void t進行描画・チップ・ドラムス( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
