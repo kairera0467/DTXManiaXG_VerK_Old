@@ -23,7 +23,7 @@ namespace DTXMania
                         if (CDTXMania.stage演奏ドラム画面.bサビ区間 && base.txBPMバーフラッシュ右 != null)
                         {
                             base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                            base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 908 - (1 * num1), 54);
+                            base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 909 - (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
                         }
                     }
                     if ( CDTXMania.ConfigIni.eBPMbar == Eタイプ.A || CDTXMania.ConfigIni.eBPMbar == Eタイプ.B )
@@ -33,7 +33,7 @@ namespace DTXMania
                         if (CDTXMania.stage演奏ドラム画面.bサビ区間 && base.txBPMバーフラッシュ左 != null)
                         {
                             base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(num1 * 18.214285714285714285714285714286);
-                            base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 209 + (1 * num1), 54);
+                            base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 220 - (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
                         }
                     }
                 }
