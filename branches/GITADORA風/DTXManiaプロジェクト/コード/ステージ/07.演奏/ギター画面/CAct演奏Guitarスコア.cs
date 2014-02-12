@@ -15,6 +15,61 @@ namespace DTXMania
 			base.b活性化してない = true;
 		}
 
+        public override void On活性化()
+        {
+
+            #region [ 本体位置 ]
+
+            {
+                this.n本体X[1] = 350;
+                this.n本体X[2] = 700;
+
+                this.n本体Y = 50;
+
+                this.n本体X[0] = 313;
+            }
+
+            if (CDTXMania.ConfigIni.bGraph有効)
+            {
+                if (!CDTXMania.DTX.bチップがある.Bass)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体X[2] = this.n本体X[2] - this.n本体X[0];
+                    }
+                    else
+                    {
+                        this.n本体X[1] = this.n本体X[1] + this.n本体X[0];
+                    }
+                }
+                else if (!CDTXMania.DTX.bチップがある.Guitar)
+                {
+                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    {
+                        this.n本体X[1] = this.n本体X[1] + this.n本体X[0];
+                    }
+                    else
+                    {
+                        this.n本体X[2] = this.n本体X[2] - this.n本体X[0];
+                    }
+                }
+                else if (!CDTXMania.ConfigIni.bギターが全部オートプレイである && CDTXMania.ConfigIni.bベースが全部オートプレイである)
+                {
+                    this.n本体X[1] = this.n本体X[1] + this.n本体X[0];
+                    this.n本体X[2] = 0;
+                }
+                else if (CDTXMania.ConfigIni.bギターが全部オートプレイである && !CDTXMania.ConfigIni.bベースが全部オートプレイである)
+                {
+                    this.n本体X[2] = this.n本体X[2] - this.n本体X[0];
+                    this.n本体X[1] = 0;
+                }
+
+            }
+
+            #endregion
+
+            base.On活性化();
+        }
 
 		// CActivity 実装（共通クラスからの差分のみ）
 
@@ -43,37 +98,36 @@ namespace DTXMania
 					}
 					base.n進行用タイマ += 10;
 				}
-				for( int i = 1; i < 3; i++ )
-				{
-					string str = this.n現在表示中のスコア[ i ].ToString( "0000000" );
-					for( int k = 0; k < 7; k++ )
-					{
-						Rectangle rectangle;
-						char ch = str[ k ];
-						if( ch.Equals( ' ' ) )
-						{
-							rectangle = new Rectangle( 0, 0, 32, 36 );
-						}
-						else
-						{
-							int num5 = int.Parse( str.Substring( k, 1 ) );
-							if( num5 < 5 )
-							{
-								rectangle = new Rectangle( num5 * 32, 0, 32, 36 );
-							}
-							else
-							{
-								rectangle = new Rectangle( ( num5 * 32), 0, 32, 36 );
-							}
-						}
-						if( base.txScore != null )
-						{
-							//base.txScore.t2D描画( CDTXMania.app.Device, this.ptSCORE[ i - 1 ].X + ( k * 26 ), this.ptSCORE[ i - 1 ].Y, rectangle );
-                            base.txScore.vc拡大縮小倍率.X = 0.85f;
-                            base.txScore.vc拡大縮小倍率.Y = 0.85f;
-						}
-					}
-				}
+				for( int j = 1; j < 3; j++ )
+                {
+                    if ( CDTXMania.DTX.bチップがある[j] && n本体X[j] != 0 )
+                    {
+                        string str = string.Format("{0,7:######0}", this.n現在の本当のスコア[j]);
+                        //string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("0000000");
+                        for (int i = 0; i < 7; i++)
+                        {
+                            Rectangle rectangle;
+                            char ch = str[i];
+                            if (ch.Equals(' '))
+                            {
+                                rectangle = new Rectangle(0, 0, 0, 0);
+                            }
+                            else
+                            {
+                                int num4 = int.Parse(str.Substring(i, 1));
+                                rectangle = new Rectangle(num4 * 36, 0, 36, 50);
+                            }
+                            if (base.txScore != null)
+                            {
+                                base.txScore.t2D描画(CDTXMania.app.Device, n本体X[j] + (i * 34), 28 + this.n本体Y, rectangle);
+                            }
+                        }
+                        if (base.txScore != null)
+                        {
+                            base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y, new Rectangle(0, 50, 86, 28));
+                        }
+                    }
+                }
 			}
 			return 0;
 		}
@@ -83,7 +137,9 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private readonly Point[] ptSCORE = new Point[] { new Point( 398, 394 ), new Point( 0, 5000 ) };
+        private STDGBVALUE<int> n本体X;
+        private int n本体Y;
+        private readonly Point[] ptSCORE = new Point[] { new Point(398, 394), new Point(0, 5000) };
 		//-----------------
 		#endregion
 	}

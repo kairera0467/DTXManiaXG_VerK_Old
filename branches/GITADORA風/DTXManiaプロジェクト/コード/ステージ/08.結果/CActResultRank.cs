@@ -34,11 +34,11 @@ namespace DTXMania
             int n中X = 480;
             int n中Y = 50;
 
-            int n上X = 300;
-            int n上Y = -10;
+            int n左X = 300;
+            int n左Y = -15;
 
-            int n下X = 950;
-            int n下Y = -10;
+            int n右X = 720;
+            int n右Y = -15;
 
             this.n本体X[0] = 0;
             this.n本体Y[0] = 0;
@@ -56,34 +56,30 @@ namespace DTXMania
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
-                if (CDTXMania.DTX.bチップがある.Guitar)
+                if (!CDTXMania.DTX.bチップがある.Bass)
                 {
-                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                    {
-                        this.n本体X[1] = n下X;
-                        this.n本体Y[1] = n下Y;
-                    }
-                    else
-                    {
-                        this.n本体X[1] = n上X;
-                        this.n本体Y[1] = n上Y;
-                    }
+                    this.n本体X[1] = n中X;
+                    this.n本体Y[1] = n中Y;
                 }
-
-                if (CDTXMania.DTX.bチップがある.Bass)
+                else if (!CDTXMania.DTX.bチップがある.Guitar)
                 {
-                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                    {
-                        this.n本体X[2] = n上X;
-                        this.n本体Y[2] = n上Y;
-                    }
-                    else
-                    {
-                        this.n本体X[2] = n下X;
-                        this.n本体Y[2] = n下Y;
-                    }
+                    this.n本体X[2] = n中X;
+                    this.n本体Y[2] = n中Y;
                 }
-
+                else if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                {
+                    this.n本体X[1] = n右X;
+                    this.n本体Y[1] = n右Y;
+                    this.n本体X[2] = n左X;
+                    this.n本体Y[2] = n左Y;
+                }
+                else
+                {
+                    this.n本体X[1] = n左X;
+                    this.n本体Y[1] = n左Y;
+                    this.n本体X[2] = n右X;
+                    this.n本体Y[2] = n右Y;
+                }
             }
             #endregion
 
