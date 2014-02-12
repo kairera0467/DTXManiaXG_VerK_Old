@@ -178,16 +178,22 @@ namespace DTXMania
 		{
             #region [ 本体位置 ]
 
-            int n上X = 186;
-            int n下X = 844;
+            int n左1X = 186;
+            int n右1X = 844;
 
-            this.n本体X[0] = 0;
-            this.n本体X[1] = 0;
-            this.n本体X[2] = 0;
+            int n左2X = 30;
+            int n右2X = 1000;
+
+            for (int j = 0; j < 3; j++)
+            {
+                this.n本体X[j] = 0;
+                this.nスコアX[j] = 0;
+            }
 
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n本体X[0] = n上X;
+                this.n本体X[0] = n左1X;
+                this.nスコアX[0] = n左2X;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
@@ -195,11 +201,13 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体X[1] = n下X;
+                        this.n本体X[1] = n右1X;
+                        this.nスコアX[1] = n右2X;
                     }
                     else
                     {
-                        this.n本体X[1] = n上X;
+                        this.n本体X[1] = n左1X;
+                        this.nスコアX[1] = n左2X;
                     }
                 }
 
@@ -207,11 +215,13 @@ namespace DTXMania
                 {
                     if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
                     {
-                        this.n本体X[2] = n上X;
+                        this.n本体X[2] = n左1X;
+                        this.nスコアX[2] = n左2X;
                     }
                     else
                     {
-                        this.n本体X[2] = n下X;
+                        this.n本体X[2] = n右1X;
+                        this.nスコアX[2] = n右2X;
                     }
                 }
 
@@ -330,12 +340,12 @@ namespace DTXMania
                         }
                         if (this.txスコア != null)
                         {
-                            this.txスコア.t2D描画(CDTXMania.app.Device, -156 + this.n本体X[j] + (i * 34), 40, rectangle);
+                            this.txスコア.t2D描画(CDTXMania.app.Device, this.nスコアX[j] + (i * 34), 40, rectangle);
                         }
                     }
                     if (this.txスコア != null)
                     {
-                        this.txスコア.t2D描画(CDTXMania.app.Device, -156 + this.n本体X[j], 12, new Rectangle(0, 50, 86, 28));
+                        this.txスコア.t2D描画(CDTXMania.app.Device, this.nスコアX[j], 12, new Rectangle(0, 50, 86, 28));
                     }
 
                     for (int i = 0; i < 1; i++)
@@ -377,6 +387,7 @@ namespace DTXMania
 
         private CCounter ct表示用;
         private STDGBVALUE<int> n本体X;
+        private STDGBVALUE<int> nスコアX;
         private readonly Point[] ptFullCombo位置;
         private CSound sdDTXで指定されたフルコンボ音;
         private readonly ST文字位置[] st小文字位置;
