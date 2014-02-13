@@ -187,6 +187,19 @@ namespace DTXMania
 			}
 			this.ctランク表示.t進行();
             this.ct表示用.t進行();
+
+            if ((CDTXMania.Input管理.Keyboard.bキーが押されている(0x3c)))
+            {
+                //F7
+                //CDTXMania.stage演奏ドラム画面.actGauge.db現在のゲージ値.Drums = 1.0;
+                //CDTXMania.stage演奏ドラム画面.actAVI.LivePoint = 300.0;
+                //CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 = 100.0;
+                //CDTXMania.ConfigIni.nヒット範囲ms.Perfect = 1000;
+                this.ct表示用.n現在の値 = 0;
+
+                //CDTXMania.stage結果.st演奏記録.Drums.db演奏型スキル値 = 80.0;
+            }
+
             if (this.ctランク表示.n現在の値 >= 500)
 			{
 				double num2 = ( (double) ( this.ctランク表示.n現在の値 - 500 ) ) / 500.0;
@@ -202,12 +215,10 @@ namespace DTXMania
             #region [ フルコンボ ]
             for (int j = 0; j < 3; j++)
             {   
-                
-                if (this.ct表示用.n現在の値 >= 900)
+                int num14 = 82 + this.n本体X[j];
+                int num15 = 152 + this.n本体Y[j];
+                if (this.ct表示用.n現在の値 >= 0)
                 {
-                    int num14 = 82 + this.n本体X[j];
-                    int num15 = 152 + this.n本体Y[j];
-
                     if (this.n本体X[j] != 0)
                     {
                         if (CDTXMania.stage結果.st演奏記録[j].nPerfect数 == CDTXMania.stage結果.st演奏記録[j].n全チップ数)
@@ -216,7 +227,8 @@ namespace DTXMania
                             {
                                 if (this.txExcellent != null)
                                 {
-                                    this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                                    if( this.ct表示用.n現在の値 >= 900 )
+                                        this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
                                 }
                                 if (!this.bエクセレント音再生済み)
                                 {
@@ -254,7 +266,8 @@ namespace DTXMania
                                 {
                                     this.txExcellent.vc拡大縮小倍率 = new Vector3(num13, num13, 1f);
                                     this.txExcellent.n透明度 = (int)(255.0 * num12);
-                                    this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                                    if( this.ct表示用.n現在の値 >= 900 )
+                                        this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
                                 }
                             }
                         }
@@ -264,7 +277,8 @@ namespace DTXMania
                             {
                                 if (this.txFullCombo != null)
                                 {
-                                    this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                                    if( this.ct表示用.n現在の値 >= 900 )
+                                        this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
                                 }
                                 if (!this.bフルコンボ音再生済み)
                                 {
@@ -298,14 +312,15 @@ namespace DTXMania
                             {
                                 double num12 = ((double)(this.ct表示用.n現在の値 - 900)) / 100.0;
                                 float num13 = (float)(1.1 - 0.1);
+                                //num14 = this.n本体X[j] + ((int)((this.txFullCombo.sz画像サイズ.Width * (1f - num13)) / 2f));
+                                //num15 = this.n本体Y[j] + ((int)((this.txFullCombo.sz画像サイズ.Height * (1f - num13)) / 2f));
                                 if (this.txFullCombo != null)
                                 {
                                     this.txFullCombo.vc拡大縮小倍率 = new Vector3(num13, num13, 1f);
                                     this.txFullCombo.n透明度 = (int)(255.0 * num12);
-                                    num14 = this.n本体X[j] + ((int)((this.txFullCombo.sz画像サイズ.Width * (1f - num13)) / 2f));
-                                    num15 = this.n本体Y[j] + ((int)((this.txFullCombo.sz画像サイズ.Height * (1f - num13)) / 2f));
 
-                                    this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                                    if( this.ct表示用.n現在の値 >= 900 )
+                                        this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
                                 }
                             }
                         }
