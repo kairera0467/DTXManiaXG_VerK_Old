@@ -670,7 +670,7 @@ namespace DTXMania
 			this.sound決定音			= new Cシステムサウンド( @"Sounds\Decide.ogg",			false, false, false );
 			this.sound変更音			= new Cシステムサウンド( @"Sounds\Change.ogg",			false, false, false );
 			this.sound取消音			= new Cシステムサウンド( @"Sounds\Cancel.ogg",			false, false, true  );
-			this.sound歓声音			= new Cシステムサウンド( @"Sounds\Audience.ogg",		false, true,  true  );
+			this.sound歓声音			= new Cシステムサウンド( @"Sounds\Audience.ogg",		false, false,  true  );
 			this.soundSTAGEFAILED音		= new Cシステムサウンド( @"Sounds\Stage failed.ogg",	false, true,  true  );
 			this.soundゲーム開始音		= new Cシステムサウンド( @"Sounds\Game start.ogg",		false, false, false );
 			this.soundゲーム終了音		= new Cシステムサウンド( @"Sounds\Game end.ogg",		false, true,  false );
