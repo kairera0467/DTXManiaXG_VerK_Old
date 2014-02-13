@@ -231,11 +231,15 @@ namespace DTXMania
 				this.bAutoPlay.GtR = false;
 				this.bAutoPlay.GtG = false;
 				this.bAutoPlay.GtB = false;
+                this.bAutoPlay.GtY = false;
+                this.bAutoPlay.GtP = false;
 				this.bAutoPlay.GtPick = false;
 				this.bAutoPlay.GtW = false;
 				this.bAutoPlay.BsR = false;
 				this.bAutoPlay.BsG = false;
 				this.bAutoPlay.BsB = false;
+                this.bAutoPlay.BsY = false;
+                this.bAutoPlay.BsP = false;
 				this.bAutoPlay.BsPick = false;
 				this.bAutoPlay.BsW = false;
 
@@ -1450,7 +1454,7 @@ namespace DTXMania
             }
             return (int)ERANK.E;
         }
-        internal static double tゲーム型スキルを計算して返す(double dbLevel, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        internal static double tゲーム型スキルを計算して返す(double dbLevel, int nLevelDec, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
         {
             //こちらはプレイヤースキル・全曲スキルに加算される得点。いわゆる曲別スキル。
             double dbPERFECT率 = (100.0 * nPerfect / nTotal);
@@ -1462,13 +1466,13 @@ namespace DTXMania
             if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
                 ret = 0.0;
 
-            if (dbLevel > 100)
+            if (dbLevel >= 100)
             {
                 dbLevel = dbLevel / 100.0;
             }
             else if (dbLevel < 100)
             {
-                dbLevel = dbLevel / 10.0;
+                dbLevel = dbLevel / 10.0 + ( nLevelDec != 0 ? 0 : nLevelDec / 100.0 );
             }
 
             ret = ((dbRate * dbLevel * 0.2));
@@ -1564,15 +1568,15 @@ namespace DTXMania
             }
             return (int)ERANK.E;
         }
-        internal static double t旧ゲーム型スキルを計算して返す(double dbLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        internal static double t旧ゲーム型スキルを計算して返す( double dbLevel, int nLevelDec, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
         {
             double ret;
-            if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
+            if ( ( nTotal == 0 ) || ( ( nPerfect == 0 ) && ( nCombo == 0 ) ) )
                 ret = 0.0;
 
-            ret = ((dbLevel * ((nPerfect * 0.8 + nCombo * 0.2) / ((double)nTotal))) / 2.0);
-            ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
-            if (CDTXMania.ConfigIni.bドラムが全部オートプレイである)
+            ret = ( ( dbLevel * ( ( nPerfect * 0.8 + nCombo * 0.2 ) / ( ( double )nTotal ) ) ) / 2.0 );
+            ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
+            if ( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
             {
                 return 0;
             }

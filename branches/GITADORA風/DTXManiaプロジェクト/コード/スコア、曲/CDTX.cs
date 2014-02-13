@@ -211,7 +211,7 @@ namespace DTXMania
 					this.dshow.Dispose();
 					this.dshow = null;
 					
-					Trace.TraceInformation( "DirectShow動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
+					Trace.TraceInformation( "動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
 				}
 
 				this.bDispose済み = true;
@@ -631,9 +631,11 @@ namespace DTXMania
 						case 0xba:
 						case 0xbb:
 						case 0xbc:
+
                         case 0xbd:
                         case 0xbe:
-                        case 197:
+
+                        case 0xC5:
                         case 198:
                         case 200:
                         case 201:
@@ -678,7 +680,6 @@ namespace DTXMania
 					return true;
 				}
 			}
-
 			public bool bIsAutoPlayed;						// 2011.6.10 yyagi
             public bool b演奏終了後も再生が続くチップである; // #32248 2013.10.14 yyagi
 			
@@ -733,8 +734,8 @@ namespace DTXMania
 					"SE18", "SE19", "??", "??", "??", "??", "??", "??", 
 					"SE20", "SE21", "SE22", "SE23", "SE24", "SE25", "SE26", "SE27",
 					"SE28", "SE29", "??", "??", "??", "??", "??", "??", 
-					"SE30", "SE31", "SE32", "??", "??", "??", "??", "??", 
-					"??", "??", "??", "??", "??", "??", "??", "??", 
+					"SE30", "SE31", "SE32", "---Y-", "--BY-", "-G-Y-", "-GBY-", "R--Y-", 
+					"R-BY-", "RG-Y", "RGBY-", "----P", "--B-P", "-G--P", "-GB-P", "R---P", 
 					"ベースOPEN", "ベース - - B", "ベース - G -", "ベース - G B", "ベース R - -", "ベース R - B", "ベース R G -", "ベース R G B",
 					"ベースWailing", "??", "??", "??", "??", "??", "??", "ベースWailing音切替",
 					"??", "HHClose(空うち)", "Snare(空うち)", "Kick(空うち)", "HiTom(空うち)", "LowTom(空うち)", "Cymbal(空うち)", "FloorTom(空うち)",
@@ -766,16 +767,16 @@ namespace DTXMania
 					5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, //0x10 ～ 0x1F　ドラム演奏
 					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, //0x20 ～ 0x2F　ギター演奏
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x30 ～ 0x3F　ドラム不可視
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8, 8, 8, 8, //0x40 ～ 0x4F　未使用(0x4Fはボーナスチップ)
+					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 8, //0x40 ～ 0x4F　未使用(0x4Fはボーナスチップ)
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x50 ～ 0x5F　小節線、拍線、フィル、AVIなど
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x60 ～ 0x6F　BGA、SE
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x70 ～ 0x7F　SE
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x80 ～ 0x8F　SE
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0x90 ～ 0x9F　SE
-					7, 7, 7, 7, 7, 7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, //0xA0 ～ 0xAF　
+					5, 5, 5, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, //0x90 ～ 0x9F　SE、Guitar5レーン
+					7, 7, 7, 7, 7, 7, 7, 7, 5, 7, 7, 7, 7, 7, 7, 7, //0xA0 ～ 0xAF　
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xB0 ～ 0xBF　
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xC0 ～ 0xCF　
-					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xD0 ～ 0xDF　
+					7, 7, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xD0 ～ 0xDF　
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xE0 ～ 0xEF　
 					5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, //0xF0 ～ 0xFF　
 				};
@@ -1295,6 +1296,7 @@ namespace DTXMania
 		public string strフォルダ名;
 		public string TITLE;
         public bool b強制的にXG譜面にする;
+        public bool bVol137to100;
 #if TEST_NOTEOFFMODE
 		public STLANEVALUE<bool> b演奏で直前の音を消音する;
 //		public bool bHH演奏で直前のHHを消音する;
@@ -1329,6 +1331,7 @@ namespace DTXMania
 			stdgbvalue.Guitar = 0;
 			stdgbvalue.Bass = 0;
 			this.LEVEL = stdgbvalue;
+            this.LEVELDEC = stdgbvalue;
 			for (int i = 0; i < 7; i++) {
 				this.RESULTIMAGE[i] = "";
 				this.RESULTMOVIE[i] = "";
@@ -1361,6 +1364,7 @@ namespace DTXMania
 			this.nRESULTMOVIE用優先順位 = new int[ 7 ];
 			this.nRESULTSOUND用優先順位 = new int[ 7 ];
             this.b強制的にXG譜面にする = false;
+            this.bVol137to100 = false;
 
 			#region [ 2011.1.1 yyagi GDA->DTX変換テーブル リファクタ後 ]
 			STGDAPARAM[] stgdaparamArray = new STGDAPARAM[] {		// GDA->DTX conversion table
@@ -1496,7 +1500,7 @@ namespace DTXMania
 								continue;
 							}
 						}
-                        if( this.listAVI.ContainsKey( chip.n整数値 ) && ( this.listAVI[ chip.n整数値 ].avi != null ) || ( this.listDS.ContainsKey( chip.n整数値 ) && ( this.listDS[ chip.n整数値 ].dshow != null ) ) )
+						if( this.listAVI.ContainsKey( chip.n整数値 ) && ( this.listAVI[ chip.n整数値 ].avi != null ) || ( this.listDS.ContainsKey( chip.n整数値 ) && ( this.listDS[ chip.n整数値 ].dshow != null ) ) )
 						{
 							chip.eAVI種別 = EAVI種別.AVI;
 							chip.rAVI = this.listAVI[ chip.n整数値 ];
@@ -2042,7 +2046,7 @@ namespace DTXMania
                                 case 0x1b:
                                 case 0x1c:
                                     {
-                                        chip.nチャンネル番号 = 0x76;
+                                        chip.nチャンネル番号 = 0x16;
                                         continue;
                                     }
                             }
@@ -2499,11 +2503,11 @@ namespace DTXMania
                             case Eランダムモード.RANDOM:
                                 if (num5 == 19)
                                 {
-                                    current.nチャンネル番号 = ((num == 0) ? 19 : 27);
+                                    current.nチャンネル番号 = ((num == 0) ? 19 : 0x1B);
                                 }
                                 else
                                 {
-                                    current.nチャンネル番号 = ((num == 1) ? 19 : 27);
+                                    current.nチャンネル番号 = ((num == 1) ? 19 : 0x1B);
                                 }
                                 break;
                             case Eランダムモード.SUPERRANDOM:
@@ -3060,8 +3064,6 @@ namespace DTXMania
 					CSound sound = wc.rSound[ index ];
 					if( sound != null )
 					{
-						sound.n音量 = (int) ( ( (double) ( nVol * wc.n音量 ) ) / 100.0 );
-						sound.n位置 = wc.n位置;
 						if( bBad )
 						{
 							sound.db周波数倍率 = ( (float) ( 100 + ( ( ( CDTXMania.Random.Next( 3 ) + 1 ) * 7 ) * ( 1 - ( CDTXMania.Random.Next( 2 ) * 2 ) ) ) ) ) / 100f;
@@ -3071,6 +3073,9 @@ namespace DTXMania
 							sound.db周波数倍率 = 1.0;
 						}
 						sound.db再生速度 = ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0;
+						// 再生速度によって、WASAPI/ASIOで使う使用mixerが決まるため、付随情報の設定(音量/PAN)は、再生速度の設定後に行う
+						sound.n音量 = (int) ( ( (double) ( nVol * wc.n音量 ) ) / 100.0 );
+						sound.n位置 = wc.n位置;
 						sound.t再生を開始する();
 					}
 					wc.n再生開始時刻[ wc.n現在再生中のサウンド番号 ] = n再生開始システム時刻ms;
@@ -3375,22 +3380,22 @@ namespace DTXMania
 						}
 						#endregion
 						#region [ 必要に応じて空打ち音を0小節に定義する ]
-						for ( int m = 0xb1; m <= 0xbc; m++ )			// #28146 2012.4.21 yyagi; bb -> bc
-						{
-							foreach ( CChip chip in this.listChip )
-							{
-								if ( chip.nチャンネル番号 == m )
-								{
-									CChip c = new CChip();
-									c.n発声位置 = 0;
-									c.nチャンネル番号 = chip.nチャンネル番号;
-									c.n整数値 = chip.n整数値;
-									c.n整数値・内部番号 = chip.n整数値・内部番号;
-									this.listChip.Insert( 0, c );
-									break;
-								}
-							}
-						}
+						//for ( int m = 0xb1; m <= 0xbe; m++ )			// #28146 2012.4.21 yyagi; bb -> bc
+						//{
+							//foreach ( CChip chip in this.listChip )
+							//{
+								//if ( chip.nチャンネル番号 == m )
+								//{
+									//CChip c = new CChip();
+									//c.n発声位置 = 0;
+									//c.nチャンネル番号 = chip.nチャンネル番号;
+									//c.n整数値 = chip.n整数値;
+									//c.n整数値・内部番号 = chip.n整数値・内部番号;
+									//this.listChip.Insert( 0, c );
+									//break;
+								//}
+							//}
+						//}
 						#endregion
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );
 						//Trace.TraceInformation( "空打確認時間:             {0}", span.ToString() );
@@ -3626,15 +3631,15 @@ namespace DTXMania
 							{
 								this.n可視チップ数[ c - 0x11 ]++;
 							}
-                            if ((32 <= c && c <= 39) || (147 <= c && c <= 159) || (169 <= c && c <= 175) || (208 <= c && c <= 211))
+                            if ( ( 0x20 <= c ) && ( c <= 0x27 ) || ( 0x93 <= c ) && ( c <= 0x9F ) || ( 0xA9 <= c ) && ( c <= 0xAF ) || ( 0xD0 <= c ) && ( c <= 0xD3 ) )
                             {
 								this.n可視チップ数.Guitar++;
 							}
-                            if ((160 <= c && c <= 167) || (197 <= c && c <= 198) || (200 <= c && c <= 207) || (218 <= c && c <= 223) || (225 <= c && c <= 232))
+                            if ( ( 0xA0 <= c ) && ( c <= 0xA7 ) || ( 0xC5 <= c ) && ( c <= 0xC6 ) || ( 0xC8 <= c ) && ( c <= 0xCF ) || ( 0xDA <= c ) && ( c <= 0xDF ) || ( 0xE1 <= c ) && ( c <= 0xE8 ) )
                             {
 								this.n可視チップ数.Bass++;
 							}
-                            if ( c == 0x4F )
+                            if ( ( c >= 0x4C ) && ( c <= 0x4F ) )
                             {
                                 this.nボーナスチップ数++;
                             }
@@ -3759,7 +3764,7 @@ namespace DTXMania
 			}
 		}
         /// <summary>
-        /// サウンドミキサーにサウンドを登録・削除する時刻を事前に算出する
+	    /// サウンドミキサーにサウンドを登録・削除する時刻を事前に算出する
 	    /// </summary>
 		public void PlanToAddMixerChannel()
 		{
@@ -3783,16 +3788,22 @@ namespace DTXMania
 					case 0x11:	case 0x12:	case 0x13:	case 0x14:	case 0x15:	case 0x16:	case 0x17:	case 0x18:	case 0x19:	case 0x1A:  case 0x1B:  case 0x1C:
 					// Gt演奏チャネル
 					case 0x20:	case 0x21:	case 0x22:	case 0x23:	case 0x24:	case 0x25:	case 0x26:	case 0x27:	case 0x28:
+                    case 0x93:　case 0x94:　case 0x95:　case 0x96:　case 0x97:　case 0x98:　case 0x99:　case 0x9A:　case 0x9B:  case 0x9C:　case 0x9D:　case 0x9E:　case 0x9F:
+                    case 0xA9:  case 0xAA:　case 0xAB:　case 0xAC:　case 0xAD:　case 0xAE:　case 0xAF:
+                    case 0xD0:  case 0xD1:  case 0xD2:  case 0xD3:
 					// Bs演奏チャネル
 					case 0xA0:	case 0xA1:	case 0xA2:	case 0xA3:	case 0xA4:	case 0xA5:	case 0xA6:	case 0xA7:	case 0xA8:
+                    case 0xC5:  case 0xC6:  case 0xC8:  case 0xC9:  case 0xCA:  case 0xCB:  case 0xCC:  case 0xCD:  case 0xCE:  case 0xCF:
+                    case 0xDA:  case 0xDB:  case 0xDC:  case 0xDD:  case 0xDE:  case 0xDF:
+                    case 0xE1:  case 0xE2:  case 0xE3:  case 0xE4:  case 0xE5:  case 0xE6:  case 0xE7:  case 0xE8:
 					// Dr不可視チップ
 					case 0x31:	case 0x32:	case 0x33:	case 0x34:	case 0x35:	case 0x36:	case 0x37:
-					case 0x38:	case 0x39:	case 0x3A:
+					case 0x38:	case 0x39:	case 0x3A:  case 0x3B:　case 0x3C:
 					// Dr/Gt/Bs空打ち
 					case 0xB1:	case 0xB2:	case 0xB3:	case 0xB4:	case 0xB5:	case 0xB6:	case 0xB7:	case 0xB8:
-					case 0xB9:	case 0xBA:	case 0xBB:	case 0xBC:
+					case 0xB9:	case 0xBA:	case 0xBB:	case 0xBC:　case 0xBD:　case 0xBE:
 					// フィルインサウンド
-					case 0x1F:	case 0x2F:	case 0xAF:
+					case 0x1F:	case 0x2F:	//case 0xAF:
 					// 自動演奏チップ
 					case 0x61:	case 0x62:	case 0x63:	case 0x64:	case 0x65:	case 0x66:	case 0x67:	case 0x68:	case 0x69:
 					case 0x70:	case 0x71:	case 0x72:	case 0x73:	case 0x74:	case 0x75:	case 0x76:	case 0x77:	case 0x78:	case 0x79:
@@ -3835,11 +3846,11 @@ namespace DTXMania
 
 						CChip c_AddMixer = new CChip()
 						{
-							nチャンネル番号 = 0xFA,
+							nチャンネル番号 = 0xEA,
 							n整数値 = pChip.n整数値,
 							n整数値・内部番号 = pChip.n整数値・内部番号,
 							n発声時刻ms = nAddMixer時刻ms,
-                            n発声位置 = nAddMixer位置,
+							n発声位置 = nAddMixer位置,
                             b演奏終了後も再生が続くチップである = false
 						};
 						listAddMixerChannel.Add( c_AddMixer );
@@ -3860,11 +3871,11 @@ namespace DTXMania
 						if ( n新RemoveMixer時刻ms < pChip.n発声時刻ms + duration )	// 曲の最後でサウンドが切れるような場合は
 						{
                             CChip c_AddMixer_noremove = c_AddMixer;
-                            c_AddMixer_noremove.b演奏終了後も再生が続くチップである = true;
-                            listAddMixerChannel[listAddMixerChannel.Count - 1] = c_AddMixer_noremove;
-                            //continue;                                                             // 発声位置の計算ができないので、Mixer削除をあきらめる・・・のではなく
-                                                                                                    // #32248 2013.10.15 yyagi 演奏終了後も再生を続けるチップであるというフラグをpChip内に立てる
-                            break;
+	                        c_AddMixer_noremove.b演奏終了後も再生が続くチップである = true;
+	                        listAddMixerChannel[ listAddMixerChannel.Count - 1 ] = c_AddMixer_noremove;
+	                        //continue;                 // 発声位置の計算ができないので、Mixer削除をあきらめる・・・のではなく
+	                                                    // #32248 2013.10.15 yyagi 演奏終了後も再生を続けるチップであるというフラグをpChip内に立てる
+	                        break;
 						}
 						#region [ 未使用コード ]
 						//if ( n新RemoveMixer時刻ms < pChip.n発声時刻ms + duration )	// 曲の最後でサウンドが切れるような場合
@@ -3905,7 +3916,7 @@ namespace DTXMania
 							}
 							CChip c = new CChip()											// mixer削除時刻を更新(遅延)する
 							{
-								nチャンネル番号 = 0xFB,
+								nチャンネル番号 = 0xEB,
 								n整数値 = listRemoveTiming[ index ].n整数値,
 								n整数値・内部番号 = listRemoveTiming[ index ].n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -3921,7 +3932,7 @@ namespace DTXMania
 						{																	// 発音していたが既にmixer削除確定していたなら
 							CChip c = new CChip()											// 新しくmixer削除候補として追加する
 							{
-								nチャンネル番号 = 0xFB,
+								nチャンネル番号 = 0xEB,
 								n整数値 = pChip.n整数値,
 								n整数値・内部番号 = pChip.n整数値・内部番号,
 								n発声時刻ms = n新RemoveMixer時刻ms,
@@ -4010,16 +4021,43 @@ namespace DTXMania
 		/// </summary>
 		public void SwapGuitarBassInfos()						// #24063 2011.1.24 yyagi ギターとベースの譜面情報入替
 		{
-			for (int i = this.listChip.Count - 1; i >= 0; i--) {
-				if (listChip[i].e楽器パート == E楽器パート.BASS) {
-					listChip[i].e楽器パート = E楽器パート.GUITAR;
-					listChip[i].nチャンネル番号 -= ( 0xA0 - 0x20 );
+			for( int i = this.listChip.Count - 1; i >= 0; i-- )
+            {
+				if( listChip[ i ].e楽器パート == E楽器パート.BASS )
+                {
+					listChip[ i ].e楽器パート = E楽器パート.GUITAR;
+                    if( listChip[ i ].nチャンネル番号 >= 0xA0 && listChip[ i ].nチャンネル番号 <= 0xA8 )
+					    listChip[ i ].nチャンネル番号 -= ( 0xA0 - 0x20 );
+                    else if( listChip[ i ].nチャンネル番号 == 0xC5 || listChip[ i ].nチャンネル番号 == 0xC6 )
+                        listChip[ i ].nチャンネル番号 -= 0x32;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xC8 && listChip[ i ].nチャンネル番号 <= 0xCF )
+                        listChip[ i ].nチャンネル番号 -= 0x33;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xDA && listChip[ i ].nチャンネル番号 <= 0xDC )
+                        listChip[ i ].nチャンネル番号 -= 0x3D;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xDD && listChip[ i ].nチャンネル番号 <= 0xDF )
+                        listChip[ i ].nチャンネル番号 -= 0x34;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xE1 && listChip[ i ].nチャンネル番号 <= 0xE8 )
+                        listChip[ i ].nチャンネル番号 -= 0x35;
 				}
-				else if ( listChip[i].e楽器パート == E楽器パート.GUITAR )
+				else if( listChip[i].e楽器パート == E楽器パート.GUITAR )
 				{
-					listChip[i].e楽器パート = E楽器パート.BASS;
-					listChip[i].nチャンネル番号 += ( 0xA0 - 0x20 );
+					listChip[ i ].e楽器パート = E楽器パート.BASS;
+
+                    if( listChip[ i ].nチャンネル番号 >= 0x20 && listChip[ i ].nチャンネル番号 <= 0x28 )
+					    listChip[ i ].nチャンネル番号 += ( 0xA0 - 0x20 );
+                    else if( listChip[ i ].nチャンネル番号 == 0x93 || listChip[ i ].nチャンネル番号 == 0x94 )
+                        listChip[ i ].nチャンネル番号 += 0x32;
+                    else if( listChip[ i ].nチャンネル番号 >= 0x95 && listChip[ i ].nチャンネル番号 <= 0x9C )
+                        listChip[ i ].nチャンネル番号 += 0x33;
+                    else if( listChip[ i ].nチャンネル番号 >= 0x9D && listChip[ i ].nチャンネル番号 <= 0x9F )
+                        listChip[ i ].nチャンネル番号 += 0x3D;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xA9 && listChip[ i ].nチャンネル番号 <= 0xAB )
+                        listChip[ i ].nチャンネル番号 += 0x34;
+                    else if( listChip[ i ].nチャンネル番号 >= 0xAC && listChip[ i ].nチャンネル番号 <= 0xD3 )
+                        listChip[ i ].nチャンネル番号 += 0x35;
 				}
+
+                //Wailing
 				else if ( listChip[ i ].nチャンネル番号 == 0x28 )		// #25215 2011.5.21 yyagi wailingはE楽器パート.UNKNOWNが割り当てられているので個別に対応
 				{
 					listChip[ i ].nチャンネル番号 += ( 0xA0 - 0x20 );
@@ -4032,6 +4070,10 @@ namespace DTXMania
 			int t = this.LEVEL.Bass;
 			this.LEVEL.Bass = this.LEVEL.Guitar;
 			this.LEVEL.Guitar = t;
+
+            t = this.LEVELDEC.Bass;
+			this.LEVELDEC.Bass = this.LEVELDEC.Guitar;
+			this.LEVELDEC.Guitar = t;
 
 			t = this.n可視チップ数.Bass;
 			this.n可視チップ数.Bass = this.n可視チップ数.Guitar;
@@ -4430,18 +4472,15 @@ namespace DTXMania
 				//-----------------
 				else if(
 					strコマンド.StartsWith( "DLEVEL", StringComparison.OrdinalIgnoreCase ) ||
-                    strコマンド.StartsWith( "DLEVELDEC", StringComparison.OrdinalIgnoreCase ) ||
 					strコマンド.StartsWith( "PLAYLEVEL", StringComparison.OrdinalIgnoreCase ) )
 				{
 					this.t入力・パラメータ食い込みチェック( "DLEVEL", ref strコマンド, ref strパラメータ );
-                    this.t入力・パラメータ食い込みチェック( "DLEVELDEC", ref strコマンド, ref strパラメータ);
 					this.t入力・パラメータ食い込みチェック( "PLAYLEVEL", ref strコマンド, ref strパラメータ );
 
 					int dlevel;
 					if( int.TryParse( strパラメータ, out dlevel ) )
 					{
 						this.LEVEL.Drums = Math.Min( Math.Max( dlevel, 0 ), 1000 );	// 0～100 に丸める
-                        this.LEVELDEC.Drums = Math.Min( Math.Max( dlevel, 0 ), 10 );
 					}
 				}
 				//-----------------
@@ -4474,6 +4513,17 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
+                #region[ DLVDEC ]
+                else if( strコマンド.StartsWith( "DLVDEC", StringComparison.OrdinalIgnoreCase ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "DLVDEC", ref strコマンド, ref strパラメータ);
+                    int dleveldec;
+					if( int.TryParse( strパラメータ, out dleveldec ) )
+					{
+                        this.LEVELDEC.Drums = Math.Min( Math.Max( dleveldec, 0 ), 10 );
+					}
+                }
+                #endregion
 #if TEST_NOTEOFFMODE
 				else if (str.StartsWith("SUPRESSNOTEOFF_HIHAT", StringComparison.OrdinalIgnoreCase)) {
 					this.t入力・パラメータ食い込みチェック("SUPRESSNOTEOFF_HIHAT", ref str, ref str2);
@@ -4488,8 +4538,8 @@ namespace DTXMania
 					this.bBASS演奏で直前のBASSを消音する = !str2.ToLower().Equals("on");
 				}
 #endif
-				#region [ GENRE ]
-				//-----------------
+                #region [ GENRE ]
+                //-----------------
 				else if( strコマンド.StartsWith( "GENRE", StringComparison.OrdinalIgnoreCase ) )
 				{
 					this.t入力・パラメータ食い込みチェック( "GENRE", ref strコマンド, ref strパラメータ );
@@ -4594,11 +4644,16 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
-                else if( strコマンド.StartsWith( "FORCINGXG" ) )
-	            {
-	                this.t入力・パラメータ食い込みチェック( "FORCINGXG", ref strコマンド, ref strパラメータ );
-	                this.b強制的にXG譜面にする = strパラメータ.ToLower().Equals( "on" );
-	            }
+                else if( strコマンド.StartsWith( "FORCINGXG"  ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "FORCINGXG", ref strコマンド, ref strパラメータ );
+					this.b強制的にXG譜面にする = strパラメータ.ToLower().Equals( "on" );
+                }
+                else if( strコマンド.StartsWith( "VOL7FTO64" ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "VOL7FTO64", ref strコマンド, ref strパラメータ );
+                    this.bVol137to100 = strパラメータ.ToLower().Equals( "on" );
+                }
 				else if( !this.bヘッダのみ )		// ヘッダのみの解析の場合、以下は無視。
 				{
 					#region [ PANEL ]
@@ -6099,7 +6154,8 @@ namespace DTXMania
 			int n音量;
 			if( int.TryParse( strパラメータ, out n音量 ) )
 			{
-				n音量 = Math.Min( Math.Max( n音量, 0 ), 100 );	// 0～100に丸める。
+                if( !bVol137to100 )
+				    n音量 = Math.Min( Math.Max( n音量, 0 ), 100 );	// 0～100に丸める。
 
 				if( this.n無限管理VOL[ zz ] == -zz )	// 初期状態では n無限管理VOL[zz] = - zz である。この場合、#WAVVOLzz, #VOLUMEzz がまだ出現していないことを意味する。
 				{
@@ -6116,6 +6172,16 @@ namespace DTXMania
 
 			return true;
 		}
+
+        private int tWAVVolMax137toMax100( int nMax137Vol )
+        {
+            int nMax100Vol;
+
+            nMax100Vol = (int)( 100.0 / nMax137Vol );
+
+            return nMax100Vol;
+        }
+
 		private bool t入力・行解析・チップ配置( string strコマンド, string strパラメータ, string strコメント )
 		{
 			// (1) コマンドを処理。
@@ -6177,11 +6243,11 @@ namespace DTXMania
 			{
 				this.bチップがある.Drums = true;
 			}
-			else if( ( nチャンネル番号 >= 0x20 ) && ( nチャンネル番号 <= 0x27 ) )
+			else if( ( nチャンネル番号 >= 0x20 ) && ( nチャンネル番号 <= 0x27 ) || ( nチャンネル番号 >= 0x93 ) && ( nチャンネル番号 <= 0x9F ) || ( nチャンネル番号 >= 0xAA ) && ( nチャンネル番号 <= 0xAF ) || ( nチャンネル番号 >= 0xD0 ) && ( nチャンネル番号 <= 0xD3 ) )
 			{
 				this.bチップがある.Guitar = true;
 			}
-			else if( ( nチャンネル番号 >= 0xA0 ) && ( nチャンネル番号 <= 0xa7 ) )
+			else if( ( nチャンネル番号 >= 0xA0 ) && ( nチャンネル番号 <= 0xa7 ) || ( nチャンネル番号 == 0xC5 ) || ( nチャンネル番号 == 0xC6 ) || ( nチャンネル番号 >= 0xC8 ) && ( nチャンネル番号 <= 0xCF ) || ( nチャンネル番号 >= 0xDA ) && ( nチャンネル番号 <= 0xDF ) || ( nチャンネル番号 >= 0xE1 ) && ( nチャンネル番号 <= 0xE8 )  )
 			{
 				this.bチップがある.Bass = true;
 			}
@@ -6335,11 +6401,11 @@ namespace DTXMania
 				{
 					chip.e楽器パート = E楽器パート.DRUMS;
 				}
-                if (( nチャンネル番号 >= 32 && nチャンネル番号 <= 39) || (147 <= nチャンネル番号 && nチャンネル番号 <= 159) || (169 <= nチャンネル番号 && nチャンネル番号 <= 175) || (208 <= nチャンネル番号 && nチャンネル番号 <= 211))
+                if ( ( nチャンネル番号 >= 0x20 && nチャンネル番号 <= 0x27 ) || ( nチャンネル番号 >= 0x93 && nチャンネル番号 <= 0x9F ) || ( nチャンネル番号 >= 0xA9 && nチャンネル番号 <= 0xAF ) || ( nチャンネル番号 >= 0xD0 && nチャンネル番号 <= 0xD3 ) )
                 {
                     chip.e楽器パート = E楽器パート.GUITAR;
                 }
-                if ((nチャンネル番号 >= 160 && nチャンネル番号 <= 167) || (197 <= nチャンネル番号 && nチャンネル番号 <= 198) || (200 <= nチャンネル番号 && nチャンネル番号 <= 207) || (218 <= nチャンネル番号 && nチャンネル番号 <= 223) || (225 <= nチャンネル番号 && nチャンネル番号 <= 232))
+                if ( ( nチャンネル番号 >= 0xA0 && nチャンネル番号 <= 0xA7 ) || ( nチャンネル番号 == 0xC5 ) || ( nチャンネル番号 == 0xC6 ) || ( nチャンネル番号 >= 0xC8 && nチャンネル番号 <= 0xCF ) || ( nチャンネル番号 >= 0xDA && nチャンネル番号 <= 0xDF ) || ( nチャンネル番号 >= 0xE1 && nチャンネル番号 <= 0xE8 ) )
                 {
                     chip.e楽器パート = E楽器パート.BASS;
                 }
