@@ -360,7 +360,6 @@ namespace DTXMania
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanel.png"));
                 }
                 this.txDShow汎用 = new CTexture(CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_score numbers.png"));
 
                 for (int i = 0; i < 1; i++)
                 {
@@ -400,7 +399,6 @@ namespace DTXMania
                 }
                 CDTXMania.t安全にDisposeする(ref this.ds汎用);
                 //テクスチャ 17枚
-                CDTXMania.tテクスチャの解放(ref this.txScore);
                 //CDTXMania.tテクスチャの解放(ref this.txドラム);
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
                 //CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
@@ -1043,7 +1041,6 @@ namespace DTXMania
 
         private CTexture tx黒幕;
         private CTexture txlanes;
-        private CTexture txScore;
         private CTexture txクリップパネル;
         //private CTexture txドラム;
         //private CTexture txフィルインエフェクト;

@@ -319,12 +319,12 @@ namespace FDK
 			}
 		}
 
-        public void AddMixer( CSound cs, double db再生速度, bool _b演奏終了後も再生が続くチップである )
+		public void AddMixer( CSound cs, double db再生速度, bool _b演奏終了後も再生が続くチップである )
 		{
 			cs.b演奏終了後も再生が続くチップである = _b演奏終了後も再生が続くチップである;
 			cs.db再生速度 = db再生速度;
 			cs.tBASSサウンドをミキサーに追加する();
-        }
+		}
 		public void AddMixer( CSound cs, double db再生速度 )
 		{
 			cs.db再生速度 = db再生速度;
@@ -338,7 +338,7 @@ namespace FDK
 		{
 			cs.tBASSサウンドをミキサーから削除する();
 		}
-}
+	}
 	#endregion
 
 	// CSound は、サウンドデバイスが変更されたときも、インスタンスを再作成することなく、新しいデバイスで作り直せる必要がある。
@@ -1135,9 +1135,10 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 					BassMix.BASS_Mixer_ChannelRemove( this._hTempoStream );
 					Bass.BASS_StreamFree( this._hTempoStream );
 				}
-				BassMix.BASS_Mixer_ChannelRemove( this.hBassStream );
-				Bass.BASS_StreamFree( this.hBassStream );
+				BassMix.BASS_Mixer_ChannelRemove( this._hBassStream );
+				Bass.BASS_StreamFree( this._hBassStream );
 				this.hBassStream = -1;
+				this._hBassStream = -1;
 				this._hTempoStream = 0;
 				//-----------------
 				#endregion
@@ -1427,7 +1428,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		/// <param name="user"></param>
 		private void CallbackEndofStream( int handle, int channel, int data, IntPtr user )	// #32248 2013.10.14 yyagi
 		{
-			//			Debug.WriteLine( "Callback!(remove): " + Path.GetFileName( this.strファイル名 ) );
+//			Debug.WriteLine( "Callback!(remove): " + Path.GetFileName( this.strファイル名 ) );
 			if ( b演奏終了後も再生が続くチップである )			// 演奏終了後に再生終了するチップ音のミキサー削除は、再生終了のコールバックに引っ掛けて、自前で行う。
 			{													// そうでないものは、ミキサー削除予定時刻に削除する。
 				tBASSサウンドをミキサーから削除する( channel );

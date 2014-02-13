@@ -50,6 +50,12 @@ namespace FDK
 
 		// メソッド
 
+		/// <summary>
+		/// WASAPIの初期化
+		/// </summary>
+		/// <param name="mode"></param>
+		/// <param name="n希望バッファサイズms">(未使用; 本メソッド内で自動設定する)</param>
+		/// <param name="n更新間隔ms">(未使用; 本メソッド内で自動設定する)</param>
 		public CSoundDeviceWASAPI( Eデバイスモード mode, long n希望バッファサイズms, long n更新間隔ms )
 		{
 			// 初期化。
@@ -73,15 +79,15 @@ namespace FDK
 			// BASS のバージョンチェック。
 			int nBASSVersion = Utils.HighWord( Bass.BASS_GetVersion() );
 			if( nBASSVersion != Bass.BASSVERSION )
-				throw new DllNotFoundException( string.Format( "bass.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSVersion, Bass.BASSVERSION ) );
+				throw new DllNotFoundException( string.Format( "bass.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSVersion, Bass.BASSVERSION ) );
 
 			int nBASSMixVersion = Utils.HighWord( BassMix.BASS_Mixer_GetVersion() );
 			if( nBASSMixVersion != BassMix.BASSMIXVERSION )
-				throw new DllNotFoundException( string.Format( "bassmix.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSMixVersion, BassMix.BASSMIXVERSION ) );
+				throw new DllNotFoundException( string.Format( "bassmix.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSMixVersion, BassMix.BASSMIXVERSION ) );
 
 			int nBASSWASAPIVersion = Utils.HighWord( BassWasapi.BASS_WASAPI_GetVersion() );
 			if( nBASSWASAPIVersion != BassWasapi.BASSWASAPIVERSION )
-				throw new DllNotFoundException( string.Format( "basswasapi.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSWASAPIVersion, BassWasapi.BASSWASAPIVERSION ) );
+				throw new DllNotFoundException( string.Format( "basswasapi.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSWASAPIVersion, BassWasapi.BASSWASAPIVERSION ) );
 			#endregion
 
 			// BASS の設定。
@@ -140,6 +146,7 @@ namespace FDK
 				// Trace.TraceInformation( "Selected Default WASAPI Device: {0}", deviceInfo.name );
 				// Trace.TraceInformation( "MinPeriod={0}, DefaultPeriod={1}", deviceInfo.minperiod, deviceInfo.defperiod );
 				n更新間隔ms = (long) ( deviceInfo.minperiod * 1000 );
+				n希望バッファサイズms = n更新間隔ms + 1;	// 2013.4.25 #31237 yyagi; バッファサイズ設定の完全自動化。更新間隔＝バッファサイズにするとBASS_ERROR_UNKNOWNになるので+1する。
 			}
 			else
 			{
@@ -199,20 +206,20 @@ namespace FDK
 					//-----------------
 					#endregion
 				}
-            }
-            #region [ #31737 WASAPI排他モードのみ利用可能とし、WASAPI共有モードは使用できないようにするために、WASAPI共有モードでの初期化フローを削除する。 ]
-            //else if ( mode == Eデバイスモード.排他 )
+			}
+			#region [ #31737 WASAPI排他モードのみ利用可能とし、WASAPI共有モードは使用できないようにするために、WASAPI共有モードでの初期化フローを削除する。 ]
+			//else if ( mode == Eデバイスモード.排他 )
 			//{
-			//	Trace.TraceInformation("Failed to initialize setting BASS (WASAPI) mode [{0}]", Bass.BASS_ErrorGetCode().ToString() );
-			//	#region [ 排他モードに失敗したのなら共有モードでリトライ。]
-			//	//-----------------
-			//	mode = Eデバイスモード.共有;
-			//	goto Retry;
-			//	//-----------------
-			//	#endregion
-            //}
-            #endregion
-            else
+			//    Trace.TraceInformation("Failed to initialize setting BASS (WASAPI) mode [{0}]", Bass.BASS_ErrorGetCode().ToString() );
+			//    #region [ 排他モードに失敗したのなら共有モードでリトライ。]
+			//    //-----------------
+			//    mode = Eデバイスモード.共有;
+			//    goto Retry;
+			//    //-----------------
+			//    #endregion
+			//}
+			#endregion
+			else
 			{
 				#region [ それでも失敗したら例外発生。]
 				//-----------------

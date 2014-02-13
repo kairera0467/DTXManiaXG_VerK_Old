@@ -11,22 +11,26 @@ namespace DTXCreator.譜面
 
 		public enum E種別
 		{
-			BPM,
-			WAV,
-			BMP,
-			AVI,
-			FI,
-			GtV,
-			GtR,
-			GtG,
-			GtB,
-			GtW,
-			BsV,
-			BsR,
-			BsG,
-			BsB,
-			BsW
-		}
+            BPM,
+            WAV,
+            BMP,
+            AVI,
+            FI,
+            GtV,
+            GtR,
+            GtG,
+            GtB,
+            GtY,
+            GtP,
+            GtW,
+            BsV,
+            BsR,
+            BsG,
+            BsB,
+            BsY,
+            BsP,
+            BsW
+        }
 		public enum ELaneType
 		{
 			BPM,
@@ -119,11 +123,7 @@ namespace DTXCreator.譜面
 
 		public bool bパターンレーンである()
 		{
-			if( ( this.eレーン種別 != E種別.GtR ) && ( this.eレーン種別 != E種別.GtG ) && ( this.eレーン種別 != E種別.GtB ) && ( this.eレーン種別 != E種別.BsR ) && ( this.eレーン種別 != E種別.BsG ) && ( this.eレーン種別 != E種別.BsB ) )
-			{
-				return false;
-			}
-			return true;
-		}
+            return this.eレーン種別 == Cレーン.E種別.GtR || this.eレーン種別 == Cレーン.E種別.GtG || this.eレーン種別 == Cレーン.E種別.GtB || this.eレーン種別 == Cレーン.E種別.GtY || this.eレーン種別 == Cレーン.E種別.GtP || this.eレーン種別 == Cレーン.E種別.BsR || this.eレーン種別 == Cレーン.E種別.BsG || this.eレーン種別 == Cレーン.E種別.BsB || this.eレーン種別 == Cレーン.E種別.BsY || this.eレーン種別 == Cレーン.E種別.BsP;
+        }
 	}
 }
