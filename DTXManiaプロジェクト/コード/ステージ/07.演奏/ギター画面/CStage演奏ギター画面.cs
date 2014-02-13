@@ -158,10 +158,11 @@ namespace DTXMania
 				this.t進行描画・背景();
                 this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
-                if (CDTXMania.ConfigIni.bShowMusicInfo)
-				    this.t進行描画・ステータスパネル();
-				this.t進行描画・パネル文字列();
 				this.t進行描画・BGA();
+                if (CDTXMania.ConfigIni.bShowMusicInfo)
+				    this.t進行描画・パネル文字列();
+                if (CDTXMania.ConfigIni.nInfoType == 1)
+				    this.t進行描画・ステータスパネル();
                 if (CDTXMania.ConfigIni.bShowScore)
                     this.t進行描画・スコア();
 				this.t進行描画・レーンフラッシュGB();
