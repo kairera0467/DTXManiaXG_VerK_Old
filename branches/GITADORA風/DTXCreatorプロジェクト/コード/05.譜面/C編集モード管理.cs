@@ -22,7 +22,7 @@ namespace DTXCreator.譜面
 			if( e.Y < ( C譜面管理.nレーン割付チップ番号表示高さdot + 10 ) )
 			{
 				Cレーン lc = this.mgr譜面管理者ref.listレーン[ this.n現在のチップカーソルがあるレーン番号0to ];
-				if( ( ( ( lc.eレーン種別 == Cレーン.E種別.GtR ) || ( lc.eレーン種別 == Cレーン.E種別.GtG ) ) || ( ( lc.eレーン種別 == Cレーン.E種別.GtB ) || ( lc.eレーン種別 == Cレーン.E種別.BsR ) ) ) || ( ( lc.eレーン種別 == Cレーン.E種別.BsG ) || ( lc.eレーン種別 == Cレーン.E種別.BsB ) ) )
+                if (lc.eレーン種別 == Cレーン.E種別.GtR || lc.eレーン種別 == Cレーン.E種別.GtG || lc.eレーン種別 == Cレーン.E種別.GtB || lc.eレーン種別 == Cレーン.E種別.GtY || lc.eレーン種別 == Cレーン.E種別.GtP || lc.eレーン種別 == Cレーン.E種別.BsR || lc.eレーン種別 == Cレーン.E種別.BsG || lc.eレーン種別 == Cレーン.E種別.BsB || lc.eレーン種別 == Cレーン.E種別.BsY || lc.eレーン種別 == Cレーン.E種別.BsP)
 				{
 					return;
 				}
@@ -136,10 +136,14 @@ namespace DTXCreator.譜面
 					case Cレーン.E種別.GtR:
 					case Cレーン.E種別.GtG:
 					case Cレーン.E種別.GtB:
-					case Cレーン.E種別.BsR:
+                    case Cレーン.E種別.GtY:
+                    case Cレーン.E種別.GtP:
+                    case Cレーン.E種別.BsR:
 					case Cレーン.E種別.BsG:
 					case Cレーン.E種別.BsB:
-					case Cレーン.E種別.BPM:
+                    case Cレーン.E種別.BsY:
+                    case Cレーン.E種別.BsP:
+                    case Cレーン.E種別.BPM:
 						num = -1;
 						break;
 
@@ -192,7 +196,7 @@ namespace DTXCreator.譜面
 							}
 							this._Form.mgrUndoRedo管理者.tトランザクション記録を終了する();
 						}
-						else if( ( ( cレーン.eレーン種別 == Cレーン.E種別.GtR ) || ( cレーン.eレーン種別 == Cレーン.E種別.GtG ) ) || ( cレーン.eレーン種別 == Cレーン.E種別.GtB ) )
+                        else if (cレーン.eレーン種別 == Cレーン.E種別.GtR || cレーン.eレーン種別 == Cレーン.E種別.GtG || cレーン.eレーン種別 == Cレーン.E種別.GtB || cレーン.eレーン種別 == Cレーン.E種別.GtY || cレーン.eレーン種別 == Cレーン.E種別.GtP)
 						{
 							if( flag )
 							{
@@ -211,7 +215,7 @@ namespace DTXCreator.譜面
 								this.mgr譜面管理者ref.tチップを配置または置換する( this.n現在のチップカーソルがあるレーン番号0to, this.n現在のチップカーソルの譜面先頭からの位置grid, 1, 0f, false );
 							}
 						}
-						else if( ( ( cレーン.eレーン種別 == Cレーン.E種別.BsR ) || ( cレーン.eレーン種別 == Cレーン.E種別.BsG ) ) || ( cレーン.eレーン種別 == Cレーン.E種別.BsB ) )
+                        else if ( cレーン.eレーン種別 == Cレーン.E種別.BsR || cレーン.eレーン種別 == Cレーン.E種別.BsG || cレーン.eレーン種別 == Cレーン.E種別.BsB || cレーン.eレーン種別 == Cレーン.E種別.BsY || cレーン.eレーン種別 == Cレーン.E種別.BsP )
 						{
 							if( flag )
 							{

@@ -27,8 +27,6 @@ namespace DTXMania
                     this.txジャケット画像 = CDTXMania.tテクスチャの生成(path);
                 }
 
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Score numbers_Guitar.png"));
-
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -38,7 +36,6 @@ namespace DTXMania
 			{
                 CDTXMania.tテクスチャの解放( ref this.txジャケットパネル );
                 CDTXMania.tテクスチャの解放( ref this.txジャケット画像 );
-                CDTXMania.tテクスチャの解放( ref this.txScore );
                 base.OnManagedリソースの解放();
 			}
 		}
@@ -80,7 +77,6 @@ namespace DTXMania
 		//private STATUSPANEL[] stパネルマップ;
         private CTexture txジャケットパネル;
         private CTexture txジャケット画像;
-        private CTexture txScore;
         //-----------------
 		#endregion
 	}

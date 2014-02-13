@@ -160,6 +160,78 @@ namespace DTXMania
 
         public override void On活性化()
         {
+
+            #region [ 本体位置 ]
+
+            for (int i = 0; i < 3; i++)
+            {
+                this.n本体X[i] = 0;
+            }
+
+            if (CDTXMania.ConfigIni.bDrums有効)
+            { 
+                this.n本体X[0] = 23;
+            }
+            else if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                this.n本体X[1] = 383;
+                this.n本体X[2] = 647;
+                this.nグラフX = 267;
+
+                if (CDTXMania.ConfigIni.bGraph有効)
+                {
+                    if (!CDTXMania.DTX.bチップがある.Bass)
+                    {
+                        if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                        {
+                            this.n本体X[2] = this.n本体X[2] - this.nグラフX;
+                            this.n本体X[1] = 0;
+                        }
+                        else
+                        {
+                            this.n本体X[1] = this.n本体X[1] + this.nグラフX;
+                            this.n本体X[2] = 0;
+                        }
+                    }
+                    else if (!CDTXMania.DTX.bチップがある.Guitar)
+                    {
+                        if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                        {
+                            this.n本体X[1] = this.n本体X[1] + this.nグラフX;
+                            this.n本体X[2] = 0;
+                        }
+                        else
+                        {
+                            this.n本体X[2] = this.n本体X[2] - this.nグラフX;
+                            this.n本体X[1] = 0;
+                        }
+                    }
+                    else if (!CDTXMania.ConfigIni.bギターが全部オートプレイである && CDTXMania.ConfigIni.bベースが全部オートプレイである)
+                    {
+                        this.n本体X[1] = this.n本体X[1] + this.nグラフX;
+                        this.n本体X[2] = 0;
+                    }
+                    else if (CDTXMania.ConfigIni.bギターが全部オートプレイである && !CDTXMania.ConfigIni.bベースが全部オートプレイである)
+                    {
+                        this.n本体X[2] = this.n本体X[2] - this.nグラフX;
+                        this.n本体X[1] = 0;
+                    }
+                }
+            }
+
+            #endregion
+
+            if (CDTXMania.ConfigIni.bDrums有効)
+            {
+                this.n曲名X = 856;
+                this.n曲名Y = 630;
+            }
+            else if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                this.n曲名X = 506;
+                this.n曲名Y = 603;
+            }
+
             this.ft表示用フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 26f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ft称号フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.prv表示用フォント = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str曲名表示フォント ), 20, FontStyle.Regular );
@@ -369,57 +441,126 @@ namespace DTXMania
                     rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
                 }
 
-                if ( CDTXMania.ConfigIni.bDrums有効 )
-                    this.txSongName.t2D描画(CDTXMania.app.Device, 856, 630);
-                else if ( CDTXMania.ConfigIni.bGuitar有効 )
-                    this.txSongName.t2D描画(CDTXMania.app.Device, 506, 630);
+                this.txSongName.t2D描画(CDTXMania.app.Device, this.n曲名X, this.n曲名Y);
+
+                double dbPERFECT率 = 0;
+                double dbGREAT率 = 0;
+                double dbGOOD率 = 0;
+                double dbPOOR率 = 0;
+                double dbMISS率 = 0;
+                double dbMAXCOMBO率 = 0;
 
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                 {
-                    this.txスキルパネル.t2D描画(CDTXMania.app.Device, 23, 242);
-                    this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, 23, 242);
-                    this.t小文字表示(100, 314, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect));
-                    this.t小文字表示(100, 344, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great));
-                    this.t小文字表示(100, 374, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good));
-                    this.t小文字表示(100, 404, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor));
-                    this.t小文字表示(100, 434, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss));
-                    this.t小文字表示(100, 464, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値));
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (this.n本体X[i] != 0)
+                        {
+                            this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[i], 242);
+                            this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, this.n本体X[i], 242);
 
-                    int n現在のノーツ数 = 
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Perfect +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Great +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Good +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss;
+                            if (i == 0)
+                            {
+                                this.t小文字表示(77 + this.n本体X[i], 314, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Perfect));
+                                this.t小文字表示(77 + this.n本体X[i], 344, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Great));
+                                this.t小文字表示(77 + this.n本体X[i], 374, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Good));
+                                this.t小文字表示(77 + this.n本体X[i], 404, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Poor));
+                                this.t小文字表示(77 + this.n本体X[i], 434, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Miss));
+                                this.t小文字表示(77 + this.n本体X[i], 464, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値));
 
-                    double dbPERFECT率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect) / n現在のノーツ数);
-                    double dbGREAT率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great / n現在のノーツ数));
-                    double dbGOOD率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good / n現在のノーツ数));
-                    double dbPOOR率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor / n現在のノーツ数));
-                    double dbMISS率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss / n現在のノーツ数));
-                    double dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値 / n現在のノーツ数));
+                                int n現在のノーツ数 =
+                                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[i].Perfect +
+                                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[i].Great +
+                                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[i].Good +
+                                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[i].Poor +
+                                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[i].Miss;
 
-                    if(double.IsNaN(dbPERFECT率))
-                        dbPERFECT率 = 0;
-                    if(double.IsNaN(dbGREAT率))
-                        dbGREAT率 = 0;
-                    if (double.IsNaN(dbGOOD率))
-                        dbGOOD率 = 0;
-                    if (double.IsNaN(dbPOOR率))
-                        dbPOOR率 = 0;
-                    if (double.IsNaN(dbMISS率))
-                        dbMISS率 = 0;
-                    if (double.IsNaN(dbMAXCOMBO率))
-                        dbMAXCOMBO率 = 0;
+                                dbPERFECT率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Perfect) / n現在のノーツ数);
+                                dbGREAT率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Great / n現在のノーツ数));
+                                dbGOOD率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Good / n現在のノーツ数));
+                                dbPOOR率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Poor / n現在のノーツ数));
+                                dbMISS率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Miss / n現在のノーツ数));
+                                dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値 / n現在のノーツ数));
 
-                    this.t小文字表示(190, 314, string.Format("{0,3:##0}%", dbPERFECT率));
-                    this.t小文字表示(190, 344, string.Format("{0,3:##0}%", dbGREAT率));
-                    this.t小文字表示(190, 374, string.Format("{0,3:##0}%", dbGOOD率));
-                    this.t小文字表示(190, 404, string.Format("{0,3:##0}%", dbPOOR率));
-                    this.t小文字表示(190, 434, string.Format("{0,3:##0}%", dbMISS率));
-                    this.t小文字表示(190, 464, string.Format("{0,3:##0}%", dbMAXCOMBO率));
-                    this.t大文字表示(82, 518, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
-                    this.t大文字表示(114, 590, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL.Drums / 10.0) * 0.2)));
+                                if (double.IsNaN(dbPERFECT率))
+                                    dbPERFECT率 = 0;
+                                if (double.IsNaN(dbGREAT率))
+                                    dbGREAT率 = 0;
+                                if (double.IsNaN(dbGOOD率))
+                                    dbGOOD率 = 0;
+                                if (double.IsNaN(dbPOOR率))
+                                    dbPOOR率 = 0;
+                                if (double.IsNaN(dbMISS率))
+                                    dbMISS率 = 0;
+                                if (double.IsNaN(dbMAXCOMBO率))
+                                    dbMAXCOMBO率 = 0;
+
+                                this.t小文字表示(167 + this.n本体X[i], 314, string.Format("{0,3:##0}%", dbPERFECT率));
+                                this.t小文字表示(167 + this.n本体X[i], 344, string.Format("{0,3:##0}%", dbGREAT率));
+                                this.t小文字表示(167 + this.n本体X[i], 374, string.Format("{0,3:##0}%", dbGOOD率));
+                                this.t小文字表示(167 + this.n本体X[i], 404, string.Format("{0,3:##0}%", dbPOOR率));
+                                this.t小文字表示(167 + this.n本体X[i], 434, string.Format("{0,3:##0}%", dbMISS率));
+                                this.t小文字表示(167 + this.n本体X[i], 464, string.Format("{0,3:##0}%", dbMAXCOMBO率));
+
+                                this.t大文字表示(59 + this.n本体X[i], 518, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
+                                this.t大文字表示(91 + this.n本体X[i], 590, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
+                            }
+                            else
+                            {
+                                this.t小文字表示(77 + this.n本体X[i], 314, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Perfect));
+                                this.t小文字表示(77 + this.n本体X[i], 344, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Great));
+                                this.t小文字表示(77 + this.n本体X[i], 374, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Good));
+                                this.t小文字表示(77 + this.n本体X[i], 404, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Poor));
+                                this.t小文字表示(77 + this.n本体X[i], 434, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Miss));
+
+                                if (i == 1)
+                                    this.t小文字表示(77 + this.n本体X[i], 464, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Guitar最高値));
+                                if (i == 2)
+                                    this.t小文字表示(77 + this.n本体X[i], 464, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Bass最高値));
+
+                                int n現在のノーツ数 =
+                                    CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Perfect +
+                                    CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Great +
+                                    CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Good +
+                                    CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Poor +
+                                    CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Miss;
+
+                                dbPERFECT率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Perfect) / n現在のノーツ数);
+                                dbGREAT率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Great / n現在のノーツ数));
+                                dbGOOD率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Good / n現在のノーツ数));
+                                dbPOOR率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Poor / n現在のノーツ数));
+                                dbMISS率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Miss / n現在のノーツ数));
+
+                                if (i == 1)
+                                    dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Guitar最高値 / n現在のノーツ数));
+                                if (i == 2)
+                                    dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Bass最高値 / n現在のノーツ数));
+
+                                if (double.IsNaN(dbPERFECT率))
+                                    dbPERFECT率 = 0;
+                                if (double.IsNaN(dbGREAT率))
+                                    dbGREAT率 = 0;
+                                if (double.IsNaN(dbGOOD率))
+                                    dbGOOD率 = 0;
+                                if (double.IsNaN(dbPOOR率))
+                                    dbPOOR率 = 0;
+                                if (double.IsNaN(dbMISS率))
+                                    dbMISS率 = 0;
+                                if (double.IsNaN(dbMAXCOMBO率))
+                                    dbMAXCOMBO率 = 0;
+
+                                this.t小文字表示(167 + this.n本体X[i], 314, string.Format("{0,3:##0}%", dbPERFECT率));
+                                this.t小文字表示(167 + this.n本体X[i], 344, string.Format("{0,3:##0}%", dbGREAT率));
+                                this.t小文字表示(167 + this.n本体X[i], 374, string.Format("{0,3:##0}%", dbGOOD率));
+                                this.t小文字表示(167 + this.n本体X[i], 404, string.Format("{0,3:##0}%", dbPOOR率));
+                                this.t小文字表示(167 + this.n本体X[i], 434, string.Format("{0,3:##0}%", dbMISS率));
+                                this.t小文字表示(167 + this.n本体X[i], 464, string.Format("{0,3:##0}%", dbMAXCOMBO率));
+
+                                this.t大文字表示(59 + this.n本体X[i], 518, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ギター画面.actGraph.dbグラフ値現在_渡));
+                                this.t大文字表示(91 + this.n本体X[i], 590, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ギター画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
+                            }
+                        }
+                    }
                 }
             }
             return 0;
@@ -441,6 +582,10 @@ namespace DTXMania
         private Font ft表示用フォント;
         private Font ft称号フォント;
         private int n文字列の長さdot;
+        private int nグラフX;
+        private int n曲名X;
+        private int n曲名Y;
+        private STDGBVALUE<int> n本体X;
         private string strパネル文字列;
         private string strSongName;
         private string strPlayerName;

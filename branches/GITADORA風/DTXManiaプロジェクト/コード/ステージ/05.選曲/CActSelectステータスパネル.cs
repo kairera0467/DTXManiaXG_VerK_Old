@@ -346,7 +346,7 @@ namespace DTXMania
                                     rect十の位 = this.rc数字[ nLevel % 10  ];
                                     rect一の位 = this.rc数字[ nLevel / 100 ];
                                 }
-                                else if (this.n現在選択中の曲のレベル[i] > 100)
+                                else
                                 {
                                     rect百の位 = this.rc数字[ nLevel / 10 ];
                                     rect十の位 = this.rc数字[ (nLevel % 10) ];
@@ -354,7 +354,7 @@ namespace DTXMania
                                 }
                             }
 						}
-                        if(CDTXMania.ConfigIni.b難易度表示をXG表示にする == true)
+                        if (CDTXMania.ConfigIni.b難易度表示をXG表示にする || this.n現在選択中の曲のレベル[i] > 99)
                         {
                             this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 14, nDispPosY, rect百の位 );
                             this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 02, nDispPosY, rect小数点 );
@@ -368,7 +368,8 @@ namespace DTXMania
                         }
 					}
 				}
-
+                #endregion
+                #region [ 選択曲の BPM の描画 ]
                 if (CDTXMania.stage選曲.r現在選択中の曲 == null)
                 {
                 }

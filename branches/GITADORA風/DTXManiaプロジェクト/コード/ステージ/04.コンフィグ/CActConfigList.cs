@@ -381,12 +381,12 @@ namespace DTXMania
             this.list項目リスト.Add(this.iSystemDifficlty);
             
             this.iSystemShowScore = new CItemToggle("ShowScore", CDTXMania.ConfigIni.bShowScore,
-                    "演奏中のスコアの表示の有無を設定します。\n",
+                    "演奏中のスコアの表示の有無を設定します。",
                     "");
             this.list項目リスト.Add(this.iSystemShowScore);
 
             this.iSystemShowMusicInfo = new CItemToggle("ShowMusicInfo", CDTXMania.ConfigIni.bShowMusicInfo,
-                    "OFFにすると演奏中のジャケット、曲情報を表示しません。",
+                    "OFFにすると演奏中のジャケット、曲情報を\n表示しません。",
                     "");
             this.list項目リスト.Add(this.iSystemShowMusicInfo);
             #endregion

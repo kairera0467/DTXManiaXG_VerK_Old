@@ -38,8 +38,6 @@ namespace DTXMania
             this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.ftSongDifficultyFont = new System.Drawing.Font("Impact", 15f, FontStyle.Regular);
             this.ftSongNameFont = new System.Drawing.Font("ＤＦＧ平成ゴシック体W7", 21f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ft表示用フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 24f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ft称号フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
             this.iDrumSpeed = Image.FromFile(CSkin.Path(@"Graphics\7_panel_icons.jpg"));
             this.txジャケットパネル = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_JacketPanel.png") );
             base.On活性化();
@@ -51,16 +49,6 @@ namespace DTXMania
 			{
 				this.ct登場用 = null;
 			}
-            if (this.ft表示用フォント != null)
-            {
-                this.ft表示用フォント.Dispose();
-                this.ft表示用フォント = null;
-            }
-            if (this.ft称号フォント != null)
-            {
-                this.ft称号フォント.Dispose();
-                this.ft称号フォント = null;
-            }
             CDTXMania.tテクスチャの解放( ref this.txジャケットパネル );
 			base.On非活性化();
 		}
@@ -88,15 +76,11 @@ namespace DTXMania
                 else
                     this.strSongName = CDTXMania.DTX.TITLE;
 
-                this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
-                this.strTitleName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
 
                 Bitmap image = new Bitmap(500, 100);
-                Bitmap image2 = new Bitmap(200, 100);
                 graphics = Graphics.FromImage(image);
-                Graphics graネームプレート用 = Graphics.FromImage(image2);
                 if ( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                 {
                     graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -111,11 +95,8 @@ namespace DTXMania
                 p縁.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
                 graphics.DrawPath(p縁, gp);
                 graphics.FillPath(Brushes.White, gp);
-                graネームプレート用.DrawString(this.strTitleName, this.ft称号フォント, Brushes.White, (float)8f, (float)12f);
-                graネームプレート用.DrawString(this.strPlayerName, this.ft表示用フォント, Brushes.White, (float)8f, (float)32f);
 
                 this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
-                this.txネームプレート用文字 = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false);
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
                 #endregion
@@ -173,7 +154,6 @@ namespace DTXMania
             {
                 CDTXMania.tテクスチャの解放(ref this.txリザルト画像);
                 CDTXMania.tテクスチャの解放(ref this.txリザルト画像がないときの画像);
-                CDTXMania.tテクスチャの解放(ref this.txネームプレート用文字);
                 CDTXMania.tテクスチャの解放(ref this.txSongName);
                 CDTXMania.tテクスチャの解放(ref this.r表示するリザルト画像);
                 CDTXMania.tテクスチャの解放(ref this.txSongLevel);
@@ -196,7 +176,6 @@ namespace DTXMania
 			this.ct登場用.t進行();
 			int x = this.n本体X;
 			int y = this.n本体Y;
-            this.txネームプレート用文字.t2D描画( CDTXMania.app.Device, 186, 256);
             this.txジャケットパネル.t2D描画( CDTXMania.app.Device, 467, 287);
 			if( this.txリザルト画像 != null )
 			{
@@ -224,18 +203,13 @@ namespace DTXMania
         private CCounter ct登場用;
         private System.Drawing.Font ftSongDifficultyFont;
         private System.Drawing.Font ftSongNameFont;
-        private System.Drawing.Font ft表示用フォント;
-        private System.Drawing.Font ft称号フォント;
         private Image iDrumSpeed;
         private int n本体X;
         private int n本体Y;
         private CTexture r表示するリザルト画像;
         private string strSongName;
-        private string strPlayerName;
-        private string strTitleName;
         private CTexture txDrumSpeed;
         private CTexture txSongDifficulty;
-        private CTexture txネームプレート用文字;
         private CTexture txSongLevel;
         private CTexture txSongName;
         private CTexture txリザルト画像;

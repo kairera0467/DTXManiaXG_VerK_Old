@@ -28,7 +28,7 @@
     </DocumentationFile>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <NoWarn>0219</NoWarn>
-    <DefineConstants>TRACE;DEBUG;TEST_CancelEnterCodeInAltEnter2 TEST_Direct3D9Ex_</DefineConstants>
+    <DefineConstants>TRACE;TEST_CancelEnterCodeInAltEnter2 TEST_Direct3D9Ex_</DefineConstants>
     <Optimize>false</Optimize>
     <ErrorReport>prompt</ErrorReport>
     <DebugType>full</DebugType>
@@ -67,6 +67,7 @@
     <Compile Include="コード\00.共通\CApplicationForm.cs" />
     <Compile Include="コード\00.共通\CD3DSettings.cs" />
     <Compile Include="コード\00.共通\CPowerManagement.cs" />
+    <Compile Include="コード\00.共通\CSendMessage.cs" />
     <Compile Include="コード\00.共通\CTimerBase.cs" />
     <Compile Include="コード\00.共通\C一定間隔処理.cs" />
     <Compile Include="コード\00.共通\C共通.cs" />
