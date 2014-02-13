@@ -126,6 +126,8 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.tリセット();
 					CDTXMania.Timer.tリセット();
 
+                    this.actAVI.LivePoint.Guitar = 0;
+                    this.actAVI.LivePoint.Bass = 0;
                     this.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
 
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );

@@ -64,5 +64,6 @@ namespace DTXMania
             演奏_STAGE_CLEAR,
 			演奏_STAGE_CLEAR_フェードアウト
 		}
+        public bool bIsStageFailed;
 	}
 }
