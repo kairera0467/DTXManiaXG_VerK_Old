@@ -91,12 +91,12 @@ namespace DTXMania
                     if ( base.dbゲージ値 == 1.0)
                     {
                         base.txgbarf.vc拡大縮小倍率.X = (float)base.dbゲージ値;
-                        base.txgbarf.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
+                        base.txgbarf.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, base.txgbarf.sz画像サイズ.Width, 0x1a));
                     }
                     else if (base.dbゲージ値 > 0.0)
                     {
                         base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
+                        base.txgbar.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, base.txgbar.sz画像サイズ.Width, 0x1a));
                     }
 
                     base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, base.txgbg.sz画像サイズ.Width, 0x2d));
