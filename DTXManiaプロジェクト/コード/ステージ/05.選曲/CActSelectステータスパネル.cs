@@ -613,7 +613,7 @@ namespace DTXMania
                                         n難易度整数[i] = (int)this.n現在選択中の曲のレベル難易度毎DGB[i][j] / 100;
                                         n難易度小数[i] = (n選択中の曲のレベル難易度毎[i] - (n難易度整数[i] * 100));
                                     }
-                                    else if (n選択中の曲のレベル難易度毎[i] < 100)
+                                    else
                                     {
                                         n難易度整数[i] = (int)this.n現在選択中の曲のレベル難易度毎DGB[i][j] / 10;
                                         n難易度小数[i] = (this.n現在選択中の曲のレベル難易度毎DGB[i][j] - (n難易度整数[i] * 10)) * 10;
@@ -635,7 +635,8 @@ namespace DTXMania
                             }
                         }
                     }
-
+                    #endregion
+                    #region [ 選択曲の BPM の描画 ]
                     if (CDTXMania.stage選曲.r現在選択中の曲 != null)
                     {
                         string strBPM;
@@ -990,7 +991,7 @@ namespace DTXMania
                     if (this.st達成率数字[i].ch == c)
                     {
                         Rectangle rectangle = new Rectangle(this.st数字[i].rc.X, this.st数字[i].rc.Y, 6, 10);
-                        if (c == '.')
+                        if (c == '-')
                         {
                             rectangle.Width -= 2;
                         }
@@ -1001,7 +1002,7 @@ namespace DTXMania
                         break;
                     }
                 }
-                if (c == '.')
+                if (c == '-')
                 {
                     x += 7;
                 }
