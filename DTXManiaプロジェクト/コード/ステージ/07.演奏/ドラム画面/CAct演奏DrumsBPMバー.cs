@@ -23,7 +23,7 @@ namespace DTXMania
                         if (CDTXMania.stage演奏ドラム画面.bサビ区間 && base.txBPMバーフラッシュ右 != null)
                         {
                             base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(255 * num1 / 14);
-                            base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 909 - (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
+                            base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 896 + (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
                         }
                     }
                     if ( CDTXMania.ConfigIni.eBPMbar == Eタイプ.A || CDTXMania.ConfigIni.eBPMbar == Eタイプ.B )
