@@ -11,24 +11,6 @@ namespace DTXMania
 {
 	internal class CAct演奏Drumsゲージ : CAct演奏ゲージ共通
 	{
-		// プロパティ
-
-//		public double db現在のゲージ値
-//		{
-//			get
-//			{
-//				return this.dbゲージ値;
-//			}
-//			set
-//			{
-//				this.dbゲージ値 = value;
-//				if( this.dbゲージ値 > 1.0 )
-//				{
-//					this.dbゲージ値 = 1.0;
-//				}
-//			}
-//		}
-
 		
 		// コンストラクタ
 
@@ -42,7 +24,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-            this.n本体X = 0x102; //もとの数値は0x102、中央寄せする場合は0x116。
+            base.n本体X.Drums = 0x102; //もとの数値は0x102、中央寄せする場合は0x116。
             this.ct本体移動 = new CCounter( 0, 1500, 2, CDTXMania.Timer );
 			base.On活性化();
 		}
@@ -55,11 +37,15 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txgbg = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
-                this.txgbar = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
-                this.txgbarf = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.jpg"));
-                this.txゲージマスク = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_mask.png"));
-                this.txゲージマスク2 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_mask2.png"));
+                this.txフレーム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
+                this.txゲージ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.png"));
+                this.txフルゲージ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.jpg"));
+                this.txマスクF = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_mask.png"));
+                this.txマスクD = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_mask2.png"));
+
+                this.nゲージX = (int)((float)(base.txフレーム.sz画像サイズ.Width - base.txゲージ.sz画像サイズ.Width) / 2f);
+                this.nフルゲージX = (int)((float)(base.txフレーム.sz画像サイズ.Width - base.txフルゲージ.sz画像サイズ.Width) / 2f);
+
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -68,11 +54,11 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 //テクスチャ 7枚
-                CDTXMania.tテクスチャの解放( ref this.txgbg );
-                CDTXMania.tテクスチャの解放( ref this.txgbar );
-                CDTXMania.tテクスチャの解放( ref this.txgbarf );
-                CDTXMania.tテクスチャの解放( ref this.txゲージマスク );
-                CDTXMania.tテクスチャの解放( ref this.txゲージマスク2 );
+                CDTXMania.tテクスチャの解放( ref this.txフレーム );
+                CDTXMania.tテクスチャの解放( ref this.txゲージ );
+                CDTXMania.tテクスチャの解放( ref this.txフルゲージ );
+                CDTXMania.tテクスチャの解放( ref this.txマスクF );
+                CDTXMania.tテクスチャの解放( ref this.txマスクD );
                 if (this.txハイスピ != null)
                     CDTXMania.tテクスチャの解放( ref this.txハイスピ );
 				base.OnManagedリソースの解放();
@@ -83,33 +69,32 @@ namespace DTXMania
 			if ( !base.b活性化してない )
 			{
                 this.ct本体移動.t進行Loop();
-                if (base.txgbg != null)
+                if (base.txフレーム != null)
                 {
                     //A～C
-                    base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, base.txgbg.sz画像サイズ.Width, 0x2d));
+                    base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width, 0x2d));
 
-                    if ( base.dbゲージ値 == 1.0)
+                    if (base.db現在のゲージ値.Drums == 1.0)
                     {
-                        base.txgbarf.vc拡大縮小倍率.X = (float)base.dbゲージ値;
-                        base.txgbarf.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, base.txgbarf.sz画像サイズ.Width, 0x1a));
+                        base.txフルゲージ.t2D描画(CDTXMania.app.Device, 1 + this.nフルゲージX + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, base.txフルゲージ.sz画像サイズ.Width, 0x1a));
                     }
-                    else if (base.dbゲージ値 > 0.0)
+                    else if (base.db現在のゲージ値.Drums >= 0.0)
                     {
-                        base.txgbar.vc拡大縮小倍率.X = (float)base.dbゲージ値;
-                        base.txgbar.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, base.txgbar.sz画像サイズ.Width, 0x1a));
+                        base.txゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Drums;
+                        base.txゲージ.t2D描画(CDTXMania.app.Device, 1 + this.nゲージX + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, base.txゲージ.sz画像サイズ.Width, 0x1a));
                     }
 
-                    base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, base.txgbg.sz画像サイズ.Width, 0x2d));
+                    base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, base.txフレーム.sz画像サイズ.Width, 0x2d));
                 }
 
                 if (base.IsDanger(E楽器パート.DRUMS) && base.db現在のゲージ値.Drums >= 0.0)
                 {
-                    this.txゲージマスク2.t2D描画( CDTXMania.app.Device, 0x01 + this.n本体X, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652 ));
+                    this.txマスクD.t2D描画( CDTXMania.app.Device, 0x01 + base.n本体X.Drums, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652 ));
                 }
                 if (base.db現在のゲージ値.Drums == 1.0)
                 {
-                    this.txゲージマスク.t2D描画(CDTXMania.app.Device, 0x01 + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652));
-                    this.txゲージマスク.n透明度 = ( this.ct本体移動.n現在の値 <= 750 ? (int)( this.ct本体移動.n現在の値 / 2.94 ) : 500 - (int)(( this.ct本体移動.n現在の値) / 2.94 ) );
+                    this.txマスクF.t2D描画(CDTXMania.app.Device, 0x01 + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652));
+                    this.txマスクF.n透明度 = ( this.ct本体移動.n現在の値 <= 750 ? (int)( this.ct本体移動.n現在の値 / 2.94 ) : 500 - (int)(( this.ct本体移動.n現在の値) / 2.94 ) );
                 }
 			}
 			return 0;
@@ -120,7 +105,8 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-        private int n本体X;
+        private int nゲージX;
+        private int nフルゲージX;
 		//-----------------
 		#endregion
 	}

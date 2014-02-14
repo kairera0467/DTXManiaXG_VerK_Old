@@ -293,13 +293,14 @@ namespace DTXMania
 		#endregion
 
 		public STDGBVALUE<double> db現在のゲージ値;
-		protected CCounter ct本体移動;
+        protected STDGBVALUE<int> n本体X;
+        protected CCounter ct本体移動;
 		protected CCounter ct本体振動;
-        protected CTexture txゲージマスク;
-        protected CTexture txゲージマスク2;
-        protected CTexture txgbar;
-        protected CTexture txgbarf;
-        protected CTexture txgbg;
+        protected CTexture txマスクF;
+        protected CTexture txマスクD;
+        protected CTexture txゲージ;
+        protected CTexture txフルゲージ;
+        protected CTexture txフレーム;
         protected CTexture txハイスピ;
 	}
 }
