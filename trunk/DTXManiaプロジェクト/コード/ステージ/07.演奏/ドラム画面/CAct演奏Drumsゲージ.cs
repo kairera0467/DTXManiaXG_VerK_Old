@@ -42,7 +42,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-            this.n本体X = 0x116; //もとの数値は0x102
+            this.n本体X = 0x102; //もとの数値は0x102、中央寄せする場合は0x116。
             this.ct本体移動 = new CCounter( 0, 1500, 2, CDTXMania.Timer );
 			base.On活性化();
 		}
@@ -86,7 +86,7 @@ namespace DTXMania
                 if (base.txgbg != null)
                 {
                     //A～C
-                    base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, 0x250, 0x2d));
+                    base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, base.txgbg.sz画像サイズ.Width, 0x2d));
 
                     if ( base.dbゲージ値 == 1.0)
                     {
@@ -99,7 +99,7 @@ namespace DTXMania
                         base.txgbar.t2D描画(CDTXMania.app.Device, 0x2d + this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 30 : 665), new Rectangle(0, 0, 0x1f8, 0x1a));
                     }
 
-                    base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, 0x250, 0x2d));
+                    base.txgbg.t2D描画(CDTXMania.app.Device, this.n本体X, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, base.txgbg.sz画像サイズ.Width, 0x2d));
                 }
 
                 if (base.IsDanger(E楽器パート.DRUMS) && base.db現在のゲージ値.Drums >= 0.0)
