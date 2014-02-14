@@ -112,10 +112,14 @@ namespace DTXMania
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                             {
                                 this.st青い星[j].fX = this.nレーンの中央X座標C[(int)lane] + 320;
+                                if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC )
+                                    this.st青い星[ j ].fX = this.nレーンの中央X座標C_改[ (int)lane ] + 320;
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.D)
                             {
                                 this.st青い星[j].fX = this.nレーンの中央X座標D[(int)lane] + 320;
+                                if( CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC )
+                                    this.st青い星[ j ].fX = this.nレーンの中央X座標D_改[ (int)lane ] + 320;
                             }
                             this.st青い星[j].fY = ((((float)this.iPosY) + 350 + nJudgeLinePosY_delta_Drums + (((float)Math.Sin((double)this.st青い星[j].f半径)) * this.st青い星[j].f半径)) - 170f); //Y座標
                             this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
