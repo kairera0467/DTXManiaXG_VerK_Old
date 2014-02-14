@@ -124,9 +124,9 @@ namespace DTXMania
                 this.n本体X[i] = 0;
             }
 
-            {
-                this.n本体X[0] = 23;
-            }
+            this.n本体X[0] = 23;
+            this.n本体Y = 242;
+            
             #endregion
 
             this.ft称号フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -279,12 +279,12 @@ namespace DTXMania
                 this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[i], 242);
                 this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, this.n本体X[i], 242);
 
-                this.t小文字表示(77 + this.n本体X[i], 314, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Perfect));
-                this.t小文字表示(77 + this.n本体X[i], 344, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Great));
-                this.t小文字表示(77 + this.n本体X[i], 374, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Good));
-                this.t小文字表示(77 + this.n本体X[i], 404, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Poor));
-                this.t小文字表示(77 + this.n本体X[i], 434, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Miss));
-                this.t小文字表示(77 + this.n本体X[i], 464, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値));
+                this.t小文字表示(77 + this.n本体X[i], 72 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Perfect));
+                this.t小文字表示(77 + this.n本体X[i], 102 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Great));
+                this.t小文字表示(77 + this.n本体X[i], 132 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Good));
+                this.t小文字表示(77 + this.n本体X[i], 162 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Poor));
+                this.t小文字表示(77 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[i].Miss));
+                this.t小文字表示(77 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ドラム画面.actCombo.n現在のコンボ数.Drums最高値));
 
                 int n現在のノーツ数 =
                     CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[i].Perfect +
@@ -313,15 +313,15 @@ namespace DTXMania
                 if (double.IsNaN(dbMAXCOMBO率))
                     dbMAXCOMBO率 = 0;
 
-                this.t小文字表示(167 + this.n本体X[i], 314, string.Format("{0,3:##0}%", dbPERFECT率));
-                this.t小文字表示(167 + this.n本体X[i], 344, string.Format("{0,3:##0}%", dbGREAT率));
-                this.t小文字表示(167 + this.n本体X[i], 374, string.Format("{0,3:##0}%", dbGOOD率));
-                this.t小文字表示(167 + this.n本体X[i], 404, string.Format("{0,3:##0}%", dbPOOR率));
-                this.t小文字表示(167 + this.n本体X[i], 434, string.Format("{0,3:##0}%", dbMISS率));
-                this.t小文字表示(167 + this.n本体X[i], 464, string.Format("{0,3:##0}%", dbMAXCOMBO率));
+                this.t小文字表示(167 + this.n本体X[i], 72 + this.n本体Y, string.Format("{0,3:##0}%", dbPERFECT率));
+                this.t小文字表示(167 + this.n本体X[i], 102 + this.n本体Y, string.Format("{0,3:##0}%", dbGREAT率));
+                this.t小文字表示(167 + this.n本体X[i], 132 + this.n本体Y, string.Format("{0,3:##0}%", dbGOOD率));
+                this.t小文字表示(167 + this.n本体X[i], 162 + this.n本体Y, string.Format("{0,3:##0}%", dbPOOR率));
+                this.t小文字表示(167 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,3:##0}%", dbMISS率));
+                this.t小文字表示(167 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,3:##0}%", dbMAXCOMBO率));
 
-                this.t大文字表示(59 + this.n本体X[i], 518, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
-                this.t大文字表示(91 + this.n本体X[i], 590, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
+                this.t大文字表示(59 + this.n本体X[i], 276 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
+                this.t大文字表示(91 + this.n本体X[i], 348 + this.n本体Y, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
             }
             return 0;
 
@@ -339,6 +339,7 @@ namespace DTXMania
             public Point pt;
         }
         private STDGBVALUE<int> n本体X;
+        private int n本体Y;
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
         private CTexture txスキルパネル;

@@ -108,8 +108,8 @@ namespace DTXMania
         public override void On活性化()
         {
             this.n本体X[0] = 900;
-            this.n本体X[1] = 290;
-            this.n本体X[2] = 574;
+            this.n本体X[1] = 574;
+            this.n本体X[2] = 290;
 
             this.dbグラフ値目標 = 80f;
             this.dbグラフ値現在 = 0f;

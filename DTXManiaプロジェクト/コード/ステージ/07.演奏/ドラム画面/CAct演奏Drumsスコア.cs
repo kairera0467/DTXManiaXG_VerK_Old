@@ -11,6 +11,14 @@ namespace DTXMania
     {
         // CActivity 実装（共通クラスからの差分のみ）
 
+        public override void On活性化()
+        {
+            this.n本体X = 30;
+            this.n本体Y = 12;
+
+            base.On活性化();
+        }
+
         public override unsafe int On進行描画()
         {
             if (!base.b活性化してない)
@@ -37,7 +45,6 @@ namespace DTXMania
                     base.n進行用タイマ += 10;
                 }
                 string str = string.Format("{0,7:######0}", this.n現在の本当のスコア.Drums);
-                //string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("0000000");
                 for (int i = 0; i < 7; i++)
                 {
                     Rectangle rectangle;
@@ -53,15 +60,21 @@ namespace DTXMania
                     }
                     if( base.txScore != null )
                     {
-                        base.txScore.t2D描画(CDTXMania.app.Device, 30 + (i * 34), 40, rectangle);
+                        base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X + (i * 34), 28 + this.n本体Y, rectangle);
                     }
                 }
                 if( base.txScore != null )
                 {
-                    base.txScore.t2D描画(CDTXMania.app.Device, 30, 12, new Rectangle(0, 50, 86, 28));
+                    base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y, new Rectangle(0, 50, 86, 28));
                 }
             }
             return 0;
         }
+        #region [ private ]
+        //-----------------
+        private int n本体X;
+        private int n本体Y;
+        //-----------------
+        #endregion
     }
 }

@@ -126,8 +126,6 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.tリセット();
 					CDTXMania.Timer.tリセット();
 
-                    this.actAVI.LivePoint.Guitar = 0;
-                    this.actAVI.LivePoint.Bass = 0;
                     this.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
 
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
@@ -161,18 +159,9 @@ namespace DTXMania
                 this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
 				this.t進行描画・BGA();
-                if (CDTXMania.ConfigIni.bShowMusicInfo)
-				    this.t進行描画・パネル文字列();
-                if (CDTXMania.ConfigIni.nInfoType == 1)
-				    this.t進行描画・ステータスパネル();
-                if (CDTXMania.ConfigIni.bShowScore)
-                    this.t進行描画・スコア();
 				this.t進行描画・レーンフラッシュGB();
 
-
 				this.t進行描画・DANGER();
-
-                this.t進行描画・グラフ();
 
 
 				this.t進行描画・WailingBonus();
@@ -184,6 +173,14 @@ namespace DTXMania
                 this.t進行描画・判定ライン();
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
+                if (CDTXMania.ConfigIni.bShowMusicInfo)
+				    this.t進行描画・パネル文字列();
+                if (CDTXMania.ConfigIni.nInfoType == 1)
+				    this.t進行描画・ステータスパネル();
+                if (CDTXMania.ConfigIni.bShowScore)
+                    this.t進行描画・スコア();
+                if (CDTXMania.ConfigIni.bGraph有効)
+                    this.t進行描画・グラフ();
                 this.t進行描画・コンボ();
 				this.t進行描画・演奏情報();
 				//this.t進行描画・Wailing枠();
