@@ -82,14 +82,12 @@ namespace DTXMania
 				"Reload song data." );
 			this.list項目リスト.Add( this.iSystemReloadDTX );
 
-            #region [ XGオプション ]
             int nDGmode = ( CDTXMania.ConfigIni.bGuitar有効 ? 1 : 1 ) + ( CDTXMania.ConfigIni.bDrums有効 ? 0 : 1 ) - 1;
 			this.iSystemGRmode = new CItemList("Drums & GR", CItemBase.Eパネル種別.通常, nDGmode,
 				"使用楽器の選択：\nDrOnly: ドラムのみ有効にします。\nGROnly: ギター/ベースのみの専用画面を\n用います。",
 				"DrOnly: Only Drums is available.\nGROnly: Only Guitar/Bass are available.\n You can play them in GR screen.",
 				new string[] { "DrOnly", "GROnly" });
 			this.list項目リスト.Add( this.iSystemGRmode );
-            #endregion
 
             this.iSystemRisky = new CItemInteger( "Risky", 0, 10, CDTXMania.ConfigIni.nRisky,
 				"Riskyモードの設定:\n"+
@@ -2800,12 +2798,10 @@ namespace DTXMania
 			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.n演奏速度 = this.iCommonPlaySpeed.n現在の値;
 
-            #region [ XGオプション ]
             CDTXMania.ConfigIni.bGuitar有効 = ( ( ( this.iSystemGRmode.n現在選択されている項目番号 + 1 ) / 2 ) == 1 );
 				//this.iSystemGuitar.bON;
 			CDTXMania.ConfigIni.bDrums有効 = ( ( ( this.iSystemGRmode.n現在選択されている項目番号 + 1 ) % 2 ) == 1 );
 				//this.iSystemDrums.bON;
-            #endregion
 
 			CDTXMania.ConfigIni.b全画面モード = this.iSystemFullscreen.bON;
 			CDTXMania.ConfigIni.bSTAGEFAILED有効 = this.iSystemStageFailed.bON;

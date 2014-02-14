@@ -148,7 +148,6 @@ namespace DTXMania
                     CDTXMania.Timer.tリセット();
                     this.actChipFireD.Start(Eレーン.HH, false, false, false, 0, false); // #31554 2013.6.12 yyagi
 
-                    this.actAVI.LivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
                     double UnitTime;
                     UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0));
@@ -323,9 +322,9 @@ namespace DTXMania
                         }
                     }
                 }
-                double dbシャッターIN = (base.nShutterInPosY * 7.2);
+                double dbシャッターIN = (base.nShutterInPosY.Drums * 7.2);
                 this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
-                double dbシャッターOUT = 720 - (base.nShutterOutPosY * 7.2f);
+                double dbシャッターOUT = 720 - (base.nShutterOutPosY.Drums * 7.2f);
                 this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
                 #endregion
                 this.t進行描画・判定ライン();
@@ -370,8 +369,9 @@ namespace DTXMania
                     this.t進行描画・パネル文字列();
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                     this.t進行描画・ステータスパネル();
+                if (CDTXMania.ConfigIni.bGraph有効)
+                    this.t進行描画・グラフ();
                 this.t進行描画・ゲージ();
-                this.t進行描画・グラフ();
                 this.t進行描画・コンボ();
                 this.t進行描画・演奏情報();
                 this.t進行描画・判定文字列1・通常位置指定の場合();

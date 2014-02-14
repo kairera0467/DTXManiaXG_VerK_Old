@@ -21,49 +21,23 @@ namespace DTXMania
             #region [ 本体位置 ]
 
             {
-                this.n本体X[1] = 350;
-                this.n本体X[2] = 700;
+                this.n本体X[0] = 0;
+                this.n本体X[1] = 378;
+                this.n本体X[2] = 652;
 
-                this.n本体Y = 50;
-
-                this.n本体X[0] = 313;
+                this.n本体Y = 12;
             }
 
             if (CDTXMania.ConfigIni.bGraph有効)
             {
-                if (!CDTXMania.DTX.bチップがある.Bass)
+                if (!CDTXMania.ConfigIni.bギターが全部オートプレイである && CDTXMania.ConfigIni.bベースが全部オートプレイである)
                 {
-                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                    {
-                        this.n本体X[2] = this.n本体X[2] - this.n本体X[0];
-                    }
-                    else
-                    {
-                        this.n本体X[1] = this.n本体X[1] + this.n本体X[0];
-                    }
-                }
-                else if (!CDTXMania.DTX.bチップがある.Guitar)
-                {
-                    if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                    {
-                        this.n本体X[1] = this.n本体X[1] + this.n本体X[0];
-                    }
-                    else
-                    {
-                        this.n本体X[2] = this.n本体X[2] - this.n本体X[0];
-                    }
-                }
-                else if (!CDTXMania.ConfigIni.bギターが全部オートプレイである && CDTXMania.ConfigIni.bベースが全部オートプレイである)
-                {
-                    this.n本体X[1] = this.n本体X[1] + this.n本体X[0];
                     this.n本体X[2] = 0;
                 }
                 else if (CDTXMania.ConfigIni.bギターが全部オートプレイである && !CDTXMania.ConfigIni.bベースが全部オートプレイである)
                 {
-                    this.n本体X[2] = this.n本体X[2] - this.n本体X[0];
                     this.n本体X[1] = 0;
                 }
-
             }
 
             #endregion
@@ -103,7 +77,6 @@ namespace DTXMania
                     if ( CDTXMania.DTX.bチップがある[j] && n本体X[j] != 0 )
                     {
                         string str = string.Format("{0,7:######0}", this.n現在の本当のスコア[j]);
-                        //string str = CDTXMania.stage演奏ドラム画面.actAVI.LivePoint.ToString("0000000");
                         for (int i = 0; i < 7; i++)
                         {
                             Rectangle rectangle;
@@ -132,14 +105,12 @@ namespace DTXMania
 			return 0;
 		}
 
-
 		// その他
 
 		#region [ private ]
 		//-----------------
         private STDGBVALUE<int> n本体X;
         private int n本体Y;
-        private readonly Point[] ptSCORE = new Point[] { new Point(398, 394), new Point(0, 5000) };
 		//-----------------
 		#endregion
 	}
