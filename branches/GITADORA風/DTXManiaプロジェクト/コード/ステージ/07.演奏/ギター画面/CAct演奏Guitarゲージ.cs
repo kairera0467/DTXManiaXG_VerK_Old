@@ -23,7 +23,7 @@ namespace DTXMania
         public override void On活性化()
         {
             base.n本体X.Guitar = 80;
-            base.n本体X.Bass = 911;
+            base.n本体X.Bass = 911 + 290;
             base.On活性化();
         }
         public override void On非活性化()
@@ -81,18 +81,18 @@ namespace DTXMania
             #region [ ギターのゲージ ]
             if (base.txフレーム.Guitar != null && CDTXMania.DTX.bチップがある.Guitar)
             {
-                base.txフレーム.Guitar.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 0, 290, 68));
-                base.txハイスピ.t2D描画(CDTXMania.app.Device, 254 + base.n本体X.Guitar, 29, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Guitar * 48, 42, 48));
+                base.txフレーム.Guitar.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 0, base.txフレーム.Guitar.sz画像サイズ.Width, 68));
+                base.txハイスピ.t2D描画(CDTXMania.app.Device, - 36 + base.n本体X.Guitar + base.txフレーム.Guitar.sz画像サイズ.Width, 30, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Guitar * 48, 42, 48));
                 if (base.db現在のゲージ値.Guitar == 1.0 && base.txフルゲージ != null)
                 {
-                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 6 + base.n本体X.Guitar, 31, new Rectangle(0, 0, 242, 30));
+                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 6 + base.n本体X.Guitar, 31, new Rectangle(0, 0, base.txフレーム.Guitar.sz画像サイズ.Width - 48, 30));
                 }
                 else if (base.db現在のゲージ値.Guitar >= 0.0)
                 {
                     base.txゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Guitar;
-                    base.txゲージ.t2D描画(CDTXMania.app.Device, 6 + base.n本体X.Guitar, 31, new Rectangle(0, 0, 242, 30));
+                    base.txゲージ.t2D描画(CDTXMania.app.Device, 6 + base.n本体X.Guitar, 31, new Rectangle(0, 0, base.txフレーム.Guitar.sz画像サイズ.Width - 48, 30));
                 }
-                base.txフレーム.Guitar.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 68, 290, 68));
+                base.txフレーム.Guitar.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 68, base.txフレーム.Guitar.sz画像サイズ.Width, 68));
                 /*
                 if (base.IsDanger(E楽器パート.GUITAR) && base.db現在のゲージ値.Guitar >= 0.0 && this.txマスクD != null)
                 {
@@ -109,18 +109,18 @@ namespace DTXMania
             #region [ ベースのゲージ ]
             if (base.txフレーム.Bass != null && CDTXMania.DTX.bチップがある.Bass)
             {
-                base.txフレーム.Bass.t2D描画(CDTXMania.app.Device, base.n本体X.Bass, 0, new Rectangle(0, 0, 290, 68));
-                base.txハイスピ.t2D描画(CDTXMania.app.Device, 4 + base.n本体X.Bass, 29, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Bass * 48, 42, 48));
+                base.txフレーム.Bass.t2D描画(CDTXMania.app.Device, base.n本体X.Bass - base.txフレーム.Bass.sz画像サイズ.Width, 0, new Rectangle(0, 0, base.txフレーム.Bass.sz画像サイズ.Width, 68));
+                base.txハイスピ.t2D描画(CDTXMania.app.Device, 4 + base.n本体X.Bass - base.txフレーム.Bass.sz画像サイズ.Width, 30, new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Bass * 48, 42, 48));
                 if (base.db現在のゲージ値.Bass == 1.0 && base.txフルゲージ != null)
                 {
-                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 42 + base.n本体X.Bass, 31, new Rectangle(0, 0, 242, 30));
+                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 42 + base.n本体X.Bass - base.txフレーム.Bass.sz画像サイズ.Width, 31, new Rectangle(0, 0, base.txフレーム.Bass.sz画像サイズ.Width - 48, 30));
                 }
                 else if (base.db現在のゲージ値.Bass >= 0.0)
                 {
                     base.txゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
-                    base.txゲージ.t2D描画(CDTXMania.app.Device, 42 + base.n本体X.Bass, 31, new Rectangle(0, 0, 242, 30));
+                    base.txゲージ.t2D描画(CDTXMania.app.Device, 42 + base.n本体X.Bass - base.txフレーム.Bass.sz画像サイズ.Width, 31, new Rectangle(0, 0, base.txフレーム.Bass.sz画像サイズ.Width - 48, 30));
                 }
-                base.txフレーム.Bass.t2D描画(CDTXMania.app.Device, base.n本体X.Bass, 0, new Rectangle(0, 68, 290, 68));
+                base.txフレーム.Bass.t2D描画(CDTXMania.app.Device, base.n本体X.Bass - base.txフレーム.Bass.sz画像サイズ.Width, 0, new Rectangle(0, 68, base.txフレーム.Bass.sz画像サイズ.Width, 68));
                 /*
                 if (base.IsDanger(E楽器パート.BASS) && base.db現在のゲージ値.Bass >= 0.0 && this.txマスクD != null)
                 {

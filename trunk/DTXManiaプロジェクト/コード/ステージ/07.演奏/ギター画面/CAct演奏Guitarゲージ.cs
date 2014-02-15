@@ -25,12 +25,12 @@ namespace DTXMania
             if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
             {
                 base.n本体X.Guitar = 65;
-                base.n本体X.Bass = 859;
+                base.n本体X.Bass = 859 + 354;
             }
             else if(CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
             {
                 base.n本体X.Guitar = 0;
-                base.n本体X.Bass = 934;
+                base.n本体X.Bass = 934 + 354;
             }
 			base.On活性化();
 		}
@@ -79,16 +79,16 @@ namespace DTXMania
             #region [ ギターのゲージ ]
             if (base.txフレーム != null && CDTXMania.DTX.bチップがある.Guitar)
             {
-                base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 0, 354, 42));
+                base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width, 42));
                 if (base.db現在のゲージ値.Guitar == 1.0)
                 {
                     base.txフルゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Guitar;
-                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Guitar, 8, new Rectangle(0, 0, 318, 26));
+                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Guitar, 8, new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width - 36, 26));
                 }
                 else if (base.db現在のゲージ値.Guitar >= 0.0)
                 {
                     base.txゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Guitar;
-                    base.txゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Guitar, 8, new Rectangle(0, 0, 318, 26));
+                    base.txゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Guitar, 8, new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width - 36, 26));
                 }
                 base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Guitar, 0, new Rectangle(0, 42, 354, 42));
 
@@ -106,26 +106,26 @@ namespace DTXMania
             #region [ ベースのゲージ ]
             if (base.txフレーム != null && CDTXMania.DTX.bチップがある.Bass)
             {
-                base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Bass, 0, new Rectangle(0, 0, 354, 42));
+                base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Bass - base.txフレーム.sz画像サイズ.Width, 0, new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width, 42));
                 if (base.db現在のゲージ値.Bass == 1.0)
                 {
                     base.txフルゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
-                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Bass, 8, new Rectangle(0, 0, 318, 26));
+                    base.txフルゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Bass - base.txフレーム.sz画像サイズ.Width, 8, new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width - 36, 26));
                 }
                 else if (base.db現在のゲージ値.Bass >= 0.0)
                 {
                     base.txゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Bass;
-                    base.txゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Bass, 8, new Rectangle(0, 0, 318, 26));
+                    base.txゲージ.t2D描画(CDTXMania.app.Device, 18 + base.n本体X.Bass - base.txフレーム.sz画像サイズ.Width, 8, new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width - 36, 26));
                 }
-                base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Bass, 0, new Rectangle(0, 42, 354, 42));
+                base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Bass - base.txフレーム.sz画像サイズ.Width, 0, new Rectangle(0, 42, base.txフレーム.sz画像サイズ.Width, 42));
 
                 if (base.IsDanger(E楽器パート.BASS) && base.db現在のゲージ値.Bass >= 0.0 && this.txマスクD != null)
                 {
-                    this.txマスクD.t2D描画(CDTXMania.app.Device, base.n本体X.Bass, 0);
+                    this.txマスクD.t2D描画(CDTXMania.app.Device, base.n本体X.Bass - base.txフレーム.sz画像サイズ.Width, 0);
                 }
                 if (base.db現在のゲージ値.Bass == 1.0 && this.txマスクF != null)
                 {
-                    this.txマスクF.t2D描画(CDTXMania.app.Device, base.n本体X.Bass, 0);
+                    this.txマスクF.t2D描画(CDTXMania.app.Device, base.n本体X.Bass - base.txフレーム.sz画像サイズ.Width, 0);
                 }
             }
             #endregion
