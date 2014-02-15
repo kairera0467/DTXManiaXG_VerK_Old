@@ -296,11 +296,11 @@ namespace DTXMania
         protected STDGBVALUE<int> n本体X;
 		protected CCounter ct本体移動;
 		protected CCounter ct本体振動;
-        protected CTexture txマスクF;
-        protected CTexture txマスクD;
+        //protected CTexture txマスクF;
+        //protected CTexture txマスクD;
         protected CTexture txゲージ;
         protected CTexture txフルゲージ;
-        protected CTexture txフレーム;
+        protected STDGBVALUE<CTexture> txフレーム;
         protected CTexture txハイスピ;
     }
 }

@@ -22,8 +22,8 @@ namespace DTXMania
 
             {
                 this.n本体X[0] = 0;
-                this.n本体X[1] = 378;
-                this.n本体X[2] = 652;
+                this.n本体X[1] = 373;
+                this.n本体X[2] = 665;
 
                 this.n本体Y = 12;
             }
