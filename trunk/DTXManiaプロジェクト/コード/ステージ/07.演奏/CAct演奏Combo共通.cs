@@ -497,7 +497,7 @@ namespace DTXMania
 		{
 			#region [ 事前チェック。]
 			//-----------------
-			if( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.D )
+            if (CDTXMania.ConfigIni.n表示可能な最小コンボ数.Guitar == 0)
 				return;		// 表示OFF。
 
 			if( nCombo値 == 0 )
@@ -599,7 +599,7 @@ namespace DTXMania
 		{
 			#region [ 事前チェック。]
 			//-----------------
-			if( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.D )
+			if( CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass == 0 )
 				return;		// 表示OFF。
 
 			if( nCombo値 == 0 )

@@ -1535,6 +1535,7 @@ namespace DTXMania
 			sw.WriteLine();
             #endregion
             sw.WriteLine( "; 表示可能な最小コンボ数(1～99999)" );
+            sw.WriteLine( "; ギターとベースでは0にするとコンボを表示しません。" );
 			sw.WriteLine( "MinComboDrums={0}", this.n表示可能な最小コンボ数.Drums );
 			sw.WriteLine( "MinComboGuitar={0}", this.n表示可能な最小コンボ数.Guitar );
 			sw.WriteLine( "MinComboBass={0}", this.n表示可能な最小コンボ数.Bass );
@@ -2472,11 +2473,11 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals("MinComboGuitar"))
                                             {
-                                                this.n表示可能な最小コンボ数.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 1, 0x1869f, this.n表示可能な最小コンボ数.Guitar);
+                                                this.n表示可能な最小コンボ数.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 0x1869f, this.n表示可能な最小コンボ数.Guitar);
                                             }
                                             else if (str3.Equals("MinComboBass"))
                                             {
-                                                this.n表示可能な最小コンボ数.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 1, 0x1869f, this.n表示可能な最小コンボ数.Bass);
+                                                this.n表示可能な最小コンボ数.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 0x1869f, this.n表示可能な最小コンボ数.Bass);
                                             }
                                             else if( str3.Equals( "MusicNameDispDef" ) )
                                             {

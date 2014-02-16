@@ -1216,8 +1216,8 @@ namespace DTXMania
 			"To enhance the guitar chip sound\n(except autoplay)." );
 			this.list項目リスト.Add( this.iSystemSoundMonitorGuitar );
 
-			this.iSystemMinComboGuitar = new CItemInteger( "G-MinCombo", 1, 0x1869f, CDTXMania.ConfigIni.n表示可能な最小コンボ数.Guitar,
-				"表示可能な最小コンボ数（ギター）：\n画面に表示されるコンボの最小の数を\n指定します。\n1 ～ 99999 の値が指定可能です。",
+			this.iSystemMinComboGuitar = new CItemInteger( "G-MinCombo", 0, 0x1869f, CDTXMania.ConfigIni.n表示可能な最小コンボ数.Guitar,
+                "表示可能な最小コンボ数（ギター）：\n画面に表示されるコンボの最小の数を\n指定します。\n1 ～ 99999 の値が指定可能です。\n0にするとコンボを表示しません。",
 				"Initial number to show the combo\n for the guitar.\nYou can specify from 1 to 99999." );
 			this.list項目リスト.Add( this.iSystemMinComboGuitar );
 			
@@ -1386,8 +1386,8 @@ namespace DTXMania
 			"To enhance the bass chip sound\n(except autoplay)." );
 			this.list項目リスト.Add( this.iSystemSoundMonitorBass );
 
-			this.iSystemMinComboBass = new CItemInteger( "B-MinCombo", 1, 0x1869f, CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass,
-				"表示可能な最小コンボ数（ベース）：\n画面に表示されるコンボの最小の数\nを指定します。\n1 ～ 99999 の値が指定可能です。",
+			this.iSystemMinComboBass = new CItemInteger( "B-MinCombo", 0, 0x1869f, CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass,
+                "表示可能な最小コンボ数（ベース）：\n画面に表示されるコンボの最小の数\nを指定します。\n1 ～ 99999 の値が指定可能です。\n0にするとコンボを表示しません。",
 				"Initial number to show the combo\n for the bass.\nYou can specify from 1 to 99999." );
 			this.list項目リスト.Add( this.iSystemMinComboBass );
 
