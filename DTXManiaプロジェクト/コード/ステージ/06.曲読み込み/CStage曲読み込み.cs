@@ -376,40 +376,43 @@ namespace DTXMania
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
             CDTX cdtx = new CDTX(strDTXファイルパス, true);
 
-            double DTXLevel = cdtx.LEVEL.Drums / 10;
-            double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL.Drums);
+            if ( CDTXMania.ConfigIni.bDrums有効 )
+            {
+                double DTXLevel = cdtx.LEVEL.Drums / 10;
+                double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL.Drums);
 
-            if (cdtx.LEVEL.Drums > 100)
-            {
-                DTXLevel = cdtx.LEVEL.Drums / 100;
-                DTXLevelDeci = (cdtx.LEVEL.Drums - (DTXLevel * 100));
-            }
-            else
-            {
-                DTXLevel = cdtx.LEVEL.Drums / 10;
-                DTXLevelDeci =  (( cdtx.LEVEL.Drums - (DTXLevel * 10)) * 10);
-            }
-
-            if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && ( !cdtx.b強制的にXG譜面にする )  )
-            {
-                DTXLevel = cdtx.LEVEL.Drums;
-                this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
-            }
-            else
-            {
-
-                this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
-                if (cdtx.LEVEL.Drums > 100)
+                if (cdtx.LEVEL.Drums > 99)
                 {
-
+                    DTXLevel = cdtx.LEVEL.Drums / 100;
+                    DTXLevelDeci = (cdtx.LEVEL.Drums - (DTXLevel * 100));
                 }
                 else
                 {
-                    this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
+                    DTXLevel = cdtx.LEVEL.Drums / 10;
+                    DTXLevelDeci = ((cdtx.LEVEL.Drums - (DTXLevel * 10)) * 10);
+                }
 
-                    this.t大文字表示(357, 152, string.Format("{0:00}", DTXLevelDeci));
+                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && (!cdtx.b強制的にXG譜面にする))
+                {
+                    DTXLevel = cdtx.LEVEL.Drums;
+                    this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
+                }
+                else
+                {
+
+                    this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
+                    if (cdtx.LEVEL.Drums > 99)
+                    {
+
+                    }
+                    else
+                    {
+                        this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
+                        this.t大文字表示(357, 152, string.Format("{0:00}", DTXLevelDeci));
+                    }
                 }
             }
+
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
             if (!File.Exists(path))
             {
@@ -566,7 +569,7 @@ namespace DTXMania
 
                 case CStage.Eフェーズ.共通_フェードアウト:
                     //if (this.actFO.On進行描画() == 0)
-                        //return 0;
+                    //return 0;
                     if (this.sd読み込み音 != null)
                     {
                         this.sd読み込み音.t解放する();
