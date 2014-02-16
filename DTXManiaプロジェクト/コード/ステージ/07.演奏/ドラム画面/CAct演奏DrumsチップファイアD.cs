@@ -501,7 +501,7 @@ namespace DTXMania
                 {
                     this.txボーナス花火.b加算合成 = true;
                 }
-                this.txNotes = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips.png"));
+                this.txNotes = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Chips_drums.png"));
                 if (this.txNotes != null)
                 {
                     this.txNotes.n透明度 = 120;
@@ -641,8 +641,8 @@ namespace DTXMania
 
                             if (this.txNotes != null)
                             {
-                                this.txNotes.t3D描画(CDTXMania.app.Device, mat, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane]), 0, nノーツの幅[this.st飛び散るチップ[i].nLane] / 2, 10));
-                                this.txNotes.t3D描画(CDTXMania.app.Device, mat2, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane]), 0, nノーツの幅[this.st飛び散るチップ[i].nLane] / 2, 10));
+                                this.txNotes.t3D描画(CDTXMania.app.Device, mat, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane]), 640, (nノーツの幅[this.st飛び散るチップ[i].nLane] + 10) / 2, 64));
+                                this.txNotes.t3D描画(CDTXMania.app.Device, mat2, new Rectangle((nノーツの左上X座標[this.st飛び散るチップ[i].nLane]), 640, (nノーツの幅[this.st飛び散るチップ[i].nLane] + 10) / 2, 64));
                             }
                         }
 
@@ -1066,7 +1066,7 @@ namespace DTXMania
         private int[] nレーンの中央X座標C_改 = new int[] { 7, 71, 176, 242, 297, 349, 398, 500, 124, 448, 124 };
         private int[] nレーンの中央X座標D =    new int[] { 7, 71, 124, 294, 182, 349, 398, 464, 230, 514, 230 };
         private int[] nレーンの中央X座標D_改 = new int[] { 7, 71, 124, 294, 182, 349, 398, 500, 230, 448, 230 };
-        private readonly int[] nノーツの左上X座標 = new int[] { 448, 60, 106, 0, 160, 206, 252, 298, 400, 362, 400 };
+        private readonly int[] nノーツの左上X座標 = new int[] { 448 + 90, 60 + 10, 106 + 20, 0, 160 + 30, 206 + 40, 252 + 50, 298 + 60, 550 + 110, 362 + 70, 400 + 80 };
         private readonly int[] nノーツの幅 = new int[] { 64, 46, 54, 60, 46, 46, 46, 60, 48, 48, 48 };
 		private const int STAR_MAX = 240;
 		private ST火花[] st火花 = new ST火花[ FIRE_MAX ];
