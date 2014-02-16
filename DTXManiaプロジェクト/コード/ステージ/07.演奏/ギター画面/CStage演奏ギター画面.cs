@@ -192,7 +192,6 @@ namespace DTXMania
                 {
                     this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
                     base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
-                    CDTXMania.Skin.soundステージクリア音.t再生する();
                     this.actFOStageClear.tフェードアウト開始();
                 }
 				if( flag2 )
