@@ -125,7 +125,7 @@ namespace DTXMania
                     }
                     else if (base.txシャッター != null)
                     {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 79, (int)dbシャッター上_Guitar);
+                        base.txシャッター.t2D描画(CDTXMania.app.Device, 80, (int)dbシャッター上_Guitar);
                     }
 
                     if (base.txRGB != null && nシャッター下_Guitar == 0)
@@ -134,7 +134,7 @@ namespace DTXMania
                     }
                     else if (base.txシャッター != null)
                     {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 79, (int)dbシャッター下_Guitar);
+                        base.txシャッター.t2D描画(CDTXMania.app.Device, 80, (int)dbシャッター下_Guitar);
                     }
 				}
 				if( CDTXMania.DTX.bチップがある.Bass )
@@ -161,7 +161,7 @@ namespace DTXMania
                     }
                     else if (base.txシャッター != null)
                     {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 949, (int)dbシャッター上_Bass);
+                        base.txシャッター.t2D描画(CDTXMania.app.Device, 950, (int)dbシャッター上_Bass);
                     }
 
                     if (base.txRGB != null && nシャッター下_Bass == 0)
@@ -170,7 +170,7 @@ namespace DTXMania
                     }
                     else  if (base.txシャッター != null)
                     {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 949, (int)dbシャッター下_Bass);
+                        base.txシャッター.t2D描画(CDTXMania.app.Device, 950, (int)dbシャッター下_Bass);
                     }
                 }
 				for( int i = 0; i < 10; i++ )
