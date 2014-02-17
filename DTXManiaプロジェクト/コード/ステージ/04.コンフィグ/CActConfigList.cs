@@ -401,6 +401,11 @@ namespace DTXMania
             #endregion
 
             #region [ XGオプション ]
+            this.iSystemSpeaker = new CItemToggle("Speaker", CDTXMania.ConfigIni.bSpeaker,
+                "スピーカーの表示を設定します。",
+                "");
+            this.list項目リスト.Add(this.iSystemSpeaker);
+
             this.iDrumsMoveDrumSet = new CItemList("DrumSetMove", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eドラムセットを動かす,
                 "ドラムセットが動くかを設定します。\n" +
                 "ON: ドラムセットを動かします。\n" +
@@ -2588,6 +2593,7 @@ namespace DTXMania
         private CItemList   iDrumsMoveDrumSet;
         private CItemList   iSystemBPMbar;
         private CItemToggle iSystemLivePoint;
+        private CItemToggle iSystemSpeaker;
         private CItemList   iSystemNamePlateType;
         #endregion
 
@@ -2839,6 +2845,7 @@ namespace DTXMania
             #region [ XGオプション ]
             CDTXMania.ConfigIni.eドラムセットを動かす = (Eタイプ)this.iDrumsMoveDrumSet.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bLivePoint = this.iSystemLivePoint.bON;
+            CDTXMania.ConfigIni.bSpeaker = this.iSystemSpeaker.bON;
             CDTXMania.ConfigIni.eBPMbar = (Eタイプ)this.iSystemBPMbar.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eNamePlate = (Eタイプ)this.iSystemNamePlateType.n現在選択されている項目番号;
             #endregion
