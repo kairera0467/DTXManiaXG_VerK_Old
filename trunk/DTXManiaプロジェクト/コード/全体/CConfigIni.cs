@@ -575,6 +575,7 @@ namespace DTXMania
         public Eタイプ eドラムセットを動かす;
         public Eタイプ eBPMbar;
         public bool bLivePoint;
+        public bool bSpeaker;
         #endregion
 
         #region [ GDオプション ]
@@ -1192,6 +1193,7 @@ namespace DTXMania
 
             #region [ XGオプション ]
             this.bLivePoint = true;
+            this.bSpeaker = true;
             this.eNamePlate = Eタイプ.A;
             #endregion
 
@@ -1790,6 +1792,9 @@ namespace DTXMania
             sw.WriteLine();
             sw.WriteLine("; LivePointの表示(0:OFF, 1:ON)");
             sw.WriteLine("LivePoint={0}", this.bLivePoint ? 1 : 0);
+            sw.WriteLine();
+            sw.WriteLine("; スピーカーの表示(0:OFF, 1:ON)");
+            sw.WriteLine("Speaker={0}", this.bSpeaker ? 1 : 0);
             sw.WriteLine();
             #endregion
             sw.WriteLine("; シャッターINSIDE(0～100)");
@@ -2837,6 +2842,10 @@ namespace DTXMania
                                             else if (str3.Equals("LivePoint"))
                                             {
                                                 this.bLivePoint = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("Speaker"))
+                                            {
+                                                this.bSpeaker = C変換.bONorOFF(str4[0]);
                                             }
                                             #endregion
                                             else if (str3.Equals("DrumsStageEffect"))

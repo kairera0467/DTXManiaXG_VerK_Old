@@ -846,6 +846,7 @@ namespace DTXMania
                         }
                     }
                     #endregion
+
                 if ( this.txバートップ != null && CDTXMania.ConfigIni.bDrums有効 && CDTXMania.ConfigIni.eBPMbar != Eタイプ.D )
                 {
                     //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
@@ -853,15 +854,21 @@ namespace DTXMania
                     this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
                     CDTXMania.stage演奏ドラム画面.actBPMBar.On進行描画();
                 }
-                if ( this.txバートップ != null && CDTXMania.ConfigIni.bGuitar有効 && CDTXMania.ConfigIni.eBPMbar != Eタイプ.D )
+                if ( CDTXMania.ConfigIni.bGuitar有効 )
                 {
-                    if (CDTXMania.DTX.bチップがある.Guitar)
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 640, 720));
+                    if ( CDTXMania.ConfigIni.bSpeaker )
+                        CDTXMania.stage演奏ギター画面.actSpeaker.On進行描画();
 
-                    if (CDTXMania.DTX.bチップがある.Bass)
-                        this.txバートップ.t2D描画(CDTXMania.app.Device, 640, 0, new Rectangle(640, 0, 640, 720));
+                    if (this.txバートップ != null && CDTXMania.ConfigIni.eBPMbar != Eタイプ.D)
+                    {
+                        if (CDTXMania.DTX.bチップがある.Guitar)
+                            this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 640, 720));
 
-                    CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
+                        if (CDTXMania.DTX.bチップがある.Bass)
+                            this.txバートップ.t2D描画(CDTXMania.app.Device, 640, 0, new Rectangle(640, 0, 640, 720));
+
+                        CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
+                    }
                 }
                 long lPos = 0;
                 //if (this.dsBGV != null)

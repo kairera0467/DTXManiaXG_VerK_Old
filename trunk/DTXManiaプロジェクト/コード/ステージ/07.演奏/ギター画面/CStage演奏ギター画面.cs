@@ -22,7 +22,8 @@ namespace DTXMania
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			base.b活性化してない = true;
             base.list子Activities.Add( this.actBPMBar = new CAct演奏GuitarBPMバー() );
-			base.list子Activities.Add( this.actStageFailed = new CAct演奏ステージ失敗() );
+            base.list子Activities.Add( this.actSpeaker = new CAct演奏Guitarスピーカー() );
+            base.list子Activities.Add( this.actStageFailed = new CAct演奏ステージ失敗() );
 			base.list子Activities.Add( this.actDANGER = new CAct演奏GuitarDanger() );
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
 			base.list子Activities.Add( this.actBGA = new CAct演奏BGA() );
@@ -131,6 +132,7 @@ namespace DTXMania
 
                     this.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
                     this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
+                    this.actSpeaker.ctBPM = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
 
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ.Bass = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
@@ -186,7 +188,6 @@ namespace DTXMania
 				this.t進行描画・DANGER();
 
                 this.t進行描画・グラフ();
-
 
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
@@ -250,6 +251,7 @@ namespace DTXMania
         public CAct演奏スキルメーター actGraph;
         public bool bサビ区間;
         public double UnitTime;
+        public CAct演奏Guitarスピーカー actSpeaker;
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
 		{
