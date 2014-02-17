@@ -320,11 +320,7 @@ namespace DTXMania
                         this.t小文字表示(77 + this.n本体X[i], 132 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Good));
                         this.t小文字表示(77 + this.n本体X[i], 162 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Poor));
                         this.t小文字表示(77 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Miss));
-
-                        if (i == 1)
-                            this.t小文字表示(77 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Guitar最高値));
-                        if (i == 2)
-                            this.t小文字表示(77 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Bass最高値));
+                        this.t小文字表示(77 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.最高値[i]));
 
                         int n現在のノーツ数 =
                             CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Perfect +
@@ -338,11 +334,7 @@ namespace DTXMania
                         dbGOOD率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Good / n現在のノーツ数));
                         dbPOOR率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Poor / n現在のノーツ数));
                         dbMISS率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Miss / n現在のノーツ数));
-
-                        if (i == 1)
-                            dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Guitar最高値 / n現在のノーツ数));
-                        if (i == 2)
-                            dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.Bass最高値 / n現在のノーツ数));
+                        dbMAXCOMBO率 = Math.Round((100.0 * CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.最高値[i] / n現在のノーツ数));
 
                         if (double.IsNaN(dbPERFECT率))
                             dbPERFECT率 = 0;
