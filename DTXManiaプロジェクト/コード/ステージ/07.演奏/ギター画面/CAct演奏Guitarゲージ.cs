@@ -22,7 +22,7 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            base.n本体X.Guitar = 79;
+            base.n本体X.Guitar = 80;
             base.n本体X.Bass = 912 + 290;
             base.On活性化();
         }
