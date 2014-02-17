@@ -358,18 +358,7 @@ namespace DTXMania
                     //-----------------
                     #endregion
 
-                    if (n桁数 == 2)//3ケタ未満の場合
-                    {
                         this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 55, nコンボy + 90 + y動作差分, new Rectangle(0, 320, 250, 60));
-                    }
-                    else if (n桁数 == 3)//3ケタの場合
-                    {
-                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 55, nコンボy + 90 + y動作差分, new Rectangle(0, 320, 250, 60));
-                    }
-                    else if (n桁数 == 4)//4ケタの場合
-                    {
-                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx + 55, nコンボy + 90 + y動作差分, new Rectangle(0, 320, 250, 60));
-                    }
                 }
                 else
                 {
@@ -478,26 +467,14 @@ namespace DTXMania
             #endregion
             #region [ "COMBO" 文字を表示。]
             //-----------------
-            int x = 490 - ((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
-            int nコンボy = 210;
+            int x = 460; // -((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
+            int nコンボy = 220;
 
-            if (n桁数 == 1)
-            {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 340, nコンボy, new Rectangle(0, 230, 160, 64));
-            }
-            else if (n桁数 == 2)
-            {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 370, nコンボy, new Rectangle(0, 230, 160, 64));
-            }
-            else if (n桁数 == 3)
-            {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 320, nコンボy, new Rectangle(0, 294, 280, 64));
-            }
-
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, nコンボy, new Rectangle(0, 230, 200, 64));
             //-----------------
             #endregion
 
-            x = 490 + (n全桁の合計幅 / 2);
+            x = 560 + (n全桁の合計幅 / 2);
             for (int i = 0; i < n桁数; i++)
             {
                 #region [ 数字の拡大率を設定。]
@@ -577,21 +554,10 @@ namespace DTXMania
             #endregion
             #region [ "COMBO" 文字を表示。]
             //-----------------
-            int x = 490 - ((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
-            int nコンボy = 210;
+            int x = 750; // -((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
+            int nコンボy = 220;
 
-            if (n桁数 == 1)
-            {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 690, nコンボy, new Rectangle(0, 230, 160, 64));
-            }
-            else if (n桁数 == 2)
-            {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 724, nコンボy, new Rectangle(0, 230, 160, 64));
-            }
-            else if (n桁数 == 3)
-            {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 670, nコンボy, new Rectangle(0, 294, 280, 64));
-            }
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, nコンボy, new Rectangle(0, 230, 200, 64));
             //-----------------
             #endregion
 
