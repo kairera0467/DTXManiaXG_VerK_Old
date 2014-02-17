@@ -62,12 +62,12 @@ namespace DTXMania
 				set
 				{
 					this.drums = value;
-					if( this.drums > this.Drums最高値 )
+					if( this.drums > this.最高値.Drums )
 					{
-						this.Drums最高値 = this.drums;
+						this.最高値.Drums = this.drums;
 					}
 					this.act.status.Drums.nCOMBO値 = this.drums;
-					this.act.status.Drums.n最高COMBO値 = this.Drums最高値;
+					this.act.status.Drums.n最高COMBO値 = this.最高値.Drums;
 				}
 			}
 			public int Guitar
@@ -79,12 +79,12 @@ namespace DTXMania
 				set
 				{
 					this.guitar = value;
-					if( this.guitar > this.Guitar最高値 )
+					if( this.guitar > this.最高値.Guitar )
 					{
-						this.Guitar最高値 = this.guitar;
+						this.最高値.Guitar = this.guitar;
 					}
 					this.act.status.Guitar.nCOMBO値 = this.guitar;
-					this.act.status.Guitar.n最高COMBO値 = this.Guitar最高値;
+					this.act.status.Guitar.n最高COMBO値 = this.最高値.Guitar;
 				}
 			}
 			public int Bass
@@ -96,17 +96,15 @@ namespace DTXMania
 				set
 				{
 					this.bass = value;
-					if( this.bass > this.Bass最高値 )
+					if( this.bass > this.最高値.Bass )
 					{
-						this.Bass最高値 = this.bass;
+						this.最高値.Bass = this.bass;
 					}
 					this.act.status.Bass.nCOMBO値 = this.bass;
-					this.act.status.Bass.n最高COMBO値 = this.Bass最高値;
+					this.act.status.Bass.n最高COMBO値 = this.最高値.Bass;
 				}
 			}
-			public int Drums最高値 { get; private set; }
-			public int Guitar最高値 { get; private set; }
-			public int Bass最高値 { get; private set; }
+            public STDGBVALUE<int> 最高値;
 
 			private int drums;
 			private int guitar;
