@@ -454,17 +454,24 @@ namespace DTXMania
                 }
 			}
 
-
 			//-----------------
 			#endregion
 		}
 		protected virtual void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス )
 		{
+            int x = 490;
+            int y = 150;
+
+            this.tコンボ表示・ギター(nCombo値, nジャンプインデックス, x, y);
 		}
 		protected virtual void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{
+            int x = 845;
+            int y = 150;
+
+            this.tコンボ表示・ベース(nCombo値, nジャンプインデックス, x, y);
 		}
-		protected void tコンボ表示・ギター( int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス )
+        protected void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス, int nコンボx, int nコンボy )
 		{
 			#region [ 事前チェック。]
 			//-----------------
@@ -475,8 +482,6 @@ namespace DTXMania
 				return;		// コンボゼロは表示しない。
 			//-----------------
 			#endregion
-
-
 
 			int[] n位の数 = new int[ 10 ];	// 表示は10桁もあれば足りるだろう
 
@@ -493,7 +498,7 @@ namespace DTXMania
 			//-----------------
 			#endregion
 
-            int y = 0;
+            int y = nコンボy;
 			int n全桁の合計幅 = nギターコンボの幅 * n桁数;
             int nJump = nジャンプインデックス - ( n桁数 );
             int y動作差分 = 0;
@@ -516,26 +521,25 @@ namespace DTXMania
 			#endregion
 			#region [ "COMBO" 文字を表示。]
 			//-----------------
-			int x = 490 - ( (int) ( ( nギターコンボのCOMBO文字の幅 * f拡大率 ) / 2.0f ) );
-			int nコンボy = 150;
+            int x = nコンボx - 150;
 
             if( n桁数 == 1 )
             {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 340, nコンボy, new Rectangle(0, 230, 160, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 230, 160, 64));
             }
             else if( n桁数 == 2 )
             {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 370, nコンボy, new Rectangle(0, 230, 160, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x + 30, y, new Rectangle(0, 230, 160, 64));
             }
             else if( n桁数 == 3)
             {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 320, nコンボy, new Rectangle(0, 294, 280, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x - 20, y, new Rectangle(0, 294, 280, 64));
             }
 
 			//-----------------
 			#endregion
 
-			x = 490 + ( n全桁の合計幅 / 2 );
+            x = nコンボx + (n全桁の合計幅 / 2);
 			for( int i = 0; i < n桁数; i++ )
 			{
 				#region [ 数字の拡大率を設定。]
@@ -566,7 +570,7 @@ namespace DTXMania
 				#endregion
 			}
 		}
-		protected void tコンボ表示・ベース( int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス )
+        protected void tコンボ表示・ベース(int nCombo値, int nジャンプインデックス, int nコンボx, int nコンボy)
 		{
 			#region [ 事前チェック。]
 			//-----------------
@@ -593,7 +597,7 @@ namespace DTXMania
 			//-----------------
 			#endregion
 
-            int y = 0;
+            int y = nコンボy;
             int n全桁の合計幅 = nギターコンボの幅 * n桁数;
             int nJump = nジャンプインデックス - (n桁数);
             int y動作差分 = 0;
@@ -615,25 +619,24 @@ namespace DTXMania
 			#endregion
 			#region [ "COMBO" 文字を表示。]
 			//-----------------
-			int x = 490 - ( (int) ( ( nギターコンボのCOMBO文字の幅 * f拡大率 ) / 2.0f ) );
-			int nコンボy = 150;
+            int x = nコンボx - 155;
 
             if( n桁数 == 1 )
             {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 690, nコンボy, new Rectangle(0, 230, 160, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 230, 160, 64));
             }
             else if( n桁数 == 2 )
             {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 724, nコンボy, new Rectangle(0, 230, 160, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x + 35, y, new Rectangle(0, 230, 160, 64));
             }
             else if( n桁数 == 3)
             {
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, 670, nコンボy, new Rectangle(0, 294, 280, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x - 20, y, new Rectangle(0, 294, 280, 64));
             }
 			//-----------------
 			#endregion
 
-			x = 845 + ( n全桁の合計幅 / 2 );
+            x = nコンボx + (n全桁の合計幅 / 2);
 			for( int i = 0; i < n桁数; i++ )
 			{
 				#region [ 数字の拡大率を設定。]
