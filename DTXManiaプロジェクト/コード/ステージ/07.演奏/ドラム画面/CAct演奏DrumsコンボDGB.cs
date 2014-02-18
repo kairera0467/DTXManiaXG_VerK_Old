@@ -127,7 +127,7 @@ namespace DTXMania
                 this.Start( nCombo値 );
             }
 
-            int x = nX中央位置px - 170;
+            int x = nX中央位置px - 180;
             int y = nY上辺位置px - 95;
 
             if (nCombo値 >= 100)
@@ -144,7 +144,7 @@ namespace DTXMania
                             this.st爆発[i].b使用中 = false;
                             this.bn00コンボに到達した[this.nコンボカウント.Drums].Drums = true;
                         }
-                        if (this.txComboBom != null)
+                        if ( this.txComboBom != null && CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.OFF )
                         {
                             this.txComboBom.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, (340 * num1), 360, 340));
                         }
