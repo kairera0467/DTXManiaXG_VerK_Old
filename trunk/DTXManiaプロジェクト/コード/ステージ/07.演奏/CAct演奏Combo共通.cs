@@ -226,46 +226,6 @@ namespace DTXMania
 		// メソッド
         protected virtual void tコンボ表示・ドラム(int nCombo値, int nジャンプインデックス)
         {
-            bool guitar = CDTXMania.DTX.bチップがある.Guitar;
-            bool bass = CDTXMania.DTX.bチップがある.Bass;
-            var e表示位置 = CDTXMania.ConfigIni.ドラムコンボ文字の表示位置;
-
-            #region [ e表示位置 の調整 ]
-            //-----------------
-            if (CDTXMania.ConfigIni.bGuitar有効)
-            {
-                if (bass)
-                {
-                    // ベースがあるときは問答無用で LEFT 表示のみ。
-                    e表示位置 = Eドラムコンボ文字の表示位置.LEFT;
-                }
-                else if (guitar && (e表示位置 == Eドラムコンボ文字の表示位置.RIGHT))
-                {
-                    // ベースがなくてもギターがあるなら、RIGHT は CENTER に強制変更。
-                    e表示位置 = Eドラムコンボ文字の表示位置.CENTER;
-                }
-            }
-            //-----------------
-            #endregion
-
-            int nX中央位置px = 0;
-            switch (e表示位置)
-            {
-                case Eドラムコンボ文字の表示位置.LEFT:
-                    nX中央位置px = 150;
-                    break;
-
-                case Eドラムコンボ文字の表示位置.CENTER:
-                    nX中央位置px = 580;
-                    break;
-
-                case Eドラムコンボ文字の表示位置.RIGHT:
-                    nX中央位置px = 1130;
-                    break;
-            }
-            int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 530 : 16;
-
-            this.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, nX中央位置px, nY上辺位置px);
         }
         protected virtual void tコンボ表示・ドラム(int nCombo値, int nジャンプインデックス, int nX中央位置px, int nY上辺位置px)
 		{
@@ -459,17 +419,9 @@ namespace DTXMania
 		}
 		protected virtual void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス )
 		{
-            int x = 490;
-            int y = 150;
-
-            this.tコンボ表示・ギター(nCombo値, nジャンプインデックス, x, y);
 		}
 		protected virtual void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{
-            int x = 845;
-            int y = 150;
-
-            this.tコンボ表示・ベース(nCombo値, nジャンプインデックス, x, y);
 		}
         protected void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス, int nコンボx, int nコンボy )
 		{

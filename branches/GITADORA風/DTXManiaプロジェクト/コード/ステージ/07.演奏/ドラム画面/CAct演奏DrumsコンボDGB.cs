@@ -86,7 +86,49 @@ namespace DTXMania
 		}
 		protected override void tコンボ表示・ドラム( int nCombo値, int nジャンプインデックス )
 		{
-			base.tコンボ表示・ドラム( nCombo値, nジャンプインデックス );
+            bool guitar = CDTXMania.DTX.bチップがある.Guitar;
+            bool bass = CDTXMania.DTX.bチップがある.Bass;
+            var e表示位置 = CDTXMania.ConfigIni.ドラムコンボ文字の表示位置;
+            int nX中央位置px = 0;
+
+            #region [ e表示位置 の調整 ]
+            //-----------------
+            if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                if (bass)
+                {
+                    // ベースがあるときは問答無用で LEFT 表示のみ。
+                    e表示位置 = Eドラムコンボ文字の表示位置.LEFT;
+                }
+                else if (guitar && (e表示位置 == Eドラムコンボ文字の表示位置.RIGHT))
+                {
+                    // ベースがなくてもギターがあるなら、RIGHT は CENTER に強制変更。
+                    e表示位置 = Eドラムコンボ文字の表示位置.CENTER;
+                }
+            }
+            //-----------------
+            #endregion
+
+            #region [ コンボ位置 ]
+            switch (e表示位置)
+            {
+                case Eドラムコンボ文字の表示位置.LEFT:
+                    nX中央位置px = 290;
+                    break;
+
+                case Eドラムコンボ文字の表示位置.CENTER:
+                    nX中央位置px = 720;
+                    break;
+
+                case Eドラムコンボ文字の表示位置.RIGHT:
+                    nX中央位置px = 1245;
+                    break;
+            }
+            int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 450 : 60;
+            #endregion
+
+            base.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, nX中央位置px, nY上辺位置px);
+
             this.n火薬カウント = (nCombo値 / 100);
 
             //if (nCombo値 % 100 == 0)
@@ -95,23 +137,9 @@ namespace DTXMania
                 this.Start( nCombo値 );
             }
 
-            int x;
-            int y = (CDTXMania.ConfigIni.bReverse.Drums ? 350 : -80 );
-            switch (CDTXMania.ConfigIni.ドラムコンボ文字の表示位置)
-            {
-                case Eドラムコンボ文字の表示位置.LEFT:
-                    x = -5;
-                    break;
-                case Eドラムコンボ文字の表示位置.CENTER:
-                    x = 425;
-                    break;
-                case Eドラムコンボ文字の表示位置.RIGHT:
-                    x = 950;
-                    break;
-                default:
-                    x = 1300;
-                    break;
-            }
+            int x = nX中央位置px - 55;
+            int y = nY上辺位置px - 140;
+
             if (nCombo値 >= 100)
             {
                 for (int i = 0; i < 1; i++)
