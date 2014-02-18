@@ -96,14 +96,14 @@ namespace DTXMania
             }
 
             int x;
-            int y = (CDTXMania.ConfigIni.bReverse.Drums ? 440 : -80 );
+            int y = (CDTXMania.ConfigIni.bReverse.Drums ? 350 : -80 );
             switch (CDTXMania.ConfigIni.ドラムコンボ文字の表示位置)
             {
                 case Eドラムコンボ文字の表示位置.LEFT:
-                    x = -10;
+                    x = -5;
                     break;
                 case Eドラムコンボ文字の表示位置.CENTER:
-                    x = 420;
+                    x = 425;
                     break;
                 case Eドラムコンボ文字の表示位置.RIGHT:
                     x = 950;
