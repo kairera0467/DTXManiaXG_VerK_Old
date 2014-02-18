@@ -394,11 +394,19 @@ namespace DTXMania
         }
         protected virtual void tコンボ表示・ギター(int nCombo値, int nジャンプインデックス)
         {
+            int x = 560;
+            int y = 220;
+
+            this.tコンボ表示・ギター(nCombo値, nジャンプインデックス, x, y);
         }
         protected virtual void tコンボ表示・ベース(int nCombo値, int nジャンプインデックス)
         {
+            int x = 845;
+            int y = 220;
+
+            this.tコンボ表示・ベース(nCombo値, nジャンプインデックス, x, y);
         }
-        protected void tコンボ表示・ギター(int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス)
+        protected void tコンボ表示・ギター(int nCombo値, int nジャンプインデックス, int nコンボx, int nコンボy)
         {
             #region [ 事前チェック。]
             //-----------------
@@ -425,7 +433,7 @@ namespace DTXMania
             //-----------------
             #endregion
 
-            int y = 0;
+            int y = nコンボy;
             int n全桁の合計幅 = nギターコンボの幅 * n桁数;
             int nJump = nジャンプインデックス - (n桁数);
             int y動作差分 = 0;
@@ -448,14 +456,13 @@ namespace DTXMania
             #endregion
             #region [ "COMBO" 文字を表示。]
             //-----------------
-            int x = 460; // -((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
-            int nコンボy = 220;
+            int x = nコンボx - 100; // -((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
 
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, nコンボy, new Rectangle(0, 230, 200, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 230, 200, 64));
             //-----------------
             #endregion
 
-            x = 560 + (n全桁の合計幅 / 2);
+            x = nコンボx + (n全桁の合計幅 / 2);
             for (int i = 0; i < n桁数; i++)
             {
                 #region [ 数字の拡大率を設定。]
@@ -486,7 +493,7 @@ namespace DTXMania
                 #endregion
             }
         }
-        protected void tコンボ表示・ベース(int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス)
+        protected void tコンボ表示・ベース(int nCombo値, int nジャンプインデックス, int nコンボx, int nコンボy)
         {
             #region [ 事前チェック。]
             //-----------------
@@ -513,7 +520,7 @@ namespace DTXMania
             //-----------------
             #endregion
 
-            int y = 0;
+            int y = nコンボy;
             int n全桁の合計幅 = nギターコンボの幅 * n桁数;
             int nJump = nジャンプインデックス - (n桁数);
             int y動作差分 = 0;
@@ -535,14 +542,13 @@ namespace DTXMania
             #endregion
             #region [ "COMBO" 文字を表示。]
             //-----------------
-            int x = 750; // -((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
-            int nコンボy = 220;
+            int x = nコンボx - 95; // -((int)((nギターコンボのCOMBO文字の幅 * f拡大率) / 2.0f));
 
-                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, nコンボy, new Rectangle(0, 230, 200, 64));
+                this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 230, 200, 64));
             //-----------------
             #endregion
 
-            x = 845 + (n全桁の合計幅 / 2);
+            x = nコンボx + (n全桁の合計幅 / 2);
             for (int i = 0; i < n桁数; i++)
             {
                 #region [ 数字の拡大率を設定。]
