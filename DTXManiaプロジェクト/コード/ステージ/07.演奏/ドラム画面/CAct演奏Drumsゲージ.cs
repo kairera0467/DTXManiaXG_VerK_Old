@@ -74,12 +74,12 @@ namespace DTXMania
                     base.txハイスピ.t2D描画(CDTXMania.app.Device, -37 + base.n本体X.Drums + base.txフレーム.Drums.sz画像サイズ.Width, (CDTXMania.ConfigIni.bReverse.Drums ? 35 : 634), new Rectangle(0, CDTXMania.ConfigIni.n譜面スクロール速度.Drums * 48, 42, 48));
                     if (base.db現在のゲージ値.Drums == 1.0 && base.txフルゲージ != null)
                     {
-                        base.txフルゲージ.t2D描画(CDTXMania.app.Device, 20 + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 0, base.txフルゲージ.sz画像サイズ.Width, 31));
+                        base.txフルゲージ.t2D描画(CDTXMania.app.Device, 20 + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 0, base.txフレーム.Drums.sz画像サイズ.Width - 63, 31));
                     }
                     else
                     {
                         base.txゲージ.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Drums;
-                        base.txゲージ.t2D描画(CDTXMania.app.Device, 20 + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 0, base.txゲージ.sz画像サイズ.Width, 31));
+                        base.txゲージ.t2D描画(CDTXMania.app.Device, 20 + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 37 : 635), new Rectangle(0, 0, base.txフレーム.Drums.sz画像サイズ.Width - 63, 31));
                     }
                     base.txフレーム.Drums.t2D描画(CDTXMania.app.Device, base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 28 : 626), new Rectangle(0, 47, base.txフレーム.Drums.sz画像サイズ.Width, 47));
                 }
