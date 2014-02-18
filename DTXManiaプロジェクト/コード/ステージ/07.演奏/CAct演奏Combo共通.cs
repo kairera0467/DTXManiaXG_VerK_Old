@@ -327,7 +327,7 @@ namespace DTXMania
                     //-----------------
                     #endregion
 
-                    if (n桁数 == 2)//3ケタ未満の場合
+                    if (n桁数 <= 2)//3ケタ未満の場合
                     {
                         if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                         {
@@ -350,7 +350,7 @@ namespace DTXMania
                             this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x - 264, y + 36 + y動作差分, new Rectangle(0, 294, 280, 64));
                         }
                     }
-                    else if (n桁数 == 4)//4ケタの場合
+                    else if (n桁数 >= 4)//4ケタの場合
                     {
                         if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                         {
@@ -483,7 +483,7 @@ namespace DTXMania
             {
                 this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x + 30, y, new Rectangle(0, 230, 160, 64));
             }
-            else if( n桁数 == 3)
+            else if( n桁数 >= 3)
             {
                 this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x - 20, y, new Rectangle(0, 294, 280, 64));
             }
@@ -581,7 +581,7 @@ namespace DTXMania
             {
                 this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x + 35, y, new Rectangle(0, 230, 160, 64));
             }
-            else if( n桁数 == 3)
+            else if( n桁数 >= 3)
             {
                 this.txCOMBOギター.t2D描画(CDTXMania.app.Device, x - 20, y, new Rectangle(0, 294, 280, 64));
             }

@@ -484,13 +484,13 @@ namespace DTXMania
 
                 gNamePlate.Dispose();
                 gSongPanel.Dispose();
-                gLevelG.Dispose();
-                gLevelB.Dispose();
+                this.b4font.Dispose();
                 this.iSongPanel.Dispose();
                 this.iAlbum.Dispose();
-
-                this.pfNameFont.Dispose();
-                this.ftDisplayFont.Dispose();
+                this.bNamePlate.Dispose();
+                this.bSongPanel.Dispose();
+                this.bLevelG.Dispose();
+                this.bLevelB.Dispose();
 
 				base.OnManagedリソースの作成();
 			}
@@ -508,7 +508,10 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txLevelB );
                 CDTXMania.tテクスチャの解放( ref this.txPart );
 
+                this.ftDifficultyL.Dispose();
+                this.ftDifficultyS.Dispose();
                 this.ftDisplayFont.Dispose();
+                this.ftGroupFont.Dispose();
                 this.ftLevelFont.Dispose();
                 this.pfNameFont.Dispose();
                 base.OnManagedリソースの解放();
@@ -766,25 +769,25 @@ namespace DTXMania
         private int nCurrentBassSpeed;
         private int nStrlengthbydot;
         private int nDifficulty;
-        private CTexture txパネル;
-        private CTexture tx曲名パネル;
-        private Bitmap b4font;
-        private Bitmap bNamePlate;
-        private Bitmap bSongPanel;
-        private Bitmap bLevelG;
-        private Bitmap bLevelB;
+        private string strGroupName;
+        private string strPanelString;
+        private string strPlayerName;
         private Font ftDifficultyL;
         private Font ftDifficultyS;
         private Font ftDisplayFont;
         private Font ftGroupFont;
         private Font ftLevelFont;
-        private string strGroupName;
-        private string strPanelString;
-        private string strPlayerName;
         private Image iAlbum;
         private Image iNamePlate;
         private Image iSongPanel;
         private Image iDifficulty;
+        private Bitmap b4font;
+        private Bitmap bNamePlate;
+        private Bitmap bSongPanel;
+        private Bitmap bLevelG;
+        private Bitmap bLevelB;
+        private CTexture txパネル;
+        private CTexture tx曲名パネル;
         private CTexture txScore;
         private CTexture txSpeed;
         private CTexture txRisky;
