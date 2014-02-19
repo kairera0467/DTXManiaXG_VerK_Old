@@ -51,8 +51,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if (CDTXMania.ConfigIni.nInfoType == 0)
-                {
                     y += 0x153;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Judge Line:    {0:####0}", this.jl));
                     y -= 0x10;
@@ -78,33 +76,6 @@ namespace DTXMania
                         CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Sound Streams: {0:####0}", CDTXMania.Sound管理.GetStreams()));
                         y -= 0x10;
                     }
-                    
-                    
-                }
-                else if (CDTXMania.ConfigIni.nInfoType == 1 && !CDTXMania.ConfigIni.bGraph有効)
-                {
-                    
-                    y += 0x153;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Shutter OUT:   {0:####0}", CDTXMania.stage演奏ドラム画面.nShutterOutPosY));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Shutter IN:    {0:####0}", CDTXMania.stage演奏ドラム画面.nShutterInPosY));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Judge Line:    {0:####0}", this.jl));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("BPM:           {0:####0.00}", this.dbBPM));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("MISS:          {0:###0}", this.nMISS数));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("POOR:          {0:###0}", this.nPOOR数));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("GOOD:          {0:###0}", this.nGOOD数));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("GREAT:         {0:###0}", this.nGREAT数));
-                    y -= 0x10;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("PREFECT:       {0:###0}", this.nPERFECT数));
-                    y -= 0x10;
-                    
-                }
 			}
 		}
 	}

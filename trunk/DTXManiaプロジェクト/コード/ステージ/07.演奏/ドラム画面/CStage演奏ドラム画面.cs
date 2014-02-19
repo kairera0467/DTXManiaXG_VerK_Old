@@ -28,23 +28,18 @@ namespace DTXMania
 			base.list子Activities.Add( this.actCombo = new CAct演奏DrumsコンボDGB() );
 			base.list子Activities.Add( this.actDANGER = new CAct演奏DrumsDanger() );
 			base.list子Activities.Add( this.actChipFireD = new CAct演奏DrumsチップファイアD() );
-            base.list子Activities.Add( this.actChipFireGB = new CAct演奏DrumsチップファイアGB());
             base.list子Activities.Add( this.actGauge = new CAct演奏Drumsゲージ() );
             base.list子Activities.Add( this.actGraph = new CAct演奏スキルメーター() ); // #24074 2011.01.23 add ikanick
 			base.list子Activities.Add( this.actJudgeString = new CAct演奏Drums判定文字列() );
 			base.list子Activities.Add( this.actLaneFlushD = new CAct演奏DrumsレーンフラッシュD() );
-			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏DrumsレーンフラッシュGB() );
-			base.list子Activities.Add( this.actRGB = new CAct演奏DrumsRGB() );
 			base.list子Activities.Add( this.actScore = new CAct演奏Drumsスコア() );
             base.list子Activities.Add( this.actLivePoint = new CAct演奏DrumsLivePoint() );
 			base.list子Activities.Add( this.actStatusPanels = new CAct演奏Drumsステータスパネル() );
-			base.list子Activities.Add( this.actWailingBonus = new CAct演奏DrumsWailingBonus() );
 			base.list子Activities.Add( this.act譜面スクロール速度 = new CAct演奏スクロール速度() );
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
 			base.list子Activities.Add( this.actBGA = new CAct演奏BGA() );
 			base.list子Activities.Add( this.actPanel = new CAct演奏パネル文字列() );
 			base.list子Activities.Add( this.actStageFailed = new CAct演奏ステージ失敗() );
-            //base.list子Activities.Add( this.actStageCleared = new CAct演奏ステージクリア());
 			base.list子Activities.Add( this.actPlayInfo = new CAct演奏演奏情報() );
 			base.list子Activities.Add( this.actFI = new CActFIFOBlackStart() );
 			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
@@ -52,6 +47,11 @@ namespace DTXMania
             base.list子Activities.Add( this.actFOStageClear = new CActFIFOWhiteClear());
             base.list子Activities.Add( this.actFillin = new CAct演奏Drumsフィルインエフェクト() );
             base.list子Activities.Add( this.actLVFont = new CActLVLNFont() );
+//          base.list子Activities.Add( this.actChipFireGB = new CAct演奏DrumsチップファイアGB());
+//			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏DrumsレーンフラッシュGB() );
+//			base.list子Activities.Add( this.actRGB = new CAct演奏DrumsRGB() );
+//			base.list子Activities.Add( this.actWailingBonus = new CAct演奏DrumsWailingBonus() );
+            //base.list子Activities.Add( this.actStageCleared = new CAct演奏ステージクリア());
 		}
 
 
@@ -112,14 +112,16 @@ namespace DTXMania
                 this.bボーナス = false;
 				this.txチップ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_chips_drums.png" ) );
 				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar.png" ) );
+                this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter.png" ) );
+                this.txLaneCover = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_lanes_Cover_cls.png" ) );
+                /*
 				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar guitar.png" ) );
 				this.txレーンフレームGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums lane parts guitar.png" ) );
-                this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter.png" ) );
-                this.txLaneCover = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_lanes_Cover_cls.png"));
                 if( this.txレーンフレームGB != null )
 				{
 					this.txレーンフレームGB.n透明度 = 0xff - CDTXMania.ConfigIni.n背景の透過度;
 				}
+                 */
 
 				base.OnManagedリソースの作成();
 			}
@@ -129,11 +131,11 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txヒットバー );
-				CDTXMania.tテクスチャの解放( ref this.txヒットバーGB );
 				CDTXMania.tテクスチャの解放( ref this.txチップ );
-				CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
                 CDTXMania.tテクスチャの解放( ref this.txLaneCover );
                 CDTXMania.tテクスチャの解放( ref this.txシャッター );
+//				CDTXMania.tテクスチャの解放( ref this.txヒットバーGB );
+//				CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
                 
 				base.OnManagedリソースの解放();
 			}
@@ -267,19 +269,27 @@ namespace DTXMania
                 {
                     dbシャッターIN = (base.nShutterOutPosY.Drums * db倍率);
                     this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
-                    this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
+
+                    if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                        this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
 
                     dbシャッターOUT = 720 - (base.nShutterInPosY.Drums * db倍率);
                     this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
-                    this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
+
+                    if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                        this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
                 }
                 else
                 {
                     this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)(-720 + dbシャッターIN));
-                    this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
+
+                    if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                        this.actLVFont.t文字列描画(564, (int)dbシャッターIN - 20, CDTXMania.ConfigIni.nShutterInSide.Drums.ToString());
 
                     this.txシャッター.t2D描画(CDTXMania.app.Device, 295, (int)dbシャッターOUT);
-                    this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
+
+                    if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                        this.actLVFont.t文字列描画(564, (int)dbシャッターOUT + 2, CDTXMania.ConfigIni.nShutterOutSide.Drums.ToString());
                 }
                 
                 #endregion
@@ -435,8 +445,8 @@ namespace DTXMania
         //2013.09.26.kairera0467 ボーナスの場合はレーンタイプAの並び方。
 
         public double UnitTime;
-		private CTexture txヒットバーGB;
-		private CTexture txレーンフレームGB;
+//		private CTexture txヒットバーGB;
+//		private CTexture txレーンフレームGB;
         public CTexture txシャッター;
         private CTexture txLaneCover;
 		//-----------------
@@ -620,6 +630,7 @@ namespace DTXMania
 			);
 		}
 
+        /*
 		private void t進行描画・ギターベースフレーム()
 		{
 			if( ( ( CDTXMania.ConfigIni.eDark != Eダークモード.HALF ) && ( CDTXMania.ConfigIni.eDark != Eダークモード.FULL ) ) && CDTXMania.ConfigIni.bGuitar有効 )
@@ -688,6 +699,7 @@ namespace DTXMania
 				}
 			}
 		}
+        */
 
 		private void t進行描画・グラフ()        
         {
@@ -3285,6 +3297,8 @@ namespace DTXMania
 				268, 144, 76, 6,
 				24, 509, 561, 400, 452, 26, 24 );
 		}
+
+        /*
 		protected override void t進行描画・チップ・ギター・ウェイリング( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
 			if ( configIni.bGuitar有効 )
@@ -3353,6 +3367,8 @@ namespace DTXMania
 			}
 			base.t進行描画・チップ・ギター・ウェイリング( configIni, ref dTX, ref pChip );
 		}
+         */
+
 		protected override void t進行描画・チップ・フィルイン( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
@@ -3438,7 +3454,6 @@ namespace DTXMania
 			}
 		}
 
-        
         protected override void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
         {
             if (!pChip.bHit )
@@ -3675,6 +3690,7 @@ namespace DTXMania
 
         }
 
+        /*
 		protected override void t進行描画・チップ・ベース・ウェイリング( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
 			if ( configIni.bGuitar有効 )
@@ -3745,6 +3761,7 @@ namespace DTXMania
 			}
 				base.t進行描画・チップ・ベース・ウェイリング( configIni, ref dTX, ref pChip);
 		}
+         */
 		protected override void t進行描画・チップ・空打ち音設定・ドラム( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
@@ -3766,9 +3783,8 @@ namespace DTXMania
 					dTX.tWave再生位置自動補正();
 				}
 			}
-			if ( configIni.bDrums有効 )
-			{
-				if ( configIni.b演奏情報を表示する && ( configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1 ) )
+
+				if ( configIni.b演奏情報を表示する )
                 {
                     if (CDTXMania.ConfigIni.nInfoType == 0)
                     {
@@ -3780,8 +3796,8 @@ namespace DTXMania
 				{
                     this.txチップ.t2D描画(CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 769, 0x22f, 2));
 				}
-                
-			}
+             
+            /*
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( configIni.eDark != Eダークモード.FULL ) )
 			{
 				int y = configIni.bReverse.Guitar ? ( ( 0x176 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 0x5f + pChip.nバーからの距離dot.Guitar ) - 1 );
@@ -3795,6 +3811,7 @@ namespace DTXMania
 					this.txチップ.t2D描画( CDTXMania.app.Device, 398, y, new Rectangle( 0, 450, 0x4e, 1 ) );
 				}
 			}
+             */
 		}              //移植完了。
     #endregion
 	}
