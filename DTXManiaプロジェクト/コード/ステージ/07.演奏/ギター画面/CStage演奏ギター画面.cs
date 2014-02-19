@@ -780,12 +780,24 @@ namespace DTXMania
                 {
                     if( CDTXMania.ConfigIni.nLaneDisp.Guitar == 0 || CDTXMania.ConfigIni.nLaneDisp.Guitar == 1 )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 88, y, new Rectangle( 0, 20, 193, 2 ) );
+
+                    if ( configIni.b演奏情報を表示する )
+                    {
+                        int n小節番号 = n小節番号plus1 - 1;
+                        CDTXMania.act文字コンソール.tPrint(60, y - 16, C文字コンソール.Eフォント種別.白, n小節番号.ToString());
+                    }
 				}
 				y = CDTXMania.ConfigIni.bReverse.Bass ? ( ( 611 - pChip.nバーからの距離dot.Bass ) + 0 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) + 9 );
                 if ( ( dTX.bチップがある.Bass && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
                 {
                     if( CDTXMania.ConfigIni.nLaneDisp.Bass == 0 || CDTXMania.ConfigIni.nLaneDisp.Bass == 1 )
 					    this.txチップ.t2D描画( CDTXMania.app.Device, 959, y, new Rectangle( 0, 20, 193, 2 ) );
+
+                    if ( configIni.b演奏情報を表示する )
+                    {
+                        int n小節番号 = n小節番号plus1 - 1;
+                        CDTXMania.act文字コンソール.tPrint(930, y - 16, C文字コンソール.Eフォント種別.白, n小節番号.ToString());
+                    }
 				}
 			}
 
