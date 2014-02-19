@@ -170,6 +170,7 @@ namespace DTXMania
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
+                this.t進行描画・小節線(E楽器パート.GUITAR);
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
                 this.t進行描画・RGBボタン();
                 this.t進行描画・ギターベース判定ライン();
@@ -365,8 +366,16 @@ namespace DTXMania
 			}
 			base.t背景テクスチャの生成( DefaultBgFilename, bgrect, BgFilename );
 		}
-
-		protected override void t進行描画・チップ・ドラムス( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
+        protected override void t進行描画・チップ・模様のみ・ドラムス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
+        {
+            // int indexSevenLanes = this.nチャンネル0Atoレーン07[ pChip.nチャンネル番号 - 0x11 ];
+            if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+            {
+                //pChip.bHit = true;
+                //this.tサウンド再生(pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量(E楽器パート.DRUMS));
+            }
+        }
+        protected override void t進行描画・チップ・ドラムス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
 		{
 			// int indexSevenLanes = this.nチャンネル0Atoレーン07[ pChip.nチャンネル番号 - 0x11 ];
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
