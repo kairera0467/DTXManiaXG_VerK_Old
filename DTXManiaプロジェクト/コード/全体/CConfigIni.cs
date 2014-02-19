@@ -561,7 +561,7 @@ namespace DTXMania
 		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
         public STDGBVALUE<Eタイプ> 判定文字表示位置;
         public int nMovieMode;
-        public int nJudgeLine;
+        public STDGBVALUE<int> nJudgeLine;
         public STDGBVALUE<int> nShutterInSide;
         public STDGBVALUE<int> nShutterOutSide;
         public bool bCLASSIC譜面判別を有効にする;
@@ -1012,7 +1012,9 @@ namespace DTXMania
 			this.nウインドウheight = SampleFramework.GameWindowSize.Height;			// 
             this.nMovieMode = 1;
             this.nMovieAlpha = 0;
-            this.nJudgeLine = 0;
+            this.nJudgeLine.Drums = 0;
+            this.nJudgeLine.Guitar = 0;
+            this.nJudgeLine.Bass = 0;
             this.nShutterInSide = new STDGBVALUE<int>();
             this.nShutterInSide.Drums = 0;
             this.nShutterOutSide = new STDGBVALUE<int>();
@@ -1774,7 +1776,9 @@ namespace DTXMania
             #endregion
             #region[ DTXHD追加オプション ]
             sw.WriteLine("; 判定ライン(0～100)" );
-            sw.WriteLine("JudgeLine={0}", (int)this.nJudgeLine);
+            sw.WriteLine("DrumsJudgeLine={0}", (int)this.nJudgeLine.Drums);
+            sw.WriteLine("GuitarJudgeLine={0}", (int)this.nJudgeLine.Guitar);
+            sw.WriteLine("BassJudgeLine={0}", (int)this.nJudgeLine.Bass);
             sw.WriteLine();
             #endregion
             #region[ ver.K追加オプション ]
@@ -2786,9 +2790,9 @@ namespace DTXMania
                                             {
                                                 this.bAssignToLBD.Drums = C変換.bONorOFF( str4[ 0 ] );
                                             }
-                                            else if (str3.Equals("JudgeLine"))
+                                            else if (str3.Equals("DrumsJudgeLine"))
                                             {
-                                                this.nJudgeLine = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine);
+                                                this.nJudgeLine.Drums = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Drums);
                                             }
                                             else if ( str3.Equals( "DrumsShutterIn" ) )
                                             {
@@ -2798,6 +2802,10 @@ namespace DTXMania
                                             {
                                                 this.nShutterOutSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Drums );
                                             }
+                                            else if ( str3.Equals( "GuitarJudgeLine" ) )
+                                            {
+                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Guitar);
+                                            }
                                             else if ( str3.Equals( "GuitarShutterIn" ) )
                                             {
                                                 this.nShutterInSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Guitar );
@@ -2805,6 +2813,10 @@ namespace DTXMania
                                             else if ( str3.Equals( "GuitarShutterOut" ) )
                                             {
                                                 this.nShutterOutSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
+                                            }
+                                            else if ( str3.Equals( "BassJudgeLine" ) )
+                                            {
+                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Bass);
                                             }
                                             else if ( str3.Equals( "BassShutterIn" ) )
                                             {

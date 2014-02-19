@@ -280,7 +280,7 @@ namespace DTXMania
 			base.On活性化();
 			this.tステータスパネルの選択();
 			this.tパネル文字列の設定();
-            this.nJudgeLinePosY = 561 - CDTXMania.ConfigIni.nJudgeLine;
+            this.nJudgeLinePosY = 561 - CDTXMania.ConfigIni.nJudgeLine.Drums;
             this.nShutterInPosY.Drums = CDTXMania.ConfigIni.nShutterInSide.Drums;
             this.nShutterOutPosY.Drums = CDTXMania.ConfigIni.nShutterOutSide.Drums;
             this.nShutterInPosY.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
@@ -2012,7 +2012,7 @@ namespace DTXMania
                             this.sw.Start();
                         }
                     }
-                    CDTXMania.ConfigIni.nJudgeLine = nJudgeLineMaxPosY - this.nJudgeLinePosY;
+                    CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY;
                     CDTXMania.stage演奏ドラム画面.tJudgeLineMovingUpandDown();
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.PageDown))
@@ -2042,7 +2042,7 @@ namespace DTXMania
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nJudgeLine = nJudgeLineMaxPosY - this.nJudgeLinePosY;
+                    CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY;
                     CDTXMania.stage演奏ドラム画面.tJudgeLineMovingUpandDown();
                 }
 
