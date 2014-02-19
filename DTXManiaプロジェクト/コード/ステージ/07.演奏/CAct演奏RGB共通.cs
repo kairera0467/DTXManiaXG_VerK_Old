@@ -13,14 +13,21 @@ namespace DTXMania
 		// プロパティ
 
 		public bool[] b押下状態 = new bool[ 10 ];
-		protected CTexture txRGB;
+        protected STDGBVALUE<int> nシャッター上;
+        protected STDGBVALUE<int> nシャッター下;
+        protected STDGBVALUE<double> dbシャッター上;
+        protected STDGBVALUE<double> dbシャッター下;
+        protected double db倍率 = 7.2;
+        protected CTexture txRGB;
         protected CTexture txシャッター;
+        protected CActLVLNFont actLVFont;
 
 		// コンストラクタ
 
 		public CAct演奏RGB共通()
 		{
-			base.b活性化してない = true;
+            base.list子Activities.Add(this.actLVFont = new CActLVLNFont());
+            base.b活性化してない = true;
 		}
 		
 		
