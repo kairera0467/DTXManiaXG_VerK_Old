@@ -54,13 +54,13 @@ namespace DTXMania
 
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n曲名X = 856;
+                this.n曲名X = 900;
                 this.n曲名Y = 630;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
             {
-                this.n曲名X = 506;
-                this.n曲名Y = 603;
+                this.n曲名X = 500;
+                this.n曲名Y = 630;
             }
 
             this.ft表示用フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 26f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -111,7 +111,7 @@ namespace DTXMania
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
 
-                Bitmap image = new Bitmap(500, 100);
+                Bitmap image = new Bitmap(800, 60);
                 graphics = Graphics.FromImage( image );
                 
                 if( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
