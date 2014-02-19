@@ -192,6 +192,7 @@ namespace DTXMania
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
 				this.t進行描画・チップアニメ();
+                this.t進行描画・小節線(E楽器パート.GUITAR);
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
                 this.t進行描画・RGBボタン();
                 this.t進行描画・ギターベース判定ライン();
