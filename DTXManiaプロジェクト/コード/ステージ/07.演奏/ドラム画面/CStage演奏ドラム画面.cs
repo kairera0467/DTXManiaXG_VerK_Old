@@ -3784,13 +3784,10 @@ namespace DTXMania
 				}
 			}
 
-				if ( configIni.b演奏情報を表示する )
+				if ( configIni.b演奏情報を表示する && CDTXMania.ConfigIni.nInfoType == 0 )
                 {
-                    if (CDTXMania.ConfigIni.nInfoType == 0)
-                    {
                         int n小節番号 = n小節番号plus1 - 1;
                         CDTXMania.act文字コンソール.tPrint(858, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 0x11) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 0x11), C文字コンソール.Eフォント種別.白, n小節番号.ToString());
-                    }
 				}
                 if (((configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視) && (this.txチップ != null))
 				{
