@@ -2596,25 +2596,6 @@ namespace DTXMania
 						this.t進行描画・チップ・ボーナス( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
-                    #region [ 50: 小節線 ]
-                    case 0x50:	// 小節線
-                        {
-                            this.t進行描画・チップ・小節線(configIni, ref dTX, ref pChip);
-                            break;
-                        }
-                    #endregion
-                    #region [ 51: 拍線 ]
-                    case 0x51:	// 拍線
-                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
-                        {
-                            pChip.bHit = true;
-                        }
-                        if ((ePlayMode == E楽器パート.DRUMS) && (configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視 && (this.txチップ != null))
-                        {
-                            this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
-                        }
-                        break;
-                    #endregion
 
 					#region [ 52: MIDIコーラス ]
 					case 0x52:	// MIDIコーラス
@@ -2901,8 +2882,80 @@ namespace DTXMania
 			}
 			return false;
 		}
+        protected bool t進行描画・小節線(E楽器パート ePlayMode)
+        {
+            if ((base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED) || (base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト))
+            {
+                return true;
+            }
+            if ((this.n現在のトップChip == -1) || (this.n現在のトップChip >= listChip.Count))
+            {
+                return true;
+            }
+            if (this.n現在のトップChip == -1)
+            {
+                return true;
+            }
 
-        protected bool t進行描画・チップ・模様のみ( E楽器パート ePlayMode )
+            const double speed = 286;	// BPM150の時の1小節の長さ[dot]
+            //XGのHS4.5が1289。思えばBPMじゃなくて拍の長さが関係あるよね。
+
+            double ScrollSpeedDrums = (this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.0) * 0.5 * 37.5 * speed / 60000.0;
+            double ScrollSpeedGuitar = (this.act譜面スクロール速度.db現在の譜面スクロール速度.Guitar + 1.0) * 0.5 * 0.5 * 37.5 * speed / 60000.0;
+            double ScrollSpeedBass = (this.act譜面スクロール速度.db現在の譜面スクロール速度.Bass + 1.0) * 0.5 * 0.5 * 37.5 * speed / 60000.0;
+
+            CDTX dTX = CDTXMania.DTX;
+            CConfigIni configIni = CDTXMania.ConfigIni;
+            for (int nCurrentTopChip = this.n現在のトップChip; nCurrentTopChip < dTX.listChip.Count; nCurrentTopChip++)
+            {
+                CDTX.CChip pChip = dTX.listChip[nCurrentTopChip];
+                //Debug.WriteLine( "nCurrentTopChip=" + nCurrentTopChip + ", ch=" + pChip.nチャンネル番号.ToString("x2") + ", 発音位置=" + pChip.n発声位置 + ", 発声時刻ms=" + pChip.n発声時刻ms );
+                pChip.nバーからの距離dot.Drums = (int)((pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻) * ScrollSpeedDrums);
+                pChip.nバーからの距離dot.Guitar = (int)((pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻) * ScrollSpeedGuitar);
+                pChip.nバーからの距離dot.Bass = (int)((pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻) * ScrollSpeedBass);
+                if (Math.Min(Math.Min(pChip.nバーからの距離dot.Drums, pChip.nバーからの距離dot.Guitar), pChip.nバーからの距離dot.Bass) > 600)
+                {
+                    break;
+                }
+                //				if ( ( ( nCurrentTopChip == this.n現在のトップChip ) && ( pChip.nバーからの距離dot.Drums < -65 ) ) && pChip.bHit )
+                // #28026 2012.4.5 yyagi; 信心ワールドエンドの曲終了後リザルトになかなか行かない問題の修正
+                if ((dTX.listChip[this.n現在のトップChip].nバーからの距離dot.Drums < -65) && dTX.listChip[this.n現在のトップChip].bHit)
+                {
+                    //					nCurrentTopChip = ++this.n現在のトップChip;
+                    ++this.n現在のトップChip;
+                    continue;
+                }
+
+                bool bPChipIsAutoPlay = bCheckAutoPlay(pChip);
+
+                int nInputAdjustTime = (bPChipIsAutoPlay || (pChip.e楽器パート == E楽器パート.UNKNOWN)) ? 0 : this.nInputAdjustTimeMs[(int)pChip.e楽器パート];
+
+                switch (pChip.nチャンネル番号)
+                {
+                    #region [ 50: 小節線 ]
+                    case 0x50:	// 小節線
+                        {
+                            this.t進行描画・チップ・小節線(configIni, ref dTX, ref pChip);
+                            break;
+                        }
+                    #endregion
+                    #region [ 51: 拍線 ]
+                    case 0x51:	// 拍線
+                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+                        {
+                            pChip.bHit = true;
+                        }
+                        if ((ePlayMode == E楽器パート.DRUMS) && (configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視 && (this.txチップ != null))
+                        {
+                            this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
+                        }
+                        break;
+                    #endregion
+                }
+            }
+            return false;
+        }
+        protected bool t進行描画・チップ・模様のみ(E楽器パート ePlayMode)
 		{
 			if ( ( base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED ) || ( base.eフェーズID == CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト ) )
 			{
@@ -2952,7 +3005,7 @@ namespace DTXMania
 
 				switch ( pChip.nチャンネル番号 )
 				{
-					#region [ 11-1c: ドラム演奏 ]
+                    #region [ 11-1c: ドラム演奏 ]
 					case 0x11:	// ドラム演奏
 					case 0x12:
 					case 0x13:

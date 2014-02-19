@@ -206,6 +206,7 @@ namespace DTXMania
                 this.t進行描画・レーンフラッシュD();
                 this.t進行描画・譜面スクロール速度();
                 this.t進行描画・チップアニメ();
+                this.t進行描画・小節線( E楽器パート.DRUMS );
                 this.t進行描画・チップ・模様のみ( E楽器パート.DRUMS );
                 bIsFinishedPlaying = this.t進行描画・チップ( E楽器パート.DRUMS );
                 #region[ シャッター ]
