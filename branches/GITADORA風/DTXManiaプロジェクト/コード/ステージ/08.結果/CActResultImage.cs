@@ -79,7 +79,7 @@ namespace DTXMania
                 graphics.Dispose();
                 this.bmSongNameLength.Dispose();
 
-                Bitmap image = new Bitmap(500, 100);
+                Bitmap image = new Bitmap(800, 60);
                 graphics = Graphics.FromImage(image);
                 if ( CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする )
                 {
@@ -186,7 +186,7 @@ namespace DTXMania
 
                 this.txリザルト画像.t3D描画(CDTXMania.app.Device, mat);
 			}
-            this.txSongName.t2D描画(CDTXMania.app.Device, 506, 630);
+            this.txSongName.t2D描画(CDTXMania.app.Device, 500, 630);
 			if( !this.ct登場用.b終了値に達した )
 			{
 				return 0;

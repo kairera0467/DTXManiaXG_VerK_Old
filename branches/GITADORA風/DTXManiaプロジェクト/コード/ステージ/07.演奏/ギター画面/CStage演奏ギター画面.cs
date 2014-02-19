@@ -159,10 +159,13 @@ namespace DTXMania
                 this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
 				this.t進行描画・BGA();
+
+                if (CDTXMania.ConfigIni.bShowMusicInfo)
+				    this.t進行描画・パネル文字列();
+
 				this.t進行描画・レーンフラッシュGB();
 
 				this.t進行描画・DANGER();
-
 
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();
@@ -173,8 +176,6 @@ namespace DTXMania
                 this.t進行描画・判定ライン();
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
-                if (CDTXMania.ConfigIni.bShowMusicInfo)
-				    this.t進行描画・パネル文字列();
                 if (CDTXMania.ConfigIni.nInfoType == 1)
 				    this.t進行描画・ステータスパネル();
                 if (CDTXMania.ConfigIni.bShowScore)

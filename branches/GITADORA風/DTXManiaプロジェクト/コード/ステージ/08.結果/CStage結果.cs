@@ -379,11 +379,11 @@ namespace DTXMania
 				{
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
 				}
-				if ( this.actParameterPanel.On進行描画() == 0 )
+                if( this.actResultImage.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
 				}
-                if( this.actResultImage.On進行描画() == 0 )
+				if ( this.actParameterPanel.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
 				}
