@@ -1154,7 +1154,7 @@ namespace DTXMania
 
             this.iGuitarAttackEffect = new CItemList("AttackEffect", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAttackEffect.Guitar,
                  "アタックエフェクトの表示 / 非表示を\n" +
-                 "切り替えます。   (未実装)",
+                 "切り替えます。",
                  "",
                 new string[] { "ON", "OFF" });
             this.list項目リスト.Add(this.iGuitarAttackEffect);
@@ -1356,7 +1356,7 @@ namespace DTXMania
 
             this.iBassAttackEffect = new CItemList("AttackEffect", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAttackEffect.Bass,
                  "アタックエフェクトの表示 / 非表示を\n" +
-                 "切り替えます。   (未実装)",
+                 "切り替えます。",
                  "",
                  new string[] { "ON", "OFF" });
             this.list項目リスト.Add(this.iBassAttackEffect);
