@@ -22,6 +22,11 @@ namespace DTXMania
     {
         // プロパティ
 
+        public CStage演奏画面共通()
+        {
+            base.list子Activities.Add(this.actLVFont = new CActLVLNFont());
+        }
+
         public bool bAUTOでないチップが１つでもバーを通過した
         {
             get;
@@ -279,7 +284,9 @@ namespace DTXMania
             base.On活性化();
             this.tステータスパネルの選択();
             this.tパネル文字列の設定();
-            this.nJudgeLinePosY = 561 - CDTXMania.ConfigIni.nJudgeLine.Drums;
+            this.nJudgeLinePosY.Drums = (CDTXMania.ConfigIni.bReverse.Drums ? 159 + CDTXMania.ConfigIni.nJudgeLine.Drums : 561 - CDTXMania.ConfigIni.nJudgeLine.Drums);
+
+
             this.nShutterInPosY.Drums = CDTXMania.ConfigIni.nShutterInSide.Drums;
             this.nShutterOutPosY.Drums = CDTXMania.ConfigIni.nShutterOutSide.Drums;
             this.nShutterInPosY.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
@@ -287,8 +294,8 @@ namespace DTXMania
             this.nShutterInPosY.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
             this.nShutterOutPosY.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
 
-            this.actJudgeString.iP_A = this.nJudgeLinePosY - 0xbd;
-            this.actJudgeString.iP_B = this.nJudgeLinePosY + 0x17;
+            this.actJudgeString.iP_A = this.nJudgeLinePosY.Drums - 0xbd;
+            this.actJudgeString.iP_B = this.nJudgeLinePosY.Drums + 0x17;
 
             this.nInputAdjustTimeMs.Drums = CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums;		// #23580 2011.1.3 yyagi
             this.nInputAdjustTimeMs.Guitar = CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar;		//        2011.1.7 ikanick 修正
@@ -601,6 +608,7 @@ namespace DTXMania
         public CAct演奏AVI actAVI;
         public CAct演奏BGA actBGA;
 
+        protected CActLVLNFont actLVFont;
         protected CAct演奏チップファイアGB actChipFireGB;
         public CAct演奏Combo共通 actCombo;
         protected CAct演奏Danger共通 actDANGER;
@@ -646,7 +654,7 @@ namespace DTXMania
         protected readonly float[,] fDamageGaugeDelta = new float[,] { { 0.004f, 0.006f, 0.006f }, { 0.002f, 0.003f, 0.003f }, { 0f, 0f, 0f }, { -0.02f, -0.03f, -0.03f }, { -0.05f, -0.05f, -0.05f } };
         protected readonly float[] fDamageLevelFactor = new float[] { 0.5f, 1f, 1.5f };
 
-        public int nJudgeLinePosY = 561;//(CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561);
+        public STDGBVALUE<int> nJudgeLinePosY = new STDGBVALUE<int>();//(CDTXMania.ConfigIni.bReverse.Drums ? 159 : 561);
         public STDGBVALUE<int> nShutterInPosY = new STDGBVALUE<int>();
         public STDGBVALUE<int> nShutterOutPosY = new STDGBVALUE<int>();
         public long n現在のスコア = 0;
@@ -1919,9 +1927,9 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
-                        if (this.nJudgeLinePosY > nJudgeLineMinPosY)
+                        if (this.nJudgeLinePosY.Drums > nJudgeLineMinPosY)
                         {
-                            this.nJudgeLinePosY--;
+                            this.nJudgeLinePosY.Drums--;
                         }
                     }
                     else
@@ -1935,15 +1943,15 @@ namespace DTXMania
                                     this.sw2.Reset();
                                 }
                             }
-                            else if (this.nJudgeLinePosY > nJudgeLineMinPosY)
+                            else if (this.nJudgeLinePosY.Drums > nJudgeLineMinPosY)
                             {
-                                this.nJudgeLinePosY--;
+                                this.nJudgeLinePosY.Drums--;
                             }
                             this.sw.Reset();
                             this.sw.Start();
                         }
                     }
-                    CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY;
+                    CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY.Drums;
                     CDTXMania.stage演奏ドラム画面.tJudgeLineMovingUpandDown();
                 }
                 if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.PageDown))
@@ -1952,9 +1960,9 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
-                        if (this.nJudgeLinePosY < nJudgeLineMaxPosY)
+                        if (this.nJudgeLinePosY.Drums < nJudgeLineMaxPosY)
                         {
-                            this.nJudgeLinePosY++;
+                            this.nJudgeLinePosY.Drums++;
                         }
                     }
                     else if (this.sw.ElapsedMilliseconds > 10L)
@@ -1966,14 +1974,14 @@ namespace DTXMania
                                 this.sw2.Reset();
                             }
                         }
-                        else if (this.nJudgeLinePosY < nJudgeLineMaxPosY)
+                        else if (this.nJudgeLinePosY.Drums < nJudgeLineMaxPosY)
                         {
-                            this.nJudgeLinePosY++;
+                            this.nJudgeLinePosY.Drums++;
                         }
                         this.sw.Reset();
                         this.sw.Start();
                     }
-                    CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY;
+                    CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY.Drums;
                     CDTXMania.stage演奏ドラム画面.tJudgeLineMovingUpandDown();
                 }
 
@@ -2872,7 +2880,7 @@ namespace DTXMania
                         }
                         if ((ePlayMode == E楽器パート.DRUMS) && (configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視 && (this.txチップ != null))
                         {
-                            this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
+                            this.txチップ.t2D描画(CDTXMania.app.Device, 0x127, configIni.bReverse.Drums ? ((this.nJudgeLinePosY.Drums + pChip.nバーからの距離dot.Drums) - 1) : ((this.nJudgeLinePosY.Drums - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 772, 0x22f, 2));
                         }
                         break;
                     #endregion
@@ -4061,12 +4069,14 @@ namespace DTXMania
         {
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                if (CDTXMania.ConfigIni.bJudgeLineDisp.Drums == true)
+                int y = CDTXMania.ConfigIni.bReverse.Drums ? nJudgeLinePosY.Drums - nJudgeLinePosY_delta.Drums : nJudgeLinePosY.Drums + nJudgeLinePosY_delta.Drums;
+                if (CDTXMania.ConfigIni.bJudgeLineDisp.Drums)
                 {
-                    int y = CDTXMania.ConfigIni.bReverse.Drums ? 159 - nJudgeLinePosY_delta.Drums : nJudgeLinePosY + nJudgeLinePosY_delta.Drums;
                     // #31602 2013.6.23 yyagi 描画遅延対策として、判定ラインの表示位置をオフセット調整できるようにする
                     this.txヒットバー.t2D描画(CDTXMania.app.Device, 295, y, new Rectangle(0, 0, 0x22f, 6));
                 }
+                if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                    this.actLVFont.t文字列描画(295, (CDTXMania.ConfigIni.bReverse.Drums ? y - 20 : y + 8), CDTXMania.ConfigIni.nJudgeLine.Drums.ToString());
             }
         }
 
