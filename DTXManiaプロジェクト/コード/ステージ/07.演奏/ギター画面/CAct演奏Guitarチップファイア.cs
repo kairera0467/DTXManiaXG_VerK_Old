@@ -32,13 +32,7 @@ namespace DTXMania
 				index = ( ( index / 5 ) * 5 ) + ( 4 - ( index % 5 ) );
 			}
 			int x = this.pt中央[ index ].X;
-			int y = this.pt中央[ index ].Y;
-
-            //リバース時のY座標
-			if( CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] )
-			{
-				y = ( nLane < 5 ) ? 611 : 611;
-			}
+            int y = (CDTXMania.ConfigIni.bReverse[(int)e楽器パート] ? 611 - CDTXMania.ConfigIni.nJudgeLine[(int)e楽器パート] : 155 + CDTXMania.ConfigIni.nJudgeLine[(int)e楽器パート]);
 
             if ( CDTXMania.ConfigIni.eAttackEffect[ (int) e楽器パート ] == Eタイプ.B )
                 y = 1000;
