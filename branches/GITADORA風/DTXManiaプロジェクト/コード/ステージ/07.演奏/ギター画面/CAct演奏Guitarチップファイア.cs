@@ -39,6 +39,10 @@ namespace DTXMania
 			{
 				y = ( nLane < 5 ) ? 611 : 611;
 			}
+
+            if ( CDTXMania.ConfigIni.eAttackEffect[ (int) e楽器パート ] == Eタイプ.B )
+                y = 1000;
+
 			base.Start( nLane, x, y );
 		}
 

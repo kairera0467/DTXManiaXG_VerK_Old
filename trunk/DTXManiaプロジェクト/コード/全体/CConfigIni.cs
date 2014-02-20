@@ -1833,7 +1833,7 @@ namespace DTXMania
             sw.WriteLine("; 3:ALLOFF すべて消します。");
             sw.WriteLine("DrumsAttackEffect={0}", (int)this.eAttackEffect.Drums);
             sw.WriteLine();
-            sw.WriteLine("; ギター / ベース アタックエフェクトタイプ (0:OFF, 1:ON) (未実装)");
+            sw.WriteLine("; ギター / ベース アタックエフェクトタイプ (0:OFF, 1:ON)");
             sw.WriteLine("GuitarAttackEffect={0}", (int)this.eAttackEffect.Guitar);
             sw.WriteLine("BassAttackEffect={0}", (int)this.eAttackEffect.Bass);
             sw.WriteLine();
