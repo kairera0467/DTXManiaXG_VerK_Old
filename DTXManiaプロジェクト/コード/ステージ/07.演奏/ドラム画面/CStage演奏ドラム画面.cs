@@ -81,8 +81,8 @@ namespace DTXMania
             Cスコア cスコア = CDTXMania.stage選曲.r確定されたスコア;
             this.ct登場用 = new CCounter(0, 12, 16, CDTXMania.Timer);
 
-            this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? -24 : base.nJudgeLinePosY - 186);
-            base.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY);
+            this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? base.nJudgeLinePosY.Drums - 183 : base.nJudgeLinePosY.Drums - 186);
+            base.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? base.nJudgeLinePosY.Drums - 159 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY.Drums);
 
 			if( CDTXMania.bコンパクトモード )
 			{
@@ -498,7 +498,6 @@ namespace DTXMania
         public int nミス数;
         public int nパフェ数;
 		private CAct演奏DrumsチップファイアD actChipFireD;
-        private CActLVLNFont actLVFont;
         public CAct演奏スキルメーター actGraph;   // #24074 2011.01.23 add ikanick
 		public CAct演奏Drumsパッド actPad;
 		public bool bフィルイン中;
@@ -596,10 +595,10 @@ namespace DTXMania
 
         protected override void tJudgeLineMovingUpandDown()
         {
-            this.actJudgeString.iP_A = (CDTXMania.ConfigIni.bReverse.Drums ? 159 : this.nJudgeLinePosY - 189);
-            this.actJudgeString.iP_B = (CDTXMania.ConfigIni.bReverse.Drums ? 159 : this.nJudgeLinePosY + 23);
-            this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? -24 : this.nJudgeLinePosY - 186);
-            CDTXMania.stage演奏ドラム画面.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY);
+            this.actJudgeString.iP_A = (CDTXMania.ConfigIni.bReverse.Drums ? base.nJudgeLinePosY.Drums : base.nJudgeLinePosY.Drums - 189);
+            this.actJudgeString.iP_B = (CDTXMania.ConfigIni.bReverse.Drums ? base.nJudgeLinePosY.Drums : base.nJudgeLinePosY.Drums + 23);
+            this.actChipFireD.iPosY = (CDTXMania.ConfigIni.bReverse.Drums ? base.nJudgeLinePosY.Drums - 183 : base.nJudgeLinePosY.Drums - 186);
+            CDTXMania.stage演奏ドラム画面.actPlayInfo.jl = (CDTXMania.ConfigIni.bReverse.Drums ? 0 : CStage演奏画面共通.nJudgeLineMaxPosY - base.nJudgeLinePosY.Drums);
         }
 
 		private bool tドラムヒット処理( long nHitTime, Eパッド type, CDTX.CChip pChip, int n強弱度合い0to127 )
@@ -2896,7 +2895,7 @@ namespace DTXMania
                         }
                     }
 
-                    int y = configIni.bReverse.Drums ? (159 + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums);
+                    int y = configIni.bReverse.Drums ? (base.nJudgeLinePosY.Drums + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY.Drums - pChip.nバーからの距離dot.Drums);
                     if (base.txチップ != null)
                     {
                         base.txチップ.vc拡大縮小倍率 = new Vector3((float)pChip.dbチップサイズ倍率, (float)pChip.dbチップサイズ倍率, 1f);
@@ -3167,7 +3166,7 @@ namespace DTXMania
                         }
                     }
 
-                    int y = configIni.bReverse.Drums ? (159 + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums);
+                    int y = configIni.bReverse.Drums ? (base.nJudgeLinePosY.Drums + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY.Drums - pChip.nバーからの距離dot.Drums);
                     if (base.txチップ != null)
                     {
                         base.txチップ.vc拡大縮小倍率 = new Vector3((float)pChip.dbチップサイズ倍率, (float)pChip.dbチップサイズ倍率, 1f);
@@ -3582,9 +3581,9 @@ namespace DTXMania
                         x = this.nボーナスチャンネルtoX座標B改[pChip.n整数値];
                     }
                 }
-                
 
-                int y = configIni.bReverse.Drums ? (159 + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums);
+
+                int y = configIni.bReverse.Drums ? (base.nJudgeLinePosY.Drums + pChip.nバーからの距離dot.Drums) : (base.nJudgeLinePosY.Drums - pChip.nバーからの距離dot.Drums);
                 if (base.txチップ != null)
                 {
                     base.txチップ.vc拡大縮小倍率 = new Vector3((float)pChip.dbチップサイズ倍率, (float)pChip.dbチップサイズ倍率, 1f);
@@ -3845,11 +3844,11 @@ namespace DTXMania
 				if ( configIni.b演奏情報を表示する && ( configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1 ) )
                 {
                         int n小節番号 = n小節番号plus1 - 1;
-                        CDTXMania.act文字コンソール.tPrint(858, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 0x11) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 0x11), C文字コンソール.Eフォント種別.白, n小節番号.ToString());
+                        CDTXMania.act文字コンソール.tPrint(858, configIni.bReverse.Drums ? ((base.nJudgeLinePosY.Drums + pChip.nバーからの距離dot.Drums) - 0x11) : ((base.nJudgeLinePosY.Drums - pChip.nバーからの距離dot.Drums) - 0x11), C文字コンソール.Eフォント種別.白, n小節番号.ToString());
 				}
                 if (((configIni.nLaneDisp.Drums == 0 || configIni.nLaneDisp.Drums == 1) && pChip.b可視) && (this.txチップ != null))
 				{
-                    this.txチップ.t2D描画(CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ((159 + pChip.nバーからの距離dot.Drums) - 1) : ((base.nJudgeLinePosY - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 769, 0x22f, 2));
+                    this.txチップ.t2D描画(CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ((base.nJudgeLinePosY.Drums + pChip.nバーからの距離dot.Drums) - 1) : ((base.nJudgeLinePosY.Drums - pChip.nバーからの距離dot.Drums) - 1), new Rectangle(0, 769, 0x22f, 2));
 				}
               
             /*
