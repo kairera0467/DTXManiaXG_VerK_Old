@@ -302,6 +302,8 @@ namespace DTXMania
 							this.txヒットバー.t2D描画( CDTXMania.app.Device, 80, y, new Rectangle( 0, i * 6, 252, 6 ) );
 						}
 					}
+                    if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                        this.actLVFont.t文字列描画(310, (CDTXMania.ConfigIni.bReverse.Guitar ? y - 20 : y + 8), CDTXMania.ConfigIni.nJudgeLine.Guitar.ToString());
 				}
 				if ( CDTXMania.DTX.bチップがある.Bass )
 				{
@@ -313,7 +315,9 @@ namespace DTXMania
                             this.txヒットバー.t2D描画(CDTXMania.app.Device, 950, y, new Rectangle(0, j * 6, 252, 6));
 						}
 					}
-				}
+                    if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                        this.actLVFont.t文字列描画(1180, (CDTXMania.ConfigIni.bReverse.Bass ? y - 20 : y + 8), CDTXMania.ConfigIni.nJudgeLine.Bass.ToString());
+                }
 			}
 		}
 
