@@ -53,9 +53,7 @@ namespace DTXMania
 			{
                 if (CDTXMania.ConfigIni.nInfoType == 0)
                 {
-                    y += 0x153;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Judge Line:    {0:####0}", this.jl));
-                    y -= 0x10;
+                    y += 0x143;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("BGM/D/G/B Adj: {0:####0}/{1:####0}/{2:####0}/{3:####0} ms", CDTXMania.DTX.nBGMAdjust, CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums, CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar, CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass));
                     y -= 0x10;
                     int num = (CDTXMania.DTX.listChip.Count > 0) ? CDTXMania.DTX.listChip[CDTXMania.DTX.listChip.Count - 1].n発声時刻ms : 0;
@@ -84,9 +82,7 @@ namespace DTXMania
                 else if (CDTXMania.ConfigIni.nInfoType == 1 && !CDTXMania.ConfigIni.bGraph有効)
                 {
                     
-                    y += 0x133;
-                    CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("Judge Line:    {0:####0}", this.jl));
-                    y -= 0x10;
+                    y += 0x123;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("BPM:           {0:####0.00}", this.dbBPM));
                     y -= 0x10;
                     CDTXMania.act文字コンソール.tPrint(x, y, C文字コンソール.Eフォント種別.白, string.Format("MISS:          {0:###0}", this.nMISS数));
