@@ -196,7 +196,6 @@ namespace DTXMania
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
                 this.t進行描画・RGBボタン();
                 this.t進行描画・ギターベース判定ライン();
-                this.t進行描画・判定ライン();
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();
                 this.t進行描画・コンボ();
@@ -317,31 +316,25 @@ namespace DTXMania
 		}
 		private void t進行描画・ギターベース判定ライン()	// yyagi: ドラム画面とは座標が違うだけですが、まとめづらかったのでそのまま放置してます。
 		{
-			if ( ( CDTXMania.ConfigIni.eDark != Eダークモード.FULL ) && CDTXMania.ConfigIni.bGuitar有効 )
+			if ( CDTXMania.ConfigIni.bGuitar有効 )
 			{
 				if ( CDTXMania.DTX.bチップがある.Guitar )
 				{
-					int y = ( CDTXMania.ConfigIni.bReverse.Guitar ? 611 : 153 );
-					for ( int i = 0; i < 4; i++ )
-					{
+                    int y = (CDTXMania.ConfigIni.bReverse.Guitar ? this.nJudgeLinePosY.Guitar : this.nJudgeLinePosY.Guitar - 1);
+
 						if ( this.txヒットバー != null && CDTXMania.ConfigIni.bJudgeLineDisp.Guitar )
-						{
-							this.txヒットバー.t2D描画( CDTXMania.app.Device, 79, y, new Rectangle( 0, i * 6, 252, 6 ) );
-						}
-					}
+							this.txヒットバー.t2D描画( CDTXMania.app.Device, 79, y, new Rectangle( 0, 0, 252, 6 ) );
+						
                     if (CDTXMania.ConfigIni.b演奏情報を表示する)
                         this.actLVFont.t文字列描画(310, (CDTXMania.ConfigIni.bReverse.Guitar ? y + 8 : y - 20), CDTXMania.ConfigIni.nJudgeLine.Guitar.ToString());
 				}
 				if ( CDTXMania.DTX.bチップがある.Bass )
 				{
-					int y = ( CDTXMania.ConfigIni.bReverse.Bass ? 611 : 153 );
-					for ( int j = 0; j < 4; j++ )
-					{
+                    int y = (CDTXMania.ConfigIni.bReverse.Bass ? this.nJudgeLinePosY.Bass : this.nJudgeLinePosY.Bass - 1);
+
 						if ( this.txヒットバー != null && CDTXMania.ConfigIni.bJudgeLineDisp.Bass )
-						{
-                            this.txヒットバー.t2D描画(CDTXMania.app.Device, 949, y, new Rectangle(0, j * 6, 252, 6));
-						}
-					}
+                            this.txヒットバー.t2D描画(CDTXMania.app.Device, 949, y, new Rectangle(0, 0, 252, 6));
+
                     if (CDTXMania.ConfigIni.b演奏情報を表示する)
                         this.actLVFont.t文字列描画(1180, (CDTXMania.ConfigIni.bReverse.Bass ? y + 8 : y - 20), CDTXMania.ConfigIni.nJudgeLine.Bass.ToString());
 				}
@@ -418,7 +411,7 @@ namespace DTXMania
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
 		{
 			base.t進行描画・チップ・ギターベース( configIni, ref dTX, ref pChip, inst,
-				164, 612, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38 );
+                this.nJudgeLinePosY[(int)inst] + 10, this.nJudgeLinePosY[ (int) inst ] + 1, 104, 670, 0, 0, 0, 11, 196, 10, 38, 38, 1000, 1000, 1000, 38, 38);
 		}
 #if false
 		protected override void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst )
@@ -550,7 +543,6 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 154, 611 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
 					const int WailingWidth = 54;		// 4種全て同じ値
@@ -560,7 +552,7 @@ namespace DTXMania
 					const int drawX = 287;				// 4種全て異なる値
 
 					const int numA = 34;				// 4種全て同じ値;
-					int y = configIni.bReverse.Guitar ? ( y_base[ 1 ] - pChip.nバーからの距離dot.Guitar ) : ( y_base[ 0 ] + pChip.nバーからの距離dot.Guitar );
+                    int y = configIni.bReverse.Guitar ? (this.nJudgeLinePosY.Guitar - pChip.nバーからの距離dot.Guitar) : (this.nJudgeLinePosY.Guitar + pChip.nバーからの距離dot.Guitar);
 					int numB = y - offset;				// 4種全て同じ定義
 					int numC = 0;						// 4種全て同じ初期値
 					const int numD = 709;				// ドラム画面かギター画面かで変わる値
@@ -746,7 +738,6 @@ namespace DTXMania
 				//
 				if ( !pChip.bHit && pChip.b可視 )
 				{
-					int[] y_base = { 154, 611 };			// ドラム画面かギター画面かで変わる値
 					int offset = 0;						// ドラム画面かギター画面かで変わる値
 
 					const int WailingWidth = 54;		// 4種全て同じ値
@@ -756,7 +747,7 @@ namespace DTXMania
 					const int drawX = 1155;				// 4種全て異なる値
 
 					const int numA = 34;				// 4種全て同じ値
-					int y = CDTXMania.ConfigIni.bReverse.Bass ? ( y_base[ 1 ] - pChip.nバーからの距離dot.Bass ) : ( y_base[ 0 ] + pChip.nバーからの距離dot.Bass );
+                    int y = CDTXMania.ConfigIni.bReverse.Bass ? (base.nJudgeLinePosY.Bass - pChip.nバーからの距離dot.Bass) : (base.nJudgeLinePosY.Bass + pChip.nバーからの距離dot.Bass);
 					int numB = y - offset;				// 4種全て同じ定義
 					int numC = 0;						// 4種全て同じ初期値
 					const int numD = 709;				// ドラム画面かギター画面かで変わる値
@@ -815,7 +806,7 @@ namespace DTXMania
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ))
 			{
-				int y = CDTXMania.ConfigIni.bReverse.Guitar ? ( ( 611 - pChip.nバーからの距離dot.Guitar ) + 0 ) : ( ( 154 + pChip.nバーからの距離dot.Guitar ) + 9 );
+                int y = CDTXMania.ConfigIni.bReverse.Guitar ? ((this.nJudgeLinePosY.Guitar - pChip.nバーからの距離dot.Guitar) + 0) : ((this.nJudgeLinePosY.Guitar + pChip.nバーからの距離dot.Guitar) + 9);
                 if ( ( dTX.bチップがある.Guitar && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
                 {
                     if( CDTXMania.ConfigIni.nLaneDisp.Guitar == 0 || CDTXMania.ConfigIni.nLaneDisp.Guitar == 1 )
@@ -827,7 +818,7 @@ namespace DTXMania
                         CDTXMania.act文字コンソール.tPrint(60, y - 16, C文字コンソール.Eフォント種別.白, n小節番号.ToString());
                     }
 				}
-				y = CDTXMania.ConfigIni.bReverse.Bass ? ( ( 611 - pChip.nバーからの距離dot.Bass ) + 0 ) : ( ( 154 + pChip.nバーからの距離dot.Bass ) + 9 );
+                y = CDTXMania.ConfigIni.bReverse.Bass ? ((this.nJudgeLinePosY.Bass - pChip.nバーからの距離dot.Bass) + 0) : ((this.nJudgeLinePosY.Bass + pChip.nバーからの距離dot.Bass) + 9);
                 if ( ( dTX.bチップがある.Bass && ( y > 104 ) ) && ( ( y < 670 ) && ( this.txチップ != null ) ) )
                 {
                     if( CDTXMania.ConfigIni.nLaneDisp.Bass == 0 || CDTXMania.ConfigIni.nLaneDisp.Bass == 1 )

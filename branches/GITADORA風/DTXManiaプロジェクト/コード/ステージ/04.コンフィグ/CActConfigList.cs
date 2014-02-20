@@ -1152,7 +1152,7 @@ namespace DTXMania
 
             this.iGuitarJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine.Guitar,
                 "演奏時の判定ラインの高さを変更します。\n" +
-                "0～100の間で指定できます。(未実装)",
+                "0～100の間で指定できます。",
                 "To change the judgeLinePosition for the\n" +
                 "You can set it from 0 to 100." );
             this.list項目リスト.Add(this.iGuitarJudgeLinePos);
@@ -1357,7 +1357,7 @@ namespace DTXMania
 
             this.iBassJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine.Bass,
                 "演奏時の判定ラインの高さを変更します。\n" +
-                "0～100の間で指定できます。(未実装)",
+                "0～100の間で指定できます。",
                 "To change the judgeLinePosition for the\n" +
                 "You can set it from 0 to 100." );
             this.list項目リスト.Add(this.iBassJudgeLinePos);
