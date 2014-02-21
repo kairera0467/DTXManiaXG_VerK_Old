@@ -296,8 +296,8 @@ namespace DTXMania
             this.nShutterInPosY.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
             this.nShutterOutPosY.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
 
-            this.actJudgeString.iP_A = this.nJudgeLinePosY.Drums - 0xbd;
-            this.actJudgeString.iP_B = this.nJudgeLinePosY.Drums + 0x17;
+            this.actJudgeString.iP_A = CDTXMania.ConfigIni.bReverse.Drums ? this.nJudgeLinePosY.Drums + 0xbd : this.nJudgeLinePosY.Drums - 0xbd;
+            this.actJudgeString.iP_B = CDTXMania.ConfigIni.bReverse.Drums ? this.nJudgeLinePosY.Drums - 0x17 : this.nJudgeLinePosY.Drums + 0x17;
 
 			this.nInputAdjustTimeMs.Drums = CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums;		// #23580 2011.1.3 yyagi
 			this.nInputAdjustTimeMs.Guitar = CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar;		//        2011.1.7 ikanick 修正
