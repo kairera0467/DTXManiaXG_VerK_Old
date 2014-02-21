@@ -982,16 +982,11 @@ namespace DTXMania
         {
             for (int j = 0; j < str.Length; j++)
             {
-                char c = str[j];
                 for (int i = 0; i < this.st数字.Length; i++)
                 {
-                    if (this.st達成率数字[i].ch == c)
+                    if (this.st数字[i].ch == str[j])
                     {
                         Rectangle rectangle = new Rectangle(this.st数字[i].rc.X, this.st数字[i].rc.Y, 6, 10);
-                        if (c == '-')
-                        {
-                            rectangle.Width -= 2;
-                        }
                         if (this.txBPM数字 != null)
                         {
                             this.txBPM数字.t2D描画(CDTXMania.app.Device, x, y, rectangle);
@@ -999,14 +994,7 @@ namespace DTXMania
                         break;
                     }
                 }
-                if (c == '-')
-                {
-                    x += 7;
-                }
-                else
-                {
-                    x += 7;
-                }
+                x += 7;
             }
         }
 		//-----------------
