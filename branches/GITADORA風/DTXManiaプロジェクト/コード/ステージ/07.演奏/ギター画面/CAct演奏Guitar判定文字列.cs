@@ -212,7 +212,7 @@ namespace DTXMania
                                 if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.C )
                                     num6 = CDTXMania.ConfigIni.bReverse.Bass ? 650 - CDTXMania.ConfigIni.nJudgeLine.Bass : 80 + CDTXMania.ConfigIni.nJudgeLine.Bass;
                                 else
-                                    num6 = CDTXMania.ConfigIni.bReverse.Bass ? 450 : 300;
+                                    num6 = CDTXMania.ConfigIni.bReverse.Bass ? 450 - CDTXMania.ConfigIni.nJudgeLine.Bass : 300 + CDTXMania.ConfigIni.nJudgeLine.Bass;
 							}
 							else if( j == 13 )
 							{
@@ -225,7 +225,7 @@ namespace DTXMania
                                 if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.C )
                                     num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 650 - CDTXMania.ConfigIni.nJudgeLine.Guitar : 80 + CDTXMania.ConfigIni.nJudgeLine.Guitar;
                                 else
-                                    num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 450 : 300;
+                                    num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 450 - CDTXMania.ConfigIni.nJudgeLine.Guitar : 300 + CDTXMania.ConfigIni.nJudgeLine.Guitar;
 							}
 
                             int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
