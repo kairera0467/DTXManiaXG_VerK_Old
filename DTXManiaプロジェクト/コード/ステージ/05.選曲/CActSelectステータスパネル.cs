@@ -93,7 +93,6 @@ namespace DTXMania
                 this.txスキルアイコン = CDTXMania.tテクスチャの生成(CSkin.Path( @"Graphics\5_skill icon.png" ), false);
 				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number.png" ), false );
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_difficulty panel.png"));
-				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect triangle arrow.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -105,7 +104,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txレベル数字 );
                 CDTXMania.tテクスチャの解放( ref this.txスキルアイコン );
                 CDTXMania.tテクスチャの解放( ref this.txゲージ用数字他 );
-				CDTXMania.tテクスチャの解放( ref this.tx難易度用矢印 );
                 CDTXMania.tテクスチャの解放(ref this.tx難易度パネル);
 				base.OnManagedリソースの解放();
 			}
@@ -542,7 +540,6 @@ namespace DTXMania
         private CTexture txスキルアイコン;
 		private CTexture txパネル本体;
 		private CTexture txレベル数字;
-		private CTexture tx難易度用矢印;
         private CTexture tx難易度パネル;
 
         private int n現在の難易度ラベルが完全表示されているかを調べてスクロール方向を返す()
