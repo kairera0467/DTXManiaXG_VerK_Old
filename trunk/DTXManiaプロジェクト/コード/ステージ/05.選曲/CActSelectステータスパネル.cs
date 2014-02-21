@@ -246,7 +246,6 @@ namespace DTXMania
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ));
 				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill icon.png" ), false );
-				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect triangle arrow.png" ), false );
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_difficulty panel.png"));
                 this.tx難易度数字XG = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\6_LevelNumber.png"));
                 this.txHSアイコン = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_panel_icons.jpg"));
@@ -261,7 +260,6 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.txゲージ用数字他 );
-				CDTXMania.tテクスチャの解放( ref this.tx難易度用矢印 );
                 CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
                 CDTXMania.tテクスチャの解放( ref this.tx難易度数字XG );
                 CDTXMania.tテクスチャの解放( ref this.txHSアイコン );
@@ -838,7 +836,6 @@ namespace DTXMania
         private readonly Rectangle rcunused = new Rectangle(0, 0x21, 80, 15);
 		private CTexture txゲージ用数字他;
 		private CTexture txパネル本体;
-		private CTexture tx難易度用矢印;
         private CTexture tx難易度パネル;
         private CTexture tx難易度数字XG;
         private CTexture txHSアイコン;

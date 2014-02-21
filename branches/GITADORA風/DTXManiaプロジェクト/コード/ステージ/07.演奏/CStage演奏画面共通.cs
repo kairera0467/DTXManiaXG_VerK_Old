@@ -1922,7 +1922,7 @@ namespace DTXMania
                     this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.演奏中断;
                 }
 
-                if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.PageUp))
+                if (!CDTXMania.ConfigIni.bReverse.Drums && keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.PageUp))
                 {
                     if (!this.sw.IsRunning)
                     {
@@ -1955,7 +1955,7 @@ namespace DTXMania
                     CDTXMania.ConfigIni.nJudgeLine.Drums = nJudgeLineMaxPosY - this.nJudgeLinePosY.Drums;
                     CDTXMania.stage演奏ドラム画面.tJudgeLineMovingUpandDown();
                 }
-                if (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.PageDown))
+                if (!CDTXMania.ConfigIni.bReverse.Drums && keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.PageDown))
                 {
                     if (!this.sw.IsRunning)
                     {

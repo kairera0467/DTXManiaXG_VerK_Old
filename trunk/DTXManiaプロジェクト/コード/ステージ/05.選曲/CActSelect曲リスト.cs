@@ -706,7 +706,7 @@ namespace DTXMania
 			}
 			#endregion
 			#region [ 曲数表示 ]
-			this.txアイテム数数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect skill number on gauge etc.png" ), false );
+            this.txアイテム数数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_skill number on gauge etc.png"), false);
 			#endregion
 
             base.OnManagedリソースの作成();
@@ -2279,38 +2279,38 @@ namespace DTXMania
 				this.stバー情報[ nバー番号 ].txアーティスト名 = null;
 			}
 		}
-		private void tアイテム数の描画()
-		{
-			string s = nCurrentPosition.ToString() + "/" + nNumOfItems.ToString();
-			int x = 1280 - 8 - 12;
-			int y = 500;
+        private void tアイテム数の描画()
+        {
+            string s = nCurrentPosition.ToString() + "/" + nNumOfItems.ToString();
+            int x = 1150;
+            int y = 200;
 
-			for ( int p = s.Length - 1; p >= 0; p-- )
-			{
-				tアイテム数の描画・１桁描画( x, y, s[ p ] );
-				x -= 10;
-			}
-		}
-		private void tアイテム数の描画・１桁描画( int x, int y, char s数値 )
-		{
-			int dx, dy;
-			if ( s数値 == '/' )
-			{
-				dx = 96;
-				dy = 0;
-			}
-			else
-			{
-				int n = (int) s数値 - (int) '0';
-				dx = ( n % 6 ) * 8;
-				dy = ( n / 6 ) * 12;
-			}
-			if ( this.txアイテム数数字 != null )
-			{
-				this.txアイテム数数字.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( dx, dy, 16, 16 ) );
-			}
-		}
-		//-----------------
+            for (int p = s.Length - 1; p >= 0; p--)
+            {
+                tアイテム数の描画・１桁描画(x, y, s[p]);
+                x -= 16;
+            }
+        }
+        private void tアイテム数の描画・１桁描画(int x, int y, char s数値)
+        {
+            int dx, dy;
+            if (s数値 == '/')
+            {
+                dx = 96;
+                dy = 0;
+            }
+            else
+            {
+                int n = (int)s数値 - (int)'0';
+                dx = (n % 6) * 16;
+                dy = (n / 6) * 16;
+            }
+            if (this.txアイテム数数字 != null)
+            {
+                this.txアイテム数数字.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(dx, dy, 16, 16));
+            }
+        }
+        //-----------------
 		#endregion
 	}
 }
