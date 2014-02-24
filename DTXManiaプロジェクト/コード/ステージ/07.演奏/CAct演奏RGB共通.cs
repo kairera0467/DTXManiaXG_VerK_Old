@@ -17,7 +17,7 @@ namespace DTXMania
         protected STDGBVALUE<int> nシャッター下;
         protected STDGBVALUE<double> dbシャッター上;
         protected STDGBVALUE<double> dbシャッター下;
-        protected double db倍率 = 7.2;
+        protected double db倍率 = 6.14;
         protected CTexture txRGB;
         protected CTexture txシャッター;
         protected CActLVLNFont actLVFont;
