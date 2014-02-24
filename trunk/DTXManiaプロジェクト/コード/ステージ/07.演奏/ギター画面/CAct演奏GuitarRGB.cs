@@ -26,7 +26,6 @@ namespace DTXMania
                     return 0;
                 }
 
-                #region[ シャッター 変数]
                 //CLASSICシャッター(レーンシャッター)は未実装。
                 //if ((CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする == true ) && ((CDTXMania.DTX.bチップがある.LeftCymbal == false) && ( CDTXMania.DTX.bチップがある.FT == false ) && ( CDTXMania.DTX.bチップがある.Ride == false ) && ( CDTXMania.DTX.bチップがある.LP == false )))
                 {
@@ -73,32 +72,36 @@ namespace DTXMania
                     }
                 }
 
-                this.nシャッター上.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
-                this.nシャッター下.Guitar = CDTXMania.ConfigIni.nShutterOutSide.Guitar;
-
-                if (CDTXMania.ConfigIni.bReverse.Guitar)
+                #region[ シャッター 変数]
+                if (base.txシャッター != null)
                 {
-                    this.nシャッター上.Guitar = CDTXMania.ConfigIni.nShutterOutSide.Guitar;
-                    this.nシャッター下.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
+                    this.nシャッター上.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
+                    this.nシャッター下.Guitar = CDTXMania.ConfigIni.nShutterOutSide.Guitar;
+
+                    if (CDTXMania.ConfigIni.bReverse.Guitar)
+                    {
+                        this.nシャッター上.Guitar = CDTXMania.ConfigIni.nShutterOutSide.Guitar;
+                        this.nシャッター下.Guitar = CDTXMania.ConfigIni.nShutterInSide.Guitar;
+                    }
+
+                    this.dbシャッター上.Guitar = 108 - base.txシャッター.sz画像サイズ.Height + (this.nシャッター上.Guitar * this.db倍率);
+                    this.dbシャッター下.Guitar = 720 - 50 - (this.nシャッター下.Guitar * this.db倍率);
+
+                    this.nシャッター上.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
+                    this.nシャッター下.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
+
+                    if (CDTXMania.ConfigIni.bReverse.Bass)
+                    {
+                        this.nシャッター上.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
+                        this.nシャッター下.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
+                    }
+
+                    this.dbシャッター上.Bass = 108 - base.txシャッター.sz画像サイズ.Height + (this.nシャッター上.Bass * this.db倍率);
+                    this.dbシャッター下.Bass = 720 - 50 - (this.nシャッター下.Bass * this.db倍率);
                 }
-
-                this.dbシャッター上.Guitar = 108 + -720 + (this.nシャッター上.Guitar * this.db倍率);
-                this.dbシャッター下.Guitar = 720 - 50 - (this.nシャッター下.Guitar * this.db倍率);
-
-                this.nシャッター上.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
-                this.nシャッター下.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
-
-                if (CDTXMania.ConfigIni.bReverse.Bass)
-                {
-                    this.nシャッター上.Bass = CDTXMania.ConfigIni.nShutterOutSide.Bass;
-                    this.nシャッター下.Bass = CDTXMania.ConfigIni.nShutterInSide.Bass;
-                }
-
-                this.dbシャッター上.Bass = 108 + -720 + (this.nシャッター上.Bass * this.db倍率);
-                this.dbシャッター下.Bass = 720 - 50 - (this.nシャッター下.Bass * this.db倍率);
-
                 #endregion
 
+                #region [ ギター ]
                 if (CDTXMania.DTX.bチップがある.Guitar)
                 {
                     /*
@@ -117,30 +120,35 @@ namespace DTXMania
 					}
                      */
 
-                    if (base.txRGB != null && this.nシャッター上.Guitar == 0)
+                    if (base.txRGB != null)
                     {
-                        base.txRGB.t2D描画(CDTXMania.app.Device, 67, 42, new Rectangle(0, (CDTXMania.ConfigIni.bLeft.Guitar ? 64 : 0), 277, 64));
-                    }
-                    else if (base.txシャッター != null)
-                    {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 79, (int)this.dbシャッター上.Guitar);
+                        if (this.nシャッター下.Guitar == 0)
+                            base.txRGB.t2D描画(CDTXMania.app.Device, 67, 670, new Rectangle(0, 128, 277, 50));
 
-                        if (CDTXMania.ConfigIni.b演奏情報を表示する)
-                            this.actLVFont.t文字列描画(195, (int)this.dbシャッター上.Guitar - 25 + 720, this.nシャッター上.Guitar.ToString());
+                        if (this.nシャッター上.Guitar == 0)
+                            base.txRGB.t2D描画(CDTXMania.app.Device, 67, 42, new Rectangle(0, (CDTXMania.ConfigIni.bLeft.Guitar ? 64 : 0), 277, 64));
                     }
 
-                    if (base.txRGB != null && this.nシャッター下.Guitar == 0)
+                    if (base.txシャッター != null)
                     {
-                        base.txRGB.t2D描画(CDTXMania.app.Device, 67, 670, new Rectangle(0, 128, 277, 50));
-                    }
-                    else if (base.txシャッター != null)
-                    {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 79, (int)this.dbシャッター下.Guitar);
+                        if (this.nシャッター下.Guitar != 0)
+                        {
+                            base.txシャッター.t2D描画(CDTXMania.app.Device, 79, (int)this.dbシャッター下.Guitar);
 
-                        if (CDTXMania.ConfigIni.b演奏情報を表示する)
-                            this.actLVFont.t文字列描画(195, (int)this.dbシャッター下.Guitar + 5, this.nシャッター下.Guitar.ToString());
+                            if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                                this.actLVFont.t文字列描画(195, (int)this.dbシャッター下.Guitar + 5, this.nシャッター下.Guitar.ToString());
+                        }
+                        if (this.nシャッター上.Guitar != 0)
+                        {
+                            base.txシャッター.t2D描画(CDTXMania.app.Device, 79, (int)this.dbシャッター上.Guitar);
+
+                            if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                                this.actLVFont.t文字列描画(195, (int)this.dbシャッター上.Guitar - 25 + base.txシャッター.sz画像サイズ.Height, this.nシャッター上.Guitar.ToString());
+                        }
                     }
                 }
+                #endregion
+                #region [ ベース ]
                 if (CDTXMania.DTX.bチップがある.Bass)
                 {
                     /*
@@ -159,30 +167,34 @@ namespace DTXMania
 					}
                      */
 
-                    if (base.txRGB != null && this.nシャッター上.Bass == 0)
+                    if (base.txRGB != null)
                     {
-                        base.txRGB.t2D描画(CDTXMania.app.Device, 937, 42, new Rectangle(0, (CDTXMania.ConfigIni.bLeft.Bass ? 64 : 0), 277, 64));
-                    }
-                    else if (base.txシャッター != null)
-                    {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 949, (int)this.dbシャッター上.Bass);
+                        if (this.nシャッター下.Bass == 0)
+                            base.txRGB.t2D描画(CDTXMania.app.Device, 937, 670, new Rectangle(0, 128, 277, 50));
 
-                        if (CDTXMania.ConfigIni.b演奏情報を表示する)
-                            this.actLVFont.t文字列描画(1065, (int)this.dbシャッター上.Bass - 25 + 720, this.nシャッター上.Bass.ToString());
+                        if (this.nシャッター上.Bass == 0)
+                            base.txRGB.t2D描画(CDTXMania.app.Device, 937, 42, new Rectangle(0, (CDTXMania.ConfigIni.bLeft.Bass ? 64 : 0), 277, 64));
                     }
 
-                    if (base.txRGB != null && this.nシャッター下.Bass == 0)
+                    if (base.txシャッター != null)
                     {
-                        base.txRGB.t2D描画(CDTXMania.app.Device, 937, 670, new Rectangle(0, 128, 277, 50));
-                    }
-                    else if (base.txシャッター != null)
-                    {
-                        base.txシャッター.t2D描画(CDTXMania.app.Device, 949, (int)this.dbシャッター下.Bass);
+                        if (this.nシャッター下.Bass != 0)
+                        {
+                            base.txシャッター.t2D描画(CDTXMania.app.Device, 949, (int)this.dbシャッター下.Bass);
 
-                        if (CDTXMania.ConfigIni.b演奏情報を表示する)
-                            this.actLVFont.t文字列描画(1065, (int)this.dbシャッター下.Bass + 5, this.nシャッター下.Bass.ToString());
+                            if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                                this.actLVFont.t文字列描画(1065, (int)this.dbシャッター下.Bass + 5, this.nシャッター下.Bass.ToString());
+                        }
+                        if (this.nシャッター上.Bass != 0)
+                        {
+                            base.txシャッター.t2D描画(CDTXMania.app.Device, 949, (int)this.dbシャッター上.Bass);
+
+                            if (CDTXMania.ConfigIni.b演奏情報を表示する)
+                                this.actLVFont.t文字列描画(1065, (int)this.dbシャッター上.Bass - 25 + base.txシャッター.sz画像サイズ.Height, this.nシャッター上.Bass.ToString());
+                        }
                     }
                 }
+                #endregion
                 for (int i = 0; i < 10; i++)
                 {
                     base.b押下状態[i] = false;
