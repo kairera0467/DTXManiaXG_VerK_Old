@@ -34,10 +34,8 @@ namespace DTXMania
 			int x = this.pt中央[ index ].X;
             int y = (CDTXMania.ConfigIni.bReverse[(int)e楽器パート] ? 611 - CDTXMania.ConfigIni.nJudgeLine[(int)e楽器パート] : 155 + CDTXMania.ConfigIni.nJudgeLine[(int)e楽器パート]);
 
-            if ( CDTXMania.ConfigIni.eAttackEffect[ (int) e楽器パート ] == Eタイプ.B )
-                y = 1000;
-
-			base.Start( nLane, x, y );
+            if ( CDTXMania.ConfigIni.eAttackEffect[ (int) e楽器パート ] != Eタイプ.B )
+			    base.Start( nLane, x, y );
 		}
 
 
