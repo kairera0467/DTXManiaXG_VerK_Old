@@ -953,7 +953,7 @@ namespace DTXMania
 			{
 				C曲リストノード itemRandom = new C曲リストノード();
 				itemRandom.eノード種別 = C曲リストノード.Eノード種別.RANDOM;
-				itemRandom.strタイトル = "< RANDOM SELECT >";
+				itemRandom.strタイトル = "";
 				itemRandom.nスコア数 = 5;
 				itemRandom.r親ノード = ノードリスト[ 0 ].r親ノード;
 
@@ -963,8 +963,9 @@ namespace DTXMania
 				for( int i = 0; i < 5; i++ )
 				{
 					itemRandom.arスコア[ i ] = new Cスコア();
-					itemRandom.arスコア[ i ].譜面情報.タイトル = string.Format( "< RANDOM SELECT Lv.{0} >", i + 1 );
-					itemRandom.arスコア[i].譜面情報.コメント =
+                    itemRandom.arスコア[ i ].譜面情報.タイトル = itemRandom.strタイトル;
+                    itemRandom.arスコア[ i ].譜面情報.Preimage = CSkin.Path(@"Graphics\5_preimage random.png");
+                    itemRandom.arスコア[ i ].譜面情報.コメント =
 						 (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ?
 						 string.Format("難易度レベル {0} 付近の曲をランダムに選択します。難易度レベルを持たない曲も選択候補となります。", i + 1) :
 						 string.Format("Random select from the songs which has the level about L{0}. Non-leveled songs may also selected.", i + 1);
@@ -1006,7 +1007,7 @@ namespace DTXMania
 				{
 					C曲リストノード itemBack = new C曲リストノード();
 					itemBack.eノード種別 = C曲リストノード.Eノード種別.BACKBOX;
-					itemBack.strタイトル = "<< BACK";
+					itemBack.strタイトル = "";
 					itemBack.nスコア数 = 1;
 					itemBack.r親ノード = c曲リストノード;
 
@@ -1024,6 +1025,7 @@ namespace DTXMania
 					itemBack.arスコア[ 0 ] = new Cスコア();
 					itemBack.arスコア[ 0 ].ファイル情報.フォルダの絶対パス = "";
 					itemBack.arスコア[ 0 ].譜面情報.タイトル = itemBack.strタイトル;
+                    itemBack.arスコア[ 0 ].譜面情報.Preimage = CSkin.Path(@"Graphics\5_preimage backbox.png");
 					itemBack.arスコア[ 0 ].譜面情報.コメント =
 						(CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ?
 						"BOX を出ます。" :
@@ -1570,7 +1572,8 @@ namespace DTXMania
 				}
 				string strAuthorN1 = "";
 				string strAuthorN2 = "";
-				if (n1.arスコア[ nL12345 ] != null ) {
+				if (n1.arスコア[ nL12345 ] != null )
+                {
 					strAuthorN1 = n1.arスコア[ nL12345 ].譜面情報.アーティスト名;
 				}
 				if ( n2.arスコア[ nL12345 ] != null )
