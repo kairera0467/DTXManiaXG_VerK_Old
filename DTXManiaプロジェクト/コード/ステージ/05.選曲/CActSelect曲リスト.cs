@@ -992,11 +992,11 @@ namespace DTXMania
                         {
                             this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
                             if( this.tx選択中の曲名テクスチャ != null )
-                                this.tx選択中の曲名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 530 );
+                                this.tx選択中の曲名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 505 );
 
                             this.tx選択中のアーティスト名テクスチャ = this.t指定された文字テクスチャを生成する( CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.アーティスト名 );
                             if( this.tx選択中のアーティスト名テクスチャ != null )
-                                this.tx選択中のアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 560 );
+                                this.tx選択中のアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 535 );
 
                         }
 

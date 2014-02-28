@@ -451,15 +451,15 @@ namespace DTXMania
 		{
 			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
 			{
-				this.n本体X = 0x10;
-				this.n本体Y = 0x56;
+				this.n本体X = 0x12;
+				this.n本体Y = 0x58;
 			}
 			else
 			{
 				double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 				double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
-				this.n本体X = 0x10;
-				this.n本体Y = 0x56 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
+				this.n本体X = 0x12;
+				this.n本体Y = 0x58 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 			}
 			if( this.txパネル本体 != null )
 			{
@@ -470,7 +470,7 @@ namespace DTXMania
 		{
 			if( !CDTXMania.stage選曲.bスクロール中 && ( ( ( this.ct遅延表示 != null ) && ( this.ct遅延表示.n現在の値 > 0 ) ) && !this.b新しいプレビューファイルをまだ読み込んでいない ) )
 			{
-                int x = this.n本体X + 0x24;
+                int x = this.n本体X + 0x25;
                 int y = this.n本体Y + 0x18;
 				float num3 = ( (float) this.ct遅延表示.n現在の値 ) / 100f;
 				float num4 = 0.9f + ( 0.1f * num3 );
@@ -498,34 +498,34 @@ namespace DTXMania
 						this.sfAVI画像.UnlockRectangle();
 						this.b動画フレームを作成した = false;
 					}
-                    x += (0x198 - this.sfAVI画像.Description.Width) / 2;
-                    y += (0x194 - this.sfAVI画像.Description.Height) / 2;
+                    x += (368 - this.sfAVI画像.Description.Width) / 2;
+                    y += (368 - this.sfAVI画像.Description.Height) / 2;
                     using (Surface surface = CDTXMania.app.Device.GetBackBuffer(0, 0))
-					{
+                    {
 						CDTXMania.app.Device.UpdateSurface( this.sfAVI画像, new Rectangle( 0, 0, this.sfAVI画像.Description.Width, this.sfAVI画像.Description.Height ), surface, new Point( x, y ) );
 						return;
 					}
 				}
-				if( this.r表示するプレビュー画像 != null )
-				{
-					float width = this.r表示するプレビュー画像.sz画像サイズ.Width;
-					float height = this.r表示するプレビュー画像.sz画像サイズ.Height;
+                if (this.r表示するプレビュー画像 != null)
+                {
+                    float width = this.r表示するプレビュー画像.sz画像サイズ.Width;
+                    float height = this.r表示するプレビュー画像.sz画像サイズ.Height;
                     float f倍率;
-					if( ( 400f / width ) > ( 400f / height ) )
-					{
-                        f倍率 = 400f / height;
-					}
-					else
-					{
-                        f倍率 = 400f / width;
-					}
-                    x += (0x198 - ((int)(width * num4 * f倍率))) / 2;
-                    y += (0x194 - ((int)(height * num4 * f倍率))) / 2;
-					this.r表示するプレビュー画像.n透明度 = (int) ( 255f * num3 );
+                    if ((368f / width) > (368f / height))
+                    {
+                        f倍率 = 368f / height;
+                    }
+                    else
+                    {
+                        f倍率 = 368f / width;
+                    }
+                    x += (368 - ((int)(width * num4 * f倍率))) / 2;
+                    y += (368 - ((int)(height * num4 * f倍率))) / 2;
+                    this.r表示するプレビュー画像.n透明度 = (int)(255f * num3);
                     this.r表示するプレビュー画像.vc拡大縮小倍率.X = num4 * f倍率;
                     this.r表示するプレビュー画像.vc拡大縮小倍率.Y = num4 * f倍率;
-					this.r表示するプレビュー画像.t2D描画( CDTXMania.app.Device, x, y );
-				}
+                    this.r表示するプレビュー画像.t2D描画(CDTXMania.app.Device, x, y);
+                }
 			}
 		}
 		//-----------------

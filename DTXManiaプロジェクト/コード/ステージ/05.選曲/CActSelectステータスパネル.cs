@@ -153,14 +153,14 @@ namespace DTXMania
 				{
 					if( this.ct登場アニメ用.b終了値に達した )
 					{
-						this.n本体X = 473;
+						this.n本体X = 460;
 						this.n本体Y = 100;
 					}
 					else
 					{
 						double num2 = ( (double) ( 100 - this.ct登場アニメ用.n現在の値 ) ) / 100.0;
 						double num3 = Math.Sin( Math.PI / 2 * num2 );
-						this.n本体X = 473;
+						this.n本体X = 460;
                         this.n本体Y = 100 - ((int)((this.txパネル本体.sz画像サイズ.Height * num3) * num3));
 					}
 					this.txパネル本体.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y );
