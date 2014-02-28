@@ -498,7 +498,9 @@ namespace DTXMania
 						this.sfAVI画像.UnlockRectangle();
 						this.b動画フレームを作成した = false;
 					}
-					using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
+                    x += (0x198 - this.sfAVI画像.Description.Width) / 2;
+                    y += (0x194 - this.sfAVI画像.Description.Height) / 2;
+                    using (Surface surface = CDTXMania.app.Device.GetBackBuffer(0, 0))
 					{
 						CDTXMania.app.Device.UpdateSurface( this.sfAVI画像, new Rectangle( 0, 0, this.sfAVI画像.Description.Width, this.sfAVI画像.Description.Height ), surface, new Point( x, y ) );
 						return;
@@ -506,22 +508,23 @@ namespace DTXMania
 				}
 				if( this.r表示するプレビュー画像 != null )
 				{
-					int width = this.r表示するプレビュー画像.sz画像サイズ.Width;
-					int height = this.r表示するプレビュー画像.sz画像サイズ.Height;
-					if( width > 0x198 )
+					float width = this.r表示するプレビュー画像.sz画像サイズ.Width;
+					float height = this.r表示するプレビュー画像.sz画像サイズ.Height;
+                    float f倍率;
+					if( ( 400f / width ) > ( 400f / height ) )
 					{
-						width = 0x198;
+                        f倍率 = 400f / height;
 					}
-					if( height > 0x194 )
+					else
 					{
-						height = 0x194;
+                        f倍率 = 400f / width;
 					}
-                    x += (0x198 - ((int)(width * num4))) / 2;
-                    y += (0x194 - ((int)(height * num4))) / 2;
+                    x += (0x198 - ((int)(width * num4 * f倍率))) / 2;
+                    y += (0x194 - ((int)(height * num4 * f倍率))) / 2;
 					this.r表示するプレビュー画像.n透明度 = (int) ( 255f * num3 );
-					this.r表示するプレビュー画像.vc拡大縮小倍率.X = num4;
-					this.r表示するプレビュー画像.vc拡大縮小倍率.Y = num4;
-					this.r表示するプレビュー画像.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, width, height ) );
+                    this.r表示するプレビュー画像.vc拡大縮小倍率.X = num4 * f倍率;
+                    this.r表示するプレビュー画像.vc拡大縮小倍率.Y = num4 * f倍率;
+					this.r表示するプレビュー画像.t2D描画( CDTXMania.app.Device, x, y );
 				}
 			}
 		}
