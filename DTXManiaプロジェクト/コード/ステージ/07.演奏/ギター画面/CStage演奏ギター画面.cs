@@ -212,6 +212,14 @@ namespace DTXMania
                         Thread.Sleep(5);
                         // DTXCからの次のメッセージを待ち続ける
                     }
+                    this.bサビ区間 = true;
+                    UnitTime = 0.015;
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
+                    if ((this.actGauge.IsFailed( E楽器パート.GUITAR ) && this.actGauge.IsFailed( E楽器パート.BASS )) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
+                    {
+                        this.actStageFailed.Start();
+                        base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_FAILED;
+                    }
                     else
                     {
                         this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
@@ -220,14 +228,48 @@ namespace DTXMania
                         this.actFOStageClear.tフェードアウト開始();
                     }
                 }
-				if ( this.eフェードアウト完了時の戻り値 == E演奏画面の戻り値.再読込・再演奏 )
+                if ( this.eフェードアウト完了時の戻り値 == E演奏画面の戻り値.再読込・再演奏 )
 				{
 					flag2 = true;
 				}
-				if ( flag2 )
-				{
-					return (int) this.eフェードアウト完了時の戻り値;
-				}
+                if (flag2)
+                {
+                    if (!CDTXMania.Skin.soundステージクリア音.b再生中 && !CDTXMania.Skin.soundSTAGEFAILED音.b再生中)
+                    {
+                        Debug.WriteLine("Total On進行描画=" + sw.ElapsedMilliseconds + "ms");
+                        //this.nミス数 = base.nヒット数・Auto含まない.Drums.Miss + base.nヒット数・Auto含まない.Drums.Poor;
+                        //switch (nミス数)
+                        {
+                            //case 0:
+                                {
+                                    //this.nパフェ数 = CDTXMania.ConfigIni.bドラムが全部オートプレイである ? this.nパフェ数 = base.nヒット数・Auto含む.Drums.Perfect : base.nヒット数・Auto含まない.Drums.Perfect;
+                                    //if (nパフェ数 == CDTXMania.DTX.n可視チップ数.Drums)
+                                    #region[ エクセ ]
+                                    {
+                                        //this.bエクセ = true;
+                                        //if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                            //this.actScore.n現在の本当のスコア.Drums += 30000;
+                                        //break;
+                                    }
+                                    #endregion
+                                    //else
+                                    #region[ フルコン ]
+                                    {
+                                        //this.bフルコン = true;
+                                        //if (CDTXMania.ConfigIni.nSkillMode == 1)
+                                            //this.actScore.n現在の本当のスコア.Drums += 15000;
+                                        //break;
+                                    }
+                                    #endregion
+                                }
+                            //default:
+                                {
+                                    //break;
+                                }
+                        }
+                        return (int)this.eフェードアウト完了時の戻り値;
+                    }
+                }
 
                 ManageMixerQueue();
 

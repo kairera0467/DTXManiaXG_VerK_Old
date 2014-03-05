@@ -3184,6 +3184,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.RD = true;
 			CDTXMania.ConfigIni.bAutoPlay.LC = true;
             CDTXMania.ConfigIni.bAutoPlay.LP = true;
+            CDTXMania.ConfigIni.bAutoPlay.LBD = true;
             CDTXMania.ConfigIni.bAutoPlay.GtR = true;
 			CDTXMania.ConfigIni.bAutoPlay.GtG = true;
 			CDTXMania.ConfigIni.bAutoPlay.GtB = true;
@@ -3208,6 +3209,9 @@ namespace DTXMania
 				CDTXMania.ConfigIni.bLight[ i ] = false;
 				CDTXMania.ConfigIni.bReverse[ i ] = false;
 				CDTXMania.ConfigIni.nHidSud[ i ] = 0;
+                CDTXMania.ConfigIni.判定文字表示位置.Drums = Eタイプ.C;
+                CDTXMania.ConfigIni.判定文字表示位置.Guitar = Eタイプ.D;
+                CDTXMania.ConfigIni.判定文字表示位置.Bass = Eタイプ.D;
 			}
 
 			CDTXMania.ConfigIni.eDark = Eダークモード.OFF;
@@ -3217,6 +3221,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bTight = false;
 			CDTXMania.ConfigIni.bストイックモード = false;
 			CDTXMania.ConfigIni.bドラム打音を発声する = true;
+            CDTXMania.ConfigIni.ボーナス演出を表示する = false;
 		}
 
         public bool bCheckAutoPlay(CDTX.CChip pChip)

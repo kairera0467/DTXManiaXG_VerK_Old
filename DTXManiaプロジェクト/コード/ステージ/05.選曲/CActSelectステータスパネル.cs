@@ -210,7 +210,6 @@ namespace DTXMania
 			for( int i = 0; i < 3; i++ )
 			{
 				this.n現在選択中の曲のレベル[ i ] = 0;
-                this.n現在選択中の曲のBPM = 0;
                 this.db現在選択中の曲の曲別スキル[ i ] = 0.0;
 				this.n現在選択中の曲の最高ランク[ i ] = (int)CScoreIni.ERANK.UNKNOWN;
 				this.b現在選択中の曲がフルコンボ[ i ] = false;
@@ -873,7 +872,6 @@ namespace DTXMania
         private STDGBVALUE<double> db現在選択中の曲の曲別スキル;
 		private STDGBVALUE<int> n現在選択中の曲のレベル;
         private int[] n選択中の曲のレベル難易度毎 = new int[5];
-        private double n現在選択中の曲のBPM;
 		private STDGBVALUE<int> n現在選択中の曲の最高ランク;
         private STDGBVALUE<int>[] n現在選択中の曲の最高ランク難易度毎 = new STDGBVALUE<int>[5];
 		private int n現在選択中の曲の難易度;

@@ -69,7 +69,7 @@ namespace DTXMania
 			if ( !base.b活性化してない )
 			{
                 this.ct本体移動.t進行Loop();
-                if (base.txフレーム != null)
+                if( base.txフレーム != null & base.txゲージ != null )
                 {
                     //A～C
                     base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0, base.txフレーム.sz画像サイズ.Width, 0x2d));
@@ -87,11 +87,11 @@ namespace DTXMania
                     base.txフレーム.t2D描画(CDTXMania.app.Device, base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 20 : 655), new Rectangle(0, 0x2d, base.txフレーム.sz画像サイズ.Width, 0x2d));
                 }
 
-                if (base.IsDanger(E楽器パート.DRUMS) && base.db現在のゲージ値.Drums >= 0.0)
+                if( base.IsDanger( E楽器パート.DRUMS ) && base.db現在のゲージ値.Drums >= 0.0 && this.txマスクD != null )
                 {
                     this.txマスクD.t2D描画( CDTXMania.app.Device, 0x01 + base.n本体X.Drums, ( CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652 ));
                 }
-                if (base.db現在のゲージ値.Drums == 1.0)
+                if( base.db現在のゲージ値.Drums == 1.0 && base.txマスクF != null )
                 {
                     this.txマスクF.t2D描画(CDTXMania.app.Device, 0x01 + base.n本体X.Drums, (CDTXMania.ConfigIni.bReverse.Drums ? 17 : 652));
                     this.txマスクF.n透明度 = ( this.ct本体移動.n現在の値 <= 750 ? (int)( this.ct本体移動.n現在の値 / 2.94 ) : 500 - (int)(( this.ct本体移動.n現在の値) / 2.94 ) );

@@ -1144,7 +1144,6 @@ namespace DTXMania
 
         #region [ private ]
         //-----------------
-        public CAct演奏BGA actBGA;
         public CAct演奏Drumsフィルインエフェクト actFill;
 
         private bool bFullScreen;
