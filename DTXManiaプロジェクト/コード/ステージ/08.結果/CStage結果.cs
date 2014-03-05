@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using FDK;
 using SlimDX.Direct3D9;
+using DirectShowLib;
 
 namespace DTXMania
 {
@@ -260,6 +261,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
+                this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\8_background.mp4"), CDTXMania.app.WindowHandle, true);
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_background.jpg" ) );
                 switch (CDTXMania.stage結果.n総合ランク値)
                 {
@@ -321,6 +323,7 @@ namespace DTXMania
 				{
 					this.ct登場用 = null;
 				}
+                CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
@@ -341,6 +344,23 @@ namespace DTXMania
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
 					base.b初めての進行描画 = false;
 				}
+                if( this.ds背景動画 != null )
+                {
+                    this.ds背景動画.t再生開始();
+                    this.ds背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
+                    this.ds背景動画.bループ再生 = true;
+                    
+                    if (this.lDshowPosition == this.lStopPosition)
+                    {
+                        this.ds背景動画.MediaSeeking.SetPositions(
+                        DsLong.FromInt64((long)(0)),
+                        AMSeekingSeekingFlags.AbsolutePositioning,
+                        0,
+                        AMSeekingSeekingFlags.NoPositioning);
+                    }
+                    
+                    this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                }
 				this.bアニメが完了 = true;
 				if( this.ct登場用.b進行中 )
 				{
@@ -359,7 +379,14 @@ namespace DTXMania
 
 				if( this.tx背景 != null )
 				{
-					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                    if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
+                    {
+                        this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                    }
+                    else
+                    {
+					    this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                    }
 				}
 				if( this.ct登場用.b進行中 && ( this.tx上部パネル != null ) )
 				{
@@ -552,6 +579,10 @@ namespace DTXMania
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
+
+        private CDirectShow ds背景動画;
+        private long lDshowPosition;
+        private long lStopPosition;
 
 		#region [ #24609 リザルト画像をpngで保存する ]		// #24609 2011.3.14 yyagi; to save result screen in case BestRank or HiSkill.
 		/// <summary>
