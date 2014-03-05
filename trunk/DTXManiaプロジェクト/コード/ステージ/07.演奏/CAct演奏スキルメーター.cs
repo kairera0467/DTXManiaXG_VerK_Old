@@ -129,9 +129,6 @@ namespace DTXMania
                 this.tx比較 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
                 this.txグラフバックパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
                 this.tx数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
-                this.txComboBom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Combobomb.png"));
-                if (this.txComboBom != null)
-                    this.txComboBom.b加算合成 = true;
                 base.OnManagedリソースの作成();
             }
         }
@@ -143,7 +140,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.tx比較);
                 CDTXMania.tテクスチャの解放(ref this.txグラフバックパネル);
                 CDTXMania.tテクスチャの解放(ref this.tx数字);
-                CDTXMania.tテクスチャの解放(ref this.txComboBom);
                 base.OnManagedリソースの解放();
             }
         }
@@ -460,7 +456,6 @@ namespace DTXMania
         private CTexture tx比較;
         private CTexture txグラフ;
         private CTexture txグラフバックパネル;
-        protected CTexture txComboBom;
         //-----------------
 
 

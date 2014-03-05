@@ -70,7 +70,6 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private CTexture txScrollPosition;
 		private CTexture txScrollBar;
 		//-----------------
 		#endregion

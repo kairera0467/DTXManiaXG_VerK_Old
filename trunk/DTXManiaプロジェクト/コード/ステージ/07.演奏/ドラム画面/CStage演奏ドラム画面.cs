@@ -134,6 +134,8 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txチップ );
                 CDTXMania.tテクスチャの解放( ref this.txLaneCover );
                 CDTXMania.tテクスチャの解放( ref this.txシャッター );
+                //CDTXMania.tテクスチャの解放( ref this.tx判定画像anime );
+                //CDTXMania.tテクスチャの解放( ref this.txボーナスエフェクト );
 //				CDTXMania.tテクスチャの解放( ref this.txヒットバーGB );
 //				CDTXMania.tテクスチャの解放( ref this.txレーンフレームGB );
                 

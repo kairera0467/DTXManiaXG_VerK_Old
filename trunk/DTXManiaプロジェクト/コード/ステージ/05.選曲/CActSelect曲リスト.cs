@@ -557,7 +557,6 @@ namespace DTXMania
 			if( this.b活性化してる )
 				return;
 
-			this.e楽器パート = E楽器パート.DRUMS;
 			this.b登場アニメ全部完了 = false;
 			this.n目標のスクロールカウンタ = 0;
 			this.n現在のスクロールカウンタ = 0;
@@ -1737,7 +1736,6 @@ namespace DTXMania
 		public bool b登場アニメ全部完了;
 		private Color color文字影 = Color.FromArgb( 0x40, 10, 10, 10 );
 		public CCounter[] ct登場アニメ用 = new CCounter[ 13 ];
-		private E楽器パート e楽器パート;
 		private Font ft曲リスト用フォント;
 		private long nスクロールタイマ;
 		private int n現在のスクロールカウンタ;
