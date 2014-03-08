@@ -23,7 +23,7 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 //this.dsエフェクト動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\7_Fillin Effect.mp4" ), CDTXMania.app.WindowHandle, true );
-                //this.tx背景 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
+                //this.tx背景 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, SlimDX.Direct3D9.Pool.Managed );
             }
         }
         public override void OnManagedリソースの解放()

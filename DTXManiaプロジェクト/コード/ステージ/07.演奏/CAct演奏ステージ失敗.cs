@@ -4,6 +4,7 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using FDK;
+using DirectShowLib;
 
 namespace DTXMania
 {
@@ -49,6 +50,8 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 this.txStageFailed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_stage_failed.jpg"));
+                this.tx動画用背景 = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, SlimDX.Direct3D9.Pool.Managed );
+                this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path(@"Graphics\7_StageFailed.mp4"), CDTXMania.app.WindowHandle, true );
                 base.OnManagedリソースの作成();
             }
         }
@@ -56,7 +59,9 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                CDTXMania.tテクスチャの解放(ref this.txStageFailed);
+                CDTXMania.tテクスチャの解放( ref this.txStageFailed );
+                CDTXMania.tテクスチャの解放( ref this.tx動画用背景 );
+                CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
                 base.OnManagedリソースの解放();
             }
         }
@@ -71,6 +76,8 @@ namespace DTXMania
                 return 0;
             }
             this.ct進行.t進行();
+            if( this.ds背景動画 != null )
+                this.ds背景動画.t再生開始();
             if (this.ct進行.n現在の値 < 100)
             {
                 int x = (int)(640.0 * Math.Cos((Math.PI / 2 * this.ct進行.n現在の値) / 100.0));
@@ -119,7 +126,21 @@ namespace DTXMania
                     }
                     this.b効果音再生済み = true;
                 }
+
             }
+            if( this.ds背景動画 != null && this.tx動画用背景 != null )
+            {
+                this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx動画用背景 );
+                if( this.ds背景動画.b上下反転 )
+                {
+                    this.tx動画用背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                }
+                else
+                {
+                    this.tx動画用背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                }
+            }
+
             if (!this.ct進行.b終了値に達した)
             {
                 return 0;
@@ -137,6 +158,8 @@ namespace DTXMania
         private CCounter ct進行;
         private CSound sd効果音;
         private CTexture txStageFailed;
+        private CTexture tx動画用背景;
+        private CDirectShow ds背景動画;
         //-----------------
         #endregion
     }
