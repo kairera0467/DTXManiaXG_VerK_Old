@@ -214,7 +214,7 @@ namespace DTXMania
                     }
                     this.bサビ区間 = true;
                     UnitTime = 0.015;
-                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ);
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ);
                     if ((this.actGauge.IsFailed( E楽器パート.GUITAR ) && this.actGauge.IsFailed( E楽器パート.BASS )) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                     {
                         this.actStageFailed.Start();
@@ -226,6 +226,7 @@ namespace DTXMania
                         base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
                         CDTXMania.Skin.soundステージクリア音.t再生する();
                         this.actFOStageClear.tフェードアウト開始();
+                        this.actFOStageClear.On進行描画();
                     }
                 }
                 if ( this.eフェードアウト完了時の戻り値 == E演奏画面の戻り値.再読込・再演奏 )
@@ -294,6 +295,14 @@ namespace DTXMania
         public bool bサビ区間;
         public double UnitTime;
         public CAct演奏Guitarスピーカー actSpeaker;
+
+        private void tフェードアウト()
+        {
+            this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.ステージクリア;
+            base.eフェーズID = CStage.Eフェーズ.演奏_STAGE_CLEAR_フェードアウト;
+
+            this.actFOStageClear.tフェードアウト開始();
+        }
 
 		protected override E判定 tチップのヒット処理( long nHitTime, CDTX.CChip pChip, bool bCorrectLane )
 		{
