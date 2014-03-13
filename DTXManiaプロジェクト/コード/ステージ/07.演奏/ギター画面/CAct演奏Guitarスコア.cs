@@ -21,7 +21,6 @@ namespace DTXMania
             #region [ 本体位置 ]
 
             {
-                this.n本体X[0] = 0;
                 this.n本体X[1] = 373;
                 this.n本体X[2] = 665;
 
@@ -63,7 +62,7 @@ namespace DTXMania
 				}
 				while( ( num - base.n進行用タイマ ) >= 10 )
 				{
-					for( int j = 0; j < 3; j++ )
+					for( int j = 1; j < 3; j++ )
 					{
 						this.n現在表示中のスコア[ j ] += this.nスコアの増分[ j ];
 
@@ -76,7 +75,7 @@ namespace DTXMania
                 {
                     if ( CDTXMania.DTX.bチップがある[j] && n本体X[j] != 0 )
                     {
-                        string str = string.Format("{0,7:######0}", this.n現在の本当のスコア[j]);
+                        string str = string.Format("{0,7:######0}", this.n現在表示中のスコア[j]);
                         for (int i = 0; i < 7; i++)
                         {
                             Rectangle rectangle;
@@ -109,8 +108,6 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-        private STDGBVALUE<int> n本体X;
-        private int n本体Y;
 		//-----------------
 		#endregion
 	}

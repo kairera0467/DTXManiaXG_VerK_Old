@@ -13,7 +13,7 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            this.n本体X = 30;
+            this.n本体X[0] = 30;
             this.n本体Y = 12;
 
             base.On活性化();
@@ -35,16 +35,13 @@ namespace DTXMania
                 }
                 while ((num - base.n進行用タイマ) >= 10)
                 {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        this.n現在表示中のスコア[j] += this.nスコアの増分[j];
+                        this.n現在表示中のスコア[0] += this.nスコアの増分[0];
 
-                        if (this.n現在表示中のスコア[j] > (long)this.n現在の本当のスコア[j])
-                            this.n現在表示中のスコア[j] = (long)this.n現在の本当のスコア[j];
-                    }
+                        if (this.n現在表示中のスコア[0] > (long)this.n現在の本当のスコア[0])
+                            this.n現在表示中のスコア[0] = (long)this.n現在の本当のスコア[0];
                     base.n進行用タイマ += 10;
                 }
-                string str = string.Format("{0,7:######0}", this.n現在の本当のスコア.Drums);
+                string str = string.Format("{0,7:######0}", this.n現在表示中のスコア[0]);
                 for (int i = 0; i < 7; i++)
                 {
                     Rectangle rectangle;
@@ -60,20 +57,18 @@ namespace DTXMania
                     }
                     if( base.txScore != null )
                     {
-                        base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X + (i * 34), 28 + this.n本体Y, rectangle);
+                        base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X[0] + (i * 34), 28 + this.n本体Y, rectangle);
                     }
                 }
                 if( base.txScore != null )
                 {
-                    base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X, this.n本体Y, new Rectangle(0, 50, 86, 28));
+                    base.txScore.t2D描画(CDTXMania.app.Device, this.n本体X[0], this.n本体Y, new Rectangle(0, 50, 86, 28));
                 }
             }
             return 0;
         }
         #region [ private ]
         //-----------------
-        private int n本体X;
-        private int n本体Y;
         //-----------------
         #endregion
     }

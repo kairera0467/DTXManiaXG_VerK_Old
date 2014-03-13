@@ -13,7 +13,9 @@ namespace DTXMania
         public STDGBVALUE<int>[] x位置 = new STDGBVALUE<int>[10];
 		public STDGBVALUE<double> n現在の本当のスコア;
 		public STDGBVALUE<long> n現在表示中のスコア;
-		public long n進行用タイマ;
+        public STDGBVALUE<int> n本体X;
+        public int n本体Y;
+        public long n進行用タイマ;
 		protected CTexture txScore;
 
 		
