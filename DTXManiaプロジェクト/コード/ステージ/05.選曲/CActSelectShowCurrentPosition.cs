@@ -58,7 +58,7 @@ namespace DTXMania
 				int py = CDTXMania.stage選曲.nスクロールバー相対y座標;
 				if( py <= 336 && py >= 0 )
 				{
-					this.txScrollBar.t2D描画( CDTXMania.app.Device, ( 1280 - 4 - (( 424.0f / 100.0f ) * CDTXMania.stage選曲.ct登場時アニメ用共通.n現在の値 ) ) + py, 164, new Rectangle( 353, 0, 26, 26 ) );//856
+					this.txScrollBar.t2D描画( CDTXMania.app.Device, ( 1280 - 4 - (( 424.0f / 100.0f ) * CDTXMania.stage選曲.ct登場時アニメ用共通.n現在の値 ) ) + py, 164, new Rectangle( 352, 0, 26, 26 ) );//856
 				}
 			#endregion
             }
