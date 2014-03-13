@@ -291,6 +291,8 @@ namespace DTXMania
 
             if (this.txCOMBOドラム != null)
                 {
+                    this.nコンボカウント.Drums = this.n現在のコンボ数.Drums / 100;
+
                     #region [ "COMBO" の拡大率を設定。]
                     //-----------------
                     float f拡大率 = 1.0f;
