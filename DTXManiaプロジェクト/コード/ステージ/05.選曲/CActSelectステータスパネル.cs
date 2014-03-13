@@ -171,10 +171,16 @@ namespace DTXMania
 				#region [ 難易度文字列の描画 ]
 				//-----------------
 
+                if ( CDTXMania.ConfigIni.bDrums有効 )
+                    CDTXMania.act文字コンソール.tPrint(this.n本体X + 70, this.n本体Y + 40, C文字コンソール.Eフォント種別.白, "DRUM");
+
+                if ( CDTXMania.ConfigIni.bGuitar有効 )
+                    CDTXMania.act文字コンソール.tPrint( this.n本体X + 70, this.n本体Y + 40, C文字コンソール.Eフォント種別.白, "GUITAR" );
+
                 for( int i = 0; i < 5; i++ )
                 {
                     if( this.n現在選択中の曲の難易度 == i )
-                        CDTXMania.act文字コンソール.tPrint( this.n本体X + 70, this.n本体Y + 50, C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
+                        CDTXMania.act文字コンソール.tPrint( this.n本体X + 70, this.n本体Y + 60, C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
 
                     CDTXMania.act文字コンソール.tPrint(70 + (i * 100), 74, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
                 }
@@ -272,16 +278,17 @@ namespace DTXMania
 
 				Cスコア cスコア = CDTXMania.stage選曲.r現在選択中のスコア;
 
+                int[,] nDispPosYOffset = { { 0, 70, 140 }, { 0, 140, 70 } };
+
                 #region [ 選択曲の 難易度パネルの描画 ]
                 //-----------------
                 for (int i = 0; i < 3; i++)
                 {
-                        int[,] nDispPosYOffset = { { 0, 32, 63 }, { 0, 0x66, -0x07 } };
-                        int x = this.n本体X + 0x09;
-                        int y = this.n本体Y + 0x5e + +(0x27 * i) + nDispPosYOffset[(CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i];
+                        int x = this.n本体X + 0x0b;
+                        int y = this.n本体Y + 0x5e + nDispPosYOffset[(CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i];
                         if (this.tx難易度パネル != null)
                         {
-                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 71 * i, 73, 71));
+                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 70 * i, 70, 70));
                         }
                 }
                 //-----------------
@@ -292,13 +299,12 @@ namespace DTXMania
 				{
 					for( int i = 0; i < 3; i++ )
 					{
-						int[,] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x66, -0x07} };	// #24063 2011.1.27 yyagi
                         Rectangle rect百の位;
 						Rectangle rect十の位;
 						Rectangle rect一の位;
                         Rectangle rect小数点 = this.rc数字[ 12 ];
                         int nDispPosX = this.n本体X + 0x21;
-						int nDispPosY = this.n本体Y + 0x84 + (i * 0x27 ) + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass? 1 : 0), i ];
+						int nDispPosY = this.n本体Y + 0x84 + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass? 1 : 0), i ];
 						int nLevel = this.n現在選択中の曲のレベル[ i ];
                         double dbLevel = this.n現在選択中の曲のレベル[ i ] / 100;
 						if( nLevel < 0 )
@@ -313,7 +319,7 @@ namespace DTXMania
 						{
                             rect百の位 = this.rc数字[ 11 ];
 							rect十の位 = this.rc数字[ 11 ];		// "-"
-							rect一の位 = this.rc数字[ 11 ];		// "- "
+							rect一の位 = this.rc数字[ 11 ];		// "-"
 						}
                         else if ( cスコア.譜面情報.レベルを非表示にする || nLevel == 0 )
 						{
@@ -387,7 +393,42 @@ namespace DTXMania
                             }
                     }
 
-                    CDTXMania.act文字コンソール.tPrint( this.n本体X + 72, this.n本体Y + 353, C文字コンソール.Eフォント種別.白, string.Format("BPM:{0:####0}", this.n現在選択中の曲のBPM));
+                    if (this.n現在選択中の曲のBPM != 0)
+                    {
+                        CDTXMania.act文字コンソール.tPrint(this.n本体X + 90, this.n本体Y + 320, C文字コンソール.Eフォント種別.白, string.Format("BPM", this.n現在選択中の曲のBPM));
+
+                        string sBPM = this.n現在選択中の曲のBPM.ToString("000");
+                        int nBPMWidth = 0;
+                        foreach (char ch in sBPM)
+                        {
+                            for (int j = 0; j < 12; j++)
+                            {
+                                if (ch == this.st数字[j].ch)
+                                {
+                                    nBPMWidth += this.st数字[j].rc.Width - 1;
+                                    break;
+                                }
+                            }
+                        }
+                        int x = this.n本体X + 100 - nBPMWidth / 2;
+                        int y = this.n本体Y + 345;
+                        foreach (char ch in sBPM)
+                        {
+                            for (int j = 0; j < 12; j++)
+                            {
+                                if (ch == this.st数字[j].ch)
+                                {
+                                    if (this.txゲージ用数字他 != null)
+                                    {
+                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, x, y, this.st数字[j].rc);
+                                    }
+                                    x += this.st数字[j].rc.Width - 1;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                 }
 
 
@@ -400,9 +441,8 @@ namespace DTXMania
 				{
 					if( this.b現在選択中の曲がフルコンボ[ i ] )
 					{
-                        int[,] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x66, -0x07 } };
 						int x = this.n本体X + 0x52;
-						int y = this.n本体Y + 0x5f + ( 0x27 * i ) + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i ];
+						int y = this.n本体Y + 0x5f + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i ];
                         Rectangle rectFullCombo = new Rectangle(770, 0, 110, 70);
 
                         if ( this.db現在選択中の曲の最高スキル値[i] == 100 )
@@ -429,9 +469,8 @@ namespace DTXMania
 						{
 							nMaxRank = 6;
 						}
-                        int[,] nDispPosYOffset = { { 0, 32, 63 }, { 0, 0x66, -0x07 } };
 						int x = this.n本体X + 0x52;
-						int y = this.n本体Y + 0x5f + ( 0x27 * i ) + nDispPosYOffset[ ( CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0 ), i ];
+						int y = this.n本体Y + 0x5f + nDispPosYOffset[ ( CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0 ), i ];
                         Rectangle rectMaxrank = new Rectangle(110 * i, 0, 110, 70);
                         if (this.txスキルアイコン != null)
 						{
@@ -445,7 +484,6 @@ namespace DTXMania
 				//-----------------
 				for( int i = 0; i < 3; i++ )
 				{
-                    int[,] nDispPosYOffset = { { 0, 0x20, 0x3f }, { 0, 0x66, -0x07 } };
 					if ( this.n現在選択中の曲のレベル[ i ] != 0 )
 					{
 						double dMaxSkill = this.db現在選択中の曲の最高スキル値[ i ];
@@ -463,7 +501,7 @@ namespace DTXMania
 							}
 						}
 						int x = this.n本体X + 0x86 - nMaxSkillStringWidth / 2;
-                        int y = this.n本体Y + 0x86 + ( 0x27 * i ) + nDispPosYOffset[(CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i];
+                        int y = this.n本体Y + 0x86 + nDispPosYOffset[(CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0), i];
 						foreach( char ch in sMaxSkillString )
 						{
 							for( int j = 0; j < 12; j++ )
