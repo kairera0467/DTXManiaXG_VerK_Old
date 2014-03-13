@@ -355,7 +355,7 @@ namespace DTXMania
                         if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                         {
                             nコンボx = nX中央位置px - 8 - ((int)((318 * f拡大率) / 3.0f));
-                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 90, nコンボy + y動作差分, new Rectangle(0, 357, 318, 64));
+                            this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, nコンボx - 35, nコンボy + y動作差分, new Rectangle(0, 357, 318, 64));
                         }
                         else
                         {
