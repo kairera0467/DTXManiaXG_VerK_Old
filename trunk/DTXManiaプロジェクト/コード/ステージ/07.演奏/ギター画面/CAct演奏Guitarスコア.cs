@@ -57,14 +57,7 @@ namespace DTXMania
 						else
 						{
 							int num5 = int.Parse( str.Substring( k, 1 ) );
-							if( num5 < 5 )
-							{
-								rectangle = new Rectangle( num5 * 32, 0, 32, 36 );
-							}
-							else
-							{
-								rectangle = new Rectangle( ( num5 * 32), 0, 32, 36 );
-							}
+							rectangle = new Rectangle( ( num5 * 32), 0, 32, 36 );
 						}
 						if( base.txScore != null )
 						{
