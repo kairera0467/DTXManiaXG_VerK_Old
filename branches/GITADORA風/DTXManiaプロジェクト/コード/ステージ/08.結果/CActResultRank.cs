@@ -7,25 +7,25 @@ using FDK;
 
 namespace DTXMania
 {
-	internal class CActResultRank : CActivity
-	{
-		// コンストラクタ
+    internal class CActResultRank : CActivity
+    {
+        // コンストラクタ
 
-		public CActResultRank()
-		{
-			base.b活性化してない = true;
-		}
-
-
-		// メソッド
-
-		public void tアニメを完了させる()
-		{
-			this.ctランク表示.n現在の値 = this.ctランク表示.n終了値;
-		}
+        public CActResultRank()
+        {
+            base.b活性化してない = true;
+        }
 
 
-		// CActivity 実装
+        // メソッド
+
+        public void tアニメを完了させる()
+        {
+            this.ctランク表示.n現在の値 = this.ctランク表示.n終了値;
+        }
+
+
+        // CActivity 実装
 
         public override void On活性化()
         {
@@ -89,18 +89,22 @@ namespace DTXMania
 
             base.On活性化();
         }
-		public override void On非活性化()
-		{
-			if( this.ctランク表示 != null )
-			{
-				this.ctランク表示 = null;
-			}
-			base.On非活性化();
-		}
-		public override void OnManagedリソースの作成()
-		{
-			if( !base.b活性化してない )
-			{
+        public override void On非活性化()
+        {
+            if (this.ctランク表示 != null)
+            {
+                this.ctランク表示 = null;
+            }
+            base.On非活性化();
+        }
+        public override void OnManagedリソースの作成()
+        {
+            if (!base.b活性化してない)
+            {
+
+                this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult fullcombo.png"));
+                this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
+
                 for (int j = 0; j < 3; j++)
                 {
                     switch (CDTXMania.stage結果.nランク値[j])
@@ -142,28 +146,30 @@ namespace DTXMania
                     }
                 }
                 base.OnManagedリソースの作成();
-			}
-		}
-		public override void OnManagedリソースの解放()
-		{
-			if( !base.b活性化してない )
-			{
+            }
+        }
+        public override void OnManagedリソースの解放()
+        {
+            if (!base.b活性化してない)
+            {
+                CDTXMania.tテクスチャの解放(ref this.txFullCombo);
+                CDTXMania.tテクスチャの解放(ref this.txExcellent);
                 CDTXMania.t安全にDisposeする(ref this.txランク文字);
                 base.OnManagedリソースの解放();
-			}
-		}
-		public override int On進行描画()
-		{
-			if( base.b活性化してない )
-			{
-				return 0;
-			}
-			if( base.b初めての進行描画 )
-			{
+            }
+        }
+        public override int On進行描画()
+        {
+            if (base.b活性化してない)
+            {
+                return 0;
+            }
+            if (base.b初めての進行描画)
+            {
                 this.ctランク表示 = new CCounter(0, 127, 1, CDTXMania.Timer);
-				base.b初めての進行描画 = false;
-			}
-			this.ctランク表示.t進行();
+                base.b初めての進行描画 = false;
+            }
+            this.ctランク表示.t進行();
             for (int j = 0; j < 3; j++)
             {
                 if (this.txランク文字[j] != null && this.n本体X[j] != 0)
@@ -171,25 +177,47 @@ namespace DTXMania
                     this.txランク文字[j].n透明度 = this.ctランク表示.n現在の値 * 2;
                     this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j]);
                 }
+
+                #region [ フルコンボ ]
+                int num14 = - 165 + this.n本体X[j];
+                int num15 = 100 + this.n本体Y[j];
+                if (this.n本体X[j] != 0)
+                {
+                    if (CDTXMania.stage結果.st演奏記録[j].nPerfect数 == CDTXMania.stage結果.st演奏記録[j].n全チップ数)
+                    {
+                        if (this.txExcellent != null)
+                            this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                    }
+                    else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[j].nPerfect数 != CDTXMania.stage結果.st演奏記録[j].n全チップ数)
+                    {
+                        if (this.txFullCombo != null)
+                            this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                    }
+                }
+                #endregion
             }
-			if( !this.ctランク表示.b終了値に達した )
-			{
-				return 0;
-			}
-			return 1;
-		}
-		
 
-		// その他
 
-		#region [ private ]
-		//-----------------
+            if (!this.ctランク表示.b終了値に達した)
+            {
+                return 0;
+            }
+            return 1;
+        }
+
+
+        // その他
+
+        #region [ private ]
+        //-----------------
         private CCounter ctランク表示;
         private STDGBVALUE<int> n本体X;
         private STDGBVALUE<int> n本体Y;
         private STDGBVALUE<bool> b全オート;
         private STDGBVALUE<CTexture> txランク文字;
+        private CTexture txExcellent;
+        private CTexture txFullCombo;
         //-----------------
-		#endregion
-	}
+        #endregion
+    }
 }
