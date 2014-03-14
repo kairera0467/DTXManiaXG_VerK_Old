@@ -257,7 +257,13 @@ namespace DTXMania
 				"Turn ON to disable drawing\n * preview image / movie\n * result image / movie\n * nowloading image\n * wallpaper (in playing screen)\n * BGA / AVI (in playing screen)" );
 			this.list項目リスト.Add( this.iSystemStoicMode );
 
-			this.iSystemShowLag = new CItemList( "ShowLagTime", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nShowLagType,
+            this.iSystemStageEffect = new CItemToggle( "StageEffect", CDTXMania.ConfigIni.ボーナス演出を表示する,
+                "OFFにすると、ゲーム中の背景演出が\n" +
+                "非表示になります。",
+                "");
+            this.list項目リスト.Add( this.iSystemStageEffect );
+
+            this.iSystemShowLag = new CItemList("ShowLagTime", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nShowLagType,
 				"ズレ時間表示：\nジャストタイミングからのズレ時間(ms)\nを表示します。\n  OFF: ズレ時間を表示しません。\n  ON: ズレ時間を表示します。\n  GREAT-: PERFECT以外の時のみ\n表示します。",
 				"About displaying the lag from\n the \"just timing\".\n  OFF: Don't show it.\n  ON: Show it.\n  GREAT-: Show it except you've\n  gotten PERFECT.",
 				new string[] { "OFF", "ON", "GREAT-" } );
@@ -598,9 +604,9 @@ namespace DTXMania
 
             this.iDrumsDark = new CItemList("       Dark", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eDark,
                 "レーン表示のオプションをまとめて切り替えます。\n"+
-                "HALF: レーンが表示されな\nくなります。\n"+
-                "FULL: さらに小節線、拍線、判定ラ\n"+
-                "インも表示されなくなります。",
+                "HALF: レーンが表示されなくなります。\n"+
+                "FULL: さらに小節線、拍線、判定ラインも\n"+
+                "表示されなくなります。",
                 "OFF: all display parts are shown.\nHALF: lanes and gauge are\n disappeared.\nFULL: additionaly to HALF, bar/beat\n lines, hit bar are disappeared.",
                 new string[] { "OFF", "HALF", "FULL" });
             this.list項目リスト.Add(this.iDrumsDark);
@@ -915,12 +921,6 @@ namespace DTXMania
                 new string[] { "RD RC", "RC RD" });
             this.list項目リスト.Add(this.iDrumsRDPosition);
 
-            this.iDrumsStageEffect = new CItemToggle("StageEffect", CDTXMania.ConfigIni.ボーナス演出を表示する,
-                "OFFにすると、ゲーム中の背景演出が\n" +
-                "非表示になります。",
-                "");
-            this.list項目リスト.Add(this.iDrumsStageEffect);
-
             this.iDrumsJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine.Drums,
                 "演奏時の判定ラインの高さを変更します。\n" +
                 "0～100の間で指定できます。",
@@ -1150,7 +1150,7 @@ namespace DTXMania
             this.list項目リスト.Add(this.iGuitarAttackEffect);
 
 			this.iGuitarReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Guitar,
-				"ギターチップが譜面の上から下に流\nれるようになります。",
+				"ギターチップが譜面の上から下に\n流れるようになります。",
 				"The scroll way is reversed. Guitar chips\nflow from the top to the bottom." );
 			this.list項目リスト.Add( this.iGuitarReverse );
 
@@ -1182,7 +1182,7 @@ namespace DTXMania
             //StageEffect
             
             this.iGuitarLeft = new CItemToggle( "Left", CDTXMania.ConfigIni.bLeft.Guitar,
-				"ギターの RGBYP の並びが左右反転し\nます。（左利きモード）",
+				"ギターの RGBYP の並びが左右反転します。\n（左利きモード）",
 				"Lane order 'R-G-B-Y-P' becomes 'P-Y-B-G-R'\nfor lefty." );
 			this.list項目リスト.Add( this.iGuitarLeft );
 
@@ -1340,7 +1340,7 @@ namespace DTXMania
 
             this.iBassLaneFlush = new CItemToggle( "LaneFlush", CDTXMania.ConfigIni.bLaneFlush.Bass,
                 "レーンフラッシュの表示 / 非表示を\n" +
-                 "切り替えます。)",
+                 "切り替えます。",
                 "Toggle LaneFlush" );
             this.list項目リスト.Add( this.iBassLaneFlush );
 
@@ -1353,7 +1353,7 @@ namespace DTXMania
 
 
 			this.iBassReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Bass,
-				"ベースチップが譜面の上から下に流\nれるようになります。",
+				"ベースチップが譜面の上から下に\n流れるようになります。",
 				"The scroll way is reversed. Bass chips\nflow from the top to the bottom." );
 			this.list項目リスト.Add( this.iBassReverse );
 
@@ -1377,7 +1377,7 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iBassLight );
 
 			this.iBassLeft = new CItemToggle( "Left", CDTXMania.ConfigIni.bLeft.Bass,
-				"ベースの RGBYP の並びが左右反転し\nます。（左利きモード）",
+				"ベースの RGBYP の並びが左右反転します。\n（左利きモード）",
 				"Lane order 'R-G-B-Y-P' becomes 'P-Y-B-G-R'\nfor lefty." );
 			this.list項目リスト.Add( this.iBassLeft );
 
@@ -2566,7 +2566,8 @@ namespace DTXMania
 		private CItemToggle iSystemSoundMonitorDrums;
 		private CItemToggle iSystemSoundMonitorGuitar;
 		private CItemToggle iSystemStageFailed;
-		private CItemToggle iSystemStoicMode;
+        private CItemToggle iSystemStageEffect;
+        private CItemToggle iSystemStoicMode;
 		private CItemToggle iSystemVSyncWait;
 		private CItemList	iSystemShowLag;					// #25370 2011.6.3 yyagi
 		private CItemToggle iSystemAutoResultCapture;		// #25399 2011.6.9 yyagi
@@ -2687,7 +2688,6 @@ namespace DTXMania
 		private CItemInteger iDrumsScrollSpeed;
 		private CItemToggle iDrumsSnare;
 		private CItemToggle iDrumsTight;
-        private CItemToggle iDrumsStageEffect;
         private CItemList iDrumsRandomPad;
         private CItemList iDrumsRandomPedal;
         private CItemList iDrumsNumOfLanes;
@@ -2838,6 +2838,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n手動再生音量 = this.iSystemChipVolume.n現在の値;
 			CDTXMania.ConfigIni.n自動再生音量 = this.iSystemAutoChipVolume.n現在の値;
 			CDTXMania.ConfigIni.bストイックモード = this.iSystemStoicMode.bON;
+            CDTXMania.ConfigIni.ボーナス演出を表示する = this.iSystemStageEffect.bON;
 
 			CDTXMania.ConfigIni.nShowLagType = this.iSystemShowLag.n現在選択されている項目番号;				// #25370 2011.6.3 yyagi
 			CDTXMania.ConfigIni.bIsAutoResultCapture = this.iSystemAutoResultCapture.bON;					// #25399 2011.6.9 yyagi
@@ -2953,7 +2954,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bJudgeLineDisp.Drums = this.iDrumsJudgeLineDisp.bON;
             CDTXMania.ConfigIni.bLaneFlush.Drums = this.iDrumsLaneFlush.bON;
 
-            CDTXMania.ConfigIni.ボーナス演出を表示する = this.iDrumsStageEffect.bON;
             CDTXMania.ConfigIni.bMutingLP = this.iMutingLP.bON;
             CDTXMania.ConfigIni.bAssignToLBD.Drums = this.iDrumsAssignToLBD.bON;
 

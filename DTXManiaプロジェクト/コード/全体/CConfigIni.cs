@@ -1028,6 +1028,7 @@ namespace DTXMania
 			this.bAVI有効 = true;
 			this.bBGA有効 = true;
 			this.bフィルイン有効 = true;
+            this.ボーナス演出を表示する = true;
             this.eRDPosition = ERDPosition.RCRD;
             this.nInfoType = 0;
             this.nSkillMode = 0;
@@ -1683,9 +1684,6 @@ namespace DTXMania
 
 			#region [ PlayOption ]
 			sw.WriteLine( "[PlayOption]" );
-			sw.WriteLine();
-			sw.WriteLine( "; DARKモード(0:OFF, 1:HALF, 2:FULL)" );
-			sw.WriteLine( "Dark={0}", (int) this.eDark );
 			sw.WriteLine();
 			sw.WriteLine( "; REVERSEモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "DrumsReverse={0}", this.bReverse.Drums ? 1 : 0 );
@@ -2678,15 +2676,7 @@ namespace DTXMania
 									//-----------------------------
 									case Eセクション種別.PlayOption:
 										{
-											if( str3.Equals( "Dark" ) )
-											{
-												this.eDark = (Eダークモード) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.eDark );
-											}
-											else if( str3.Equals( "DrumsTight" ) )
-											{
-												this.bTight = C変換.bONorOFF( str4[ 0 ] );
-											}
-											else if( str3.Equals( "SkillMater" ) )  // #24074 2011.01.23 addikanick
+											if( str3.Equals( "SkillMater" ) )  // #24074 2011.01.23 addikanick
 											{
 												this.bGraph有効 = C変換.bONorOFF( str4[ 0 ] );
 											}
@@ -2709,6 +2699,10 @@ namespace DTXMania
 											else if( str3.Equals( "BassRandom" ) )
 											{
 												this.eRandom.Bass = (Eランダムモード) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 4, (int) this.eRandom.Bass );
+											}
+											else if( str3.Equals( "DrumsTight" ) )
+											{
+												this.bTight = C変換.bONorOFF( str4[ 0 ] );
 											}
 											else if( str3.Equals( "GuitarLight" ) )
 											{
