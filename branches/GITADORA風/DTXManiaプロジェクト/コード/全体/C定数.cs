@@ -37,13 +37,6 @@ namespace DTXMania
         D,
         E
     }
-	public enum Eミラーモード
-	{
-		OFF,
-		PAD,
-		PEDAL,
-		ALL
-	}
     public enum ERDPosition
     {
         RDRC,
@@ -145,6 +138,7 @@ namespace DTXMania
 	public enum Eランダムモード
 	{
 		OFF,
+        MIRROR,
 		RANDOM,
 		SUPERRANDOM,
 		HYPERRANDOM,

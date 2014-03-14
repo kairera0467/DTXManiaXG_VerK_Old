@@ -2058,37 +2058,6 @@ namespace DTXMania
             }
         }
 
-        public void tドラムのミラー化( E楽器パート part, Eミラーモード eMirror )
-        {
-            if( part == E楽器パート.DRUMS && eMirror != Eミラーモード.OFF )
-            {
-                foreach( CDTX.CChip current in this.listChip )
-                {
-                    int nチャンネル番号 = current.nチャンネル番号;
-                    if ( part == E楽器パート.DRUMS && 0x11 <= nチャンネル番号 && nチャンネル番号 <= 0x1C )
-                    {
-                        switch( eMirror )
-                        {
-                            case Eミラーモード.PAD:
-                                if ( nチャンネル番号 != 0x13 && nチャンネル番号 != 0x1B && nチャンネル番号 != 0x1C )
-                                {
-                                    CDTX.tミラーチップのチャンネルを指定する( current, nチャンネル番号 );
-                                }
-                                break;
-                            case Eミラーモード.PEDAL:
-                                if ( nチャンネル番号 == 0x13 || nチャンネル番号 == 0x1B || nチャンネル番号 == 0x1C )
-                                {
-                                    CDTX.tミラーチップのチャンネルを指定する( current, nチャンネル番号 );
-                                }
-                                break;
-                            case Eミラーモード.ALL:
-                                CDTX.tミラーチップのチャンネルを指定する( current, nチャンネル番号 );
-                                break;
-                        }
-                    }
-                }
-            }
-        }
         private static void tミラーチップのチャンネルを指定する( CDTX.CChip chip, int nミラー化前チャンネル番号 )
         {
             switch( nミラー化前チャンネル番号 )
@@ -2143,7 +2112,18 @@ namespace DTXMania
         }
         public void tドラムのランダム化(E楽器パート part, Eランダムモード eRandom)
         {
-            if (part == E楽器パート.DRUMS && eRandom != Eランダムモード.OFF)
+            if (part == E楽器パート.DRUMS && eRandom == Eランダムモード.MIRROR)
+            {
+                foreach (CDTX.CChip current in this.listChip)
+                {
+                    int nチャンネル番号 = current.nチャンネル番号;
+                    if (part == E楽器パート.DRUMS && nチャンネル番号 != 0x13 && nチャンネル番号 != 0x1B && nチャンネル番号 != 0x1C)
+                    {
+                        CDTX.tミラーチップのチャンネルを指定する(current, nチャンネル番号);
+                    }
+                }
+            }
+            else if (part == E楽器パート.DRUMS && eRandom != Eランダムモード.OFF)
             {
                 if (CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.C)
                 {
@@ -2483,7 +2463,18 @@ namespace DTXMania
         }
         public void tドラムの足ランダム化(E楽器パート part, Eランダムモード eRandomPedal)
         {
-            if (part == E楽器パート.DRUMS && eRandomPedal != Eランダムモード.OFF && CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.C)
+            if (part == E楽器パート.DRUMS && eRandomPedal == Eランダムモード.MIRROR)
+            {
+                foreach (CDTX.CChip current in this.listChip)
+                {
+                    int nチャンネル番号 = current.nチャンネル番号;
+                    if (part == E楽器パート.DRUMS && (nチャンネル番号 == 0x13 || nチャンネル番号 == 0x1B || nチャンネル番号 == 0x1C))
+                    {
+                        CDTX.tミラーチップのチャンネルを指定する(current, nチャンネル番号);
+                    }
+                }
+            }
+            else if (part == E楽器パート.DRUMS && eRandomPedal != Eランダムモード.OFF && CDTXMania.ConfigIni.eNumOfLanes.Drums != Eタイプ.C)
             {
                 int num = CDTXMania.Random.Next(2);
                 int num2 = 0;
