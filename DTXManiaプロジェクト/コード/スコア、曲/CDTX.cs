@@ -2128,7 +2128,7 @@ namespace DTXMania
                 foreach (CDTX.CChip current in this.listChip)
                 {
                     int nチャンネル番号 = current.nチャンネル番号;
-                    if (part == E楽器パート.DRUMS && nチャンネル番号 != 0x13 && nチャンネル番号 != 0x1B && nチャンネル番号 != 0x1C)
+                    if (part == E楽器パート.DRUMS && 0x11 <= nチャンネル番号 && nチャンネル番号 != 0x13 && nチャンネル番号 <= 0x1A)
                     {
                         CDTX.tミラーチップのチャンネルを指定する(current, nチャンネル番号);
                     }
