@@ -2188,10 +2188,7 @@ namespace DTXMania
         }
         protected void t進行描画・RGBボタン()
         {
-            if (CDTXMania.ConfigIni.eDark != Eダークモード.FULL)
-            {
-                this.actRGB.On進行描画();
-            }
+            this.actRGB.On進行描画();
         }
         protected void t進行描画・STAGEFAILED()
         {
@@ -2213,18 +2210,15 @@ namespace DTXMania
         protected abstract void t進行描画・Wailing枠();
         protected void t進行描画・Wailing枠(int GtWailingFrameX, int BsWailingFrameX, int GtWailingFrameY, int BsWailingFrameY)
         {
-            if ((CDTXMania.ConfigIni.eDark != Eダークモード.FULL) && CDTXMania.ConfigIni.bGuitar有効)
+            if (this.txWailing枠 != null && CDTXMania.ConfigIni.bGuitar有効)
             {
-                if (this.txWailing枠 != null)
+                if (CDTXMania.DTX.bチップがある.Guitar)
                 {
-                    if (CDTXMania.DTX.bチップがある.Guitar)
-                    {
-                        this.txWailing枠.t2D描画(CDTXMania.app.Device, GtWailingFrameX, GtWailingFrameY);
-                    }
-                    if (CDTXMania.DTX.bチップがある.Bass)
-                    {
-                        this.txWailing枠.t2D描画(CDTXMania.app.Device, BsWailingFrameX, BsWailingFrameY);
-                    }
+                    this.txWailing枠.t2D描画(CDTXMania.app.Device, GtWailingFrameX, GtWailingFrameY);
+                }
+                if (CDTXMania.DTX.bチップがある.Bass)
+                {
+                    this.txWailing枠.t2D描画(CDTXMania.app.Device, BsWailingFrameX, BsWailingFrameY);
                 }
             }
         }
