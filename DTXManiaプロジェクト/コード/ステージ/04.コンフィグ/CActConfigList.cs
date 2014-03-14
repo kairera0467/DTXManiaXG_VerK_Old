@@ -990,23 +990,26 @@ namespace DTXMania
             this.iDrumsRandomPad = new CItemList("RandomPad", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandom.Drums,
                 "ドラムのパッドチップがランダムに\n"+
                 "降ってきます。\n"+
+                "Mirror: ミラーをかけます\n"+
                 "Part: レーン単位で交換\n"+
                 "Super: 小節単位で交換\n"+
                 "Hyper: 四分の一小節単位で交換\n"+
                 "Master: 死ぬがよい\n"+
                 "Another: チップを丁度良くバラける",
                 "Drums chips (pads) come randomly.\n"+
+                "Mirror: \n"+
                 "Part: swapping lanes randomly\n"+
                 "Super: swapping for each measure\n"+
                 "Hyper: swapping for each 1/4 measure\n"+
                 "Master: game over...\n"+
                 "Another: moderately swapping each\n"+
                 "chip randomly",
-                new string[] { "OFF", "Part", "Super", "Hyper", "Master", "Another" } );
+                new string[] { "OFF", "Mirror", "Part", "Super", "Hyper", "Master", "Another" } );
             this.list項目リスト.Add(this.iDrumsRandomPad);
 
             this.iDrumsRandomPedal = new CItemList("RandomPedal", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRandomPedal.Drums,
                 "ドラムの足チップがランダムに\n降ってきます。\n"+
+                "Mirror: ミラーをかけます\n"+
                 "Part: レーン単位で交換\n"+
                 "Super: 小節単位で交換\n"+
                 "Hyper: 四分の一小節単位で交換\n"+
@@ -1019,21 +1022,8 @@ namespace DTXMania
                 "Master: game over...\n"+
                 "Another: moderately swapping each\n"+
                 "chip randomly",
-                new string[] { "OFF", "Part", "Super", "Hyper", "Master", "Another" } );
+                new string[] { "OFF", "Mirror", "Part", "Super", "Hyper", "Master", "Another" });
             this.list項目リスト.Add(this.iDrumsRandomPedal);
-
-            this.iDrumsMirror = new CItemList("Mirror", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eMirror.Drums,
-                "ドラムのチップにミラーをかけます。\n"+
-                "Pad: パッドだけミラー\n"+
-                "Pedal: 足だけミラー\n"+
-                "All: 全部ミラー",
-                "Drums chips come reversely from\n"+
-                "left to right.\n"+
-                "Pad: pads only\n"+
-                "Pedal: pedals only\n"+
-                "All: all pads and pedals",
-                new string[] {"OFF","Pad","Pedal","All"});
-            this.list項目リスト.Add(this.iDrumsMirror);
 
 			this.iDrumsGoToKeyAssign = new CItemBase( "Drums Keys", CItemBase.Eパネル種別.通常,
 				"ドラムのキー入力に関する項目を設定します。",
@@ -1182,9 +1172,9 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iGuitarLight );
 
 			this.iGuitarRandom = new CItemList( "Random", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eRandom.Guitar,
-				"ギターのチップがランダムに降ってきます。\n  Part: 小節・レーン単位で交換\n  Super: チップ単位で交換\n  Hyper: 全部完全に変更",
-				"Guitar chips come randomly.\n\n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
-				new string[] { "OFF", "Part", "Super", "Hyper" } );
+                "ギターのチップがランダムに降ってきます。\n  Mirror: ミラーをかけます\n  Part: 小節・レーン単位で交換\n  Super: チップ単位で交換\n  Hyper: 全部完全に変更",
+				"Guitar chips come randomly.\n Mirror: \n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
+				new string[] { "OFF", "Mirror", "Part", "Super", "Hyper" } );
 			this.list項目リスト.Add( this.iGuitarRandom );
 
             //NumOfLanes(ここではレーンオ－トに相当する。)
@@ -1376,9 +1366,9 @@ namespace DTXMania
 
 			this.iBassRandom = new CItemList( "Random", CItemBase.Eパネル種別.通常,
 				(int) CDTXMania.ConfigIni.eRandom.Bass,
-				"ベースのチップがランダムに降ってきます。\n  Part: 小節・レーン単位で交換\n  Super: チップ単位で交換\n  Hyper: 全部完全に変更",
-				"Bass chips come randomly.\n\n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
-				new string[] { "OFF", "Part", "Super", "Hyper" } );
+                "ベースのチップがランダムに降ってきます。\n  Mirror: ミラーをかけます\n  Part: 小節・レーン単位で交換\n  Super: チップ単位で交換\n  Hyper: 全部完全に変更",
+				"Bass chips come randomly.\n Mirror: \n Part: swapping lanes randomly for each\n  measures.\n Super: swapping chip randomly\n Hyper: swapping randomly\n  (number of lanes also changes)",
+				new string[] { "OFF", "Mirror", "Part", "Super", "Hyper" } );
 			this.list項目リスト.Add( this.iBassRandom );
 
 			this.iBassLight = new CItemToggle( "Light", CDTXMania.ConfigIni.bLight.Bass,
@@ -2698,7 +2688,6 @@ namespace DTXMania
 		private CItemToggle iDrumsSnare;
 		private CItemToggle iDrumsTight;
         private CItemToggle iDrumsStageEffect;
-        private CItemList iDrumsMirror;
         private CItemList iDrumsRandomPad;
         private CItemList iDrumsRandomPedal;
         private CItemList iDrumsNumOfLanes;
@@ -2970,8 +2959,7 @@ namespace DTXMania
 
             CDTXMania.ConfigIni.eRandom.Drums = (Eランダムモード)this.iDrumsRandomPad.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eRandomPedal.Drums = (Eランダムモード)this.iDrumsRandomPedal.n現在選択されている項目番号;
-            CDTXMania.ConfigIni.eMirror.Drums = (Eミラーモード)this.iDrumsMirror.n現在選択されている項目番号;
-            //CDTXMania.ConfigIni.eNumOfLanes.Drums = (Eタイプ)this.iDrumsNumOfLanes.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.eNumOfLanes.Drums = (Eタイプ)this.iDrumsNumOfLanes.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eDkdkType.Drums = (Eタイプ)this.iDrumsDkdkType.n現在選択されている項目番号;
 
             CDTXMania.ConfigIni.bHAZARD = this.iDrumsHAZARD.bON;
