@@ -92,7 +92,8 @@ namespace DTXMania
                 this.txレベル数字 = CDTXMania.tテクスチャの生成(CSkin.Path( @"Graphics\5_level number.png" ), false);
                 this.txスキルアイコン = CDTXMania.tテクスチャの生成(CSkin.Path( @"Graphics\5_skill icon.png" ), false);
 				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number.png" ), false );
-                this.tx難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_difficulty panel.png"));
+                this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_difficulty panel.png" ) );
+                this.txBPM = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_BPM.png" ));
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -104,8 +105,9 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txレベル数字 );
                 CDTXMania.tテクスチャの解放( ref this.txスキルアイコン );
                 CDTXMania.tテクスチャの解放( ref this.txゲージ用数字他 );
-                CDTXMania.tテクスチャの解放(ref this.tx難易度パネル);
-				base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
+                CDTXMania.tテクスチャの解放( ref this.txBPM );
+                base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
@@ -395,7 +397,8 @@ namespace DTXMania
 
                     if (this.n現在選択中の曲のBPM != 0)
                     {
-                        CDTXMania.act文字コンソール.tPrint(this.n本体X + 90, this.n本体Y + 320, C文字コンソール.Eフォント種別.白, string.Format("BPM", this.n現在選択中の曲のBPM));
+                        if (this.txBPM != null)
+                            this.txBPM.t2D描画(CDTXMania.app.Device, this.n本体X + 78, this.n本体Y + 320);
 
                         string sBPM = this.n現在選択中の曲のBPM.ToString("000");
                         int nBPMWidth = 0;
@@ -579,6 +582,7 @@ namespace DTXMania
 		private CTexture txパネル本体;
 		private CTexture txレベル数字;
         private CTexture tx難易度パネル;
+        private CTexture txBPM;
 
         private int n現在の難易度ラベルが完全表示されているかを調べてスクロール方向を返す()
         {

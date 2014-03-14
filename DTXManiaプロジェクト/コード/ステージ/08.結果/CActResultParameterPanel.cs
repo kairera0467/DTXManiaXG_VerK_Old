@@ -264,10 +264,7 @@ namespace DTXMania
                 this.tx文字[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_s.png"));
                 this.tx文字[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Ratenumber_l.png"));
                 this.tx文字[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_numbers_large.png"));
-                this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult fullcombo.png"));
-                this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
                 this.txNewRecord = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_New Record.png"));
-                this.txWhite = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\Tile white 64x64.png"));
                 this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
                 this.txエキサイトゲージ = new CTexture[3];
                 this.txエキサイトゲージ[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Gauge.png"));
@@ -296,10 +293,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.tx文字[0]);
                 CDTXMania.tテクスチャの解放(ref this.tx文字[1]);
                 CDTXMania.tテクスチャの解放(ref this.tx文字[2]);
-                CDTXMania.tテクスチャの解放(ref this.txFullCombo);
-                CDTXMania.tテクスチャの解放(ref this.txExcellent);
                 CDTXMania.tテクスチャの解放(ref this.txNewRecord);
-                CDTXMania.tテクスチャの解放(ref this.txWhite);
                 CDTXMania.tテクスチャの解放(ref this.txエキサイトゲージ[0]);
                 CDTXMania.tテクスチャの解放(ref this.txエキサイトゲージ[1]);
                 CDTXMania.tテクスチャの解放(ref this.txエキサイトゲージ[2]);
@@ -419,10 +413,7 @@ namespace DTXMania
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
         private readonly ST文字位置[] st特大文字位置;
-        private CTexture txExcellent;
         private CTexture txNewRecord;
-        private CTexture txFullCombo;
-        private CTexture txWhite;
         private CTexture txパネル本体;
         private CTexture[] tx文字;
         private CTexture[] txエキサイトゲージ;
