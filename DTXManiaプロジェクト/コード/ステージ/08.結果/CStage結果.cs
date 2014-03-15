@@ -404,7 +404,7 @@ namespace DTXMania
 				}
 				if( this.tx下部パネル != null )
 				{
-					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
+					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 				}
                 if( this.actResultImage.On進行描画() == 0 )
 				{

@@ -701,7 +701,7 @@ namespace DTXMania
 		}
 		protected override void t進行描画・BGA()
 		{
-			base.t進行描画・BGA( 990, 0 );
+			//base.t進行描画・BGA( 990, 0 );
 		}
 		protected override void t進行描画・DANGER()
 		{

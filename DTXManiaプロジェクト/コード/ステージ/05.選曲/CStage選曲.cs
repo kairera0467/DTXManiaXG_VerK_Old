@@ -99,7 +99,7 @@ namespace DTXMania
 			base.eステージID = CStage.Eステージ.選曲;
 			base.eフェーズID = CStage.Eフェーズ.共通_通常状態;
 			base.b活性化してない = true;
-			base.list子Activities.Add( this.actオプションパネル = new CActオプションパネル() );
+//			base.list子Activities.Add( this.actオプションパネル = new CActオプションパネル() );
 			base.list子Activities.Add( this.actFIFO = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actFIfrom結果画面 = new CActFIFOBlack() );
 //			base.list子Activities.Add( this.actFOtoNowLoading = new CActFIFOBlack() );	// #27787 2012.3.10 yyagi 曲決定時の画面フェードアウトの省略
@@ -290,7 +290,7 @@ namespace DTXMania
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
 				this.actPresound.On進行描画();
-				this.actオプションパネル.On進行描画();
+//				this.actオプションパネル.On進行描画();
 				this.actShowCurrentPosition.On進行描画();								// #27648 2011.3.28 yyagi
 
 				switch ( base.eフェーズID )
@@ -685,7 +685,7 @@ namespace DTXMania
 		private CActSelectInformation actInformation;
 		private CActSelectPreimageパネル actPreimageパネル;
 		private CActSelectPresound actPresound;
-		private CActオプションパネル actオプションパネル;
+//		private CActオプションパネル actオプションパネル;
 		public CActSelectステータスパネル actステータスパネル;
 		private CActSelect演奏履歴パネル act演奏履歴パネル;
 		private CActSelect曲リスト act曲リスト;

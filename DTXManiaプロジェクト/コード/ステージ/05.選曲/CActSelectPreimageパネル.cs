@@ -79,6 +79,7 @@ namespace DTXMania
 //				CDTXMania.tテクスチャの解放( ref this.txセンサ );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像がないときの画像 );
+                CDTXMania.tテクスチャの解放( ref this.r表示するプレビュー画像 );
 				if( this.sfAVI画像 != null )
 				{
 					this.sfAVI画像.Dispose();
@@ -151,13 +152,13 @@ namespace DTXMania
 		private IntPtr pAVIBmp;
 		private readonly Rectangle rcセンサ本体下半分 = new Rectangle( 0x80, 0, 0x80, 0xc0 );
 		private readonly Rectangle rcセンサ本体上半分 = new Rectangle( 0, 0, 0x80, 0xc0 );
-		private CTexture r表示するプレビュー画像;
 		private Surface sfAVI画像;
 		private string str現在のファイル名;
 //		private CTexture txセンサ;
 		private CTexture txパネル本体;
 		private CTexture txプレビュー画像;
 		private CTexture txプレビュー画像がないときの画像;
+		private CTexture r表示するプレビュー画像;
 		private bool b新しいプレビューファイルを読み込んだ;
 		private bool b新しいプレビューファイルをまだ読み込んでいない
 		{
