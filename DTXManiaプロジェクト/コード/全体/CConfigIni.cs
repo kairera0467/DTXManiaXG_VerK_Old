@@ -1745,7 +1745,7 @@ namespace DTXMania
 			sw.WriteLine();
 
             #region[DTXManiaXG追加オプション]
-            //sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
+            sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
             sw.WriteLine("NumOfLanes={0}", (int)this.eNumOfLanes.Drums);
             sw.WriteLine();
             sw.WriteLine("; dkdk仕様変更(0:デフォルト, 1:始動足変更, 2:dkdk1レーン化)");
