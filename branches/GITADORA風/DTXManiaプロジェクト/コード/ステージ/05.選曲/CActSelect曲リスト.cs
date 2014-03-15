@@ -533,8 +533,8 @@ namespace DTXMania
 			this.tx選曲バー.Box = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_bar box selected.png" ), false );
 			this.tx選曲バー.Other = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_bar other selected.png" ), false );
             this.txスキル数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenSelect skill number on list.png"), false);
-            this.txHeader = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_header song list.png"), false);
-            this.txFooter = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_footer song list.png"), false);
+            this.tx上部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_header song list.png"), false);
+            this.tx下部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_footer song list.png"), false);
 
 			for( int i = 0; i < 13; i++ )
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
@@ -615,8 +615,10 @@ namespace DTXMania
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Score );
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Box );
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Other );
-            CDTXMania.t安全にDisposeする( ref this.txHeader );
-            CDTXMania.t安全にDisposeする( ref this.txFooter );
+            CDTXMania.t安全にDisposeする( ref this.tx選択中の曲名テクスチャ );
+            CDTXMania.t安全にDisposeする( ref this.tx選択中のアーティスト名テクスチャ );
+            CDTXMania.t安全にDisposeする( ref this.tx上部パネル );
+            CDTXMania.t安全にDisposeする( ref this.tx下部パネル );
 
 			base.OnManagedリソースの解放();
 		}
@@ -946,10 +948,10 @@ namespace DTXMania
 							//-----------------
 							#endregion
 						}
-                        if (this.txHeader != null)
-                            this.txHeader.t2D描画(CDTXMania.app.Device, 0f, this.ct登場アニメ用[ 0 ].n現在の値 - 100 );
-                        if (this.txFooter != null)
-                            this.txFooter.t2D描画(CDTXMania.app.Device, 0f, 720 - this.ct登場アニメ用[ 0 ].n現在の値 );
+                        if (this.tx上部パネル != null)
+                            this.tx上部パネル.t2D描画(CDTXMania.app.Device, 0f, ((float)(this.tx上部パネル.szテクスチャサイズ.Height) * ((float)(this.ct登場アニメ用[0].n現在の値) / 100f)) - (float)(this.tx上部パネル.szテクスチャサイズ.Height));
+                        if (this.tx下部パネル != null)
+                            this.tx下部パネル.t2D描画(CDTXMania.app.Device, 0f, 720 - ((float)(this.tx下部パネル.szテクスチャサイズ.Height) * ((float)(this.ct登場アニメ用[0].n現在の値) / 100f)));
                     }
 				}
 				//-----------------
@@ -1034,10 +1036,10 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
-                if (this.txHeader != null)
-                    this.txHeader.t2D描画(CDTXMania.app.Device, 0, 0);
-                if (this.txFooter != null)
-                    this.txFooter.t2D描画(CDTXMania.app.Device, 0, 620);
+                if (this.tx上部パネル != null)
+                    this.tx上部パネル.t2D描画(CDTXMania.app.Device, 0, 0);
+                if (this.tx下部パネル != null)
+                    this.tx下部パネル.t2D描画(CDTXMania.app.Device, 0, 720 - this.tx下部パネル.szテクスチャサイズ.Height);
 
 			}
 			#region [ スクロール地点の計算(描画はCActSelectShowCurrentPositionにて行う) #27648 ]
@@ -1192,8 +1194,8 @@ namespace DTXMania
 		private CTexture txアイテム数数字;
         private CTexture tx選択中の曲名テクスチャ;
         private CTexture tx選択中のアーティスト名テクスチャ;
-        private CTexture txHeader;
-        private CTexture txFooter;
+        private CTexture tx上部パネル;
+        private CTexture tx下部パネル;
         private STバー tx曲名バー;
 		private ST選曲バー tx選曲バー;
         private CPrivateFastFont prvFont;

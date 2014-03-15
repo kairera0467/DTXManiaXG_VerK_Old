@@ -184,7 +184,7 @@ namespace DTXMania
                     if( this.n現在選択中の曲の難易度 == i )
                         CDTXMania.act文字コンソール.tPrint( this.n本体X + 70, this.n本体Y + 60, C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
 
-                    CDTXMania.act文字コンソール.tPrint(70 + (i * 100), 74, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
+                    CDTXMania.act文字コンソール.tPrint(70 + (i * 100), 80, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
                 }
 
                 /*
