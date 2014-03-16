@@ -939,7 +939,7 @@ namespace DTXCreator.譜面
 								Cチップ.t表チップを描画する( g, rectangle, -1, cレーン.col背景色 );
 								break;
 							}
-							rectangle.Width = cレーン.n幅dot * 3;
+							rectangle.Width = cレーン.n幅dot * 5;
 							Cチップ.tOPENチップを描画する( g, rectangle );
 							break;
 
