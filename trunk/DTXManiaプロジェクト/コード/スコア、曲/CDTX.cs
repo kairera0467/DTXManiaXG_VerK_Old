@@ -348,10 +348,14 @@ namespace DTXMania
 			{
 				get
 				{
-					if ( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
-						return CDTXMania.DTX.PATH_WAV + this.strファイル名;
-					else
-						return CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                    if( CDTXMania.DTX != null )
+					{
+                        if ( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+						    return CDTXMania.DTX.PATH_WAV + this.strファイル名;
+					    else
+						    return CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                    }
+                    return "";
 				}
 			}
 

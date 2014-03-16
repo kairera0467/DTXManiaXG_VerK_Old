@@ -164,8 +164,8 @@ namespace DTXMania
                     this.actLivePoint.n現在のLivePoint.Drums = 0;
                     this.ctチップ模様アニメ.Drums = new CCounter(0, 7, 70, CDTXMania.Timer);
 
-                    this.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
-                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
+                    this.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 16.0, UnitTime, CSound管理.rc演奏用タイマ);
 
                     this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
 
@@ -3460,6 +3460,46 @@ namespace DTXMania
         {
             if (!pChip.bHit )
             {
+                #region [ Sudden処理 ]
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 2) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
+				{
+					if ( pChip.nバーからの距離dot.Drums < 200 )
+					{
+						pChip.b可視 = true;
+						pChip.n透明度 = 0xff;
+					}
+					else if ( pChip.nバーからの距離dot.Drums < 250 )
+					{
+						pChip.b可視 = true;
+						pChip.n透明度 = 0xff - ( (int) ( ( ( (double) ( pChip.nバーからの距離dot.Drums - 200 ) ) * 255.0 ) / 50.0 ) );
+					}
+					else
+					{
+						pChip.b可視 = false;
+						pChip.n透明度 = 0;
+					}
+				}
+				#endregion
+				#region [ Hidden処理 ]
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 1) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
+				{
+					if ( pChip.nバーからの距離dot.Drums < 100 )
+					{
+						pChip.b可視 = false;
+					}
+					else if ( pChip.nバーからの距離dot.Drums < 150 )
+					{
+						pChip.b可視 = true;
+						pChip.n透明度 = (int) ( ( ( (double) ( pChip.nバーからの距離dot.Drums - 100 ) ) * 255.0 ) / 50.0 );
+					}
+				}
+				#endregion
+                #region [ ステルス処理 ]
+                if (CDTXMania.ConfigIni.nHidSud.Drums == 4)
+                {
+                        pChip.b可視 = false;
+                }
+                #endregion
                 if (!pChip.bHit && pChip.b可視)
                 {
                     if (this.txチップ != null)

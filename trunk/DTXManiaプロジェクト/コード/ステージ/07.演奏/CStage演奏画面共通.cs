@@ -389,8 +389,15 @@ namespace DTXMania
 				this.t背景テクスチャの生成();
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
-                this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_judge strings.png" ) );
                 this.txボーナスエフェクト = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Fillin Effect.png" ) );
+                if( CDTXMania.ConfigIni.nJudgeAnimeType == 1 )
+                    this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_judge strings.png" ) );
+                else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
+                {
+                    this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime_2 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime_3 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                }
 
 				base.OnManagedリソースの作成();
 			}
@@ -403,6 +410,8 @@ namespace DTXMania
 
 				CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
                 CDTXMania.tテクスチャの解放( ref this.tx判定画像anime );
+                CDTXMania.tテクスチャの解放( ref this.tx判定画像anime_2 );
+                CDTXMania.tテクスチャの解放( ref this.tx判定画像anime_3 );
                 CDTXMania.tテクスチャの解放( ref this.txボーナスエフェクト );
 				base.OnManagedリソースの解放();
 			}
@@ -698,6 +707,8 @@ namespace DTXMania
 		protected CTexture txチップ;
 		protected CTexture txヒットバー;
         public CTexture tx判定画像anime;     //2013.8.2 kairera0467 アニメーションの場合はあらかじめこっちで読み込む。
+        public CTexture tx判定画像anime_2;   //2014.3.16 kairera0467 棒とかで必要になる。
+        public CTexture tx判定画像anime_3;
         public CTexture txボーナスエフェクト;
 
 		protected CTexture tx背景;
@@ -2423,14 +2434,14 @@ namespace DTXMania
 
                             if( CDTXMania.ConfigIni.bDrums有効 )
                             {
-                                CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0 ));
-                                this.actBPMBar.ctBPMバー = new CCounter(0, 13.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 ));
+                                this.actBPMBar.ctBPMバー = new CCounter(0, 16.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
                                 CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
                             }
                             else if( CDTXMania.ConfigIni.bGuitar有効 )
                             {
-                                CDTXMania.stage演奏ギター画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0 ));
-                                this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                CDTXMania.stage演奏ギター画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16.0 ));
+                                this.actBPMBar.ctBPMバー = new CCounter(0.0, 16.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ );
                                 CDTXMania.stage演奏ギター画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
                             }
                         }
@@ -2495,14 +2506,14 @@ namespace DTXMania
 
                                 if( CDTXMania.ConfigIni.bDrums有効 )
                                 {
-                                    CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 14.0 ));
-                                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                    CDTXMania.stage演奏ドラム画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0 ));
+                                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 16.0, CDTXMania.stage演奏ドラム画面.UnitTime, CSound管理.rc演奏用タイマ );
                                     CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
                                 }
                                 else if( CDTXMania.ConfigIni.bGuitar有効 )
                                 {
-                                    CDTXMania.stage演奏ギター画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0 ));
-                                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ );
+                                    CDTXMania.stage演奏ギター画面.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16.0 ));
+                                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 16.0, CDTXMania.stage演奏ギター画面.UnitTime, CSound管理.rc演奏用タイマ );
                                     CDTXMania.stage演奏ギター画面.ctコンボ動作タイマ = new CCounter(1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
                                 }
                             }
