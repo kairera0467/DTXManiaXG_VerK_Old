@@ -28,8 +28,10 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 int index = 0;
-                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                #region[ 座標など定義 ]
+                if( CDTXMania.ConfigIni.nJudgeAnimeType == 1 )
                 {
+                    #region[ コマ方式 ]
                     for (int i = 0; i < 12; i++)
                     {
                         if (!base.st状態[i].ct進行.b停止中)
@@ -43,9 +45,374 @@ namespace DTXMania
                         }
                         index++;
                     }
+                    #endregion
+                }
+                else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
+                {
+                    #region[ 新しいやつ ]
+                    for (int i = 0; i < 12; i++)
+                    {
+                        if (!base.st状態[i].ct進行.b停止中)
+                        {
+                            base.st状態[i].ct進行.t進行();
+                            if (base.st状態[i].ct進行.b終了値に達した)
+                            {
+                                base.st状態[i].ct進行.t停止();
+                            }
+                            //int num2 = base.st状態[i].ct進行.n現在の値;
+                            int nNowFrame = base.st状態[ i ].ct進行.n現在の値;
+
+                            //テンプレのようなもの。
+                            //拡大処理を先に行わないとめちゃくちゃになる。
+                            /*
+                            base.st状態[i].fX方向拡大率 = 1.0f;
+                            base.st状態[i].fY方向拡大率 = 1.0f;
+                            base.st状態[i].n相対X座標 = 0;
+                            base.st状態[i].n相対Y座標 = 0;
+                            base.st状態[i].n透明度 = 0;
+                            */
+
+                            //nNowFrame = 22;
+                            if( base.st状態[ i ].judge == E判定.Perfect )
+                            {
+                                #region[ PERFECT ]
+                                if( nNowFrame == 0 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.67f;
+                                    base.st状態[i].fY方向拡大率 = 1.67f;
+                                    base.st状態[i].n相対X座標 = 30;
+                                    base.st状態[i].n相対Y座標 = 46;
+                                    base.st状態[i].n透明度 = 0;
+                                    
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame == 1 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.33f;
+                                    base.st状態[i].fY方向拡大率 = 1.33f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 7f );
+                                    base.st状態[i].n相対X座標 = 16;
+                                    base.st状態[i].n相対Y座標 = 24;
+                                    base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率_棒 = 1.63f;
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame >= 2 && nNowFrame <= 18 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 19 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.22f;
+                                    base.st状態[i].fY方向拡大率 = 0.77f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 10;
+                                    base.st状態[i].n相対Y座標 = -16;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 20 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.45f;
+                                    base.st状態[i].fY方向拡大率 = 0.64f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 20;
+                                    base.st状態[i].n相対Y座標 = -25;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 21 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.70f;
+                                    base.st状態[i].fY方向拡大率 = 0.41f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 28;
+                                    base.st状態[i].n相対Y座標 = -41;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 22 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 23 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                #endregion
+                            }
+                            else if( base.st状態[ i ].judge == E判定.Great )
+                            {
+                                #region[ GREAT ]
+                                if( nNowFrame == 0 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.67f;
+                                    base.st状態[i].fY方向拡大率 = 1.67f;
+                                    base.st状態[i].n相対X座標 = 30;
+                                    base.st状態[i].n相対Y座標 = 46;
+                                    base.st状態[i].n透明度 = 0;
+                                    
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame == 1 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.33f;
+                                    base.st状態[i].fY方向拡大率 = 1.33f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 7f );
+                                    base.st状態[i].n相対X座標 = 16;
+                                    base.st状態[i].n相対Y座標 = 24;
+                                    base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率_棒 = 1.63f;
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame >= 2 && nNowFrame <= 18 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 19 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.22f;
+                                    base.st状態[i].fY方向拡大率 = 0.77f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 10;
+                                    base.st状態[i].n相対Y座標 = -16;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 20 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.45f;
+                                    base.st状態[i].fY方向拡大率 = 0.64f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 20;
+                                    base.st状態[i].n相対Y座標 = -25;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 21 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.70f;
+                                    base.st状態[i].fY方向拡大率 = 0.41f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 28;
+                                    base.st状態[i].n相対Y座標 = -41;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 22 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 23 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                #endregion
+                            }
+                            else if( base.st状態[ i ].judge == E判定.Good )
+                            {
+                                #region[ GOOD ]
+                                if( nNowFrame == 0 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.67f;
+                                    base.st状態[i].fY方向拡大率 = 1.67f;
+                                    base.st状態[i].n相対X座標 = 30;
+                                    base.st状態[i].n相対Y座標 = 46;
+                                    base.st状態[i].n透明度 = 0;
+                                    
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame == 1 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.33f;
+                                    base.st状態[i].fY方向拡大率 = 1.33f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 7f );
+                                    base.st状態[i].n相対X座標 = 16;
+                                    base.st状態[i].n相対Y座標 = 24;
+                                    base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率_棒 = 1.63f;
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame >= 2 && nNowFrame <= 18 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 19 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.22f;
+                                    base.st状態[i].fY方向拡大率 = 0.77f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 10;
+                                    base.st状態[i].n相対Y座標 = -16;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 20 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.45f;
+                                    base.st状態[i].fY方向拡大率 = 0.64f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 20;
+                                    base.st状態[i].n相対Y座標 = -25;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 21 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.70f;
+                                    base.st状態[i].fY方向拡大率 = 0.41f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 28;
+                                    base.st状態[i].n相対Y座標 = -41;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 22 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 23 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                #endregion
+                            }
+                            else if( base.st状態[ i ].judge == E判定.Auto )
+                            {
+                                #region[ GOOD ]
+                                if( nNowFrame == 0 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.67f;
+                                    base.st状態[i].fY方向拡大率 = 1.67f;
+                                    base.st状態[i].n相対X座標 = 30;
+                                    base.st状態[i].n相対Y座標 = 46;
+                                    base.st状態[i].n透明度 = 0;
+                                    
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame == 1 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.33f;
+                                    base.st状態[i].fY方向拡大率 = 1.33f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 7f );
+                                    base.st状態[i].n相対X座標 = 16;
+                                    base.st状態[i].n相対Y座標 = 24;
+                                    base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率_棒 = 1.63f;
+                                    //base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
+                                }
+                                else if( nNowFrame >= 2 && nNowFrame <= 18 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1f;
+                                    base.st状態[i].fY方向拡大率 = 1f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 0;
+                                    base.st状態[i].n相対Y座標 = 0;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 19 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.22f;
+                                    base.st状態[i].fY方向拡大率 = 0.77f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 10;
+                                    base.st状態[i].n相対Y座標 = -16;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 20 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.45f;
+                                    base.st状態[i].fY方向拡大率 = 0.64f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 20;
+                                    base.st状態[i].n相対Y座標 = -25;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 21 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.70f;
+                                    base.st状態[i].fY方向拡大率 = 0.41f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 28;
+                                    base.st状態[i].n相対Y座標 = -41;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 22 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                else if( nNowFrame == 23 )
+                                {
+                                    base.st状態[i].fX方向拡大率 = 1.91f;
+                                    base.st状態[i].fY方向拡大率 = 0.23f;
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
+                                    base.st状態[i].n相対X座標 = 38;
+                                    base.st状態[i].n相対Y座標 = -53;
+                                    base.st状態[i].n透明度 = 0;
+                                }
+                                #endregion
+                            }
+                            else
+                            {
+                                base.st状態[i].fX方向拡大率 = 1.0f;
+                                base.st状態[i].fY方向拡大率 = 1.0f;
+                                base.st状態[i].fZ軸回転度 = 0f;
+                                base.st状態[i].n相対X座標 = 0;
+                                base.st状態[i].n相対Y座標 = 0;
+                                base.st状態[i].n透明度 = 0;
+                            }
+                        }
+                    }
+                    #endregion
                 }
                 else
                 {
+                    #region[ むかしの ]
                     for (int i = 0; i < 12; i++)
                     {
                         if (!base.st状態[i].ct進行.b停止中)
@@ -117,124 +484,231 @@ namespace DTXMania
                             }
                         }
                     }
+                    #endregion
                 }
-                        
+                #endregion
+
                 for (int j = 0; j < 12; j++)
                 {
                     if (!base.st状態[j].ct進行.b停止中)
                     {
-                        int num4 = CDTXMania.ConfigIni.nJudgeFrames > 1 ? 0 : base.st判定文字列[(int)base.st状態[j].judge].n画像番号;
-                        int num5 = 0;
-                        int num6 = 0;
-                        if (j < 10)
+                        #region[ 以前まで ]
+                        if (CDTXMania.ConfigIni.nJudgeAnimeType < 2)
                         {
-                            num5 = base.stレーンサイズ[j].x;
-                            num6 =(CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ? - (this.n文字の縦表示位置[j] * 0x20) : (this.n文字の縦表示位置[j] * 0x20) ) : base.iP_B;
-                        }
-                        else if (j == 11)
-                        {
-                            if (CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.D)
+                            int num4 = CDTXMania.ConfigIni.nJudgeFrames > 1 ? 0 : base.st判定文字列[(int)base.st状態[j].judge].n画像番号;
+                            int num5 = 0;
+                            int num6 = 0;
+                            if (j < 10)
                             {
-                                continue;
+                                num5 = base.stレーンサイズ[j].x;
+                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ? -(this.n文字の縦表示位置[j] * 0x20) : (this.n文字の縦表示位置[j] * 0x20)) : base.iP_B;
                             }
-                            num5 = base.stレーンサイズ[j].x;
-                            num6 = CDTXMania.ConfigIni.bReverse.Bass ? (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
-                        }
-                        else if (j == 10)
-                        {
-                            if (CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.D)
+                            else if (j == 11)
                             {
-                                continue;
+                                if (CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.D)
+                                {
+                                    continue;
+                                }
+                                num5 = base.stレーンサイズ[j].x;
+                                num6 = CDTXMania.ConfigIni.bReverse.Bass ? (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
                             }
-                            if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != Eタイプ.B)))
+                            else if (j == 10)
                             {
-                                num5 = 0x198;
-                                num6 = 0x93;
-                            }
-                            else
-                            {
-                                num5 = this.stレーンサイズ[j].x;
-                                num6 = CDTXMania.ConfigIni.bReverse.Guitar ? (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
-                            }
-                        }
-
-                        int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
-                        int nRectY = CDTXMania.ConfigIni.nJudgeHeight;
-
-                        int xc = (num5 + base.st状態[j].n相対X座標) + (this.stレーンサイズ[j].w / 2);
-                        int x = (xc - ((int)((110f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)))) - (( nRectX - 225 ) / 2) ;
-                        int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0))) - (( nRectY - 135 ) / 2);
-
-                        //if (base.tx判定文字列[num4] != null)
-                        {
-                            if (CDTXMania.ConfigIni.nJudgeFrames > 1 && CDTXMania.stage演奏ドラム画面.tx判定画像anime != null)
-                            {
-                                if (base.st状態[j].judge == E判定.Perfect)
+                                if (CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.D)
                                 {
-                                    //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    continue;
                                 }
-                                if (base.st状態[j].judge == E判定.Great)
+                                if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != Eタイプ.B)))
                                 {
-                                    //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    num5 = 0x198;
+                                    num6 = 0x93;
                                 }
-                                if (base.st状態[j].judge == E判定.Good)
+                                else
                                 {
-                                    //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                }
-                                if (base.st状態[j].judge == E判定.Poor)
-                                {
-                                    //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                }
-                                if (base.st状態[j].judge == E判定.Miss)
-                                {
-                                    //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                }
-                                if (base.st状態[j].judge == E判定.Auto)
-                                {
-                                    //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
-                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    num5 = this.stレーンサイズ[j].x;
+                                    num6 = CDTXMania.ConfigIni.bReverse.Guitar ? (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
                                 }
                             }
-                            else if (base.tx判定文字列[num4] != null)
+
+                            int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
+                            int nRectY = CDTXMania.ConfigIni.nJudgeHeight;
+
+                            int xc = (num5 + base.st状態[j].n相対X座標) + (this.stレーンサイズ[j].w / 2);
+                            int x = (xc - ((int)((110f * base.st状態[j].fX方向拡大率)))) - ((nRectX - 225) / 2);
+                            int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率)) / 2.0))) - ((nRectY - 135) / 2);
+
+                            //if (base.tx判定文字列[num4] != null)
                             {
-                                x = xc - ((int)((64f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
-                                y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((43f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
-
-                                base.tx判定文字列[num4].n透明度 = base.st状態[j].n透明度;
-                                base.tx判定文字列[num4].vc拡大縮小倍率 = new Vector3((float)(base.st状態[j].fX方向拡大率 * ((j < 10) ? 1.0 : 0.7)), (float)(base.st状態[j].fY方向拡大率 * ((j < 10) ? 1.0 : 0.7)), 1f);
-                                base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, base.st判定文字列[(int)base.st状態[j].judge].rc);
-                            }
-
-
-                            if (base.nShowLagType == (int)EShowLagType.ON ||
-                                 ((base.nShowLagType == (int)EShowLagType.GREAT_POOR) && (base.st状態[j].judge != E判定.Perfect)))
-                            {
-                                if (base.st状態[j].judge != E判定.Auto && base.txlag数値 != null)		// #25370 2011.2.1 yyagi
+                                if (CDTXMania.ConfigIni.nJudgeFrames > 1 && CDTXMania.stage演奏ドラム画面.tx判定画像anime != null)
                                 {
-                                    bool minus = false;
-                                    int offsetX = 0;
-                                    string strDispLag = base.st状態[j].nLag.ToString();
-                                    if (st状態[j].nLag < 0)
+                                    if (base.st状態[j].judge == E判定.Perfect)
                                     {
-                                        minus = true;
+                                        //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                     }
-                                    x = xc - strDispLag.Length * 15 / 2;
-                                    for (int i = 0; i < strDispLag.Length; i++)
+                                    if (base.st状態[j].judge == E判定.Great)
                                     {
-                                        int p = (strDispLag[i] == '-') ? 11 : (int)(strDispLag[i] - '0');	//int.Parse(strDispLag[i]);
-                                        p += minus ? 0 : 12;		// change color if it is minus value
-                                        base.txlag数値.t2D描画(CDTXMania.app.Device, x + offsetX, y + 34, base.stLag数値[p].rc);
-                                        offsetX += 15;
+                                        //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 1, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Good)
+                                    {
+                                        //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Poor)
+                                    {
+                                        //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 3, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Miss)
+                                    {
+                                        //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 4, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Auto)
+                                    {
+                                        //base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 5, nRectY * base.st状態[j].nRect, nRectX, nRectY));
                                     }
                                 }
+                                else if (base.tx判定文字列[num4] != null)
+                                {
+                                    x = xc - ((int)((64f * base.st状態[j].fX方向拡大率)));
+                                    y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((43f * base.st状態[j].fY方向拡大率)) / 2.0));
+
+                                    base.tx判定文字列[num4].n透明度 = base.st状態[j].n透明度;
+                                    base.tx判定文字列[num4].vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, base.st判定文字列[(int)base.st状態[j].judge].rc);
+                                }
+
+
+                                if (base.nShowLagType == (int)EShowLagType.ON ||
+                                     ((base.nShowLagType == (int)EShowLagType.GREAT_POOR) && (base.st状態[j].judge != E判定.Perfect)))
+                                {
+                                    if (base.st状態[j].judge != E判定.Auto && base.txlag数値 != null)		// #25370 2011.2.1 yyagi
+                                    {
+                                        bool minus = false;
+                                        int offsetX = 0;
+                                        string strDispLag = base.st状態[j].nLag.ToString();
+                                        if (st状態[j].nLag < 0)
+                                        {
+                                            minus = true;
+                                        }
+                                        x = xc - strDispLag.Length * 15 / 2;
+                                        for (int i = 0; i < strDispLag.Length; i++)
+                                        {
+                                            int p = (strDispLag[i] == '-') ? 11 : (int)(strDispLag[i] - '0');	//int.Parse(strDispLag[i]);
+                                            p += minus ? 0 : 12;		// change color if it is minus value
+                                            base.txlag数値.t2D描画(CDTXMania.app.Device, x + offsetX, y + 34, base.stLag数値[p].rc);
+                                            offsetX += 15;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        #endregion
+                        #region[ さいしんばん ]
+                        else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
+                        {
+                            int num4 = 0;
+                            int num5 = 0;
+                            int num6 = 0;
+                            if (j < 10)
+                            {
+                                num5 = base.stレーンサイズ[j].x;
+                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ? -(this.n文字の縦表示位置[j] * 0x20) : (this.n文字の縦表示位置[j] * 0x20)) : base.iP_B;
                             }
 
+                            int nRectX = 85;
+                            int nRectY = 35;
+
+                            int xc = (num5 + base.st状態[j].n相対X座標) + (this.stレーンサイズ[j].w / 2);
+                            float fRot = base.st状態[j].fZ軸回転度;
+                            int x = xc - ((int)(((nRectX / 2) * base.st状態[j].fX方向拡大率)));
+                            int y = ((num6 + base.st状態[j].n相対Y座標) - ((int)(((140f * base.st状態[j].fY方向拡大率)) / 2.0))) - ((nRectY - 135) / 2);
+
+                            if( CDTXMania.stage演奏ドラム画面.tx判定画像anime != null )
+                            {
+                                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                                {
+                                    if (base.st状態[j].judge == E判定.Perfect)
+                                    {
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
+
+                                        //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率_棒, base.st状態[j].fY方向拡大率_棒, 1f  );
+                                        //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.fZ軸中心回転 = base.st状態[j].fZ軸回転度_棒;
+                                        //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 110, 210, 15));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Great)
+                                    {
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX + 5, 0, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Good)
+                                    {
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY + 2, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Poor)
+                                    {
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX + 5, nRectY + 2, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Miss)
+                                    {
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * 2 + 4, nRectX, nRectY));
+                                    }
+                                    if (base.st状態[j].judge == E判定.Auto)
+                                    {
+                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2 + 10, nRectY * 2 + 4, nRectX, nRectY));
+                                    }
+                                }
+                                else if (base.tx判定文字列[num4] != null)
+                                {
+                                    x = xc - ((int)((64f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
+                                    y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((43f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
+
+                                    base.tx判定文字列[num4].n透明度 = base.st状態[j].n透明度;
+                                    base.tx判定文字列[num4].vc拡大縮小倍率 = new Vector3((float)(base.st状態[j].fX方向拡大率 * ((j < 10) ? 1.0 : 0.7)), (float)(base.st状態[j].fY方向拡大率 * ((j < 10) ? 1.0 : 0.7)), 1f);
+                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, base.st判定文字列[(int)base.st状態[j].judge].rc);
+                                }
+
+
+                                if (base.nShowLagType == (int)EShowLagType.ON ||
+                                     ((base.nShowLagType == (int)EShowLagType.GREAT_POOR) && (base.st状態[j].judge != E判定.Perfect)))
+                                {
+                                    if (base.st状態[j].judge != E判定.Auto && base.txlag数値 != null)		// #25370 2011.2.1 yyagi
+                                    {
+                                        bool minus = false;
+                                        int offsetX = 0;
+                                        string strDispLag = base.st状態[j].nLag.ToString();
+                                        if (st状態[j].nLag < 0)
+                                        {
+                                            minus = true;
+                                        }
+                                        x = xc - strDispLag.Length * 15 / 2;
+                                        for (int i = 0; i < strDispLag.Length; i++)
+                                        {
+                                            int p = (strDispLag[i] == '-') ? 11 : (int)(strDispLag[i] - '0');	//int.Parse(strDispLag[i]);
+                                            p += minus ? 0 : 12;		// change color if it is minus value
+                                            base.txlag数値.t2D描画(CDTXMania.app.Device, x + offsetX, y + 34, base.stLag数値[p].rc);
+                                            offsetX += 15;
+                                        }
+                                    }
+                                }
+
+                            }
                         }
+                        #endregion
                     }
                 }
             }

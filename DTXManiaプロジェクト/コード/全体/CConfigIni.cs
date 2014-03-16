@@ -585,6 +585,7 @@ namespace DTXMania
         #endregion
 
         #region[ 画像関連 ]
+        public int nJudgeAnimeType;
         public int nJudgeFrames;
         public int nJudgeInterval;
         public int nJudgeWidgh;
@@ -1070,6 +1071,8 @@ namespace DTXMania
             this.bLaneFlush.Guitar = true;
             this.bLaneFlush.Bass = true;
 
+            #region[ 画像関連 ]
+            this.nJudgeAnimeType = 1;
             this.nJudgeFrames = 24;
             this.nJudgeInterval = 14;
             this.nJudgeWidgh = 250;
@@ -1079,6 +1082,8 @@ namespace DTXMania
             this.nExplosionInterval = 50;
             this.nExplosionWidgh = 0;
             this.nExplosionHeight = 0;
+
+            #endregion
 
             this.nPedalLagTime = 0;
 
@@ -1855,28 +1860,32 @@ namespace DTXMania
             //sw.WriteLine( ";-------------------" );
 			#endregion
             #region[ 画像周り ]
+            sw.WriteLine( ";判定画像のアニメーション方式" );
+            sw.WriteLine( ";(0:旧DTXMania方式 1:コマ方式 2:擬似XG方式)");
+            sw.WriteLine( "JudgeAnimeType={0}", this.nJudgeAnimeType );
+            sw.WriteLine();
             sw.WriteLine( ";判定画像のコマ数" );
             sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
             sw.WriteLine();
-            sw.WriteLine(";判定画像の1コマのフレーム数");
+            sw.WriteLine( ";判定画像の1コマのフレーム数" );
             sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
             sw.WriteLine();
-            sw.WriteLine(";判定画像の1コマの幅");
+            sw.WriteLine( ";判定画像の1コマの幅" );
             sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
             sw.WriteLine();
-            sw.WriteLine(";判定画像の1コマの高さ");
+            sw.WriteLine( ";判定画像の1コマの高さ" );
             sw.WriteLine( "JudgeHeight={0}", this.nJudgeHeight );
             sw.WriteLine();
-            sw.WriteLine(";アタックエフェクトのコマ数");
+            sw.WriteLine( ";アタックエフェクトのコマ数" );
             sw.WriteLine( "ExplosionFrames={0}", (int)this.nExplosionFrames );
             sw.WriteLine();
-            sw.WriteLine(";アタックエフェクトの1コマのフレーム数");
+            sw.WriteLine( ";アタックエフェクトの1コマのフレーム数" );
             sw.WriteLine( "ExplosionInterval={0}", (int)this.nExplosionInterval );
             sw.WriteLine();
-            sw.WriteLine(";アタックエフェクトの1コマの幅");
+            sw.WriteLine( ";アタックエフェクトの1コマの幅" );
             sw.WriteLine( "ExplosionWidgh={0}", this.nExplosionWidgh );
             sw.WriteLine();
-            sw.WriteLine(";アタックエフェクトの1コマの高さ");
+            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
             sw.WriteLine( "ExplosionHeight={0}", this.nExplosionHeight );
             sw.WriteLine();
             sw.WriteLine(";-------------------");
@@ -2930,21 +2939,25 @@ namespace DTXMania
                                             {
                                                 this.bLaneFlush.Bass = C変換.bONorOFF(str4[0]);
                                             }
+                                            else if( str3.Equals( "JudgeAnimeType" ) )
+                                            {
+                                                this.nJudgeAnimeType = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, this.nJudgeAnimeType );
+                                            }
                                             else if (str3.Equals( "JudgeFrames"))
                                             {
-                                                this.nJudgeFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeFrames );
+                                                this.nJudgeFrames = C変換.n値を文字列から取得して返す( str4, this.nJudgeFrames );
                                             }
                                             else if ( str3.Equals( "JudgeInterval" ))
                                             {
-                                                this.nJudgeInterval = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeInterval );
+                                                this.nJudgeInterval = C変換.n値を文字列から取得して返す( str4, this.nJudgeInterval );
                                             }
                                             else if ( str3.Equals( "JudgeWidgh" ))
                                             {
-                                                this.nJudgeWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeWidgh );
+                                                this.nJudgeWidgh = C変換.n値を文字列から取得して返す( str4, this.nJudgeWidgh );
                                             }
                                             else if ( str3.Equals( "JudgeHeight" ))
                                             {
-                                                this.nJudgeHeight = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nJudgeHeight );
+                                                this.nJudgeHeight = C変換.n値を文字列から取得して返す( str4, this.nJudgeHeight );
                                             }
                                             else if ( str3.Equals( "ExplosionFrames" ))
                                             {

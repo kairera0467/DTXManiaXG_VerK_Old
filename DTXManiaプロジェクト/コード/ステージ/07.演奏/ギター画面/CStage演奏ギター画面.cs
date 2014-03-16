@@ -130,9 +130,9 @@ namespace DTXMania
                     CSound管理.rc演奏用タイマ.tリセット();
 					CDTXMania.Timer.tリセット();
 
-                    this.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 14.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
-                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
-                    this.actSpeaker.ctBPM = new CCounter(1.0, 14.0, UnitTime, CSound管理.rc演奏用タイマ);
+                    this.UnitTime = ((60.0 / (CDTXMania.stage演奏ギター画面.actPlayInfo.dbBPM) / 16.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
+                    this.actBPMBar.ctBPMバー = new CCounter(1.0, 16.0, UnitTime, CSound管理.rc演奏用タイマ);
+                    this.actSpeaker.ctBPM = new CCounter(1.0, 16.0, UnitTime, CSound管理.rc演奏用タイマ);
 
 					this.ctチップ模様アニメ.Guitar = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
 					this.ctチップ模様アニメ.Bass = new CCounter( 0, 0x17, 20, CDTXMania.Timer );
