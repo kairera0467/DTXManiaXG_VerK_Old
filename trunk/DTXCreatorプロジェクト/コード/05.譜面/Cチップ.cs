@@ -83,7 +83,7 @@ namespace DTXCreator.譜面
 		public static void tOPENチップを描画する( Graphics g, Rectangle rcチップ描画領域 )
 		{
 			t表チップを描画する・本体( g, rcチップ描画領域, Color.White );
-			string str = "O P E N";
+			string str = "O    P    E    N";
 			t表チップを描画する・番号( g, rcチップ描画領域, str );
 		}
 		public void tコピーfrom( Cチップ ccコピー元 )
