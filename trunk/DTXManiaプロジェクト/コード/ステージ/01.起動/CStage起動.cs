@@ -69,6 +69,11 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\1_background.jpg"), false);
+
+                if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")) && CDTXMania.Skin.ds選曲画面背景動画 == null )
+                {
+                    CDTXMania.Skin.ds選曲画面背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\5_background.mp4" ), CDTXMania.app.WindowHandle, true );
+                }
 				base.OnManagedリソースの作成();
 			}
 		}
