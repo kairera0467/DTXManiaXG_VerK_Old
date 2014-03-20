@@ -223,7 +223,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
-                if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")))
+                if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")) && CDTXMania.Skin.ds選曲画面背景動画 == null)
                 {
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path(@"Graphics\5_background.mp4"), CDTXMania.app.WindowHandle, true );
                 }
@@ -271,6 +271,7 @@ namespace DTXMania
 
 				this.ct登場時アニメ用共通.t進行();
 
+                /*
                 if( this.ds背景動画 != null )
                 {
                     this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
@@ -285,10 +286,27 @@ namespace DTXMania
                         AMSeekingSeekingFlags.NoPositioning);
                     }
                 }
+                */
+
+                if( CDTXMania.Skin.ds選曲画面背景動画 != null )
+                {
+                    CDTXMania.Skin.ds選曲画面背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                    CDTXMania.Skin.ds選曲画面背景動画.t再生開始();
+                    CDTXMania.Skin.ds選曲画面背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
+                    if (this.lDshowPosition == this.lStopPosition)
+                    {
+                        CDTXMania.Skin.ds選曲画面背景動画.MediaSeeking.SetPositions(
+                        DsLong.FromInt64((long)(0)),
+                        AMSeekingSeekingFlags.AbsolutePositioning,
+                        0,
+                        AMSeekingSeekingFlags.NoPositioning);
+                    }
+                }
 
 				if( this.tx背景 != null )
                 {
-                    if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
+                    //if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
+                    if( CDTXMania.Skin.ds選曲画面背景動画 != null && CDTXMania.Skin.ds選曲画面背景動画.b上下反転 )
 					    this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
                     else
                         this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );

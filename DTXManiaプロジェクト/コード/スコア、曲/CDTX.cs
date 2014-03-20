@@ -1492,7 +1492,7 @@ namespace DTXMania
                     cds.OnDeviceCreated();
                 }
             }
-			if( !this.bヘッダのみ )
+			if( !this.bヘッダのみ &&  this.b動画読み込み )
 			{
 				foreach( CChip chip in this.listChip )
 				{
@@ -3163,6 +3163,7 @@ namespace DTXMania
 		public void t入力( string strファイル名, bool bヘッダのみ, double db再生速度, int nBGMAdjust )
 		{
 			this.bヘッダのみ = bヘッダのみ;
+            this.b動画読み込み = (CDTXMania.r現在のステージ.eステージID == CStage.Eステージ.曲読み込み ? true : false);
 			this.strファイル名の絶対パス = Path.GetFullPath( strファイル名 );
 			this.strファイル名 = Path.GetFileName( this.strファイル名の絶対パス );
 			this.strフォルダ名 = Path.GetDirectoryName( this.strファイル名の絶対パス ) + @"\";
@@ -4244,6 +4245,7 @@ namespace DTXMania
 
 		private readonly STGDAPARAM[] stGDAParam;
 		private bool bヘッダのみ;
+        private bool b動画読み込み;
 		private Stack<bool> bstackIFからENDIFをスキップする;
 	
 		private int n現在の行数;

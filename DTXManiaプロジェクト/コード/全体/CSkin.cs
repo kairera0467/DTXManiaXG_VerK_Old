@@ -323,6 +323,8 @@ namespace DTXMania
 	
 		// プロパティ
 
+        public CDirectShow ds選曲画面背景動画 = null;
+
 		public Cシステムサウンド bgmオプション画面 = null;
 		public Cシステムサウンド bgmコンフィグ画面 = null;
 		public Cシステムサウンド bgm起動画面 = null;
