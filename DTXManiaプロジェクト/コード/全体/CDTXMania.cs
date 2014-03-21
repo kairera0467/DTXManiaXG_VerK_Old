@@ -661,7 +661,7 @@ namespace DTXMania
 								{
 									case 0:		// 何もない
 										//if ( CDTXMania.stage選曲.bIsEnumeratingSongs )
-										if ( !CDTXMania.stage選曲.bIsPlayingPremovie )
+										if ( !CDTXMania.stage選曲.bIsPlayingPremovie || CDTXMania.Skin.ds選曲画面背景動画 != null )
 										{
 											EnumSongs.Resume();						// #27060 2012.2.6 yyagi 中止していたバックグランド曲検索を再開
 											EnumSongs.IsSlowdown = false;
