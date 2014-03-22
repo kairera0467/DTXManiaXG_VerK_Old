@@ -72,8 +72,8 @@ namespace DTXMania
                             base.st状態[i].n透明度 = 0;
                             */
 
-                            //base.st状態[i].judge = E判定.Miss;
-                            nNowFrame = 0;
+                            //base.st状態[i].judge = E判定.Auto;
+                            //nNowFrame = 0;
                             if( base.st状態[ i ].judge == E判定.Perfect )
                             {
                                 #region[ PERFECT ]
@@ -732,66 +732,54 @@ namespace DTXMania
                             float fRot = base.st状態[j].fZ軸回転度;
                             int x = (xc - ((int)(((nRectX * base.st状態[j].fX方向拡大率 ) / base.st状態[j].fX方向拡大率) * base.st状態[j].fX方向拡大率)) + (nRectX / 2));
                             int y = (num6 + base.st状態[j].n相対Y座標 ) - ((int)((((nRectY) / 2) * base.st状態[j].fY方向拡大率)));
-                            
-                            if( CDTXMania.stage演奏ドラム画面.tx判定画像anime != null )
+
+                            if (CDTXMania.stage演奏ドラム画面.tx判定画像anime != null)
                             {
-                                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                                if (base.st状態[j].judge == E判定.Perfect)
                                 {
-                                    if (base.st状態[j].judge == E判定.Perfect)
-                                    {
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
 
-                                        //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率_棒, base.st状態[j].fY方向拡大率_棒, 1f  );
-                                        //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.fZ軸中心回転 = base.st状態[j].fZ軸回転度_棒;
-                                        //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 110, 210, 15));
-                                    }
-                                    if (base.st状態[j].judge == E判定.Great)
-                                    {
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX + 5, 0, nRectX, nRectY));
-                                    }
-                                    if (base.st状態[j].judge == E判定.Good)
-                                    {
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = 0;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY + 2, nRectX, nRectY));
-                                    }
-                                    if (base.st状態[j].judge == E判定.Poor)
-                                    {
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = base.st状態[j].n透明度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX + 5, nRectY + 2, nRectX, nRectY));
-                                    }
-                                    if (base.st状態[j].judge == E判定.Miss)
-                                    {
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = base.st状態[j].n透明度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * 2 + 4, nRectX, nRectY));
-                                    }
-                                    if (base.st状態[j].judge == E判定.Auto)
-                                    {
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
-                                        CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX * 2 + 10, nRectY * 2 + 4, nRectX, nRectY));
-                                    }
+                                    //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率_棒, base.st状態[j].fY方向拡大率_棒, 1f  );
+                                    //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.fZ軸中心回転 = base.st状態[j].fZ軸回転度_棒;
+                                    //CDTXMania.stage演奏ドラム画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 110, 210, 15));
                                 }
-                                else if (base.tx判定文字列[num4] != null)
+                                if (base.st状態[j].judge == E判定.Great)
                                 {
-                                    x = xc - ((int)((64f * base.st状態[j].fX方向拡大率) * ((j < 10) ? 1.0 : 0.7)));
-                                    y = (num6 + base.st状態[j].n相対Y座標) - ((int)(((43f * base.st状態[j].fY方向拡大率) * ((j < 10) ? 1.0 : 0.7)) / 2.0));
-
-                                    base.tx判定文字列[num4].n透明度 = base.st状態[j].n透明度;
-                                    base.tx判定文字列[num4].vc拡大縮小倍率 = new Vector3((float)(base.st状態[j].fX方向拡大率 * ((j < 10) ? 1.0 : 0.7)), (float)(base.st状態[j].fY方向拡大率 * ((j < 10) ? 1.0 : 0.7)), 1f);
-                                    base.tx判定文字列[num4].t2D描画(CDTXMania.app.Device, x, y, base.st判定文字列[(int)base.st状態[j].judge].rc);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX + 5, 0, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Good)
+                                {
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = 0;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY + 2, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Poor)
+                                {
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = base.st状態[j].n透明度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(nRectX + 5, nRectY + 2, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Miss)
+                                {
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = base.st状態[j].n透明度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, nRectY * 2 + 4, nRectX, nRectY));
+                                }
+                                if (base.st状態[j].judge == E判定.Auto)
+                                {
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x + 5, y, new Rectangle(nRectX * 2 + 3, nRectY * 2 + 4, nRectX, nRectY));
                                 }
 
 
@@ -817,7 +805,6 @@ namespace DTXMania
                                         }
                                     }
                                 }
-
                             }
                         }
                         #endregion
