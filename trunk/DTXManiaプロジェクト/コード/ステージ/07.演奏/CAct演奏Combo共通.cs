@@ -130,6 +130,8 @@ namespace DTXMania
         protected CTexture txComboBom;
         public float nUnitTime;
         public CCounter ctコンボ;
+        public CCounter ctコンボアニメ;
+        public int nY1の位座標差分値 = 0;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct ST爆発
@@ -290,6 +292,22 @@ namespace DTXMania
                 y動作差分 = 8;
             }
 
+            this.ctコンボアニメ.t進行();
+            this.ctコンボアニメ.t進行db();
+            //CDTXMania.act文字コンソール.tPrint(1200, 0, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.n現在の値.ToString());
+            //CDTXMania.act文字コンソール.tPrint(1200, 16, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.db現在の値.ToString());
+            //CDTXMania.act文字コンソール.tPrint(1200, 32, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.b進行中.ToString());
+            //CDTXMania.act文字コンソール.tPrint(1200, 48, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.n終了値.ToString());
+            if( this.nY1の位座標差分値 > 0 )
+            {
+                //this.nY1の位座標差分値 -= ( CDTXMania.ConfigIni.b垂直帰線待ちを行う ? 16 : 4);
+                this.nY1の位座標差分値 = this.nY1の位座標差分値 - ( CDTXMania.ConfigIni.b垂直帰線待ちを行う ? (int)this.ctコンボアニメ.db現在の値 : this.ctコンボアニメ.n現在の値);
+            }
+            else
+            {
+                this.nY1の位座標差分値 = 0;
+            }
+
 	        // "COMBO" を表示。
 
 
@@ -409,7 +427,7 @@ namespace DTXMania
                     {
                         y += this.nジャンプ差分値[nJump];
                     }
-                    this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x, y + y動作差分,
+                    this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x, y + y動作差分 - ( i == 0 ? this.nY1の位座標差分値 : 0 ),
                        new Rectangle((n位の数[i] % 5) * nドラムコンボの幅, (n位の数[i] / 5) * nドラムコンボの高さ, nドラムコンボの幅, nドラムコンボの高さ));
                 }
 			}
@@ -645,6 +663,10 @@ namespace DTXMania
             this.nUnitTime = (float)((60 / CDTXMania.DTX.BPM) / 4) * 10;
             this.ctコンボ = new CCounter(0, 1, (int)this.nUnitTime, CDTXMania.Timer);
             
+            this.ctコンボアニメ = new CCounter( 0, 130, 4, CDTXMania.Timer );
+            if(CDTXMania.ConfigIni.b垂直帰線待ちを行う)
+                this.ctコンボアニメ = new CCounter( 0.0, 130.0, 0.003, CSound管理.rc演奏用タイマ );
+            
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -766,6 +788,10 @@ namespace DTXMania
 						{
 							this.status[ i ].nジャンプインデックス値 = 0;
 							this.status[ i ].n前回の時刻・ジャンプ用 = CDTXMania.Timer.n現在時刻;
+                            //this.nY1の位座標差分値 = (CDTXMania.ConfigIni.b垂直帰線待ちを行う ? 80 : 80);
+                            this.nY1の位座標差分値 = 130;
+                            this.ctコンボアニメ.n現在の値 = 0;
+                            this.ctコンボアニメ.db現在の値 = 0;
 						}
 
 						this.status[ i ].n現在表示中のCOMBO値 = this.status[ i ].nCOMBO値;

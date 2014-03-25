@@ -72,8 +72,8 @@ namespace DTXMania
                             base.st状態[i].n透明度 = 0;
                             */
 
-                            //base.st状態[i].judge = E判定.Auto;
-                            //nNowFrame = 0;
+                            //base.st状態[i].judge = E判定.Perfect;
+                            //nNowFrame = 1;
                             if( base.st状態[ i ].judge == E判定.Perfect )
                             {
                                 #region[ PERFECT ]
