@@ -668,11 +668,14 @@ namespace DTXMania
 					this[ i ].Dispose();
 				}
 			}
+            if( this.ds選曲画面背景動画 != null )
+                this.ds選曲画面背景動画.Dispose();
+
 			this.soundカーソル移動音	= new Cシステムサウンド( @"Sounds\Move.ogg",			false, false, false );
 			this.sound決定音			= new Cシステムサウンド( @"Sounds\Decide.ogg",			false, false, false );
 			this.sound変更音			= new Cシステムサウンド( @"Sounds\Change.ogg",			false, false, false );
 			this.sound取消音			= new Cシステムサウンド( @"Sounds\Cancel.ogg",			false, false, true  );
-			this.sound歓声音			= new Cシステムサウンド( @"Sounds\Audience.ogg",		false, false,  true  );
+			this.sound歓声音			= new Cシステムサウンド( @"Sounds\Audience.ogg",		false, false, true  );
 			this.soundSTAGEFAILED音		= new Cシステムサウンド( @"Sounds\Stage failed.ogg",	false, true,  true  );
 			this.soundゲーム開始音		= new Cシステムサウンド( @"Sounds\Game start.ogg",		false, false, false );
 			this.soundゲーム終了音		= new Cシステムサウンド( @"Sounds\Game end.ogg",		false, true,  false );
@@ -695,7 +698,8 @@ namespace DTXMania
 			this.bgmオプション画面		= new Cシステムサウンド( @"Sounds\Option BGM.ogg",		true,  true,  false );
 			this.bgmコンフィグ画面		= new Cシステムサウンド( @"Sounds\Config BGM.ogg",		true,  true,  false );
 			this.bgm選曲画面			= new Cシステムサウンド( @"Sounds\Select BGM.ogg",		true,  true,  false );
-            this.bgm結果画面            = new Cシステムサウンド( @"Sounds\Result BGM.ogg",      true,  true,  false);
+            this.bgm結果画面            = new Cシステムサウンド( @"Sounds\Result BGM.ogg",      true,  true,  false );
+            this.ds選曲画面背景動画     = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\5_background.mp4" ), CDTXMania.app.WindowHandle, true );
 		}
 
 		public void ReloadSkin()

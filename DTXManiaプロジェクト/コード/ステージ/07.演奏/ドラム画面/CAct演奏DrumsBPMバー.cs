@@ -18,22 +18,22 @@ namespace DTXMania
                 {
                     if ( CDTXMania.ConfigIni.eBPMbar == Eタイプ.A )
                     {
-                        base.txBPMバー右.t2D描画(CDTXMania.app.Device, 896 + (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
+                        base.txBPMバー右.t2D描画(CDTXMania.app.Device, 900 + (float)(6 * Math.Sin(Math.PI * num1 / 14)), 54);
 
                         if (CDTXMania.stage演奏ドラム画面.bサビ区間 && base.txBPMバーフラッシュ右 != null)
                         {
                             base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(255 * num1 / 14);
-                            base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 896 + (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
+                            base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, 896 + (float)(6 * Math.Sin(Math.PI * num1 / 14)), 54);
                         }
                     }
                     if ( CDTXMania.ConfigIni.eBPMbar == Eタイプ.A || CDTXMania.ConfigIni.eBPMbar == Eタイプ.B )
                     {
-                        base.txBPMバー左.t2D描画(CDTXMania.app.Device, 233 - (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
+                        base.txBPMバー左.t2D描画(CDTXMania.app.Device, 231 - (float)(6 * Math.Sin(Math.PI * num1 / 14)), 54);
 
                         if (CDTXMania.stage演奏ドラム画面.bサビ区間 && base.txBPMバーフラッシュ左 != null)
                         {
                             base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(255 * num1 / 14);
-                            base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 220 - (float)(9 * Math.Sin(Math.PI * num1 / 14)), 54);
+                            base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, 220 - (float)(6 * Math.Sin(Math.PI * num1 / 14)), 54);
                         }
                     }
                 }
