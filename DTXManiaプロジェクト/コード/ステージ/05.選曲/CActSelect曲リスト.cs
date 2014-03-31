@@ -1365,6 +1365,8 @@ namespace DTXMania
             //現在は機能しない(面倒なので実装してない)が、そのうち使用する予定。
             //PrivateFontの試験運転も兼ねて。
             //CPrivateFastFont
+            //if(prvFont != null)
+            //    prvFont.Dispose();
             prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
             Bitmap bmp;
             

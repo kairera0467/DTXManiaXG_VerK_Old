@@ -159,6 +159,55 @@ namespace DTXMania
             st文字位置34.pt = new Point(90, 0);
             st文字位置Array3[11] = st文字位置34;
             this.st特大文字位置 = st文字位置Array3;
+
+
+            ST文字位置[] st難易度文字位置Ar = new ST文字位置[11];
+            ST文字位置 st難易度文字位置 = new ST文字位置();
+            st難易度文字位置.ch = '0';
+            st難易度文字位置.pt = new Point(0, 0);
+            st難易度文字位置Ar[0] = st難易度文字位置;
+            ST文字位置 st難易度文字位置2 = new ST文字位置();
+            st難易度文字位置2.ch = '1';
+            st難易度文字位置2.pt = new Point(16, 0);
+            st難易度文字位置Ar[1] = st難易度文字位置2;
+            ST文字位置 st難易度文字位置3 = new ST文字位置();
+            st難易度文字位置3.ch = '2';
+            st難易度文字位置3.pt = new Point(32, 0);
+            st難易度文字位置Ar[2] = st難易度文字位置3;
+            ST文字位置 st難易度文字位置4 = new ST文字位置();
+            st難易度文字位置4.ch = '3';
+            st難易度文字位置4.pt = new Point(48, 0);
+            st難易度文字位置Ar[3] = st難易度文字位置4;
+            ST文字位置 st難易度文字位置5 = new ST文字位置();
+            st難易度文字位置5.ch = '4';
+            st難易度文字位置5.pt = new Point(64, 0);
+            st難易度文字位置Ar[4] = st難易度文字位置5;
+            ST文字位置 st難易度文字位置6 = new ST文字位置();
+            st難易度文字位置6.ch = '5';
+            st難易度文字位置6.pt = new Point(80, 0);
+            st難易度文字位置Ar[5] = st難易度文字位置6;
+            ST文字位置 st難易度文字位置7 = new ST文字位置();
+            st難易度文字位置7.ch = '6';
+            st難易度文字位置7.pt = new Point(96, 0);
+            st難易度文字位置Ar[6] = st難易度文字位置7;
+            ST文字位置 st難易度文字位置8 = new ST文字位置();
+            st難易度文字位置8.ch = '7';
+            st難易度文字位置8.pt = new Point(112, 0);
+            st難易度文字位置Ar[7] = st難易度文字位置8;
+            ST文字位置 st難易度文字位置9 = new ST文字位置();
+            st難易度文字位置9.ch = '8';
+            st難易度文字位置9.pt = new Point(128, 0);
+            st難易度文字位置Ar[8] = st難易度文字位置9;
+            ST文字位置 st難易度文字位置10 = new ST文字位置();
+            st難易度文字位置10.ch = '9';
+            st難易度文字位置10.pt = new Point(144, 0);
+            st難易度文字位置Ar[9] = st難易度文字位置10;
+            ST文字位置 st難易度文字位置11 = new ST文字位置();
+            st難易度文字位置11.ch = '.';
+            st難易度文字位置11.pt = new Point(160, 0);
+            st難易度文字位置Ar[10] = st難易度文字位置11;
+            this.st難易度数字位置 = st難易度文字位置Ar;
+
             this.ptFullCombo位置 = new Point[] { new Point(220, 160), new Point(0xdf, 0xed), new Point(0x141, 0xed) };
             base.b活性化してない = true;
         }
@@ -272,6 +321,8 @@ namespace DTXMania
                 this.txエキサイトゲージ[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_gauge_bar.jpg"));
                 this.txスコア = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbersGD.png"));
                 this.txスキルパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_SkillPanel.png"));
+                this.tx難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Difficulty.png"));
+                this.tx難易度用数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_LevelNumber.png"));
 
                 this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
                 this.strTitleName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
@@ -300,6 +351,8 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txスキルパネル);
                 CDTXMania.tテクスチャの解放(ref this.txスコア);
                 CDTXMania.tテクスチャの解放(ref this.txネームプレート用文字);
+                CDTXMania.tテクスチャの解放(ref this.tx難易度パネル);
+                CDTXMania.tテクスチャの解放(ref this.tx難易度用数字);
                 base.OnManagedリソースの解放();
             }
         }
@@ -315,6 +368,29 @@ namespace DTXMania
                 base.b初めての進行描画 = false;
             }
             this.ct表示用.t進行();
+
+            string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10f);
+            bool bCLASSIC = false;
+            if (CDTXMania.DTX.LEVEL.Drums > 100)
+            {
+                str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 100f);
+            }
+            else
+            {
+                str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10.0f + (CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0f : 0));
+            }
+
+            if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
+                (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
+                (CDTXMania.DTX.bチップがある.LP == false) &&
+                (CDTXMania.DTX.bチップがある.LBD == false) &&
+                (CDTXMania.DTX.bチップがある.FT == false) &&
+                (CDTXMania.DTX.bチップがある.Ride == false) &&
+                (CDTXMania.DTX.b強制的にXG譜面にする == false))
+            {
+                str = string.Format("{0:00}", CDTXMania.DTX.LEVEL.Drums);
+                bCLASSIC = true;
+            }
 
             for (int j = 0; j < 3; j++)
             {
@@ -341,21 +417,25 @@ namespace DTXMania
                     this.t小文字表示(168 + this.n本体X[j], 442, string.Format("{0,3:##0}%", (int)Math.Round(CDTXMania.stage結果.fMiss率[j])));
                     this.t小文字表示(168 + this.n本体X[j], 472, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[j].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[j].n全チップ数))));
 
-                    this.t大文字表示(56 + this.n本体X[j], 524, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値));
-                    this.t大文字表示(88 + this.n本体X[j], 596, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
+                    this.t大文字表示(59 + this.n本体X[j], 525, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値));
+                    this.t大文字表示(88 + this.n本体X[j], 620, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
+                    
+                    if(this.tx難易度パネル != null)
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 200, 508, new Rectangle(0, 60 * CDTXMania.nSongDifficulty, 60, 60));
+                    this.tレベル数字描画((bCLASSIC == true ? 212 : 204), 534, str);
 
-                    string str = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[j].nスコア);
+                    string strScore = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[j].nスコア);
                     for (int i = 0; i < 7; i++)
                     {
                         Rectangle rectangle;
-                        char ch = str[i];
+                        char ch = strScore[i];
                         if (ch.Equals(' '))
                         {
                             rectangle = new Rectangle(0, 0, 0, 0);
                         }
                         else
                         {
-                            int num4 = int.Parse(str.Substring(i, 1));
+                            int num4 = int.Parse(strScore.Substring(i, 1));
                             rectangle = new Rectangle(num4 * 36, 0, 36, 50);
                         }
                         if (this.txスコア != null)
@@ -372,7 +452,7 @@ namespace DTXMania
                     {
                         if (CDTXMania.stage結果.b新記録スキル[i])
                         {
-
+                            this.txNewRecord.t2D描画( CDTXMania.app.Device, 237, 570 );
                         }
                     }
                     if (this.ct表示用.n現在の値 >= 900)
@@ -413,6 +493,7 @@ namespace DTXMania
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
         private readonly ST文字位置[] st特大文字位置;
+        private readonly ST文字位置[] st難易度数字位置;
         private CTexture txNewRecord;
         private CTexture txパネル本体;
         private CTexture[] tx文字;
@@ -424,6 +505,9 @@ namespace DTXMania
         private string strTitleName;
         private System.Drawing.Font ft表示用フォント;
         private System.Drawing.Font ft称号フォント;
+
+        private CTexture tx難易度パネル;
+        private CTexture tx難易度用数字;
 
 
         private void t小文字表示(int x, int y, string str)
@@ -493,7 +577,7 @@ namespace DTXMania
 						break;
 					}
 				}
-                x += (ch == '.' ? 12 : 29);
+                x += (ch == '.' ? 12 : 28);
 			}
 		}
         private void t特大文字表示(int x, int y, string str)
@@ -588,7 +672,29 @@ namespace DTXMania
         }
 
 
-
+        private void tレベル数字描画(int x, int y, string str)
+        {
+            foreach (char ch in str)
+            {
+                for (int i = 0; i < this.st難易度数字位置.Length; i++)
+                {
+                    if (this.st難易度数字位置[i].ch == ch)
+                    {
+                        Rectangle rectangle = new Rectangle(this.st難易度数字位置[i].pt.X, this.st難易度数字位置[i].pt.Y, 16, 32);
+                        if (ch == '.')
+                        {
+                            rectangle.Width -= 11;
+                        }
+                        if (this.tx難易度用数字 != null)
+                        {
+                            this.tx難易度用数字.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                        }
+                        break;
+                    }
+                }
+                x += (ch == '.' ? 5 : 16);
+            }
+        }
  
 
 

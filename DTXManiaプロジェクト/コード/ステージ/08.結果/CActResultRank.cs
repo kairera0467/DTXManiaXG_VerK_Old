@@ -185,13 +185,13 @@ namespace DTXMania
                 {
                     if (CDTXMania.stage結果.st演奏記録[j].nPerfect数 == CDTXMania.stage結果.st演奏記録[j].n全チップ数)
                     {
-                        if (this.txExcellent != null)
-                            this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                        //if (this.txExcellent != null)
+                            //this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
                     }
                     else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[j].nPerfect数 != CDTXMania.stage結果.st演奏記録[j].n全チップ数)
                     {
-                        if (this.txFullCombo != null)
-                            this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                        //if (this.txFullCombo != null)
+                            //this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
                     }
                 }
                 #endregion
