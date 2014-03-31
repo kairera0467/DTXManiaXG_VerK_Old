@@ -28,23 +28,23 @@ namespace DTXMania
 
                         if (CDTXMania.DTX.bチップがある.Guitar)
                         {
-                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, fギター左X - (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, fギター左X - (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
 
                             if ( CDTXMania.stage演奏ギター画面.bサビ区間 && base.txBPMバーフラッシュ左 != null )
                             {
                                 base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(255 * num1 / 14);
-                                base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, - 13 + fギター左X - (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                                base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, - 13 + fギター左X - (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
                             }
                         }
 
                         if (CDTXMania.DTX.bチップがある.Bass)
                         {
-                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, fベース右X + (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, fベース右X + (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
 
                             if (CDTXMania.stage演奏ギター画面.bサビ区間 && base.txBPMバーフラッシュ右 != null)
                             {
                                 base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(255 * num1 / 14);
-                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, fベース右X + (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, fベース右X + (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
                             }
                         }
 
@@ -54,23 +54,23 @@ namespace DTXMania
 
                         if (CDTXMania.DTX.bチップがある.Guitar)
                         {
-                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, fギター右X + (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                            base.txBPMバー右.t2D描画(CDTXMania.app.Device, fギター右X + (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
 
                             if (CDTXMania.stage演奏ギター画面.bサビ区間 && base.txBPMバーフラッシュ右 != null)
                             {
                                 base.txBPMバーフラッシュ右.n透明度 = 255 - (int)(255 * num1 / 14);
-                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, fギター右X + (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                                base.txBPMバーフラッシュ右.t2D描画(CDTXMania.app.Device, fギター右X + (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
                             }
                         }
 
                         if (CDTXMania.DTX.bチップがある.Bass)
                         {
-                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, fベース左X - (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                            base.txBPMバー左.t2D描画(CDTXMania.app.Device, fベース左X - (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
 
                             if (CDTXMania.stage演奏ギター画面.bサビ区間 && base.txBPMバーフラッシュ左 != null)
                             {
                                 base.txBPMバーフラッシュ左.n透明度 = 255 - (int)(255 * num1 / 14);
-                                base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, - 13 - fベース左X - (float)(9 * Math.Sin(Math.PI * num1 / 14)), fバーY);
+                                base.txBPMバーフラッシュ左.t2D描画(CDTXMania.app.Device, - 13 - fベース左X - (float)(6 * Math.Sin(Math.PI * num1 / 14)), fバーY);
                             }
                         }
                     }

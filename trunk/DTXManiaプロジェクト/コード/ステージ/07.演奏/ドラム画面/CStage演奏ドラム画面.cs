@@ -167,7 +167,7 @@ namespace DTXMania
                     this.UnitTime = ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0)); //2014.01.14.kairera0467 これも動かしたいのだが・・・・
                     this.actBPMBar.ctBPMバー = new CCounter(1.0, 16.0, UnitTime, CSound管理.rc演奏用タイマ);
 
-                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16)), CSound管理.rc演奏用タイマ);
+                    this.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ((60.0 / (CDTXMania.stage演奏ドラム画面.actPlayInfo.dbBPM) / 16.0)), CSound管理.rc演奏用タイマ);
 
                     this.ctチップ模様アニメ.Guitar = new CCounter(0, 0x17, 20, CDTXMania.Timer);
                     this.ctチップ模様アニメ.Bass = new CCounter(0, 0x17, 20, CDTXMania.Timer);
@@ -3808,9 +3808,19 @@ namespace DTXMania
 		{
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
 			{
-				pChip.bHit = true;
-				this.r現在の空うちドラムChip[ (int) this.eチャンネルtoパッド[ pChip.nチャンネル番号 - 0xb1 ] ] = pChip;
-                pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 0xbe)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
+            if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+            {
+    	            try
+	                {
+                    	pChip.bHit = true;
+                	    this.r現在の空うちドラムChip[(int)this.eチャンネルtoパッド[pChip.nチャンネル番号 - 0xb1]] = pChip;
+            	        pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 190)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
+        	        }
+    	            catch
+	                {
+                    	return;
+                	}
+            	}
 			}
 		}
 		protected override void t進行描画・チップ・小節線( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )

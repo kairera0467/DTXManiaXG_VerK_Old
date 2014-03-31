@@ -3515,9 +3515,48 @@ namespace DTXMania
         
         protected override void t進行描画・チップ・ボーナス(CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip)
         {
-
             if (!pChip.bHit && pChip.b可視)
             {
+                #region [ Sudden処理 ]
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 2) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
+				{
+					if ( pChip.nバーからの距離dot.Drums < 200 )
+					{
+						pChip.b可視 = true;
+						pChip.n透明度 = 0xff;
+					}
+					else if ( pChip.nバーからの距離dot.Drums < 250 )
+					{
+						pChip.b可視 = true;
+						pChip.n透明度 = 0xff - ( (int) ( ( ( (double) ( pChip.nバーからの距離dot.Drums - 200 ) ) * 255.0 ) / 50.0 ) );
+					}
+					else
+					{
+						pChip.b可視 = false;
+						pChip.n透明度 = 0;
+					}
+				}
+				#endregion
+				#region [ Hidden処理 ]
+                if ((CDTXMania.ConfigIni.nHidSud.Drums == 1) || (CDTXMania.ConfigIni.nHidSud.Drums == 3))
+				{
+					if ( pChip.nバーからの距離dot.Drums < 100 )
+					{
+						pChip.b可視 = false;
+					}
+					else if ( pChip.nバーからの距離dot.Drums < 150 )
+					{
+						pChip.b可視 = true;
+						pChip.n透明度 = (int) ( ( ( (double) ( pChip.nバーからの距離dot.Drums - 100 ) ) * 255.0 ) / 50.0 );
+					}
+				}
+				#endregion
+                #region [ ステルス処理 ]
+                if (CDTXMania.ConfigIni.nHidSud.Drums == 4)
+                {
+                        pChip.b可視 = false;
+                }
+                #endregion
                 if (this.txチップ != null)
                 {
                     this.txチップ.n透明度 = pChip.n透明度;
@@ -3824,10 +3863,18 @@ namespace DTXMania
         {
             if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
             {
-                pChip.bHit = true;
-                this.r現在の空うちドラムChip[(int)this.eチャンネルtoパッド[pChip.nチャンネル番号 - 0xb1]] = pChip;
-                pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 190)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
+                try
+                {
+                    pChip.bHit = true;
+                    this.r現在の空うちドラムChip[(int)this.eチャンネルtoパッド[pChip.nチャンネル番号 - 0xb1]] = pChip;
+                    pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 190)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
+                }
+                catch
+                {
+                    return;
+                }
             }
+
         }
 		protected override void t進行描画・チップ・小節線( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
