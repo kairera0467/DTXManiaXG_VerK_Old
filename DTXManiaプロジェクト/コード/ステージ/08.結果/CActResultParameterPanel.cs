@@ -369,33 +369,34 @@ namespace DTXMania
             }
             this.ct表示用.t進行();
 
-            string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10f);
-            bool bCLASSIC = false;
-            if (CDTXMania.DTX.LEVEL.Drums > 100)
-            {
-                str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 100f);
-            }
-            else
-            {
-                str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10.0f + (CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0f : 0));
-            }
-
-            if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                (CDTXMania.DTX.bチップがある.LP == false) &&
-                (CDTXMania.DTX.bチップがある.LBD == false) &&
-                (CDTXMania.DTX.bチップがある.FT == false) &&
-                (CDTXMania.DTX.bチップがある.Ride == false) &&
-                (CDTXMania.DTX.b強制的にXG譜面にする == false))
-            {
-                str = string.Format("{0:00}", CDTXMania.DTX.LEVEL.Drums);
-                bCLASSIC = true;
-            }
 
             for (int j = 0; j < 3; j++)
             {
                 if ( this.n本体X[j] != 0 )
                 {
+                    string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 10f);
+                    bool bCLASSIC = false;
+                    if (CDTXMania.DTX.LEVEL[j] > 100)
+                    {
+                        str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 100f);
+                    }
+                    else
+                    {
+                        str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 10.0f + (CDTXMania.DTX.LEVELDEC[j] != 0 ? CDTXMania.DTX.LEVELDEC[j] / 100.0f : 0));
+                    }
+
+                    if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
+                        (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
+                        (CDTXMania.DTX.bチップがある.LP == false) &&
+                        (CDTXMania.DTX.bチップがある.LBD == false) &&
+                        (CDTXMania.DTX.bチップがある.FT == false) &&
+                        (CDTXMania.DTX.bチップがある.Ride == false) &&
+                        (CDTXMania.DTX.b強制的にXG譜面にする == false))
+                    {
+                        str = string.Format("{0:00}", CDTXMania.DTX.LEVEL[j]);
+                        bCLASSIC = true;
+                    }
+
                     double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値);
                     int num = this.ct表示用.n現在の値;
 
@@ -421,8 +422,8 @@ namespace DTXMania
                     this.t大文字表示(88 + this.n本体X[j], 620, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
                     
                     if(this.tx難易度パネル != null)
-                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 200, 508, new Rectangle(0, 60 * CDTXMania.nSongDifficulty, 60, 60));
-                    this.tレベル数字描画((bCLASSIC == true ? 212 : 204), 534, str);
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[j], 508, new Rectangle(0, 60 * CDTXMania.nSongDifficulty, 60, 60));
+                    this.tレベル数字描画((bCLASSIC == true ? 26 : 18) + this.n本体X[j], 534, str);
 
                     string strScore = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[j].nスコア);
                     for (int i = 0; i < 7; i++)
@@ -452,7 +453,7 @@ namespace DTXMania
                     {
                         if (CDTXMania.stage結果.b新記録スキル[i])
                         {
-                            this.txNewRecord.t2D描画( CDTXMania.app.Device, 237, 570 );
+                            this.txNewRecord.t2D描画( CDTXMania.app.Device, 51 + this.n本体X[j], 570 );
                         }
                     }
                     if (this.ct表示用.n現在の値 >= 900)

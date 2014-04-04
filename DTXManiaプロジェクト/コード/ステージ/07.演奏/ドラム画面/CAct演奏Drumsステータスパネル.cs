@@ -327,15 +327,15 @@ namespace DTXMania
 
                 int i = 0;
 
-                string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10f);
+                string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[i]) / 10f);
                 bool bCLASSIC = false;
-                if (CDTXMania.DTX.LEVEL.Drums > 100)
+                if (CDTXMania.DTX.LEVEL[i] > 100)
                 {
-                    str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 100f);
+                    str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[i]) / 100f);
                 }
                 else
                 {
-                    str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Drums) / 10.0f + (CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0f : 0));
+                    str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[i]) / 10.0f + (CDTXMania.DTX.LEVELDEC[i] != 0 ? CDTXMania.DTX.LEVELDEC[i] / 100.0f : 0));
                 }
 
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
@@ -346,7 +346,7 @@ namespace DTXMania
                     (CDTXMania.DTX.bチップがある.Ride == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
-                    str = string.Format("{0:00}", CDTXMania.DTX.LEVEL.Drums);
+                    str = string.Format("{0:00}", CDTXMania.DTX.LEVEL[i]);
                     bCLASSIC = true;
                 }
 
@@ -397,8 +397,8 @@ namespace DTXMania
                 this.t大文字表示(59 + this.n本体X[i], 276 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
                 this.t大文字表示(91 + this.n本体X[i], 370 + this.n本体Y, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
 
-                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 37, 508, new Rectangle(0, 60 * nIndex, 60, 60));
-                this.tレベル数字描画((bCLASSIC == true ? 50 : 41 ), 534, str);
+                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[i], 266 + this.n本体Y, new Rectangle(0, 60 * nIndex, 60, 60));
+                this.tレベル数字描画((bCLASSIC == true ? 27 : 18) + this.n本体X[i], 292 + this.n本体Y, str);
             }
             return 0;
 
