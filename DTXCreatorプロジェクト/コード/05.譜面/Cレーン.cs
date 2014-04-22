@@ -12,6 +12,7 @@ namespace DTXCreator.譜面
 		public enum E種別
 		{
             BPM,
+            BEAT,
             WAV,
             BMP,
             AVI,
@@ -34,6 +35,7 @@ namespace DTXCreator.譜面
 		public enum ELaneType
 		{
 			BPM,
+            Beat,
 			Drums,
 			BGM,
 			SE1_5,

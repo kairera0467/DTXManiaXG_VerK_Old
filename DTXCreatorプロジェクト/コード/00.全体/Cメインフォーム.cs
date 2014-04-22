@@ -461,9 +461,10 @@ namespace DTXCreator
 			#region [ アプリ設定をXML形式ファイルで出力する。 ]
 			//-----------------
 			var serializer = new XmlSerializer( typeof( AppSetting ) );
-			var stream = new FileStream( str設定ファイル名, FileMode.Create );
-			serializer.Serialize( (Stream) stream, this.appアプリ設定 );
-			stream.Close();
+			using ( var stream = new FileStream( str設定ファイル名, FileMode.Create ) )		// #33204 2014.2.13 yyagi usingを使って、エラー発生時のファイルロックを回避
+			{
+				serializer.Serialize( (Stream) stream, this.appアプリ設定 );
+			}
 			//-----------------
 			#endregion
 		}
@@ -518,6 +519,7 @@ namespace DTXCreator
 			//-----------------
 			CUndoRedo管理.bUndoRedoした直後 = true;	this.textBox曲名.Clear();
 			CUndoRedo管理.bUndoRedoした直後 = true;	this.textBox製作者.Clear();
+			CUndoRedo管理.bUndoRedoした直後 = true;	this.textBoxGenre.Clear();
 			CUndoRedo管理.bUndoRedoした直後 = true;	this.textBoxコメント.Clear();
 			CUndoRedo管理.bUndoRedoした直後 = true;	this.numericUpDownBPM.Value = 120.0M;
 			CUndoRedo管理.bUndoRedoした直後 = true;	this.textBoxDLEVEL.Text = "50";
@@ -637,6 +639,11 @@ namespace DTXCreator
 			#region [ 未保存フラグをクリアする。]
 			//-----------------
 			this.b未保存 = false;
+			//-----------------
+			#endregion
+			#region [ 再生制御用フラグを立てる。(DTXVに必ずリロードさせるため) ]
+			//-----------------
+			this.bDTXファイルを開いた = true;
 			//-----------------
 			#endregion
 		}
@@ -1055,21 +1062,122 @@ namespace DTXCreator
 
 			// 小節長を変更。
 
-			#region [ 小節長を変更する。]
 			//-----------------
 			int n変更開始小節番号 = cs.n小節番号0to3599;
 			int n変更終了小節番号 = ( dlg.b後続変更 ) ? this.mgr譜面管理者.n現在の最大の小節番号を返す() : cs.n小節番号0to3599;
 
-			for( int i = n変更開始小節番号; i <= n変更終了小節番号; i++ )
-				this.t小節長を変更する・小節単位( i, dlg.f倍率 );
-
-			//-----------------
+			#region [ BEATレーンをすべてバックアップ(コピー)しておく。小節長変更でBEATチップが削除されると困るので。]
+			int laneBEAT = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BEAT" );
+			List<Cチップ> listBEATチップ = new List<Cチップ>();
+			foreach ( KeyValuePair<int, C小節> pair in this.mgr譜面管理者.dic小節 )
+			{
+				C小節 c小節 = pair.Value;
+				for ( int index = 0; index < c小節.listチップ.Count; index++ )
+				{
+					if ( c小節.listチップ[ index ].nレーン番号0to == laneBEAT )
+					{
+						listBEATチップ.Add( c小節.listチップ[ index ] );
+					}
+				}
+			}
 			#endregion
 
+			#region [ 小節長変更を実行する ]
+			for ( int n小節番号 = n変更開始小節番号; n小節番号 <= n変更終了小節番号; n小節番号++ )
+			{
+				#region [ 指定した小節が存在しなければ、中断 ]
+				C小節 c小節 = this.mgr譜面管理者.p小節を返す( n変更開始小節番号 );
+				if ( c小節 == null )
+				{
+					return;	// 中断
+				}
+				#endregion
+
+				int n旧Grid数 = (int) ( c小節.f小節長倍率 * 192 + 0.5 );
+				int n新Grid数 = (int) ( dlg.f倍率 * 192 + 0.5 );
+				int nGrid増減 = n旧Grid数 - n新Grid数;
+
+				this.t小節長を変更する・小節単位( n小節番号, dlg.f倍率 );
+
+				// そして、Gridの増減があった分だけ、コピーしたBEATチップのGridを増減する
+				int nGrid_BAR = this.mgr譜面管理者.n譜面先頭からみた小節先頭の位置gridを返す( n変更開始小節番号 );
+				for ( int index = 0; index < listBEATチップ.Count; index++ )
+				{
+					// Gridを増減するのは、小節長変更した小節以降のチップだけ。
+					// 更に、小節長変更した小節上では、新しい小節長で溢れた分のチップだけGridを増減する。
+					// (この条件で、Grid数が増えた場合も対応できている)
+					if ( 
+						( n小節番号 > n変更開始小節番号 ) ||
+						( ( n小節番号 == n変更開始小節番号 ) && ( nGrid_BAR + n新Grid数 < listBEATチップ[ index ].n位置grid ) )
+					)
+					{
+						Cチップ cc = new Cチップ();
+						cc.tコピーfrom( listBEATチップ[ index ] );
+						cc.n位置grid += nGrid増減;
+						listBEATチップ[ index ] = cc;
+					}
+				}
+
+			}
+			#endregion
+			//-----------------
+	
+			this.mgrUndoRedo管理者.tトランザクション記録を開始する();
+
+			#region [ BEATレーンのチップを全削除する ]
+			//this.mgr選択モード管理者.tレーン上の全チップを選択する( laneBEAT );
+			//this.tシナリオ・削除();
+			foreach ( KeyValuePair<int, C小節> pair in this.mgr譜面管理者.dic小節 )
+			{
+				C小節 c小節 = pair.Value;
+				for( int i = 0; i < c小節.listチップ.Count; i++ )
+				{
+					Cチップ cチップ = c小節.listチップ[ i ];
+
+					if( cチップ.nレーン番号0to == laneBEAT )
+					{
+						#region [ UndoRedo リストにこの操作（チップ削除）を記録する。]
+						//-----------------
+						var cc = new Cチップ();
+						cc.tコピーfrom( cチップ );
+					
+						var ur = new Cチップ配置用UndoRedo( c小節.n小節番号0to3599, cc );
+
+						this.mgrUndoRedo管理者.tノードを追加する(
+							new CUndoRedoセル<Cチップ配置用UndoRedo>( 
+								null, 
+								new DGUndoを実行する<Cチップ配置用UndoRedo>( this.mgr譜面管理者.tチップ削除のUndo ), 
+								new DGRedoを実行する<Cチップ配置用UndoRedo>( this.mgr譜面管理者.tチップ削除のRedo ),
+								ur, ur ) );
+						//-----------------
+						#endregion
+		
+						// チップを小節のチップリストから削除する。
+						c小節.listチップ.RemoveAt( i );
+
+						// リストが更新されたので、最初のチップから見直す。
+						i = -1;
+					}
+				}
+			}
+			#endregion
+
+			#region [ コピーしておいた(そして、nGridを更新した))BEATチップを、BEATレーンに戻す ]
+			foreach ( Cチップ cチップ in listBEATチップ )
+			{
+				this.mgr編集モード管理者.tBeatチップを配置する( cチップ.n位置grid, cチップ.n値・整数1to1295, cチップ.f値・浮動小数, cチップ.b裏 );
+			}
+			#endregion
 
 			// 後処理。
-
 			this.b未保存 = true;
+			this.mgrUndoRedo管理者.tトランザクション記録を終了する();
+			listBEATチップ.Clear();
+			listBEATチップ = null;
+
+			// 画面を再描画。
+			this.tUndoRedo用GUIの有効・無効を設定する();
+
 		}
 		private void t小節長を変更する・小節単位( int n小節番号, float f倍率 )
 		{
@@ -1115,6 +1223,7 @@ namespace DTXCreator
 			#endregion
 
 			#region [ 小節からはみ出したチップを削除する。チップの削除操作は Undo/Redo に記録する。]
+
 			//-----------------
 			for( int i = 0; i < c小節.listチップ.Count; i++ )
 			{
@@ -1442,6 +1551,8 @@ namespace DTXCreator
 
 				bool b削除されたチップがある = false;
 				bool b削除完了 = false;
+				int laneBEAT  = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BEAT" );
+				List<int> list削除処理済BEAT_index = new List<int>();
 
 				while( !b削除完了 )
 				{
@@ -1471,21 +1582,40 @@ namespace DTXCreator
 							#endregion
 
 
-							// チップオブジェクトを削除する。
+							#region [ チップオブジェクトを削除する。ただしBEATオブジェクトは削除禁止。表裏を反転するだけ。]
+							if ( cチップ.nレーン番号0to != laneBEAT )
+							{
+								c小節.listチップ.Remove( cチップ );
 
-							c小節.listチップ.Remove( cチップ );
-							
-							
-							// フラグを設定してループする。
+								// フラグを設定してループする。(foreachのlistを更新しているため)
+								b削除完了 = false;		// まだ終わらんよ
+								b削除されたチップがある = true;
+								break;
+							}
+							else
+							{
+								int p = c小節.listチップ.IndexOf( cチップ );
+								if ( !list削除処理済BEAT_index.Contains( p ) )	// まだ裏表反転したことがないチップならば
+								{
+									cチップ.nチャンネル番号00toFF = ( cチップ.b裏 ) ? 0xF3 : 0xF8;		// 表裏反転
+									cチップ.b裏 = !cチップ.b裏;
+									c小節.listチップ[ p ] = cチップ;
+									list削除処理済BEAT_index.Add( p );
 
-							b削除完了 = false;		// まだ終わらんよ
-							b削除されたチップがある = true;
-							break;
+									// フラグを設定してループする。(foreachのlistを更新しているため)
+									b削除完了 = false;		// まだ終わらんよ
+									b削除されたチップがある = true;
+									break;
+								}
+							}
+							#endregion
 						}
 					}
 					//-----------------
 					#endregion
 				}
+				list削除処理済BEAT_index.Clear();
+				list削除処理済BEAT_index = null;
 
 				#region [ 1つでもチップを削除したなら、未保存フラグを立てる。 ]
 				//-----------------
@@ -1515,7 +1645,12 @@ namespace DTXCreator
 		//-----------------
 		private void tシナリオ・Viewerで最初から再生する()
 		{
-			this.tViewer用の一時ファイルを出力する( false );
+			#region [ DTXViewer 用の一時ファイルを出力する。]
+			//-----------------
+			this.tViewer用の一時ファイルを出力する( false, this.b未保存 | !this.bBGMありで再生した | this.b再生速度を変更した | this.bDTXファイルを開いた );
+			this.bBGMありで再生した = true;
+			//-----------------
+			#endregion
 
 			#region [ 再生開始オプション引数に一時ファイルを指定して DTXViewer プロセスを起動する。]
 			//-----------------
@@ -1525,14 +1660,15 @@ namespace DTXCreator
 
 				#region [ DTXViewer が起動していなければ起動する。]
 				//-----------------
-				Process.Start( strDTXViewerのパス ).WaitForInputIdle( 20 * 1000 );	// 起動完了まで最大20秒待つ
+				// DTXManiaGR.exeはコンパクトモードで起動する必要があるため、「一旦起動してから再生オプションを渡す」やり方はやめる
+				// Process.Start( strDTXViewerのパス ).WaitForInputIdle( 20 * 1000 );	// 起動完了まで最大20秒待つ
 				//-----------------
 				#endregion
 				
 				#region [ 実行中の DTXViewer に再生オプションを渡す。 ]
 				//-----------------
-				Process.Start( strDTXViewerのパス, 
-					this.appアプリ設定.ViewerInfo.PlayStartOption + " " + this.strViewer演奏用一時ファイル名 );
+				Process.Start( strDTXViewerのパス,
+					this.appアプリ設定.ViewerInfo.PlaySoundOption + this.appアプリ設定.ViewerInfo.PlayStartOption + " " + this.strViewer演奏用一時ファイル名 ).WaitForInputIdle( 20 * 1000 );
 				//-----------------
 				#endregion
 			}
@@ -1552,7 +1688,12 @@ namespace DTXCreator
 		}
 		private void tシナリオ・Viewerで現在位置から再生する()
 		{
-			this.tViewer用の一時ファイルを出力する( false );
+			#region [ DTXViewer 用の一時ファイルを出力する。]
+			//-----------------
+			this.tViewer用の一時ファイルを出力する( false, this.b未保存 | !this.bBGMありで再生した | this.b再生速度を変更した | this.bDTXファイルを開いた );
+			this.bBGMありで再生した = true;
+			//-----------------
+			#endregion
 
 			try
 			{
@@ -1560,9 +1701,8 @@ namespace DTXCreator
 
 				#region [ DTXViewer が起動していなければ起動する。]
 				//-----------------
-				
-				Process.Start( strDTXViewerのパス ).WaitForInputIdle( 20 * 1000 );	// 起動完了まで最大20秒待つ
-				
+				// DTXManiaGR.exeはコンパクトモードで起動する必要があるため、「一旦起動してから再生オプションを渡す」やり方はやめる
+				// Process.Start( strDTXViewerのパス ).WaitForInputIdle( 20 * 1000 );	// 起動完了まで最大20秒待つ
 				//-----------------
 				#endregion
 
@@ -1573,7 +1713,7 @@ namespace DTXCreator
 					this.mgr譜面管理者.p譜面先頭からの位置gridを含む小節を返す( this.mgr譜面管理者.n現在の譜面表示下辺の譜面先頭からの位置grid );
 				
 				Process.Start( strDTXViewerのパス,
-					this.appアプリ設定.ViewerInfo.PlayStartFromOption + c小節.n小節番号0to3599 + " " + this.strViewer演奏用一時ファイル名 );
+					this.appアプリ設定.ViewerInfo.PlaySoundOption + this.appアプリ設定.ViewerInfo.PlayStartFromOption + c小節.n小節番号0to3599 + " " + this.strViewer演奏用一時ファイル名 ).WaitForInputIdle( 20 * 1000 );
 				
 				//-----------------
 				#endregion
@@ -1594,7 +1734,8 @@ namespace DTXCreator
 		{
 			#region [ DTXViewer 用の一時ファイルを出力する。]
 			//-----------------
-			this.tViewer用の一時ファイルを出力する( true );
+			this.tViewer用の一時ファイルを出力する( true, this.b未保存 | this.bBGMありで再生した | this.b再生速度を変更した | this.bDTXファイルを開いた );
+			this.bBGMありで再生した = false;
 			//-----------------
 			#endregion
 
@@ -1604,7 +1745,8 @@ namespace DTXCreator
 
 				#region [ DTXViewer が起動していなければ起動する。]
 				//-----------------
-				Process.Start( strDTXViewerのパス ).WaitForInputIdle( 20 * 1000 );	// 起動完了まで最大20秒待つ
+				// DTXManiaGR.exeはコンパクトモードで起動する必要があるため、「一旦起動してから再生オプションを渡す」やり方はやめる
+				// Process.Start( strDTXViewerのパス ).WaitForInputIdle( 20 * 1000 );	// 起動完了まで最大20秒待つ
 				//-----------------
 				#endregion
 
@@ -1612,7 +1754,7 @@ namespace DTXCreator
 				//-----------------
 				C小節 c小節 = this.mgr譜面管理者.p譜面先頭からの位置gridを含む小節を返す( this.mgr譜面管理者.n現在の譜面表示下辺の譜面先頭からの位置grid );
 				Process.Start( strDTXViewerのパス,
-					this.appアプリ設定.ViewerInfo.PlayStartFromOption + c小節.n小節番号0to3599 + " " + this.strViewer演奏用一時ファイル名 );
+					this.appアプリ設定.ViewerInfo.PlaySoundOption + this.appアプリ設定.ViewerInfo.PlayStartFromOption + c小節.n小節番号0to3599 + " " + this.strViewer演奏用一時ファイル名 ).WaitForInputIdle( 20 * 1000 );
 				//-----------------
 				#endregion
 			}
@@ -1659,9 +1801,20 @@ namespace DTXCreator
 		}
 
 		private string strViewer演奏用一時ファイル名 = "";
-		private void tViewer用の一時ファイルを出力する( bool bBGMのみ出力 )
+		private void tViewer用の一時ファイルを出力する( bool bBGMのみ出力, bool b前回から更新があった )
 		{
 			// 一時ファイル名を自動生成。
+
+			// 前回から更新がなければ(連続して再生ボタンを押した、など)、前回の生成ファイルをそのまま返す。
+			// (初めての再生の場合は、tempファイル未生成のため、このまま生成フローを続ける。)
+			if ( !b前回から更新があった && File.Exists( Path.Combine( this.mgr譜面管理者.strPATH_WAV, this.strViewer演奏用一時ファイル名 ) ) )
+			{
+				return;
+			}
+
+			// 再生速度変更フラグをリセット。
+			b再生速度を変更した = false;
+			bDTXファイルを開いた = false;
 
 			//this.strViewer演奏用一時ファイル名 = Path.GetTempFileName();			//
 			this.strViewer演奏用一時ファイル名 = makeTempDTX.GetTempFileName();		// #24746 2011.4.1 yyagi add; a countermeasure for temp-flooding
@@ -1822,7 +1975,7 @@ namespace DTXCreator
 		}
 		public void t選択モードのコンテクストメニューを表示する( int x, int y )
 		{
-            // メニューの左上隅座標を控えておく。
+			// メニューの左上隅座標を控えておく。
 
 			this.pt選択モードのコンテクストメニューを開いたときのマウスの位置 = new Point( x, y );
 			
@@ -1843,13 +1996,19 @@ namespace DTXCreator
 			#endregion
 
 			#region [ コンテクストメニューの[選択]項目に、レーン名と小節番号の情報をを付与する。 ]
-			int indexMenuLaneSelect = this.contextMenuStrip譜面右メニュー.Items.IndexOfKey( "toolStripMenuItemレーン内のすべてのチップの選択" );
+			int indexMenuLaneSelect1 = this.contextMenuStrip譜面右メニュー.Items.IndexOfKey( "toolStripMenuItemレーン内のすべてのチップの選択1" );
+			int indexMenuLaneSelect2 = this.contextMenuStrip譜面右メニュー.Items.IndexOfKey( "toolStripMenuItemレーン内のすべてのチップの選択_特定小節以降2" );
 			int indexMenuPartSelect = this.contextMenuStrip譜面右メニュー.Items.IndexOfKey( "toolStripMenuItem小節内のすべてのチップの選択" );
 
-			string strItemMenuLaneSelect = this.contextMenuStrip譜面右メニュー.Items[ indexMenuLaneSelect ].Text;
+			string strItemMenuLaneSelect = this.contextMenuStrip譜面右メニュー.Items[ indexMenuLaneSelect1 ].Text;
 			strItemMenuLaneSelect = System.Text.RegularExpressions.Regex.Replace(
 				strItemMenuLaneSelect , @"\[(.*)\]", "[" + strLane + "]" );
-			this.contextMenuStrip譜面右メニュー.Items[ indexMenuLaneSelect ].Text = strItemMenuLaneSelect;
+			this.contextMenuStrip譜面右メニュー.Items[ indexMenuLaneSelect1 ].Text = strItemMenuLaneSelect;
+
+			strItemMenuLaneSelect = this.contextMenuStrip譜面右メニュー.Items[ indexMenuLaneSelect2 ].Text;
+			strItemMenuLaneSelect = System.Text.RegularExpressions.Regex.Replace(
+				strItemMenuLaneSelect, @"\[(.*)\]", "[" + strLane + "]" );
+			this.contextMenuStrip譜面右メニュー.Items[ indexMenuLaneSelect2 ].Text = strItemMenuLaneSelect;
 
 			string strItemMenuPartSelect = this.contextMenuStrip譜面右メニュー.Items[ indexMenuPartSelect ].Text;
 			strItemMenuPartSelect = System.Text.RegularExpressions.Regex.Replace(
@@ -1982,6 +2141,11 @@ namespace DTXCreator
 				strファイルの絶対パス = this.str作業フォルダ名 + strファイル;
 			}
 
+			// 正規化する。(\a\b\c\..\d を \a\b\d にする)
+
+//			FileInfo fi = new FileInfo( strファイルの絶対パス );
+//\			strファイルの絶対パス = fi.FullName;
+
 			return strファイルの絶対パス;
 		}
 		public Point pt現在のマウス位置を譜面の可視領域相対の座標dotで返す()
@@ -2011,6 +2175,9 @@ namespace DTXCreator
 		#region [ private ]
 		//-----------------
 		private bool _b未保存 = true;
+		private bool bBGMありで再生した = true;
+		private bool b再生速度を変更した = false;
+		private bool bDTXファイルを開いた = false;
 		private Point pt選択モードのコンテクストメニューを開いたときのマウスの位置;
 		private int n現在のガイド間隔4to64or0 = 16;		// 初期は16分間隔
 		private bool b選択チップがある
@@ -2029,11 +2196,11 @@ namespace DTXCreator
 			}
 		}
 
-		private void tDTXV演奏関連のボタンとメニューのEnabledの設定()
+		public void tDTXV演奏関連のボタンとメニューのEnabledの設定()
 		{
 			if( File.Exists( this.strDTXCのあるフォルダ名 + this.appアプリ設定.ViewerInfo.Path ) )
 			{
-				// DTXViewer が存在するなら Enable
+				// DTXViewer(DTXManiaGR) が存在するなら Enable
 
 				this.toolStripButton先頭から再生.Enabled = true;
 				this.toolStripButton現在位置から再生.Enabled = true;
@@ -2046,7 +2213,7 @@ namespace DTXCreator
 			}
 			else
 			{
-				// DTXViewer が存在しないなら Disable
+				// DTXViewer(DTXManiaGR) が存在しないなら Disable
 
 				this.toolStripButton先頭から再生.Enabled = false;
 				this.toolStripButton現在位置から再生.Enabled = false;
@@ -2590,6 +2757,40 @@ namespace DTXCreator
 			this.mgr選択モード管理者.tレーン上の全チップを選択する( lane );
 
 		}
+		private void toolStripMenuItemレーン内のすべてのチップの選択_特定小節以降_Click( object sender, EventArgs e )
+		{
+			// 編集モードなら強制的に選択モードにする。
+
+			if ( this.b編集モードである )
+				this.t選択モードにする();
+
+			// メニューが開かれたときのマウスの座標を取得。
+			// ※メニューは必ずマウス位置を左上にして表示されるとは限らないため、
+			// 　メニューの表示位置からは取得しないこと。
+
+			Point ptマウスの位置 = this.pt選択モードのコンテクストメニューを開いたときのマウスの位置;
+
+			#region [ クリックされた箇所のレーン番号を取得する。]
+			//-----------------
+			int lane = this.mgr譜面管理者.nX座標dotが位置するレーン番号を返す( ptマウスの位置.X );
+			if ( lane < 0 )
+				return;		// クリックされた箇所にレーンがない
+
+			//-----------------
+			#endregion
+			#region [ クリックされた箇所の小節を取得する。]
+			//-----------------
+			if ( this.mgr譜面管理者.nX座標dotが位置するレーン番号を返す( ptマウスの位置.X ) < 0 )
+				return;		// クリックされた箇所にレーンがない
+
+			int n譜面先頭からの位置grid = this.mgr譜面管理者.nY座標dotが位置するgridを返す・ガイド幅単位( ptマウスの位置.Y );
+
+			C小節 csクリックされた小節 = this.mgr譜面管理者.p譜面先頭からの位置gridを含む小節を返す( n譜面先頭からの位置grid );
+			//-----------------
+			#endregion
+
+			this.mgr選択モード管理者.tレーン上の全チップを選択する( lane, csクリックされた小節.n小節番号0to3599 );
+		}
 
 		private void toolStripMenuItem小節内のすべてのチップの選択_Click( object sender, EventArgs e )
 		{
@@ -2706,6 +2907,7 @@ namespace DTXCreator
 		
 		#region [ GUIイベント：基本情報関連 ]
 		//-----------------
+		#region [ Title ]
 		private string textBox曲名_以前の値 = "";
 		private void textBox曲名_TextChanged( object sender, EventArgs e )
 		{
@@ -2783,7 +2985,8 @@ namespace DTXCreator
 
 			this.textBox曲名.Focus();
 		}
-
+		#endregion
+		#region [ Author ]
 		private string textBox製作者_以前の値 = "";
 		private void textBox製作者_TextChanged( object sender, EventArgs e )
 		{
@@ -2861,7 +3064,8 @@ namespace DTXCreator
 
 			this.textBox製作者.Focus();
 		}
-
+		#endregion
+		#region [ Comment ]
 		private string textBoxコメント_以前の値 = "";
 		private void textBoxコメント_TextChanged( object sender, EventArgs e )
 		{
@@ -2938,7 +3142,87 @@ namespace DTXCreator
 
 			this.textBoxコメント.Focus();
 		}
+		#endregion
+		#region [ Genre ]
+		private string textBoxGenre_以前の値 = "";
+		private void textBoxGenre_TextChanged( object sender, EventArgs e )
+		{
+			// Undo/Redo リストを修正する。
 
+			#region [ Undo/Redo リストを修正。]
+			//-----------------
+			if ( !CUndoRedo管理.bUndoRedoした直後 )
+			{
+				CUndoRedoセル仮想 oセル仮想 = this.mgrUndoRedo管理者.tUndoするノードを取得して返す・見るだけ();
+
+				if ( ( oセル仮想 != null ) && oセル仮想.b所有権がある( this.textBoxGenre ) )
+				{
+					// 既存のセルの値を更新。
+
+					( (CUndoRedoセル<string>) oセル仮想 ).変更後の値 = this.textBoxGenre.Text;
+				}
+				else
+				{
+					// 新しいセルを追加。
+
+					this.mgrUndoRedo管理者.tノードを追加する(
+						new CUndoRedoセル<string>(
+							this.textBoxGenre,
+							new DGUndoを実行する<string>( this.textBoxGenre_Undo ),
+							new DGRedoを実行する<string>( this.textBoxGenre_Redo ),
+							this.textBoxコメント_以前の値, this.textBoxGenre.Text ) );
+
+					// Undo ボタンを有効にする。
+
+					this.tUndoRedo用GUIの有効・無効を設定する();
+				}
+			}
+			//-----------------
+			#endregion
+
+
+			// Undo 用に値を保管しておく。
+
+			this.textBoxGenre_以前の値 = this.textBoxGenre.Text;
+
+
+			// 完了。
+
+			CUndoRedo管理.bUndoRedoした直後 = false;
+			this.b未保存 = true;
+		}
+		private void textBoxGenre_Leave( object sender, EventArgs e )
+		{
+			CUndoRedoセル仮想 oセル仮想 = this.mgrUndoRedo管理者.tUndoするノードを取得して返す・見るだけ();
+
+			if ( oセル仮想 != null )
+				oセル仮想.t所有権の放棄( this.textBoxGenre );
+		}
+		private void textBoxGenre_Undo( string str変更前, string str変更後 )
+		{
+			// 変更前の値に戻す。
+
+			this.tタブを選択する( Eタブ種別.基本情報 );
+
+			this.t次のプロパティ変更処理がUndoRedoリストに載らないようにする();
+			this.textBoxGenre.Text = str変更前;
+
+			this.textBoxGenre.Focus();
+		}
+		private void textBoxGenre_Redo( string str変更前, string str変更後 )
+		{
+			// 変更後の値に戻す。
+
+			this.tタブを選択する( Eタブ種別.基本情報 );
+
+			this.t次のプロパティ変更処理がUndoRedoリストに載らないようにする();
+			this.textBoxGenre.Text = str変更後;
+
+			this.textBoxGenre.Focus();
+		}
+		#endregion
+
+		#region [ BPM ]
 		private decimal numericUpDownBPM_以前の値 = 120.0M;
 		private void numericUpDownBPM_ValueChanged( object sender, EventArgs e )
 		{
@@ -3016,7 +3300,9 @@ namespace DTXCreator
 
 			this.numericUpDownBPM.Focus();
 		}
+		#endregion
 
+		#region [ DLEVEL ]
 		private int nDLEVEL_以前の値 = 50;
 		private void textBoxDLEVEL_TextChanged( object sender, EventArgs e )
 		{
@@ -3138,7 +3424,8 @@ namespace DTXCreator
 			this.t次のプロパティ変更処理がUndoRedoリストに載らないようにする();
 			this.hScrollBarDLEVEL.Value = n変更後;
 		}
-
+		#endregion
+		#region [ GLEVEL ]
 		private int nGLEVEL_以前の値;
 		private void textBoxGLEVEL_TextChanged( object sender, EventArgs e )
 		{
@@ -3259,7 +3546,8 @@ namespace DTXCreator
 			this.t次のプロパティ変更処理がUndoRedoリストに載らないようにする();
 			this.hScrollBarGLEVEL.Value = n変更後;
 		}
-
+		#endregion
+		#region [ BLEVEL ]
 		private int nBLEVEL_以前の値;
 		private void textBoxBLEVEL_TextChanged( object sender, EventArgs e )
 		{
@@ -3381,7 +3669,9 @@ namespace DTXCreator
 			this.t次のプロパティ変更処理がUndoRedoリストに載らないようにする();
 			this.hScrollBarBLEVEL.Value = n変更後;
 		}
+		#endregion
 
+		#region [ PANEL ]
 		private string textBoxパネル_以前の値 = "";
 		private void textBoxパネル_TextChanged( object sender, EventArgs e )
 		{
@@ -3459,7 +3749,8 @@ namespace DTXCreator
 
 			this.textBoxパネル.Focus();
 		}
-
+		#endregion
+		#region [ PREVIEW ]
 		private string textBoxPREVIEW_以前の値 = "";
 		private void textBoxPREVIEW_TextChanged( object sender, EventArgs e )
 		{
@@ -3537,7 +3828,8 @@ namespace DTXCreator
 
 			this.textBoxPREVIEW.Focus();
 		}
-
+		#endregion
+		#region [ PREIMAGE ]
 		private string textBoxPREIMAGE_以前の値 = "";
 		private void textBoxPREIMAGE_TextChanged( object sender, EventArgs e )
 		{
@@ -3615,7 +3907,8 @@ namespace DTXCreator
 
 			this.textBoxPREIMAGE.Focus();
 		}
-
+		#endregion
+		#region [ STAGEFILE ]
 		private string textBoxSTAGEFILE_以前の値 = "";
 		private void textBoxSTAGEFILE_TextChanged( object sender, EventArgs e )
 		{
@@ -3693,7 +3986,8 @@ namespace DTXCreator
 
 			this.textBoxSTAGEFILE.Focus();
 		}
-
+		#endregion
+		#region [ BACKGROUND ]
 		private string textBoxBACKGROUND_以前の値 = "";
 		private void textBoxBACKGROUND_TextChanged( object sender, EventArgs e )
 		{
@@ -3771,7 +4065,8 @@ namespace DTXCreator
 
 			this.textBoxBACKGROUND.Focus();
 		}
-
+		#endregion
+		#region [ RESULTIMAGE ]
 		private string textBoxRESULTIMAGE_以前の値 = "";
 		private void textBoxRESULTIMAGE_TextChanged( object sender, EventArgs e )
 		{
@@ -3849,7 +4144,9 @@ namespace DTXCreator
 
 			this.textBoxRESULTIMAGE.Focus();
 		}
+		#endregion
 
+		#region [ PREVIEW参照ボタン ]
 		private void buttonPREVIEW参照_Click( object sender, EventArgs e )
 		{
 			string str初期フォルダ名 = this.str作業フォルダ名;
@@ -3868,6 +4165,8 @@ namespace DTXCreator
 				this.b未保存 = true;
 			}
 		}
+		#endregion
+		#region [ PREIMAGE参照ボタン ]
 		private void buttonPREIMAGE参照_Click( object sender, EventArgs e )
 		{
 			string str初期フォルダ名 = this.str作業フォルダ名;
@@ -3886,6 +4185,8 @@ namespace DTXCreator
 				this.b未保存 = true;
 			}
 		}
+		#endregion
+		#region [ STAGEFILE参照ボタン ]
 		private void buttonSTAGEFILE参照_Click( object sender, EventArgs e )
 		{
 			string str初期フォルダ名 = this.str作業フォルダ名;
@@ -3904,6 +4205,8 @@ namespace DTXCreator
 				this.b未保存 = true;
 			}
 		}
+		#endregion
+		#region [ BACKGROUND参照ボタン ]
 		private void buttonBACKGROUND参照_Click( object sender, EventArgs e )
 		{
 			string str初期フォルダ名 = this.str作業フォルダ名;
@@ -3922,6 +4225,8 @@ namespace DTXCreator
 				this.b未保存 = true;
 			}
 		}
+		#endregion
+		#region [ RESULTIMAGE参照ボタン ]
 		private void buttonRESULTIMAGE参照_Click( object sender, EventArgs e )
 		{
 			string str初期フォルダ名 = this.str作業フォルダ名;
@@ -3940,6 +4245,7 @@ namespace DTXCreator
 				this.b未保存 = true;
 			}
 		}
+		#endregion
 		//-----------------
 		#endregion
 		#region [ GUIイベント：WAVリスト関連 ]
@@ -4779,6 +5085,475 @@ namespace DTXCreator
 		{
 			this.tシナリオ・Viewerを再生停止する();
 		}
+
+		//private void ToolStripMenuItemBeatChipsGeneration_Click( object sender, EventArgs e )			// Beat Detections
+		//{
+		//    GenarateBeatChip_Main();
+		//}
+
+		private void GenarateBeatChip_Main()
+		{
+			string filename = "";
+
+			#region [ マウスカーソルを待機中に変更 ]
+			this.Cursor = Cursors.WaitCursor;
+			#endregion
+
+
+			#region [ BGM, BPM, BEATレーンのレーン番号を取得 ]
+			int laneBGM = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BGM" );
+			int laneBPM = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BPM" );
+			int laneBEAT = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BEAT" );
+			#endregion
+			#region [ BGMレーンにあるチップを抽出して、beat検出する対象のサウンドファイルを決める ]
+			// とりあえずBGMチップは1個しかない前提で進める。追々、複数のBGMチップでも動作するようにはしたい。
+			#region [ BGMチップ抽出 ]
+			int nBGMチップの小節番号 = -1;
+			int nBGMチップのindex = -1;
+			foreach ( KeyValuePair<int, C小節> pair in this.mgr譜面管理者.dic小節 )
+			{
+				C小節 c小節 = pair.Value;
+				nBGMチップのindex = c小節.listチップ.FindIndex(
+					delegate( Cチップ cチップ )
+					{
+						return ( cチップ.nレーン番号0to == laneBGM );
+					}
+				);
+				if ( nBGMチップのindex >= 0 )
+				{
+					nBGMチップの小節番号 = c小節.n小節番号0to3599;
+					filename = this.mgrWAVリスト管理者.tファイル名を絶対パスで返す( c小節.listチップ[ nBGMチップのindex ].n値・整数1to1295 );
+					Debug.WriteLine( filename );
+					break;	// とりあえず1個見つけたらbreakしちゃう
+				}
+				//for ( int i = 0; i < c小節.listチップ.Count; i++ )
+				//{
+				//Cチップ cチップ = c小節.listチップ[ i ];
+				//if ( cチップ.nレーン番号0to == lane )
+				//{
+				//    nBGMチップのindex = i;
+				//    filename = this.mgrWAVリスト管理者.tファイル名を絶対パスで返す( cチップ.n値・整数1to1295 );
+				//    Debug.WriteLine( filename );
+				//}
+				//}
+			}
+			#endregion
+			#endregion
+
+
+			#region [  BPM,BEATレーンの情報を消去 ]
+			this.mgr選択モード管理者.tレーン上の全チップを選択する( laneBPM );
+			this.tシナリオ・削除();
+			this.mgr選択モード管理者.tレーン上の全チップを選択する( laneBEAT );
+			this.tシナリオ・削除();
+
+			#endregion
+
+			#region [ BASSFXのBeat detectionを実行する ]
+			FDK.CBeatDetect cbd = new CBeatDetect( filename );
+
+			float tempo = cbd.GetTempo();
+// Debug.WriteLine( "BPM=" + tempo );
+
+			List<FDK.CBeatDetect.stBeatPos> listBeatPositions = cbd.GetBeatPositions();
+// Debug.WriteLine( "Count: " + listBeatPositions.Count );
+			#endregion
+
+			// 四分音符以下、8分音符以下などと選べるようにしたい。
+			#region [ 四分音符以下の間隔で検出されたbeatを、端折る。端折らないと、検出beat数が多過ぎて、人が扱えなくなる。ただ、端折り方はもう少し熟慮が必要。]
+			float last = 0;
+			float minBeatDelta = 60.0f / tempo;		// 4分音符の長さ
+			int count = 0;
+
+			// 最初の10個くらいは、端折らない。まず拍の頭をとるのに必要な情報を落とすわけにはいかないので。
+			// 10個目以降は、四分音符未満の長さのbeatを、端折る。(裏BEATレーンに回す)
+			if ( listBeatPositions.Count > 10 )
+			{
+				for ( int i = count; i < listBeatPositions.Count; i++ )
+				{
+					if ( listBeatPositions[ i ].fBeatTime - last < minBeatDelta )
+					{
+						FDK.CBeatDetect.stBeatPos sbp = new CBeatDetect.stBeatPos(
+							listBeatPositions[ i ].fBeatTime,
+							0,
+							0,
+							0,
+							( listBeatPositions[ i ].fBeatTime - last < minBeatDelta ),
+							true
+						);
+
+						listBeatPositions[ i ] = sbp;
+					}
+					last = listBeatPositions[ i ].fBeatTime;
+				}
+			}
+			#endregion
+
+			#region [ ただのデバッグ表示 ]
+			//last = 0;
+			//for ( int i = 0; i < listBeatPositions.Count; i++ )
+			//{
+			//    //Debug.WriteLine( listBeatPositionsLight[ i ] - last );
+			//    Debug.WriteLine( listBeatPositions[ i ].fBeatTime );
+			//    last = listBeatPositions[ i ].fBeatTime;
+			//}
+			//Debug.WriteLine( "========================" );
+			#endregion
+
+			#region [ 未使用: 端折った区間内で、それぞれBPMを再取得してみる → これは意味なし。1つのbeatしか得られないため、正しいBPMを取得できない。]
+			//List<float> listTempo_interval = new List<float>();
+			//last = 0;
+			//for ( int i = 0; i < listBeatPositionsLight.Count - 1; i++ )
+			//{
+			//    listTempo_interval.Add( cbd.GetTempo( last, listBeatPositionsLight[ i ] ) );
+			//    last = listBeatPositionsLight[ i ];
+			//    Debug.WriteLine( listTempo_interval[ i ] );
+			//}
+			#endregion
+
+
+			int n1拍目のBeatPositionIndex = 0;
+
+			#region [ 1小節目の頭に1発目の拍が来るよう、BGMチップをずらす。ただしこれだけだと、最大1grid分の時間誤差が発生する。(BPM=125時に最大10msの誤差)]
+			int nBGM位置grid = 0;
+			if ( nBGMチップの小節番号 >= 0 && nBGMチップのindex >= 0 )
+			{
+				//	float f小節長倍率 = 1.0f;
+				C小節 c小節_0小節目 = this.mgr譜面管理者.dic小節[ nBGMチップの小節番号 ];
+				Cチップ cチップBGM = c小節_0小節目.listチップ[ nBGMチップのindex ];
+				nBGM位置grid = (int) ( 192f * c小節_0小節目.f小節長倍率 * listBeatPositions[ n1拍目のBeatPositionIndex ].fBeatTime / ( ( 60 * 4 ) / tempo ) + 0.5 );
+				// ここでnBGM位置Gridが192(x小節長)を超えることがある
+				// → 192(x小節長)をひいて、次の小節に回す。(小節ごとに小節長倍率が変化する可能性があることに注意)
+				// → スマン、この実装ではまだ、DTXデータの最初はしばらく小節倍率が一定である前提になっちゃってる・・
+				cチップBGM.n位置grid = (int) ( 192 * c小節_0小節目.f小節長倍率 + 0.5f ) - ( nBGM位置grid % 192 );			// "192-" が必要なことに注意
+				c小節_0小節目.listチップ[ nBGMチップのindex ] = cチップBGM;
+				this.mgr譜面管理者.dic小節[ nBGMチップの小節番号 ] = c小節_0小節目;
+			}
+			#endregion
+
+			#region [ 0小節目のBPMを設定し、1つ目の拍が1小節目の頭に来るようにする。]
+			// まず、0小節の頭にBPM設定を追加する。
+			this.mgr編集モード管理者.tBPMチップを配置する( 0 * 192, tempo );
+			this.numericUpDownBPM.Value = (decimal) ( (int) ( tempo + 0.5 ) );
+			numericUpDownBPM_ValueChanged( null, null );
+			numericUpDownBPM_Leave( null, null );
+
+			// 更に、先の1グリッド分の誤差をなくすために、BGMチップの位置だけでなく、0小節目のBPMも微調整する。
+			float f小節長倍率_ = this.mgr譜面管理者.dic小節[ nBGMチップの小節番号 ].f小節長倍率;					// 手抜き。すまん。
+			float fBGM再生直後のBPM = ( 60 * 4 ) * nBGM位置grid / ( 192.0f * f小節長倍率_ ) / listBeatPositions[ n1拍目のBeatPositionIndex ].fBeatTime;
+			this.mgr編集モード管理者.tBPMチップを配置する( 192 - ( nBGM位置grid % 192 ), fBGM再生直後のBPM );
+			#endregion
+
+			#region [ BEATレーンにチップを配置する ]
+			//			int lastGrid = (int) ( 192 * this.mgr譜面管理者.dic小節[ 0 ].f小節長倍率 );	// 0小節目の倍率
+			//int last小節内Grid = 0;
+			//int last小節番号 = nBGMチップの小節番号;
+			int n最初の拍のある小節番号 = 1 + ( nBGM位置grid / 192 );
+			float lastBeatTime = listBeatPositions[ n1拍目のBeatPositionIndex ].fBeatTime;
+
+			for ( int index = n1拍目のBeatPositionIndex; index < listBeatPositions.Count; index++ )
+			{
+				//Debug.Write( "[" + index + "] " );
+
+				// 今注目しているBEATチップが、どの小節・拍(grid)に収まるかを計算する
+				//		// 誤差を小さくするため、直前のBEATポイントからの相対位置として計算すること。
+				//		// 絶対位置で計算すると、最初のBPM計算の誤差がそのままBEAT位置に現れる。
+				//		// ...としたいのだが、まだできてない。全部絶対位置で計算している。
+				FDK.CBeatDetect.stBeatPos sbp = listBeatPositions[ index ];
+
+				float deltatime = sbp.fBeatTime - lastBeatTime;
+				//Debug.Write( "delta=" + deltatime );
+				int n小節番号 = n最初の拍のある小節番号;
+				float f1小節の時間 = ( 60 / tempo ) * 4;
+				#region [ 0小節目の場合 ]
+				if ( deltatime < 0 )
+				{
+					while ( n小節番号 >= 0 && deltatime < 0 )
+					{
+						n小節番号--;
+						deltatime += f1小節の時間 * this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率;
+						//(int) ( 192 * this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率 );	// 0小節目の倍率
+					}
+					if ( deltatime < 0 )
+					{
+						Debug.WriteLine( "[" + index + "]: deltatime < 0; error (" + deltatime );
+						continue;
+					}
+				}
+				#endregion
+				#region [ 1小節目以降の場合 ]
+				else
+				{
+					//Debug.Write( " + " + f1小節の時間 * this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率 * last小節内Grid / 192 + "(" + lastGrid + "|" + last小節内Grid +")=" );
+					//					deltatime += f1小節の時間 * this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率 * last小節内Grid / 192;		// 直前のgrid(その小節の頭から)の分
+					//Debug.WriteLine( deltatime );
+					while ( true )
+					{
+						if ( deltatime < f1小節の時間 * this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率 )
+						{
+							break;
+						}
+						n小節番号++;
+
+						#region [ 小節ノードが不足しているなら、追加する ]
+						if ( this.mgr譜面管理者.n現在の最大の小節番号を返す() < n小節番号 )
+						{
+							for ( int i = n小節番号; i < n小節番号 + 5; i++ )
+							{
+								this.mgr譜面管理者.dic小節.Add( i, new C小節( i ) );
+								this.mgrUndoRedo管理者.tノードを追加する( new CUndoRedoセル<int>( null, new DGUndoを実行する<int>( this.mgr譜面管理者.t小節挿入のUndo ), new DGRedoを実行する<int>( this.mgr譜面管理者.t小節挿入のRedo ), i, i ) );
+							}
+						}
+						#endregion
+
+						deltatime -= f1小節の時間 * this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率;
+					}
+					if ( deltatime < 0 )
+					{
+						Debug.WriteLine( "[" + index + "]: deltatime < 0; error (" + deltatime );
+						continue;
+					}
+				}
+				#endregion
+
+				// ここまでで、n小節番号を得ている
+				// ここで、更にgridを得たうえで、16分音符相当にquantizeして、BEATチップの位置とする
+
+				#region [ BEATチップを置く ]
+				float f小節長倍率 = this.mgr譜面管理者.dic小節[ n小節番号 ].f小節長倍率;
+				int n小節内Grid = (int) ( 192f * f小節長倍率 * deltatime / ( ( 60 * 4 ) / tempo ) + 0.5 );
+
+				#region [ Gridを16分音符単位(==12grid単位)でquantizeする ]
+				//Debug.Write( "nGrid: " + n小節内Grid + " -> " );
+				n小節内Grid = ( ( n小節内Grid + 6 ) / 12 ) * 12;
+				//Debug.WriteLine( n小節内Grid );
+				#endregion
+
+				int nGrid = this.mgr譜面管理者.n譜面先頭からみた小節先頭の位置gridを返す( n小節番号 ) + n小節内Grid;
+
+				this.mgr編集モード管理者.tBeatチップを配置する( nGrid, index, sbp.fBeatTime, sbp.b無効 );
+				//				this.mgr編集モード管理者.tHHチップを配置する( nGrid, 1, sbp.b無効 );	// デバッグ用・見やすくするために暫定的に。
+				sbp.nGrid = nGrid;
+				sbp.n小節番号 = n小節番号;
+				listBeatPositions[ index ] = sbp;		// Grid情報を入れて、listを更新 (この情報はBPx挿入時に使う)
+
+				//if ( !sbp.b無効 )
+				{
+					//lastGrid = nGrid;
+					//last小節内Grid = n小節内Grid;
+					//last小節番号 = n小節番号;
+					//lastBeatTime = sbp.fBeatTime;
+				}
+				#endregion
+				//Debug.WriteLine( "[" + index + "]: n小節番号=" + n小節番号 + ", Grid= " + n小節内Grid + "/" + nGrid + ", BeatTime=" + sbp.fBeatTime + ", 裏=" + sbp.b無効 );
+			}
+			#endregion
+
+			BPMchipsGeneneration_Main();
+
+			#region [ マウスカーソルの形を元に戻す ]
+			this.Cursor = Cursors.Default;
+			#endregion
+
+			cbd.Dispose();
+			cbd = null;
+
+			#region [ Beatレーンを表示する ]
+			this.mgr譜面管理者.listレーン[ laneBEAT ].bIsVisible = true;
+			#endregion
+
+			#region [ 画面の再描画 ]
+			this.pictureBox譜面パネル.Invalidate();
+			#endregion
+
+			#region [ listBeatPositionsの開放 ]
+			listBeatPositions.Clear();
+			listBeatPositions = null;
+			#endregion
+		}
+
+		//private void ToolStripMenuItemBPMChipsGeneration_Click( object sender, EventArgs e )
+		//{
+		//    BPMchipsGeneneration_Main();
+		//}
+
+		private void BPMchipsGeneneration_Main()
+		{
+			#region [ BPMレーンとHHレーンを消去(0小節目を除く) ]
+			int laneBPM = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BPM" );
+			this.mgr選択モード管理者.tレーン上の全チップを選択する( laneBPM, 1 );
+			this.tシナリオ・削除();
+
+			int laneHH = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "HH" );
+			this.mgr選択モード管理者.tレーン上の全チップを選択する( laneHH, 1 );
+			this.tシナリオ・削除();
+			#endregion
+
+			#region [ BEATレーンから、listBestPositionを生成 ]
+			int laneBEAT = this.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BEAT" );
+			List<FDK.CBeatDetect.stBeatPos> listBeatPositions = new List<CBeatDetect.stBeatPos>();
+			foreach ( KeyValuePair<int, C小節> pair in this.mgr譜面管理者.dic小節 )
+			{
+				C小節 c小節 = pair.Value;
+				for ( int index = 0; index < c小節.listチップ.Count; index++ )
+				{
+					if (  c小節.listチップ[ index ].nレーン番号0to == laneBEAT )
+					{
+						int n小節番号 = c小節.n小節番号0to3599;
+						listBeatPositions.Add(
+							new CBeatDetect.stBeatPos(
+								c小節.listチップ[ index ].f値・浮動小数,
+								n小節番号,
+								this.mgr譜面管理者.n譜面先頭からみた小節先頭の位置gridを返す( n小節番号 ) + c小節.listチップ[ index ].n位置grid,
+								c小節.listチップ[ index ].n位置grid,
+								c小節.listチップ[ index ].b裏,
+								true
+							)
+						);
+					}
+				}
+			}
+			#endregion
+
+
+			#region [ BEATチップの位置に合わせて、BPMを計算し、BPxチップを配置する ]
+
+			int n1拍目のBeatPositionIndex = 0;
+
+			int lastindex = 0;
+			for ( int index = n1拍目のBeatPositionIndex + 1; index < listBeatPositions.Count; index++ )
+			{
+				if ( listBeatPositions[ index ].b無効 )
+				{
+					continue;
+				}
+				#region [ 次の有効なBeatPointを検出する ]
+				int nextIndex = -1;
+				for ( int i = index + 1; i < listBeatPositions.Count; i++ )
+				{
+					if ( listBeatPositions[ i ].bレーン表示する && !listBeatPositions[ i ].b無効 )
+					//if ( listBeatPositions[ i ].bレーン表示する )
+					{
+						nextIndex = i;
+						break;
+					}
+				}
+				#endregion
+
+				#region [ BPMチップを置く]
+				//int lastgrid = (int) ( 192 * this.mgr譜面管理者.dic小節[ 0 ].f小節長倍率 );	// 0小節目の倍率
+				//int lastindex = n1拍目のBeatPositionIndex;
+				//int last小節番号 = nBGMチップの小節番号;
+
+				if ( nextIndex >= 0 )
+				{
+					float deltatime = listBeatPositions[ nextIndex ].fBeatTime - listBeatPositions[ index ].fBeatTime;
+
+					//int current小節番号 = listBeatPositionsLight[ index ].n小節番号;
+					//int next小節番号 = listBeatPositionsLight[ nextIndex ].n小節番号;
+					int deltagrid = listBeatPositions[ nextIndex ].nGrid - listBeatPositions[ index ].nGrid;
+
+					float fBPM = 60.0f / ( deltatime / deltagrid * 48 );		// 四分音符==48grid
+
+
+					// BPMチップを配置する(裏BEATチップに対しては、配置しない)
+					if ( nextIndex >= 0 )
+					{
+						this.mgr編集モード管理者.tBPMチップを配置する( listBeatPositions[ index ].nGrid, fBPM );
+					}
+
+
+					//this.mgr編集モード管理者.tHHチップを配置する( listBeatPositions[ index ].nGrid, 1, listBeatPositions[ index ].b無効 );	// デバッグ用・見やすくするために暫定的に。
+
+// Debug.WriteLine( "(" + index + "->" + nextIndex + "): BPM=" + fBPM + ", nGrid=" + listBeatPositions[ index ].nGrid + ", deltagrid=" + deltagrid +" , deltatime=" + deltatime );
+					lastindex = index;
+				}
+				#endregion
+			}
+			#region [ デバッグ用: HHチップを置く ]
+			//for ( int index = n1拍目のBeatPositionIndex; index < listBeatPositions.Count; index++ )
+			//{
+			//    this.mgr編集モード管理者.tHHチップを配置する( listBeatPositions[ index ].nGrid, 1, listBeatPositions[ index ].b無効 );	// デバッグ用・見やすくするために暫定的に。
+			//}
+			#endregion
+
+			#region [ listBeatPositionsの開放 ]
+			listBeatPositions.Clear();
+			listBeatPositions = null;
+			#endregion
+
+			#endregion
+		}
+
+		private void generateBeatChipsToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			GenarateBeatChip_Main();
+		}
+
+		private void generateBPMFromBeatChipsToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+			BPMchipsGeneneration_Main();
+		}
+
+		private void toolStripComboBox演奏速度_SelectedIndexChanged( object sender, EventArgs e )
+		{
+			this.b再生速度を変更した = true;
+		}
+
+		public bool DetectDTXManiaProcess()
+		{
+			bool target = false;
+//Debug.WriteLine( "process start" );
+			for ( int i = 0; i < 5; i++ )		// 検索結果のハンドルがZeroになることがあるので、200ms間隔で5回リトライする
+			{
+				#region [ 既に起動中のDTXManiaプロセスを検索する。]
+				// このやり方だと、ShowInTaskbar=falseでタスクバーに表示されないパターンの時に検索に失敗するようだが
+				// DTXManiaでそのパターンはない？のでこのままいく。
+				// FindWindowを使えばこのパターンにも対応できるが、C#でビルドするアプリはウインドウクラス名を自前指定できないので、これは使わない。
+
+				//Process current = Process.GetCurrentProcess();
+				//Process[] running = Process.GetProcessesByName( current.ProcessName );
+				string appPath = Application.ExecutablePath;
+				string processname = Path.Combine( Path.GetDirectoryName( appPath ), "DTXManiaGR.exe" );
+//Debug.WriteLine( "processname=" + processname );
+				//Process[] running = Process.GetProcesses();	// .GetProcessesByName( processname );
+
+				System.Management.ManagementClass mc =
+					new System.Management.ManagementClass( "Win32_Process" );
+				System.Management.ManagementObjectCollection moc = mc.GetInstances();
+				
+				//IntPtr hWnd = FindWindow( null, "DTXMania .NET style release " + CDTXMania.VERSION );
+
+				foreach ( System.Management.ManagementObject mo in moc )
+				{
+//Debug.WriteLine( "filename=" + mo["ExecutablePath"] );
+//Debug.WriteLine( "2" );
+if ( (string)mo[ "ExecutablePath" ] == processname )
+{
+//Debug.WriteLine( "3" );
+	//if ( mo["ProcessId"] != 0 )
+	{
+//Debug.WriteLine( "4" );
+		target = true;
+		break;
+	}
+}
+//Debug.WriteLine( "5" );
+				}
+				#endregion
+
+				#region [ 起動中のDTXManiaがいれば、そのプロセスを返す ]
+				if ( target != false )
+				{
+					break;
+				}
+				#endregion
+			}
+
+//Debug.WriteLine( "process end;" );
+			return target;
+		}
+
 		//-----------------
 		#endregion
 

@@ -270,6 +270,10 @@ namespace DTXMania
 				//}
 				this.queWailing[ k ] = new Queue<CDTX.CChip>();
 				this.r現在の歓声Chip[ k ] = null;
+                if ( CDTXMania.DTXVmode.Enabled )
+                {
+                    CDTXMania.ConfigIni.n譜面スクロール速度[ k ] = CDTXMania.ConfigIni.nViewerScrollSpeed[ k ];
+                }
 			}
 			for ( int i = 0; i < 3; i++ )
 			{
@@ -314,11 +318,19 @@ namespace DTXMania
 
             CDTXMania.Skin.tRemoveMixerAll();	// 効果音のストリームをミキサーから解除しておく
 
-            //lockmixer = new object();
-            queueMixerSound = new Queue<stmixer>(64);
-            bIsDirectSound = (CDTXMania.Sound管理.GetCurrentSoundDeviceType() == "DirectSound");
-            db再生速度 = ((double)CDTXMania.ConfigIni.n演奏速度) / 20.0;
-			bValidScore = (CDTXMania.DTXVmode.Enabled)? false : true;
+			queueMixerSound = new Queue<stmixer>( 64 );
+			bIsDirectSound = ( CDTXMania.Sound管理.GetCurrentSoundDeviceType() == "DirectSound" );
+			this.bPAUSE = false;
+			if ( CDTXMania.DTXVmode.Enabled )
+			{
+				db再生速度 = CDTXMania.DTX.dbDTXVPlaySpeed;
+				CDTXMania.ConfigIni.n演奏速度 = (int) (CDTXMania.DTX.dbDTXVPlaySpeed * 20 + 0.5 );
+			}
+			else
+			{
+				db再生速度 = ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0;
+			}
+			bValidScore = ( CDTXMania.DTXVmode.Enabled ) ? false : true;
 
 			#region [ 演奏開始前にmixer登録しておくべきサウンド(開幕してすぐに鳴らすことになるチップ音)を登録しておく ]
 			foreach ( CDTX.CChip pChip in listChip )
@@ -3069,7 +3081,8 @@ namespace DTXMania
 		{
 			// まず全サウンドオフにする
 			CDTXMania.DTX.t全チップの再生停止();
-
+            this.actAVI.Stop();
+            this.actBGA.Stop();
 
 			#region [ 再生開始小節の変更 ]
 			//int nStartBar = CDTXMania.DTXVmode.nStartBar + 1;	// +1が必要
@@ -3205,6 +3218,8 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAutoPlay.BsPick = true;
 			CDTXMania.ConfigIni.bAutoPlay.BsW = true;
 
+            this.bIsAutoPlay = CDTXMania.ConfigIni.bAutoPlay;
+
 			CDTXMania.ConfigIni.bAVI有効 = true;
 			CDTXMania.ConfigIni.bBGA有効 = true;
 			for ( int i = 0; i < 3; i++ )
@@ -3214,19 +3229,31 @@ namespace DTXMania
 				CDTXMania.ConfigIni.bLight[ i ] = false;
 				CDTXMania.ConfigIni.bReverse[ i ] = false;
 				CDTXMania.ConfigIni.nHidSud[ i ] = 0;
+                CDTXMania.ConfigIni.eRandom[ i ] = Eランダムモード.OFF;
+                CDTXMania.ConfigIni.eRandomPedal[ i ] = Eランダムモード.OFF;
+                CDTXMania.ConfigIni.n表示可能な最小コンボ数[ i ] = 65535;
                 CDTXMania.ConfigIni.判定文字表示位置.Drums = Eタイプ.C;
                 CDTXMania.ConfigIni.判定文字表示位置.Guitar = Eタイプ.D;
                 CDTXMania.ConfigIni.判定文字表示位置.Bass = Eタイプ.D;
+				// CDTXMania.ConfigIni.n譜面スクロール速度[ i ] = CDTXMania.ConfigIni.nViewerScrollSpeed[ i ];	// これだけはOn活性化()で行うこと。
+																												// そうしないと、演奏開始直後にスクロール速度が変化して見苦しい。
 			}
 
 			CDTXMania.ConfigIni.eDark = Eダークモード.OFF;
 
+            CDTXMania.ConfigIni.b演奏情報を表示する = CDTXMania.ConfigIni.bViewerShowDebugStatus;
+            CDTXMania.ConfigIni.bフィルイン有効 = true;
 			CDTXMania.ConfigIni.bScoreIniを出力する = false;
 			CDTXMania.ConfigIni.bSTAGEFAILED有効 = false;
 			CDTXMania.ConfigIni.bTight = false;
 			CDTXMania.ConfigIni.bストイックモード = false;
 			CDTXMania.ConfigIni.bドラム打音を発声する = true;
+            CDTXMania.ConfigIni.bBGM音を発声する = true;
             CDTXMania.ConfigIni.ボーナス演出を表示する = false;
+
+            CDTXMania.ConfigIni.nRisky = 0;
+            CDTXMania.ConfigIni.nShowLagType = 0;
+            CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = Eドラムコンボ文字の表示位置.OFF;
 		}
 
         public bool bCheckAutoPlay(CDTX.CChip pChip)

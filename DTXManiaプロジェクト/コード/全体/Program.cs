@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.IO;
 using FDK;
 
 namespace DTXMania
@@ -16,18 +17,35 @@ namespace DTXMania
 		//-----------------------------
 		private static Mutex mutex二重起動防止用;
 
+		private static bool tDLLの存在チェック( string strDll名, string str存在しないときに表示するエラー文字列jp, string str存在しないときに表示するエラー文字列en, bool bLoadDllCheck )
+		{
+			string str存在しないときに表示するエラー文字列 = ( CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja" ) ?
+				str存在しないときに表示するエラー文字列jp : str存在しないときに表示するエラー文字列en;
+			if ( bLoadDllCheck )
+			{
+				IntPtr hModule = LoadLibrary( strDll名 );		// 実際にLoadDll()してチェックする
+				if ( hModule == IntPtr.Zero )
+				{
+					MessageBox.Show( str存在しないときに表示するエラー文字列, "DTXMania runtime error", MessageBoxButtons.OK, MessageBoxIcon.Hand );
+					return false;
+				}
+				FreeLibrary( hModule );
+			}
+			else
+			{													// 単純にファイルの存在有無をチェックするだけ (プロジェクトで「参照」していたり、アンマネージドなDLLが暗黙リンクされるものはこちら)
+				string path = Path.Combine( System.IO.Directory.GetCurrentDirectory(), strDll名 );
+				if ( !File.Exists( path ) )
+				{
+					MessageBox.Show( str存在しないときに表示するエラー文字列, "DTXMania runtime error", MessageBoxButtons.OK, MessageBoxIcon.Hand );
+					return false;
+				}
+			}
+			return true;
+		}
 		private static bool tDLLの存在チェック( string strDll名, string str存在しないときに表示するエラー文字列jp, string str存在しないときに表示するエラー文字列en )
 		{
-			string str存在しないときに表示するエラー文字列 = (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ?
-				str存在しないときに表示するエラー文字列jp : str存在しないときに表示するエラー文字列en;
-			IntPtr hModule = LoadLibrary( strDll名 );
-			if( hModule == IntPtr.Zero )
-			{
-				MessageBox.Show( str存在しないときに表示するエラー文字列, "DTXMania runtime error", MessageBoxButtons.OK, MessageBoxIcon.Hand );
-				return false;
-			}
-			FreeLibrary( hModule );
 			return true;
+			//return tDLLの存在チェック( strDll名, str存在しないときに表示するエラー文字列jp, str存在しないときに表示するエラー文字列en, false );
 		}
 
 		#region [DllImport]
@@ -49,6 +67,9 @@ namespace DTXMania
 			{
 				string newLine = Environment.NewLine;
                 bool bDLLnotfound = false;
+
+                Trace.WriteLine( "Current Directory: " + Environment.CurrentDirectory );
+                Trace.WriteLine( "EXEのあるフォルダ: " + Path.GetDirectoryName( Application.ExecutablePath ) );
 
 				#region [DLLの存在チェック]
 				if (!tDLLの存在チェック("SlimDX" + CDTXMania.SLIMDXDLL,
@@ -164,7 +185,7 @@ namespace DTXMania
 				{
 					if ( p.Id != current.Id )	// プロセス名は同じでかつ、プロセスIDが自分自身とは異なるものを探す
 					{
-						if ( p.MainModule.FileName == current.MainModule.FileName )
+						if ( p.MainModule.FileName == current.MainModule.FileName && p.MainWindowHandle != IntPtr.Zero )
 						{
 							target = p;
 							break;
