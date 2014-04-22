@@ -578,14 +578,41 @@ namespace DTXMania
 
 				if ( strMes != null )
 				{
-//Debug.WriteLine( "msg arg=" + strMes );
 					DTXVmode.ParseArguments( strMes );
 
 					if ( DTXVmode.Enabled )
 					{
-//Debug.WriteLine( "DTXV mode is enabled," );
 						bコンパクトモード = true;
 						strコンパクトモードファイル = DTXVmode.filename;
+						if ( DTXVmode.Command == CDTXVmode.ECommand.Preview )
+						{
+							// preview soundの再生
+							string strPreviewFilename = DTXVmode.previewFilename;
+//Trace.TraceInformation( "Preview Filename=" + DTXVmode.previewFilename );
+							try
+							{
+								if ( this.previewSound != null )
+								{
+									this.previewSound.tサウンドを停止する();
+									this.previewSound.Dispose();
+									this.previewSound = null;
+								}
+								this.previewSound = CDTXMania.Sound管理.tサウンドを生成する( strPreviewFilename );
+								this.previewSound.n音量 = DTXVmode.previewVolume;
+								this.previewSound.n位置 = DTXVmode.previewPan;
+								this.previewSound.t再生を開始する();
+								Trace.TraceInformation( "DTXCからの指示で、サウンドを生成しました。({0})", strPreviewFilename );
+							}
+							catch
+							{
+								Trace.TraceError( "DTXCからの指示での、サウンドの生成に失敗しました。({0})", strPreviewFilename );
+								if ( this.previewSound != null )
+								{
+									this.previewSound.Dispose();
+								}
+								this.previewSound = null;
+							}
+						}
 					}
 				}
 			}
@@ -637,6 +664,7 @@ namespace DTXMania
 					case CStage.Eステージ.曲読み込み:
 						if ( EnumSongs != null )
 						{
+                            DTXVmode.Refreshed = false;         // 曲のリロード中に発生した再リロードは、無視する。
 							#region [ (特定条件時) 曲検索スレッドの起動・開始 ]
 							if ( r現在のステージ.eステージID == CStage.Eステージ.タイトル &&
 								 r直前のステージ.eステージID == CStage.Eステージ.起動 &&
@@ -1138,6 +1166,9 @@ for (int i = 0; i < 3; i++) {
 						#region [ *** ]
 						//-----------------------------
 
+						double n = (double)sw.ElapsedTicks / (double)Stopwatch.Frequency;
+						swlist.Add(n);
+
 						#region [ DTXVモード中にDTXCreatorから指示を受けた場合の処理 ]
 						if ( DTXVmode.Enabled && DTXVmode.Refreshed )
 						{
@@ -1153,6 +1184,12 @@ for (int i = 0; i < 3; i++) {
 								{
 									CDTXMania.stage演奏ギター画面.t停止();
 								}
+								if ( previewSound != null )
+								{
+									this.previewSound.tサウンドを停止する();
+									this.previewSound.Dispose();
+									this.previewSound = null;
+								}
 							}
 							else if ( DTXVmode.Command == CDTXVmode.ECommand.Play )
 							{
@@ -1165,6 +1202,16 @@ for (int i = 0; i < 3; i++) {
 									else
 									{
 										CDTXMania.stage演奏ギター画面.t再読込();
+									}
+
+									CDTXMania.ConfigIni.bDrums有効 = !DTXVmode.GRmode;
+									CDTXMania.ConfigIni.bGuitar有効 = true;
+									CDTXMania.ConfigIni.bTimeStretch = DTXVmode.TimeStretch;
+									CSound管理.bIsTimeStretch = DTXVmode.TimeStretch;
+									if ( CDTXMania.ConfigIni.b垂直帰線待ちを行う != DTXVmode.VSyncWait )
+									{
+										CDTXMania.ConfigIni.b垂直帰線待ちを行う = DTXVmode.VSyncWait;
+										CDTXMania.app.b次のタイミングで垂直帰線同期切り替えを行う = true;
 									}
 								}
 								else
@@ -1208,6 +1255,25 @@ for (int i = 0; i < 3; i++) {
 								#region [ 演奏キャンセル ]
 								//-----------------------------
 								scoreIni = this.tScoreIniへBGMAdjustとHistoryとPlayCountを更新( "Play canceled" );
+
+								double lastd = 0f;
+								int f = 0;
+								foreach ( double d in swlist )
+								{
+									double dif = d - lastd;
+									string s = "";
+									if ( 0.016 < dif && dif < 0.017 )
+									{
+									}
+									else
+									{
+										s = "★";
+									}
+									//Trace.TraceInformation( "frame " + f + ": " + d + " (" + dif + ")" + s );
+									lastd = d;
+									f++;
+								}
+								swlist.Clear();
 
 								#region [ プラグイン On演奏キャンセル() の呼び出し ]
 								//---------------------
@@ -1670,6 +1736,7 @@ for (int i = 0; i < 3; i++) {
 				}
 			}
 		}
+        private CSound previewSound;
 
 		private void t起動処理()
 		{
@@ -2492,7 +2559,8 @@ for (int i = 0; i < 3; i++) {
 				{
 					if ( DTXVmode.Enabled )
 					{
-						Trace.TraceInformation( "DTXVモードだったため、Config.iniは保存しません。" );
+                        DTXVmode.tUpdateConfigIni();
+                        Trace.TraceInformation( "DTXVモードの設定情報を、Config.iniに保存しました。" );
 					}
 					else
 					{
@@ -2744,6 +2812,10 @@ for (int i = 0; i < 3; i++) {
         //}
 
         //-----------------
+
+        Stopwatch sw = new Stopwatch();
+        List<double> swlist;
+
         #endregion
     }
 }
