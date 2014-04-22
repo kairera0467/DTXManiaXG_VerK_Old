@@ -19,6 +19,12 @@ namespace DTXMania
 		{
 			public CCounter ct進行;
 			public E判定 judge;
+            public float fZ軸回転度_棒;
+            public float fX方向拡大率_棒;
+			public float fY方向拡大率_棒;
+            public int n相対X座標_棒;
+			public int n相対Y座標_棒;
+            public float fZ軸回転度;
 			public float fX方向拡大率;
 			public float fY方向拡大率;
 			public int n相対X座標;
@@ -104,7 +110,7 @@ namespace DTXMania
 			}
 			if( ( ( nLane >= 10 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != Eタイプ.C ) ) && ( ( ( nLane != 13 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != Eタイプ.D ) ) && ( ( nLane != 14 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != Eタイプ.D ) ) ) )
 			{
-                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                if (CDTXMania.ConfigIni.nJudgeAnimeType != 0)
                 {
                     this.st状態[nLane].ct進行 = new CCounter(0, CDTXMania.ConfigIni.nJudgeFrames - 1, CDTXMania.ConfigIni.nJudgeInterval, CDTXMania.Timer);
                 }
@@ -115,9 +121,17 @@ namespace DTXMania
 				this.st状態[ nLane ].judge = judge;
 				this.st状態[ nLane ].fX方向拡大率 = 1f;
 				this.st状態[ nLane ].fY方向拡大率 = 1f;
+                this.st状態[ nLane ].fZ軸回転度 = 0f;
 				this.st状態[ nLane ].n相対X座標 = 0;
 				this.st状態[ nLane ].n相対Y座標 = 0;
-				this.st状態[ nLane ].n透明度 = 0xff;
+                this.st状態[ nLane ].n透明度 = 0xff;
+                
+                this.st状態[ nLane ].fZ軸回転度_棒 = 0f;
+                this.st状態[ nLane ].fX方向拡大率_棒 = 0;
+				this.st状態[ nLane ].fY方向拡大率_棒 = 0;
+				this.st状態[ nLane ].n相対X座標_棒 = 0;
+				this.st状態[ nLane ].n相対Y座標_棒 = 0;                
+
 				this.st状態[ nLane ].nLag = lag;
 			}
 		}
@@ -191,12 +205,16 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if (CDTXMania.ConfigIni.nJudgeFrames > 1)
+                if(CDTXMania.ConfigIni.nJudgeAnimeType == 1)
                 {
                     //this.tx判定文字列[0] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //this.tx判定文字列[1] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //this.tx判定文字列[2] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_judge strings.png"));
                     //2013.8.2 kairera0467 CStage演奏画面共通側で読み込むテスト。
+                }
+                else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
+                {
+                    
                 }
                 else
                 {

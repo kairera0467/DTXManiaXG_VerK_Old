@@ -1200,6 +1200,11 @@ namespace DTXMania
 		private ST選曲バー tx選曲バー;
         private CPrivateFastFont prvFont;
 
+        //2014.04.05.kairera0467 GITADORAグラデーションの色。
+        //本当は共通のクラスに設置してそれを参照する形にしたかったが、なかなかいいメソッドが無いため、とりあえず個別に設置。
+        public Color clGITADORAgradationTopColor = Color.FromArgb(0, 220, 200);
+        public Color clGITADORAgradationBottomColor = Color.FromArgb(255, 250, 40);
+
 		private int nCurrentPosition = 0;
 		private int nNumOfItems = 0;
 
@@ -1370,7 +1375,7 @@ namespace DTXMania
             prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
             Bitmap bmp;
             
-            bmp = prvFont.DrawPrivateFont( str文字, Color.White, Color.Black );
+            bmp = prvFont.DrawPrivateFont( str文字, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true );
 
             SizeF sz曲名;
 
