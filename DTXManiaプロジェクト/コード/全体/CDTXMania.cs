@@ -436,6 +436,8 @@ namespace DTXMania
 		protected override void Initialize()
 		{
 //			new GCBeep();
+            sw.Start();
+			swlist = new List<double>( 8192 );
 			if( this.listトップレベルActivities != null )
 			{
                 foreach (CActivity activity in this.listトップレベルActivities)
