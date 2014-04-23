@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="コード\00.共通\CApplicationForm.cs" />
     <Compile Include="コード\00.共通\CD3DSettings.cs" />
+    <Compile Include="コード\00.共通\COS.cs" />
     <Compile Include="コード\00.共通\CPowerManagement.cs" />
     <Compile Include="コード\00.共通\CSendMessage.cs" />
     <Compile Include="コード\00.共通\CTimerBase.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="コード\05.DirectShow\CDirectShow.cs" />
     <Compile Include="コード\05.DirectShow\CDStoWAVFileImage.cs" />
     <Compile Include="コード\05.DirectShow\MemoryRenderer.cs" />
+    <Compile Include="コード\06.Tempo\CBeatDetect.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="コード\01.フレームワーク\Properties\Resources.resx">

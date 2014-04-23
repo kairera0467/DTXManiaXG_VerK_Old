@@ -298,9 +298,11 @@ namespace DTXMania
                 #endregion
 
                 this.prv表示用フォント.Dispose();
-
+                bmpCardName.Dispose();
                 this.txネームプレート用文字 = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false);
                 image2.Dispose();
+
+                graネームプレート用.Dispose();
 
                 base.OnManagedリソースの作成();
             }
