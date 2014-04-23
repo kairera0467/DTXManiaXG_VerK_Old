@@ -3806,21 +3806,11 @@ namespace DTXMania
          */
 		protected override void t進行描画・チップ・空打ち音設定・ドラム( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
 		{
-			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
-			{
-            if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+            if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
             {
-    	            try
-	                {
-                    	pChip.bHit = true;
-                	    this.r現在の空うちドラムChip[(int)this.eチャンネルtoパッド[pChip.nチャンネル番号 - 0xb1]] = pChip;
-            	        pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 190)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
-        	        }
-    	            catch
-	                {
-                    	return;
-                	}
-            	}
+                pChip.bHit = true;
+                this.r現在の空うちドラムChip[(int)this.eチャンネルtoパッド[pChip.nチャンネル番号 - 0xb1]] = pChip;
+            	//pChip.nチャンネル番号 = ((pChip.nチャンネル番号 < 0xbc) || (pChip.nチャンネル番号 > 190)) ? ((pChip.nチャンネル番号 - 0xb1) + 0x11) : ((pChip.nチャンネル番号 - 0xb3) + 0x11);
 			}
 		}
 		protected override void t進行描画・チップ・小節線( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip )
