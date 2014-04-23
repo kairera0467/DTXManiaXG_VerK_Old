@@ -72,7 +72,7 @@ namespace DTXMania
                             base.st状態[i].n透明度 = 0;
                             */
 
-                            base.st状態[i].judge = E判定.Great;
+                            //base.st状態[i].judge = E判定.Great;
                             //nNowFrame = 22;
                             if( base.st状態[ i ].judge == E判定.Perfect )
                             {

@@ -194,6 +194,14 @@ namespace FDK
 					}
 				}
 			}
+            if ( soundDeviceType == ESoundDeviceType.ExclusiveWASAPI || soundDeviceType == ESoundDeviceType.ASIO )
+			{
+				//Bass.BASS_SetConfig( BASSConfig.BASS_CONFIG_UPDATETHREADS, 4 );
+				//Bass.BASS_SetConfig( BASSConfig.BASS_CONFIG_UPDATEPERIOD, 0 );
+
+				Trace.TraceInformation( "BASS_CONFIG_UpdatePeriod=" + Bass.BASS_GetConfig( BASSConfig.BASS_CONFIG_UPDATEPERIOD ) );
+				Trace.TraceInformation( "BASS_CONFIG_UpdateThreads=" + Bass.BASS_GetConfig( BASSConfig.BASS_CONFIG_UPDATETHREADS ) );
+			}
 		}
 
 
@@ -265,6 +273,7 @@ namespace FDK
 			return SoundDevice.tサウンドを作成する( filename );
 		}
 
+        private static DateTime lastUpdateTime = DateTime.MinValue;
 		public void t再生中の処理をする( object o )			// #26122 2011.9.1 yyagi; delegate経由の呼び出し用
 		{
 			t再生中の処理をする();
@@ -273,6 +282,17 @@ namespace FDK
 		{
 //★★★★★★★★★★★★★★★★★★★★★ダミー★★★★★★★★★★★★★★★★★★
 //			Debug.Write( "再生中の処理をする()" );
+            //DateTime now = DateTime.Now;
+            //TimeSpan ts = now - lastUpdateTime;
+            //if ( ts.Milliseconds > 5 )
+            //{
+            //    bool b = Bass.BASS_Update( 100 * 2 );
+            //    lastUpdateTime = DateTime.Now;
+            //    if ( !b )
+            //    {
+            //        Trace.TraceInformation( "BASS_UPdate() failed: " + Bass.BASS_ErrorGetCode().ToString() );
+            //    }
+            //}
 		}
 
 		public void tサウンドを破棄する( CSound csound )
@@ -1035,7 +1055,15 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			}
 			else if( this.bDirectSoundである )
 			{
-				this.Buffer.Stop();
+                try
+                {
+				    this.Buffer.Stop();
+                }
+                catch( Exception )
+                {
+                    // WASAPI/ASIOとDirectSoundを同時使用すると、Bufferがlostしてここで例外発生する。→ catchして無視する。
+                    // DTXCからDTXManiaを呼び出すと、DTXC終了時にこの現象が発生する。
+                }
 			}
 		}
 		
@@ -1459,15 +1487,18 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		{
 			if ( BassMix.BASS_Mixer_ChannelGetMixer( hBassStream ) == 0 )
 			{
-				BASSFlag bf = BASSFlag.BASS_SPEAKER_FRONT | BASSFlag.BASS_MIXER_NORAMPIN;	// | BASSFlag.BASS_MIXER_PAUSE;
+				BASSFlag bf = BASSFlag.BASS_SPEAKER_FRONT | BASSFlag.BASS_MIXER_NORAMPIN | BASSFlag.BASS_MIXER_PAUSE;
 				Interlocked.Increment( ref CSound管理.nMixing );
 
 				// preloadされることを期待して、敢えてflagからはBASS_MIXER_PAUSEを外してAddChannelした上で、すぐにPAUSEする
+				// -> ChannelUpdateでprebufferできることが分かったため、BASS_MIXER_PAUSEを使用することにした
+
 				bool b1 = BassMix.BASS_Mixer_StreamAddChannel( this.hMixer, this.hBassStream, bf );
-				bool b2 = BassMix.BASS_Mixer_ChannelPause( this.hBassStream );
+				//bool b2 = BassMix.BASS_Mixer_ChannelPause( this.hBassStream );
 				t再生位置を先頭に戻す();	// StreamAddChannelの後で再生位置を戻さないとダメ。逆だと再生位置が変わらない。
 //				Debug.WriteLine( "Add Mixer: " + Path.GetFileName( this.strファイル名 ) + " (" + hBassStream + ")" + " MixedStreams=" + CSound管理.nMixing );
-				return b1 & b2;
+				Bass.BASS_ChannelUpdate( this.hBassStream, 0 );	// pre-buffer
+				return b1;	// &b2;
 			}
 			return true;
 		}
