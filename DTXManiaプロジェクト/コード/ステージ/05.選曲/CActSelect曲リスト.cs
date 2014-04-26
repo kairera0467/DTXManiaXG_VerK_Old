@@ -938,7 +938,7 @@ namespace DTXMania
 							#region [ タイトル名テクスチャを描画。]
 							//-----------------
 							if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
-								this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 88 , y + 6 );
+								this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, x + 88, y + 6 );
 							//-----------------
 							#endregion
 							#region [ スキル値を描画。]
@@ -992,11 +992,11 @@ namespace DTXMania
 
                         if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE )
                         {
-                            this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 , 60 );
+                            this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列, 60 );
                             if( this.tx選択中の曲名テクスチャ != null )
                                 this.tx選択中の曲名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 490 );
 
-                            this.tx選択中のアーティスト名テクスチャ = this.t指定された文字テクスチャを生成する( CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.アーティスト名 , 30 );
+                            this.tx選択中のアーティスト名テクスチャ = this.t指定された文字テクスチャを生成する( CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.アーティスト名, 30 );
                             if( this.tx選択中のアーティスト名テクスチャ != null )
                                 this.tx選択中のアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 545 );
 
@@ -1364,7 +1364,7 @@ namespace DTXMania
                     #endregion
                 }
         }
-        private CTexture t指定された文字テクスチャを生成する( string str文字 , int nフォントサイズ )
+        private CTexture t指定された文字テクスチャを生成する( string str文字, int nフォントサイズ )
         {
             //2013.09.05.kairera0467 中央にしか使用することはないので、色は黒固定。
             //現在は機能しない(面倒なので実装してない)が、そのうち使用する予定。
@@ -1372,7 +1372,7 @@ namespace DTXMania
             //CPrivateFastFont
             //if(prvFont != null)
             //    prvFont.Dispose();
-            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), nフォントサイズ , FontStyle.Regular );
+            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), nフォントサイズ, FontStyle.Regular );
             Bitmap bmp;
             
             bmp = prvFont.DrawPrivateFont( str文字, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true );
