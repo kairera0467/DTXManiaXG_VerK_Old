@@ -13,8 +13,8 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            this.n本体X[0] = 30;
-            this.n本体Y = 12;
+            this.n本体X[0] = 40;
+            this.n本体Y = 13;
 
             base.On活性化();
         }

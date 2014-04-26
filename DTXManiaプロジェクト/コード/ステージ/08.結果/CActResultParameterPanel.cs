@@ -400,8 +400,8 @@ namespace DTXMania
                     double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値);
                     int num = this.ct表示用.n現在の値;
 
-                    this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[j], 249);
-                    this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, this.n本体X[j], 256);
+                    this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[j], 250);
+                    this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, this.n本体X[j], 250);
 
                     this.t小文字表示(84 + this.n本体X[j], 322, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPerfect数・Auto含まない));
                     this.t小文字表示(84 + this.n本体X[j], 352, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGreat数・Auto含まない));
@@ -419,11 +419,11 @@ namespace DTXMania
                     this.t小文字表示(168 + this.n本体X[j], 472, string.Format("{0,3:##0}%", (int)Math.Round((100.0 * CDTXMania.stage結果.st演奏記録[j].n最大コンボ数 / CDTXMania.stage結果.st演奏記録[j].n全チップ数))));
 
                     this.t大文字表示(59 + this.n本体X[j], 525, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値));
-                    this.t大文字表示(88 + this.n本体X[j], 620, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
+                    this.t大文字表示(88 + this.n本体X[j], 615, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
                     
                     if(this.tx難易度パネル != null)
-                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[j], 508, new Rectangle(0, 60 * CDTXMania.nSongDifficulty, 60, 60));
-                    this.tレベル数字描画((bCLASSIC == true ? 26 : 18) + this.n本体X[j], 534, str);
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[j], 515, new Rectangle(0, 60 * CDTXMania.nSongDifficulty, 60, 60));
+                    this.tレベル数字描画((bCLASSIC == true ? 26 : 18) + this.n本体X[j], 540, str);
 
                     string strScore = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[j].nスコア);
                     for (int i = 0; i < 7; i++)
@@ -441,12 +441,12 @@ namespace DTXMania
                         }
                         if (this.txスコア != null)
                         {
-                            this.txスコア.t2D描画(CDTXMania.app.Device, this.nスコアX[j] + (i * 34), 40, rectangle);
+                            this.txスコア.t2D描画(CDTXMania.app.Device, this.nスコアX[j] + (i * 34), 58, rectangle);
                         }
                     }
                     if (this.txスコア != null)
                     {
-                        this.txスコア.t2D描画(CDTXMania.app.Device, this.nスコアX[j], 12, new Rectangle(0, 50, 86, 28));
+                        this.txスコア.t2D描画(CDTXMania.app.Device, this.nスコアX[j], 30, new Rectangle(0, 50, 86, 28));
                     }
 
                     for (int i = 0; i < 1; i++)
