@@ -102,8 +102,6 @@ namespace DTXMania
                 //gp.AddString(this.strSongName, ff, 1, 24, new Point(0, 0), StringFormat.GenericDefault);
                 //gp.AddString(CDTXMania.DTX.ARTIST, ff, 1, 20, new Point(0, 30), StringFormat.GenericDefault);
 
-
-
                 //Pen p縁 = new Pen(Color.Black, 3f);
                 //p縁.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
                 //graphics.DrawPath(p縁, gp);
