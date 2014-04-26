@@ -385,12 +385,12 @@ namespace DTXMania
                         this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[i], this.n本体Y);
                         this.txネームプレート用文字.t2D描画(CDTXMania.app.Device, this.n本体X[i], this.n本体Y);
 
-                        this.t小文字表示(77 + this.n本体X[i], 72 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Perfect));
-                        this.t小文字表示(77 + this.n本体X[i], 102 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Great));
-                        this.t小文字表示(77 + this.n本体X[i], 132 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Good));
-                        this.t小文字表示(77 + this.n本体X[i], 162 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Poor));
-                        this.t小文字表示(77 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Miss));
-                        this.t小文字表示(77 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.最高値[i]));
+                        this.t小文字表示(80 + this.n本体X[i], 72 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Perfect));
+                        this.t小文字表示(80 + this.n本体X[i], 102 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Great));
+                        this.t小文字表示(80 + this.n本体X[i], 132 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Good));
+                        this.t小文字表示(80 + this.n本体X[i], 162 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Poor));
+                        this.t小文字表示(80 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[i].Miss));
+                        this.t小文字表示(80 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.最高値[i]));
 
                         int n現在のノーツ数 =
                             CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[i].Perfect +
@@ -426,8 +426,8 @@ namespace DTXMania
                         this.t小文字表示(167 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,3:##0}%", dbMISS率));
                         this.t小文字表示(167 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,3:##0}%", dbMAXCOMBO率));
 
-                        this.t大文字表示(59 + this.n本体X[i], 276 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ギター画面.actGraph.dbグラフ値現在_渡));
-                        this.t大文字表示(91 + this.n本体X[i], 370 + this.n本体Y, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ギター画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
+                        this.t大文字表示(60 + this.n本体X[i], 275 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ギター画面.actGraph.dbグラフ値現在_渡));
+                        this.t大文字表示(90 + this.n本体X[i], 365 + this.n本体Y, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ギター画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
 
                         this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[i], 266 + this.n本体Y, new Rectangle(0, 60 * nIndex, 60, 60));
                         this.tレベル数字描画((bCLASSIC == true ? 27 : 18) + this.n本体X[i], 292 + this.n本体Y, str);

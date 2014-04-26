@@ -54,7 +54,7 @@ namespace DTXMania
 
             if (CDTXMania.ConfigIni.bDrums有効)
             {
-                this.n曲名X = 900;
+                this.n曲名X = 950;
                 this.n曲名Y = 630;
             }
             else if (CDTXMania.ConfigIni.bGuitar有効)
@@ -98,8 +98,8 @@ namespace DTXMania
                 this.SetPanelString(this.strパネル文字列);
 
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
-                prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 15, FontStyle.Regular );
-                prvFontB = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 10, FontStyle.Regular );
+                prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 20, FontStyle.Regular );
+                prvFontB = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 15, FontStyle.Regular );
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
 
@@ -221,7 +221,7 @@ namespace DTXMania
                     this.txジャケット画像.t3D描画(CDTXMania.app.Device, mat);
 
                 this.txSongName.t2D描画( CDTXMania.app.Device, this.n曲名X, this.n曲名Y );
-                this.txArtistName.t2D描画( CDTXMania.app.Device, this.n曲名X, this.n曲名Y + 30 );
+                this.txArtistName.t2D描画( CDTXMania.app.Device, this.n曲名X, this.n曲名Y + 35 );
             }
             return 0;
         }
