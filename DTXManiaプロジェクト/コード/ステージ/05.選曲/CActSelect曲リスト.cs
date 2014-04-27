@@ -536,6 +536,9 @@ namespace DTXMania
             this.tx上部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_header song list.png"), false);
             this.tx下部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_footer song list.png"), false);
 
+            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 30, FontStyle.Regular );
+            prvFontSmall = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 15, FontStyle.Regular );
+
 			for( int i = 0; i < 13; i++ )
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
 
@@ -615,10 +618,20 @@ namespace DTXMania
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Score );
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Box );
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Other );
-            CDTXMania.t安全にDisposeする( ref this.tx選択中の曲名テクスチャ );
-            CDTXMania.t安全にDisposeする( ref this.tx選択中のアーティスト名テクスチャ );
             CDTXMania.t安全にDisposeする( ref this.tx上部パネル );
             CDTXMania.t安全にDisposeする( ref this.tx下部パネル );
+            prvFont.Dispose();
+            prvFontSmall.Dispose();
+            if( this.tx選択中の曲名テクスチャ != null )
+            {
+                this.tx選択中の曲名テクスチャ.Dispose();
+                this.tx選択中の曲名テクスチャ = null;
+            }
+            if( this.tx選択中のアーティスト名テクスチャ != null )
+            {
+                this.tx選択中のアーティスト名テクスチャ.Dispose();
+                this.tx選択中のアーティスト名テクスチャ = null;
+            }
 
 			base.OnManagedリソースの解放();
 		}
@@ -787,7 +800,17 @@ namespace DTXMania
 						this.n現在のスクロールカウンタ -= 100;
 						this.n目標のスクロールカウンタ -= 100;
 
-						this.t選択曲が変更された(false);				// スクロールバー用に今何番目を選択しているかを更新
+						this.t選択曲が変更された( false );				// スクロールバー用に今何番目を選択しているかを更新
+                        if( this.tx選択中の曲名テクスチャ != null )
+                        {
+                            this.tx選択中の曲名テクスチャ.Dispose();
+                            this.tx選択中の曲名テクスチャ = null;
+                        }
+                        if( this.tx選択中のアーティスト名テクスチャ != null )
+                        {
+                            this.tx選択中のアーティスト名テクスチャ.Dispose();
+                            this.tx選択中のアーティスト名テクスチャ = null;
+                        }
 
 						if( this.n目標のスクロールカウンタ == 0 )
 							CDTXMania.stage選曲.t選択曲変更通知();		// スクロール完了＝選択曲変更！
@@ -843,7 +866,17 @@ namespace DTXMania
 						this.n現在のスクロールカウンタ += 100;
 						this.n目標のスクロールカウンタ += 100;
 
-						this.t選択曲が変更された(false);				// スクロールバー用に今何番目を選択しているかを更新
+						this.t選択曲が変更された( false );				// スクロールバー用に今何番目を選択しているかを更新
+                        if( this.tx選択中の曲名テクスチャ != null )
+                        {
+                            this.tx選択中の曲名テクスチャ.Dispose();
+                            this.tx選択中の曲名テクスチャ = null;
+                        }
+                        if( this.tx選択中のアーティスト名テクスチャ != null )
+                        {
+                            this.tx選択中のアーティスト名テクスチャ.Dispose();
+                            this.tx選択中のアーティスト名テクスチャ = null;
+                        }
 						
 						if( this.n目標のスクロールカウンタ == 0 )
 							CDTXMania.stage選曲.t選択曲変更通知();		// スクロール完了＝選択曲変更！
@@ -992,14 +1025,15 @@ namespace DTXMania
 
                         if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE )
                         {
-                            this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列, 60 );
+                            if( this.tx選択中の曲名テクスチャ == null )
+                                this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
+                            if( this.tx選択中のアーティスト名テクスチャ == null )
+                                this.tx選択中のアーティスト名テクスチャ = this.t指定された文字テクスチャを生成する_小( CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.アーティスト名 );
+
                             if( this.tx選択中の曲名テクスチャ != null )
                                 this.tx選択中の曲名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 490 );
-
-                            this.tx選択中のアーティスト名テクスチャ = this.t指定された文字テクスチャを生成する( CDTXMania.stage選曲.r現在選択中のスコア.譜面情報.アーティスト名, 30 );
                             if( this.tx選択中のアーティスト名テクスチャ != null )
                                 this.tx選択中のアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 60, 545 );
-
                         }
 
                         //-----------------
@@ -1199,6 +1233,7 @@ namespace DTXMania
         private STバー tx曲名バー;
 		private ST選曲バー tx選曲バー;
         private CPrivateFastFont prvFont;
+        private CPrivateFastFont prvFontSmall;
 
         //2014.04.05.kairera0467 GITADORAグラデーションの色。
         //本当は共通のクラスに設置してそれを参照する形にしたかったが、なかなかいいメソッドが無いため、とりあえず個別に設置。
@@ -1364,7 +1399,7 @@ namespace DTXMania
                     #endregion
                 }
         }
-        private CTexture t指定された文字テクスチャを生成する( string str文字, int nフォントサイズ )
+        private CTexture t指定された文字テクスチャを生成する( string str文字 )
         {
             //2013.09.05.kairera0467 中央にしか使用することはないので、色は黒固定。
             //現在は機能しない(面倒なので実装してない)が、そのうち使用する予定。
@@ -1372,38 +1407,19 @@ namespace DTXMania
             //CPrivateFastFont
             //if(prvFont != null)
             //    prvFont.Dispose();
-            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), nフォントサイズ, FontStyle.Regular );
-            Bitmap bmp;
             
+            Bitmap bmp;
             bmp = prvFont.DrawPrivateFont( str文字, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true );
-
-            SizeF sz曲名;
-
-            #region [ 曲名表示に必要となるサイズを取得する。]
-            //-----------------
-            using( var bmpDummy = new Bitmap(1, 1) )
-            {
-                var g = Graphics.FromImage( bmpDummy );
-                g.PageUnit = GraphicsUnit.Pixel;
-                sz曲名 = g.MeasureString( str文字, this.ft曲リスト用フォント);
-                //this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int)g.MeasureString(str文字, this.ft曲リスト用フォント).Width;
-            }
-            //-----------------
-            #endregion
-            int n最大幅px = 500;
-            int height = 25;
-            int width = (int)((sz曲名.Width + 2) * 0.5f);
-            if (width > (CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2))
-                width = CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2;	// 右端断ち切れ仕方ないよね
-
-            float f拡大率X = (width <= n最大幅px) ? 0.5f : (((float)n最大幅px / (float)width) * 0.5f);	// 長い文字列は横方向に圧縮。
-
             CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
+            bmp.Dispose();
 
-            if( tx文字テクスチャ != null )
-                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( f拡大率X, 0.5f, 1f );
-
-            //prvFont.Dispose();
+            return tx文字テクスチャ;
+        }
+        private CTexture t指定された文字テクスチャを生成する_小( string str文字 )
+        {
+            Bitmap bmp;
+            bmp = prvFontSmall.DrawPrivateFont( str文字, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true );
+            CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
             bmp.Dispose();
 
             return tx文字テクスチャ;
