@@ -529,50 +529,45 @@ namespace DTXMania
             
             //後に変数にしてギターベースなどでも正常に表示できるようにする予定
             STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
-            n表記するLEVEL.Drums = cdtx.LEVEL.Drums / 10.0;
-            n表記するLEVEL.Drums += ( cdtx.LEVELDEC.Drums != 0 ? cdtx.LEVELDEC.Drums / 100.0 : 0 );
-            int DTXLevel = cdtx.LEVEL.Drums;
-            double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL.Drums);
 
-            string strLevel = string.Format( "{0:0.00}", n表記するLEVEL.Drums );
+            if (CDTXMania.ConfigIni.bDrums有効)
+            {
+                int i = 0;
 
-            if (cdtx.LEVEL.Drums > 100)
-            {
-                DTXLevel = cdtx.LEVEL.Drums / 100;
-                DTXLevelDeci = (cdtx.LEVEL.Drums - (DTXLevel * 100));
-            }
-            else
-            {
-                DTXLevel = cdtx.LEVEL.Drums / 10;
-                DTXLevelDeci = ( cdtx.LEVEL.Drums - DTXLevel * 10 );
-            }
+                n表記するLEVEL[i] = cdtx.LEVEL[i] / 10.0;
+                n表記するLEVEL[i] += (cdtx.LEVELDEC[i] != 0 ? cdtx.LEVELDEC[i] / 100.0 : 0);
+                int DTXLevel = cdtx.LEVEL[i];
+                double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL[i]);
 
-            if( bCLASSIC && !cdtx.b強制的にXG譜面にする )
-            {
-                if( CDTXMania.ConfigIni.bDrums有効 )
+                string strLevel = string.Format("{0:0.00}", n表記するLEVEL[i]);
+
+                if (cdtx.LEVEL[i] > 99)
                 {
-                    DTXLevel = cdtx.LEVEL.Drums;
-                    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
-                    //this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                    DTXLevel = cdtx.LEVEL[i] / 100;
+                    DTXLevelDeci = (cdtx.LEVEL[i] - (DTXLevel * 100));
+                }
+                else
+                {
+                    DTXLevel = cdtx.LEVEL[i] / 10;
+                    DTXLevelDeci = (cdtx.LEVEL[i] - DTXLevel * 10);
                 }
 
-            }
-            else
-            {
-                if( CDTXMania.ConfigIni.bDrums有効 )
+                if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
                 {
-                    //this.t大文字表示(335, 218, string.Format("{0:0}", DTXLevel));
+                    DTXLevel = cdtx.LEVEL[i];
+                    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                }
+                else
+                {
                     this.t大文字表示(335, 218, string.Format("{0:0}", strLevel.Substring(0, 1)));
                     this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
-                    if (cdtx.LEVEL.Drums > 100)
+                    if (cdtx.LEVEL[i] > 99)
                     {
                         this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci));
                     }
                     else
                     {
-                        //this.t小文字表示(366, 238, string.Format("{0:0}", DTXLevelDeci));
                         this.t小文字表示(354, 236, string.Format("{0:00}", strLevel.Substring(1, 3)));
-                        //this.txLevel.t2D描画(CDTXMania.app.Device, 378, 238, new Rectangle(13, 40, 13, 22));
                     }
                 }
             }
