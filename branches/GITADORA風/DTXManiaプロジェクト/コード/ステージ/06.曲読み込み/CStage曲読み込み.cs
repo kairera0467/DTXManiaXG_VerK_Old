@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.IO;
 using SlimDX;
+using SlimDX.Direct3D9;
 using System.Drawing.Text;
 using FDK;
 
@@ -263,20 +264,9 @@ namespace DTXMania
                     if ((this.str曲タイトル != null) && (this.str曲タイトル.Length > 0))
                     {
                         pfタイトル = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 40, FontStyle.Regular);
-                        this.ftタイトル表示用フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 40, FontStyle.Bold, GraphicsUnit.Pixel);
-
-                        Bitmap image1 = new Bitmap(1, 1);
-                        Graphics graphics1 = Graphics.FromImage(image1);
-
-                        SizeF ef = graphics1.MeasureString(this.str曲タイトル, this.ftタイトル表示用フォント);
-                        Size size = new Size((int)Math.Ceiling((double)ef.Width), (int)Math.Ceiling((double)ef.Height));
-                        Bitmap bmpSongName = new Bitmap(size.Width, size.Height);
-
+                        Bitmap bmpSongName = new Bitmap(1, 1);
                         bmpSongName = pfタイトル.DrawPrivateFont(this.str曲タイトル, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
                         this.txタイトル = CDTXMania.tテクスチャの生成(bmpSongName, false);
-
-                        graphics1.Dispose();
-                        image1.Dispose();
                         bmpSongName.Dispose();
                     }
                     else
@@ -287,19 +277,9 @@ namespace DTXMania
                     if ((this.strアーティスト名 != null) && (this.strアーティスト名.Length > 0))
                     {
                         pfアーティスト = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 30, FontStyle.Regular);
-                        this.ftアーティスト名表示フォント = new Font(CDTXMania.ConfigIni.str選曲リストフォント, 30, FontStyle.Bold, GraphicsUnit.Pixel);
-
-                        Bitmap image2 = new Bitmap(1, 1);
-                        Graphics graphics2 = Graphics.FromImage(image2);
-                        SizeF ef2 = graphics2.MeasureString(this.strアーティスト名, this.ftアーティスト名表示フォント);
-                        Size size2 = new Size((int)Math.Ceiling((double)ef2.Width), (int)Math.Ceiling((double)ef2.Height));
-                        Bitmap bmpArtistName = new Bitmap(size2.Width, size2.Height);
-
+                        Bitmap bmpArtistName = new Bitmap(1, 1);
                         bmpArtistName = pfアーティスト.DrawPrivateFont(this.strアーティスト名, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
                         this.txアーティスト = CDTXMania.tテクスチャの生成(bmpArtistName, false);
-
-                        graphics2.Dispose();
-                        image2.Dispose();
                         bmpArtistName.Dispose();
                     }
                     else
@@ -674,8 +654,6 @@ namespace DTXMania
         private CTexture txRISKY;
         private ST泡[] st泡 = new ST泡[8];
 
-        private Font ftタイトル表示用フォント;
-        private Font ftアーティスト名表示フォント;
         private CPrivateFastFont pfタイトル;
         private CPrivateFastFont pfアーティスト;
 
