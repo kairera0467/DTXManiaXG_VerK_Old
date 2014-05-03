@@ -474,7 +474,7 @@ namespace DTXMania
 						}
 						int x = this.n本体X + 0x52;
 						int y = this.n本体Y + 0x5f + nDispPosYOffset[ ( CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0 ), i ];
-                        Rectangle rectMaxrank = new Rectangle(110 * i, 0, 110, 70);
+                        Rectangle rectMaxrank = new Rectangle(110 * nMaxRank, 0, 110, 70);
                         if (this.txスキルアイコン != null)
 						{
                             this.txスキルアイコン.t2D描画(CDTXMania.app.Device, x, y, rectMaxrank );
