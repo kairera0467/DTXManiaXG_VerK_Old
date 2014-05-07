@@ -370,37 +370,6 @@ namespace DTXMania
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
             CDTX cdtx = new CDTX(strDTXファイルパス, true);
 
-            if (CDTXMania.ConfigIni.bDrums有効)
-            {
-                int i = 0;
-
-                int DTXLevel = cdtx.LEVEL[i];
-
-                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする)
-                {
-                    this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
-                }
-                else
-                {
-                    double DTXLevelDeci = 0;
-
-                    if (cdtx.LEVEL[i] > 99)
-                    {
-                        DTXLevel = cdtx.LEVEL[i] / 100;
-                        DTXLevelDeci = cdtx.LEVEL[i] - (DTXLevel * 100);
-                    }
-                    else
-                    {
-                        DTXLevel = cdtx.LEVEL[i] / 10;
-                        DTXLevelDeci = ((cdtx.LEVEL[i] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[i];
-                    }
-
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
-                    this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
-                    this.t大文字表示(357, 152, string.Format("{0:00}", DTXLevelDeci));
-                }
-            }
-
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
             if (!File.Exists(path))
             {
@@ -436,6 +405,83 @@ namespace DTXMania
             }
 
             this.txジャケット.Dispose();
+
+            if (CDTXMania.ConfigIni.bDrums有効)
+            {
+                int i = 0;
+
+                int DTXLevel = cdtx.LEVEL[i];
+                double DTXLevelDeci = cdtx.LEVELDEC[i];
+
+                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする)
+                {
+                    this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
+                }
+                else
+                {
+                    if (cdtx.LEVEL[i] > 99)
+                    {
+                        DTXLevel = cdtx.LEVEL[i] / 100;
+                        DTXLevelDeci = cdtx.LEVEL[i] - (DTXLevel * 100);
+                    }
+                    else
+                    {
+                        DTXLevel = cdtx.LEVEL[i] / 10;
+                        DTXLevelDeci = ((cdtx.LEVEL[i] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[i];
+                    }
+
+                    this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
+                    this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
+                    this.t大文字表示(357, 152, string.Format("{0:00}", DTXLevelDeci));
+                }
+            }
+
+            if (CDTXMania.ConfigIni.bGuitar有効)
+            {
+                int i = 0;
+                int j = 0;
+
+                if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
+                    i = 1;
+
+                for (int k = 1; k < 3; k++)
+                {
+                    i++;
+
+                    if (i == 3)
+                        i = 1;
+
+                    int DTXLevel = cdtx.LEVEL[i];
+                    double DTXLevelDeci = cdtx.LEVELDEC[i];
+
+                    if (DTXLevel != 0 || DTXLevelDeci != 0)
+                    {
+                        if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする)
+                        {
+                            this.t大文字表示(187 + j, 152, string.Format("{0:00}", DTXLevel));
+                        }
+                        else
+                        {
+                            if (cdtx.LEVEL[i] > 99)
+                            {
+                                DTXLevel = cdtx.LEVEL[i] / 100;
+                                DTXLevelDeci = cdtx.LEVEL[i] - (DTXLevel * 100);
+                            }
+                            else
+                            {
+                                DTXLevel = cdtx.LEVEL[i] / 10;
+                                DTXLevelDeci = ((cdtx.LEVEL[i] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[i];
+                            }
+
+                            this.txLevel.t2D描画(CDTXMania.app.Device, 307 + j, 243, new Rectangle(1000, 92, 30, 38));
+                            this.t大文字表示(187 + j, 152, string.Format("{0:0}", DTXLevel));
+                            this.t大文字表示(357 + j, 152, string.Format("{0:00}", DTXLevelDeci));
+                        }
+
+                        j = 700;
+                    }
+                }
+            }
             //-----------------------------
             #endregion
 
