@@ -308,7 +308,7 @@ namespace DTXMania
                         int nDispPosX = this.n本体X + 0x21;
 						int nDispPosY = this.n本体Y + 0x84 + nDispPosYOffset[ (CDTXMania.ConfigIni.bIsSwappedGuitarBass? 1 : 0), i ];
 						int nLevel = this.n現在選択中の曲のレベル[ i ];
-                        double dbLevel = this.n現在選択中の曲のレベル[ i ] / 100;
+
 						if( nLevel < 0 )
 						{
 							nLevel = 0;
@@ -317,50 +317,41 @@ namespace DTXMania
 						{
 							nLevel = 999;
 						}
+
                         if ( !this.b現在選択中の曲に譜面がある[ i ] )
 						{
-                            rect百の位 = this.rc数字[ 11 ];
+                            rect百の位 = this.rc数字[ 11 ];     // "-"
 							rect十の位 = this.rc数字[ 11 ];		// "-"
 							rect一の位 = this.rc数字[ 11 ];		// "-"
 						}
                         else if ( cスコア.譜面情報.レベルを非表示にする || nLevel == 0 )
 						{
-                            rect百の位 = this.rc数字[ 10 ];
+                            rect百の位 = this.rc数字[ 10 ];     // "?"
 							rect十の位 = this.rc数字[ 10 ];		// "?"
 							rect一の位 = this.rc数字[ 10 ];		// "?"
 						}
 						else
 						{
-                            rect百の位 = this.rc数字[( nLevel / 100 )];
-                            if (nLevel > 100)
+                            rect百の位 = this.rc数字[ nLevel / 100 ];
+                            if ( nLevel > 99 )
                             {
-                                nLevel = nLevel / 10;
-                                rect十の位 = this.rc数字[nLevel / 10];
-                                rect一の位 = this.rc数字[nLevel % 10];
+                                rect十の位 = this.rc数字[ nLevel / 10 - ( (nLevel / 100) * 10) ];
+                                rect一の位 = this.rc数字[ nLevel % 10 ];
+                            }
+                            else if ( CDTXMania.ConfigIni.b難易度表示をXG表示にする == true )
+                            {
+                                    rect百の位 = this.rc数字[ nLevel / 10 ];
+                                    rect十の位 = this.rc数字[ nLevel % 10 ];
+                                    rect一の位 = this.rc数字[ nLevel / 100 ];
                             }
                             else
                             {
 							    rect十の位 = this.rc数字[ nLevel / 10 ];
 							    rect一の位 = this.rc数字[ nLevel % 10 ];
                             }
-                            if(CDTXMania.ConfigIni.b難易度表示をXG表示にする == true)
-                            {
-                                if (this.n現在選択中の曲のレベル[i] < 100)
-                                {
-                                    dbLevel = this.n現在選択中の曲のレベル[i] / 10;
-                                    rect百の位 = this.rc数字[ (int)dbLevel ];
-                                    rect十の位 = this.rc数字[ nLevel % 10  ];
-                                    rect一の位 = this.rc数字[ nLevel / 100 ];
-                                }
-                                else
-                                {
-                                    rect百の位 = this.rc数字[ nLevel / 10 ];
-                                    rect十の位 = this.rc数字[ (nLevel % 10) ];
-                                    rect一の位 = this.rc数字[ this.n現在選択中の曲のレベル[i] - (nLevel * 10)];
-                                }
-                            }
 						}
-                        if (CDTXMania.ConfigIni.b難易度表示をXG表示にする || this.n現在選択中の曲のレベル[i] > 99)
+
+                        if ( CDTXMania.ConfigIni.b難易度表示をXG表示にする || this.n現在選択中の曲のレベル[i] > 99 )
                         {
                             this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX - 14, nDispPosY, rect百の位 );
                             this.txレベル数字.t2D描画( CDTXMania.app.Device, nDispPosX + 02, nDispPosY, rect小数点 );
