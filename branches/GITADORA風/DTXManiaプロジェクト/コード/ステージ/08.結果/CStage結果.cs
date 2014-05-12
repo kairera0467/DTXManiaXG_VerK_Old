@@ -47,7 +47,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actParameterPanel = new CActResultParameterPanel() );
 			base.list子Activities.Add( this.actRank = new CActResultRank() );
 			base.list子Activities.Add( this.actSongBar = new CActResultSongBar() );
-			base.list子Activities.Add( this.actOption = new CActオプションパネル() );
+			//base.list子Activities.Add( this.actOption = new CActオプションパネル() );
 			base.list子Activities.Add( this.actFI = new CActFIFOWhite() );
 			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
 		}
@@ -565,7 +565,7 @@ namespace DTXMania
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private CActFIFOWhite actFI;
 		private CActFIFOBlack actFO;
-		private CActオプションパネル actOption;
+		//private CActオプションパネル actOption;
 		private CActResultParameterPanel actParameterPanel;
 		private CActResultRank actRank;
 		private CActResultImage actResultImage;

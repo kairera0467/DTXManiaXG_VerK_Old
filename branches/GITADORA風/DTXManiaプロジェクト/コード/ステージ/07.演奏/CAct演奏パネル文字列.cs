@@ -159,15 +159,15 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.bDrums有効)
                 {
-                    this.nジャケットX = 985;
-                    this.nジャケットY = 378;
+                    this.nジャケットX = 915;
+                    this.nジャケットY = 287;
 
                     //this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
                     //this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
                     //this.txジャケット画像.fZ軸中心回転 = 0.3f;
                     //this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
                     mat *= SlimDX.Matrix.Scaling(245.0f / this.txジャケット画像.sz画像サイズ.Width, 245.0f / this.txジャケット画像.sz画像サイズ.Height, 1f);
-                    mat *= SlimDX.Matrix.Translation(440f, -335f, 0f);
+                    mat *= SlimDX.Matrix.Translation(400f, -227f, 0f);
                     mat *= SlimDX.Matrix.RotationZ(0.3f);
                 }
 
