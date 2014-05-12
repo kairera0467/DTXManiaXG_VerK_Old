@@ -28,7 +28,7 @@ namespace DTXMania
             base.list子Activities.Add(this.actFIFO = new CActFIFOWhite());
             base.list子Activities.Add(this.actList = new CActConfigList());
             base.list子Activities.Add(this.actKeyAssign = new CActConfigKeyAssign());
-            base.list子Activities.Add(this.actオプションパネル = new CActオプションパネル());
+            //base.list子Activities.Add(this.actオプションパネル = new CActオプションパネル());
             base.b活性化してない = true;
         }
 
@@ -451,7 +451,7 @@ namespace DTXMania
         private CActFIFOWhite actFIFO;
         private CActConfigKeyAssign actKeyAssign;
         private CActConfigList actList;
-        private CActオプションパネル actオプションパネル;
+        //private CActオプションパネル actオプションパネル;
         private bool bメニューにフォーカス中;
         private STキー反復用カウンタ ctキー反復用;
         private const int DESC_H = 0x80;
