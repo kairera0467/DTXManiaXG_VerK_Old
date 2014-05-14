@@ -283,7 +283,7 @@ namespace DTXMania
             this.bAUTOでないチップが１つでもバーを通過した = false;
             base.On活性化();
             this.tステータスパネルの選択();
-            this.tパネル文字列の設定();
+            //this.tパネル文字列の設定();
             this.nJudgeLinePosY.Drums = (CDTXMania.ConfigIni.bReverse.Drums ? 159 + CDTXMania.ConfigIni.nJudgeLine.Drums : 561 - CDTXMania.ConfigIni.nJudgeLine.Drums);
             this.nJudgeLinePosY.Guitar = (CDTXMania.ConfigIni.bReverse.Guitar ? 611 - CDTXMania.ConfigIni.nJudgeLine.Guitar : 154 + CDTXMania.ConfigIni.nJudgeLine.Guitar);
             this.nJudgeLinePosY.Bass = (CDTXMania.ConfigIni.bReverse.Bass ? 611 - CDTXMania.ConfigIni.nJudgeLine.Bass : 154 + CDTXMania.ConfigIni.nJudgeLine.Bass);
@@ -632,7 +632,7 @@ namespace DTXMania
         protected CAct演奏判定文字列共通 actJudgeString;
         protected CAct演奏DrumsレーンフラッシュD actLaneFlushD;
         protected CAct演奏レーンフラッシュGB共通 actLaneFlushGB;
-        protected CAct演奏パネル文字列 actPanel;
+//      protected CAct演奏パネル文字列 actPanel;
         protected CAct演奏演奏情報 actPlayInfo;
         public CAct演奏RGB共通 actRGB;
         public CAct演奏スコア共通 actScore;
@@ -2173,14 +2173,15 @@ namespace DTXMania
         }
 
 
-        protected abstract void t進行描画・AVI();
-        protected void t進行描画・AVI(int x, int y)
+//      protected abstract void t進行描画・AVI();
+        protected void t進行描画・AVI()
         {
             if (((base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED) && (base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト)) && (!CDTXMania.ConfigIni.bストイックモード))
             {
-                this.actAVI.t進行描画(x, y);
+                this.actAVI.t進行描画(0, 0);
             }
         }
+        /*
         protected abstract void t進行描画・BGA();
         protected void t進行描画・BGA(int x, int y)
         {
@@ -2189,6 +2190,7 @@ namespace DTXMania
                 this.actBGA.t進行描画(x, y);
             }
         }
+         */
         protected abstract void t進行描画・DANGER();
         protected void t進行描画・MIDIBGM()
         {
@@ -2239,18 +2241,21 @@ namespace DTXMania
         {
             this.actChipFireGB.On進行描画();
         }
+
+        /*
         protected abstract void t進行描画・パネル文字列();
-        protected void t進行描画・パネル文字列(int x, int y)
+        protected void t進行描画・パネル文字列()
         {
             if ((base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED) && (base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト))
             {
-                this.actPanel.t進行描画(x, y);
+                this.actPanel.t進行描画();
             }
         }
         protected void tパネル文字列の設定()
         {
             this.actPanel.SetPanelString(string.IsNullOrEmpty(CDTXMania.DTX.PANEL) ? CDTXMania.stage選曲.r確定された曲.strタイトル : CDTXMania.DTX.PANEL);
         }
+         */
 
         protected void t進行描画・ゲージ()
         {

@@ -14,6 +14,7 @@ namespace DTXMania
     {
         // メソッド
 
+        /*
         public void SetPanelString(string str)
         {
             this.strパネル文字列 = str;
@@ -46,6 +47,7 @@ namespace DTXMania
                 }
             }
         }
+         */
 
         // CActivity 実装
 
@@ -64,8 +66,8 @@ namespace DTXMania
             }
 
             this.ft表示用フォント = new Font(CDTXMania.ConfigIni.str曲名表示フォント, 26f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.n文字列の長さdot = 0;
-            this.txPanel = null;
+//          this.n文字列の長さdot = 0;
+//          this.txPanel = null;
             this.ct進行用 = new CCounter();
             base.On活性化();
         }
@@ -76,7 +78,7 @@ namespace DTXMania
                 this.ft表示用フォント.Dispose();
                 this.ft表示用フォント = null;
             }
-            CDTXMania.tテクスチャの解放(ref this.txPanel);
+//          CDTXMania.tテクスチャの解放(ref this.txPanel);
             this.ct進行用 = null;
             base.On非活性化();
         }
@@ -95,7 +97,7 @@ namespace DTXMania
                     this.txジャケット画像 = CDTXMania.tテクスチャの生成(path);
                 }
 
-                this.SetPanelString(this.strパネル文字列);
+//              this.SetPanelString(this.strパネル文字列);
 
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
                 if (string.IsNullOrEmpty(CDTXMania.DTX.TITLE) || (!CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする))
@@ -123,9 +125,11 @@ namespace DTXMania
         {
             if ( !base.b活性化してない )
             {
-                CDTXMania.tテクスチャの解放( ref this.txPanel );
+//              CDTXMania.tテクスチャの解放( ref this.txPanel );
                 CDTXMania.tテクスチャの解放( ref this.txSongName );
                 CDTXMania.tテクスチャの解放( ref this.txArtistName );
+                CDTXMania.tテクスチャの解放( ref this.txジャケットパネル );
+                CDTXMania.tテクスチャの解放( ref this.txジャケット画像 );
                 base.OnManagedリソースの解放();
             }
         }
@@ -133,10 +137,11 @@ namespace DTXMania
         {
             throw new InvalidOperationException("t進行描画(x,y)のほうを使用してください。");
         }
-        public int t進行描画(int x, int y)
+        public int t進行描画()
         {
             if (!base.b活性化してない)
             {
+                /*
                 //this.ct進行用.t進行Loop();
                 if ((string.IsNullOrEmpty(this.strパネル文字列) || (this.txPanel == null)) || (this.ct進行用 == null))
                 {
@@ -154,6 +159,7 @@ namespace DTXMania
                 {
                     rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
                 }
+                 */
 
                 SlimDX.Matrix mat = SlimDX.Matrix.Identity;
 
@@ -162,10 +168,13 @@ namespace DTXMania
                     this.nジャケットX = 915;
                     this.nジャケットY = 287;
 
-                    //this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
-                    //this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
-                    //this.txジャケット画像.fZ軸中心回転 = 0.3f;
-                    //this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
+                    /*
+                    this.txジャケット画像.vc拡大縮小倍率.X = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Width);
+                    this.txジャケット画像.vc拡大縮小倍率.Y = 245.0f / ((float)this.txジャケット画像.sz画像サイズ.Height);
+                    this.txジャケット画像.fZ軸中心回転 = 0.3f;
+                    this.txジャケット画像.t2D描画(CDTXMania.app.Device, 960, 350, new Rectangle(0, 0, this.txジャケット画像.sz画像サイズ.Width, this.txジャケット画像.sz画像サイズ.Height));
+                     */
+
                     mat *= SlimDX.Matrix.Scaling(245.0f / this.txジャケット画像.sz画像サイズ.Width, 245.0f / this.txジャケット画像.sz画像サイズ.Height, 1f);
                     mat *= SlimDX.Matrix.Translation(400f, -227f, 0f);
                     mat *= SlimDX.Matrix.RotationZ(0.3f);
@@ -206,14 +215,14 @@ namespace DTXMania
         //-----------------
         private CCounter ct進行用;
         private Font ft表示用フォント;
-        private int n文字列の長さdot;
+//      private int n文字列の長さdot;
         private int n曲名X;
         private int n曲名Y;
         private int nジャケットX;
         private int nジャケットY;
-        private string strパネル文字列;
+//      private string strパネル文字列;
         private string strSongName;
-        private CTexture txPanel;
+//      private CTexture txPanel;
         private CTexture txジャケットパネル;
         private CTexture txジャケット画像;
         private CTexture txSongName;
