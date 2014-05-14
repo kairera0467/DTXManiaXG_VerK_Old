@@ -331,14 +331,16 @@ namespace DTXMania
 			this.tチップのヒット処理・BadならびにTight時のMiss( part, nLane, E楽器パート.GUITAR );
 		}
 
+        /*
 		protected override void t進行描画・AVI()
 		{
 		    base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
-		    //base.t進行描画・BGA( 500, 50 );
+		    base.t進行描画・BGA( 500, 50 );
 		}
+         */
 		protected override void t進行描画・DANGER()			// #23631 2011.4.19 yyagi
 		{
 			//this.actDANGER.t進行描画( false, this.actGauge.db現在のゲージ値.Guitar < 0.3, this.actGauge.db現在のゲージ値.Bass < 0.3 );
