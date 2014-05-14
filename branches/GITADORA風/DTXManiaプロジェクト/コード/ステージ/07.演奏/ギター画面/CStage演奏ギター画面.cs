@@ -25,7 +25,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
 			base.list子Activities.Add( this.actBGA = new CAct演奏BGA() );
             base.list子Activities.Add( this.actGraph = new CAct演奏スキルメーター() );
-			base.list子Activities.Add( this.actPanel = new CAct演奏パネル文字列() );
+//			base.list子Activities.Add( this.actPanel = new CAct演奏パネル文字列() );
 			base.list子Activities.Add( this.act譜面スクロール速度 = new CAct演奏スクロール速度() );
 			base.list子Activities.Add( this.actStatusPanels = new CAct演奏Guitarステータスパネル() );
 			base.list子Activities.Add( this.actWailingBonus = new CAct演奏GuitarWailingBonus() );
@@ -159,8 +159,8 @@ namespace DTXMania
                 this.t進行描画・AVI();
 				this.t進行描画・MIDIBGM();
 
-                if (CDTXMania.ConfigIni.bShowMusicInfo)
-				    this.t進行描画・パネル文字列();
+//                if (CDTXMania.ConfigIni.bShowMusicInfo)
+//				    this.t進行描画・パネル文字列();
 
 				this.t進行描画・レーンフラッシュGB();
 
@@ -253,14 +253,16 @@ namespace DTXMania
 			this.tチップのヒット処理・BadならびにTight時のMiss( part, nLane, E楽器パート.GUITAR );
 		}
 
+        /*
 		protected override void t進行描画・AVI()
 		{
 		    base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
-		    //base.t進行描画・BGA( 500, 50 );
+		    base.t進行描画・BGA( 500, 50 );
 		}
+         */
 		protected override void t進行描画・DANGER()			// #23631 2011.4.19 yyagi
 		{
 			//this.actDANGER.t進行描画( false, this.actGauge.db現在のゲージ値.Guitar < 0.3, this.actGauge.db現在のゲージ値.Bass < 0.3 );
@@ -313,10 +315,12 @@ namespace DTXMania
 			}
 		}
 
+        /*
 		protected override void t進行描画・パネル文字列()
 		{
 			base.t進行描画・パネル文字列( 0xb5, 430 );
 		}
+         */
 
 		protected override void t進行描画・演奏情報()
 		{

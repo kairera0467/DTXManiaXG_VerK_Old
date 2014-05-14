@@ -35,7 +35,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.act譜面スクロール速度 = new CAct演奏スクロール速度() );
 			base.list子Activities.Add( this.actAVI = new CAct演奏AVI() );
 			base.list子Activities.Add( this.actBGA = new CAct演奏BGA() );
-			base.list子Activities.Add( this.actPanel = new CAct演奏パネル文字列() );
+//			base.list子Activities.Add( this.actPanel = new CAct演奏パネル文字列() );
 			base.list子Activities.Add( this.actStageFailed = new CAct演奏ステージ失敗() );
 			base.list子Activities.Add( this.actPlayInfo = new CAct演奏演奏情報() );
 			base.list子Activities.Add( this.actFI = new CActFIFOBlackStart() );
@@ -48,7 +48,7 @@ namespace DTXMania
 //			base.list子Activities.Add( this.actLaneFlushGB = new CAct演奏DrumsレーンフラッシュGB() );
 //			base.list子Activities.Add( this.actRGB = new CAct演奏DrumsRGB() );
 //			base.list子Activities.Add( this.actWailingBonus = new CAct演奏DrumsWailingBonus() );
-            //base.list子Activities.Add( this.actStageCleared = new CAct演奏ステージクリア());
+//          base.list子Activities.Add( this.actStageCleared = new CAct演奏ステージクリア());
 		}
 
 
@@ -394,8 +394,8 @@ namespace DTXMania
                 }
                 if( CDTXMania.ConfigIni.bShowScore )
                     this.t進行描画・スコア();
-                if( CDTXMania.ConfigIni.bShowMusicInfo )
-                    this.t進行描画・パネル文字列();
+//              if( CDTXMania.ConfigIni.bShowMusicInfo )
+//                  this.t進行描画・パネル文字列();
                 if (CDTXMania.ConfigIni.nInfoType == 1)
                     this.t進行描画・ステータスパネル();
                 if (CDTXMania.ConfigIni.bGraph有効)
@@ -695,14 +695,16 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n譜面スクロール速度.Drums = Math.Max( CDTXMania.ConfigIni.n譜面スクロール速度.Drums - 1, 0 );
 		}
 	
+        /*
 		protected override void t進行描画・AVI()
 		{
 			base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
-			//base.t進行描画・BGA( 990, 0 );
+			base.t進行描画・BGA( 990, 0 );
 		}
+         */
 		protected override void t進行描画・DANGER()
 		{
 			this.actDANGER.t進行描画( this.actGauge.IsDanger(E楽器パート.DRUMS), false, false );
@@ -804,10 +806,13 @@ namespace DTXMania
         {
             this.actPad.On進行描画();
         }
+
+        /*
         protected override void t進行描画・パネル文字列()
         {
             base.t進行描画・パネル文字列(912, 640);
         }
+         */
 
 		protected override void t進行描画・演奏情報()
 		{

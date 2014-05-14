@@ -18,6 +18,7 @@ namespace DTXMania
         public CAct演奏AVI()
         {
             base.list子Activities.Add(this.actFill = new CAct演奏Drumsフィルインエフェクト());
+            base.list子Activities.Add(this.actPanel = new CAct演奏パネル文字列());
             base.b活性化してない = true;
         }
 
@@ -707,7 +708,7 @@ namespace DTXMania
                     if (CDTXMania.ConfigIni.bDrums有効)
                         CDTXMania.stage演奏ドラム画面.actBGA.t進行描画(980, 0);
                     else
-                        CDTXMania.stage演奏ギター画面.actBGA.t進行描画(503, 0);
+                        CDTXMania.stage演奏ギター画面.actBGA.t進行描画(501, 0);
                 }
 
                 if (CDTXMania.ConfigIni.ボーナス演出を表示する == true)
@@ -743,6 +744,9 @@ namespace DTXMania
                         }
                     }
                 }
+
+                if (CDTXMania.ConfigIni.bShowMusicInfo)
+                    this.actPanel.t進行描画();
 
                 if ((((this.n総移動時間ms != -1L) && (((this.rAVI != null)) && (this.rAVI.avi != null)) || (this.dsBGV != null && this.dsBGV.dshow != null))) && (this.bWindowMode) && this.tx描画用 != null && (CDTXMania.ConfigIni.bAVI有効))
                 {
@@ -986,11 +990,12 @@ namespace DTXMania
 
         #region [ private ]
         //-----------------
-        public CAct演奏BGA actBGA;
+//      public CAct演奏BGA actBGA;
         public CAct演奏Drumsフィルインエフェクト actFill;
+        public CAct演奏パネル文字列 actPanel;
 
         private bool bFullScreen;
-        //      private Bitmap blanes;
+//      private Bitmap blanes;
         public bool bWindowMode;
         private bool bフレームを作成した;
         private bool b再生トグル;
@@ -1000,7 +1005,7 @@ namespace DTXMania
         private uint framewidth;
         private int i1;
         private int i2;
-        //      private Image ilanes;
+//      private Image ilanes;
         private int nAlpha;
         private int nCurrentMovieMode;
         private long n移動開始時刻ms;

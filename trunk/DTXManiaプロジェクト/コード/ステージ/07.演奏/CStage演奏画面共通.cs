@@ -2255,14 +2255,15 @@ namespace DTXMania
 		}
 
 
-		protected abstract void t進行描画・AVI();
-		protected void t進行描画・AVI(int x, int y)
+//		protected abstract void t進行描画・AVI();
+		protected void t進行描画・AVI()
 		{
             if (((base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED) && (base.eフェーズID != CStage.Eフェーズ.演奏_STAGE_FAILED_フェードアウト)) && (!CDTXMania.ConfigIni.bストイックモード))
 			{
-				this.actAVI.t進行描画( x, y );
+				this.actAVI.t進行描画( 0, 0 );
 			}
 		}
+        /*
 		protected abstract void t進行描画・BGA();
 		protected void t進行描画・BGA(int x, int y)
 		{
@@ -2271,6 +2272,7 @@ namespace DTXMania
 				this.actBGA.t進行描画( x, y );
 			}
 		}
+         */
 		protected abstract void t進行描画・DANGER();
 		protected void t進行描画・MIDIBGM()
 		{

@@ -609,6 +609,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n譜面スクロール速度.Drums = Math.Max( CDTXMania.ConfigIni.n譜面スクロール速度.Drums - 1, 0 );
 		}
 	
+        /*
 		protected override void t進行描画・AVI()
 		{
             //ここでif文を入れると、ドラムセットなど演出の類が消えてしまうため、
@@ -617,8 +618,9 @@ namespace DTXMania
 		}
 		protected override void t進行描画・BGA()
 		{
-			//base.t進行描画・BGA( 990, 0 );
+			base.t進行描画・BGA( 990, 0 );
 		}
+         */
 		protected override void t進行描画・DANGER()
 		{
 			this.actDANGER.t進行描画( this.actGauge.IsDanger(E楽器パート.DRUMS), false, false );
