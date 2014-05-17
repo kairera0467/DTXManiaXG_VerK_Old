@@ -223,6 +223,9 @@ namespace DTXMania
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\6_background.mp4"), CDTXMania.app.WindowHandle, true);
                 }
 
+                this.ct進行タイマー = new CCounter((int)0, (int)3000, (int)1, CDTXMania.Timer);
+                this.counter = new CCounter((int) 0, (int)100, (int)5, CDTXMania.Timer );
+
 				this.nBGM再生開始時刻 = -1L;
 				this.nBGMの総再生時間ms = 0;
 				if( this.sd読み込み音 != null )
@@ -293,6 +296,7 @@ namespace DTXMania
             }
             this.bSTAGEFILEが存在する = false;
             CDTXMania.t安全にDisposeする(ref this.ds背景動画);
+            this.ct進行タイマー = null;
 			try
 			{
 				if( this.ftタイトル表示用フォント != null )
@@ -325,6 +329,7 @@ namespace DTXMania
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"),false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
                 this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
+                this.tx黒タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_FadeOut.jpg" ), false );
 		        try
 				{
 					if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
@@ -396,6 +401,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txLevel);
                 CDTXMania.tテクスチャの解放( ref this.txシンボル );
                 CDTXMania.tテクスチャの解放( ref this.txBall );
+                CDTXMania.tテクスチャの解放( ref this.tx黒タイル64x64 );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -630,10 +636,40 @@ namespace DTXMania
                     this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298, new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
                     this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
                 }
+            #region[ FO描画 ]
+            /*
+            this.ct進行タイマー.t進行();
+            CDTXMania.act文字コンソール.tPrint( 60, 20, C文字コンソール.Eフォント種別.灰, this.ct進行タイマー.n現在の値.ToString() );
+            if( this.ct進行タイマー.b終了値に達した )
+            {
+                
+                bool b = false;
+                if(b == false)
+                {
+                    this.counter.n現在の値 = 0;
+                    b = true;
+                }
+                this.counter.t進行();
+                
+
+
+			    if( this.tx黒タイル64x64 != null )
+			    {
+                    this.tx黒タイル64x64.n透明度 = (((100 - this.counter.n現在の値) * 0xff) / 100);
+				    this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, 0, 0 );
+			    }
+                CDTXMania.act文字コンソール.tPrint( 60, 0, C文字コンソール.Eフォント種別.灰, this.counter.n現在の値.ToString() );
+                
+            }
+                 */
+            #endregion
+
             //-----------------------------
             #endregion
 
-            switch (base.eフェーズID)
+
+
+            switch( base.eフェーズID )
             {
                 case CStage.Eフェーズ.共通_フェードイン:
                     //if( this.actFI.On進行描画() != 0 )					// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
@@ -905,6 +941,9 @@ namespace DTXMania
         private ST泡[] st泡 = new ST泡[8];
         private CDirectShow ds背景動画;
 
+        private CCounter ct進行タイマー;
+        private CCounter counter;
+
 		private DateTime timeBeginLoad;
 		private DateTime timeBeginLoadWAV;
 		private int nWAVcount;
@@ -913,6 +952,8 @@ namespace DTXMania
 //		private CTexture txFilename;
         private CTexture txLevel;
         private CTexture txBall;
+
+        private CTexture tx黒タイル64x64;
 
 		private Bitmap bitmapFilename;
 		private Graphics graphicsFilename;
