@@ -371,11 +371,8 @@ namespace DTXMania
                         }
 
                         if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                            (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                            (CDTXMania.DTX.bチップがある.LP == false) &&
-                            (CDTXMania.DTX.bチップがある.LBD == false) &&
-                            (CDTXMania.DTX.bチップがある.FT == false) &&
-                            (CDTXMania.DTX.bチップがある.Ride == false) &&
+                            (CDTXMania.DTX.bチップがある.YPGuitar == false) &&
+                            (CDTXMania.DTX.bチップがある.YPBass == false) &&
                             (CDTXMania.DTX.b強制的にXG譜面にする == false))
                         {
                             str = string.Format("{0:00}", CDTXMania.DTX.LEVEL[i]);

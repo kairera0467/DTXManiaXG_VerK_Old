@@ -266,12 +266,15 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
-                    this.iSongPanel = Image.FromFile(CSkin.Path(@"Graphics\7_songpanel.png"));
-                    this.bSongPanel = new Bitmap(250, 112);
+                    if( File.Exists( CSkin.Path(@"Graphics\7_songpanel.png") ) )
+                    {
+                        this.iSongPanel = Image.FromFile(CSkin.Path(@"Graphics\7_songpanel.png"));
+                        this.bSongPanel = new Bitmap(250, 112);
 
-                    gSongPanel = Graphics.FromImage(this.bSongPanel);
-                    gSongPanel.DrawImage(this.iSongPanel, 0, 0, 250, 112);
-                    gSongPanel.DrawImage(this.iAlbum, new Rectangle(20, 10, 51, 51), new Rectangle(0, 0, this.iAlbum.Width, this.iAlbum.Height), GraphicsUnit.Pixel);
+                        gSongPanel = Graphics.FromImage(this.bSongPanel);
+                        gSongPanel.DrawImage(this.iSongPanel, 0, 0, 250, 112);
+                        gSongPanel.DrawImage(this.iAlbum, new Rectangle(20, 10, 51, 51), new Rectangle(0, 0, this.iAlbum.Width, this.iAlbum.Height), GraphicsUnit.Pixel);
+                    }
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
@@ -340,11 +343,7 @@ namespace DTXMania
                 }
 
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                    (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                    (CDTXMania.DTX.bチップがある.LP == false) &&
-                    (CDTXMania.DTX.bチップがある.LBD == false) &&
-                    (CDTXMania.DTX.bチップがある.FT == false) &&
-                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.YPGuitar == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                     strG = string.Format("{0:00}", CDTXMania.DTX.LEVEL.Guitar);
@@ -353,11 +352,7 @@ namespace DTXMania
                 int widthG = (int)gNamePlate.MeasureString(this.stパネルマップ[this.nIndex].label.Substring(0, 3) + "   ", this.ftLevelFont).Width;
                 //数字の描画部分。その左側。
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                    (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                    (CDTXMania.DTX.bチップがある.LP == false) &&
-                    (CDTXMania.DTX.bチップがある.LBD == false) &&
-                    (CDTXMania.DTX.bチップがある.FT == false) &&
-                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.YPGuitar == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                     if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
@@ -376,11 +371,7 @@ namespace DTXMania
 
                 //数字の右。
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                    (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                    (CDTXMania.DTX.bチップがある.LP == false) &&
-                    (CDTXMania.DTX.bチップがある.LBD == false) &&
-                    (CDTXMania.DTX.bチップがある.FT == false) &&
-                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.YPGuitar == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                 }
@@ -419,11 +410,7 @@ namespace DTXMania
                 }
 
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                    (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                    (CDTXMania.DTX.bチップがある.LP == false) &&
-                    (CDTXMania.DTX.bチップがある.LBD == false) &&
-                    (CDTXMania.DTX.bチップがある.FT == false) &&
-                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.YPBass == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                     strB = string.Format("{0:00}", CDTXMania.DTX.LEVEL.Bass);
@@ -432,11 +419,7 @@ namespace DTXMania
                 int widthB = (int)gNamePlate.MeasureString(this.stパネルマップ[this.nIndex].label.Substring(0, 3) + "   ", this.ftLevelFont).Width;
                 //数字の描画部分。その左側。
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                    (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                    (CDTXMania.DTX.bチップがある.LP == false) &&
-                    (CDTXMania.DTX.bチップがある.LBD == false) &&
-                    (CDTXMania.DTX.bチップがある.FT == false) &&
-                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.YPBass == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                     if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
@@ -455,11 +438,7 @@ namespace DTXMania
 
                 //数字の右。
                 if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
-                    (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
-                    (CDTXMania.DTX.bチップがある.LP == false) &&
-                    (CDTXMania.DTX.bチップがある.LBD == false) &&
-                    (CDTXMania.DTX.bチップがある.FT == false) &&
-                    (CDTXMania.DTX.bチップがある.Ride == false) &&
+                    (CDTXMania.DTX.bチップがある.YPBass == false) &&
                     (CDTXMania.DTX.b強制的にXG譜面にする == false))
                 {
                 }
