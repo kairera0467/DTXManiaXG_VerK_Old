@@ -348,10 +348,14 @@ namespace DTXMania
 			{
 				get
 				{
-					if ( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
-						return CDTXMania.DTX.PATH_WAV + this.strファイル名;
-					else
-						return CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                    if( CDTXMania.DTX != null )
+					{
+                        if ( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+						    return CDTXMania.DTX.PATH_WAV + this.strファイル名;
+					    else
+						    return CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                    }
+                    return "";
 				}
 			}
 
@@ -480,7 +484,7 @@ namespace DTXMania
 			}
 
 		}
-		public class CChip : IComparable<CDTX.CChip>
+		public class CChip : IComparable<CDTX.CChip>, ICloneable
 		{
 			public bool bHit;
 			public bool b可視 = true;
@@ -757,6 +761,41 @@ namespace DTXMania
 					this.b自動再生音チャンネルである,
 					CDTX.tZZ( this.n整数値 ) );
 			}
+			/// <summary>
+			/// チップの再生長を取得する。現状、WAVチップとBGAチップでのみ使用可能。
+			/// </summary>
+			/// <returns>再生長(ms)</returns>
+			public int GetDuration()
+			{
+				int nDuration = 0;
+
+				if ( this.bWAVを使うチャンネルである )		// WAV
+				{
+					CDTX.CWAV wc;
+					CDTXMania.DTX.listWAV.TryGetValue( this.n整数値・内部番号, out wc );
+					if ( wc == null )
+					{
+						nDuration = 0;
+					}
+					else
+					{
+						nDuration = ( wc.rSound[ 0 ] == null ) ? 0 : wc.rSound[ 0 ].n総演奏時間ms;
+					}
+				}
+				else if ( this.nチャンネル番号 == 0x54 )	// AVI
+				{
+					if ( this.rAVI != null && this.rAVI.avi != null )
+					{
+						int dwRate = (int) this.rAVI.avi.dwレート;
+						int dwScale = (int) this.rAVI.avi.dwスケール;
+						nDuration = (int) ( 1000.0f * dwScale / dwRate * this.rAVI.avi.GetMaxFrameCount() );
+					}
+				}
+
+				double _db再生速度 = /*( CDTXMania.DTXVmode.Enabled ) ? CDTXMania.DTX.dbDTXVPlaySpeed :*/ CDTXMania.DTX.db再生速度;
+				return (int) ( nDuration / _db再生速度 );
+			}
+
 			#region [ IComparable 実装 ]
 			//-----------------
 			public int CompareTo( CDTX.CChip other )
@@ -806,6 +845,14 @@ namespace DTXMania
 			}
 			//-----------------
 			#endregion
+            /// <summary>
+			/// shallow copyです。
+			/// </summary>
+			/// <returns></returns>
+			public object Clone()
+			{
+				return MemberwiseClone();
+			}
 		}
 		public class CWAV : IDisposable
 		{
@@ -1135,7 +1182,10 @@ namespace DTXMania
 			public bool LeftCymbal;
 			public bool OpenGuitar;
 			public bool OpenBass;
+            public bool YPGuitar;
+            public bool YPBass;
             public bool AVI;
+
 			
 			public bool this[ int index ]
 			{
@@ -1177,6 +1227,12 @@ namespace DTXMania
 							return this.OpenBass;
 
                         case 11:
+                            return this.YPGuitar;
+
+                        case 12:
+                            return this.YPBass;
+
+                        case 13:
                             return this.AVI;
 					}
 					throw new IndexOutOfRangeException();
@@ -1230,6 +1286,14 @@ namespace DTXMania
 							return;
 
                         case 11:
+                            this.YPGuitar = value;
+                            return;
+
+                        case 12:
+                            this.YPBass = value;
+                            return;
+
+                        case 13:
                             this.AVI = value;
                             return;
 					}
@@ -1297,6 +1361,7 @@ namespace DTXMania
 		public string TITLE;
         public bool b強制的にXG譜面にする;
         public bool bVol137to100;
+        public double dbDTXVPlaySpeed;
 #if TEST_NOTEOFFMODE
 		public STLANEVALUE<bool> b演奏で直前の音を消音する;
 //		public bool bHH演奏で直前のHHを消音する;
@@ -1351,6 +1416,8 @@ namespace DTXMania
 			this.bチップがある.LeftCymbal = false;
 			this.bチップがある.OpenGuitar = false;
 			this.bチップがある.OpenBass = false;
+            this.bチップがある.YPGuitar = false;
+            this.bチップがある.YPBass = false;
             this.bチップがある.AVI = false;
 			this.strファイル名 = "";
 			this.strフォルダ名 = "";
@@ -1365,6 +1432,7 @@ namespace DTXMania
 			this.nRESULTSOUND用優先順位 = new int[ 7 ];
             this.b強制的にXG譜面にする = false;
             this.bVol137to100 = false;
+
 
 			#region [ 2011.1.1 yyagi GDA->DTX変換テーブル リファクタ後 ]
 			STGDAPARAM[] stgdaparamArray = new STGDAPARAM[] {		// GDA->DTX conversion table
@@ -1394,6 +1462,7 @@ namespace DTXMania
 			#endregion
 			this.nBGMAdjust = 0;
 			this.nPolyphonicSounds = CDTXMania.ConfigIni.nPoliphonicSounds;
+            this.dbDTXVPlaySpeed = 1.0f;
 #if TEST_NOTEOFFMODE
 			this.bHH演奏で直前のHHを消音する = true;
 			this.bGUITAR演奏で直前のGUITARを消音する = true;
@@ -1477,7 +1546,7 @@ namespace DTXMania
                     cds.OnDeviceCreated();
                 }
             }
-			if( !this.bヘッダのみ )
+			if( !this.bヘッダのみ &&  this.b動画読み込み )
 			{
 				foreach( CChip chip in this.listChip )
 				{
@@ -3148,6 +3217,7 @@ namespace DTXMania
 		public void t入力( string strファイル名, bool bヘッダのみ, double db再生速度, int nBGMAdjust )
 		{
 			this.bヘッダのみ = bヘッダのみ;
+            this.b動画読み込み = (CDTXMania.r現在のステージ.eステージID == CStage.Eステージ.曲読み込み ? true : false);
 			this.strファイル名の絶対パス = Path.GetFullPath( strファイル名 );
 			this.strファイル名 = Path.GetFileName( this.strファイル名の絶対パス );
 			this.strフォルダ名 = Path.GetDirectoryName( this.strファイル名の絶対パス ) + @"\";
@@ -4229,6 +4299,7 @@ namespace DTXMania
 
 		private readonly STGDAPARAM[] stGDAParam;
 		private bool bヘッダのみ;
+        private bool b動画読み込み;
 		private Stack<bool> bstackIFからENDIFをスキップする;
 	
 		private int n現在の行数;
@@ -4645,6 +4716,20 @@ namespace DTXMania
                     this.t入力・パラメータ食い込みチェック( "VOL7FTO64", ref strコマンド, ref strパラメータ );
                     this.bVol137to100 = strパラメータ.ToLower().Equals( "on" );
                 }
+                #region [ DTXVPLAYSPEED ]
+				//-----------------
+				else if ( strコマンド.StartsWith( "DTXVPLAYSPEED", StringComparison.OrdinalIgnoreCase ) )
+				{
+					this.t入力・パラメータ食い込みチェック( "DTXVPLAYSPEED", ref strコマンド, ref strパラメータ );
+
+					double dtxvplayspeed = 0.0;
+					if ( TryParse( strパラメータ, out dtxvplayspeed ) && dtxvplayspeed > 0.0 )
+					{
+						this.dbDTXVPlaySpeed = dtxvplayspeed;
+					}
+				}
+				//-----------------
+				#endregion
 				else if( !this.bヘッダのみ )		// ヘッダのみの解析の場合、以下は無視。
 				{
 					#region [ PANEL ]
@@ -4732,6 +4817,7 @@ namespace DTXMania
 					}
 					//-----------------
 					#endregion
+
 
 					// オブジェクト記述コマンドの処理。
 
@@ -6274,6 +6360,60 @@ namespace DTXMania
 
                 case 0x54:
                     this.bチップがある.AVI = true;
+                    break;
+
+                case 0x93:
+                case 0x94:
+                case 0x95:
+                case 0x96:
+                case 0x97:
+                case 0x98:
+                case 0x99:
+                case 0x9A:
+                case 0x9B:
+                case 0x9C:
+                case 0x9D:
+                case 0x9E:
+                case 0x9F:
+                case 0xA9:
+                case 0xAA:
+                case 0xAB:
+                case 0xAC:
+                case 0xAD:
+                case 0xAE:
+                case 0xAF:
+                case 0xD0:
+                case 0xD1:
+                case 0xD2:
+                case 0xD3:
+                    this.bチップがある.YPGuitar = true;
+                    break;
+
+                case 0xC5:
+                case 0xC6:
+                case 0xC8:
+                case 0xC9:
+                case 0xCA:
+                case 0xCB:
+                case 0xCC:
+                case 0xCD:
+                case 0xCE:
+                case 0xCF:
+                case 0xDA:
+                case 0xDB:
+                case 0xDC:
+                case 0xDD:
+                case 0xDE:
+                case 0xDF:
+                case 0xE1:
+                case 0xE2:
+                case 0xE3:
+                case 0xE4:
+                case 0xE5:
+                case 0xE6:
+                case 0xE7:
+                case 0xE8:
+                    this.bチップがある.YPBass = true;
                     break;
 
 				case 0xA0:
