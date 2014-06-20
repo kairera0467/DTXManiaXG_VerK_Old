@@ -777,6 +777,8 @@ namespace DTXMania
         public bool bViewerShowDebugStatus;
         public bool bViewerTimeStretch;
         public bool bViewerDrums有効, bViewerGuitar有効;
+        //public bool bNoMP3Streaming;
+        public int nMasterVolume;
 
 		public STAUTOPLAY bAutoPlay;
 		public STRANGE nヒット範囲ms;
@@ -1238,6 +1240,9 @@ namespace DTXMania
             bViewerTimeStretch = false;
 	        bViewerDrums有効 = true;
 	        bViewerGuitar有効 = true;
+
+            //this.bNoMP3Streaming = false;
+            this.nMasterVolume = 100;                   // #33700 2014.4.26 yyagi マスターボリュームの設定(WASAPI/ASIO用)
 		}
 		public CConfigIni( string iniファイル名 )
 			: this()
@@ -1338,6 +1343,12 @@ namespace DTXMania
 			#region [ スキン関連 ]
 			#region [ Skinパスの絶対パス→相対パス変換 ]
 			Uri uriRoot = new Uri( System.IO.Path.Combine( CDTXMania.strEXEのあるフォルダ, "System" + System.IO.Path.DirectorySeparatorChar ) );
+            if ( strSystemSkinSubfolderFullName != null && strSystemSkinSubfolderFullName.Length == 0 )
+            {
+                // Config.iniが空の状態でDTXManiaをViewerとして起動・終了すると、strSystemSkinSubfolderFullName が空の状態でここに来る。
+                // → 初期値として Default/ を設定する。
+                strSystemSkinSubfolderFullName = System.IO.Path.Combine( CDTXMania.strEXEのあるフォルダ, "System" + System.IO.Path.DirectorySeparatorChar + "Default" + System.IO.Path.DirectorySeparatorChar );
+            }
 			Uri uriPath = new Uri( System.IO.Path.Combine( this.strSystemSkinSubfolderFullName, "." + System.IO.Path.DirectorySeparatorChar ) );
 			string relPath = uriRoot.MakeRelativeUri( uriPath ).ToString();				// 相対パスを取得
 			relPath = System.Web.HttpUtility.UrlDecode( relPath );						// デコードする
@@ -1439,6 +1450,13 @@ namespace DTXMania
             //sw.WriteLine("; (0=行わない, 1=行う)");
             //sw.WriteLine("DynamicBassMixerManagement={0}", this.bDynamicBassMixerManagement ? 1 : 0);
             //sw.WriteLine();
+
+            sw.WriteLine( "; 全体ボリュームの設定" );
+            sw.WriteLine( "; (0=無音 ～ 100=最大。WASAPI/ASIO時のみ有効)" );
+            sw.WriteLine( "; Master volume settings" );
+            sw.WriteLine( "; (0=Silent - 100=Max)" );
+            sw.WriteLine( "MasterVolume={0}", this.nMasterVolume );
+            sw.WriteLine();
             #endregion
             #region [ ギター/ベース/ドラム 有効/無効 ]
 			sw.WriteLine( "; ギター/ベース有効(0:OFF,1:ON)" );
@@ -1642,6 +1660,13 @@ namespace DTXMania
             sw.WriteLine("; (Only available when you're using using WASAPI or ASIO)");	//
             sw.WriteLine("TimeStretch={0}", this.bTimeStretch ? 1 : 0);					//
             sw.WriteLine();
+            //sw.WriteLine( "; WASAPI/ASIO使用時に、MP3をストリーム再生するかどうか(0:ストリーム再生する, 1:しない" ); //
+            //sw.WriteLine( "; (mp3のシークがおかしくなる場合は、これを1にしてください) " ); //
+            //sw.WriteLine( "; Set \"0\" if you'd like to use mp3 streaming playback on WASAPI/ASIO." ); //
+            //sw.WriteLine( "; Set \"1\" not to use streaming playback for mp3." ); //
+            //sw.WriteLine( "; (If you feel illegal seek with mp3, please set it to 1.)" ); //
+            //sw.WriteLine( "NoMP3Streaming={0}", this.bNoMP3Streaming ? 1 : 0 ); //
+            //sw.WriteLine();
             #region [ Adjust ]
             sw.WriteLine("; 判定タイミング調整(ドラム, ギター, ベース)(-99～0)[ms]");		// #23580 2011.1.3 yyagi
             sw.WriteLine("; Revision value to adjust judgement timing for the drums, guitar and bass.");	//
@@ -2406,13 +2431,17 @@ namespace DTXMania
                                             //{
                                             //    this.nASIOBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9999, this.nASIOBufferSizeMs);
                                             //}
-                                            //else if (str3.Equals("DynamicBassMixerManagement"))
-                                            //{
-                                            //    this.bDynamicBassMixerManagement = C変換.bONorOFF(str4[0]);
-                                            //}
+                                            else if (str3.Equals("DynamicBassMixerManagement"))
+                                            {
+                                                this.bDynamicBassMixerManagement = C変換.bONorOFF(str4[0]);
+                                            }
                                             else if (str3.Equals("VSyncWait"))
                                             {
                                                 this.b垂直帰線待ちを行う = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if ( str3.Equals( "MasterVolume" ) )
+                                            {
+                                                this.nMasterVolume = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nMasterVolume );
                                             }
                                             else if (str3.Equals("BackSleep"))				// #23568 2010.11.04 ikanick add
                                             {
@@ -2714,6 +2743,10 @@ namespace DTXMania
                                             {
                                                 this.bAutoAddGage = C変換.bONorOFF(str4[0]);
                                             }
+                                            //else if ( str3.Equals( "NoMP3Streaming" ) )
+                                            //{
+                                            //    this.bNoMP3Streaming = C変換.bONorOFF( str4[ 0 ] );
+                                            //}
 											continue;
 										}
 									//-----------------------------

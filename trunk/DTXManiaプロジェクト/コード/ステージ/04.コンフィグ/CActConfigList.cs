@@ -2119,7 +2119,7 @@ namespace DTXMania
                         break;
                 }
 
-                FDK.CSound管理.t初期化(soundDeviceType,
+                CDTXMania.Sound管理.t初期化(soundDeviceType,
                                         this.iSystemWASAPIBufferSizeMs.n現在の値,
                                         0,
                                         this.iSystemASIODevice.n現在選択されている項目番号);

@@ -186,7 +186,7 @@ namespace DTXMania
                         }
                         if (i == 9 && CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
                         {
-                            this.stレーンサイズ[i].x = sizeXW[7, 0];
+                            this.stレーンサイズ[i].x = sizeXW[7, 0] - 18;
                         }
                     }
                 }

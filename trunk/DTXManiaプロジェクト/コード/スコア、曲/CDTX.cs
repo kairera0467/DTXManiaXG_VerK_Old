@@ -2801,6 +2801,10 @@ namespace DTXMania
 		}
 		public void tWavの再生停止( int nWaveの内部番号 )
 		{
+            tWavの再生停止( nWaveの内部番号, false );
+        }
+        public void tWavの再生停止( int nWaveの内部番号, bool bミキサーからも削除する )
+        {
 			if( this.listWAV.ContainsKey( nWaveの内部番号 ) )
 			{
 				CWAV cwav = this.listWAV[ nWaveの内部番号 ];
@@ -2808,11 +2812,26 @@ namespace DTXMania
 				{
 					if( cwav.rSound[ i ] != null && cwav.rSound[ i ].b再生中 )
 					{
-						cwav.rSound[ i ].t再生を停止する();
+						if ( bミキサーからも削除する )
+                        {
+                            cwav.rSound[ i ].tサウンドを停止してMixerからも削除する();
+                        }
+                        else
+                        {
+                            cwav.rSound[ i ].t再生を停止する();
+                        }
 					}
 				}
 			}
 		}
+        public void t全チップの再生停止とミキサーからの削除()
+        {
+            foreach( CWAV cwav in this.listWAV.Values )
+            {
+                this.tWavの再生停止( cwav.n内部番号, true );
+            }
+        }
+
 		public void tWAVの読み込み( CWAV cwav )
 		{
 //			Trace.TraceInformation("WAV files={0}", this.listWAV.Count);
@@ -2864,6 +2883,10 @@ namespace DTXMania
 					{
 						cwav.rSound[ 0 ] = CDTXMania.Sound管理.tサウンドを生成する( str );
 						cwav.rSound[ 0 ].n音量 = 100;
+                        if ( !CDTXMania.ConfigIni.bDynamicBassMixerManagement )
+	                    {
+                            cwav.rSound[ 0 ].tBASSサウンドをミキサーに追加する();
+                        }
 						if ( CDTXMania.ConfigIni.bLog作成解放ログ出力 )
 						{
 							Trace.TraceInformation( "サウンドを作成しました。({3})({0})({1})({2}bytes)", cwav.strコメント文, str, cwav.rSound[ 0 ].nサウンドバッファサイズ, cwav.rSound[ 0 ].bストリーム再生する ? "Stream" : "OnMemory" );
@@ -2909,6 +2932,10 @@ namespace DTXMania
 							{
 								cwav.rSound[ i ] = CDTXMania.Sound管理.tサウンドを生成する( str );
 								cwav.rSound[ i ].n音量 = 100;
+                                if ( !CDTXMania.ConfigIni.bDynamicBassMixerManagement )
+	                            {
+                                    cwav.rSound[ i ].tBASSサウンドをミキサーに追加する();
+                                }
 								if ( CDTXMania.ConfigIni.bLog作成解放ログ出力 )
 								{
 									Trace.TraceInformation( "サウンドを作成しました。({3})({0})({1})({2}bytes)", cwav.strコメント文, str, cwav.rSound[ 0 ].nサウンドバッファサイズ, cwav.rSound[ 0 ].bストリーム再生する ? "Stream" : "OnMemory" );
@@ -3923,7 +3950,8 @@ namespace DTXMania
 						if ( listWAV.ContainsKey( pChip.n整数値・内部番号 ) )
 						{
 							CDTX.CWAV wc = CDTXMania.DTX.listWAV[ pChip.n整数値・内部番号 ];
-							duration = ( wc.rSound[ 0 ] == null ) ? 0 : (int) ( wc.rSound[ 0 ].n総演奏時間ms / this.db再生速度 );	// #23664 durationに再生速度が加味されておらず、低速再生でBGMが途切れる問題を修正 (発声時刻msは、DTX読み込み時に再生速度加味済)
+							double _db再生速度 = ( CDTXMania.DTXVmode.Enabled ) ? this.dbDTXVPlaySpeed : this.db再生速度;
+                            duration = ( wc.rSound[ 0 ] == null ) ? 0 : (int) ( wc.rSound[ 0 ].n総演奏時間ms / _db再生速度 ); // #23664 durationに再生速度が加味されておらず、低速再生でBGMが途切れる問題を修正 (発声時刻msは、DTX読み込み時に再生速度加味済)
 						}
 //Debug.WriteLine("duration=" + duration );
 						int n新RemoveMixer時刻ms, n新RemoveMixer位置;

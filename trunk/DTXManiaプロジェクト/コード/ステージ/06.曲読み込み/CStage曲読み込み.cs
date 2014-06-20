@@ -223,8 +223,8 @@ namespace DTXMania
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\6_background.mp4"), CDTXMania.app.WindowHandle, true);
                 }
 
-                this.ct進行タイマー = new CCounter((int)0, (int)3000, (int)1, CDTXMania.Timer);
-                this.counter = new CCounter((int) 0, (int)100, (int)5, CDTXMania.Timer );
+                //this.ct進行タイマー = new CCounter((int)0, (int)4000, (int)1, CDTXMania.Timer);
+                //this.counter = new CCounter((int) 0, (int)100, (int)5, CDTXMania.Timer );
 
 				this.nBGM再生開始時刻 = -1L;
 				this.nBGMの総再生時間ms = 0;
@@ -329,7 +329,7 @@ namespace DTXMania
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"),false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
                 this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
-                this.tx黒タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_FadeOut.jpg" ), false );
+                this.tx黒タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile black 64x64.png" ), false );
 		        try
 				{
 					if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
@@ -460,11 +460,12 @@ namespace DTXMania
 
             #region [ 背景、レベル、タイトル表示 ]
             //-----------------------------
+            //this.ct進行タイマー.t進行();
 
             if( this.ds背景動画 != null && !this.bSTAGEFILEが存在する )
             {
-                this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
                 this.ds背景動画.t再生開始();
+                this.ds背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
             }
             if( this.tx背景 != null )
             {
@@ -636,33 +637,6 @@ namespace DTXMania
                     this.txDrumspeed.t2D描画(CDTXMania.app.Device, 288, 298, new Rectangle(0, 0 + (nCurrentDrumspeed * 48), 42, 48));
                     this.txRISKY.t2D描画(CDTXMania.app.Device, 288, 346, new Rectangle(0, 0 + (nCurrentRISKY * 48), 42, 48));
                 }
-            #region[ FO描画 ]
-            /*
-            this.ct進行タイマー.t進行();
-            CDTXMania.act文字コンソール.tPrint( 60, 20, C文字コンソール.Eフォント種別.灰, this.ct進行タイマー.n現在の値.ToString() );
-            if( this.ct進行タイマー.b終了値に達した )
-            {
-                
-                bool b = false;
-                if(b == false)
-                {
-                    this.counter.n現在の値 = 0;
-                    b = true;
-                }
-                this.counter.t進行();
-                
-
-
-			    if( this.tx黒タイル64x64 != null )
-			    {
-                    this.tx黒タイル64x64.n透明度 = (((100 - this.counter.n現在の値) * 0xff) / 100);
-				    this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, 0, 0 );
-			    }
-                CDTXMania.act文字コンソール.tPrint( 60, 0, C文字コンソール.Eフォント種別.灰, this.counter.n現在の値.ToString() );
-                
-            }
-                 */
-            #endregion
 
             //-----------------------------
             #endregion
@@ -715,56 +689,94 @@ namespace DTXMania
 
                 case CStage.Eフェーズ.NOWLOADING_WAVファイルを読み込む:
                     {
+                        //this.ct進行タイマー.t進行();
                         //if (nWAVcount == 1 && CDTXMania.DTX.listWAV.Count > 0)			// #28934 2012.7.7 yyagi (added checking Count)
                         {
                             //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
                         }
-                        int looptime = (CDTXMania.ConfigIni.b垂直帰線待ちを行う) ? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
-                        for (int i = 0; i < looptime && nWAVcount <= CDTXMania.DTX.listWAV.Count; i++)
+                        //if( this.ct進行タイマー.n現在の値 > 3000 )
                         {
-                            if (CDTXMania.DTX.listWAV[nWAVcount].listこのWAVを使用するチャンネル番号の集合.Count > 0)	// #28674 2012.5.8 yyagi
+                        //    this.tフェードアウトもどき();
+                        }
+                        //if ( this.ct進行タイマー.n現在の値 == 4000 && this.counter.b終了値に達した )
+                        //{
+                            #region[ 黒幕 ]
+                            /*
+                            if ( this.tx黒タイル64x64 != null )
                             {
-                                CDTXMania.DTX.tWAVの読み込み(CDTXMania.DTX.listWAV[nWAVcount]);
+                                for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+				                {
+					                for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+					                {
+						                //this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, i * 64, j * 64 );
+					                }
+				                }
                             }
-                            nWAVcount++;
-                        }
-                        //if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
-                        {
-                            //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
-                        }
-                        if (nWAVcount > CDTXMania.DTX.listWAV.Count)
-                        {
-                            TimeSpan span = (TimeSpan)(DateTime.Now - timeBeginLoadWAV);
-                            Trace.TraceInformation("WAV読込所要時間({0,4}):     {1}", CDTXMania.DTX.listWAV.Count, span.ToString());
-                            timeBeginLoadWAV = DateTime.Now;
+                            */ 
+                            #endregion
 
-							if ( CDTXMania.ConfigIni.bDynamicBassMixerManagement )
-							{
-								CDTXMania.DTX.PlanToAddMixerChannel();
-							}
-                            CDTXMania.DTX.t譜面仕様変更( E楽器パート.DRUMS, CDTXMania.ConfigIni.eNumOfLanes.Drums );
-                            CDTXMania.DTX.t旧仕様のドコドコチップを振り分ける(E楽器パート.DRUMS, CDTXMania.ConfigIni.bAssignToLBD.Drums);
-                            CDTXMania.DTX.tドコドコ仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eDkdkType.Drums);
-                            CDTXMania.DTX.tドラムのランダム化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eRandom.Drums);
-                            CDTXMania.DTX.tドラムの足ランダム化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eRandomPedal.Drums);
-                            CDTXMania.DTX.tギターとベースのランダム化(E楽器パート.GUITAR, CDTXMania.ConfigIni.eRandom.Guitar);
-                            CDTXMania.DTX.tギターとベースのランダム化(E楽器パート.BASS, CDTXMania.ConfigIni.eRandom.Bass);
+                            int looptime = (CDTXMania.ConfigIni.b垂直帰線待ちを行う) ? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
+                            for (int i = 0; i < looptime && nWAVcount <= CDTXMania.DTX.listWAV.Count; i++)
+                            {
+                                if (CDTXMania.DTX.listWAV[nWAVcount].listこのWAVを使用するチャンネル番号の集合.Count > 0)	// #28674 2012.5.8 yyagi
+                                {
+                                    CDTXMania.DTX.tWAVの読み込み(CDTXMania.DTX.listWAV[nWAVcount]);
+                                }
+                                nWAVcount++;
+                            }
+                            //if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
+                            {
+                                //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            }
+                            if (nWAVcount > CDTXMania.DTX.listWAV.Count)
+                            {
+                                TimeSpan span = (TimeSpan)(DateTime.Now - timeBeginLoadWAV);
+                                Trace.TraceInformation("WAV読込所要時間({0,4}):     {1}", CDTXMania.DTX.listWAV.Count, span.ToString());
+                                timeBeginLoadWAV = DateTime.Now;
 
-                            if (CDTXMania.ConfigIni.bギタレボモード)
-                                CDTXMania.stage演奏ギター画面.On活性化();
-                            else
-                                CDTXMania.stage演奏ドラム画面.On活性化();
+                                if (CDTXMania.ConfigIni.bDynamicBassMixerManagement)
+                                {
+                                    CDTXMania.DTX.PlanToAddMixerChannel();
+                                }
+                                CDTXMania.DTX.t譜面仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eNumOfLanes.Drums);
+                                CDTXMania.DTX.t旧仕様のドコドコチップを振り分ける(E楽器パート.DRUMS, CDTXMania.ConfigIni.bAssignToLBD.Drums);
+                                CDTXMania.DTX.tドコドコ仕様変更(E楽器パート.DRUMS, CDTXMania.ConfigIni.eDkdkType.Drums);
+                                CDTXMania.DTX.tドラムのランダム化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eRandom.Drums);
+                                CDTXMania.DTX.tドラムの足ランダム化(E楽器パート.DRUMS, CDTXMania.ConfigIni.eRandomPedal.Drums);
+                                CDTXMania.DTX.tギターとベースのランダム化(E楽器パート.GUITAR, CDTXMania.ConfigIni.eRandom.Guitar);
+                                CDTXMania.DTX.tギターとベースのランダム化(E楽器パート.BASS, CDTXMania.ConfigIni.eRandom.Bass);
 
-							span = (TimeSpan) ( DateTime.Now - timeBeginLoadWAV );
-							Trace.TraceInformation( "WAV/譜面後処理時間({0,4}):  {1}", ( CDTXMania.DTX.listBMP.Count + CDTXMania.DTX.listBMPTEX.Count + CDTXMania.DTX.listAVI.Count ), span.ToString() );
+                                if (CDTXMania.ConfigIni.bギタレボモード)
+                                    CDTXMania.stage演奏ギター画面.On活性化();
+                                else
+                                    CDTXMania.stage演奏ドラム画面.On活性化();
 
-							base.eフェーズID = CStage.Eフェーズ.NOWLOADING_BMPファイルを読み込む;
-                        }
+                                span = (TimeSpan)(DateTime.Now - timeBeginLoadWAV);
+                                Trace.TraceInformation("WAV/譜面後処理時間({0,4}):  {1}", (CDTXMania.DTX.listBMP.Count + CDTXMania.DTX.listBMPTEX.Count + CDTXMania.DTX.listAVI.Count), span.ToString());
+
+                                base.eフェーズID = CStage.Eフェーズ.NOWLOADING_BMPファイルを読み込む;
+                            }
+                            //return (int)E曲読込画面の戻り値.継続;
+                        //}
                         return (int)E曲読込画面の戻り値.継続;
                     }
 
 				case CStage.Eフェーズ.NOWLOADING_BMPファイルを読み込む:
 					{
+                        #region[ 黒幕 ]
+                        /*
+                        if ( this.tx黒タイル64x64 != null )
+                        {
+                            for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+				            {
+					            for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+					            {
+						            //this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, i * 64, j * 64 );
+					            }
+				            }
+                        }
+                        */
+                        #endregion
 						TimeSpan span;
 						DateTime timeBeginLoadBMPAVI = DateTime.Now;
 						if ( CDTXMania.ConfigIni.bBGA有効 )
@@ -800,6 +812,22 @@ namespace DTXMania
 
                 case CStage.Eフェーズ.NOWLOADING_システムサウンドBGMの完了を待つ:
                     {
+
+                        #region[ 黒幕 ]
+                        /*
+                        if ( this.tx黒タイル64x64 != null )
+                        {
+                            for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+				            {
+					            for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+					            {
+						            //this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, i * 64, j * 64 );
+					            }
+				            }
+                        }
+                        */
+                        #endregion
+
                         long nCurrentTime = CDTXMania.Timer.n現在時刻;
                         if (nCurrentTime < this.nBGM再生開始時刻)
                             this.nBGM再生開始時刻 = nCurrentTime;
@@ -817,16 +845,32 @@ namespace DTXMania
                     }
 
                 case CStage.Eフェーズ.共通_フェードアウト:
+                    #region[ 黒幕 ]
+                    /*
+                    if (this.tx黒タイル64x64 != null)
+                    {
+                        for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+                        {
+                            for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+                            {
+                                //this.tx黒タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
+                            }
+                        }
+                    }
+                    */
+                    #endregion
 					if ( this.actFO.On進行描画() == 0 && !CDTXMania.DTXVmode.Enabled )		// DTXVモード時は、フェードアウト省略
 						return 0;
                     //if (txFilename != null)
                     {
                     //    txFilename.Dispose();
                     }
+
                     if (this.sd読み込み音 != null)
                     {
                         this.sd読み込み音.t解放する();
                     }
+
                     return (int)E曲読込画面の戻り値.読込完了;
             }
             return (int)E曲読込画面の戻り値.継続;
@@ -885,6 +929,22 @@ namespace DTXMania
                 CDTXMania.ConfigIni.nSkillMode = 0;
             else
                 CDTXMania.ConfigIni.nSkillMode = 1;
+        }
+
+        private void tフェードアウトもどき()
+        {
+			if (this.tx黒タイル64x64 != null)
+			{
+                this.tx黒タイル64x64.n透明度 = ( ( this.counter.n現在の値 * 0xff ) / 100 );
+                this.counter.t進行();
+				for (int i = 0; i <= (SampleFramework.GameWindowSize.Width / 64); i++)		// #23510 2010.10.31 yyagi: change "clientSize.Width" to "640" to fix FIFO drawing size
+				{
+					for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
+					{
+						//this.tx黒タイル64x64.t2D描画( CDTXMania.app.Device, i * 64, j * 64 );
+					}
+				}
+			}
         }
 
 		// その他

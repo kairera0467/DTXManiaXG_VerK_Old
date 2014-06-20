@@ -30,10 +30,78 @@ namespace FDK
 			get; set;
 		}
 		public static CSoundTimer rc演奏用タイマ = null;
+		public static bool bUseOSTimer = false;		// OSのタイマーを使うか、CSoundTimerを使うか。DTXCではfalse, DTXManiaではtrue。
+													// DTXC(DirectSound)でCSoundTimerを使うと、内部で無音のループサウンドを再生するため
+													// サウンドデバイスを占有してしまい、Viewerとして呼び出されるDTXManiaで、ASIOが使えなくなる。
 
 		public static IntPtr WindowHandle;
 
 		public static bool bIsTimeStretch = false;
+
+		private static int _nMasterVolume;
+		public int nMasterVolume
+		{
+			get
+			{
+				return _nMasterVolume;
+			}
+			//get
+			//{
+			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI || SoundDeviceType == ESoundDeviceType.ASIO )
+			//    {
+			//        return Bass.BASS_GetConfig(BASSConfig.BASS_CONFIG_GVOL_STREAM ) / 100;
+			//    }
+			//    else
+			//    {
+			//        return 100;
+			//    }
+			//}
+			//set
+			//{
+			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI )
+			//    {
+			//        bool b = BassWasapi.BASS_WASAPI_SetVolume( BASSWASAPIVolume.BASS_WASAPI_CURVE_LINEAR, value / 100.0f );
+			//        if ( !b )
+			//        {
+			//            BASSError be = Bass.BASS_ErrorGetCode();
+			//            Trace.TraceInformation( "WASAPI Master Volume Set Error: " + be.ToString() );
+			//        }
+			//    }
+			//}
+			//set
+			//{
+			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI || SoundDeviceType == ESoundDeviceType.ASIO )
+			//    {
+			//        bool b = Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_GVOL_STREAM, value * 100 );
+			//        if ( !b )
+			//        {
+			//            BASSError be = Bass.BASS_ErrorGetCode();
+			//            Trace.TraceInformation( "Master Volume Set Error: " + be.ToString() );
+			//        }
+			//    }
+			//}
+			//set
+			//{
+			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI || SoundDeviceType == ESoundDeviceType.ASIO )
+			//    {
+			//        var nodes = new BASS_MIXER_NODE[ 1 ] { new BASS_MIXER_NODE( 0, (float) value ) };
+			//        BassMix.BASS_Mixer_ChannelSetEnvelope( SoundDevice.hMixer, BASSMIXEnvelope.BASS_MIXER_ENV_VOL, nodes );
+			//    }
+			//}
+			set
+			{
+				SoundDevice.nMasterVolume = value;
+				_nMasterVolume = value;
+			}
+		}
+
+		///// <summary>
+		///// BASS時、mp3をストリーミング再生せずに、デコードしたraw wavをオンメモリ再生する場合はtrueにする。
+		///// 特殊なmp3を使用時はシークが乱れるので、必要に応じてtrueにすること。(Config.iniのNoMP3Streamingで設定可能。)
+		///// ただし、trueにすると、その分再生開始までの時間が長くなる。
+		///// </summary>
+		//public static bool bIsMP3DecodeByWindowsCodec = false;
+
 		public static int nMixing = 0;
 		public int GetMixingStreams()
 		{
@@ -117,20 +185,30 @@ namespace FDK
 		#endregion
 
 
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
-	/// <param name="handle"></param>
+		/// <summary>
+		/// DTXC用コンストラクタ
+		/// </summary>
+		/// <param name="handle"></param>
 		public CSound管理( IntPtr handle )	// #30803 従来のコンストラクタ相当のI/Fを追加。(DTXC用)
 		{
 			WindowHandle = handle;
 			SoundDevice = null;
+			bUseOSTimer = true;
 			t初期化( ESoundDeviceType.DirectSound, 0, 0, 0 );
 		}
+		/// <summary>
+		/// DTXMania用コンストラクタ
+		/// </summary>
+		/// <param name="handle"></param>
+		/// <param name="soundDeviceType"></param>
+		/// <param name="nSoundDelayExclusiveWASAPI"></param>
+		/// <param name="nSoundDelayASIO"></param>
+		/// <param name="nASIODevice"></param>
 		public CSound管理( IntPtr handle, ESoundDeviceType soundDeviceType, int nSoundDelayExclusiveWASAPI, int nSoundDelayASIO, int nASIODevice )
 		{
 			WindowHandle = handle;
 			SoundDevice = null;
+			bUseOSTimer = false;
 			t初期化( soundDeviceType, nSoundDelayExclusiveWASAPI, nSoundDelayASIO, nASIODevice );
 		}
 		public void Dispose()
@@ -138,13 +216,22 @@ namespace FDK
 			t終了();
 		}
 
-		public static void t初期化()
+		//public static void t初期化()
+		//{
+		//    t初期化( ESoundDeviceType.DirectSound, 0, 0, 0 );
+		//}
+
+		public void t初期化( ESoundDeviceType soundDeviceType, int _nSoundDelayExclusiveWASAPI, int _nSoundDelayASIO, int _nASIODevice, IntPtr handle )
 		{
-			t初期化( ESoundDeviceType.DirectSound, 0, 0, 0 );
+			//if ( !bInitialized )
+			{
+				WindowHandle = handle;
+				t初期化( soundDeviceType, _nSoundDelayExclusiveWASAPI, _nSoundDelayASIO, _nASIODevice );
+				//bInitialized = true;
+			}
 		}
 
-
-		public static void t初期化( ESoundDeviceType soundDeviceType, int _nSoundDelayExclusiveWASAPI, int _nSoundDelayASIO, int _nASIODevice )
+		public void t初期化( ESoundDeviceType soundDeviceType, int _nSoundDelayExclusiveWASAPI, int _nSoundDelayASIO, int _nASIODevice )
 		{
 			//SoundDevice = null;						// 後で再初期化することがあるので、null初期化はコンストラクタに回す
 			rc演奏用タイマ = null;						// Global.Bass 依存（つまりユーザ依存）
@@ -190,11 +277,12 @@ namespace FDK
 					Trace.TraceInformation( e.Message );
 					if ( ESoundDeviceTypes[ n初期デバイス ] == ESoundDeviceType.Unknown )
 					{
-						throw new Exception( string.Format( "サウンドデバイスの初期化に失敗しました。" ) );
+						Trace.TraceError( string.Format( "サウンドデバイスの初期化に失敗しました。" ) );
+						break;
 					}
 				}
 			}
-            if ( soundDeviceType == ESoundDeviceType.ExclusiveWASAPI || soundDeviceType == ESoundDeviceType.ASIO )
+			if ( soundDeviceType == ESoundDeviceType.ExclusiveWASAPI || soundDeviceType == ESoundDeviceType.ASIO )
 			{
 				//Bass.BASS_SetConfig( BASSConfig.BASS_CONFIG_UPDATETHREADS, 4 );
 				//Bass.BASS_SetConfig( BASSConfig.BASS_CONFIG_UPDATEPERIOD, 0 );
@@ -202,6 +290,15 @@ namespace FDK
 				Trace.TraceInformation( "BASS_CONFIG_UpdatePeriod=" + Bass.BASS_GetConfig( BASSConfig.BASS_CONFIG_UPDATEPERIOD ) );
 				Trace.TraceInformation( "BASS_CONFIG_UpdateThreads=" + Bass.BASS_GetConfig( BASSConfig.BASS_CONFIG_UPDATETHREADS ) );
 			}
+		}
+
+		public void tDisableUpdateBufferAutomatically()
+		{
+			//Bass.BASS_SetConfig( BASSConfig.BASS_CONFIG_UPDATETHREADS, 0 );
+			//Bass.BASS_SetConfig( BASSConfig.BASS_CONFIG_UPDATEPERIOD, 0 );
+
+			//Trace.TraceInformation( "BASS_CONFIG_UpdatePeriod=" + Bass.BASS_GetConfig( BASSConfig.BASS_CONFIG_UPDATEPERIOD ) );
+			//Trace.TraceInformation( "BASS_CONFIG_UpdateThreads=" + Bass.BASS_GetConfig( BASSConfig.BASS_CONFIG_UPDATETHREADS ) );
 		}
 
 
@@ -248,7 +345,7 @@ namespace FDK
 					break;
 
 				case ESoundDeviceType.DirectSound:
-					SoundDevice = new CSoundDeviceDirectSound( WindowHandle, SoundDelayDirectSound );
+					SoundDevice = new CSoundDeviceDirectSound( WindowHandle, SoundDelayDirectSound, bUseOSTimer );
 					break;
 
 				default:
@@ -262,6 +359,8 @@ namespace FDK
 			//-----------------
 			#endregion
 
+			SoundDevice.nMasterVolume = _nMasterVolume;					// サウンドデバイスに対して、マスターボリュームを再設定する
+
 			CSound.tすべてのサウンドを再構築する( SoundDevice );		// すでに生成済みのサウンドがあれば作り直す。
 		}
 		public CSound tサウンドを生成する( string filename )
@@ -273,7 +372,7 @@ namespace FDK
 			return SoundDevice.tサウンドを作成する( filename );
 		}
 
-        private static DateTime lastUpdateTime = DateTime.MinValue;
+		private static DateTime lastUpdateTime = DateTime.MinValue;
 		public void t再生中の処理をする( object o )			// #26122 2011.9.1 yyagi; delegate経由の呼び出し用
 		{
 			t再生中の処理をする();
@@ -282,17 +381,17 @@ namespace FDK
 		{
 //★★★★★★★★★★★★★★★★★★★★★ダミー★★★★★★★★★★★★★★★★★★
 //			Debug.Write( "再生中の処理をする()" );
-            //DateTime now = DateTime.Now;
-            //TimeSpan ts = now - lastUpdateTime;
-            //if ( ts.Milliseconds > 5 )
-            //{
-            //    bool b = Bass.BASS_Update( 100 * 2 );
-            //    lastUpdateTime = DateTime.Now;
-            //    if ( !b )
-            //    {
-            //        Trace.TraceInformation( "BASS_UPdate() failed: " + Bass.BASS_ErrorGetCode().ToString() );
-            //    }
-            //}
+			//DateTime now = DateTime.Now;
+			//TimeSpan ts = now - lastUpdateTime;
+			//if ( ts.Milliseconds > 5 )
+			//{
+			//    bool b = Bass.BASS_Update( 100 * 2 );
+			//    lastUpdateTime = DateTime.Now;
+			//    if ( !b )
+			//    {
+			//        Trace.TraceInformation( "BASS_UPdate() failed: " + Bass.BASS_ErrorGetCode().ToString() );
+			//    }
+			//}
 		}
 
 		public void tサウンドを破棄する( CSound csound )
@@ -454,7 +553,7 @@ namespace FDK
 
 		public bool b演奏終了後も再生が続くチップである = false;	// これがtrueなら、本サウンドの再生終了のコールバック時に自動でミキサーから削除する
 
-		private STREAMPROC _cbStreamXA;		// make it global, so that the GC can not remove it
+		//private STREAMPROC _cbStreamXA;		// make it global, so that the GC can not remove it
 		private SYNCPROC _cbEndofStream;	// ストリームの終端まで再生されたときに呼び出されるコールバック
 //		private WaitCallback _cbRemoveMixerChannel;
 
@@ -551,7 +650,7 @@ namespace FDK
 					}
 					else if( this._n位置 == 100 )
 					{
-						this._n位置db = 100000;
+						this._n位置db = 10000;
 					}
 					else if( this._n位置 < 0 )
 					{
@@ -724,7 +823,7 @@ namespace FDK
 			int nPCMサイズbyte;
 			CWin32.WAVEFORMATEX cw32wfx;
 			tオンメモリ方式でデコードする( strファイル名, out this.byArrWAVファイルイメージ,
-			out nPCMデータの先頭インデックス, out nPCMサイズbyte, out cw32wfx );
+			out nPCMデータの先頭インデックス, out nPCMサイズbyte, out cw32wfx, false );
 
 			wfx.AverageBytesPerSecond = (int) cw32wfx.nAvgBytesPerSec;
 			wfx.BitsPerSample = (short) cw32wfx.wBitsPerSample;
@@ -1038,6 +1137,14 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			this.t再生位置を先頭に戻す();
 			this.tサウンドを再生する();
 		}
+		public void tサウンドを停止してMixerからも削除する()
+		{
+			tサウンドを停止する( false );
+			if ( bBASSサウンドである )
+			{
+				tBASSサウンドをミキサーから削除する();
+			}
+		}
 		public void tサウンドを停止する()
 		{
 			tサウンドを停止する( false );
@@ -1055,16 +1162,17 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			}
 			else if( this.bDirectSoundである )
 			{
-                try
-                {
-				    this.Buffer.Stop();
-                }
-                catch( Exception )
-                {
-                    // WASAPI/ASIOとDirectSoundを同時使用すると、Bufferがlostしてここで例外発生する。→ catchして無視する。
-                    // DTXCからDTXManiaを呼び出すと、DTXC終了時にこの現象が発生する。
-                }
+				try
+				{
+					this.Buffer.Stop();
+				}
+				catch ( Exception )
+				{
+					// WASAPI/ASIOとDirectSoundを同時使用すると、Bufferがlostしてここで例外発生する。→ catchして無視する。
+					// DTXCからDTXManiaを呼び出すと、DTXC終了時にこの現象が発生する。
+				}
 			}
+			this.n一時停止回数 = 0;
 		}
 		
 		public void t再生位置を先頭に戻す()
@@ -1072,7 +1180,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			if( this.bBASSサウンドである )
 			{
 				BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, 0 );
-				pos = 0;
+				//pos = 0;
 			}
 			else if( this.bDirectSoundである )
 			{
@@ -1083,7 +1191,12 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		{
 			if( this.bBASSサウンドである )
 			{
-				BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ), BASSMode.BASS_POS_BYTES );
+				bool b = BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ), BASSMode.BASS_POS_BYTES );
+				if ( !b )
+				{
+					BASSError be = Bass.BASS_ErrorGetCode();
+					Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + be.ToString() );
+				}
 			}
 			else if( this.bDirectSoundである )
 			{
@@ -1355,7 +1468,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			int totalPCMSize;
 
 			tオンメモリ方式でデコードする( strファイル名, out this.byArrWAVファイルイメージ,
-				out nPCMデータの先頭インデックス, out totalPCMSize, out wfx );
+				out nPCMデータの先頭インデックス, out totalPCMSize, out wfx, true );
 
 			nBytes = totalPCMSize;
 
@@ -1363,18 +1476,23 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			this.strファイル名 = strファイル名;
 			this.hGC = GCHandle.Alloc( this.byArrWAVファイルイメージ, GCHandleType.Pinned );		// byte[] をピン留め
 
-
-			_cbStreamXA = new STREAMPROC( CallbackPlayingXA );
+			//_cbStreamXA = new STREAMPROC( CallbackPlayingXA );
 
 			// BASSファイルストリームを作成。
 
 			//this.hBassStream = Bass.BASS_StreamCreate( xa.xaheader.nSamplesPerSec, xa.xaheader.nChannels, BASSFlag.BASS_STREAM_DECODE, _myStreamCreate, IntPtr.Zero );
-			this._hBassStream = Bass.BASS_StreamCreate( (int) wfx.nSamplesPerSec, (int) wfx.nChannels, BASSFlag.BASS_STREAM_DECODE, _cbStreamXA, IntPtr.Zero );
+			//this._hBassStream = Bass.BASS_StreamCreate( (int) wfx.nSamplesPerSec, (int) wfx.nChannels, BASSFlag.BASS_STREAM_DECODE, _cbStreamXA, IntPtr.Zero );
+
+			// StreamCreate()で作成したstreamはseek不可のため、StreamCreateFile()を使う。
+			this._hBassStream = Bass.BASS_StreamCreateFile( this.hGC.AddrOfPinnedObject(), 0L, totalPCMSize, flags );
 			if ( this._hBassStream == 0 )
 			{
 				hGC.Free();
 				throw new Exception( string.Format( "サウンドストリームの生成に失敗しました。(BASS_SampleCreate)[{0}]", Bass.BASS_ErrorGetCode().ToString() ) );
 			}
+
+			nBytes = Bass.BASS_ChannelGetLength( this._hBassStream );
+
 
 			tBASSサウンドを作成する・ストリーム生成後の共通処理( hMixer );
 		}
@@ -1420,7 +1538,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			// n総演奏時間の取得; DTXMania用に追加。
 			double seconds = Bass.BASS_ChannelBytes2Seconds( this._hBassStream, nBytes );
 			this.n総演奏時間ms = (int) ( seconds * 1000 );
-			this.pos = 0;
+			//this.pos = 0;
 			this.hMixer = hMixer;
 			float freq = 0.0f;
 			if ( !Bass.BASS_ChannelGetAttribute( this._hBassStream, BASSAttribute.BASS_ATTRIB_FREQ, ref freq ) )
@@ -1432,21 +1550,20 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		}
 		//-----------------
 
-		private int pos = 0;
-		private int CallbackPlayingXA( int handle, IntPtr buffer, int length, IntPtr user )
-		{
-			int bytesread = ( pos + length > Convert.ToInt32(nBytes) ) ? Convert.ToInt32(nBytes) - pos : length;
+		//private int pos = 0;
+		//private int CallbackPlayingXA( int handle, IntPtr buffer, int length, IntPtr user )
+		//{
+		//    int bytesread = ( pos + length > Convert.ToInt32( nBytes ) ) ? Convert.ToInt32( nBytes ) - pos : length;
 
-			Marshal.Copy( byArrWAVファイルイメージ, pos, buffer, bytesread );
-			pos += bytesread;
-
-			if ( pos >= nBytes )
-			{
-				// set indicator flag
-				bytesread |= (int) BASSStreamProc.BASS_STREAMPROC_END;
-			}
-			return bytesread;
-		}
+		//    Marshal.Copy( byArrWAVファイルイメージ, pos, buffer, bytesread );
+		//    pos += bytesread;
+		//    if ( pos >= nBytes )
+		//    {
+		//        // set indicator flag
+		//        bytesread |= (int) BASSStreamProc.BASS_STREAMPROC_END;
+		//    }
+		//    return bytesread;
+		//}
 		/// <summary>
 		/// ストリームの終端まで再生したときに呼び出されるコールバック
 		/// </summary>
@@ -1456,7 +1573,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		/// <param name="user"></param>
 		private void CallbackEndofStream( int handle, int channel, int data, IntPtr user )	// #32248 2013.10.14 yyagi
 		{
-//			Debug.WriteLine( "Callback!(remove): " + Path.GetFileName( this.strファイル名 ) );
+// Trace.TraceInformation( "Callback!(remove): " + Path.GetFileName( this.strファイル名 ) );
 			if ( b演奏終了後も再生が続くチップである )			// 演奏終了後に再生終了するチップ音のミキサー削除は、再生終了のコールバックに引っ掛けて、自前で行う。
 			{													// そうでないものは、ミキサー削除予定時刻に削除する。
 				tBASSサウンドをミキサーから削除する( channel );
@@ -1496,7 +1613,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 				bool b1 = BassMix.BASS_Mixer_StreamAddChannel( this.hMixer, this.hBassStream, bf );
 				//bool b2 = BassMix.BASS_Mixer_ChannelPause( this.hBassStream );
 				t再生位置を先頭に戻す();	// StreamAddChannelの後で再生位置を戻さないとダメ。逆だと再生位置が変わらない。
-//				Debug.WriteLine( "Add Mixer: " + Path.GetFileName( this.strファイル名 ) + " (" + hBassStream + ")" + " MixedStreams=" + CSound管理.nMixing );
+//Trace.TraceInformation( "Add Mixer: " + Path.GetFileName( this.strファイル名 ) + " (" + hBassStream + ")" + " MixedStreams=" + CSound管理.nMixing );
 				Bass.BASS_ChannelUpdate( this.hBassStream, 0 );	// pre-buffer
 				return b1;	// &b2;
 			}
@@ -1505,7 +1622,8 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 
 		#region [ tオンメモリ方式でデコードする() ]
 		public void tオンメモリ方式でデコードする( string strファイル名, out byte[] buffer,
-			out int nPCMデータの先頭インデックス, out int totalPCMSize, out CWin32.WAVEFORMATEX wfx )
+			out int nPCMデータの先頭インデックス, out int totalPCMSize, out CWin32.WAVEFORMATEX wfx,
+			bool bIntegrateWaveHeader )
 		{
 			nPCMデータの先頭インデックス = 0;
 			//int nPCMサイズbyte = (int) ( xa.xaheader.nSamples * xa.xaheader.nChannels * 2 );	// nBytes = Bass.BASS_ChannelGetLength( this.hBassStream );
@@ -1548,8 +1666,10 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 				throw new Exception( string.Format( "GetTotalPCMSize() に失敗しました。({0})", strファイル名 ) );
 			}
 			totalPCMSize += ( ( totalPCMSize % 2 ) != 0 ) ? 1 : 0;
-			buffer = new byte[ totalPCMSize ];
-			GCHandle handle = GCHandle.Alloc( buffer, GCHandleType.Pinned );
+			int wavheadersize = ( bIntegrateWaveHeader ) ? 44 : 0;
+			byte[] buffer_rawdata = new byte[ totalPCMSize ];
+			buffer = new byte[ wavheadersize + totalPCMSize ];
+			GCHandle handle = GCHandle.Alloc( buffer_rawdata, GCHandleType.Pinned );
 			try
 			{
 				if ( sounddecoder.Decode( nHandle, handle.AddrOfPinnedObject(), (uint) totalPCMSize, 0 ) < 0 )
@@ -1557,6 +1677,50 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 					buffer = null;
 					throw new Exception( string.Format( "デコードに失敗しました。({0})", strファイル名 ) );
 				}
+				if ( bIntegrateWaveHeader )
+				{
+					// wave headerを書き込む
+
+					int wfx拡張領域_Length = 0;
+					var ms = new MemoryStream();
+					var bw = new BinaryWriter( ms );
+					bw.Write( new byte[] { 0x52, 0x49, 0x46, 0x46 } );		// 'RIFF'
+					bw.Write( (UInt32) totalPCMSize + 44 - 8 );				// ファイルサイズ - 8 [byte]；今は不明なので後で上書きする。
+					bw.Write( new byte[] { 0x57, 0x41, 0x56, 0x45 } );		// 'WAVE'
+					bw.Write( new byte[] { 0x66, 0x6D, 0x74, 0x20 } );		// 'fmt '
+					bw.Write( (UInt32) ( 16 + ( ( wfx拡張領域_Length > 0 ) ? ( 2/*sizeof(WAVEFORMATEX.cbSize)*/ + wfx拡張領域_Length ) : 0 ) ) );	// fmtチャンクのサイズ[byte]
+					bw.Write( (UInt16) wfx.wFormatTag );					// フォーマットID（リニアPCMなら1）
+					bw.Write( (UInt16) wfx.nChannels );						// チャンネル数
+					bw.Write( (UInt32) wfx.nSamplesPerSec );				// サンプリングレート
+					bw.Write( (UInt32) wfx.nAvgBytesPerSec );				// データ速度
+					bw.Write( (UInt16) wfx.nBlockAlign );					// ブロックサイズ
+					bw.Write( (UInt16) wfx.wBitsPerSample );				// サンプルあたりのビット数
+					//if ( wfx拡張領域_Length > 0 )
+					//{
+					//    bw.Write( (UInt16) wfx拡張領域.Length );			// 拡張領域のサイズ[byte]
+					//    bw.Write( wfx拡張領域 );							// 拡張データ
+					//}
+					bw.Write( new byte[] { 0x64, 0x61, 0x74, 0x61 } );		// 'data'
+					//int nDATAチャンクサイズ位置 = (int) ms.Position;
+					bw.Write( (UInt32) totalPCMSize );						// dataチャンクのサイズ[byte]
+
+					byte[] bs = ms.ToArray();
+
+					bw.Close();
+					ms.Close();
+
+					for ( int i = 0; i < bs.Length; i++ )
+					{
+						buffer[ i ] = bs[ i ];
+					}
+				}
+				int s = ( bIntegrateWaveHeader ) ? 44 : 0;
+				for ( int i = 0; i < totalPCMSize; i++ )
+				{
+					buffer[ i + s ] = buffer_rawdata[ i ];
+				}
+				totalPCMSize += wavheadersize;
+				nPCMデータの先頭インデックス = wavheadersize;
 			}
 			finally
 			{

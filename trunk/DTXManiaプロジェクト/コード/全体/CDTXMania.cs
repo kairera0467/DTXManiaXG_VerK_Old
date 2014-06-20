@@ -1561,6 +1561,12 @@ for (int i = 0; i < 3; i++) {
 #if !GPUFlushAfterPresent
 			actFlushGPU.On進行描画();		// Flush GPU	// EndScene()～Present()間 (つまりVSync前) でFlush実行
 #endif
+            if ( Sound管理.GetCurrentSoundDeviceType() != "DirectSound" )
+            {
+             Sound管理.t再生中の処理をする(); // サウンドバッファの更新; 画面描画と同期させることで、スクロールをスムーズにする
+            }
+
+
 			#region [ 全画面・ウインドウ切り替え ]
 			if ( this.b次のタイミングで全画面・ウィンドウ切り替えを行う )
 			{
@@ -1861,6 +1867,11 @@ for (int i = 0; i < 3; i++) {
                             ConfigIni.nASIODevice = DTXVmode.nASIOdevice;
                             break;
                     }
+
+                    CDTXMania.ConfigIni.b垂直帰線待ちを行う = DTXVmode.VSyncWait;
+                    CDTXMania.ConfigIni.bTimeStretch = DTXVmode.TimeStretch;
+                    CDTXMania.ConfigIni.bDrums有効 = !DTXVmode.GRmode;
+                    CDTXMania.ConfigIni.bGuitar有効 = true;
 				}
 				else														// 通常のコンパクトモード
 				{
@@ -2140,6 +2151,8 @@ for (int i = 0; i < 3; i++) {
                     );
                     ShowWindowTitleWithSoundType();
                     FDK.CSound管理.bIsTimeStretch = CDTXMania.ConfigIni.bTimeStretch;
+                    Sound管理.nMasterVolume = CDTXMania.ConfigIni.nMasterVolume;
+                    //FDK.CSound管理.bIsMP3DecodeByWindowsCodec = CDTXMania.ConfigIni.bNoMP3Streaming;
                     Trace.TraceInformation("サウンドデバイスの初期化を完了しました。");
                 }
             }
