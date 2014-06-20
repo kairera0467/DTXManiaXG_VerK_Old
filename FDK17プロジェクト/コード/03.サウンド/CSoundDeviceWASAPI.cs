@@ -48,6 +48,51 @@ namespace FDK
 
 		public enum Eデバイスモード { 排他, 共有 }
 
+		public int nMasterVolume
+		{
+			get
+			{
+				float f音量 = 0.0f;
+				//if ( BassMix.BASS_Mixer_ChannelGetEnvelopePos( this.hMixer, BASSMIXEnvelope.BASS_MIXER_ENV_VOL, ref f音量 ) == -1 )
+				//    return 100;
+				//bool b = Bass.BASS_ChannelGetAttribute( this.hMixer, BASSAttribute.BASS_ATTRIB_VOL, ref f音量 );
+				bool b = Bass.BASS_ChannelGetAttribute( this.hMixer, BASSAttribute.BASS_ATTRIB_VOL, ref f音量 );
+				if ( !b )
+				{
+					BASSError be = Bass.BASS_ErrorGetCode();
+					Trace.TraceInformation( "WASAPI Master Volume Get Error: " + be.ToString() );
+				}
+				else
+				{
+					Trace.TraceInformation( "WASAPI Master Volume Get Success: " + (f音量 * 100) );
+
+				}
+				return (int) ( f音量 * 100 );
+			}
+			set
+			{
+				bool b = Bass.BASS_SetVolume( value / 100.0f );
+				// hMixerに対するBASS_ChannelSetAttribute()でBASS_ATTRIB_VOLを変更: 出力音量に反映されず
+				// Bass_SetVolume(): BASS_ERROR_NOTAVIL ("no sound" deviceには適用不可)
+
+				// Mixer_ChannelSetEnvelope():
+
+				//var nodes = new BASS_MIXER_NODE[ 1 ] { new BASS_MIXER_NODE( 0, (float) value ) };
+				//bool b = BassMix.BASS_Mixer_ChannelSetEnvelope( this.hMixer, BASSMIXEnvelope.BASS_MIXER_ENV_VOL, nodes );
+				//bool b = Bass.BASS_ChannelSetAttribute( this.hMixer, BASSAttribute.BASS_ATTRIB_VOL, value / 100.0f );
+				if ( !b )
+				{
+					BASSError be = Bass.BASS_ErrorGetCode();
+					Trace.TraceInformation( "WASAPI Master Volume Set Error: " + be.ToString() );
+				}
+				else
+				{
+					//int n = this.nMasterVolume;	
+					//Trace.TraceInformation( "WASAPI Master Volume Set Success: " + value );
+
+				}
+			}
+		}
 		// メソッド
 
 		/// <summary>
@@ -79,15 +124,15 @@ namespace FDK
 			// BASS のバージョンチェック。
 			int nBASSVersion = Utils.HighWord( Bass.BASS_GetVersion() );
 			if( nBASSVersion != Bass.BASSVERSION )
-				throw new DllNotFoundException( string.Format( "bass.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSVersion, Bass.BASSVERSION ) );
+				throw new DllNotFoundException( string.Format( "bass.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSVersion, Bass.BASSVERSION ) );
 
 			int nBASSMixVersion = Utils.HighWord( BassMix.BASS_Mixer_GetVersion() );
 			if( nBASSMixVersion != BassMix.BASSMIXVERSION )
-				throw new DllNotFoundException( string.Format( "bassmix.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSMixVersion, BassMix.BASSMIXVERSION ) );
+				throw new DllNotFoundException( string.Format( "bassmix.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSMixVersion, BassMix.BASSMIXVERSION ) );
 
 			int nBASSWASAPIVersion = Utils.HighWord( BassWasapi.BASS_WASAPI_GetVersion() );
 			if( nBASSWASAPIVersion != BassWasapi.BASSWASAPIVERSION )
-				throw new DllNotFoundException( string.Format( "basswasapi.dll のバージョンが異なります({0:X4})。このプログラムはバージョン{1:X4}で動作します。", nBASSWASAPIVersion, BassWasapi.BASSWASAPIVERSION ) );
+				throw new DllNotFoundException( string.Format( "basswasapi.dll のバージョンが異なります({0})。このプログラムはバージョン{1}で動作します。", nBASSWASAPIVersion, BassWasapi.BASSWASAPIVERSION ) );
 			#endregion
 
 			// BASS の設定。
@@ -156,7 +201,7 @@ namespace FDK
 
 //Retry:
 			var flags = ( mode == Eデバイスモード.排他 ) ? BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EXCLUSIVE : BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT;
-            //var flags = ( mode == Eデバイスモード.排他 ) ? BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EVENT | BASSWASAPIInit.BASS_WASAPI_EXCLUSIVE : BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EVENT;
+			//var flags = ( mode == Eデバイスモード.排他 ) ? BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EVENT | BASSWASAPIInit.BASS_WASAPI_EXCLUSIVE : BASSWASAPIInit.BASS_WASAPI_AUTOFORMAT | BASSWASAPIInit.BASS_WASAPI_EVENT;
 			if ( BassWasapi.BASS_WASAPI_Init( nデバイス, n周波数, nチャンネル数, flags, ( n希望バッファサイズms / 1000.0f ), ( n更新間隔ms / 1000.0f ), this.tWasapiProc, IntPtr.Zero ) )
 			{
 				if( mode == Eデバイスモード.排他 )

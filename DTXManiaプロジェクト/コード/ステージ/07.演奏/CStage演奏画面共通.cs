@@ -2860,7 +2860,7 @@ namespace DTXMania
                     case 0xEA:
                         if( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
                         {
-                            //Debug.WriteLine("[DA(AddMixer)] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString("x2") + ", wav=" + pChip.n整数値.ToString("x2") + ", time=" + pChip.n発声時刻ms);
+                            // Trace.TraceInformation( "first [DA] BAR=" + pChip.n発声位置 / 384 + " ch=" + pChip.nチャンネル番号.ToString( "x2" ) + ", wav=" + pChip.n整数値 + ", time=" + pChip.n発声時刻ms );
                             pChip.bHit = true;
                             if (listWAV.ContainsKey(pChip.n整数値・内部番号)) // 参照が遠いので後日最適化する
                             {
@@ -3072,7 +3072,7 @@ namespace DTXMania
 
 		public void t停止()
 		{
-			CDTXMania.DTX.t全チップの再生停止();
+            CDTXMania.DTX.t全チップの再生停止とミキサーからの削除();
 			this.n現在のトップChip = CDTXMania.DTX.listChip.Count - 1;	// 終端にシーク
 			actCombo.On活性化();	// コンボ初期化
 

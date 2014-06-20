@@ -151,7 +151,8 @@ namespace DTXMania
                 this.bIsFinishedFadeout = false;
                 this.bエクセ = false;
                 this.bフルコン = false;
-                if (base.b初めての進行描画)
+                #region [ 初めての進行描画 ]
+                if( base.b初めての進行描画 )
                 {
                     CSound管理.rc演奏用タイマ.tリセット();
                     CDTXMania.Timer.tリセット();
@@ -194,7 +195,7 @@ namespace DTXMania
 					}
                     base.b初めての進行描画 = false;
                 }
-
+                #endregion
                 if ((CDTXMania.ConfigIni.bSTAGEFAILED有効 && this.actGauge.IsFailed(E楽器パート.DRUMS)) && (base.eフェーズID == CStage.Eフェーズ.共通_通常状態))
                 {
                     this.actStageFailed.Start();
@@ -319,6 +320,12 @@ namespace DTXMania
                 {
                     if ( CDTXMania.DTXVmode.Enabled )   //製作途中なのに最後にBPMバーが光ってもただうっとおしいので、光る前に挿入。
 					{
+                        // 何かサウンドが鳴っている間は、待機する
+                        //if ( CDTXMania.Timer.b停止していない )
+                        //{
+                        // this.actPanel.SetPanelString( "" ); // まだPANELの復活ができていない
+                        // CDTXMania.Timer.t一時停止();
+                        //}
 						Thread.Sleep( 5 );
 						// DTXCからの次のメッセージを待ち続ける
 					}

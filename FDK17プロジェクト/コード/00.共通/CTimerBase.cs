@@ -122,6 +122,13 @@ namespace FDK
 			protected set;
 		}
 
+        public bool b停止していない
+        {
+            get
+            {
+                return ( this.n停止数 == 0 );
+            }
+        }
 
 		public void tリセット()
 		{

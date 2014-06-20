@@ -197,8 +197,23 @@ namespace DTXMania
                 }
                 else if (CDTXMania.ConfigIni.nSkillMode == 1)
                 {
-                    //this.dbグラフ値比較 = CScoreIni.tゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数[j], this.n現在演奏されたノーツ数, drums.n最大コンボ数, E楽器パート[j]);
-                    this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
+                    E楽器パート ePart = E楽器パート.UNKNOWN;
+                    switch( j )
+                    {
+                        case 0:
+                            ePart = E楽器パート.DRUMS;
+                            break;
+                        case 1:
+                            ePart = E楽器パート.GUITAR;
+                            break;
+                        case 2:
+                            ePart = E楽器パート.BASS;
+                            break;
+                    }
+
+
+                    this.dbグラフ値比較 = CScoreIni.tゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数[j], this.n現在演奏されたノーツ数, drums.n最大コンボ数, ePart );
+                    //this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
                 }
 
 
@@ -382,7 +397,7 @@ namespace DTXMania
                 //sw.WriteLine("TotalJudgeは{0}で、Ghostは{1}です。", db現在の判定数合計, this.dbグラフ値目標_Ghost);
                 //sw.Close();
                 this.dbグラフ値目標_表示 = this.dbグラフ値目標;
-                rectangle = new Rectangle(138, 0, 72, (int)(556f * this.dbグラフ値目標_表示 / 100));
+                rectangle = new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値目標_表示 / 100.0));
                 if (this.txグラフ != null)
                 {
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
@@ -392,7 +407,7 @@ namespace DTXMania
                     this.txグラフ.n透明度 = 48;
                     //this.txグラフ.b加算合成 = true;
                     //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値比較 / 100), new Rectangle(138, 0, 72, (int)(556f * this.dbグラフ値比較 / 100)));
+                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556.0 * this.dbグラフ値目標_表示 / 100.0), new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値目標_表示 / 100.0)));
                 }
                 /*
 				for( int k = 32; k < 64; k++ )
