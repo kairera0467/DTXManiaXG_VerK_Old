@@ -223,7 +223,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if( this.txDS背景 == null )
+                if( this.txDS背景 == null && CDTXMania.Skin.ds選曲画面背景動画 != null )
                     this.txDS背景 = new CTexture( CDTXMania.app.Device, CDTXMania.Skin.ds選曲画面背景動画.n幅px, CDTXMania.Skin.ds選曲画面背景動画.n高さpx, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
 
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
@@ -293,7 +293,7 @@ namespace DTXMania
                 }
                 */
 
-
+                this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 
 				if( CDTXMania.Skin.ds選曲画面背景動画 != null )
                 {
