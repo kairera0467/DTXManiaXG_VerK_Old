@@ -417,19 +417,21 @@ namespace DTXMania
             if (base.b初めての進行描画)
             {
                 //Cスコア cスコア1 = CDTXMania.bコンパクトモード ? : CDTXMania.stage選曲.r確定されたスコア;
-                if (this.sd読み込み音 != null)
+                if( this.sd読み込み音 != null )
                 {
                     if (CDTXMania.Skin.sound曲読込開始音.b排他 && (CSkin.Cシステムサウンド.r最後に再生した排他システムサウンド != null))
                     {
                         CSkin.Cシステムサウンド.r最後に再生した排他システムサウンド.t停止する();
                     }
-                    this.sd読み込み音.t再生を開始する();
+                    if( !CDTXMania.DTXVmode.Enabled )
+                        this.sd読み込み音.t再生を開始する();
                     this.nBGM再生開始時刻 = CSound管理.rc演奏用タイマ.n現在時刻;
                     this.nBGMの総再生時間ms = this.sd読み込み音.n総演奏時間ms;
                 }
                 else
                 {
-                    CDTXMania.Skin.sound曲読込開始音.t再生する();
+                    if( !CDTXMania.DTXVmode.Enabled )
+                        CDTXMania.Skin.sound曲読込開始音.t再生する();
                     this.nBGM再生開始時刻 = CSound管理.rc演奏用タイマ.n現在時刻;
                     this.nBGMの総再生時間ms = CDTXMania.Skin.sound曲読込開始音.n長さ・現在のサウンド;
                 }
@@ -438,10 +440,11 @@ namespace DTXMania
                 base.b初めての進行描画 = false;
 
                 nWAVcount = 1;
-                bitmapFilename = new Bitmap(1280, 720);
-                graphicsFilename = Graphics.FromImage(bitmapFilename);
-                graphicsFilename.TextRenderingHint = TextRenderingHint.AntiAlias;
-                ftFilename = new Font("MS PGothic", 24f, FontStyle.Bold, GraphicsUnit.Pixel);
+                
+                //bitmapFilename = new Bitmap(1280, 720);
+                //graphicsFilename = Graphics.FromImage(bitmapFilename);
+                //graphicsFilename.TextRenderingHint = TextRenderingHint.AntiAlias;
+                //ftFilename = new Font("MS PGothic", 24f, FontStyle.Bold, GraphicsUnit.Pixel);
             }
             //-----------------------------
             #endregion

@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Diagnostics;
 using System.IO;
+using SlimDX.Direct3D9;
 using DirectShowLib;
 using FDK;
 
@@ -181,7 +182,7 @@ namespace DTXMania
 			{
 				this.eフェードアウト完了時の戻り値 = E戻り値.継続;
 				this.bBGM再生済み = false;
-				this.ftフォント = new Font( "MS PGothic", 26f, GraphicsUnit.Pixel );
+				this.ftフォント = new System.Drawing.Font( "MS PGothic", 26f, GraphicsUnit.Pixel );
 				for( int i = 0; i < 4; i++ )
 					this.ctキー反復用[ i ] = new CCounter( 0, 0, 0, CDTXMania.Timer );
 
@@ -222,6 +223,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
+                if( this.txDS背景 == null )
+                    this.txDS背景 = new CTexture( CDTXMania.app.Device, CDTXMania.Skin.ds選曲画面背景動画.n幅px, CDTXMania.Skin.ds選曲画面背景動画.n高さpx, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
+
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_background.jpg" ), false );
                 if( File.Exists (CSkin.Path(@"Graphics\5_background.mp4")) && CDTXMania.Skin.ds選曲画面背景動画 == null)
                 {
@@ -238,6 +242,7 @@ namespace DTXMania
 			{
                 CDTXMania.t安全にDisposeする( ref this.ds背景動画 );
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
+                CDTXMania.tテクスチャの解放( ref this.txDS背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
 				base.OnManagedリソースの解放();
@@ -288,10 +293,24 @@ namespace DTXMania
                 }
                 */
 
-                if( CDTXMania.Skin.ds選曲画面背景動画 != null )
+
+
+				if( CDTXMania.Skin.ds選曲画面背景動画 != null )
                 {
-                    CDTXMania.Skin.ds選曲画面背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                    //if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
+                    if( this.txDS背景 != null )
+                    {
+                        this.txDS背景.vc拡大縮小倍率.X = (float)(1280.0 / CDTXMania.Skin.ds選曲画面背景動画.n幅px);
+                        this.txDS背景.vc拡大縮小倍率.Y = (float)( 720.0 / CDTXMania.Skin.ds選曲画面背景動画.n高さpx);
+                    }
                     CDTXMania.Skin.ds選曲画面背景動画.t再生開始();
+                    CDTXMania.Skin.ds選曲画面背景動画.t現時点における最新のスナップイメージをTextureに転写する( this.txDS背景 );
+
+                    if( CDTXMania.Skin.ds選曲画面背景動画.b上下反転 )
+					    this.txDS背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                    else
+                        this.txDS背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+
                     CDTXMania.Skin.ds選曲画面背景動画.MediaSeeking.GetPositions(out this.lDshowPosition, out this.lStopPosition);
                     if (this.lDshowPosition == this.lStopPosition)
                     {
@@ -301,15 +320,7 @@ namespace DTXMania
                         0,
                         AMSeekingSeekingFlags.NoPositioning);
                     }
-                }
 
-				if( this.tx背景 != null )
-                {
-                    //if( this.ds背景動画 != null && this.ds背景動画.b上下反転 )
-                    if( CDTXMania.Skin.ds選曲画面背景動画 != null && CDTXMania.Skin.ds選曲画面背景動画.b上下反転 )
-					    this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
-                    else
-                        this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
                 }
 
 			//	this.actPreimageパネル.On進行描画();
@@ -750,11 +761,12 @@ namespace DTXMania
 		private STキー反復用カウンタ ctキー反復用;
 		public CCounter ct登場時アニメ用共通;
 		private E戻り値 eフェードアウト完了時の戻り値;
-		private Font ftフォント;
+		private System.Drawing.Font ftフォント;
 		private CTexture tx下部パネル;
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
         private CDirectShow ds背景動画;
+        private CTexture txDS背景;
         private long lDshowPosition;
         private long lStopPosition;
 
