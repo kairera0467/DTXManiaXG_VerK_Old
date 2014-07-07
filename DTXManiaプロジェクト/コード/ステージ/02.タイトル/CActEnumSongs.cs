@@ -87,7 +87,7 @@ namespace DTXMania
 
 			try
 			{
-				System.Drawing.Font ftMessage = new System.Drawing.Font( "MS PGothic", 60f, FontStyle.Bold, GraphicsUnit.Pixel );
+				System.Drawing.Font ftMessage = new System.Drawing.Font( "MS PGothic", 40f, FontStyle.Bold, GraphicsUnit.Pixel );
 				string[] strMessage = 
 				{
 					"     曲データの一覧を\n       取得しています。\n   しばらくお待ちください。",
@@ -150,8 +150,8 @@ namespace DTXMania
 			}
 			if ( bコマンドでの曲データ取得 && this.txDialogNowEnumeratingSongs != null )
 			{
-				this.txDialogNowEnumeratingSongs.t2D描画( CDTXMania.app.Device, 360, 177 );
-				this.txMessage.t2D描画( CDTXMania.app.Device, 450, 240 );
+				this.txDialogNowEnumeratingSongs.t2D描画( CDTXMania.app.Device, 180, 177 );
+				this.txMessage.t2D描画( CDTXMania.app.Device, 190, 197 );
 			}
 
 			return 0;

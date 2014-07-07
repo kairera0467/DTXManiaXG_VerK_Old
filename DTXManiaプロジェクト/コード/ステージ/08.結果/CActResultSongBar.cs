@@ -32,7 +32,7 @@ namespace DTXMania
 		{
 			this.n本体X = 0;
 			this.n本体Y = 0x18b;
-			this.ft曲名用フォント = new Font( "MS PGothic", 44f, FontStyle.Regular, GraphicsUnit.Pixel );
+			this.ft曲名用フォント = new Font( "MS PGothic", 44f, FontStyle.Bold, GraphicsUnit.Pixel );
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -52,7 +52,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				//this.txバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult song bar.png" ) );
+				this.txバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult song bar.png" ) );
 				try
 				{
 					Bitmap image = new Bitmap( 0x3a8, 0x36 );
@@ -131,7 +131,15 @@ namespace DTXMania
 				{
 					rectangle.Width -= ( num8 + rectangle.Width ) - num2;
 				}
+				if( this.txバー != null )
+				{
+					this.txバー.t2D描画( CDTXMania.app.Device, num6 + num8, y, rectangle );
+				}
 				num8 += rectangle.Width;
+			}
+			if( this.txバー != null )
+			{
+				this.txバー.t2D描画( CDTXMania.app.Device, num6 + num8, y, new Rectangle( 0x40, 0, 0x40, 0x40 ) );
 			}
 			if( this.tx曲名 != null )
 			{

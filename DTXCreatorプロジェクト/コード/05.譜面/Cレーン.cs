@@ -11,38 +11,34 @@ namespace DTXCreator.譜面
 
 		public enum E種別
 		{
-            BPM,
-            BEAT,
-            WAV,
-            BMP,
-            AVI,
-            FI,
-            GtV,
-            GtR,
-            GtG,
-            GtB,
-            GtY,
-            GtP,
-            GtW,
-            BsV,
-            BsR,
-            BsG,
-            BsB,
-            BsY,
-            BsP,
-            BsW
-        }
+			BPM,
+			BEAT,
+			WAV,
+			BMP,
+			AVI,
+			FI,
+			GtV,
+			GtR,
+			GtG,
+			GtB,
+			GtW,
+			BsV,
+			BsR,
+			BsG,
+			BsB,
+			BsW
+		}
 		public enum ELaneType
 		{
 			BPM,
-            Beat,
+			Beat,
 			Drums,
 			BGM,
 			SE1_5,
 			SE6_32,
 			Guitar,
 			Bass,
-			AVI1_2,
+			AVI,
 			BGA1_5,
 			BGA6_8,
 			END			// 何か非値を設定したくなったときのための値(nullの代わり)
@@ -125,7 +121,11 @@ namespace DTXCreator.譜面
 
 		public bool bパターンレーンである()
 		{
-            return this.eレーン種別 == Cレーン.E種別.GtR || this.eレーン種別 == Cレーン.E種別.GtG || this.eレーン種別 == Cレーン.E種別.GtB || this.eレーン種別 == Cレーン.E種別.GtY || this.eレーン種別 == Cレーン.E種別.GtP || this.eレーン種別 == Cレーン.E種別.BsR || this.eレーン種別 == Cレーン.E種別.BsG || this.eレーン種別 == Cレーン.E種別.BsB || this.eレーン種別 == Cレーン.E種別.BsY || this.eレーン種別 == Cレーン.E種別.BsP;
-        }
+			if( ( this.eレーン種別 != E種別.GtR ) && ( this.eレーン種別 != E種別.GtG ) && ( this.eレーン種別 != E種別.GtB ) && ( this.eレーン種別 != E種別.BsR ) && ( this.eレーン種別 != E種別.BsG ) && ( this.eレーン種別 != E種別.BsB ) )
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }

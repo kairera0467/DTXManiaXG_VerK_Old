@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -99,19 +99,6 @@ namespace SlimDX
 	int ComObject::CreationTime::get()
 	{
 		return m_CreationTime;
-	}
-
-	void ComObject::Construct( IUnknown* pointer, ComObject^ owner, bool addToTable )
-	{
-		if( pointer == 0 )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		m_Unknown = pointer;
-
-		if (addToTable)
-			ObjectTable::Add( this, owner );
-		else
-			ObjectTable::RegisterParent( this, owner );
 	}
 	
 	void ComObject::Construct( IUnknown* pointer )

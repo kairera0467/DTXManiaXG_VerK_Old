@@ -35,7 +35,16 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない )
 			{
-                this.txScrollBar = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_scrollbar.png"), false );
+				string pathScrollBar = CSkin.Path( @"Graphics\ScreenSelect scrollbar.png" );
+				string pathScrollPosition = CSkin.Path( @"Graphics\ScreenSelect scrollbar.png" );
+				if ( File.Exists( pathScrollBar ) )
+				{
+					this.txScrollBar = CDTXMania.tテクスチャの生成( pathScrollBar, false );
+				}
+				if ( File.Exists( pathScrollPosition ) )
+				{
+					this.txScrollPosition = CDTXMania.tテクスチャの生成( pathScrollPosition, false );
+				}
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -44,24 +53,35 @@ namespace DTXMania
 			if ( !base.b活性化してない )
 			{
 				CDTXMania.t安全にDisposeする( ref this.txScrollBar );
+				CDTXMania.t安全にDisposeする( ref this.txScrollPosition );
+
 				base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
 		{
+			#region [ スクロールバーの描画 #27648 ]
 			if ( this.txScrollBar != null )
 			{
-			#region [ スクロールバーの描画 #27648 ]
-                this.txScrollBar.t2D描画( CDTXMania.app.Device, (1280 - ((429.0f / 100.0f ) * CDTXMania.stage選曲.ct登場時アニメ用共通.n現在の値)), 164, new Rectangle( 0, 0, 352, 26 ) ); //移動後のxは851
+				for ( int sy = 0; sy < 336; sy += 128 )
+				{
+					int ry = ( sy / 128 );
+					int h = ( ( ry + 1 ) * 128 > 336 ) ? 336 - ry * 128 : 128;
+					this.txScrollBar.t2D描画( CDTXMania.app.Device, 640 - 12, 58 + sy, new Rectangle( ry * 12, 0, 12, h ) );	// 本当のy座標は88なんだが、なぜか約30のバイアスが掛かる・・・
+				}
+			}
 			#endregion
 			#region [ スクロール地点の描画 (計算はCActSelect曲リストで行う。スクロール位置と選曲項目の同期のため。)#27648 ]
+			if ( this.txScrollPosition != null )
+			{
 				int py = CDTXMania.stage選曲.nスクロールバー相対y座標;
-				if( py <= 336 && py >= 0 )
+				if ( py <= 336 - 6 - 8 && py >= 0 )
 				{
-					this.txScrollBar.t2D描画( CDTXMania.app.Device, ( 1280 - 4 - (( 424.0f / 100.0f ) * CDTXMania.stage選曲.ct登場時アニメ用共通.n現在の値 ) ) + py, 164, new Rectangle( 352, 0, 26, 26 ) );//856
+					this.txScrollPosition.t2D描画( CDTXMania.app.Device, 640 - 12 + 3, 58 + py, new Rectangle( 30, 120, 6, 8 ) );
 				}
+			}
 			#endregion
-            }
+
 			return 0;
 		}
 
@@ -70,6 +90,7 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
+		private CTexture txScrollPosition;
 		private CTexture txScrollBar;
 		//-----------------
 		#endregion

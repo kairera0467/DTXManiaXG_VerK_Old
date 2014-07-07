@@ -17,25 +17,26 @@ namespace DTXMania
 		
 		// メソッド
 
-		public override void Start( int nLane )
+		public override void Start( int nLane, C演奏判定ライン座標共通 演奏判定ライン座標 )
 		{
-			if( ( nLane < 0 ) && ( nLane > 9 ) )
+			if( ( nLane < 0 ) && ( nLane > 5 ) )
 			{
 				throw new IndexOutOfRangeException();
 			}
-			E楽器パート e楽器パート = ( nLane < 5 ) ? E楽器パート.GUITAR : E楽器パート.BASS;
+			E楽器パート e楽器パート = ( nLane < 3 ) ? E楽器パート.GUITAR : E楽器パート.BASS;
 			int index = nLane;
-
-            //LEFT時のY座標
 			if( CDTXMania.ConfigIni.bLeft[ (int) e楽器パート ] )
 			{
-				index = ( ( index / 5 ) * 5 ) + ( 4 - ( index % 5 ) );
+				index = ( ( index / 3 ) * 3 ) + ( 2 - ( index % 3 ) );
 			}
 			int x = this.pt中央[ index ].X;
-            int y = (CDTXMania.ConfigIni.bReverse[(int)e楽器パート] ? 611 - CDTXMania.ConfigIni.nJudgeLine[(int)e楽器パート] : 155 + CDTXMania.ConfigIni.nJudgeLine[(int)e楽器パート]);
-
-            if ( CDTXMania.ConfigIni.eAttackEffect[ (int) e楽器パート ] != Eタイプ.B )
- 			    base.Start( nLane, x, y );
+			//int y = this.pt中央[ index ].Y;
+			int y = 演奏判定ライン座標.n判定ラインY座標( e楽器パート, true, CDTXMania.ConfigIni.bReverse[ (int) e楽器パート ] );
+			//if ( CDTXMania.ConfigIni.bReverse[ (int)e楽器パート ] )
+			//{
+			//    y = 369;
+			//}
+			base.Start( nLane, x, y, 演奏判定ライン座標 );
 		}
 
 
@@ -43,7 +44,14 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-        private readonly Point[] pt中央 = new Point[] { new Point(107, 155), new Point(146, 155), new Point(185, 155), new Point(224, 155), new Point(264, 155), new Point(978, 155), new Point(1017, 155), new Point(1056, 155), new Point(1095, 155), new Point(1134, 155) };
+		private readonly Point[] pt中央 = new Point[] {
+			new Point(  42, 40 ),	// GtR
+			new Point(  78, 40 ),	// GtG
+			new Point( 114, 40 ),	// GtB
+			new Point( 496, 40 ),	// BsR
+			new Point( 532, 40 ),	// BsG
+			new Point( 568, 40 )	// BsB
+		};
 		//-----------------
 		#endregion
 	}

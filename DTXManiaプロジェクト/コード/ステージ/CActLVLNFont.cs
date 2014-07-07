@@ -15,6 +15,7 @@ namespace DTXMania
 
 		const int numWidth = 15;
 		const int numHeight = 19;
+
 		public CActLVLNFont()
 		{
 			string numChars = "0123456789?-";

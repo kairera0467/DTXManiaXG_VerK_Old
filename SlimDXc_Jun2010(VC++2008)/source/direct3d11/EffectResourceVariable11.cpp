@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -95,7 +95,7 @@ namespace Direct3D11
 
 		stack_array<ID3D11ShaderResourceView*> nativeViews = stackalloc(ID3D11ShaderResourceView*, count);
 		for (int i = 0; i < count; i++)
-			nativeViews[i] = views[i + offset] != nullptr ? views[i + offset]->InternalPointer : 0;
+			nativeViews[i] = views[i + offset]->InternalPointer;
 
 		HRESULT hr = m_Pointer->SetResourceArray(&nativeViews[0], 0, count);
 		return RECORD_D3D11(hr);

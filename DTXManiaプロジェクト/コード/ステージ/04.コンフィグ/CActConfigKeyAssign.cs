@@ -29,7 +29,7 @@ namespace DTXMania
 				this.part = part;
 				this.pad = pad;
 				this.strパッド名 = strパッド名;
-				for( int i = 0; i < 16; i++ )
+				for( int i = 0; i < 0x10; i++ )
 				{
 					this.structReset用KeyAssign[ i ].入力デバイス = CDTXMania.ConfigIni.KeyAssign[ (int) part ][ (int) pad ][ i ].入力デバイス;
 					this.structReset用KeyAssign[ i ].ID = CDTXMania.ConfigIni.KeyAssign[ (int) part ][ (int) pad ][ i ].ID;
@@ -45,8 +45,8 @@ namespace DTXMania
 				CDTXMania.Skin.sound決定音.t再生する();
 				switch( this.n現在の選択行 )
 				{
-					case 16:
-						for( int i = 0; i < 16; i++ )
+					case 0x10:
+						for( int i = 0; i < 0x10; i++ )
 						{
 							CDTXMania.ConfigIni.KeyAssign[ (int) this.part ][ (int) this.pad ][ i ].入力デバイス = this.structReset用KeyAssign[ i ].入力デバイス;
 							CDTXMania.ConfigIni.KeyAssign[ (int) this.part ][ (int) this.pad ][ i ].ID = this.structReset用KeyAssign[ i ].ID;
@@ -104,8 +104,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_menu cursor.png" ), false );
-				this.txHitKeyダイアログ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_hit key to assign dialog.png" ), false );
+				this.txカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" ), false );
+				this.txHitKeyダイアログ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig hit key to assign dialog.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -212,138 +212,15 @@ namespace DTXMania
 
 		private bool bキー入力待ち;
 		private STKEYLABEL[] KeyLabel = new STKEYLABEL[] { 
-			new STKEYLABEL(0x35, "[ESC]"),
-            new STKEYLABEL(1, "[ 1 ]"),
-            new STKEYLABEL(2, "[ 2 ]"),
-            new STKEYLABEL(3, "[ 3 ]"),
-            new STKEYLABEL(4, "[ 4 ]"),
-            new STKEYLABEL(5, "[ 5 ]"),
-            new STKEYLABEL(6, "[ 6 ]"),
-            new STKEYLABEL(7, "[ 7 ]"),
-            new STKEYLABEL(8, "[ 8 ]"),
-            new STKEYLABEL(9, "[ 9 ]"),
-            new STKEYLABEL(0, "[ 0 ]"),
-            new STKEYLABEL(0x53, "[ - ]"),
-            new STKEYLABEL(0x34, "[ = ]"),
-            new STKEYLABEL(0x2a, "[BSC]"),
-            new STKEYLABEL(0x81, "[TAB]"),
-            new STKEYLABEL(0x1a, "[ Q ]"), 
-			new STKEYLABEL(0x20, "[ W ]"),
-            new STKEYLABEL(14, "[ E ]"),
-            new STKEYLABEL(0x1b, "[ R ]"),
-            new STKEYLABEL(0x1d, "[ T ]"),
-            new STKEYLABEL(0x22, "[ Y ]"),
-            new STKEYLABEL(30, "[ U ]"),
-            new STKEYLABEL(0x12, "[ I ]"),
-            new STKEYLABEL(0x18, "[ O ]"),
-            new STKEYLABEL(0x19, "[ P ]"),
-            new STKEYLABEL(0x4a, "[ [ ]"),
-            new STKEYLABEL(0x73, "[ ] ]"),
-            new STKEYLABEL(0x75, "[Enter]"),
-            new STKEYLABEL(0x4b, "[L-Ctrl]"),
-            new STKEYLABEL(10, "[ A ]"),
-            new STKEYLABEL(0x1c, "[ S ]"),
-            new STKEYLABEL(13, "[ D ]"), 
-			new STKEYLABEL(15, "[ F ]"),
-            new STKEYLABEL(0x10, "[ G ]"),
-            new STKEYLABEL(0x11, "[ H ]"),
-            new STKEYLABEL(0x13, "[ J ]"),
-            new STKEYLABEL(20, "[ K ]"),
-            new STKEYLABEL(0x15, "[ L ]"),
-            new STKEYLABEL(0x7b, "[ ; ]"),
-            new STKEYLABEL(0x26, "[ ' ]"),
-            new STKEYLABEL(0x45, "[ ` ]"),
-            new STKEYLABEL(0x4e, "[L-Shift]"),
-            new STKEYLABEL(0x2b, @"[ \]"),
-            new STKEYLABEL(0x23, "[ Z ]"),
-            new STKEYLABEL(0x21, "[ X ]"),
-            new STKEYLABEL(12, "[ C ]"),
-            new STKEYLABEL(0x1f, "[ V ]"),
-            new STKEYLABEL(11, "[ B ]"), 
-			new STKEYLABEL(0x17, "[ N ]"),
-            new STKEYLABEL(0x16, "[ M ]"),
-            new STKEYLABEL(0x2f, "[ , ]"),
-            new STKEYLABEL(0x6f, "[ . ]"),
-            new STKEYLABEL(0x7c, "[ / ]"),
-            new STKEYLABEL(120, "[R-Shift]"),
-            new STKEYLABEL(0x6a, "[ * ]"),
-            new STKEYLABEL(0x4d, "[L-Alt]"),
-            new STKEYLABEL(0x7e, "[Space]"),
-            new STKEYLABEL(0x2d, "[CAPS]"),
-            new STKEYLABEL(0x36, "[F1]"),
-            new STKEYLABEL(0x37, "[F2]"),
-            new STKEYLABEL(0x38, "[F3]"),
-            new STKEYLABEL(0x39, "[F4]"),
-            new STKEYLABEL(0x3a, "[F5]"),
-            new STKEYLABEL(0x3b, "[F6]"), 
-			new STKEYLABEL(60, "[F7]"),
-            new STKEYLABEL(0x3d, "[F8]"),
-            new STKEYLABEL(0x3e, "[F9]"),
-            new STKEYLABEL(0x3f, "[F10]"),
-            new STKEYLABEL(0x58, "[NumLock]"),
-            new STKEYLABEL(0x7a, "[Scroll]"),
-            new STKEYLABEL(0x60, "[NPad7]"),
-            new STKEYLABEL(0x61, "[NPad8]"),
-            new STKEYLABEL(0x62, "[NPad9]"),
-            new STKEYLABEL(0x66, "[NPad-]"),
-            new STKEYLABEL(0x5d, "[NPad4]"),
-            new STKEYLABEL(0x5e, "[NPad5]"),
-            new STKEYLABEL(0x5f, "[NPad6]"),
-            new STKEYLABEL(0x68, "[NPad+]"),
-            new STKEYLABEL(90, "[NPad1]"),
-            new STKEYLABEL(0x5b, "[NPad2]"), 
-			new STKEYLABEL(0x5c, "[NPad3]"),
-            new STKEYLABEL(0x59, "[NPad0]"),
-            new STKEYLABEL(0x67, "[NPad.]"),
-            new STKEYLABEL(0x40, "[F11]"),
-            new STKEYLABEL(0x41, "[F12]"),
-            new STKEYLABEL(0x42, "[F13]"),
-            new STKEYLABEL(0x43, "[F14]"),
-            new STKEYLABEL(0x44, "[F15]"),
-            new STKEYLABEL(0x48, "[Kana]"),
-            new STKEYLABEL(0x24, "[ ? ]"),
-            new STKEYLABEL(0x30, "[Henkan]"),
-            new STKEYLABEL(0x57, "[MuHenkan]"),
-            new STKEYLABEL(0x8f, @"[ \ ]"),
-            new STKEYLABEL(0x25, "[NPad.]"),
-            new STKEYLABEL(0x65, "[NPad=]"),
-            new STKEYLABEL(0x72, "[ ^ ]"), 
-			new STKEYLABEL(40, "[ @ ]"),
-            new STKEYLABEL(0x2e, "[ : ]"),
-            new STKEYLABEL(130, "[ _ ]"),
-            new STKEYLABEL(0x49, "[Kanji]"),
-            new STKEYLABEL(0x7f, "[Stop]"),
-            new STKEYLABEL(0x29, "[AX]"),
-            new STKEYLABEL(100, "[NPEnter]"),
-            new STKEYLABEL(0x74, "[R-Ctrl]"),
-            new STKEYLABEL(0x54, "[Mute]"),
-            new STKEYLABEL(0x2c, "[Calc]"),
-            new STKEYLABEL(0x70, "[PlayPause]"),
-            new STKEYLABEL(0x52, "[MediaStop]"),
-            new STKEYLABEL(0x85, "[Volume-]"),
-            new STKEYLABEL(0x86, "[Volume+]"),
-            new STKEYLABEL(0x8b, "[WebHome]"),
-            new STKEYLABEL(0x63, "[NPad,]"), 
-			new STKEYLABEL(0x69, "[ / ]"),
-            new STKEYLABEL(0x80, "[PrtScn]"),
-            new STKEYLABEL(0x77, "[R-Alt]"),
-            new STKEYLABEL(110, "[Pause]"),
-            new STKEYLABEL(70, "[Home]"),
-            new STKEYLABEL(0x84, "[Up]"),
-            new STKEYLABEL(0x6d, "[PageUp]"),
-            new STKEYLABEL(0x4c, "[Left]"),
-            new STKEYLABEL(0x76, "[Right]"),
-            new STKEYLABEL(0x33, "[End]"),
-            new STKEYLABEL(50, "[Down]"),
-            new STKEYLABEL(0x6c, "[PageDown]"),
-            new STKEYLABEL(0x47, "[Insert]"),
-            new STKEYLABEL(0x31, "[Delete]"),
-            new STKEYLABEL(0x4f, "[L-Win]"),
-            new STKEYLABEL(0x79, "[R-Win]"), 
-			new STKEYLABEL(0x27, "[APP]"),
-            new STKEYLABEL(0x71, "[Power]"),
-            new STKEYLABEL(0x7d, "[Sleep]"),
-            new STKEYLABEL(0x87, "[Wake]")
+			new STKEYLABEL(0x35, "[ESC]"), new STKEYLABEL(1, "[ 1 ]"), new STKEYLABEL(2, "[ 2 ]"), new STKEYLABEL(3, "[ 3 ]"), new STKEYLABEL(4, "[ 4 ]"), new STKEYLABEL(5, "[ 5 ]"), new STKEYLABEL(6, "[ 6 ]"), new STKEYLABEL(7, "[ 7 ]"), new STKEYLABEL(8, "[ 8 ]"), new STKEYLABEL(9, "[ 9 ]"), new STKEYLABEL(0, "[ 0 ]"), new STKEYLABEL(0x53, "[ - ]"), new STKEYLABEL(0x34, "[ = ]"), new STKEYLABEL(0x2a, "[BSC]"), new STKEYLABEL(0x81, "[TAB]"), new STKEYLABEL(0x1a, "[ Q ]"), 
+			new STKEYLABEL(0x20, "[ W ]"), new STKEYLABEL(14, "[ E ]"), new STKEYLABEL(0x1b, "[ R ]"), new STKEYLABEL(0x1d, "[ T ]"), new STKEYLABEL(0x22, "[ Y ]"), new STKEYLABEL(30, "[ U ]"), new STKEYLABEL(0x12, "[ I ]"), new STKEYLABEL(0x18, "[ O ]"), new STKEYLABEL(0x19, "[ P ]"), new STKEYLABEL(0x4a, "[ [ ]"), new STKEYLABEL(0x73, "[ ] ]"), new STKEYLABEL(0x75, "[Enter]"), new STKEYLABEL(0x4b, "[L-Ctrl]"), new STKEYLABEL(10, "[ A ]"), new STKEYLABEL(0x1c, "[ S ]"), new STKEYLABEL(13, "[ D ]"), 
+			new STKEYLABEL(15, "[ F ]"), new STKEYLABEL(0x10, "[ G ]"), new STKEYLABEL(0x11, "[ H ]"), new STKEYLABEL(0x13, "[ J ]"), new STKEYLABEL(20, "[ K ]"), new STKEYLABEL(0x15, "[ L ]"), new STKEYLABEL(0x7b, "[ ; ]"), new STKEYLABEL(0x26, "[ ' ]"), new STKEYLABEL(0x45, "[ ` ]"), new STKEYLABEL(0x4e, "[L-Shift]"), new STKEYLABEL(0x2b, @"[ \]"), new STKEYLABEL(0x23, "[ Z ]"), new STKEYLABEL(0x21, "[ X ]"), new STKEYLABEL(12, "[ C ]"), new STKEYLABEL(0x1f, "[ V ]"), new STKEYLABEL(11, "[ B ]"), 
+			new STKEYLABEL(0x17, "[ N ]"), new STKEYLABEL(0x16, "[ M ]"), new STKEYLABEL(0x2f, "[ , ]"), new STKEYLABEL(0x6f, "[ . ]"), new STKEYLABEL(0x7c, "[ / ]"), new STKEYLABEL(120, "[R-Shift]"), new STKEYLABEL(0x6a, "[ * ]"), new STKEYLABEL(0x4d, "[L-Alt]"), new STKEYLABEL(0x7e, "[Space]"), new STKEYLABEL(0x2d, "[CAPS]"), new STKEYLABEL(0x36, "[F1]"), new STKEYLABEL(0x37, "[F2]"), new STKEYLABEL(0x38, "[F3]"), new STKEYLABEL(0x39, "[F4]"), new STKEYLABEL(0x3a, "[F5]"), new STKEYLABEL(0x3b, "[F6]"), 
+			new STKEYLABEL(60, "[F7]"), new STKEYLABEL(0x3d, "[F8]"), new STKEYLABEL(0x3e, "[F9]"), new STKEYLABEL(0x3f, "[F10]"), new STKEYLABEL(0x58, "[NumLock]"), new STKEYLABEL(0x7a, "[Scroll]"), new STKEYLABEL(0x60, "[NPad7]"), new STKEYLABEL(0x61, "[NPad8]"), new STKEYLABEL(0x62, "[NPad9]"), new STKEYLABEL(0x66, "[NPad-]"), new STKEYLABEL(0x5d, "[NPad4]"), new STKEYLABEL(0x5e, "[NPad5]"), new STKEYLABEL(0x5f, "[NPad6]"), new STKEYLABEL(0x68, "[NPad+]"), new STKEYLABEL(90, "[NPad1]"), new STKEYLABEL(0x5b, "[NPad2]"), 
+			new STKEYLABEL(0x5c, "[NPad3]"), new STKEYLABEL(0x59, "[NPad0]"), new STKEYLABEL(0x67, "[NPad.]"), new STKEYLABEL(0x40, "[F11]"), new STKEYLABEL(0x41, "[F12]"), new STKEYLABEL(0x42, "[F13]"), new STKEYLABEL(0x43, "[F14]"), new STKEYLABEL(0x44, "[F15]"), new STKEYLABEL(0x48, "[Kana]"), new STKEYLABEL(0x24, "[ ? ]"), new STKEYLABEL(0x30, "[Henkan]"), new STKEYLABEL(0x57, "[MuHenkan]"), new STKEYLABEL(0x8f, @"[ \ ]"), new STKEYLABEL(0x25, "[NPad.]"), new STKEYLABEL(0x65, "[NPad=]"), new STKEYLABEL(0x72, "[ ^ ]"), 
+			new STKEYLABEL(40, "[ @ ]"), new STKEYLABEL(0x2e, "[ : ]"), new STKEYLABEL(130, "[ _ ]"), new STKEYLABEL(0x49, "[Kanji]"), new STKEYLABEL(0x7f, "[Stop]"), new STKEYLABEL(0x29, "[AX]"), new STKEYLABEL(100, "[NPEnter]"), new STKEYLABEL(0x74, "[R-Ctrl]"), new STKEYLABEL(0x54, "[Mute]"), new STKEYLABEL(0x2c, "[Calc]"), new STKEYLABEL(0x70, "[PlayPause]"), new STKEYLABEL(0x52, "[MediaStop]"), new STKEYLABEL(0x85, "[Volume-]"), new STKEYLABEL(0x86, "[Volume+]"), new STKEYLABEL(0x8b, "[WebHome]"), new STKEYLABEL(0x63, "[NPad,]"), 
+			new STKEYLABEL(0x69, "[ / ]"), new STKEYLABEL(0x80, "[PrtScn]"), new STKEYLABEL(0x77, "[R-Alt]"), new STKEYLABEL(110, "[Pause]"), new STKEYLABEL(70, "[Home]"), new STKEYLABEL(0x84, "[Up]"), new STKEYLABEL(0x6d, "[PageUp]"), new STKEYLABEL(0x4c, "[Left]"), new STKEYLABEL(0x76, "[Right]"), new STKEYLABEL(0x33, "[End]"), new STKEYLABEL(50, "[Down]"), new STKEYLABEL(0x6c, "[PageDown]"), new STKEYLABEL(0x47, "[Insert]"), new STKEYLABEL(0x31, "[Delete]"), new STKEYLABEL(0x4f, "[L-Win]"), new STKEYLABEL(0x79, "[R-Win]"), 
+			new STKEYLABEL(0x27, "[APP]"), new STKEYLABEL(0x71, "[Power]"), new STKEYLABEL(0x7d, "[Sleep]"), new STKEYLABEL(0x87, "[Wake]")
 		};
 		private int n現在の選択行;
 		private EKeyConfigPad pad;

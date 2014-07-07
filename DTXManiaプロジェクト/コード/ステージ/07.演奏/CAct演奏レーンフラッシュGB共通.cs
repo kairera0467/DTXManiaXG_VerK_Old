@@ -9,8 +9,8 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		protected CCounter[] ct進行 = new CCounter[ 10 ];
-		protected CTexture[] txFlush = new CTexture[ 10 ];
+		protected CCounter[] ct進行 = new CCounter[ 6 ];
+		protected CTexture[] txFlush = new CTexture[ 6 ];
 
 
 		// コンストラクタ
@@ -25,11 +25,11 @@ namespace DTXMania
 
 		public void Start( int nLane )
 		{
-			if( ( nLane < 0 ) || ( nLane > 10 ) )
+			if( ( nLane < 0 ) || ( nLane > 6 ) )
 			{
-				throw new IndexOutOfRangeException( "有効範囲は 0～10 です。" );
+				throw new IndexOutOfRangeException( "有効範囲は 0～6 です。" );
 			}
-			this.ct進行[ nLane ] = new CCounter( 0, 70, 1, CDTXMania.Timer );
+			this.ct進行[ nLane ] = new CCounter( 0, 100, 1, CDTXMania.Timer );
 		}
 
 
@@ -37,7 +37,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			for( int i = 0; i < 10; i++ )
+			for( int i = 0; i < 6; i++ )
 			{
 				this.ct進行[ i ] = new CCounter();
 			}
@@ -45,7 +45,7 @@ namespace DTXMania
 		}
 		public override void On非活性化()
 		{
-			for( int i = 0; i < 10; i++ )
+			for( int i = 0; i < 6; i++ )
 			{
 				this.ct進行[ i ] = null;
 			}
@@ -58,14 +58,9 @@ namespace DTXMania
 				this.txFlush[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush red.png" ) );
 				this.txFlush[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush green.png" ) );
 				this.txFlush[ 2 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush blue.png" ) );
-                this.txFlush[ 3 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush yellow.png" ) );
-				this.txFlush[ 4 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush purple.png" ) );
-
-				this.txFlush[ 5 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush red reverse.png" ) );
-				this.txFlush[ 6 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush green reverse.png" ) );
-				this.txFlush[ 7 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush blue reverse.png" ) );
-                this.txFlush[ 8 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush yellow reverse.png" ) );
-				this.txFlush[ 9 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush purple reverse.png" ) );
+				this.txFlush[ 3 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush red reverse.png" ) );
+				this.txFlush[ 4 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush green reverse.png" ) );
+				this.txFlush[ 5 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay lane flush blue reverse.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -73,7 +68,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				for( int i = 0; i < 10; i++ )
+				for( int i = 0; i < 6; i++ )
 				{
 					CDTXMania.tテクスチャの解放( ref this.txFlush[ i ] );
 				}

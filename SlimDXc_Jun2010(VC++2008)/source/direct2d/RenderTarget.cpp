@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -340,7 +340,7 @@ namespace Direct2D
 		DrawText( text, textFormat, rect, defaultBrush );
 	}
 
-	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMode measuringMethod )
+	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMethod measuringMethod )
 	{
 		RectangleF rect = CastRectangle( layoutRectangle );
 
@@ -355,7 +355,7 @@ namespace Direct2D
 		InternalPointer->DrawTextW( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer );
 	}
 
-	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMode measuringMethod )
+	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMethod measuringMethod )
 	{
 		D2D1_RECT_F rect = D2D1::RectF( layoutRectangle.Left, layoutRectangle.Top, layoutRectangle.Right, layoutRectangle.Bottom );
 		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );

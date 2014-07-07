@@ -45,25 +45,30 @@ namespace DTXMania
 				}
 				for( int i = 1; i < 3; i++ )
 				{
-					string str = this.n現在表示中のスコア[ i ].ToString( "0000000" );
-					for( int k = 0; k < 7; k++ )
+					string str = this.n現在表示中のスコア[ i ].ToString( "0000000000" );
+					for( int k = 0; k < 10; k++ )
 					{
 						Rectangle rectangle;
 						char ch = str[ k ];
 						if( ch.Equals( ' ' ) )
 						{
-							rectangle = new Rectangle( 0, 0, 32, 36 );
+							rectangle = new Rectangle( 0, 0, 12, 0x18 );
 						}
 						else
 						{
 							int num5 = int.Parse( str.Substring( k, 1 ) );
-							rectangle = new Rectangle( ( num5 * 32), 0, 32, 36 );
+							if( num5 < 5 )
+							{
+								rectangle = new Rectangle( num5 * 12, 0, 12, 0x18 );
+							}
+							else
+							{
+								rectangle = new Rectangle( ( num5 - 5 ) * 12, 0x18, 12, 0x18 );
+							}
 						}
 						if( base.txScore != null )
 						{
-							//base.txScore.t2D描画( CDTXMania.app.Device, this.ptSCORE[ i - 1 ].X + ( k * 26 ), this.ptSCORE[ i - 1 ].Y, rectangle );
-                            base.txScore.vc拡大縮小倍率.X = 0.85f;
-                            base.txScore.vc拡大縮小倍率.Y = 0.85f;
+							base.txScore.t2D描画( CDTXMania.app.Device, this.ptSCORE[ i - 1 ].X + ( k * 12 ), this.ptSCORE[ i - 1 ].Y, rectangle );
 						}
 					}
 				}
@@ -76,7 +81,7 @@ namespace DTXMania
 
 		#region [ private ]
 		//-----------------
-		private readonly Point[] ptSCORE = new Point[] { new Point( 398, 394 ), new Point( 0, 5000 ) };
+		private readonly Point[] ptSCORE = new Point[] { new Point( 0x1f, 0x1a9 ), new Point( 0x1e9, 0x1a9 ) };
 		//-----------------
 		#endregion
 	}

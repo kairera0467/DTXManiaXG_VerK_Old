@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -211,9 +211,9 @@ namespace Direct3D11
 		if (precomputeBuffers == nullptr)
 			throw gcnew ArgumentNullException("precomputeBuffers");
 
-		if (tempBuffers->Length == 0)
+		if (tempBuffers->Length == 0 || tempBuffers->Length > D3DX11_FFT_MAX_TEMP_BUFFERS)
 			throw gcnew ArgumentOutOfRangeException("temporaryBuffers");
-		if (precomputeBuffers->Length == 0)
+		if (precomputeBuffers->Length == 0 || precomputeBuffers->Length > D3DX11_FFT_MAX_PRECOMPUTE_BUFFERS)
 			throw gcnew ArgumentOutOfRangeException("precomputeBuffers");
 
 		stack_array<ID3D11UnorderedAccessView*> nativeTempBuffers = stackalloc(ID3D11UnorderedAccessView*, tempBuffers->Length);

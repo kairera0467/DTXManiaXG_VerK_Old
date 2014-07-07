@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BAC81BCC-5689-4600-91A0-7427667500D6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -16,6 +16,21 @@
     </TargetFrameworkSubset>
     <ApplicationIcon>コード\99.リソース\DTXC.ico</ApplicationIcon>
     <ApplicationManifest>DTXCreator.exe.x86.manifest</ApplicationManifest>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +53,7 @@
   <ItemGroup>
     <Reference Include="SlimDXc_net20x86_Jun2010, Version=1002.0.10.43, Culture=neutral, PublicKeyToken=53d0e4ef1f1579f5, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\実行時フォルダ\SlimDXc_net20x86_Jun2010.dll</HintPath>
+      <HintPath>..\実行時フォルダ(DTXCreator)\dll\SlimDXc_net20x86_Jun2010.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,9 +80,7 @@
     <Compile Include="コード\00.全体\MakeTempDTX.cs" />
     <Compile Include="コード\00.全体\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Resources.ja-JP.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ja-JP.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,19 +88,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="コード\00.全体\Cバージョン情報.resx">
       <DependentUpon>Cバージョン情報.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\00.全体\Cメインフォーム.ja-JP.resx">
       <DependentUpon>Cメインフォーム.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\00.全体\Cメインフォーム.resx">
       <DependentUpon>Cメインフォーム.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\02.WAV_BMP_AVI\Cサウンドプロパティダイアログ.ja-JP.resx">
       <DependentUpon>Cサウンドプロパティダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\02.WAV_BMP_AVI\Cサウンドプロパティダイアログ.resx">
       <DependentUpon>Cサウンドプロパティダイアログ.cs</DependentUpon>
@@ -95,75 +104,57 @@
     </EmbeddedResource>
     <EmbeddedResource Include="コード\02.WAV_BMP_AVI\C動画プロパティダイアログ.ja-JP.resx">
       <DependentUpon>C動画プロパティダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\02.WAV_BMP_AVI\C動画プロパティダイアログ.resx">
       <DependentUpon>C動画プロパティダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\02.WAV_BMP_AVI\C画像プロパティダイアログ.ja-JP.resx">
       <DependentUpon>C画像プロパティダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\02.WAV_BMP_AVI\C画像プロパティダイアログ.resx">
       <DependentUpon>C画像プロパティダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\03.オプション関連\Cオプションダイアログ.ja-JP.resx">
       <DependentUpon>Cオプションダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\03.オプション関連\Cオプションダイアログ.resx">
       <DependentUpon>Cオプションダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\04.チップパレット関連\Cチップパレット.ja-JP.resx">
       <DependentUpon>Cチップパレット.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\04.チップパレット関連\Cチップパレット.resx">
       <DependentUpon>Cチップパレット.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C小節長変更ダイアログ.ja-JP.resx">
       <DependentUpon>C小節長変更ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C小節長変更ダイアログ.resx">
       <DependentUpon>C小節長変更ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C数値入力ダイアログ.ja-JP.resx">
       <DependentUpon>C数値入力ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C数値入力ダイアログ.resx">
       <DependentUpon>C数値入力ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C検索ダイアログ.ja-JP.resx">
       <DependentUpon>C検索ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C検索ダイアログ.resx">
       <DependentUpon>C検索ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C置換ダイアログ.ja-JP.resx">
       <DependentUpon>C置換ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\05.譜面\C置換ダイアログ.resx">
       <DependentUpon>C置換ダイアログ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\06.汎用\Cメッセージポップアップ.ja-JP.resx">
       <DependentUpon>Cメッセージポップアップ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="コード\06.汎用\Cメッセージポップアップ.resx">
       <DependentUpon>Cメッセージポップアップ.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -301,6 +292,33 @@
     <Content Include="コード\99.リソース\表示形式.png" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FDK17プロジェクト\FDK19.csproj">
       <Project>{BCD40908-F3E2-4707-BFAA-1DD99DF6357D}</Project>
       <Name>FDK19</Name>
@@ -318,6 +336,11 @@
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)..\実行時フォルダ(DTXCreator)"
 mkdir "$(SolutionDir)..\実行時フォルダ(DTXCreator)\ja-JP"
 copy /Y "$(TargetDir)ja-JP" "$(SolutionDir)..\実行時フォルダ(DTXCreator)\ja-JP"
+mkdir "$(SolutionDir)..\実行時フォルダ(DTXCreator)\dll"
+move /Y "$(TargetDir)\Bass.Net.dll" "$(TargetDir)dll"
+move /Y "$(TargetDir)\DirectShowLib-2005.dll" "$(TargetDir)dll"
+move /Y "$(TargetDir)\FDK.dll" "$(TargetDir)dll"
+move /Y "$(TargetDir)\SlimDXc_net20x86_Jun2010.dll" "$(TargetDir)dll"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

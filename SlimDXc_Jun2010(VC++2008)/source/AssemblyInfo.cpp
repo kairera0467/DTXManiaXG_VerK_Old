@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("SlimDX Group")];
 [assembly:AssemblyProductAttribute("SlimDX")];
-[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2012 SlimDX Group")];
+[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2010 SlimDX Group")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
@@ -54,9 +54,9 @@ using namespace System::Security::Permissions;
 // by using the '*' as shown below:
 
 #if _MSC_VER < 1600
-[assembly:AssemblyVersionAttribute("1002.0.13.43")];
+[assembly:AssemblyVersionAttribute("1002.0.10.43")];
 #else
-[assembly:AssemblyVersionAttribute("1004.0.13.43")];
+[assembly:AssemblyVersionAttribute("4.0.10.43")];
 #endif
 
 [assembly:ComVisible(false)];
@@ -67,6 +67,13 @@ using namespace System::Security::Permissions;
 
 [assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];
 
-#ifndef PUBLIC
+#ifdef PUBLIC
+[assembly:InternalsVisibleTo("SlimDX.Tests, PublicKey="
+"00240000048000009400000006020000002400005253413100040000010001004919b163e34445"
+"ac4942b40b271cf7ce3e3713abe7c6e8bb43fd19dcab991b5106a6c15460b6110ea25c2907e333"
+"d56c1a92426bccffa8c4da9ed943dfcc91f8130b9b3a0a3f10ff4c9ae6ee92769ffe2d15d122e3"
+"e351bbd6e2b8880e02edbec193a50a7d3088b1c80d259fe0851357fb7f1b37bd89871b709471d8"
+"d801a6bd")];
+#else
 [assembly:InternalsVisibleTo("SlimDX.Tests")];
 #endif

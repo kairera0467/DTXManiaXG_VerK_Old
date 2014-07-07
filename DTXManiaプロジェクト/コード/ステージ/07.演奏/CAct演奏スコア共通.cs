@@ -9,11 +9,10 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public STDGBVALUE<long> nスコアの増分;
-        public STDGBVALUE<int>[] x位置 = new STDGBVALUE<int>[10];
-		public STDGBVALUE<double> n現在の本当のスコア;
-		public STDGBVALUE<long> n現在表示中のスコア;
-		public long n進行用タイマ;
+		protected STDGBVALUE<long> nスコアの増分;
+		protected STDGBVALUE<double> n現在の本当のスコア;
+		protected STDGBVALUE<long> n現在表示中のスコア;
+		protected long n進行用タイマ;
 		protected CTexture txScore;
 
 		
@@ -52,12 +51,25 @@ namespace DTXMania
 		/// <param name="delta"></param>
 		public void Add( E楽器パート part, STAUTOPLAY bAutoPlay, long delta )
 		{
-			double rev = 1.0 ;
+			double rev = 1.0;
 			switch ( part )
 			{
 				#region [ Unknown ]
 				case E楽器パート.UNKNOWN:
 					throw new ArgumentException();
+				#endregion
+				#region [ Drums ]
+				case E楽器パート.DRUMS:
+					if ( !CDTXMania.ConfigIni.bドラムが全部オートプレイである )
+					{
+						#region [ Auto BD ]
+						if ( bAutoPlay.BD == true )
+						{
+							rev /= 2;
+						}
+						#endregion
+					}
+					break;
 				#endregion
 				#region [ Gutiar ]
 				case E楽器パート.GUITAR:
@@ -131,7 +143,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txScore = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_score numbers.png"));
+				this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay score numbers.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}

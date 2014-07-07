@@ -20,24 +20,24 @@ namespace DTXMania
 		// コンストラクタ
 		public CAct演奏ゲージ共通()
 		{
-            //actLVLNFont = new CActLVLNFont(); // On活性化()に移動
+			//actLVLNFont = new CActLVLNFont();		// On活性化()に移動
 			//actLVLNFont.On活性化();
 		}
-        // CActivity 実装
-        public override void On活性化()
-        {
-            actLVLNFont = new CActLVLNFont();
-            actLVLNFont.On活性化();
-            base.On活性化();
-        }
 
-        public override void On非活性化()
-        {
-            actLVLNFont.On非活性化();
-            actLVLNFont = null;
-            base.On非活性化();
-        }
-		
+		// CActivity 実装
+
+		public override void On活性化()
+		{
+			actLVLNFont = new CActLVLNFont();
+			actLVLNFont.On活性化();
+			base.On活性化();
+		}
+		public override void On非活性化()
+		{
+			actLVLNFont.On非活性化();
+			actLVLNFont = null;
+			base.On非活性化();
+		}
 		
 		const double GAUGE_MAX = 1.0;
 		const double GAUGE_INITIAL =  2.0 / 3;
@@ -62,8 +62,7 @@ namespace DTXMania
 		}
 		public bool IsFailed( E楽器パート part )	// 閉店状態になったかどうか
 		{
-			if ( bRisky ) 
-            {
+			if ( bRisky ) {
 				return ( nRiskyTimes <= 0 );
 			}
 			return this.db現在のゲージ値[ (int) part ] <= GAUGE_MIN;
@@ -82,7 +81,7 @@ namespace DTXMania
 						return ( nRiskyTimes <= 2 );
 				}
 			}
-			return ( this.db現在のゲージ値[ (int) part ] <= 0.3 );
+			return ( this.db現在のゲージ値[ (int) part ] <= GAUGE_DANGER );
 		}
 
 		public double dbゲージ値	// Drums専用
@@ -114,9 +113,9 @@ namespace DTXMania
 
 			for ( int i = 0; i < 3; i++ )
 			{
-				if ( !bRisky)
+				if ( !bRisky )
 				{
-                    this.db現在のゲージ値[i] = GAUGE_INITIAL;
+					this.db現在のゲージ値[ i ] = GAUGE_INITIAL;
 				}
 				else if ( nRiskyTimes_InitialVal == 1 )
 				{
@@ -135,7 +134,7 @@ namespace DTXMania
 		// ----------------------------------
 		public float[ , ] fDamageGaugeDelta = {			// #23625 2011.1.10 ickw_284: tuned damage/recover factors
 			// drums,   guitar,  bass
-			{  0.004f, 0.006f,  0.006f  },
+			{  0.004f,  0.006f,  0.006f  },
 			{  0.002f,  0.003f,  0.003f  },
 			{  0.000f,  0.000f,  0.000f  },
 			{ -0.020f, -0.030f,	-0.030f  },
@@ -153,57 +152,12 @@ namespace DTXMania
 			double fDamage;
 
 #if true	// DAMAGELEVELTUNING
-            if (CDTXMania.ConfigIni.nSkillMode == 1)
-            {
-                fDamageGaugeDelta[0, 0] =  0.005f;
-                fDamageGaugeDelta[1, 0] =  0.001f;
-                fDamageGaugeDelta[3, 0] = -0.017f;
-                fDamageGaugeDelta[4, 0] = -0.041f;
-            }
 			switch ( e今回の判定 )
 			{
-                case E判定.Perfect:
-                    {
-                        fDamage = bRisky ? 0 : fDamageGaugeDelta[(int)e今回の判定, (int)part];
-                        break;
-                    }
+				case E判定.Perfect:
 				case E判定.Great:
-
-                    if (CDTXMania.ConfigIni.bHAZARD)
-                    {
-                        if (bRisky)
-                        {
-                            fDamage = (nRiskyTimes == 1) ? 0 : -GAUGE_MAX / (nRiskyTimes_Initial - 1);	// Risky=1のときは1Miss即閉店なのでダメージ計算しない
-                            if (nRiskyTimes >= 0) nRiskyTimes--;		// 念のため-1未満には減らないようにしておく
-                        }
-                        else
-                        {
-                            fDamage = fDamageGaugeDelta[(int)4, (int)part];
-                        }
-                    }
-                    else
-                    {
-                        fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
-                    }
-                    break;
 				case E判定.Good:
-
-                    if (CDTXMania.ConfigIni.bHAZARD)
-                    {
-                        if (bRisky)
-                        {
-                            fDamage = (nRiskyTimes == 1) ? 0 : -GAUGE_MAX / (nRiskyTimes_Initial - 1);	// Risky=1のときは1Miss即閉店なのでダメージ計算しない
-                            if (nRiskyTimes >= 0) nRiskyTimes--;		// 念のため-1未満には減らないようにしておく
-                        }
-                        else
-                        {
-                            fDamage = fDamageGaugeDelta[(int)4, (int)part];
-                        }
-                    }
-                    else
-                    {
-    					fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
-                    }
+					fDamage  = bRisky ? 0 : fDamageGaugeDelta[ (int) e今回の判定, (int) part ];
 					break;
 				case E判定.Poor:
 				case E判定.Miss:
@@ -293,14 +247,8 @@ namespace DTXMania
 		#endregion
 
 		public STDGBVALUE<double> db現在のゲージ値;
-        protected STDGBVALUE<int> n本体X;
-        protected CCounter ct本体移動;
+		protected CCounter ct本体移動;
 		protected CCounter ct本体振動;
-        protected CTexture txマスクF;
-        protected CTexture txマスクD;
-        protected CTexture txゲージ;
-        protected CTexture txフルゲージ;
-        protected CTexture txフレーム;
-        protected CTexture txハイスピ;
+		protected CTexture txゲージ;
 	}
 }

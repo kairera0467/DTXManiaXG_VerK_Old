@@ -71,8 +71,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\2_background.jpg" ), false );
-				this.txメニュー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\2_menu.png" ), false );
+				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenTitle background.jpg" ), false );
+				this.txメニュー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenTitle menu.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -156,11 +156,11 @@ namespace DTXMania
 						this.tカーソルを上へ移動する();
 
 					this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int)SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
-					this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.SD ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
-					if( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
+					this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.BD ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
+					if( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LT ) )
 						this.tカーソルを下へ移動する();
 
-					if( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Return ) ) ) 
+					if( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int)SlimDX.DirectInput.Key.Return ) ) ) )
 					{
 						if ( ( this.n現在のカーソル行 == (int) E戻り値.GAMESTART - 1 ) && CDTXMania.Skin.soundゲーム開始音.b読み込み成功 )
 						{
@@ -177,6 +177,8 @@ namespace DTXMania
 						this.actFO.tフェードアウト開始();
 						base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
 					}
+//					if ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) Key.Space ) )
+//						Trace.TraceInformation( "DTXMania Title: SPACE key registered. " + CDTXMania.ct.nシステム時刻 );
 				}
 
 				// 描画
@@ -213,7 +215,7 @@ namespace DTXMania
 				}
 				if( this.txメニュー != null )
 				{
-					//this.txメニュー.t2D描画( CDTXMania.app.Device, 0xce, 0xcb, new Rectangle( 0, 0, MENU_W, MENU_H ) );
+					//this.txメニュー.t2D描画( CDTXMania.app.Device, 0xce, 0xcb, new Rectangle( 0, 0, MENU_W, MWNU_H ) );
 					// #24525 2011.3.16 yyagi: "OPTION"を省いて描画。従来スキンとの互換性確保のため。
 					this.txメニュー.t2D描画( CDTXMania.app.Device, MENU_X, MENU_Y, new Rectangle( 0, 0, MENU_W, MENU_H ) );
 					this.txメニュー.t2D描画( CDTXMania.app.Device, MENU_X, MENU_Y + MENU_H, new Rectangle( 0, MENU_H * 2, MENU_W, MENU_H * 2 ) );
@@ -333,10 +335,10 @@ namespace DTXMania
 		private STキー反復用カウンタ ctキー反復用;
 		private CCounter ct下移動用;
 		private CCounter ct上移動用;
-        private const int MENU_H = 0x27;
-        private const int MENU_W = 0xe3;
-        private const int MENU_X = 0x1fa;
-        private const int MENU_Y = 0x201;
+		private const int MENU_H = 39;
+		private const int MENU_W = 227;
+		private const int MENU_X = 206;
+		private const int MENU_Y = 203;
 		private int n現在のカーソル行;
 		private CTexture txメニュー;
 		private CTexture tx背景;

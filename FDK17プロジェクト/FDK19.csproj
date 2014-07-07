@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BCD40908-F3E2-4707-BFAA-1DD99DF6357D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -14,9 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>SlimDXKey_yyagi.snk</AssemblyOriginatorKeyFile>
     <ApplicationIcon>
     </ApplicationIcon>
   </PropertyGroup>
@@ -26,12 +25,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>
     </DocumentationFile>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
     <NoWarn>0219</NoWarn>
-    <DefineConstants>TRACE;TEST_CancelEnterCodeInAltEnter2 TEST_Direct3D9Ex_</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;TEST_CancelEnterCodeInAltEnter2 TEST_Direct3D9Ex_</DefineConstants>
     <Optimize>false</Optimize>
-    <ErrorReport>prompt</ErrorReport>
-    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -39,23 +36,23 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>
     </DocumentationFile>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
     <NoWarn>0219</NoWarn>
     <DefineConstants>TRACE;TEST_ENGLISH_ TEST_Direct3D9Ex_</DefineConstants>
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bass.Net, Version=2.4.9.1, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
+    <Reference Include="Bass.Net, Version=2.4.10.3, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\実行時フォルダ\Bass.Net.dll</HintPath>
+      <HintPath>..\実行時フォルダ(DTXCreator)\dll\Bass.Net.dll</HintPath>
     </Reference>
     <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\実行時フォルダ\DirectShowLib-2005.dll</HintPath>
+      <HintPath>..\実行時フォルダ(DTXCreator)\dll\DirectShowLib-2005.dll</HintPath>
     </Reference>
     <Reference Include="SlimDXc_net20x86_Jun2010, Version=1002.0.10.43, Culture=neutral, PublicKeyToken=53d0e4ef1f1579f5, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\実行時フォルダ\SlimDXc_net20x86_Jun2010.dll</HintPath>
+      <HintPath>..\実行時フォルダ\dll\SlimDXc_net20x86_Jun2010.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -64,8 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="コード\00.共通\CApplicationForm.cs" />
-    <Compile Include="コード\00.共通\CD3DSettings.cs" />
     <Compile Include="コード\00.共通\COS.cs" />
     <Compile Include="コード\00.共通\CPowerManagement.cs" />
     <Compile Include="コード\00.共通\CSendMessage.cs" />
@@ -149,6 +144,9 @@
   <ItemGroup>
     <Content Include="コード\01.フレームワーク\Resources\sdx_icon_black.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SlimDXKey_yyagi.snk" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -158,7 +156,11 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)..\実行時フォルダ"
-copy /Y "$(TargetPath)" "$(SolutionDir)..\実行時フォルダ(DTXCreator)"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)..\実行時フォルダ\dll\"
+copy /Y "$(TargetPath)" "$(SolutionDir)..\実行時フォルダ(DTXCreator)\dll\"
+copy /Y "$(TargetPath)" "$(SolutionDir)bin\x86\Debug\dll\"
+
+
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

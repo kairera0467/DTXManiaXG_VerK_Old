@@ -13,17 +13,14 @@ using SlimDX;
 using SlimDX.Direct3D9;
 using FDK;
 using SampleFramework;
-using DTXMania.Properties;
-using System.Reflection;
-using DirectShowLib;
 
 namespace DTXMania
 {
-    internal class CDTXMania : Game
+	internal class CDTXMania : Game
 	{
 		// プロパティ
-
-		public static readonly string VERSION = "Ver3.25(140624)";
+		#region [ properties ]
+		public static readonly string VERSION = "099(140707)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -34,16 +31,6 @@ namespace DTXMania
 			get;
 			private set;
 		}
-        public static Folder Folder
-        {
-            get;
-            protected set;
-        }
-        public static CApp App
-        {
-            get;
-            private set;
-        }
 		public static C文字コンソール act文字コンソール
 		{ 
 			get;
@@ -89,19 +76,8 @@ namespace DTXMania
 			get;
 			private set;
 		}
-        public static int nSongDifficulty
-        {
-            get;
-            set;
-        }
-
-        public static string strSongDifficulyName
-        {
-            get;
-            set;
-        }
-        #region [ 入力範囲ms ]
-        public static int nPerfect範囲ms
+		#region [ 入力範囲ms ]
+		public static int nPerfect範囲ms
 		{
 			get
 			{
@@ -160,9 +136,9 @@ namespace DTXMania
 				}
 				return ConfigIni.nヒット範囲ms.Poor;
 			}
-        }
-        #endregion
-        public static CPad Pad 
+		}
+		#endregion
+		public static CPad Pad 
 		{
 			get;
 			private set;
@@ -192,14 +168,15 @@ namespace DTXMania
 			get;
 			private set;
 		}
-        public static CActFlushGPU actFlushGPU
-        {
-            get;
-            private set;
-        }
+		public static CActFlushGPU actFlushGPU
+		{
+			get;
+			private set;
+		}
+
 		public static CSound管理 Sound管理
 		{
-			get; 
+			get;
 			private set;
 		}
 		public static CStage起動 stage起動 
@@ -212,11 +189,11 @@ namespace DTXMania
 			get;
 			private set;
 		}
-		public static CStageオプション stageオプション
-		{ 
-			get;
-			private set;
-		}
+//		public static CStageオプション stageオプション
+//		{ 
+//			get;
+//			private set;
+//		}
 		public static CStageコンフィグ stageコンフィグ 
 		{ 
 			get; 
@@ -242,11 +219,6 @@ namespace DTXMania
 			get;
 			private set;
 		}
-        public static CStage演奏画面共通 stage演奏画面共通
-        {
-            get;
-            private set;
-        }
 		public static CStage結果 stage結果
 		{
 			get;
@@ -264,7 +236,6 @@ namespace DTXMania
 		}
 		public static CStage r現在のステージ = null;
 		public static CStage r直前のステージ = null;
-        public bool b汎用ムービーである = false;
 		public static string strEXEのあるフォルダ 
 		{
 			get;
@@ -297,7 +268,6 @@ namespace DTXMania
 			get;
 			set;
 		}
-
 		public Device Device
 		{
 			get { return base.GraphicsDeviceManager.Direct3D9.Device; }
@@ -320,16 +290,17 @@ namespace DTXMania
 			get;
 			set;
 		}
-        //		public static CTimer ct;
-        public IntPtr WindowHandle					// 2012.10.24 yyagi; to add ASIO support
-        {
-            get { return base.Window.Handle; }
-        }
-        public static CDTXVmode DTXVmode			// #28821 2014.1.23 yyagi
+		//		public static CTimer ct;
+		public IntPtr WindowHandle					// 2012.10.24 yyagi; to add ASIO support
+		{
+			get { return base.Window.Handle; }
+		}
+		public static CDTXVmode DTXVmode			// #28821 2014.1.23 yyagi
 		{
 			get;
 			set;
 		}
+		#endregion
 
 		// コンストラクタ
 
@@ -401,7 +372,6 @@ namespace DTXMania
 #endif
 			}
 		}
-    
 
 		#region [ #24609 リザルト画像をpngで保存する ]		// #24609 2011.3.14 yyagi; to save result screen in case BestRank or HiSkill.
 		/// <summary>
@@ -433,17 +403,20 @@ namespace DTXMania
 		#endregion
 
 		// Game 実装
+
 		protected override void Initialize()
 		{
 //			new GCBeep();
-            sw.Start();
-			swlist = new List<double>( 8192 );
-			if( this.listトップレベルActivities != null )
+			//sw.Start();
+			//swlist1 = new List<int>( 8192 );
+			//swlist2 = new List<int>( 8192 );
+			//swlist3 = new List<int>( 8192 );
+			//swlist4 = new List<int>( 8192 );
+			//swlist5 = new List<int>( 8192 );
+			if ( this.listトップレベルActivities != null )
 			{
-                foreach (CActivity activity in this.listトップレベルActivities)
-                {
-                    activity.OnManagedリソースの作成();
-                }
+				foreach( CActivity activity in this.listトップレベルActivities )
+					activity.OnManagedリソースの作成();
 			}
 
 			foreach( STPlugin st in this.listプラグイン )
@@ -453,17 +426,17 @@ namespace DTXMania
 				Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
 			}
 #if GPUFlushAfterPresent
-        FrameEnd += dtxmania_FrameEnd;
+			FrameEnd += dtxmania_FrameEnd;
 #endif
-        }
+		}
 #if GPUFlushAfterPresent
-        void dtxmania_FrameEnd( object sender, EventArgs e ) // GraphicsDeviceManager.game_FrameEnd()後に実行される
-        {	                                                                     // → Present()直後にGPUをFlushする
-                                                                                 // → 画面のカクツキが頻発したため、ここでのFlushは行わない
-            actFlushGPU.On進行描画(); // Flush GPU
-        }
+		void dtxmania_FrameEnd( object sender, EventArgs e )	// GraphicsDeviceManager.game_FrameEnd()後に実行される
+		{														// → Present()直後にGPUをFlushする
+																// → 画面のカクツキが頻発したため、ここでのFlushは行わない
+			actFlushGPU.On進行描画();		// Flush GPU
+		}
 #endif
-        protected override void LoadContent()
+		protected override void LoadContent()
 		{
 			if ( ConfigIni.bウィンドウモード )
 			{
@@ -480,27 +453,24 @@ namespace DTXMania
 			}
 			this.Device.SetTransform(TransformState.View, Matrix.LookAtLH(new Vector3(0f, 0f, (float)(-SampleFramework.GameWindowSize.Height / 2 * Math.Sqrt(3.0))), new Vector3(0f, 0f, 0f), new Vector3(0f, 1f, 0f)));
 			this.Device.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(C変換.DegreeToRadian((float)60f), ((float)this.Device.Viewport.Width) / ((float)this.Device.Viewport.Height), -100f, 100f));
-			this.Device.SetRenderState( RenderState.Lighting, false );
+			this.Device.SetRenderState(RenderState.Lighting, false);
 			this.Device.SetRenderState( RenderState.ZEnable, false );
 			this.Device.SetRenderState( RenderState.AntialiasedLineEnable, false );
 			this.Device.SetRenderState( RenderState.AlphaTestEnable, true );
 			this.Device.SetRenderState( RenderState.AlphaRef, 10 );
 
-            if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
-            {
-                this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
-                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
-                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
-            }
+			this.Device.SetRenderState( RenderState.MultisampleAntialias, true );
+			this.Device.SetSamplerState( 0, SamplerState.MinFilter, TextureFilter.Linear );
+			this.Device.SetSamplerState( 0, SamplerState.MagFilter, TextureFilter.Linear );
 
-            this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
-            this.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
-            this.Device.SetRenderState<Blend>(RenderState.SourceBlend, Blend.SourceAlpha);
-            this.Device.SetRenderState<Blend>(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
-            this.Device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Modulate);
-            this.Device.SetTextureStageState(0, TextureStage.AlphaArg1, 2);
-            this.Device.SetTextureStageState(0, TextureStage.AlphaArg2, 1);
-			
+			this.Device.SetRenderState<Compare>( RenderState.AlphaFunc, Compare.Greater );
+			this.Device.SetRenderState( RenderState.AlphaBlendEnable, true );
+			this.Device.SetRenderState<Blend>( RenderState.SourceBlend, Blend.SourceAlpha );
+			this.Device.SetRenderState<Blend>( RenderState.DestinationBlend, Blend.InverseSourceAlpha );
+			this.Device.SetTextureStageState( 0, TextureStage.AlphaOperation, TextureOperation.Modulate );
+			this.Device.SetTextureStageState( 0, TextureStage.AlphaArg1, 2 );
+			this.Device.SetTextureStageState( 0, TextureStage.AlphaArg2, 1 );
+
 			if( this.listトップレベルActivities != null )
 			{
 				foreach( CActivity activity in this.listトップレベルActivities )
@@ -512,9 +482,8 @@ namespace DTXMania
 				Directory.SetCurrentDirectory( st.strプラグインフォルダ );
 				st.plugin.OnUnmanagedリソースの作成();
 				Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
-            }
-
-        }
+			}
+		}
 		protected override void UnloadContent()
 		{
 			if( this.listトップレベルActivities != null )
@@ -532,7 +501,7 @@ namespace DTXMania
 		}
 		protected override void OnExiting( EventArgs e )
 		{
-            CPowerManagement.tEnableMonitorSuspend();		// スリープ抑止状態を解除
+			CPowerManagement.tEnableMonitorSuspend();		// スリープ抑止状態を解除
 			this.t終了処理();
 			base.OnExiting( e );
 		}
@@ -545,8 +514,7 @@ namespace DTXMania
 
 			if( Timer != null )
 				Timer.t更新();
-
-            if ( CSound管理.rc演奏用タイマ != null )
+            if (CSound管理.rc演奏用タイマ != null)
                 CSound管理.rc演奏用タイマ.t更新();
 
 			if( Input管理 != null )
@@ -561,10 +529,10 @@ namespace DTXMania
 			if( this.Device == null )
 				return;
 
-            if (this.bApplicationActive)	// DTXMania本体起動中の本体/モニタの省電力モード移行を抑止
-                CPowerManagement.tDisableMonitorSuspend();
+			if ( this.bApplicationActive )	// DTXMania本体起動中の本体/モニタの省電力モード移行を抑止
+				CPowerManagement.tDisableMonitorSuspend();
 
-            // #xxxxx 2013.4.8 yyagi; sleepの挿入位置を、EndScnene～Present間から、BeginScene前に移動。描画遅延を小さくするため。
+			// #xxxxx 2013.4.8 yyagi; sleepの挿入位置を、EndScnene～Present間から、BeginScene前に移動。描画遅延を小さくするため。
 			#region [ スリープ ]
 			if ( ConfigIni.nフレーム毎スリープms >= 0 )			// #xxxxx 2011.11.27 yyagi
 			{
@@ -620,8 +588,8 @@ namespace DTXMania
 			}
 			#endregion
 
-            this.Device.BeginScene();
-            this.Device.Clear(ClearFlags.ZBuffer | ClearFlags.Target, Color.Black, 1f, 0);
+			this.Device.BeginScene();
+			this.Device.Clear( ClearFlags.ZBuffer | ClearFlags.Target, Color.Black, 1f, 0 );
 
 			if( r現在のステージ != null )
 			{
@@ -646,27 +614,25 @@ namespace DTXMania
 
 				CScoreIni scoreIni = null;
 
-                if( Control.IsKeyLocked( Keys.CapsLock ) ) // #30925 2013.3.11 yyagi; capslock=ON時は、EnumSongsしないようにして、起動負荷とASIOの音切れの関係を確認する
-                {                                       // → songs.db等の書き込み時だと音切れするっぽい
-                    actEnumSongs.On非活性化();
-                    EnumSongs.SongListEnumCompletelyDone();
-                    CDTXMania.stage選曲.bIsEnumeratingSongs = false;
-                }
+				if ( Control.IsKeyLocked( Keys.CapsLock ) )				// #30925 2013.3.11 yyagi; capslock=ON時は、EnumSongsしないようにして、起動負荷とASIOの音切れの関係を確認する
+				{														// → songs.db等の書き込み時だと音切れするっぽい
+					actEnumSongs.On非活性化();
+					EnumSongs.SongListEnumCompletelyDone();
+					CDTXMania.stage選曲.bIsEnumeratingSongs = false;
+				}
 				#region [ 曲検索スレッドの起動/終了 ]					// ここに"Enumerating Songs..."表示を集約
-                if (!CDTXMania.bコンパクトモード)
-                {
-                    actEnumSongs.On進行描画();							// "Enumerating Songs..."アイコンの描画
-                }							// "Enumerating Songs..."アイコンの描画
+				if ( !CDTXMania.bコンパクトモード )
+				{
+					actEnumSongs.On進行描画();							// "Enumerating Songs..."アイコンの描画
+				}
 				switch ( r現在のステージ.eステージID )
 				{
 					case CStage.Eステージ.タイトル:
 					case CStage.Eステージ.コンフィグ:
-                    case CStage.Eステージ.オプション:
 					case CStage.Eステージ.選曲:
 					case CStage.Eステージ.曲読み込み:
 						if ( EnumSongs != null )
 						{
-                            DTXVmode.Refreshed = false;         // 曲のリロード中に発生した再リロードは、無視する。
 							#region [ (特定条件時) 曲検索スレッドの起動・開始 ]
 							if ( r現在のステージ.eステージID == CStage.Eステージ.タイトル &&
 								 r直前のステージ.eステージID == CStage.Eステージ.起動 &&
@@ -691,7 +657,7 @@ namespace DTXMania
 								{
 									case 0:		// 何もない
 										//if ( CDTXMania.stage選曲.bIsEnumeratingSongs )
-										if ( !CDTXMania.stage選曲.bIsPlayingPremovie || CDTXMania.Skin.ds選曲画面背景動画 != null )
+										if ( !CDTXMania.stage選曲.bIsPlayingPremovie )
 										{
 											EnumSongs.Resume();						// #27060 2012.2.6 yyagi 中止していたバックグランド曲検索を再開
 											EnumSongs.IsSlowdown = false;
@@ -798,20 +764,18 @@ namespace DTXMania
 								break;
 
 							#region [ OPTION: 廃止済 ]
-                                /*
-							case 2:									// #24525 OPTIONとCONFIGの統合に伴い、OPTIONは廃止
-								#region [ *** ]
-								//-----------------------------
-								r現在のステージ.On非活性化();
-								Trace.TraceInformation( "----------------------" );
-								Trace.TraceInformation( "■ オプション" );
-								stageオプション.On活性化();
-								r直前のステージ = r現在のステージ;
-								r現在のステージ = stageオプション;
-								//-----------------------------
-								#endregion
-								break;
-                                */
+//							case 2:									// #24525 OPTIONとCONFIGの統合に伴い、OPTIONは廃止
+//								#region [ *** ]
+//								//-----------------------------
+//								r現在のステージ.On非活性化();
+//								Trace.TraceInformation( "----------------------" );
+//								Trace.TraceInformation( "■ オプション" );
+//								stageオプション.On活性化();
+//								r直前のステージ = r現在のステージ;
+//								r現在のステージ = stageオプション;
+//								//-----------------------------
+//								#endregion
+							//								break;
 							#endregion
 
 							case (int)CStageタイトル.E戻り値.CONFIG:
@@ -848,68 +812,66 @@ namespace DTXMania
 							Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
 						}
 
-                        //this.tガベージコレクションを実行する();       // #31980 2013.9.3 yyagi タイトル画面でだけ、毎フレームGCを実行して重くなっていた問題の修正
+						//this.tガベージコレクションを実行する();		// #31980 2013.9.3 yyagi タイトル画面でだけ、毎フレームGCを実行して重くなっていた問題の修正
 						//-----------------------------
 						#endregion
 						break;
 
-                        
-					case CStage.Eステージ.オプション:
+//					case CStage.Eステージ.オプション:
 						#region [ *** ]
-						//-----------------------------
-						if( this.n進行描画の戻り値 != 0 )
-						{
-							switch( r直前のステージ.eステージID )
-							{
-								case CStage.Eステージ.タイトル:
-									#region [ *** ]
-									//-----------------------------
-									r現在のステージ.On非活性化();
-									Trace.TraceInformation( "----------------------" );
-    								Trace.TraceInformation( "■ タイトル" );
-									stageタイトル.On活性化();
-									r直前のステージ = r現在のステージ;
-									r現在のステージ = stageタイトル;
-						
-									foreach( STPlugin pg in this.listプラグイン )
-									{
-										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
-										pg.plugin.Onステージ変更();
-										Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
-									}
-						
-									this.tガベージコレクションを実行する();
-									break;
-								//-----------------------------
-									#endregion
-
-								case CStage.Eステージ.選曲:
-									#region [ *** ]
-									//-----------------------------
-									r現在のステージ.On非活性化();
-									Trace.TraceInformation( "----------------------" );
-									Trace.TraceInformation( "■ 選曲" );
-									stage選曲.On活性化();
-									r直前のステージ = r現在のステージ;
-									r現在のステージ = stage選曲;
-
-									foreach( STPlugin pg in this.listプラグイン )
-									{
-										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
-										pg.plugin.Onステージ変更();
-										Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
-									}
-
-									this.tガベージコレクションを実行する();
-									break;
-								//-----------------------------
-									#endregion
-							}
-						}
-						//-----------------------------
+//						//-----------------------------
+//						if( this.n進行描画の戻り値 != 0 )
+//						{
+//							switch( r直前のステージ.eステージID )
+//							{
+//								case CStage.Eステージ.タイトル:
+//									#region [ *** ]
+//									//-----------------------------
+//									r現在のステージ.On非活性化();
+//									Trace.TraceInformation( "----------------------" );
+//									Trace.TraceInformation( "■ タイトル" );
+//									stageタイトル.On活性化();
+//									r直前のステージ = r現在のステージ;
+//									r現在のステージ = stageタイトル;
+//						
+//									foreach( STPlugin pg in this.listプラグイン )
+//									{
+//										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+//										pg.plugin.Onステージ変更();
+//										Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
+//									}
+//						
+//									this.tガベージコレクションを実行する();
+//									break;
+//								//-----------------------------
+//									#endregion
+//
+//								case CStage.Eステージ.選曲:
+//									#region [ *** ]
+//									//-----------------------------
+//									r現在のステージ.On非活性化();
+//									Trace.TraceInformation( "----------------------" );
+//									Trace.TraceInformation( "■ 選曲" );
+//									stage選曲.On活性化();
+//									r直前のステージ = r現在のステージ;
+//									r現在のステージ = stage選曲;
+//
+//									foreach( STPlugin pg in this.listプラグイン )
+//									{
+//										Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+//										pg.plugin.Onステージ変更();
+//										Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
+//									}
+//
+//									this.tガベージコレクションを実行する();
+//									break;
+//								//-----------------------------
+//									#endregion
+//							}
+//						}
+//						//-----------------------------
 						#endregion
-						break;
-                        
+//						break;
 
 					case CStage.Eステージ.コンフィグ:
 						#region [ *** ]
@@ -1016,30 +978,28 @@ namespace DTXMania
 							//-----------------------------
 								#endregion
 
-                                
-							case (int) CStage選曲.E戻り値.オプション呼び出し:
+//							case (int) CStage選曲.E戻り値.オプション呼び出し:
 								#region [ *** ]
-								//-----------------------------
-                                
-								r現在のステージ.On非活性化();
-								Trace.TraceInformation( "----------------------" );
-								Trace.TraceInformation( "■ オプション" );
-								stageオプション.On活性化();
-								r直前のステージ = r現在のステージ;
-								r現在のステージ = stageオプション;
-
-								foreach( STPlugin pg in this.listプラグイン )
-								{
-									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
-									pg.plugin.Onステージ変更();
-									Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
-								}
-
-								this.tガベージコレクションを実行する();
-								break;
-							//-----------------------------
+//								//-----------------------------
+//								r現在のステージ.On非活性化();
+//								Trace.TraceInformation( "----------------------" );
+//								Trace.TraceInformation( "■ オプション" );
+//								stageオプション.On活性化();
+//								r直前のステージ = r現在のステージ;
+//								r現在のステージ = stageオプション;
+//
+//								foreach( STPlugin pg in this.listプラグイン )
+//								{
+//									Directory.SetCurrentDirectory( pg.strプラグインフォルダ );
+//									pg.plugin.Onステージ変更();
+//									Directory.SetCurrentDirectory( CDTXMania.strEXEのあるフォルダ );
+//								}
+//
+//								this.tガベージコレクションを実行する();
+//								break;
+//							//-----------------------------
 								#endregion
-                                
+
 							case (int) CStage選曲.E戻り値.コンフィグ呼び出し:
 								#region [ *** ]
 								//-----------------------------
@@ -1083,12 +1043,11 @@ namespace DTXMania
 					case CStage.Eステージ.曲読み込み:
 						#region [ *** ]
 						//-----------------------------
+						DTXVmode.Refreshed = false;		// 曲のリロード中に発生した再リロードは、無視する。
 						if( this.n進行描画の戻り値 != 0 )
 						{
 							CDTXMania.Pad.st検知したデバイス.Clear();	// 入力デバイスフラグクリア(2010.9.11)
-
 							r現在のステージ.On非活性化();
-
 							#region [ ESC押下時は、曲の読み込みを中止して選曲画面に戻る ]
 							if ( this.n進行描画の戻り値 == (int) E曲読込画面の戻り値.読込中止 )
 							{
@@ -1110,7 +1069,6 @@ namespace DTXMania
 								break;
 							}
 							#endregion
-
 
 							if( !ConfigIni.bギタレボモード )
 							{
@@ -1167,9 +1125,17 @@ for (int i = 0; i < 3; i++) {
 					case CStage.Eステージ.演奏:
 						#region [ *** ]
 						//-----------------------------
+						//long n1 = FDK.CSound管理.rc演奏用タイマ.nシステム時刻ms;
+						//long n2 = FDK.CSound管理.SoundDevice.n経過時間ms;
+						//long n3 = FDK.CSound管理.SoundDevice.tmシステムタイマ.nシステム時刻ms;
+						//long n4 = FDK.CSound管理.rc演奏用タイマ.n現在時刻;
+						//long n5 = FDK.CSound管理.SoundDevice.n経過時間を更新したシステム時刻ms;
 
-						double n = (double)sw.ElapsedTicks / (double)Stopwatch.Frequency;
-						swlist.Add(n);
+						//swlist1.Add( Convert.ToInt32(n1) );
+						//swlist2.Add( Convert.ToInt32(n2) );
+						//swlist3.Add( Convert.ToInt32( n3 ) );
+						//swlist4.Add( Convert.ToInt32( n4 ) );
+						//swlist5.Add( Convert.ToInt32( n5 ) );
 
 						#region [ DTXVモード中にDTXCreatorから指示を受けた場合の処理 ]
 						if ( DTXVmode.Enabled && DTXVmode.Refreshed )
@@ -1192,6 +1158,37 @@ for (int i = 0; i < 3; i++) {
 									this.previewSound.Dispose();
 									this.previewSound = null;
 								}
+								//{
+								//    int lastd = 0;
+								//    int f = 0;
+								//    for ( int i = 0; i < swlist1.Count; i++ )
+								//    {
+								//        int d1 = swlist1[ i ];
+								//        int d2 = swlist2[ i ];
+								//        int d3 = swlist3[ i ];
+								//        int d4 = swlist4[ i ];
+								//        int d5 = swlist5[ i ];
+
+								//        int dif = d1 - lastd;
+								//        string s = "";
+								//        if ( 16 <= dif && dif <= 17 )
+								//        {
+								//        }
+								//        else
+								//        {
+								//            s = "★";
+								//        }
+								//        Trace.TraceInformation( "frame {0:D4}: {1:D3} ( {2:D3}, {3:D3} - {7:D3}, {4:D3} ) {5}, n現在時刻={6}", f, dif, d1, d2, d3, s, d4, d5 );
+								//        lastd = d1;
+								//        f++;
+								//    }
+								//    swlist1.Clear();
+								//    swlist2.Clear();
+								//    swlist3.Clear();
+								//    swlist4.Clear();
+								//    swlist5.Clear();
+
+								//}
 							}
 							else if ( DTXVmode.Command == CDTXVmode.ECommand.Play )
 							{
@@ -1258,25 +1255,33 @@ for (int i = 0; i < 3; i++) {
 								//-----------------------------
 								scoreIni = this.tScoreIniへBGMAdjustとHistoryとPlayCountを更新( "Play canceled" );
 
-								double lastd = 0f;
-								int f = 0;
-								foreach ( double d in swlist )
-								{
-									double dif = d - lastd;
-									string s = "";
-									if ( 0.016 < dif && dif < 0.017 )
-									{
-									}
-									else
-									{
-										s = "★";
-									}
-									//Trace.TraceInformation( "frame " + f + ": " + d + " (" + dif + ")" + s );
-									lastd = d;
-									f++;
-								}
-								swlist.Clear();
+								//int lastd = 0;
+								//int f = 0;
+								//for (int i = 0; i < swlist1.Count; i++)
+								//{
+								//    int d1 = swlist1[ i ];
+								//    int d2 = swlist2[ i ];
+								//    int d3 = swlist3[ i ];
+								//    int d4 = swlist4[ i ];
 
+								//    int dif = d1 - lastd;
+								//    string s = "";
+								//    if ( 16 <= dif && dif <= 17 )
+								//    {
+								//    }
+								//    else
+								//    {
+								//        s = "★";
+								//    }
+								//    Trace.TraceInformation( "frame {0:D4}: {1:D3} ( {2:D3}, {3:D3}, {4:D3} ) {5}, n現在時刻={6}", f, dif, d1, d2, d3, s, d4 );
+								//    lastd = d1;
+								//    f++;
+								//}
+								//swlist1.Clear();
+								//swlist2.Clear();
+								//swlist3.Clear();
+								//swlist4.Clear();
+		
 								#region [ プラグイン On演奏キャンセル() の呼び出し ]
 								//---------------------
 								foreach( STPlugin pg in this.listプラグイン )
@@ -1371,8 +1376,8 @@ for (int i = 0; i < 3; i++) {
 							case (int) E演奏画面の戻り値.ステージクリア:
 								#region [ 演奏クリア ]
 								//-----------------------------
-                                CScoreIni.C演奏記録 c演奏記録_Drums, c演奏記録_Guitar, c演奏記録_Bass;
-                                CDTX.CChip[] chipArray = new CDTX.CChip[10];
+								CScoreIni.C演奏記録 c演奏記録_Drums, c演奏記録_Guitar, c演奏記録_Bass;
+								CDTX.CChip[] chipArray = new CDTX.CChip[ 10 ];
 								if( ConfigIni.bギタレボモード )
 								{
 									stage演奏ギター画面.t演奏結果を格納する( out c演奏記録_Drums, out c演奏記録_Guitar, out c演奏記録_Bass );
@@ -1390,8 +1395,8 @@ for (int i = 0; i < 3; i++) {
 									c演奏記録_Bass = t;
 
 									CDTXMania.DTX.SwapGuitarBassInfos();			// 譜面情報も元に戻す
-                                    CDTXMania.ConfigIni.SwapGuitarBassInfos_AutoFlags(); // #24415 2011.2.27 yyagi
-                                                                                    // リザルト集計時のみ、Auto系のフラグも元に戻す。
+									CDTXMania.ConfigIni.SwapGuitarBassInfos_AutoFlags();	// #24415 2011.2.27 yyagi
+																					// リザルト集計時のみ、Auto系のフラグも元に戻す。
 																					// これを戻すのは、リザルト集計後。
 								}													// "case CStage.Eステージ.結果:"のところ。
 
@@ -1409,7 +1414,7 @@ for (int i = 0; i < 3; i++) {
 									ps = c演奏記録_Bass.db演奏型スキル値;
 									gs = c演奏記録_Bass.dbゲーム型スキル値;
 								}
-                                string str = "Cleared";
+								string str = "Cleared";
 								switch( CScoreIni.t総合ランク値を計算して返す( c演奏記録_Drums, c演奏記録_Guitar, c演奏記録_Bass ) )
 								{
 									case (int)CScoreIni.ERANK.SS:
@@ -1495,7 +1500,7 @@ for (int i = 0; i < 3; i++) {
 						{
 							if ( CDTXMania.ConfigIni.bIsSwappedGuitarBass )		// #24415 2011.2.27 yyagi Gt/Bsを入れ替えていたなら、Auto状態をリザルト画面終了後に元に戻す
 							{
-                                CDTXMania.ConfigIni.SwapGuitarBassInfos_AutoFlags(); // Auto入れ替え
+								CDTXMania.ConfigIni.SwapGuitarBassInfos_AutoFlags();	// Auto入れ替え
 							}
 
 							DTX.t全チップの再生一時停止();
@@ -1561,10 +1566,10 @@ for (int i = 0; i < 3; i++) {
 #if !GPUFlushAfterPresent
 			actFlushGPU.On進行描画();		// Flush GPU	// EndScene()～Present()間 (つまりVSync前) でFlush実行
 #endif
-            if ( Sound管理.GetCurrentSoundDeviceType() != "DirectSound" )
-            {
-             Sound管理.t再生中の処理をする(); // サウンドバッファの更新; 画面描画と同期させることで、スクロールをスムーズにする
-            }
+			if ( Sound管理.GetCurrentSoundDeviceType() != "DirectSound" )
+			{
+				Sound管理.t再生中の処理をする();	// サウンドバッファの更新; 画面描画と同期させることで、スクロールをスムーズにする
+			}
 
 
 			#region [ 全画面・ウインドウ切り替え ]
@@ -1592,7 +1597,6 @@ for (int i = 0; i < 3; i++) {
 			}
 			#endregion
 		}
-
 
 		// その他
 
@@ -1625,8 +1629,7 @@ for (int i = 0; i < 3; i++) {
 		}
 		public static void tテクスチャの解放( ref CTexture tx )
 		{
-            if( tx != null )
-			    CDTXMania.t安全にDisposeする( ref tx );
+			CDTXMania.t安全にDisposeする( ref tx );
 		}
 
 		public static CTexture tテクスチャの生成( byte[] txData )
@@ -1670,41 +1673,6 @@ for (int i = 0; i < 3; i++) {
 				return null;
 			}
 		}
-        
-        public static CTexture tテクスチャを生成する(int width, int height)
-        {
-            try
-            {
-                return new CTexture(CDTXMania.App.D3D9Device, width, height, CDTXMania.TextureFormat);
-            }
-            catch
-            {
-                Trace.TraceError("空のテクスチャ({0}x{1})の生成に失敗しました。", width, height);
-                return null;
-            }
-        }
-        
-
-        public static CDirectShow t失敗してもスキップ可能なDirectShowを生成する(string fileName, IntPtr hWnd, bool bオーディオレンダラなし)
-        {
-            CDirectShow ds = null;
-            try
-            {
-                ds = new CDirectShow(fileName, hWnd, bオーディオレンダラなし);
-            }
-            catch (FileNotFoundException)
-            {
-                Trace.TraceError("動画ファイルが見つかりませんでした。({0})", fileName);
-                ds = null;      // Dispose はコンストラクタ内で実施済み
-            }
-            catch
-            {
-                Trace.TraceError("DirectShow の生成に失敗しました。[{0}]", fileName);
-                ds = null;      // Dispose はコンストラクタ内で実施済み
-            }
-
-            return ds;
-        }
 
 		/// <summary>プロパティ、インデクサには ref は使用できないので注意。</summary>
 		public static void t安全にDisposeする<T>( ref T obj )
@@ -1721,14 +1689,14 @@ for (int i = 0; i < 3; i++) {
 		}
 		//-----------------
 		#endregion
+
 		#region [ private ]
 		//-----------------
 		private bool bマウスカーソル表示中 = true;
-        public bool bウィンドウがアクティブである = true;
 		private bool b終了処理完了済み;
 		private static CDTX dtx;
 		private List<CActivity> listトップレベルActivities;
-		public int n進行描画の戻り値;
+		private int n進行描画の戻り値;
 		private MouseButtons mb = System.Windows.Forms.MouseButtons.Left;
 		private string strWindowTitle
 		{
@@ -1744,7 +1712,7 @@ for (int i = 0; i < 3; i++) {
 				}
 			}
 		}
-        private CSound previewSound;
+		private CSound previewSound;
 
 		private void t起動処理()
 		{
@@ -1787,7 +1755,7 @@ for (int i = 0; i < 3; i++) {
 			{
 				try
 				{
-					Trace.Listeners.Add( new CTraceLogListener( new StreamWriter( strEXEのあるフォルダ + "DTXManiaLog.txt", false, Encoding.GetEncoding( "shift-jis" ) ) ) );
+					Trace.Listeners.Add( new CTraceLogListener( new StreamWriter( System.IO.Path.Combine( strEXEのあるフォルダ, "DTXManiaLog.txt" ), false, Encoding.GetEncoding( "Shift_JIS" ) ) ) );
 				}
 				catch ( System.UnauthorizedAccessException )			// #24481 2011.2.20 yyagi
 				{
@@ -1854,24 +1822,24 @@ for (int i = 0; i < 3; i++) {
 				{
 					DTXVmode.Refreshed = false;								// 初回起動時は再読み込みに走らせない
 					strコンパクトモードファイル = DTXVmode.filename;
-                    switch( DTXVmode.soundDeviceType )
-                    {
-                        case ESoundDeviceType.DirectSound:
-                            ConfigIni.nSoundDeviceType = 0;
-                            break;
-                        case ESoundDeviceType.ExclusiveWASAPI:
-                            ConfigIni.nSoundDeviceType = 2;
-                            break;
-                        case ESoundDeviceType.ASIO:
-                            ConfigIni.nSoundDeviceType = 1;
-                            ConfigIni.nASIODevice = DTXVmode.nASIOdevice;
-                            break;
-                    }
+					switch ( DTXVmode.soundDeviceType )						// サウンド再生方式の設定
+					{
+						case ESoundDeviceType.DirectSound:
+							ConfigIni.nSoundDeviceType = 0;
+							break;
+						case ESoundDeviceType.ExclusiveWASAPI:
+							ConfigIni.nSoundDeviceType = 2;
+							break;
+						case ESoundDeviceType.ASIO:
+							ConfigIni.nSoundDeviceType = 1;
+							ConfigIni.nASIODevice = DTXVmode.nASIOdevice;
+							break;
+					}
 
-                    CDTXMania.ConfigIni.b垂直帰線待ちを行う = DTXVmode.VSyncWait;
-                    CDTXMania.ConfigIni.bTimeStretch = DTXVmode.TimeStretch;
-                    CDTXMania.ConfigIni.bDrums有効 = !DTXVmode.GRmode;
-                    CDTXMania.ConfigIni.bGuitar有効 = true;
+					CDTXMania.ConfigIni.b垂直帰線待ちを行う = DTXVmode.VSyncWait;
+					CDTXMania.ConfigIni.bTimeStretch = DTXVmode.TimeStretch;
+					CDTXMania.ConfigIni.bDrums有効 = !DTXVmode.GRmode;
+					CDTXMania.ConfigIni.bGuitar有効 = true;
 				}
 				else														// 通常のコンパクトモード
 				{
@@ -1884,7 +1852,14 @@ for (int i = 0; i < 3; i++) {
 #if DEBUG
 					Environment.Exit( -1 );
 #else
-					throw new FileNotFoundException( "コンパクトモードで指定されたファイルが見つかりません。DTXManiaを終了します。", strコンパクトモードファイル );
+					if ( strコンパクトモードファイル == "" )	// DTXMania未起動状態で、DTXCで再生停止ボタンを押した場合は、何もせず終了
+					{
+						Environment.Exit( -1 );
+					}
+					else
+					{
+						throw new FileNotFoundException( "コンパクトモードで指定されたファイルが見つかりません。DTXManiaを終了します。", strコンパクトモードファイル );
+					}
 #endif
 				}
 				if ( DTXVmode.Enabled )
@@ -1901,14 +1876,13 @@ for (int i = 0; i < 3; i++) {
 
 			#region [ ウィンドウ初期化 ]
 			//---------------------
-            base.Window.StartPosition = FormStartPosition.Manual;                                                       // #30675 2013.02.04 ikanick add
-            base.Window.Location = new Point( ConfigIni.n初期ウィンドウ開始位置X, ConfigIni.n初期ウィンドウ開始位置Y );   // #30675 2013.02.04 ikanick add
+			base.Window.StartPosition = FormStartPosition.Manual;                                                       // #30675 2013.02.04 ikanick add
+			base.Window.Location = new Point( ConfigIni.n初期ウィンドウ開始位置X, ConfigIni.n初期ウィンドウ開始位置Y );   // #30675 2013.02.04 ikanick add
 
-            base.Window.Text = this.strWindowTitle;		// 事前にDTXVmodeの実体を作っておくこと
-
+			base.Window.Text = this.strWindowTitle;		// 事前にDTXVmodeの実体を作っておくこと
 
 			base.Window.StartPosition = FormStartPosition.Manual;                                                       // #30675 2013.02.04 ikanick add
-            base.Window.Location = new Point( ConfigIni.n初期ウィンドウ開始位置X, ConfigIni.n初期ウィンドウ開始位置Y );   // #30675 2013.02.04 ikanick add
+            base.Window.Location = new Point(ConfigIni.n初期ウィンドウ開始位置X, ConfigIni.n初期ウィンドウ開始位置Y);   // #30675 2013.02.04 ikanick add
 
 			base.Window.ClientSize = new Size(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);	// #34510 yyagi 2010.10.31 to change window size got from Config.ini
 #if !WindowedFullscreen
@@ -1919,9 +1893,9 @@ for (int i = 0; i < 3; i++) {
 #if !WindowedFullscreen
 			}
 #endif
-            base.Window.MaximizeBox = true;							// #23510 2010.11.04 yyagi: to support maximizing window
+			base.Window.MaximizeBox = true;							// #23510 2010.11.04 yyagi: to support maximizing window
 			base.Window.FormBorderStyle = FormBorderStyle.Sizable;	// #23510 2010.10.27 yyagi: changed from FixedDialog to Sizable, to support window resize
-																	// #30666 2013.02.02 yyagi: moved the code to t全画面・ウインドウモード切り替え()
+																		// #30666 2013.02.02 yyagi: moved the code to t全画面・ウインドウモード切り替え()
 			base.Window.ShowIcon = true;
 			base.Window.Icon = Properties.Resources.dtx;
 			base.Window.KeyDown += new KeyEventHandler( this.Window_KeyDown );
@@ -1998,6 +1972,7 @@ for (int i = 0; i < 3; i++) {
 			}
 			//---------------------
 			#endregion
+			//-----------
 			#region [ Timer の初期化 ]
 			//---------------------
 			Trace.TraceInformation( "タイマの初期化を行います。" );
@@ -2013,6 +1988,8 @@ for (int i = 0; i < 3; i++) {
 			}
 			//---------------------
 			#endregion
+			//-----------
+
 			#region [ FPS カウンタの初期化 ]
 			//---------------------
 			Trace.TraceInformation( "FPSカウンタの初期化を行います。" );
@@ -2057,7 +2034,8 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				Input管理 = new CInput管理( base.Window.Handle );
+				bool bUseMIDIIn = !DTXVmode.Enabled;
+				Input管理 = new CInput管理( base.Window.Handle, bUseMIDIIn );
 				foreach( IInputDevice device in Input管理.list入力デバイス )
 				{
 					if( ( device.e入力デバイス種別 == E入力デバイス種別.Joystick ) && !ConfigIni.dicJoystick.ContainsValue( device.GUID ) )
@@ -2121,50 +2099,53 @@ for (int i = 0; i < 3; i++) {
 			#endregion
 			#region [ Sound管理 の初期化 ]
 			//---------------------
-            Trace.TraceInformation("サウンドデバイスの初期化を行います。");
+			Trace.TraceInformation( "サウンドデバイスの初期化を行います。" );
 			Trace.Indent();
 			try
-            {
-                {
-                    ESoundDeviceType soundDeviceType;
-                    switch (CDTXMania.ConfigIni.nSoundDeviceType)
-                    {
-                        case 0:
-                            soundDeviceType = ESoundDeviceType.DirectSound;
-                            break;
-                        case 1:
-                            soundDeviceType = ESoundDeviceType.ASIO;
-                            break;
-                        case 2:
-                            soundDeviceType = ESoundDeviceType.ExclusiveWASAPI;
-                            break;
-                        default:
-                            soundDeviceType = ESoundDeviceType.Unknown;
-                            break;
-                    }
-                    Sound管理 = new CSound管理( base.Window.Handle,
-                                                soundDeviceType,
-                                                CDTXMania.ConfigIni.nWASAPIBufferSizeMs,
-                                                //CDTXMania.ConfigIni.nASIOBufferSizeMs,
-                                                0,
-                                                CDTXMania.ConfigIni.nASIODevice
-                    );
-                    ShowWindowTitleWithSoundType();
-                    FDK.CSound管理.bIsTimeStretch = CDTXMania.ConfigIni.bTimeStretch;
-                    Sound管理.nMasterVolume = CDTXMania.ConfigIni.nMasterVolume;
-                    //FDK.CSound管理.bIsMP3DecodeByWindowsCodec = CDTXMania.ConfigIni.bNoMP3Streaming;
-                    Trace.TraceInformation("サウンドデバイスの初期化を完了しました。");
-                }
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                throw;
-            }
-            finally
-            {
-                Trace.Unindent();
-            }
+			{
+				ESoundDeviceType soundDeviceType;
+				switch ( CDTXMania.ConfigIni.nSoundDeviceType )
+				{
+					case 0:
+						soundDeviceType = ESoundDeviceType.DirectSound;
+						break;
+					case 1:
+						soundDeviceType = ESoundDeviceType.ASIO;
+						break;
+					case 2:
+						soundDeviceType = ESoundDeviceType.ExclusiveWASAPI;
+						break;
+					default:
+						soundDeviceType = ESoundDeviceType.Unknown;
+						break;
+				}
+				Sound管理 = new CSound管理( base.Window.Handle,
+											soundDeviceType,
+					// CDTXMania.ConfigIni.nWASAPIBufferSizeMs,
+											0,
+					// CDTXMania.ConfigIni.nASIOBufferSizeMs,
+											0,
+											CDTXMania.ConfigIni.nASIODevice,
+											CDTXMania.ConfigIni.bUseOSTimer
+				);
+				//Sound管理 = FDK.CSound管理.Instance;
+				//Sound管理.t初期化( soundDeviceType, 0, 0, CDTXMania.ConfigIni.nASIODevice, base.Window.Handle );
+	
+				ShowWindowTitleWithSoundType();
+				FDK.CSound管理.bIsTimeStretch = CDTXMania.ConfigIni.bTimeStretch;
+				Sound管理.nMasterVolume = CDTXMania.ConfigIni.nMasterVolume;
+				//FDK.CSound管理.bIsMP3DecodeByWindowsCodec = CDTXMania.ConfigIni.bNoMP3Streaming;
+				Trace.TraceInformation( "サウンドデバイスの初期化を完了しました。" );
+			}
+			catch (Exception e)
+			{
+				Trace.TraceError( e.Message );
+				throw;
+			}
+			finally
+			{
+				Trace.Unindent();
+			}
 			//---------------------
 			#endregion
 			#region [ Songs管理 の初期化 ]
@@ -2206,7 +2187,7 @@ for (int i = 0; i < 3; i++) {
 			r直前のステージ = null;
 			stage起動 = new CStage起動();
 			stageタイトル = new CStageタイトル();
-			stageオプション = new CStageオプション();
+//			stageオプション = new CStageオプション();
 			stageコンフィグ = new CStageコンフィグ();
 			stage選曲 = new CStage選曲();
 			stage曲読み込み = new CStage曲読み込み();
@@ -2220,7 +2201,7 @@ for (int i = 0; i < 3; i++) {
 			this.listトップレベルActivities.Add( act文字コンソール );
 			this.listトップレベルActivities.Add( stage起動 );
 			this.listトップレベルActivities.Add( stageタイトル );
-			this.listトップレベルActivities.Add( stageオプション );
+//			this.listトップレベルActivities.Add( stageオプション );
 			this.listトップレベルActivities.Add( stageコンフィグ );
 			this.listトップレベルActivities.Add( stage選曲 );
 			this.listトップレベルActivities.Add( stage曲読み込み );
@@ -2229,7 +2210,7 @@ for (int i = 0; i < 3; i++) {
 			this.listトップレベルActivities.Add( stage結果 );
 			this.listトップレベルActivities.Add( stageChangeSkin );
 			this.listトップレベルActivities.Add( stage終了 );
-            this.listトップレベルActivities.Add( actFlushGPU);
+			this.listトップレベルActivities.Add( actFlushGPU );
 			//---------------------
 			#endregion
 			#region [ プラグインの検索と生成 ]
@@ -2281,35 +2262,35 @@ for (int i = 0; i < 3; i++) {
 			//---------------------
 			#endregion
 
-
 			Trace.TraceInformation( "アプリケーションの初期化を完了しました。" );
+			
+			#region [ 最初のステージの起動 ]
+			//---------------------
+			Trace.TraceInformation( "----------------------" );
+			Trace.TraceInformation( "■ 起動" );
 
-            #region [ 最初のステージの起動 ]
-            //---------------------
-            Trace.TraceInformation("----------------------");
-            Trace.TraceInformation("■ 起動");
-
-            if (CDTXMania.bコンパクトモード)
-            {
-                r現在のステージ = stage曲読み込み;
-            }
-            else
-            {
-                r現在のステージ = stage起動;
-            }
-            r現在のステージ.On活性化();
-            //---------------------
-            #endregion
+			if ( CDTXMania.bコンパクトモード )
+			{
+				r現在のステージ = stage曲読み込み;
+			}
+			else
+			{
+				r現在のステージ = stage起動;
+			}
+			r現在のステージ.On活性化();
+			//---------------------
+			#endregion
 		}
-        public void ShowWindowTitleWithSoundType()
-        {
-            string delay = "";
-            if (Sound管理.GetCurrentSoundDeviceType() != "DirectSound")
-            {
-                delay = "(" + Sound管理.GetSoundDelay() + "ms)";
-            }
-            base.Window.Text = strWindowTitle + " (" + Sound管理.GetCurrentSoundDeviceType() + delay + ")";
-        }
+
+		public void ShowWindowTitleWithSoundType()
+		{
+			string delay = "";
+			if ( Sound管理.GetCurrentSoundDeviceType() != "DirectSound" )
+			{
+				delay = "(" + Sound管理.GetSoundDelay() + "ms)";
+			}
+			base.Window.Text = strWindowTitle + " (" + Sound管理.GetCurrentSoundDeviceType() + delay + ")";
+		}
 
 		private void t終了処理()
 		{
@@ -2546,9 +2527,6 @@ for (int i = 0; i < 3; i++) {
 				}
 				//---------------------
 				#endregion
-
-//				ct.Dispose();
-
 				#region [ タイマの終了処理 ]
 				//---------------------
 				Trace.TraceInformation("タイマの終了処理を行います。");
@@ -2559,7 +2537,6 @@ for (int i = 0; i < 3; i++) {
 					{
 						Timer.Dispose();
 						Timer = null;
-
 						Trace.TraceInformation( "タイマの終了処理を完了しました。" );
 					}
 					else
@@ -2587,8 +2564,8 @@ for (int i = 0; i < 3; i++) {
 				{
 					if ( DTXVmode.Enabled )
 					{
-                        DTXVmode.tUpdateConfigIni();
-                        Trace.TraceInformation( "DTXVモードの設定情報を、Config.iniに保存しました。" );
+						DTXVmode.tUpdateConfigIni();
+						Trace.TraceInformation( "DTXVモードの設定情報を、Config.iniに保存しました。" );
 					}
 					else
 					{
@@ -2629,13 +2606,12 @@ for (int i = 0; i < 3; i++) {
 				}
 				//---------------------
 				#endregion
-				Trace.TraceInformation("アプリケーションの終了処理を完了しました。");
+				Trace.TraceInformation( "アプリケーションの終了処理を完了しました。" );
 
 
 				this.b終了処理完了済み = true;
 			}
 		}
-
 		private CScoreIni tScoreIniへBGMAdjustとHistoryとPlayCountを更新(string str新ヒストリ行)
 		{
 			bool bIsUpdatedDrums, bIsUpdatedGuitar, bIsUpdatedBass;
@@ -2707,9 +2683,9 @@ for (int i = 0; i < 3; i++) {
 
 			if( this.listプラグイン.Count > 0 )
 				Trace.TraceInformation( this.listプラグイン.Count + " 個のプラグインを読み込みました。" );
-        }
-        #region [ Windowイベント処理 ]
-        private void t指定フォルダ内でのプラグイン検索と生成( string strプラグインフォルダパス, string strプラグイン型名 )
+		}
+		#region [ Windowイベント処理 ]
+		private void t指定フォルダ内でのプラグイン検索と生成( string strプラグインフォルダパス, string strプラグイン型名 )
 		{
 			// 指定されたパスが存在しないとエラー
 			if( !Directory.Exists( strプラグインフォルダパス ) )
@@ -2759,91 +2735,91 @@ for (int i = 0; i < 3; i++) {
 				this.t指定フォルダ内でのプラグイン検索と生成( dir + "\\", strプラグイン型名 );
 		}
 		//-----------------
-        private void Window_ApplicationActivated(object sender, EventArgs e)
-        {
-            this.bApplicationActive = true;
-        }
-        private void Window_ApplicationDeactivated(object sender, EventArgs e)
-        {
-            this.bApplicationActive = false;
-        }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Menu)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
-            else if ((e.KeyCode == Keys.Return) && e.Alt)
-            {
-                if (ConfigIni != null)
-                {
-                    ConfigIni.bウィンドウモード = !ConfigIni.bウィンドウモード;
-                    this.t全画面・ウィンドウモード切り替え();
-                }
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
-            else
-            {
-                for (int i = 0; i < 0x10; i++)
-                {
-                    if (ConfigIni.KeyAssign.System.Capture[i].コード > 0 &&
-                         e.KeyCode == DeviceConstantConverter.KeyToKeyCode((SlimDX.DirectInput.Key)ConfigIni.KeyAssign.System.Capture[i].コード))
-                    {
-                        // Debug.WriteLine( "capture: " + string.Format( "{0:2x}", (int) e.KeyCode ) + " " + (int) e.KeyCode );
-                        string strFullPath =
-                           Path.Combine(CDTXMania.strEXEのあるフォルダ, "Capture_img");
-                        strFullPath = Path.Combine(strFullPath, DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");
-                        SaveResultScreen(strFullPath);
-                    }
-                }
-            }
-        }
-        private void Window_MouseUp(object sender, MouseEventArgs e)
-        {
-            mb = e.Button;
-        }
+		private void Window_ApplicationActivated( object sender, EventArgs e )
+		{
+			this.bApplicationActive = true;
+		}
+		private void Window_ApplicationDeactivated( object sender, EventArgs e )
+		{
+			this.bApplicationActive = false;
+		}
+		private void Window_KeyDown( object sender, KeyEventArgs e )
+		{
+			if ( e.KeyCode == Keys.Menu )
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+			else if ( ( e.KeyCode == Keys.Return ) && e.Alt )
+			{
+				if ( ConfigIni != null )
+				{
+					ConfigIni.bウィンドウモード = !ConfigIni.bウィンドウモード;
+					this.t全画面・ウィンドウモード切り替え();
+				}
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+			else
+			{
+				for ( int i = 0; i < 0x10; i++ )
+				{
+					if ( ConfigIni.KeyAssign.System.Capture[ i ].コード > 0 &&
+						 e.KeyCode == DeviceConstantConverter.KeyToKeyCode( (SlimDX.DirectInput.Key) ConfigIni.KeyAssign.System.Capture[ i ].コード ) )
+					{
+						// Debug.WriteLine( "capture: " + string.Format( "{0:2x}", (int) e.KeyCode ) + " " + (int) e.KeyCode );
+						string strFullPath =
+						   Path.Combine( CDTXMania.strEXEのあるフォルダ, "Capture_img" );
+						strFullPath = Path.Combine( strFullPath, DateTime.Now.ToString( "yyyyMMddHHmmss" ) + ".png" );
+						SaveResultScreen( strFullPath );
+					}
+				}
+			}
+		}
+		private void Window_MouseUp( object sender, MouseEventArgs e )
+		{
+			mb = e.Button;
+		}
 
-        private void Window_MouseDoubleClick(object sender, MouseEventArgs e)	// #23510 2010.11.13 yyagi: to go full screen mode
-        {
-            if (mb.Equals(MouseButtons.Left) && ConfigIni.bIsAllowedDoubleClickFullscreen)	// #26752 2011.11.27 yyagi
-            {
-                ConfigIni.bウィンドウモード = false;
-                this.t全画面・ウィンドウモード切り替え();
-            }
-        }
-        private void Window_ResizeEnd(object sender, EventArgs e)				// #23510 2010.11.20 yyagi: to get resized window size
-        {
-            if (ConfigIni.bウィンドウモード)
-            {
-                ConfigIni.n初期ウィンドウ開始位置X = base.Window.Location.X;	// #30675 2013.02.04 ikanick add
-                ConfigIni.n初期ウィンドウ開始位置Y = base.Window.Location.Y;	//
-            }
+		private void Window_MouseDoubleClick( object sender, MouseEventArgs e)	// #23510 2010.11.13 yyagi: to go full screen mode
+		{
+			if ( mb.Equals(MouseButtons.Left) && ConfigIni.bIsAllowedDoubleClickFullscreen )	// #26752 2011.11.27 yyagi
+			{
+				ConfigIni.bウィンドウモード = false;
+				this.t全画面・ウィンドウモード切り替え();
+			}
+		}
+		private void Window_ResizeEnd(object sender, EventArgs e)				// #23510 2010.11.20 yyagi: to get resized window size
+		{
+			if ( ConfigIni.bウィンドウモード )
+			{
+				ConfigIni.n初期ウィンドウ開始位置X = base.Window.Location.X;	// #30675 2013.02.04 ikanick add
+				ConfigIni.n初期ウィンドウ開始位置Y = base.Window.Location.Y;	//
+			}
 
-            ConfigIni.nウインドウwidth = (ConfigIni.bウィンドウモード) ? base.Window.ClientSize.Width : currentClientSize.Width;	// #23510 2010.10.31 yyagi add
-            ConfigIni.nウインドウheight = (ConfigIni.bウィンドウモード) ? base.Window.ClientSize.Height : currentClientSize.Height;
-        }
-        #endregion
+			ConfigIni.nウインドウwidth = (ConfigIni.bウィンドウモード) ? base.Window.ClientSize.Width : currentClientSize.Width;	// #23510 2010.10.31 yyagi add
+			ConfigIni.nウインドウheight = (ConfigIni.bウィンドウモード) ? base.Window.ClientSize.Height : currentClientSize.Height;
+		}
+		#endregion
 
-        //internal sealed class GCBeep	// GC発生の度にbeep
-        //{
-        //    ~GCBeep()
-        //    {
-        //        Console.Beep();
-        //        if ( !AppDomain.CurrentDomain.IsFinalizingForUnload()
-        //            && !Environment.HasShutdownStarted )
-        //        {
-        //            new GCBeep();
-        //        }
-        //    }
-        //}
+		//internal sealed class GCBeep	// GC発生の度にbeep
+		//{
+		//    ~GCBeep()
+		//    {
+		//        Console.Beep();
+		//        if ( !AppDomain.CurrentDomain.IsFinalizingForUnload()
+		//            && !Environment.HasShutdownStarted )
+		//        {
+		//            new GCBeep();
+		//        }
+		//    }
+		//}
+	
+		//-----------------
 
-        //-----------------
+		//Stopwatch sw = new Stopwatch();
+		//List<int> swlist1, swlist2, swlist3, swlist4, swlist5;
 
-        Stopwatch sw = new Stopwatch();
-        List<double> swlist;
-
-        #endregion
-    }
+		#endregion
+	}
 }

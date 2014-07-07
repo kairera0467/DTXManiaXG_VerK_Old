@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ namespace SlimDX
 		value class OverhangMetrics;
 		value class TextMetrics;
 		ref class InlineObject;
-		interface struct ITextRenderer;
+		ref class TextRenderer;
 		interface struct IClientDrawingEffect;
 
 		public ref class TextLayout : public TextFormat
@@ -54,7 +54,7 @@ namespace SlimDX
 			TextLayout( Factory^ factory, String^ text, TextFormat^ format, float maxWidth, float maxHeight );
 
 			float DetermineMinWidth();
-			Result Draw(IntPtr clientDrawingContext, ITextRenderer ^renderer, float originX, float originY);
+			Result Draw(IntPtr clientDrawingContext, TextRenderer ^renderer, float originX, float originY);
 			HitTestMetrics HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside );
 			HitTestMetrics HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY );
 			array< HitTestMetrics >^ HitTestTextRange( int textPosition, int textLength, float originX, float originY );

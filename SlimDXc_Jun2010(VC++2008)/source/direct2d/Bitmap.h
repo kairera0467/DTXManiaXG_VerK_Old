@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,6 @@ namespace SlimDX
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch, BitmapProperties properties );
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size );
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch );
-			Bitmap( RenderTarget^ renderTarget, SlimDX::DXGI::Surface^ surface);
-			Bitmap( RenderTarget^ renderTarget, SlimDX::DXGI::Surface^ surface, BitmapProperties properties);
 
 			Result FromBitmap( Bitmap^ sourceBitmap );
 			Result FromBitmap( Bitmap^ sourceBitmap, System::Drawing::Point destinationPoint );

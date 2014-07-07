@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -90,9 +90,6 @@ namespace SlimDX
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="offset" /> or <paramref name="count" /> is negative.</exception>
 		/// <exception cref="ArgumentException">The sum of <paramref name="offset" /> and <paramref name="count" /> is greater than the buffer length.</exception>
 		static void CheckArrayBounds( System::Array^ data, int offset, int% count );
-		
-		generic<typename T>
-        static int GetElementHashCode( array<T>^ a );
 		
 		generic<typename T>
 		static bool CheckElementEquality( array<T>^ left, array<T>^ right );

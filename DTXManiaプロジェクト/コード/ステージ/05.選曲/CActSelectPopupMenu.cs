@@ -114,12 +114,6 @@ namespace DTXMania
 		public virtual void tCancel()
 		{
 		}
-        /// <summary>
-        /// BD二回入力時の追加処理があれば、継承先で記述する。
-        /// </summary>
-        public virtual void tBDContinuity()
-        {
-        }
 		/// <summary>
 		/// 追加の描画処理。必要に応じて、継承先で記述する。
 		/// </summary>
@@ -182,7 +176,6 @@ namespace DTXMania
 			base.list子Activities.Add( this.font );
 			nItemSelecting = -1;
 
-            this.CommandHistory = new DTXMania.CStage選曲.CCommandHistory();
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -238,14 +231,11 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない && this.bIsActivePopupMenu )
 			{
-                n本体X = 500;
-                n本体Y = 150;
-
-
 				if ( this.bキー入力待ち )
 				{
-					#region [ CONFIG画面 ]
-					if ( CDTXMania.Pad.b押された( E楽器パート.GUITAR, Eパッド.Help ) )
+					#region [ Shift-F1: CONFIG画面 ]
+					if ( ( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightShift ) || CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftShift ) ) &&
+						CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F1 ) )
 					{	// [SHIFT] + [F1] CONFIG
 						CDTXMania.Skin.sound取消音.t再生する();
 						tCancel();
@@ -254,53 +244,14 @@ namespace DTXMania
 					#endregion
 					#region [ キー入力: キャンセル ]
 					else if ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape )
-						|| CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC )
-						|| CDTXMania.Pad.b押されたGB( Eパッド.Pick ) )
+						|| CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT )
+						|| CDTXMania.Pad.b押されたGB( Eパッド.Cancel ) )
 					{	// キャンセル
 						CDTXMania.Skin.sound取消音.t再生する();
 						tCancel();
 						this.bIsActivePopupMenu = false;
 					}
 					#endregion
-                    #region [ BD二回: キャンセル ]
-                    else if ( CDTXMania.Pad.b押された(E楽器パート.DRUMS, Eパッド.BD ) )
-                    {	// キャンセル
-                        this.CommandHistory.Add( E楽器パート.DRUMS, EパッドFlag.BD );
-                        EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.BD, EパッドFlag.BD };
-                        if ( this.CommandHistory.CheckCommand( comChangeScrollSpeed , E楽器パート.DRUMS) )
-                        {
-                            CDTXMania.Skin.sound変更音.t再生する();
-                            tBDContinuity();
-                            this.bIsActivePopupMenu = false;
-                        }
-                    }
-                    #endregion
-                    #region [ Px2 Guitar: 簡易CONFIG ]
-                    if (CDTXMania.Pad.b押された(E楽器パート.GUITAR, Eパッド.P))
-                    {	// [BD]x2 スクロール速度変更
-                        CommandHistory.Add(E楽器パート.GUITAR, EパッドFlag.P);
-                        EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.P, EパッドFlag.P };
-                        if (CommandHistory.CheckCommand(comChangeScrollSpeed, E楽器パート.GUITAR))
-                        {
-                            CDTXMania.Skin.sound変更音.t再生する();
-                            tBDContinuity();
-                            this.bIsActivePopupMenu = false;
-                        }
-                    }
-                    #endregion
-                    #region [ Px2 Bass: 簡易CONFIG ]
-                    if (CDTXMania.Pad.b押された(E楽器パート.BASS, Eパッド.P))
-                    {	// [BD]x2 スクロール速度変更
-                        CommandHistory.Add(E楽器パート.BASS, EパッドFlag.P);
-                        EパッドFlag[] comChangeScrollSpeed = new EパッドFlag[] { EパッドFlag.P, EパッドFlag.P };
-                        if (CommandHistory.CheckCommand(comChangeScrollSpeed, E楽器パート.BASS))
-                        {
-                            CDTXMania.Skin.sound変更音.t再生する();
-                            tBDContinuity();
-                            this.bIsActivePopupMenu = false;
-                        }
-                    }
-                    #endregion
 
 					#region [ キー入力: 決定 ]
 					// E楽器パート eInst = E楽器パート.UNKNOWN;
@@ -318,6 +269,7 @@ namespace DTXMania
 					else if (
 						CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.Decide )	// #24756 2011.4.1 yyagi: Add condition "Drum-Decide" to enable CY in Sort Menu.
 						|| CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD )
+						|| CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC )
 						|| ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) )
 					{
 						eInst = E楽器パート.DRUMS;
@@ -338,8 +290,8 @@ namespace DTXMania
 					#endregion
 					#region [ キー入力: 次に移動 ]
 					this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.t次に移動 ) );
-					this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.G ), new CCounter.DGキー処理( this.t次に移動 ) );
-					if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
+					this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.B ), new CCounter.DGキー処理( this.t次に移動 ) );
+					if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LT ) )
 					{
 						this.t次に移動();
 					}
@@ -348,19 +300,19 @@ namespace DTXMania
 				#region [ ポップアップメニュー 背景描画 ]
 				if ( this.txPopupMenuBackground != null )
 				{
-					this.txPopupMenuBackground.t2D描画( CDTXMania.app.Device, n本体X, n本体Y );
+					this.txPopupMenuBackground.t2D描画( CDTXMania.app.Device, 160, 40 );
 				}
 				#endregion
 				#region [ ソートメニュータイトル描画 ]
-                int x = n本体X + 80, y = n本体Y + 4;
+				int x = 240, y = 44;
 				font.t文字列描画( x, y, strMenuTitle, false, 1.0f );
 				#endregion
 				#region [ カーソル描画 ]
 				if ( this.txCursor != null )
 				{
 					int height = 32;
-                    int curX = n本体X + 20;
-                    int curY = n本体Y + 6 + (height * (this.n現在の選択行 + 1));
+					int curX = 180;
+					int curY = 46 + ( height * ( this.n現在の選択行 + 1 ) );
 					this.txCursor.t2D描画( CDTXMania.app.Device, curX, curY, new Rectangle( 0, 0, 16, 32 ) );
 					curX += 0x10;
 					Rectangle rectangle = new Rectangle( 8, 0, 0x10, 0x20 );
@@ -376,7 +328,7 @@ namespace DTXMania
 				for ( int i = 0; i < lciMenuItems.Count; i++ )
 				{
 					bool bItemBold = ( i == nItemSelecting && !bShowAllItems ) ? true : false;
-					font.t文字列描画( n本体X + 30, n本体Y + 40 + i * 32, lciMenuItems[i].str項目名, bItemBold, 1.0f );
+					font.t文字列描画( 190, 80 + i * 32, lciMenuItems[i].str項目名, bItemBold, 1.0f );
 
 					bool bValueBold = (bItemBold || (i == nItemSelecting && bIsSelectingIntItem)) ? true : false;
 					if ( bItemBold || bShowAllItems )
@@ -401,7 +353,7 @@ namespace DTXMania
 								s = lciMenuItems[ i ].obj現在値().ToString();
 								break;
 						}
-						font.t文字列描画( n本体X + 180, n本体Y + 40 + i * 32, s, bValueBold, 1.0f );
+						font.t文字列描画( 340, 80 + i * 32, s, bValueBold, 1.0f );
 					}
 				}
 				#endregion
@@ -425,14 +377,10 @@ namespace DTXMania
 		private CTexture txCursor;
 		private CActDFPFont font;
 
-        private int n本体X;
-        private int n本体Y;
-
 		private string strMenuTitle;
 		private List<CItemBase> lciMenuItems;
 		private bool bShowAllItems;
 		private bool bIsSelectingIntItem;
-        public DTXMania.CStage選曲.CCommandHistory CommandHistory;
 
 		[StructLayout( LayoutKind.Sequential )]
 		private struct STキー反復用カウンタ

@@ -62,8 +62,19 @@ namespace DTXMania
 						{
 							int d = this.ct透明度用.n現在の値;
 							this.txDANGER.n透明度 = n透明度MIN + ( ( d < n波長 / 2 ) ? ( n透明度MAX - n透明度MIN ) * d / ( n波長 / 2 ) : ( n透明度MAX - n透明度MIN ) * ( n波長 - d ) / ( n波長 / 2 ) );		// 60-200
+							//		}
+							//num = this.ct移動用.n現在の値;
+							//int num2 = CDTXMania.ConfigIni.bReverse.Drums ? ( 0x7f - num ) : num;
+							//				for ( int i = -1; i < 4; i++ )
+							//				{
+							//		if ( this.txDANGER != null )
+							//		{
 							this.txDANGER.t2D描画( CDTXMania.app.Device, nGaugeX[ nPart ], 0 );
+							//this.txDANGER.t2D描画( CDTXMania.app.Device, 0x26, ( ( i * 0x80 ) + num2 ) + 0x40, this.rc領域[ 1 ] );
+							//this.txDANGER.t2D描画( CDTXMania.app.Device, 0x12a, ( i * 0x80 ) + num2, this.rc領域[ 0 ] );
+							//this.txDANGER.t2D描画( CDTXMania.app.Device, 0x12a, ( ( i * 0x80 ) + num2 ) + 0x40, this.rc領域[ 1 ] );
 						}
+						//				}
 					}
 				}
 			}

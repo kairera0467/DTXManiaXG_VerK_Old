@@ -28,7 +28,7 @@ namespace DTXMania
 				{
 					return this._file;
 				}
-                set // ここには来ない( Label[xx] にsetすると、結局Labelのgetが呼ばれるだけで、Labelのsetは呼ばれない)
+				set						// ここには来ない( Label[xx] にsetすると、結局Labelのgetが呼ばれるだけで、Labelのsetは呼ばれない)
 				{
 					this._file = value;
 					this.b使用中 = true;
@@ -76,7 +76,7 @@ namespace DTXMania
 				{
 					return this._label;
 				}
-                set // ここには来ない( Label[xx] にsetすると、結局Labelのgetが呼ばれるだけで、Labelのsetは呼ばれない)
+				set						// ここには来ない( Label[xx] にsetすると、結局Labelのgetが呼ばれるだけで、Labelのsetは呼ばれない)
 				{
 					this._label = value;
 					this.b使用中 = true;
@@ -128,7 +128,7 @@ namespace DTXMania
 
 		public void t読み込み( string setdefファイル名 )
 		{
-			var reader = new StreamReader( setdefファイル名, Encoding.GetEncoding( "shift-jis" ) );
+			var reader = new StreamReader( setdefファイル名, Encoding.GetEncoding( "Shift_JIS" ) );
 			CBlock block = new CBlock();
 			string str = null;
 			while( ( str = reader.ReadLine() ) != null )
@@ -234,7 +234,7 @@ namespace DTXMania
 		//-----------------
 		private void tFILEの指定があるのにLxLABELが省略されているときはデフォルトの名前をセットする( CBlock block )
 		{
-			string[] strArray = new string[] { "NOVICE", "REGULAR", "EXPERT", "MASTER", "DTXMania" };
+			string[] strArray = new string[] { "BASIC", "ADVANCED", "EXTREME", "HYPER", "ULTIMATE" };
 			for( int i = 0; i < 5; i++ )
 			{
 				if( ( ( block.File[ i ] != null ) && ( block.File[ i ].Length > 0 ) ) && string.IsNullOrEmpty( block.Label[ i ] ) )

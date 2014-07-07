@@ -23,14 +23,14 @@ namespace DTXMania
 			{
 				try
 				{
-					Bitmap image = new Bitmap( 800, 0xc3 );
+					Bitmap image = new Bitmap( 400, 130 );
 					Graphics graphics = Graphics.FromImage( image );
 					graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 					for ( int i = 0; i < 5; i++ )
 					{
 						if( ( cスコア.譜面情報.演奏履歴[ i ] != null ) && ( cスコア.譜面情報.演奏履歴[ i ].Length > 0 ) )
 						{
-							graphics.DrawString( cスコア.譜面情報.演奏履歴[ i ], this.ft表示用フォント, Brushes.Yellow, (float) 0f, (float) ( i * 36f ) );
+							graphics.DrawString( cスコア.譜面情報.演奏履歴[ i ], this.ft表示用フォント, Brushes.Yellow, (float) 0f, (float) ( i * 24f ) );
 						}
 					}
 					graphics.Dispose();
@@ -55,9 +55,9 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.n本体X = 810;
-			this.n本体Y = 0x22e;
-			this.ft表示用フォント = new Font( "メイリオ", 26f, FontStyle.Bold, GraphicsUnit.Pixel );
+			this.n本体X = 0x195;
+			this.n本体Y = 0x174;
+			this.ft表示用フォント = new Font( "Arial", 26f, FontStyle.Bold, GraphicsUnit.Pixel );
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -74,7 +74,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_play history panel.png" ), true );
+				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect play history panel.png" ), true );
 				this.t選択曲が変更された();
 				base.OnManagedリソースの作成();
 			}
@@ -100,15 +100,15 @@ namespace DTXMania
 				this.ct登場アニメ用.t進行();
 				if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 == null ) )
 				{
-					this.n本体X = 662;
-					this.n本体Y = 0x214;
+					this.n本体X = 0x195;
+					this.n本体Y = 0x174;
 				}
 				else
 				{
 					double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 					double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
-					this.n本体X = 662;
-					this.n本体Y = 0x214 + ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
+					this.n本体X = 0x195;
+					this.n本体Y = 0x174 + ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 				}
 				if( this.txパネル本体 != null )
 				{
@@ -116,7 +116,7 @@ namespace DTXMania
 				}
 				if( this.tx文字列パネル != null )
 				{
-					this.tx文字列パネル.t2D描画( CDTXMania.app.Device, this.n本体X + 0x20, this.n本体Y + 0x18 );
+					this.tx文字列パネル.t2D描画( CDTXMania.app.Device, this.n本体X + 12, this.n本体Y + 0x13 );
 				}
 			}
 			return 0;

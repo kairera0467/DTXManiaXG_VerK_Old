@@ -130,7 +130,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txBGAバックパネル = new CTexture(CDTXMania.app.Device, 278, 355, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
 				using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
 				{
 					this.sfBackBuffer = Surface.CreateOffscreenPlain( CDTXMania.app.Device, surface.Description.Width, surface.Description.Height, surface.Description.Format, Pool.SystemMemory );
@@ -142,7 +141,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.tテクスチャの解放( ref this.txBGAバックパネル );
 				if( this.sfBackBuffer != null )
 				{
 					this.sfBackBuffer.Dispose();
@@ -159,7 +157,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txBGAバックパネル.t2D描画(CDTXMania.app.Device, 980, 0);
 				for( int i = 0; i < 8; i++ )
 				{
 					if( ( ( this.stLayer[ i ].n移動開始時刻ms != -1 ) && ( ( this.stLayer[ i ].rBMP != null ) || ( this.stLayer[ i ].rBMPTEX != null ) ) ) && ( ( ( this.stLayer[ i ].rBMP == null ) || ( this.stLayer[ i ].rBMP.bUse && ( this.stLayer[ i ].rBMP.tx画像 != null ) ) ) && ( ( this.stLayer[ i ].rBMPTEX == null ) || ( this.stLayer[ i ].rBMPTEX.bUse && ( this.stLayer[ i ].rBMPTEX.tx画像 != null ) ) ) ) )
@@ -300,7 +297,6 @@ namespace DTXMania
 			public long n移動開始時刻ms;
 		}
 
-        private CTexture txBGAバックパネル;
 		private readonly int[] nChannel = new int[] { 4, 7, 0x55, 0x56, 0x57, 0x58, 0x59, 0x60 };
 		private Surface sfBackBuffer;
 		private STLAYER[] stLayer = new STLAYER[ 8 ];

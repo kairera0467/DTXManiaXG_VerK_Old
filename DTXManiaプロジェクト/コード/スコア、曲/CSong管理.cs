@@ -708,18 +708,9 @@ namespace DTXMania
 													|| scoreIni.stセクション[ nSectionHiSkill ].b演奏にジョイパッドを使用した
 													|| scoreIni.stセクション[ nSectionHiSkill ].b演奏にマウスを使用した )
 												{
-                                                    if (CDTXMania.ConfigIni.nSkillMode == 0)
-                                                    {
-                                                        node.arスコア[lv].譜面情報.最大ランク[i] =
-                                                            (scoreIni.stファイル.BestRank[i] != (int)CScoreIni.ERANK.UNKNOWN) ?
-                                                            (int)scoreIni.stファイル.BestRank[i] : CScoreIni.t旧ランク値を計算して返す(scoreIni.stセクション[nSectionHiSkill]);
-                                                    }
-                                                    else
-                                                    {
-                                                        node.arスコア[lv].譜面情報.最大ランク[i] =
-                                                            (scoreIni.stファイル.BestRank[i] != (int)CScoreIni.ERANK.UNKNOWN) ?
-                                                            (int)scoreIni.stファイル.BestRank[i] : CScoreIni.tランク値を計算して返す(scoreIni.stセクション[nSectionHiSkill]);
-                                                    }
+													node.arスコア[ lv ].譜面情報.最大ランク[ i ] = 
+														(scoreIni.stファイル.BestRank[i] != (int)CScoreIni.ERANK.UNKNOWN)?
+														(int)scoreIni.stファイル.BestRank[i] : CScoreIni.tランク値を計算して返す( scoreIni.stセクション[ nSectionHiSkill ] );
 												}
 												else
 												{
@@ -790,16 +781,9 @@ namespace DTXMania
 			cスコア.譜面情報.演奏履歴.行4 = br.ReadString();
 			cスコア.譜面情報.演奏履歴.行5 = br.ReadString();
 			cスコア.譜面情報.レベルを非表示にする = br.ReadBoolean();
-            cスコア.譜面情報.b完全にCLASSIC譜面である.Drums = br.ReadBoolean();
-            cスコア.譜面情報.b完全にCLASSIC譜面である.Guitar = br.ReadBoolean();
-            cスコア.譜面情報.b完全にCLASSIC譜面である.Bass = br.ReadBoolean();
-            cスコア.譜面情報.b譜面がある.Drums = br.ReadBoolean();
-            cスコア.譜面情報.b譜面がある.Guitar = br.ReadBoolean();
-            cスコア.譜面情報.b譜面がある.Bass = br.ReadBoolean();
 			cスコア.譜面情報.曲種別 = (CDTX.E種別) br.ReadInt32();
 			cスコア.譜面情報.Bpm = br.ReadDouble();
 			cスコア.譜面情報.Duration = br.ReadInt32();
-
 
 //Debug.WriteLine( "songs.db: " + cスコア.ファイル情報.ファイルの絶対パス );
 			return cスコア;
@@ -837,8 +821,7 @@ namespace DTXMania
 							{
 								try
 								{
-									CDTX cdtx = new CDTX( c曲リストノード.arスコア[ i ].ファイル情報.ファイルの絶対パス, true );    //2013.06.04 kairera0467 ここの「ヘッダのみ読み込む」をfalseにすると、選曲画面のBPM表示が狂う場合があるので注意。
-                                    CDTX cdtx2 = new CDTX( c曲リストノード.arスコア[ i ].ファイル情報.ファイルの絶対パス, false );
+									CDTX cdtx = new CDTX( c曲リストノード.arスコア[ i ].ファイル情報.ファイルの絶対パス, true );
 									c曲リストノード.arスコア[ i ].譜面情報.タイトル = cdtx.TITLE;
 									c曲リストノード.arスコア[ i ].譜面情報.アーティスト名 = cdtx.ARTIST;
 									c曲リストノード.arスコア[ i ].譜面情報.コメント = cdtx.COMMENT;
@@ -850,12 +833,7 @@ namespace DTXMania
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Drums = cdtx.LEVEL.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Guitar = cdtx.LEVEL.Guitar;
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Bass = cdtx.LEVEL.Bass;
-                                    c曲リストノード.arスコア[ i ].譜面情報.レベルDec.Drums = cdtx.LEVELDEC.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベルを非表示にする = cdtx.HIDDENLEVEL;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums = (cdtx2.bチップがある.LeftCymbal == false && cdtx2.bチップがある.LP == false && cdtx2.bチップがある.LBD == false && cdtx2.bチップがある.FT == false && cdtx2.bチップがある.Ride == false) ? true : false;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Drums = cdtx2.bチップがある.Drums;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Guitar = cdtx2.bチップがある.Guitar;
-                                    c曲リストノード.arスコア[ i ].譜面情報.b譜面がある.Bass = cdtx2.bチップがある.Bass;
 									c曲リストノード.arスコア[ i ].譜面情報.曲種別 = cdtx.e種別;
 									c曲リストノード.arスコア[ i ].譜面情報.Bpm = cdtx.BPM;
 									c曲リストノード.arスコア[ i ].譜面情報.Duration = 0;	//  (cdtx.listChip == null)? 0 : cdtx.listChip[ cdtx.listChip.Count - 1 ].n発声時刻ms;
@@ -880,7 +858,6 @@ namespace DTXMania
 										sb.Append( ", lvGt=" + c曲リストノード.arスコア[ i ].譜面情報.レベル.Guitar );
 										sb.Append( ", lvBs=" + c曲リストノード.arスコア[ i ].譜面情報.レベル.Bass );
 										sb.Append( ", lvHide=" + c曲リストノード.arスコア[ i ].譜面情報.レベルを非表示にする );
-                                        sb.Append( ", classic=" + c曲リストノード.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である );
 										sb.Append( ", type=" + c曲リストノード.arスコア[ i ].譜面情報.曲種別 );
 										sb.Append( ", bpm=" + c曲リストノード.arスコア[ i ].譜面情報.Bpm );
 									//	sb.Append( ", duration=" + c曲リストノード.arスコア[ i ].譜面情報.Duration );
@@ -953,7 +930,7 @@ namespace DTXMania
 			{
 				C曲リストノード itemRandom = new C曲リストノード();
 				itemRandom.eノード種別 = C曲リストノード.Eノード種別.RANDOM;
-				itemRandom.strタイトル = "";
+				itemRandom.strタイトル = "< RANDOM SELECT >";
 				itemRandom.nスコア数 = 5;
 				itemRandom.r親ノード = ノードリスト[ 0 ].r親ノード;
 
@@ -963,9 +940,8 @@ namespace DTXMania
 				for( int i = 0; i < 5; i++ )
 				{
 					itemRandom.arスコア[ i ] = new Cスコア();
-                    itemRandom.arスコア[ i ].譜面情報.タイトル = itemRandom.strタイトル;
-                    itemRandom.arスコア[ i ].譜面情報.Preimage = CSkin.Path(@"Graphics\5_preimage random.png");
-                    itemRandom.arスコア[ i ].譜面情報.コメント =
+					itemRandom.arスコア[ i ].譜面情報.タイトル = string.Format( "< RANDOM SELECT Lv.{0} >", i + 1 );
+					itemRandom.arスコア[i].譜面情報.コメント =
 						 (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ?
 						 string.Format("難易度レベル {0} 付近の曲をランダムに選択します。難易度レベルを持たない曲も選択候補となります。", i + 1) :
 						 string.Format("Random select from the songs which has the level about L{0}. Non-leveled songs may also selected.", i + 1);
@@ -1007,7 +983,7 @@ namespace DTXMania
 				{
 					C曲リストノード itemBack = new C曲リストノード();
 					itemBack.eノード種別 = C曲リストノード.Eノード種別.BACKBOX;
-					itemBack.strタイトル = "";
+					itemBack.strタイトル = "<< BACK";
 					itemBack.nスコア数 = 1;
 					itemBack.r親ノード = c曲リストノード;
 
@@ -1025,7 +1001,6 @@ namespace DTXMania
 					itemBack.arスコア[ 0 ] = new Cスコア();
 					itemBack.arスコア[ 0 ].ファイル情報.フォルダの絶対パス = "";
 					itemBack.arスコア[ 0 ].譜面情報.タイトル = itemBack.strタイトル;
-                    itemBack.arスコア[ 0 ].譜面情報.Preimage = CSkin.Path(@"Graphics\5_preimage backbox.png");
 					itemBack.arスコア[ 0 ].譜面情報.コメント =
 						(CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja") ?
 						"BOX を出ます。" :
@@ -1133,9 +1108,6 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.レベル.Bass );
-                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Drums );
-                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Guitar );
-                    bw.Write( node.arスコア[ i ].譜面情報.レベルDec.Bass );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Drums );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Guitar );
 					bw.Write( node.arスコア[ i ].譜面情報.最大ランク.Bass );
@@ -1154,12 +1126,6 @@ namespace DTXMania
 					bw.Write( node.arスコア[ i ].譜面情報.演奏履歴.行4 );
 					bw.Write( node.arスコア[ i ].譜面情報.演奏履歴.行5 );
 					bw.Write( node.arスコア[ i ].譜面情報.レベルを非表示にする );
-                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Drums );
-                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Guitar );
-                    bw.Write( node.arスコア[ i ].譜面情報.b完全にCLASSIC譜面である.Bass );
-                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Drums );
-                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Guitar );
-                    bw.Write( node.arスコア[ i ].譜面情報.b譜面がある.Bass );
 					bw.Write( (int) node.arスコア[ i ].譜面情報.曲種別 );
 					bw.Write( node.arスコア[ i ].譜面情報.Bpm );
 					bw.Write( node.arスコア[ i ].譜面情報.Duration );
@@ -1572,8 +1538,7 @@ namespace DTXMania
 				}
 				string strAuthorN1 = "";
 				string strAuthorN2 = "";
-				if (n1.arスコア[ nL12345 ] != null )
-                {
+				if (n1.arスコア[ nL12345 ] != null ) {
 					strAuthorN1 = n1.arスコア[ nL12345 ].譜面情報.アーティスト名;
 				}
 				if ( n2.arスコア[ nL12345 ] != null )
@@ -1669,43 +1634,27 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 						ini.stセクション[ n ].b演奏にキーボードを使用した ||
 						ini.stセクション[ n ].b演奏にジョイパッドを使用した ||
 						ini.stセクション[ n ].b演奏にマウスを使用した )
-                    {
-                        // (A) 全オートじゃないようなので、演奏結果情報を有効としてランクを算出する。
-                        if ( CDTXMania.ConfigIni.nSkillMode == 0 )
-                        {
-                            score.譜面情報.最大ランク[ n楽器番号 ] =
-                            CScoreIni.t旧ランク値を計算して返す(
-                                ini.stセクション[n].n全チップ数,
-                                ini.stセクション[n].nPerfect数,
-                                ini.stセクション[n].nGreat数,
-                                ini.stセクション[n].nGood数,
-                                ini.stセクション[n].nPoor数,
-                                ini.stセクション[n].nMiss数
-                                );
-                        }
-                        else if( CDTXMania.ConfigIni.nSkillMode == 1 )
-                        {
-                            score.譜面情報.最大ランク[ n楽器番号 ] =
-                            CScoreIni.tランク値を計算して返す(
-                                ini.stセクション[ n ].n全チップ数,
-                                ini.stセクション[ n ].nPerfect数,
-                                ini.stセクション[ n ].nGreat数,
-                                ini.stセクション[ n ].nGood数,
-                                ini.stセクション[ n ].nPoor数,
-                                ini.stセクション[ n ].nMiss数,
-                                ini.stセクション[ n ].n最大コンボ数
-                                );
-                        }
-                    }
+					{
+						// (A) 全オートじゃないようなので、演奏結果情報を有効としてランクを算出する。
+
+						score.譜面情報.最大ランク[ n楽器番号 ] =
+							CScoreIni.tランク値を計算して返す( 
+								ini.stセクション[ n ].n全チップ数,
+								ini.stセクション[ n ].nPerfect数, 
+								ini.stセクション[ n ].nGreat数,
+								ini.stセクション[ n ].nGood数, 
+								ini.stセクション[ n ].nPoor数,
+								ini.stセクション[ n ].nMiss数 );
+					}
 					else
 					{
 						// (B) 全オートらしいので、ランクは無効とする。
+
 						score.譜面情報.最大ランク[ n楽器番号 ] = (int) CScoreIni.ERANK.UNKNOWN;
 					}
 					//-----------------
 					#endregion
 					score.譜面情報.最大スキル[ n楽器番号 ] = ini.stセクション[ n ].db演奏型スキル値;
-                    score.譜面情報.最大曲別スキル[ n楽器番号 ] = ini.stセクション[ n ].dbゲーム型スキル値;
 					score.譜面情報.フルコンボ[ n楽器番号 ] = ini.stセクション[ n ].bフルコンボである;
 				}
 				score.譜面情報.演奏回数.Drums = ini.stファイル.PlayCountDrums;
@@ -1727,7 +1676,7 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 
 		#region [ private ]
 		//-----------------
-		private const string SONGSDB_VERSION = "SongsDB3(ver.K)rev2";
+		private const string SONGSDB_VERSION = "SongsDB3";
 		private List<string> listStrBoxDefSkinSubfolderFullName;
 
 		private int t比較0_共通( C曲リストノード n1, C曲リストノード n2 )

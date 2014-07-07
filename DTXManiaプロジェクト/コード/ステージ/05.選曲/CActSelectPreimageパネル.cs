@@ -37,7 +37,7 @@ namespace DTXMania
 		public override void On活性化()
 		{
 			this.n本体X = 8;
-			this.n本体Y = 57;
+			this.n本体Y = 0x39;
 			this.r表示するプレビュー画像 = this.txプレビュー画像がないときの画像;
 			this.str現在のファイル名 = "";
 			this.b新しいプレビューファイルを読み込んだ = false;
@@ -58,13 +58,13 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage panel.png" ), false );
-				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
-				this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
+				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect preimage panel.png" ), false );
+				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect sensor.png" ), false );
+				this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect sensor light.png" ), false );
 				this.txプレビュー画像 = null;
-				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
+				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect preimage default.png" ), false );
 				this.sfAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
-				this.nAVI再生開始時刻 = -1L;
+				this.nAVI再生開始時刻 = -1;
 				this.n前回描画したフレーム番号 = -1;
 				this.b動画フレームを作成した = false;
 				this.pAVIBmp = IntPtr.Zero;
@@ -105,16 +105,16 @@ namespace DTXMania
 				if( ( !CDTXMania.stage選曲.bスクロール中 && ( this.ct遅延表示 != null ) ) && this.ct遅延表示.b進行中 )
 				{
 					this.ct遅延表示.t進行();
-					if( this.ct遅延表示.b終了値に達した )
-					{
-						this.ct遅延表示.t停止();
-					}
-					else if( ( this.ct遅延表示.n現在の値 >= 0 ) && this.b新しいプレビューファイルをまだ読み込んでいない )
+					if ( ( this.ct遅延表示.n現在の値 >= 0 ) && this.b新しいプレビューファイルをまだ読み込んでいない )
 					{
 						this.tプレビュー画像・動画の変更();
 						CDTXMania.Timer.t更新();
 						this.ct遅延表示.n現在の経過時間ms = CDTXMania.Timer.n現在時刻;
 						this.b新しいプレビューファイルを読み込んだ = true;
+					}
+					else if ( this.ct遅延表示.b終了値に達した && this.ct遅延表示.b進行中 )
+					{
+						this.ct遅延表示.t停止();
 					}
 				}
 				else if( ( ( this.avi != null ) && ( this.sfAVI画像 != null ) ) && ( this.nAVI再生開始時刻 != -1 ) )
@@ -156,9 +156,9 @@ namespace DTXMania
 		private int n本体X;
 		private int n本体Y;
 		private IntPtr pAVIBmp;
-		private readonly Rectangle rcセンサ光 = new Rectangle( 0, 0x120, 0x80, 0x60 );
-		private readonly Rectangle rcセンサ本体下半分 = new Rectangle( 0x80, 0, 0x80, 0xc0 );
-		private readonly Rectangle rcセンサ本体上半分 = new Rectangle( 0, 0, 0x80, 0xc0 );
+		private readonly Rectangle rcセンサ光 = new Rectangle( 0, 0xc0, 0x40, 0x40 );
+		private readonly Rectangle rcセンサ本体下半分 = new Rectangle( 0x40, 0, 0x40, 0x80 );
+		private readonly Rectangle rcセンサ本体上半分 = new Rectangle( 0, 0, 0x40, 0x80 );
 		private CTexture r表示するプレビュー画像;
 		private Surface sfAVI画像;
 		private string str現在のファイル名;
@@ -344,7 +344,7 @@ namespace DTXMania
 					graphics.Dispose();
 					bitmap3 = new Bitmap( 0xcc, 0x10d );
 					graphics = Graphics.FromImage( bitmap3 );
-					graphics.DrawImage( bitmap2, 5, 5, new Rectangle( 0x157, 0x6d, 204, 269 ), GraphicsUnit.Pixel );
+					graphics.DrawImage( bitmap2, 5, 5, new Rectangle( 0x157, 0x6d, 0xcc, 0x10d ), GraphicsUnit.Pixel );
 					graphics.Dispose();
 					this.txプレビュー画像 = new CTexture( CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat );
 					this.r表示するプレビュー画像 = this.txプレビュー画像;
@@ -389,6 +389,7 @@ namespace DTXMania
 							{
 								str = cスコア.譜面情報.ジャンル;
 							}
+#if false	// #32644 2013.12.21 yyagi "Unknown"なジャンル表示を削除。DTX/BMSなどの種別表示もしない。
 							else
 							{
 								switch( cスコア.譜面情報.曲種別 )
@@ -415,6 +416,7 @@ namespace DTXMania
 								}
 								str = "Unknown";
 							}
+#endif
 							break;
 						}
 						str = c曲リストノード.strジャンル;
@@ -448,13 +450,13 @@ namespace DTXMania
 			int num = this.ctセンサ光.n現在の値;
 			if( num < 12 )
 			{
-				int x = this.n本体X + 0x198;
-				int y = this.n本体Y + 0xb9;
+				int x = this.n本体X + 0xcc;
+				int y = this.n本体Y + 0x7b;
 				if( this.txセンサ光 != null )
 				{
 					this.txセンサ光.vc拡大縮小倍率 = new Vector3( 1f, 1f, 1f );
 					this.txセンサ光.n透明度 = 0xff;
-					this.txセンサ光.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( ( num % 4 ) * 0x80, ( num / 4 ) * 0x60, 0x80, 0x60 ) );
+					this.txセンサ光.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( ( num % 4 ) * 0x40, ( num / 4 ) * 0x40, 0x40, 0x40 ) );
 				}
 			}
 			else if( num < 0x18 )
@@ -462,10 +464,10 @@ namespace DTXMania
 				int num4 = num - 11;
 				double num5 = ( (double) num4 ) / 11.0;
 				double num6 = 1.0 + ( num5 * 0.5 );
-				int num7 = (int) ( 128.0 * num6 );
-				int num8 = (int) ( 96.0 * num6 );
-				int num9 = ( ( this.n本体X + 0x198 ) + 0x40 ) - ( num7 / 2 );
-				int num10 = ( ( this.n本体Y + 0xb9 ) + 0x30 ) - ( num8 / 2 );
+				int num7 = (int) ( 64.0 * num6 );
+				int num8 = (int) ( 64.0 * num6 );
+				int num9 = ( ( this.n本体X + 0xcc ) + 0x20 ) - ( num7 / 2 );
+				int num10 = ( ( this.n本体Y + 0x7b ) + 0x20 ) - ( num8 / 2 );
 				if( this.txセンサ光 != null )
 				{
 					this.txセンサ光.vc拡大縮小倍率 = new Vector3( (float) num6, (float) num6, 1f );
@@ -476,12 +478,12 @@ namespace DTXMania
 		}
 		private void t描画処理・センサ本体()
 		{
-			int x = this.n本体X + 410;
-			int y = this.n本体Y - 6;
+			int x = this.n本体X + 0xcd;
+			int y = this.n本体Y - 4;
 			if( this.txセンサ != null )
 			{
 				this.txセンサ.t2D描画( CDTXMania.app.Device, x, y, this.rcセンサ本体上半分 );
-				y += 0xc0;
+				y += 0x80;
 				this.txセンサ.t2D描画( CDTXMania.app.Device, x, y, this.rcセンサ本体下半分 );
 			}
 		}
@@ -489,15 +491,15 @@ namespace DTXMania
 		{
 			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
 			{
-				this.n本体X = 0x10;
-				this.n本体Y = 0x56;
+				this.n本体X = 8;
+				this.n本体Y = 0x39;
 			}
 			else
 			{
 				double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 				double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
-				this.n本体X = 0x10;
-				this.n本体Y = 0x56 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
+				this.n本体X = 8;
+				this.n本体Y = 0x39 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 			}
 			if( this.txパネル本体 != null )
 			{
@@ -508,8 +510,8 @@ namespace DTXMania
 		{
 			if( !CDTXMania.stage選曲.bスクロール中 && ( ( ( this.ct遅延表示 != null ) && ( this.ct遅延表示.n現在の値 > 0 ) ) && !this.b新しいプレビューファイルをまだ読み込んでいない ) )
 			{
-                int x = this.n本体X + 0x24;
-                int y = this.n本体Y + 0x18;
+				int x = this.n本体X + 0x12;
+				int y = this.n本体Y + 0x10;
 				float num3 = ( (float) this.ct遅延表示.n現在の値 ) / 100f;
 				float num4 = 0.9f + ( 0.1f * num3 );
 				if( ( this.nAVI再生開始時刻 != -1 ) && ( this.sfAVI画像 != null ) )
@@ -538,7 +540,13 @@ namespace DTXMania
 					}
 					using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
 					{
-						CDTXMania.app.Device.UpdateSurface( this.sfAVI画像, new Rectangle( 0, 0, this.sfAVI画像.Description.Width, this.sfAVI画像.Description.Height ), surface, new Point( x, y ) );
+						try
+						{
+							CDTXMania.app.Device.UpdateSurface( this.sfAVI画像, new Rectangle( 0, 0, this.sfAVI画像.Description.Width, this.sfAVI画像.Description.Height ), surface, new Point( x, y ) );
+						}
+						catch	// #32335 2013.10.26 yyagi: codecがないと、D3DERR_INVALIDCALLが発生する場合がある
+						{
+						}
 						return;
 					}
 				}
@@ -546,16 +554,16 @@ namespace DTXMania
 				{
 					int width = this.r表示するプレビュー画像.sz画像サイズ.Width;
 					int height = this.r表示するプレビュー画像.sz画像サイズ.Height;
-					if( width > 0x198 )
+					if( width > 0xcc )
 					{
-						width = 0x198;
+						width = 0xcc;
 					}
-					if( height > 0x194 )
+					if( height > 0x10d )
 					{
-						height = 0x194;
+						height = 0x10d;
 					}
-                    x += (0x198 - ((int)(width * num4))) / 2;
-                    y += (0x194 - ((int)(height * num4))) / 2;
+					x += ( 0xcc - ( (int) ( width * num4 ) ) ) / 2;
+					y += ( 0x10d - ( (int) ( height * num4 ) ) ) / 2;
 					this.r表示するプレビュー画像.n透明度 = (int) ( 255f * num3 );
 					this.r表示するプレビュー画像.vc拡大縮小倍率.X = num4;
 					this.r表示するプレビュー画像.vc拡大縮小倍率.Y = num4;

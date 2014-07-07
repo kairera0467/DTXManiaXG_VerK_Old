@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,6 @@
 #include "stdafx.h"
 
 #include "../stack_array.h"
-
-#include "../dxgi/Factory1.h"
 
 #include "Direct3D11Exception.h"
 
@@ -93,43 +91,8 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 
+		context->Release();
 		Construct( device );
-
-		immediateContext = DeviceContext::FromPointer( context, this );
-	}
-
-	SlimDX::DXGI::Factory^ Device::Factory::get()
-	{
-		IDXGIDevice *device = 0;
-		if (RECORD_D3D11(InternalPointer->QueryInterface(IID_IDXGIDevice, reinterpret_cast<void**>(&device))).IsFailure)
-			return nullptr;
-
-		IDXGIAdapter *adapter = 0;
-		HRESULT hr = device->GetAdapter(&adapter);
-		if (FAILED(hr))
-			device->Release();
-
-		if (RECORD_D3D11(hr).IsFailure)
-			return nullptr;
-
-		SlimDX::DXGI::Factory^ result = nullptr;
-
-		IDXGIFactory1 *factory1;
-		hr = adapter->GetParent(IID_IDXGIFactory1, reinterpret_cast<void**>(&factory1));
-		if (SUCCEEDED(hr))
-			result = SlimDX::DXGI::Factory1::FromPointer(factory1, this);
-		else
-		{
-			IDXGIFactory *factory;
-			hr = adapter->GetParent(IID_IDXGIFactory, reinterpret_cast<void**>(&factory));
-			if (SUCCEEDED(hr))
-				result = SlimDX::DXGI::Factory::FromPointer(factory, this);
-		}
-
-		adapter->Release();
-		device->Release();
-
-		return result;
 	}
 
 	DeviceCreationFlags Device::CreationFlags::get()
@@ -149,14 +112,10 @@ namespace Direct3D11
 
 	DeviceContext^ Device::ImmediateContext::get()
 	{
-		if (immediateContext == nullptr)
-		{
-			ID3D11DeviceContext *context;
-			InternalPointer->GetImmediateContext(&context);
-			immediateContext = DeviceContext::FromPointer(context, this);
-		}
+		ID3D11DeviceContext *context = NULL;
+		InternalPointer->GetImmediateContext( &context );
 
-		return immediateContext;
+		return DeviceContext::FromPointer( context, this );
 	}
 	
 	bool Device::IsReferenceDevice::get()
@@ -171,33 +130,6 @@ namespace Direct3D11
 		switcher->Release();
 
 		return result;
-	}
-
-	System::String^ Device::DebugName::get()
-	{
-		char name[1024];
-		UINT size = sizeof(name) - 1;
-
-		if (FAILED(InternalPointer->GetPrivateData(WKPDID_D3DDebugObjectName, &size, name)))
-			return "";
-
-		name[size] = 0;
-		return gcnew System::String(name);
-	}
-	
-	void Device::DebugName::set(System::String^ value)
-	{
-		if (!String::IsNullOrEmpty(value))
-		{
-			array<Byte>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(value);
-			pin_ptr<Byte> pinnedValue = &valueBytes[0];
-
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, value->Length, pinnedValue);
-		}
-		else
-		{
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0);
-		}
 	}
 
 	CounterCapabilities Device::GetCounterCapabilities()
@@ -301,6 +233,18 @@ namespace Direct3D11
 		return result;
 	}
 
+	void Device::SwitchToReference(bool useReferenceRasterizer)
+	{
+		ID3D11SwitchToRef *switcher;
+
+		HRESULT hr = InternalPointer->QueryInterface(IID_ID3D11SwitchToRef, reinterpret_cast<void**>(&switcher));
+		if (FAILED(hr))
+			throw gcnew InvalidOperationException("The device must have been created with the DeviceCreationFlags.SwitchToRef option in order to switch between the reference rasterizer and a hardware accelerated device.");
+
+		switcher->SetUseRef(useReferenceRasterizer);
+		switcher->Release();
+	}
+
 	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel()
 	{
 		D3D_FEATURE_LEVEL outputLevel;
@@ -327,17 +271,14 @@ namespace Direct3D11
 	T Device::OpenSharedResource(System::IntPtr handle)
 	{
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		ID3D11Resource* resultPointer;
+		void *resultPointer;
 
-		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, (void**)&resultPointer );
+		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, &resultPointer );
 		if( RECORD_D3D11( hr ).IsFailure )
 			return T();
 
 		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
-		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
-
-		resultPointer->Release();
-		return result;
+		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
 	}
 
 #pragma warning(disable : 4947)

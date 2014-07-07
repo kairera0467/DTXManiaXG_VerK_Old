@@ -92,14 +92,14 @@ namespace DTXMania
 				}
 				base.On非活性化();
 			}
-            catch ( UnauthorizedAccessException e )
-            {
-                Trace.TraceError( e.Message + "ファイルが読み取り専用になっていないか、管理者権限がないと書き込めなくなっていないか等を確認して下さい" );
-            }
-            catch ( Exception e )
-            {
-                Trace.TraceError( e.Message );
-            }
+			catch ( UnauthorizedAccessException e )
+			{
+				Trace.TraceError( e.Message + "ファイルが読み取り専用になっていないか、管理者権限がないと書き込めなくなっていないか等を確認して下さい" );
+			}
+			catch ( Exception e )
+			{
+				Trace.TraceError( e.Message );
+			}
 			finally
 			{
 				Trace.TraceInformation( "コンフィグステージの非活性化を完了しました。" );
@@ -110,10 +110,10 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_background.jpg" ), false );
-				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_header panel.png" ), true );
-				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_footer panel.png" ), true );
-				this.txMenuカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_menu cursor.png" ), false );
+				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig background.jpg" ), false );
+				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig header panel.png" ), true );
+				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig footer panel.png" ), true );
+				this.txMenuカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" ), false );
 				if( this.bメニューにフォーカス中 )
 				{
 					this.t説明文パネルに現在選択されているメニューの説明を描画する();
@@ -163,18 +163,18 @@ namespace DTXMania
 			{
 				Rectangle rectangle;
 				this.txMenuカーソル.n透明度 = this.bメニューにフォーカス中 ? 0xff : 0x80;
-				int x = 111;
-				int y = 144 + ( this.n現在のメニュー番号 * 38 );
-				int num3 = 340;
-				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, 0x20, 0x30 ) );
-				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, ( x + num3 ) - 0x20, y, new Rectangle( 20, 0, 0x20, 0x30 ) );
-				x += 0x20;
-				for( num3 -= 0x40; num3 > 0; num3 -= rectangle.Width )
+				int x = 0x37;
+				int y = 0x61 + ( this.n現在のメニュー番号 * 0x19 );
+				int num3 = 170;
+				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, 0x10, 0x20 ) );
+				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, ( x + num3 ) - 0x10, y, new Rectangle( 10, 0, 0x10, 0x20 ) );
+				x += 0x10;
+				for( num3 -= 0x20; num3 > 0; num3 -= rectangle.Width )
 				{
-					rectangle = new Rectangle( 0x10, 0, 0x20, 0x30 );
-					if( num3 < 0x20 )
+					rectangle = new Rectangle( 8, 0, 0x10, 0x20 );
+					if( num3 < 0x10 )
 					{
-						rectangle.Width -= 0x20 - num3;
+						rectangle.Width -= 0x10 - num3;
 					}
 					this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, rectangle );
 					x += rectangle.Width;
@@ -187,30 +187,46 @@ namespace DTXMania
 			string str = "System";
 			int num4 = this.actFont.n文字列長dot( str );
 			bool flag = this.n現在のメニュー番号 == 0;
-			this.actFont.t文字列描画( 0x11a - ( num4 / 2 ), 0x9b, str, flag );
+			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 100, str, flag );
+			//str = "Drums Keys";
+			//num4 = this.actFont.n文字列長dot( str );
+			//flag = this.n現在のメニュー番号 == 1;
+			//this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 0x7d, str, flag );
+			//str = "Guitar Keys";
+			//num4 = this.actFont.n文字列長dot( str );
+			//flag = this.n現在のメニュー番号 == 2;
+			//this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 150, str, flag );
+			//str = "Bass Keys";
+			//num4 = this.actFont.n文字列長dot( str );
+			//flag = this.n現在のメニュー番号 == 3;
+			//this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 0xaf, str, flag );
+			//str = "Exit";
+			//num4 = this.actFont.n文字列長dot( str );
+			//flag = this.n現在のメニュー番号 == 4;
+			//this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 200, str, flag );
 			str = "Drums";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 1;
-			this.actFont.t文字列描画( 0x11a - ( num4 / 2 ), 0xc0, str, flag );
+			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 0x7d, str, flag );
 			str = "Guitar";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 2;
-			this.actFont.t文字列描画( 0x11a - ( num4 / 2 ), 230, str, flag );
+			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 150, str, flag );
 			str = "Bass";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 3;
-			this.actFont.t文字列描画( 0x11a - ( num4 / 2 ), 0x10b, str, flag );
+			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 0xaf, str, flag );
 			str = "Exit";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 4;
-			this.actFont.t文字列描画( 0x11a - ( num4 / 2 ), 0x130, str, flag );
+			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 200, str, flag );
 
 			//---------------------
 			#endregion
 			#region [ 説明文パネル ]
 			//---------------------
 			if( this.tx説明文パネル != null )
-				this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 0x43, 0x17e );
+				this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 0x1d, 0xf8 );
 			//---------------------
 			#endregion
 			#region [ アイテム ]
@@ -236,7 +252,7 @@ namespace DTXMania
 			#region [ 下部パネル ]
 			//---------------------
 			if( this.tx下部パネル != null )
-				this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.szテクスチャサイズ.Height );
+				this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.szテクスチャサイズ.Height );
 			//---------------------
 			#endregion
 			#region [ オプションパネル ]
@@ -266,7 +282,7 @@ namespace DTXMania
 			//---------------------
 			#endregion
 
-            #region [ Enumerating Songs ]
+			#region [ Enumerating Songs ]
 			// CActEnumSongs側で表示する
 			#endregion
 
@@ -280,7 +296,7 @@ namespace DTXMania
 			// 曲データの一覧取得中は、キー入力を無効化する
 			if ( !CDTXMania.EnumSongs.IsEnumerating || CDTXMania.actEnumSongs.bコマンドでの曲データ取得 != true )
 			{
-				if ( ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) ) || CDTXMania.Pad.b押されたGB( Eパッド.Pick ) )
+				if ( ( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Escape ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) ) || CDTXMania.Pad.b押されたGB( Eパッド.FT ) )
 				{
 					CDTXMania.Skin.sound取消音.t再生する();
 					if ( !this.bメニューにフォーカス中 )
@@ -303,7 +319,7 @@ namespace DTXMania
 						base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
 					}
 				}
-				else if ( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) || ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) ) )
+				else if ( ( CDTXMania.Pad.b押されたDGB( Eパッド.CY ) || CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.RD ) ) || ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LC ) || ( CDTXMania.ConfigIni.bEnterがキー割り当てのどこにも使用されていない && CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.Return ) ) ) )
 				{
 					if ( this.n現在のメニュー番号 == 4 )
 					{
@@ -347,12 +363,12 @@ namespace DTXMania
 					this.tカーソルを上へ移動する();
 				}
 				this.ctキー反復用.Down.tキー反復( CDTXMania.Input管理.Keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.DownArrow ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
-				this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.SD ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
-				if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.FT ) )
+				this.ctキー反復用.B.tキー反復( CDTXMania.Pad.b押されているGB( Eパッド.BD ), new CCounter.DGキー処理( this.tカーソルを下へ移動する ) );
+				if ( CDTXMania.Pad.b押された( E楽器パート.DRUMS, Eパッド.LT ) )
 				{
 					this.tカーソルを下へ移動する();
 				}
-            }
+			}
 			return 0;
 		}
 
@@ -422,7 +438,7 @@ namespace DTXMania
 		private CActFIFOWhite actFIFO;
 		private CActConfigKeyAssign actKeyAssign;
 		private CActConfigList actList;
-        private CActオプションパネル actオプションパネル;
+		private CActオプションパネル actオプションパネル;
 		private bool bメニューにフォーカス中;
 		private STキー反復用カウンタ ctキー反復用;
 		private const int DESC_H = 0x80;
@@ -551,7 +567,7 @@ namespace DTXMania
 		{
 			try
 			{
-				var image = new Bitmap( 250 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
+				var image = new Bitmap( 220 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
 				var graphics = Graphics.FromImage( image );
 				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 				
@@ -559,10 +575,9 @@ namespace DTXMania
 				switch( this.n現在のメニュー番号 )
 				{
 					case 0:
-						str[ 0, 0 ] = "システムに関係する項目を設定します。";
-                        str[ 0, 1 ] = "";
+						str[ 0, 0 ] = "システムに関係する項目を設定しま";
+						str[ 0, 1 ] = "す。";
 						str[ 1, 0 ] = "Settings for an overall systems.";
-                        str[ 1, 1 ] = "";
 						break;
 
 					//case 1:
@@ -586,29 +601,29 @@ namespace DTXMania
 					//    str[1, 1] = "";
 					//    break;
 					case 1:
-						str[ 0, 0 ] = "ドラムの演奏に関する項目を設定します。";
-						str[ 0, 1 ] = "";
+						str[ 0, 0 ] = "ドラムの演奏に関する項目を設定し";
+						str[ 0, 1 ] = "ます。";
 						str[ 1, 0 ] = "Settings to play the drums.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 2:
-						str[ 0, 0 ] = "ギターの演奏に関する項目を設定します。";
-						str[ 0, 1 ] = "";
+						str[ 0, 0 ] = "ギターの演奏に関する項目を設定し";
+						str[ 0, 1 ] = "ます。";
 						str[ 1, 0 ] = "Settings to play the guitar.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 3:
-						str[ 0, 0 ] = "ベースの演奏に関する項目を設定します。";
-						str[ 0, 1 ] = "";
+						str[ 0, 0 ] = "ベースの演奏に関する項目を設定し";
+						str[ 0, 1 ] = "ます。";
 						str[ 1, 0 ] = "Settings to play the bass.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 4:
-						str[ 0, 0 ] = "設定を保存し、コンフィグ画面を終了します。";
-						str[ 0, 1 ] = "";
+						str[ 0, 0 ] = "設定を保存し、コンフィグ画面を終了";
+						str[ 0, 1 ] = "します。";
 						str[ 1, 0 ] = "Save the settings and exit from";
 						str[ 1, 1 ] = "CONFIGURATION menu.";
 						break;
@@ -625,8 +640,8 @@ namespace DTXMania
 					this.tx説明文パネル.Dispose();
 				}
 				this.tx説明文パネル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
-				this.tx説明文パネル.vc拡大縮小倍率.X = 0.8f;
-				this.tx説明文パネル.vc拡大縮小倍率.Y = 0.8f;
+				this.tx説明文パネル.vc拡大縮小倍率.X = 0.5f;
+				this.tx説明文パネル.vc拡大縮小倍率.Y = 0.5f;
 				image.Dispose();
 			}
 			catch( CTextureCreateFailedException )
@@ -639,7 +654,7 @@ namespace DTXMania
 		{
 			try
 			{
-				var image = new Bitmap( 550, 0x100 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
+				var image = new Bitmap( 220 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
 				var graphics = Graphics.FromImage( image );
 				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
@@ -659,8 +674,8 @@ namespace DTXMania
 					this.tx説明文パネル.Dispose();
 				}
 				this.tx説明文パネル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
-				this.tx説明文パネル.vc拡大縮小倍率.X = 0.8f;
-				this.tx説明文パネル.vc拡大縮小倍率.Y = 0.8f;
+				this.tx説明文パネル.vc拡大縮小倍率.X = 0.5f;
+				this.tx説明文パネル.vc拡大縮小倍率.Y = 0.5f;
 				image.Dispose();
 			}
 			catch( CTextureCreateFailedException )

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 extern const IID IID_IDWritePixelSnapping;
 
 #include "../ComObject.h"
-#include "../math/Matrix3x2.h"
+#include "../direct2d/Matrix3x2.h"
 
 namespace SlimDX
 {
@@ -38,7 +38,7 @@ namespace SlimDX
 
 		public:
 			bool IsPixelSnappingDisabled(IntPtr clientDrawingContext);
-			Matrix3x2 GetCurrentTransform(IntPtr clientDrawingContext);
+			SlimDX::Direct2D::Matrix3x2 GetCurrentTransform(IntPtr clientDrawingContext);
 			float GetPixelsPerDip(IntPtr clientDrawingContext);
 		};
 	}

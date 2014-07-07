@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -68,10 +68,9 @@ namespace SlimDX
 
 	private protected:
 		ComObject();
-
+		
 		void Construct( IUnknown* pointer );
 		void Construct( IUnknown* pointer, ComObject^ owner );
-		void Construct( IUnknown* pointer, ComObject^ owner, bool addToTable );
 		void Construct( System::IntPtr pointer, System::Guid guid );
 		void Destruct();
 		

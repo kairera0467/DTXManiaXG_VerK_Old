@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -41,12 +41,13 @@ namespace DirectInput
 	{
 		timeStamp = 0;
 		sliders = gcnew array<int>( 2 );
-		povs = gcnew array<int>( 4 );
+		povs = gcnew array<int>( 4 ) { -1, -1, -1, -1};		// #24341 2011.3.9 yyagi add initializer to "-1".
 		pressedButtons = gcnew array<bool>( 128 );
 		releasedButtons = gcnew array<bool>( 128 );
 		vsliders = gcnew array<int>( 2 );
 		fsliders = gcnew array<int>( 2 );
 		asliders = gcnew array<int>( 2 );
+		dwOfs = 0;											// #26880 2011.12.3 yyagi
 	}
 
 	JoystickState::JoystickState( const DIJOYSTATE2 &joystate )

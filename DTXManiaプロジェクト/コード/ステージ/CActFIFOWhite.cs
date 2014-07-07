@@ -13,21 +13,13 @@ namespace DTXMania
 		public void tフェードアウト開始()
 		{
 			this.mode = EFIFOモード.フェードアウト;
-            this.bテクスチャを描画する = true;
 			this.counter = new CCounter( 0, 100, 5, CDTXMania.Timer );
 		}
 		public void tフェードイン開始()
 		{
 			this.mode = EFIFOモード.フェードイン;
-            this.bテクスチャを描画する = true;
 			this.counter = new CCounter( 0, 100, 5, CDTXMania.Timer );
 		}
-        public void tフェードイン開始(bool bテクスチャの描画)
-        {
-            this.mode = EFIFOモード.フェードイン;
-            this.bテクスチャを描画する = bテクスチャの描画;
-            this.counter = new CCounter(0, 100, 5, CDTXMania.Timer);
-        }
 		public void tフェードイン完了()		// #25406 2011.6.9 yyagi
 		{
 			this.counter.n現在の値 = this.counter.n終了値;
@@ -67,10 +59,7 @@ namespace DTXMania
 				{
 					for (int j = 0; j <= (SampleFramework.GameWindowSize.Height / 64); j++)	// #23510 2010.10.31 yyagi: change "clientSize.Height" to "480" to fix FIFO drawing size
 					{
-                        if (this.bテクスチャを描画する)
-                        {
-                            this.tx白タイル64x64.t2D描画(CDTXMania.app.Device, i * 64, j * 64);
-                        }
+						this.tx白タイル64x64.t2D描画( CDTXMania.app.Device, i * 64, j * 64 );
 					}
 				}
 			}
@@ -89,7 +78,6 @@ namespace DTXMania
 		private CCounter counter;
 		private EFIFOモード mode;
 		private CTexture tx白タイル64x64;
-        private bool bテクスチャを描画する = true;
 		//-----------------
 		#endregion
 	}

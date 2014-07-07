@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -1774,9 +1774,7 @@ namespace SlimDX
 			None = 0,
 			GenerateMipMaps = D3D10_RESOURCE_MISC_GENERATE_MIPS,
 			Shared = D3D10_RESOURCE_MISC_SHARED,
-			TextureCube = D3D10_RESOURCE_MISC_TEXTURECUBE,
-			KeyedMutex = D3D10_RESOURCE_MISC_SHARED_KEYEDMUTEX,
-			GdiCompatible = D3D10_RESOURCE_MISC_GDI_COMPATIBLE
+			TextureCube = D3D10_RESOURCE_MISC_TEXTURECUBE
 		};
 
 		/// <summary></summary>
