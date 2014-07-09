@@ -35,8 +35,8 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない )
 			{
-				string pathScrollBar = CSkin.Path( @"Graphics\ScreenSelect scrollbar.png" );
-				string pathScrollPosition = CSkin.Path( @"Graphics\ScreenSelect scrollbar.png" );
+				string pathScrollBar = CSkin.Path( @"Graphics\5_scrollbar.png" );
+				string pathScrollPosition = CSkin.Path( @"Graphics\5_scrollbar.png" );
 				if ( File.Exists( pathScrollBar ) )
 				{
 					this.txScrollBar = CDTXMania.tテクスチャの生成( pathScrollBar, false );

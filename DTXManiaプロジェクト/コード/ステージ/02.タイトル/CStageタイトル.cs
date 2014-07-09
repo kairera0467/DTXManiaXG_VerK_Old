@@ -71,8 +71,8 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenTitle background.jpg" ), false );
-				this.txメニュー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenTitle menu.png" ), false );
+				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\2_background.jpg" ), false );
+				this.txメニュー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\2_menu.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -337,8 +337,8 @@ namespace DTXMania
 		private CCounter ct上移動用;
 		private const int MENU_H = 39;
 		private const int MENU_W = 227;
-		private const int MENU_X = 206;
-		private const int MENU_Y = 203;
+		private const int MENU_X = 506;
+		private const int MENU_Y = 513;
 		private int n現在のカーソル行;
 		private CTexture txメニュー;
 		private CTexture tx背景;

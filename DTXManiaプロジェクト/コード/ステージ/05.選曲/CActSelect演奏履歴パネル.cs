@@ -74,7 +74,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect play history panel.png" ), true );
+				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_play history panel.png" ), true );
 				this.t選択曲が変更された();
 				base.OnManagedリソースの作成();
 			}
