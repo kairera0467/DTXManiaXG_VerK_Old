@@ -84,11 +84,11 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect status panel.png" ), true );
-				this.txレベル数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect level numbers.png" ), false );
-				this.txスキルゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect skill gauge.png" ), false );
-				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect skill number on gauge etc.png" ), false );
-				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect triangle arrow.png" ), false );
+				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ) );
+				this.txレベル数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_level numbers.png" ) );
+				this.txスキルゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill gauge.png" ) );
+				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ) );
+				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_triangle arrow.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}

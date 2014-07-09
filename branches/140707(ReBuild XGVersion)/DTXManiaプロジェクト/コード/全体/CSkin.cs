@@ -763,7 +763,7 @@ namespace DTXMania
 		public bool bIsValid( string skinPathFullName )
 		{
 			string filePathTitle;
-			filePathTitle = System.IO.Path.Combine( skinPathFullName, @"Graphics\ScreenTitle background.jpg" );
+			filePathTitle = System.IO.Path.Combine( skinPathFullName, @"Graphics\2_background.jpg" );
 			return ( File.Exists( filePathTitle ) );
 		}
 

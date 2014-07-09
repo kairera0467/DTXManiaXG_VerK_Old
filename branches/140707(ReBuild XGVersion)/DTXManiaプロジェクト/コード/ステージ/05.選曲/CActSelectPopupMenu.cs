@@ -199,8 +199,8 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない )
 			{
-				string pathCursor = CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" );;
-				string pathPopupMenuBackground = CSkin.Path( @"Graphics\ScreenSelect sort menu background.png" );
+				string pathCursor = CSkin.Path( @"Graphics\5_menu cursor.png" );;
+				string pathPopupMenuBackground = CSkin.Path( @"Graphics\5_sort menu background.png" );
 				if ( File.Exists ( pathCursor ) )
 				{
 					this.txCursor = CDTXMania.tテクスチャの生成( pathCursor, false );
