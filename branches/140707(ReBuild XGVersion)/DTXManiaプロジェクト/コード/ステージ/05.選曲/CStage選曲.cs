@@ -280,16 +280,16 @@ namespace DTXMania
 				if( this.tx上部パネル != null )
 						this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0, y );
 
-				this.actInformation.On進行描画();
+				//this.actInformation.On進行描画();
 				if( this.tx下部パネル != null )
-					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
+					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
 				this.actステータスパネル.On進行描画();
 				this.act演奏履歴パネル.On進行描画();
 				this.actPresound.On進行描画();
 				if( this.txコメントバー != null )
 				{
-					this.txコメントバー.t2D描画( CDTXMania.app.Device, 0xf2, 0xe4 );
+					this.txコメントバー.t2D描画( CDTXMania.app.Device, 484, 314 );
 				}
 				this.actArtistComment.On進行描画();
 				this.actオプションパネル.On進行描画();
@@ -685,7 +685,7 @@ namespace DTXMania
 
 		private bool bBGM再生済み;
 		private STキー反復用カウンタ ctキー反復用;
-		private CCounter ct登場時アニメ用共通;
+		public CCounter ct登場時アニメ用共通;
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private Font ftフォント;
 		private CTexture txコメントバー;

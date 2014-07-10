@@ -24,6 +24,7 @@ namespace DTXMania
 				this.n現在選択中の曲の難易度 = CDTXMania.stage選曲.n現在選択中の曲の難易度;
 				for( int i = 0; i < 3; i++ )
 				{
+                    //2014.07.10 kairera0467 以前の拡張難易度は廃止のため、そのまま運用することにした。
 					int nLevel = cスコア.譜面情報.レベル[ i ];
 					if( nLevel < 0 )
 					{
@@ -55,8 +56,8 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.n本体X = 3;
-			this.n本体Y = 0x15d;
+			this.n本体X = 6;
+			this.n本体Y = 523;
 			this.n現在選択中の曲の難易度 = 0;
 			for( int i = 0; i < 3; i++ )
 			{
@@ -86,7 +87,7 @@ namespace DTXMania
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ) );
 				this.txレベル数字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_level numbers.png" ) );
-				this.txスキルゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill gauge.png" ) );
+				this.txスキルゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect skill gauge.png" ) );
 				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ) );
 				this.tx難易度用矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_triangle arrow.png" ) );
 				base.OnManagedリソースの作成();
@@ -149,17 +150,17 @@ namespace DTXMania
 				{
 					if( this.ct登場アニメ用.b終了値に達した )
 					{
-						this.n本体X = 3;
-						this.n本体Y = 0x15d;
+						this.n本体X = 6;
+						this.n本体Y = 523;
 					}
 					else
 					{
 						double num2 = ( (double) ( 100 - this.ct登場アニメ用.n現在の値 ) ) / 100.0;
 						double num3 = Math.Sin( Math.PI / 2 * num2 );
-						this.n本体X = 3 - ( (int) ( ( this.txパネル本体.sz画像サイズ.Width * num3 ) * num3 ) );
-						this.n本体Y = 0x15d;
+						this.n本体X = 6 - ( (int) ( ( this.txパネル本体.sz画像サイズ.Width * num3 ) * num3 ) );
+						this.n本体Y = 523;
 					}
-					this.txパネル本体.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y );
+					//this.txパネル本体.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y );
 				}
 				//-----------------
 				#endregion

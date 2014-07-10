@@ -491,8 +491,8 @@ namespace DTXMania
 		{
 			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
 			{
-				this.n本体X = 8;
-				this.n本体Y = 0x39;
+				this.n本体X = 16;
+				this.n本体Y = 86;
 			}
 			else
 			{
@@ -554,20 +554,20 @@ namespace DTXMania
 				{
 					int width = this.r表示するプレビュー画像.sz画像サイズ.Width;
 					int height = this.r表示するプレビュー画像.sz画像サイズ.Height;
-					if( width > 0xcc )
+					if( width > 400 )
 					{
-						width = 0xcc;
+						width = 400;
 					}
-					if( height > 0x10d )
+					if( height > 400 )
 					{
-						height = 0x10d;
+						height = 400;
 					}
-					x += ( 0xcc - ( (int) ( width * num4 ) ) ) / 2;
-					y += ( 0x10d - ( (int) ( height * num4 ) ) ) / 2;
+					x += ( 400 - ( (int) ( width * num4 ) ) ) / 2;
+					y += ( 400 - ( (int) ( height * num4 ) ) ) / 2;
 					this.r表示するプレビュー画像.n透明度 = (int) ( 255f * num3 );
 					this.r表示するプレビュー画像.vc拡大縮小倍率.X = num4;
 					this.r表示するプレビュー画像.vc拡大縮小倍率.Y = num4;
-					this.r表示するプレビュー画像.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, width, height ) );
+					this.r表示するプレビュー画像.t2D描画( CDTXMania.app.Device, x + 22, y + 12, new Rectangle( 0, 0, width, height ) );
 				}
 			}
 		}
