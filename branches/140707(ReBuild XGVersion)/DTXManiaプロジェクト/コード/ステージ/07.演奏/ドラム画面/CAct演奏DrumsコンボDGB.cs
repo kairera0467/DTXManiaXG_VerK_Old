@@ -37,7 +37,7 @@ namespace DTXMania
 		}
 		protected override void tコンボ表示・ドラム( int nCombo値, int nジャンプインデックス )
 		{
-			base.tコンボ表示・ドラム( nCombo値, nジャンプインデックス );
+			//base.tコンボ表示・ドラム( nCombo値, nジャンプインデックス );
 		}
 		protected override void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{

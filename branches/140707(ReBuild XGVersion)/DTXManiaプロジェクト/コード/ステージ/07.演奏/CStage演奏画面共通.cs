@@ -609,11 +609,13 @@ namespace DTXMania
 
 		protected E演奏画面の戻り値 eフェードアウト完了時の戻り値;
 		protected readonly int[,] nBGAスコープチャンネルマップ = new int[ , ] { { 0xc4, 0xc7, 0xd5, 0xd6, 0xd7, 0xd8, 0xd9, 0xe0 }, { 4, 7, 0x55, 0x56, 0x57, 0x58, 0x59, 0x60 } };
-		protected readonly int[] nチャンネル0Atoパッド08 = new int[] { 1, 2, 3, 4, 5, 7, 6, 1, 8, 0 };
-		protected readonly int[] nチャンネル0Atoレーン07 = new int[] { 1, 2, 3, 4, 5, 7, 6, 1, 7, 0 };
-		protected readonly int[] nパッド0Atoチャンネル0A = new int[] { 0x11, 0x12, 0x13, 20, 0x15, 0x17, 0x16, 0x18, 0x19, 0x1a };
-		protected readonly int[] nパッド0Atoパッド08 = new int[] { 1, 2, 3, 4, 5, 6, 7, 1, 8, 0 };	// パッド画像のヒット処理用
-		protected readonly int[] nパッド0Atoレーン07 = new int[] { 1, 2, 3, 4, 5, 6, 7, 1, 7, 0 };	
+        protected readonly int[] nチャンネル0Atoパッド08 = new int[] { 1, 2, 3, 4, 5, 7, 6, 1, 8, 0, 9, 9 };
+        protected readonly int[] nチャンネル0Atoレーン07 = new int[] { 1, 2, 3, 4, 5, 7, 6, 1, 9, 0, 8, 8 };
+                                                                    //                         RD LC  LP  RD
+		protected readonly int[] nパッド0Atoチャンネル0A = new int[] { 0x11, 0x12, 0x13, 0x14, 0x15, 0x17, 0x16, 0x18, 0x19, 0x1a, 0x1b, 0x1c };
+        protected readonly int[] nパッド0Atoパッド08 = new int[] { 1, 2, 3, 4, 5, 6, 7, 1, 8, 0, 9, 9 };// パッド画像のヒット処理用
+                                                              //   HH SD BD HT LT FT CY HHO RD LC LP LBD
+        protected readonly int[] nパッド0Atoレーン07 = new int[] { 1, 2, 3, 4, 5, 6, 7, 1, 9, 0, 8, 8 };
 		protected STDGBVALUE<CHITCOUNTOFRANK> nヒット数・Auto含まない;
 		protected STDGBVALUE<CHITCOUNTOFRANK> nヒット数・Auto含む;
 		protected int n現在のトップChip = -1;
@@ -1351,7 +1353,7 @@ namespace DTXMania
 			switch ( part )
 			{
 				case E楽器パート.DRUMS:
-					if ( ( nLane >= 0 ) && ( nLane <= 7 ) )
+					if ( ( nLane >= 0 ) && ( nLane <= 10 ) )
 					{
 						this.actJudgeString.Start( nLane, bIsAutoPlay[ nLane ] ? E判定.Auto : E判定.Miss, 999 );
 					}
@@ -1359,12 +1361,12 @@ namespace DTXMania
 					return;
 
 				case E楽器パート.GUITAR:
-					this.actJudgeString.Start( 10, E判定.Bad, 999 );
+					this.actJudgeString.Start( 13, E判定.Bad, 999 );
 					this.actCombo.n現在のコンボ数.Guitar = 0;
 					return;
 
 				case E楽器パート.BASS:
-					this.actJudgeString.Start( 11, E判定.Bad, 999 );
+					this.actJudgeString.Start( 14, E判定.Bad, 999 );
 					this.actCombo.n現在のコンボ数.Bass = 0;
 					break;
 
@@ -1403,7 +1405,7 @@ namespace DTXMania
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Future ];
 				if ( !chip.bHit )
 				{
-					if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1a ) )
+					if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1c ) )
 					{
 						if ( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 						{
@@ -1441,7 +1443,7 @@ namespace DTXMania
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Past ];
 				if ( (!chip.bHit) &&
 						(
-							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1a ) &&
+							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1c ) &&
 								( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 							)
 							||
@@ -1767,9 +1769,9 @@ namespace DTXMania
 			}
 
 			//double speed = 264.0;	// BPM150の時の1小節の長さ[dot]
-			const double speed = 234.0;	// BPM150の時の1小節の長さ[dot]
+			const double speed = 324.0;	// BPM150の時の1小節の長さ[dot]
 
-			double ScrollSpeedDrums = ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.0 ) * 0.5 * 37.5 * speed / 60000.0;
+			double ScrollSpeedDrums = (( this.act譜面スクロール速度.db現在の譜面スクロール速度.Drums + 1.0 ) * speed ) * 0.5 * 37.5 / 60000.0;
 			double ScrollSpeedGuitar = ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Guitar + 1.0 ) * 0.5 * 0.5 * 37.5 * speed / 60000.0;
 			double ScrollSpeedBass = ( this.act譜面スクロール速度.db現在の譜面スクロール速度.Bass + 1.0 ) * 0.5 * 0.5 * 37.5 * speed / 60000.0;
 
@@ -1782,7 +1784,7 @@ namespace DTXMania
 				pChip.nバーからの距離dot.Drums = (int) ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * ScrollSpeedDrums );
 				pChip.nバーからの距離dot.Guitar = (int) ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * ScrollSpeedGuitar );
 				pChip.nバーからの距離dot.Bass = (int) ( ( pChip.n発声時刻ms - CSound管理.rc演奏用タイマ.n現在時刻 ) * ScrollSpeedBass );
-				if ( Math.Min( Math.Min( pChip.nバーからの距離dot.Drums, pChip.nバーからの距離dot.Guitar ), pChip.nバーからの距離dot.Bass ) > 450 )
+				if ( Math.Min( Math.Min( pChip.nバーからの距離dot.Drums, pChip.nバーからの距離dot.Guitar ), pChip.nバーからの距離dot.Bass ) > 600 )
 				{
 					break;
 				}
@@ -1902,6 +1904,9 @@ namespace DTXMania
 					case 0x18:
 					case 0x19:
 					case 0x1a:
+                    //case 0x1b:
+                    //case 0x1c:
+                        this.t進行描画・チップ本体・ドラムス( configIni, ref dTX, ref pChip );
 						this.t進行描画・チップ・ドラムス( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
@@ -1972,7 +1977,7 @@ namespace DTXMania
 						}
 						if ( ( ePlayMode == E楽器パート.DRUMS ) && ( configIni.eDark != Eダークモード.FULL ) && pChip.b可視 && ( this.txチップ != null ) )
 						{
-							this.txチップ.t2D描画( CDTXMania.app.Device, 0x23, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 1 ) : ( ( 0x1a6 - pChip.nバーからの距離dot.Drums ) - 1 ), new Rectangle( 0, 0x1bf, 0x128, 1 ) );
+							this.txチップ.t2D描画( CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 1 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 1 ), new Rectangle( 0, 772, 559, 2 ) );
 						}
 						break;
 					#endregion
@@ -2498,6 +2503,7 @@ namespace DTXMania
 		}
 
 		protected abstract void t進行描画・チップ・ドラムス( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
+		protected abstract void t進行描画・チップ本体・ドラムス( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
 		//protected abstract void t進行描画・チップ・ギター( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip );
 		protected abstract void t進行描画・チップ・ギターベース( CConfigIni configIni, ref CDTX dTX, ref CDTX.CChip pChip, E楽器パート inst );
 
@@ -2818,14 +2824,11 @@ namespace DTXMania
 		{
 			if ( CDTXMania.ConfigIni.eDark != Eダークモード.FULL )
 			{
-				int y = CDTXMania.ConfigIni.bReverse.Drums ? 53 - 演奏判定ライン座標.nJudgeLinePosY_delta.Drums : 419 + 演奏判定ライン座標.nJudgeLinePosY_delta.Drums;
+				int y = CDTXMania.ConfigIni.bReverse.Drums ? 53 - 演奏判定ライン座標.nJudgeLinePosY_delta.Drums : 567 + 演奏判定ライン座標.nJudgeLinePosY_delta.Drums;
 																// #31602 2013.6.23 yyagi 描画遅延対策として、判定ラインの表示位置をオフセット調整できるようにする
 				if ( this.txヒットバー != null )
 				{
-					for ( int i = 32; i < 335; i += 8 )
-					{
-						this.txヒットバー.t2D描画( CDTXMania.app.Device, i, y, new Rectangle( 0, 0, ( ( i + 8 ) >= 335 ) ? ( 7 - ( ( i + 8 ) - 335 ) ) : 8, 8 ) );
-					}
+				    this.txヒットバー.t2D描画( CDTXMania.app.Device, 295, y, new Rectangle( 0, 0, 520, 6 ) );
 				}
 			}
 		}

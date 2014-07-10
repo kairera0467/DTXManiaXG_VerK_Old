@@ -269,7 +269,7 @@ namespace DTXMania
 						{
 							rectangle.Width = num9;
 						}
-						this.txWhite.t2D描画( CDTXMania.app.Device, num7, num8, rectangle );
+						//this.txWhite.t2D描画( CDTXMania.app.Device, num7, num8, rectangle );
 						num7 += 0x40;
 						num9 -= 0x40;
 					}
@@ -285,7 +285,7 @@ namespace DTXMania
 						{
 							if( this.txFullCombo != null )
 							{
-								this.txFullCombo.t2D描画( CDTXMania.app.Device, this.n本体X + this.ptFullCombo位置[ j ].X, this.n本体Y + this.ptFullCombo位置[ j ].Y );
+								this.txFullCombo.t2D描画( CDTXMania.app.Device, 220, 160 );
 							}
 							if( !this.bフルコンボ音再生済み )
 							{
@@ -325,7 +325,7 @@ namespace DTXMania
 								this.txFullCombo.n透明度 = (int) ( 255.0 * num12 );
 								int num14 = ( this.n本体X + this.ptFullCombo位置[ j ].X ) + ( (int) ( ( this.txFullCombo.sz画像サイズ.Width * ( 1f - num13 ) ) / 2f ) );
 								int num15 = ( this.n本体Y + this.ptFullCombo位置[ j ].Y ) + ( (int) ( ( this.txFullCombo.sz画像サイズ.Height * ( 1f - num13 ) ) / 2f ) );
-								this.txFullCombo.t2D描画( CDTXMania.app.Device, num14, num15 );
+								this.txFullCombo.t2D描画( CDTXMania.app.Device, 82, 152 );
 							}
 						}
 					}

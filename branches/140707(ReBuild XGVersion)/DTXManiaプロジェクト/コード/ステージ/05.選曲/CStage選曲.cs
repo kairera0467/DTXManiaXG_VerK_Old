@@ -221,6 +221,7 @@ namespace DTXMania
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_footer panel.png" ), true );
 				this.txコメントバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_comment bar.png" ), true );
 				this.txFLIP = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill number on gauge etc.png" ), false );
+
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -686,6 +687,7 @@ namespace DTXMania
 		private bool bBGM再生済み;
 		private STキー反復用カウンタ ctキー反復用;
 		public CCounter ct登場時アニメ用共通;
+        private CDirectShow ds背景動画;  //2014.07.10 kairera0467 DShowのテスト。
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private Font ftフォント;
 		private CTexture txコメントバー;
@@ -693,6 +695,7 @@ namespace DTXMania
 		private CTexture tx上部パネル;
 		private CTexture tx背景;
 		private CTexture txFLIP;
+        private CTexture tx背景動画;
 
 		private struct STCommandTime		// #24063 2011.1.16 yyagi コマンド入力時刻の記録用
 		{
