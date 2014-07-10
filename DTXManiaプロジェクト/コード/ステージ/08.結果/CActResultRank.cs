@@ -29,8 +29,8 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.n本体X = 0x1ed;
-			this.n本体Y = 0x153;
+			this.n本体X = 138;
+			this.n本体Y = 8;
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -54,32 +54,32 @@ namespace DTXMania
 				switch ( CDTXMania.stage結果.n総合ランク値 )
 				{
 					case 0:
-						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rankSS.png" ) );
+						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankSS.png" ) );
 						break;
 
 					case 1:
-						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rankS.png" ) );
+						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankS.png" ) );
 						break;
 
 					case 2:
-						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rankA.png" ) );
+						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankA.png" ) );
 						break;
 
 					case 3:
-						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rankB.png" ) );
+						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankB.png" ) );
 						break;
 
 					case 4:
-						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rankC.png" ) );
+						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankC.png" ) );
 						break;
 
 					case 5:
-						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rankD.png" ) );
+						this.txランク文字 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_rankD.png" ) );
 						break;
 
 					case 6:
 					case 99:	// #23534 2010.10.28 yyagi: 演奏チップが0個のときは、rankEと見なす
-						this.txランク文字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult rankE.png"));
+						this.txランク文字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\8_rankE.png"));
 						break;
 
 					default:
@@ -128,7 +128,7 @@ namespace DTXMania
 				double num2 = ( (double) ( this.ctランク表示.n現在の値 - 0x3e8 ) ) / 300.0;
 				if( this.txランク文字 != null )
 				{
-					this.txランク文字.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y, new Rectangle( 0, 0, (int) ( 128.0 * num2 ), 0x80 ) );
+					this.txランク文字.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y, new Rectangle( 0, 0, (int) ( 274.0 * num2 ), 274 ) );
 				}
 			}
 			this.t描画・白波();

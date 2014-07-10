@@ -93,58 +93,12 @@ namespace DTXMania
 				base.b初めての進行描画 = false;
 			}
 			this.ct登場用.t進行();
-			int num = 0x1d4;
-			int num2 = num - 0x40;
-			if( this.ct登場用.b進行中 )
-			{
-				if( this.ct登場用.n現在の値 <= 100 )
-				{
-					double num3 = 1.0 - ( ( (double) this.ct登場用.n現在の値 ) / 100.0 );
-					this.n本体X = -( (int) ( num * Math.Sin( Math.PI / 2 * num3 ) ) );
-					this.n本体Y = 0x18b;
-				}
-				else if( this.ct登場用.n現在の値 <= 200 )
-				{
-					double num4 = ( (double) ( this.ct登場用.n現在の値 - 100 ) ) / 100.0;
-					this.n本体X = -( (int) ( ( ( (double) num ) / 6.0 ) * Math.Sin( Math.PI * num4 ) ) );
-					this.n本体Y = 0x18b;
-				}
-				else if( this.ct登場用.n現在の値 <= 270 )
-				{
-					double num5 = ( (double) ( this.ct登場用.n現在の値 - 200 ) ) / 70.0;
-					this.n本体X = -( (int) ( ( ( (double) num ) / 18.0 ) * Math.Sin( Math.PI * num5 ) ) );
-					this.n本体Y = 0x18b;
-				}
-			}
-			else
-			{
-				this.n本体X = 0;
-				this.n本体Y = 0x18b;
-			}
-			int num6 = this.n本体X;
-			int y = this.n本体Y;
-			int num8 = 0;
-			while( num8 < num2 )
-			{
-				Rectangle rectangle = new Rectangle( 0, 0, 0x40, 0x40 );
-				if( ( num8 + rectangle.Width ) >= num2 )
-				{
-					rectangle.Width -= ( num8 + rectangle.Width ) - num2;
-				}
-				if( this.txバー != null )
-				{
-					this.txバー.t2D描画( CDTXMania.app.Device, num6 + num8, y, rectangle );
-				}
-				num8 += rectangle.Width;
-			}
-			if( this.txバー != null )
-			{
-				this.txバー.t2D描画( CDTXMania.app.Device, num6 + num8, y, new Rectangle( 0x40, 0, 0x40, 0x40 ) );
-			}
+
 			if( this.tx曲名 != null )
 			{
-				this.tx曲名.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y + 20 );
+				this.tx曲名.t2D描画( CDTXMania.app.Device, 571, 346 );
 			}
+
 			if( !this.ct登場用.b終了値に達した )
 			{
 				return 0;

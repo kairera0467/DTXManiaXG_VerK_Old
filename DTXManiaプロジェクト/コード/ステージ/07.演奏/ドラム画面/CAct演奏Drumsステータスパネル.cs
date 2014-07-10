@@ -66,17 +66,6 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない && ( this.txStatusPanels != null ) )
 			{
-				this.txStatusPanels.t2D描画( CDTXMania.app.Device, 0x26f, 0x14f, new Rectangle( this.nStatus * 15, 0xb7, 15, 0x49 ) );
-				int drums = CDTXMania.ConfigIni.n譜面スクロール速度.Drums;
-				if( drums < 0 )
-				{
-					drums = 0;
-				}
-				if( drums > 15 )
-				{
-					drums = 15;
-				}
-				this.txStatusPanels.t2D描画( CDTXMania.app.Device, 0x26f, 0x3b, new Rectangle( drums * 15, 0, 15, 0xac ) );
 			}
 			return 0;
 		}

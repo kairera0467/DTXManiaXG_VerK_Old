@@ -40,7 +40,7 @@ namespace DTXMania
 					{
 						Bitmap bitmap2 = new Bitmap( this.n文字列の長さdot, (int) this.ft表示用フォント.Size );
 						graphics = Graphics.FromImage( bitmap2 );
-						graphics.DrawString( this.strパネル文字列, this.ft表示用フォント, Brushes.Red, (float) 0f, (float) 0f );
+						graphics.DrawString( this.strパネル文字列, this.ft表示用フォント, Brushes.White, (float) 0f, (float) 0f );
 						graphics.Dispose();
 						this.txPanel = new CTexture( CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat );
 						this.txPanel.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
@@ -51,7 +51,7 @@ namespace DTXMania
 						Trace.TraceError( "パネル文字列テクスチャの生成に失敗しました。" );
 						this.txPanel = null;
 					}
-					this.ct進行用 = new CCounter( -278, this.n文字列の長さdot / 2, 8, CDTXMania.Timer );
+					this.ct進行用 = new CCounter( -408, this.n文字列の長さdot / 2, 8, CDTXMania.Timer );
 				}
 				this.Start();
 			}
@@ -71,7 +71,7 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.ft表示用フォント = new Font( "MS PGothic", 48f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel );
+			this.ft表示用フォント = new Font( "MS PGothic", 48f, FontStyle.Bold, GraphicsUnit.Pixel );
 			this.n文字列の長さdot = 0;
 			this.txPanel = null;
 			this.ct進行用 = new CCounter();
@@ -113,24 +113,24 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない && !this.bMute )
 			{
-				this.ct進行用.t進行Loop();
+				//this.ct進行用.t進行Loop();
 				if( ( string.IsNullOrEmpty( this.strパネル文字列 ) || ( this.txPanel == null ) ) || ( this.ct進行用 == null ) )
 				{
 					return 0;
 				}
 				float num = this.txPanel.vc拡大縮小倍率.X;
-				Rectangle rectangle = new Rectangle( (int) ( ( (float) this.ct進行用.n現在の値 ) / num ), 0, (int) ( 278f / num ), (int) this.ft表示用フォント.Size );
-				if( rectangle.X < 0 )
+				Rectangle rectangle = new Rectangle( (int) ( ( (float) this.ct進行用.n現在の値 ) / num ), 0, (int) ( 408f / num ), (int) this.ft表示用フォント.Size );
+				//if( rectangle.X < 0 )
 				{
-					x -= (int) ( rectangle.X * num );
-					rectangle.Width += rectangle.X;
-					rectangle.X = 0;
+				//	x -= (int) ( rectangle.X * num );
+				//	rectangle.Width += rectangle.X;
+				//	rectangle.X = 0;
 				}
-				if( rectangle.Right >= this.n文字列の長さdot )
+				//if( rectangle.Right >= this.n文字列の長さdot )
 				{
-					rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
+				//	rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
 				}
-				this.txPanel.t2D描画( CDTXMania.app.Device, x, y, rectangle );
+				this.txPanel.t2D描画( CDTXMania.app.Device, 1050 - ( this.txPanel.szテクスチャサイズ.Width / 4 ), 680 );
 			}
 			return 0;
 		}

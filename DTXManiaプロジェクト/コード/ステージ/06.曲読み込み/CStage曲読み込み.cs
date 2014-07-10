@@ -57,7 +57,7 @@ namespace DTXMania
 				}
 				else
 				{
-					this.strSTAGEFILE = CSkin.Path( @"Graphics\\ScreenNowLoading background.jpg" );
+					this.strSTAGEFILE = CSkin.Path( @"Graphics\\6_background.jpg" );
 					this.b音符を表示する = true;
 				}
 				if( ( ( cdtx.SOUND_NOWLOADING != null ) && ( cdtx.SOUND_NOWLOADING.Length > 0 ) ) && File.Exists( cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING ) )
@@ -126,12 +126,12 @@ namespace DTXMania
 							this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
 							this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
 							image.Dispose();
-							this.n音符の表示位置X = ( ( 640 - ( (int) ( size.Width * this.txタイトル.vc拡大縮小倍率.X ) ) ) - ( ( this.tx音符 != null ) ? this.tx音符.sz画像サイズ.Width : 0 ) ) - 2;
+							this.n音符の表示位置X = ( ( 1280 - ( (int) ( size.Width * this.txタイトル.vc拡大縮小倍率.X ) ) ) - ( ( this.tx音符 != null ) ? this.tx音符.sz画像サイズ.Width : 0 ) ) - 2;
 						}
 						else
 						{
 							this.txタイトル = null;
-							this.n音符の表示位置X = ( 640 - ( ( this.tx音符 != null ) ? this.tx音符.sz画像サイズ.Width : 0 ) ) - 2;
+							this.n音符の表示位置X = ( 1280 - ( ( this.tx音符 != null ) ? this.tx音符.sz画像サイズ.Width : 0 ) ) - 2;
 						}
 					}
 					catch( CTextureCreateFailedException )
@@ -218,14 +218,14 @@ namespace DTXMania
 
 			if( this.b音符を表示する )
 			{
-				int y = 480 - 45;
+				int y = 720 - 45;
 				if( this.tx音符 != null )
 				{
 					this.tx音符.t2D描画( CDTXMania.app.Device, this.n音符の表示位置X, y );
 				}
 				if( this.txタイトル != null )
 				{
-					this.txタイトル.t2D描画( CDTXMania.app.Device, (int) ( 640 - ( this.txタイトル.sz画像サイズ.Width * this.txタイトル.vc拡大縮小倍率.X ) ), y );
+					this.txタイトル.t2D描画( CDTXMania.app.Device, (int) ( 1280 - ( this.txタイトル.sz画像サイズ.Width * this.txタイトル.vc拡大縮小倍率.X ) ), y );
 				}
 			}
 			//-----------------------------
@@ -417,7 +417,7 @@ namespace DTXMania
 				}
 				txFilename = new CTexture( CDTXMania.app.Device, bitmapFilename, CDTXMania.TextureFormat );
 				txFilename.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
-				txFilename.t2D描画( CDTXMania.app.Device, 0, 480 - 16 );
+				txFilename.t2D描画( CDTXMania.app.Device, 0, 720 - 16 );
 			}
 		}
 

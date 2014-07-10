@@ -116,7 +116,7 @@ namespace DTXMania
 				//---------------------
 				#endregion
 
-                				#region [ .score.ini の作成と出力 ]
+                #region [ .score.ini の作成と出力 ]
 				//---------------------
 				string str = CDTXMania.DTX.strファイル名の絶対パス + ".score.ini";
 				CScoreIni ini = new CScoreIni( str );
@@ -280,9 +280,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult background.jpg" ) );
-				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult header panel.png" ), true );
-				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult footer panel.png" ), true );
+				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_background.jpg" ) );
+				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_header panel.png" ), true );
+				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_footer panel.png" ), true );
 				this.txオプションパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen option panels.png" ) );
 				base.OnManagedリソースの作成();
 			}
@@ -356,8 +356,12 @@ namespace DTXMania
 				{
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.sz画像サイズ.Height );
 				}
-				this.actOption.On進行描画();
+				//this.actOption.On進行描画();
 				if( this.actResultImage.On進行描画() == 0 )
+				{
+					this.bアニメが完了 = false;
+				}
+                if ( this.actRank.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
 				}
@@ -365,10 +369,7 @@ namespace DTXMania
 				{
 					this.bアニメが完了 = false;
 				}
-				if ( this.actRank.On進行描画() == 0 )
-				{
-					this.bアニメが完了 = false;
-				}
+
 				if ( this.actSongBar.On進行描画() == 0 )
 				{
 					this.bアニメが完了 = false;
