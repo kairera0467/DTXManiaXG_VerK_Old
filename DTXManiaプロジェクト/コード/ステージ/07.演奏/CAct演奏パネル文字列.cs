@@ -130,7 +130,7 @@ namespace DTXMania
 				{
 				//	rectangle.Width -= rectangle.Right - this.n文字列の長さdot;
 				}
-				this.txPanel.t2D描画( CDTXMania.app.Device, 1050 - ( this.txPanel.szテクスチャサイズ.Width / 4 ), 680 );
+				this.txPanel.t2D描画( CDTXMania.app.Device, 1050 - ( this.n文字列の長さdot / 6 ), 680 );
 			}
 			return 0;
 		}

@@ -45,6 +45,9 @@ namespace DTXMania
 			base.list子Activities.Add( this.actFI = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actFOClear = new CActFIFOWhite() );
+            base.list子Activities.Add( this.actLane = new CAct演奏Drumsレーン() );
+            base.list子Activities.Add( this.actDrumSet = new CAct演奏Drumsドラムセット() );
+            base.list子Activities.Add( this.actBPMBarD = new CAct演奏DrumsBPMバー() );
 		}
 
 
@@ -178,16 +181,19 @@ namespace DTXMania
 				}
 				this.t進行描画・背景();
 				this.t進行描画・MIDIBGM();
-				this.t進行描画・パネル文字列();
 				this.t進行描画・スコア();
 				this.t進行描画・AVI();
 				this.t進行描画・BGA();
+                this.t進行描画・ドラムセット();
+                this.t進行描画・BPMバー();
+                this.t進行描画・パネル文字列();
 				this.t進行描画・ステータスパネル();
 				this.t進行描画・ギターベースフレーム();
 				this.t進行描画・レーンフラッシュGB();
                 this.t進行描画・ギターベース判定ライン();
                 this.t進行描画・ゲージ();
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
+                this.t進行描画・レーン();
 				this.t進行描画・レーンフラッシュD();
 				this.t進行描画・DANGER();
 				this.t進行描画・判定ライン();
@@ -263,6 +269,9 @@ namespace DTXMania
 		private CAct演奏DrumsチップファイアD actChipFireD;
 		private CAct演奏Drumsグラフ actGraph;   // #24074 2011.01.23 add ikanick
 		private CAct演奏Drumsパッド actPad;
+        private CAct演奏Drumsレーン actLane;
+        private CAct演奏Drumsドラムセット actDrumSet;
+        public CAct演奏DrumsBPMバー actBPMBarD;
 		private bool bフィルイン中;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[]
 		{
@@ -341,6 +350,7 @@ namespace DTXMania
 			this.tチップのヒット処理( nHitTime, pChip );
 			this.actLaneFlushD.Start( (Eレーン) nLane, ( (float) n強弱度合い0to127 ) / 127f );
 			this.actPad.Hit( nPad );
+            this.actDrumSet.Start( nLane );
 			if( ( e判定 != E判定.Poor ) && ( e判定 != E判定.Miss ) )
 			{
 				bool flag = this.bフィルイン中;
@@ -526,7 +536,7 @@ namespace DTXMania
 
 		protected override void t進行描画・演奏情報()
 		{
-			base.t進行描画・演奏情報( 338, 57 );
+			base.t進行描画・演奏情報( 1000, 257 );
 		}
 
 		protected override void t入力処理・ドラム()
@@ -1533,6 +1543,9 @@ namespace DTXMania
 					// パッドアニメ
 					this.actPad.Hit( this.nパッド0Atoパッド08[ pad ] );
 
+                    // ドラムセット
+                    this.actDrumSet.Start( this.nパッド0Atoレーン07[ pad ] );
+
 					// 空打ち音
 					if( CDTXMania.ConfigIni.bドラム打音を発声する )
 					{
@@ -2294,6 +2307,7 @@ namespace DTXMania
                     // #31602 2013.6.24 yyagi 判定ラインの表示位置をずらしたら、チップのヒットエフェクトの表示もずらすために、nJudgeLine..を追加
                     this.actChipFireD.Start( (Eレーン)indexSevenLanes, flag, flag2, flag2, 演奏判定ライン座標.nJudgeLinePosY_delta.Drums );
 					this.actPad.Hit( this.nチャンネル0Atoパッド08[ pChip.nチャンネル番号 - 0x11 ] );
+                    this.actDrumSet.Start( indexSevenLanes );
 					this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量( E楽器パート.DRUMS ) );
 					this.tチップのヒット処理( pChip.n発声時刻ms, pChip );
 				}
@@ -2751,7 +2765,7 @@ namespace DTXMania
 				if ( configIni.b演奏情報を表示する && ( configIni.eDark == Eダークモード.OFF ) )
 				{
 					int n小節番号 = n小節番号plus1 - 1;
-					CDTXMania.act文字コンソール.tPrint( 0x14d, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 0x11 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 0x11 ), C文字コンソール.Eフォント種別.白, n小節番号.ToString() );
+					CDTXMania.act文字コンソール.tPrint( 858, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 0x11 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 0x11 ), C文字コンソール.Eフォント種別.白, n小節番号.ToString() );
 				}
 				if ( ( ( configIni.eDark != Eダークモード.FULL ) && pChip.b可視 ) && ( this.txチップ != null ) )
 				{
@@ -2802,6 +2816,22 @@ namespace DTXMania
 				}
 			}
 		}
+
+        protected void t進行描画・レーン()
+        {
+            this.actLane.On進行描画();
+        }
+
+        protected void t進行描画・ドラムセット()
+        {
+            this.actDrumSet.On進行描画();
+        }
+
+        public void t進行描画・BPMバー()
+        {
+            this.actBPMBarD.On進行描画();
+        }
+
 		#endregion
 	}
 }

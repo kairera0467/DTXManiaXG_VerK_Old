@@ -1906,8 +1906,8 @@ namespace DTXMania
 					case 0x1a:
                     //case 0x1b:
                     //case 0x1c:
-                        this.t進行描画・チップ本体・ドラムス( configIni, ref dTX, ref pChip );
 						this.t進行描画・チップ・ドラムス( configIni, ref dTX, ref pChip );
+                        this.t進行描画・チップ本体・ドラムス( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
 					#region [ 1f: フィルインサウンド(ドラム) ]
@@ -2807,16 +2807,9 @@ namespace DTXMania
 		}
 		protected void t進行描画・背景()
 		{
-			if ( CDTXMania.ConfigIni.eDark == Eダークモード.OFF )
+			if ( this.tx背景 != null )
 			{
-				if ( this.tx背景 != null )
-				{
-					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
-				}
-			}
-			else
-			{
-				CDTXMania.app.Device.Clear( ClearFlags.ZBuffer | ClearFlags.Target, Color.Black, 0f, 0 );
+				this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 			}
 		}
 

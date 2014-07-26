@@ -127,9 +127,9 @@ namespace DTXMania
 		protected const int nギターコンボの文字間隔 = 1;
 		protected const int nドラムコンボのCOMBO文字の高さ = 32;
 		protected const int nドラムコンボのCOMBO文字の幅 = 90;
-		protected const int nドラムコンボの高さ = 70;
-		protected const int nドラムコンボの幅 = 45;
-		protected const int nドラムコンボの文字間隔 = 2;
+		protected const int nドラムコンボの高さ = 115;
+		protected const int nドラムコンボの幅 = 90;
+		protected const int nドラムコンボの文字間隔 = -6;
 		protected int[] nジャンプ差分値 = new int[ 180 ];
 		protected CSTATUS status;
 		protected CTexture txCOMBOギター;
@@ -273,10 +273,10 @@ namespace DTXMania
 					break;
 
 				case Eドラムコンボ文字の表示位置.RIGHT:
-					nX中央位置px = 485;
+					nX中央位置px = 1138;
 					break;
 			}
-			int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 350 : 60;
+			int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 350 : 10;
 			int n数字とCOMBOを合わせた画像の全長px = ( ( nドラムコンボの幅 + nドラムコンボの文字間隔 ) * n桁数 ) + nドラムコンボのCOMBO文字の幅;
 			int x = ( nX中央位置px + ( n数字とCOMBOを合わせた画像の全長px / 2 ) ) - nドラムコンボのCOMBO文字の幅;
 			int y = ( nY上辺位置px + nドラムコンボの高さ ) - nドラムコンボのCOMBO文字の高さ;
@@ -285,7 +285,7 @@ namespace DTXMania
 				y += this.nジャンプ差分値[ nJump ];
 
 			if( this.txCOMBOドラム != null )
-				this.txCOMBOドラム.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 140, 90, 32 ) );	// "COMBO" を表示。
+				this.txCOMBOドラム.t2D描画( CDTXMania.app.Device, x - 260, y + 40, new Rectangle(0, 294, 280, 64) );	// "COMBO" を表示。
 
 			// COMBO値を1の位から順に表示。
 
