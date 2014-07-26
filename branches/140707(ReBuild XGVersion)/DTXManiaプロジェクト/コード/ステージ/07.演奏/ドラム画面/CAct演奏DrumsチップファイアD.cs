@@ -49,7 +49,7 @@ namespace DTXMania
 					}
 				}
 				float n回転初期値 = CDTXMania.Random.Next( 360 );
-				for ( int i = 0; i < 8; i++ )
+				for ( int i = 0; i < 1; i++ )
 				{
 					for( int j = 0; j < FIRE_MAX; j++ )
 					{
@@ -59,11 +59,10 @@ namespace DTXMania
 							this.st火花[ j ].nLane = (int) lane;
 //							this.st火花[ j ].ct進行 = new CCounter( 0, 35, 6, CDTXMania.Timer );
 							this.st火花[ j ].ct進行 = new CCounter( 0, 70, 3, CDTXMania.Timer );
-							this.st火花[ j ].f回転単位 = C変換.DegreeToRadian( (float) ( n回転初期値 + ( i * 90f ) ) );
-							this.st火花[ j ].f回転方向 = ( i < 4 ) ? 1f : -2f;
-							this.st火花[ j ].fサイズ = ( i < 4 ) ? 1f : 0.5f;
 							break;
 						}
+                        this.st火花[ j ].f回転単位 = C変換.DegreeToRadian( (float) ( n回転初期値 + ( i * 90f ) ) );
+                        this.st火花[ j ].fサイズ = 1f;
 					}
 				}
 			}
@@ -190,11 +189,24 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx火花 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire.png" ) );
-				if( this.tx火花 != null )
-				{
-					this.tx火花.b加算合成 = true;
-				}
+				this.tx火花[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_LC.png" ) );
+                this.tx火花[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_HH.png" ) );
+                this.tx火花[ 2 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_SD.png" ) );
+                this.tx火花[ 3 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_BD.png" ) );
+                this.tx火花[ 4 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_HT.png" ) );
+                this.tx火花[ 5 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_LT.png" ) );
+                this.tx火花[ 6 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_FT.png" ) );
+                this.tx火花[ 7 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_CY.png" ) );
+                this.tx火花[ 8 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_LP.png" ) );
+                this.tx火花[ 9 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_RD.png" ) );
+
+                for ( int nTexA = 0; nTexA <= 9; nTexA++ )
+                {
+                    if (this.tx火花[ nTexA ] != null)
+                    {
+                        this.tx火花[ nTexA ].b加算合成 = true;
+                    }
+                }
 				this.tx青い星 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip star.png" ) );
 				if( this.tx青い星 != null )
 				{
@@ -217,7 +229,11 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				CDTXMania.tテクスチャの解放( ref this.tx火花 );
+                for ( int nTexA = 0; nTexA <= 9; nTexA++ )
+                {
+				    CDTXMania.tテクスチャの解放( ref this.tx火花[ nTexA ] );
+                }
+
 				CDTXMania.tテクスチャの解放( ref this.tx青い星 );
 				CDTXMania.tテクスチャの解放( ref this.tx大波 );
 				CDTXMania.tテクスチャの解放( ref this.tx細波 );
@@ -244,17 +260,13 @@ namespace DTXMania
 						float num3 = this.st火花[ i ].f回転単位 + ( this.st火花[ i ].f回転方向 * C変換.DegreeToRadian( (float) ( 60f * num2 ) ) );
 //						float num4 = ( (float) ( 0.2 + ( 0.8 * Math.Cos( ( ( (double) this.st火花[ i ].ct進行.n現在の値 ) * 2 / 50.0 ) * Math.PI / 2 ) ) ) ) * this.st火花[ i ].fサイズ;
 						float num4 = ( (float) ( 0.2 + ( 0.8 * Math.Cos( ( ( (double) this.st火花[ i ].ct進行.n現在の値 ) / 50.0 ) * Math.PI / 2 ) ) ) ) * this.st火花[ i ].fサイズ;
-						identity *= Matrix.Scaling( 0.2f + num4, 0.2f + this.st火花[ i ].fサイズ, 1f );
-						identity *= Matrix.RotationZ( num3 + ( (float) Math.PI / 2 ) );
+						identity *= Matrix.Scaling( 0.2f + num4, 0.2f + num4, 1f );
+						//identity *= Matrix.RotationZ( num3 + ( (float) Math.PI / 2 ) );
 						float num5 = ( (float) ( 0.8 * Math.Sin( num2 * Math.PI / 2 ) ) ) * this.st火花[ i ].fサイズ;
-						identity *= Matrix.Translation(
-							(this.nレーンの中央X座標[this.st火花[i].nLane] + (((float)Math.Cos((double)num3)) * num5)) - SampleFramework.GameWindowSize.Width / 2,
-							-( ( ( CDTXMania.ConfigIni.bReverse.Drums ? 55f - nJudgeLinePosY_delta_Drums : 425f + nJudgeLinePosY_delta_Drums ) + ( ( (float)Math.Sin( (double)num3 ) ) * num5 ) ) - SampleFramework.GameWindowSize.Height / 2 ),
-							0f
-						);
-						if( this.tx火花 != null )
+                        identity *= Matrix.Translation( ( this.nレーンの中央X座標[ this.st火花[i].nLane ] + (((float)Math.Cos((double)num3)) * num5)) - 320f, -((((float)375.0 + nJudgeLinePosY_delta_Drums) + (((float)Math.Sin((double)num3)) * num5)) - 170f), 0f);
+						if( this.tx火花[ this.st火花[ i ].nLane ] != null )
 						{
-							this.tx火花.t3D描画( CDTXMania.app.Device, identity );
+							this.tx火花[ this.st火花[ i ].nLane ].t3D描画( CDTXMania.app.Device, identity );
 						}
 					}
 				}
@@ -395,9 +407,10 @@ namespace DTXMania
 			public int nLane;
 			public bool b使用中;
 			public CCounter ct進行;
-			public float f回転単位;
-			public float f回転方向;
-			public float fサイズ;
+            public CCounter ctフレーム;
+            public float f回転単位;
+            public float f回転方向;
+            public float fサイズ;
 		}
 		[StructLayout( LayoutKind.Sequential )]
 		private struct ST細波
@@ -446,13 +459,16 @@ namespace DTXMania
 		private const int FIRE_MAX = 8 * 8;
 		private readonly float[] fY波の最小仰角 = new float[] { -130f, -126f, -120f, -118f, -110f, -108f, -103f, -97f };
 		private readonly float[] fY波の最大仰角 = new float[] { 70f, 72f, 77f, 84f, 89f, 91f, 99f, 107f };
-		private readonly int[] nレーンの中央X座標 = new int[] { 0x36, 0x5c, 0x7e, 0xa7, 0xd0, 0xf2, 0x114, 0x139 };
+
+        //2014.07.16 kairera0467　現時点でLP、RD
+		private readonly int[] nレーンの中央X座標 = new int[]       { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
+        private readonly int[] nチップエフェクト用X座標 = new int[] { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
 		private const int STAR_MAX = 0x100;
 		private ST火花[] st火花 = new ST火花[ FIRE_MAX ];
 		private ST大波[] st大波 = new ST大波[ BIGWAVE_MAX ];
 		private ST細波[] st細波 = new ST細波[ BIGWAVE_MAX ];
 		private ST青い星[] st青い星 = new ST青い星[ STAR_MAX ];
-		private CTexture tx火花;
+		private CTexture[] tx火花 = new CTexture[ 10 ];
 		private CTexture tx細波;
 		private CTexture tx青い星;
 		private CTexture tx大波;

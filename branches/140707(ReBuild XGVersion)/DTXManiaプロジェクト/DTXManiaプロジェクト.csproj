@@ -39,7 +39,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;_TEST_ENGLISH TEST_Direct3D9Ex_ _WindowedFullscreen</DefineConstants>
+    <DefineConstants>TRACE;_TEST_ENGLISH TEST_Direct3D9Ex_ _WindowedFullscreen</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -172,6 +172,8 @@
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsレーンフラッシュGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drums判定文字列.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CStage演奏ドラム画面.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏Drumsドラムセット.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsBPMバー.cs" />
     <Compile Include="コード\ステージ\08.結果\CActResultImage.cs" />
     <Compile Include="コード\ステージ\08.結果\CActResultParameterPanel.cs" />
     <Compile Include="コード\ステージ\08.結果\CActResultRank.cs" />
