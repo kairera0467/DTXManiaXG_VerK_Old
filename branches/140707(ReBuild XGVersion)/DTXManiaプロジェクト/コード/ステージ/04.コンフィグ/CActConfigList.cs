@@ -496,6 +496,18 @@ namespace DTXMania
 				"To play both right- and Ride-Cymbal\n" +
 				" automatically." );
 			this.list項目リスト.Add( this.iDrumsCymbalRide );
+
+			this.iDrumsLeftPedal = new CItemToggle( "    LeftPedal", CDTXMania.ConfigIni.bAutoPlay.LP,
+				"左ペダルを自動で演奏します。",
+				"To play Floor Tom automatically." );
+			this.list項目リスト.Add( this.iDrumsLeftPedal );
+
+			this.iDrumsLeftBassDrum = new CItemToggle( "    LeftBassDrum", CDTXMania.ConfigIni.bAutoPlay.LBD,
+				"左バスドラムを自動で\n" +
+				"演奏します。",
+				"To play both LeftBassDrum\n" +
+				" automatically." );
+			this.list項目リスト.Add( this.iDrumsLeftBassDrum );
 			#endregion
 
 			this.iDrumsScrollSpeed = new CItemInteger( "ScrollSpeed", 0, 0x7cf, CDTXMania.ConfigIni.n譜面スクロール速度.Drums,
@@ -1391,10 +1403,14 @@ namespace DTXMania
 			{
 				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.RD );
 			}
-			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsHP )			// #27029 2012.1.4 from
+			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsLP )			// #27029 2012.1.4 from
 			{																							//
-				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.HP );	//
+				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.LP );	//
 			}																							//
+            else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsLBD )
+            {
+                CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.DRUMS, EKeyConfigPad.LBD);
+            }
 			else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarR )
 			{
 				CDTXMania.stageコンフィグ.tパッド選択通知( EKeyConfigPart.GUITAR, EKeyConfigPad.R );
@@ -1691,10 +1707,14 @@ namespace DTXMania
 				"ドラムのキー設定：\nライドシンバルへのキーの割り当て\nを設定します。",
 				"Drums key assign:\nTo assign key/pads for RideCymbal\n button.");
 			this.list項目リスト.Add(this.iKeyAssignDrumsRD);
-			this.iKeyAssignDrumsHP = new CItemBase( "HiHatPedal",									// #27029 2012.1.4 from
-				"ドラムのキー設定：\nハイハットのフットペダルへのキーの\n割り当てを設定します。",	//
+			this.iKeyAssignDrumsLP = new CItemBase( "HiHatPedal",									// #27029 2012.1.4 from
+				"ドラムのキー設定：\nハイハットペダルへのキーの\n割り当てを設定します。",	        //
 				"Drums key assign:\nTo assign key/pads for HiHatPedal\n button." );					//
-			this.list項目リスト.Add( this.iKeyAssignDrumsHP );										//
+			this.list項目リスト.Add( this.iKeyAssignDrumsLP );										//
+            this.iKeyAssignDrumsLBD = new CItemBase( "LeftBassDrum",
+                "ドラムのキー設定：\n左バスペダルへのキーの\n割り当てを設定します。",
+				"Drums key assign:\nTo assign key/pads for LeftBassDrum\n button." );
+			this.list項目リスト.Add( this.iKeyAssignDrumsLBD );	
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignDrums;
 		}
@@ -2278,7 +2298,8 @@ namespace DTXMania
 		private CItemBase iKeyAssignDrumsRD;
 		private CItemBase iKeyAssignDrumsReturnToMenu;
 		private CItemBase iKeyAssignDrumsSD;
-		private CItemBase iKeyAssignDrumsHP;	// #27029 2012.1.4 from
+		private CItemBase iKeyAssignDrumsLP;	// #27029 2012.1.4 from
+		private CItemBase iKeyAssignDrumsLBD;	// #27029 2012.1.4 from
 		private CItemBase iKeyAssignGuitarB;
 		private CItemBase iKeyAssignGuitarCancel;
 		private CItemBase iKeyAssignGuitarDecide;
@@ -2414,6 +2435,8 @@ namespace DTXMania
 		//private CItemToggle iDrumsSudden;
 		private CItemToggle iDrumsTight;
 		private CItemToggle iDrumsGraph;        // #24074 2011.01.23 add ikanick
+        private CItemToggle iDrumsLeftPedal;
+        private CItemToggle iDrumsLeftBassDrum;
 
 		//private CItemToggle iGuitarAutoPlay;
 		private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2603,6 +2626,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.LT = this.iDrumsLowTom.bON;
 			CDTXMania.ConfigIni.bAutoPlay.FT = this.iDrumsFloorTom.bON;
 			CDTXMania.ConfigIni.bAutoPlay.CY = this.iDrumsCymbalRide.bON;
+            CDTXMania.ConfigIni.bAutoPlay.LP = this.iDrumsLeftPedal.bON;
+            CDTXMania.ConfigIni.bAutoPlay.LBD = this.iDrumsLeftBassDrum.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Drums = this.iDrumsScrollSpeed.n現在の値;
 			CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置) this.iDrumsComboPosition.n現在選択されている項目番号;
 												// "Sudden" || "Sud+Hid"

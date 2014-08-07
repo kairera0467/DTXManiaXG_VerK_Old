@@ -33,12 +33,18 @@ namespace DTXMania
             this.nY座標制御タイマ = -1;
             for( int i = 0; i < 9; i++ )
             {
-                STパッド状態 stパッド状態2 = new STパッド状態();
-                STパッド状態 stパッド状態 = stパッド状態2;
+                STパッド状態 stパッド状態 = new STパッド状態();
                 stパッド状態.nY座標オフセットdot = 0;
                 stパッド状態.nY座標加速度dot = 0;
                 this.stパッド状態[ i ] = stパッド状態;
             }
+
+            this.nLeftCymbalFrame = 9;
+            this.nLeftCymbalInterval = 35;
+
+            this.ctLeftCymbal = new CCounter( 1, this.nLeftCymbalFrame, this.nLeftCymbalInterval, CDTXMania.Timer );
+            this.ctLeftCymbal = new CCounter( 1, this.nRightCymbalFrame, this.nRightCymbalInterval, CDTXMania.Timer );
+
             base.On活性化();
         }
 
@@ -53,6 +59,8 @@ namespace DTXMania
             this.txHitom = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_HiTom.png" ) );
             this.txLowTom = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_LowTom.png" ) );
             this.txFloorTom = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_FloorTom.png" ) );
+            this.txBassDrum = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_BassDrum.png" ) );
+
 
             base.OnManagedリソースの作成();
         }
@@ -63,6 +71,7 @@ namespace DTXMania
             CDTXMania.tテクスチャの解放( ref this.txHitom );
             CDTXMania.tテクスチャの解放( ref this.txLowTom );
             CDTXMania.tテクスチャの解放( ref this.txFloorTom );
+            CDTXMania.tテクスチャの解放( ref this.txBassDrum );
 
             base.OnManagedリソースの解放();
         }
@@ -102,11 +111,17 @@ namespace DTXMania
             this.n座標HiTom = 491 + this.stパッド状態[ 4 ].nY座標オフセットdot;
             this.n座標LowTom = 490 + this.stパッド状態[ 5 ].nY座標オフセットdot;
             this.n座標FloorTom = 490 + this.stパッド状態[ 6 ].nY座標オフセットdot;
+            this.n座標BassDrum = 517 - this.stパッド状態[ 3 ].nY座標オフセットdot;
+            #endregion
+
+            #region[ バスドラ ]
+            this.txBassDrum.t2D描画( CDTXMania.app.Device, 310, this.n座標BassDrum );
             #endregion
 
             #region[ スネア ]
             this.txSnare.t2D描画( CDTXMania.app.Device, 0, this.n座標Snare );
             #endregion
+
             #region[ ハイタム ]
             this.txHitom.t2D描画( CDTXMania.app.Device, 107, this.n座標HiTom );
             #endregion
@@ -132,6 +147,9 @@ namespace DTXMania
             public int nY座標加速度dot;
         }
 
+        private CCounter ctLeftCymbal;
+        private CCounter ctRightCymbal;
+        
         private CTexture txLeftCymbal;
         private CTexture txSnare;
         private CTexture txHitom;
@@ -147,6 +165,17 @@ namespace DTXMania
         private int n座標HiTom;
         private int n座標LowTom;
         private int n座標FloorTom;
+        private int n座標BassDrum;
+
+        private int nLeftCymbalX;
+        private int nLeftCymbalY;
+        private int nLeftCymbalFrame;
+        private int nLeftCymbalInterval;
+
+        private int nRightCymbalX;
+        private int nRightCymbalY;
+        private int nRightCymbalFrame;
+        private int nRightCymbalInterval;
         //-----------------
         #endregion
     }
