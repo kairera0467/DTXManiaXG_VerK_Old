@@ -731,7 +731,7 @@ namespace DTXMania
 					"??", "??", "??", "??", "??", "??", "??", "??", 
 					"??", "??", "??", "??", "??", "??", "??", "??", 
 					"小節線", "拍線", "MIDIコーラス", "フィルイン", "AVI", "??", "BMPレイヤ4", "BMPレイヤ5",
-					"BMPレイヤ6", "BMPレイヤ7", "??", "??", "??", "??", "??", "??", 
+					"BMPレイヤ6", "BMPレイヤ7", "AVIWIDE", "??", "??", "??", "??", "??", 
 					"BMPレイヤ8", "SE01", "SE02", "SE03", "SE04", "SE05", "SE06", "SE07",
 					"SE08", "SE09", "??", "??", "??", "??", "??", "??", 
 					"SE10", "SE11", "SE12", "SE13", "SE14", "SE15", "SE16", "SE17",
@@ -782,7 +782,7 @@ namespace DTXMania
 						nDuration = ( wc.rSound[ 0 ] == null ) ? 0 : wc.rSound[ 0 ].n総演奏時間ms;
 					}
 				}
-				else if ( this.nチャンネル番号 == 0x54 )	// AVI
+				else if ( this.nチャンネル番号 == 0x54 || this.nチャンネル番号 == 0x5A )	// AVI
 				{
 					if ( this.rAVI != null && this.rAVI.avi != null )
 					{
@@ -1550,7 +1550,7 @@ namespace DTXMania
 			{
 				foreach( CChip chip in this.listChip )
 				{
-					if( chip.nチャンネル番号 == 0x54 )
+					if( chip.nチャンネル番号 == 0x54 || chip.nチャンネル番号 == 0x5A )
 					{
 						chip.eAVI種別 = EAVI種別.Unknown;
 						chip.rAVI = null;
@@ -1563,7 +1563,7 @@ namespace DTXMania
 							{
 								chip.eAVI種別 = EAVI種別.AVIPAN;
 								chip.rAVI = this.listAVI[ cavipan.nAVI番号 ];
-                                if(CDTXMania.ConfigIni.bDirectShowMode == true)
+                                if( CDTXMania.ConfigIni.bDirectShowMode == true )
                                     chip.rDShow = this.listDS[ cavipan.nAVI番号 ];
 								chip.rAVIPan = cavipan;
 								continue;
@@ -3640,7 +3640,7 @@ namespace DTXMania
 
 								case 0x05:	// Extended Object (非対応)
 								case 0x06:	// Missアニメ (非対応)
-								case 0x5A:	// 未定義
+								//case 0x5A:	// 未定義
 								case 0x5b:	// 未定義
 								case 0x5c:	// 未定義
 								case 0x5d:	// 未定義
@@ -3669,16 +3669,16 @@ namespace DTXMania
 										}
 										continue;
 									}
-                                case 0x99:	// 動画再生
-                                    {
-                                        if (this.listAVIPAN.ContainsKey(chip.n整数値))
-                                        {
-                                            int num21 = ms + ((int)(((0x271 * (chip.n発声位置 - n発声位置)) * dbBarLength) / bpm));
-                                            int num22 = ms + ((int)(((0x271 * ((chip.n発声位置 + this.listAVIPAN[chip.n整数値].n移動時間ct) - n発声位置)) * dbBarLength) / bpm));
-                                            chip.n総移動時間 = num22 - num21;
-                                        }
-                                        continue;
-                                    }
+								case 0x5A:	// ワイド(DTX1.00)動画再生
+									{
+										if ( this.listAVIPAN.ContainsKey( chip.n整数値 ) )
+										{
+											int num21 = ms + ( (int) ( ( ( 0x271 * ( chip.n発声位置 - n発声位置 ) ) * dbBarLength ) / bpm ) );
+											int num22 = ms + ( (int) ( ( ( 0x271 * ( ( chip.n発声位置 + this.listAVIPAN[ chip.n整数値 ].n移動時間ct ) - n発声位置 ) ) * dbBarLength ) / bpm ) );
+											chip.n総移動時間 = num22 - num21;
+										}
+										continue;
+									}
 								default:
 									{
 										continue;
@@ -6387,6 +6387,7 @@ namespace DTXMania
 					break;
 
                 case 0x54:
+                case 0x5A:
                     this.bチップがある.AVI = true;
                     break;
 
