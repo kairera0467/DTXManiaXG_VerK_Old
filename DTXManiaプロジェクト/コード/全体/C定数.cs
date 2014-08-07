@@ -24,8 +24,10 @@ namespace DTXMania
 	}
 	public enum EBDGroup		// #27029 2012.1.4 from add
 	{
-		打ち分ける,
-		どっちもBD
+        打ち分ける,
+        BDとLPで打ち分ける,
+        左右ペダルのみ打ち分ける,
+        どっちもBD
 	}
 	public enum Eダークモード
 	{
@@ -58,7 +60,8 @@ namespace DTXMania
 		HHO		= 7,
 		RD		= 8,
 		LC		= 9,
-		HP		= 10,	// #27029 2012.1.4 from
+		LP		= 10,	// #27029 2012.1.4 from
+        LBD     = 11,
 		MAX,			// 門番用として定義
 		UNKNOWN = 99
 	}
@@ -81,7 +84,8 @@ namespace DTXMania
 		HHO		= Eパッド.HHO,
 		RD		= Eパッド.RD,
 		LC		= Eパッド.LC,
-		HP		= Eパッド.HP,		// #27029 2012.1.4 from
+		LP		= Eパッド.LP,		// #27029 2012.1.4 from
+        LBD     = Eパッド.LBD,
 		Capture,
 		UNKNOWN = Eパッド.UNKNOWN
 	}
@@ -106,8 +110,9 @@ namespace DTXMania
 		HHO		= 128,
 		RD		= 256,
 		LC		= 512,
-		HP		= 1024,				// #27029
-		UNKNOWN = 2048
+		LP		= 1024,				// #27029
+        LBD     = 2048,
+		UNKNOWN = 4096
 	}
 	public enum Eランダムモード
 	{
@@ -209,7 +214,9 @@ namespace DTXMania
 		LT,
 		FT,
 		CY,
+        LP,
 		RD,		// 将来の独立レーン化/独立AUTO設定を見越して追加
+        LBD = 10,
 		Guitar,	// AUTOレーン判定を容易にするため、便宜上定義しておく(未使用)
 		Bass,	// (未使用)
 		GtR,
@@ -227,8 +234,10 @@ namespace DTXMania
 	}
 	internal enum Eレーン数
 	{
-		物理 = 8,	// LC, HH,     SD, BD, HT, LT, FT, CY
-		論理 = 10	// LC, HO, HC, SD, BD, HT, LT, FT, RC, RD
+		物理 = 8,	   // LC, HH,             SD, BD, HT, LT, FT, CY
+		論理 = 10,	   // LC, HO, HC,         SD, BD, HT, LT, FT, RC, RD
+        DTXG物理 = 10, // LC, HH,     LP,     SD, BD, HT, LT, FT, CY, RD
+        DTXG論理 = 12  // LC, HO, HC, LP, LB, SD, BD, HT, LT, FT, CY, RD 
 	}
 	internal enum Eログ出力
 	{
@@ -338,6 +347,8 @@ namespace DTXMania
 		public T LC;
 		public T HH;
 		public T SD;
+        public T LP;
+        public T LBD;
 		public T BD;
 		public T HT;
 		public T LT;
@@ -370,6 +381,10 @@ namespace DTXMania
 						return this.HH;
 					case (int) Eレーン.SD:
 						return this.SD;
+                    case (int) Eレーン.LP:
+                        return this.LP;
+                    case (int) Eレーン.LBD:
+                        return this.LBD;
 					case (int) Eレーン.BD:
 						return this.BD;
 					case (int) Eレーン.HT:
@@ -422,6 +437,12 @@ namespace DTXMania
 					case (int) Eレーン.SD:
 						this.SD = value;
 						return;
+                    case (int) Eレーン.LP:
+                        this.LP = value;
+                        return;
+                    case (int) Eレーン.LBD:
+                        this.LBD = value;
+                        return;
 					case (int) Eレーン.BD:
 						this.BD = value;
 						return;
@@ -494,7 +515,9 @@ namespace DTXMania
 		public bool LT;			// 5
 		public bool FT;			// 6
 		public bool CY;			// 7
+        public bool LP;
 		public bool RD;			// 8
+        public bool LBD;
 		public bool Guitar;		// 9	(not used)
 		public bool Bass;		// 10	(not used)
 		public bool GtR;		// 11
@@ -529,8 +552,12 @@ namespace DTXMania
 						return this.FT;
 					case (int) Eレーン.CY:
 						return this.CY;
+                    case (int) Eレーン.LP:
+                        return this.LP;
 					case (int) Eレーン.RD:
 						return this.RD;
+                    case (int) Eレーン.LBD:
+                        return this.LBD;
 					case (int) Eレーン.Guitar:
 						if ( !this.GtR ) return false;
 						if ( !this.GtG ) return false;
@@ -596,9 +623,15 @@ namespace DTXMania
 					case (int) Eレーン.CY:
 						this.CY = value;
 						return;
+                    case (int) Eレーン.LP:
+                        this.LP = value;
+                        return;
 					case (int) Eレーン.RD:
 						this.RD = value;
 						return;
+                    case (int) Eレーン.LBD:
+                        this.LBD = value;
+                        return;
 					case (int) Eレーン.Guitar:
 						this.GtR = this.GtG = this.GtB = this.GtPick = this.GtW = value;
 						return;
@@ -639,10 +672,29 @@ namespace DTXMania
 				throw new IndexOutOfRangeException();
 			}
 		}
-	}
+    }
 
+    #region[Ver.K追加]
+    public enum Eレーンタイプ
+    {
+        TypeA,
+        TypeB,
+        TypeC,
+        TypeD
+    }
+    public enum Eミラー
+    {
+        TypeA,
+        TypeB
+    }
+    public enum EGraphicType
+    {
+        XG,
+        XG2
+    }
+    #endregion
 
-	internal class C定数
+    internal class C定数
 	{
 		public const int BGA_H = 0x163;
 		public const int BGA_W = 0x116;

@@ -482,6 +482,8 @@ namespace DTXMania
 			public CDTX.CChip HHO;
 			public CDTX.CChip RD;
 			public CDTX.CChip LC;
+            public CDTX.CChip LP;
+            public CDTX.CChip LBD;
 			public CDTX.CChip this[ int index ]
 			{
 				get
@@ -517,6 +519,12 @@ namespace DTXMania
 
 						case 9:
 							return this.LC;
+
+                        case 10:
+                            return this.LP;
+
+                        case 11:
+                            return this.LBD;
 					}
 					throw new IndexOutOfRangeException();
 				}
@@ -563,6 +571,10 @@ namespace DTXMania
 						case 9:
 							this.LC = value;
 							return;
+
+                        case 10:
+                            this.LP = value;
+                            return;
 					}
 					throw new IndexOutOfRangeException();
 				}
@@ -848,6 +860,12 @@ namespace DTXMania
 								return this.r現在の空うちドラムChip.HH;
 							}
 							return this.r現在の空うちドラムChip.HHO;
+
+                        case Eパッド.LP:
+                            return this.r現在の空うちドラムChip.LP;
+
+                        case Eパッド.LBD:
+                            return this.r現在の空うちドラムChip.LBD;
 					}
 					break;
 
@@ -882,7 +900,7 @@ namespace DTXMania
 			for ( ; nIndex_NearestChip_Future < count; nIndex_NearestChip_Future++)
 			{
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Future ];
-				if ( ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1a ) ) )
+				if ( ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1C ) ) )
 				{
 					if ( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 					{
@@ -917,7 +935,7 @@ namespace DTXMania
 			for ( ; nIndex_NearestChip_Past >= 0; nIndex_NearestChip_Past-- )
 			{
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Past ];
-				if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1a ) )
+				if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1C ) )
 				{
 					if ( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 					{
@@ -1001,7 +1019,7 @@ namespace DTXMania
 					#region [ DRUMS ]
 						{
 							int index = pChip.nチャンネル番号;
-							if ( ( 0x11 <= index ) && ( index <= 0x1a ) )
+							if ( ( 0x11 <= index ) && ( index <= 0x1C ) )
 							{
 								index -= 0x11;
 							}
@@ -1405,7 +1423,7 @@ namespace DTXMania
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Future ];
 				if ( !chip.bHit )
 				{
-					if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1c ) )
+					if ( ( 0x11 <= nChannel ) && ( nChannel <= 0x1C ) )
 					{
 						if ( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 						{
@@ -1443,7 +1461,7 @@ namespace DTXMania
 				CDTX.CChip chip = listChip[ nIndex_NearestChip_Past ];
 				if ( (!chip.bHit) &&
 						(
-							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1c ) &&
+							( ( nChannel >= 0x11 ) && ( nChannel <= 0x1C ) &&
 								( ( chip.nチャンネル番号 == nChannel ) || ( chip.nチャンネル番号 == ( nChannel + 0x20 ) ) )
 							)
 							||
@@ -1904,8 +1922,8 @@ namespace DTXMania
 					case 0x18:
 					case 0x19:
 					case 0x1a:
-                    //case 0x1b:
-                    //case 0x1c:
+                    case 0x1b:
+                    case 0x1c:
 						this.t進行描画・チップ・ドラムス( configIni, ref dTX, ref pChip );
                         this.t進行描画・チップ本体・ドラムス( configIni, ref dTX, ref pChip );
 						break;
@@ -2394,6 +2412,8 @@ namespace DTXMania
 			CDTXMania.ConfigIni.bAutoPlay.FT = true;
 			CDTXMania.ConfigIni.bAutoPlay.RD = true;
 			CDTXMania.ConfigIni.bAutoPlay.LC = true;
+            CDTXMania.ConfigIni.bAutoPlay.LP = true;
+            CDTXMania.ConfigIni.bAutoPlay.LBD = true;
 			CDTXMania.ConfigIni.bAutoPlay.GtR = true;
 			CDTXMania.ConfigIni.bAutoPlay.GtB = true;
 			CDTXMania.ConfigIni.bAutoPlay.GtB = true;

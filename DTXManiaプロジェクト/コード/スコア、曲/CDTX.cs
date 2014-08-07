@@ -421,6 +421,8 @@ namespace DTXMania
 						case 0x18:
 						case 0x19:
 						case 0x1a:
+                        case 0x1b:
+                        case 0x1c:
 						case 0x1f:
 						case 0x20:
 						case 0x21:
@@ -550,7 +552,7 @@ namespace DTXMania
 					"??", "バックコーラス", "小節長変更", "BPM変更", "BMPレイヤ1", "??", "??", "BMPレイヤ2",
 					"BPM変更(拡張)", "??", "??", "??", "??", "??", "??", "??",
 					"??", "HHClose", "Snare", "Kick", "HiTom", "LowTom", "Cymbal", "FloorTom",
-					"HHOpen", "RideCymbal", "LeftCymbal", "", "", "", "", "ドラム歓声切替",
+					"HHOpen", "RideCymbal", "LeftCymbal", "LeftPedal", "LeftBD", "", "", "ドラム歓声切替",
 					"ギターOPEN", "ギター - - B", "ギター - G -", "ギター - G B", "ギター R - -", "ギター R - B", "ギター R G -", "ギター R G B",
 					"ギターWailing", "??", "??", "??", "??", "??", "??", "ギターWailing音切替",
 					"??", "HHClose(不可視)", "Snare(不可視)", "Kick(不可視)", "HiTom(不可視)", "LowTom(不可視)", "Cymbal(不可視)", "FloorTom(不可視)",
@@ -785,12 +787,14 @@ namespace DTXMania
 			public int HHO;
 			public int RD;
 			public int LC;
+            public int LP;
+            public int LBD;
 
 			public int Drums
 			{
 				get
 				{
-					return this.HH + this.SD + this.BD + this.HT + this.LT + this.CY + this.FT + this.HHO + this.RD + this.LC;
+					return this.HH + this.SD + this.BD + this.HT + this.LT + this.CY + this.FT + this.HHO + this.RD + this.LC + this.LP + this.LBD;
 				}
 			}
 			public int Guitar;
@@ -833,9 +837,15 @@ namespace DTXMania
 							return this.LC;
 
 						case 10:
-							return this.Guitar;
+                            return this.LP;
 
 						case 11:
+							return this.LBD;
+
+						case 12:
+							return this.Guitar;
+
+						case 13:
 							return this.Bass;
 					}
 					throw new IndexOutOfRangeException();
@@ -889,10 +899,18 @@ namespace DTXMania
 							return;
 
 						case 10:
-							this.Guitar = value;
+							this.LP = value;
 							return;
 
 						case 11:
+							this.LBD = value;
+							return;
+
+						case 12:
+							this.Guitar = value;
+							return;
+
+						case 13:
 							this.Bass = value;
 							return;
 					}
@@ -2522,7 +2540,7 @@ namespace DTXMania
 						foreach ( CChip chip in this.listChip )
 						{
 							int c = chip.nチャンネル番号;
-							if ( ( 0x11 <= c ) && ( c <= 0x1a ) )
+							if ( ( 0x11 <= c ) && ( c <= 0x1C ) )
 							{
 								this.n可視チップ数[ c - 0x11 ]++;
 							}
@@ -2672,7 +2690,7 @@ namespace DTXMania
 					// BGM:
 					case 0x01:
 					// Dr演奏チャネル
-					case 0x11:	case 0x12:	case 0x13:	case 0x14:	case 0x15:	case 0x16:	case 0x17:	case 0x18:	case 0x19:	case 0x1A:
+					case 0x11:	case 0x12:	case 0x13:	case 0x14:	case 0x15:	case 0x16:	case 0x17:	case 0x18:	case 0x19:	case 0x1A:  case 0x1B:  case 0x1C:
 					// Gt演奏チャネル
 					case 0x20:	case 0x21:	case 0x22:	case 0x23:	case 0x24:	case 0x25:	case 0x26:	case 0x27:	case 0x28:
 					// Bs演奏チャネル
@@ -5191,7 +5209,7 @@ namespace DTXMania
 
 				#region [ chip.e楽器パート = ... ]
 				//-----------------
-				if( ( nチャンネル番号 >= 0x11 ) && ( nチャンネル番号 <= 0x1A ) )
+				if( ( nチャンネル番号 >= 0x11 ) && ( nチャンネル番号 <= 0x1C ) )
 				{
 					chip.e楽器パート = E楽器パート.DRUMS;
 				}

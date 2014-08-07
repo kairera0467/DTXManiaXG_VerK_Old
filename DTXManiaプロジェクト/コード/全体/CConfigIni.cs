@@ -205,15 +205,26 @@ namespace DTXMania
 						this.padLC = value;
 					}
 				}
-				public CConfigIni.CKeyAssign.STKEYASSIGN[] HP
+				public CConfigIni.CKeyAssign.STKEYASSIGN[] LP
 				{
 					get
 					{
-						return this.padHP;
+						return this.padLP;
 					}
 					set
 					{
-						this.padHP = value;
+						this.padLP = value;
+					}
+				}
+				public CConfigIni.CKeyAssign.STKEYASSIGN[] LBD
+				{
+					get
+					{
+						return this.padLBD;
+					}
+					set
+					{
+						this.padLBD = value;
 					}
 				}
 				public CConfigIni.CKeyAssign.STKEYASSIGN[] Capture
@@ -263,8 +274,11 @@ namespace DTXMania
 							case (int) EKeyConfigPad.LC:
 								return this.padLC;
 
-							case (int) EKeyConfigPad.HP:	// #27029 2012.1.4 from
-								return this.padHP;			//
+							case (int) EKeyConfigPad.LP:	// #27029 2012.1.4 from
+								return this.padLP;			//
+
+							case (int) EKeyConfigPad.LBD:	// #27029 2012.1.4 from
+								return this.padLBD;			//
 
 							case (int) EKeyConfigPad.Capture:
 								return this.padCapture;
@@ -315,8 +329,12 @@ namespace DTXMania
 								this.padLC = value;
 								return;
 
-							case (int) EKeyConfigPad.HP:
-								this.padHP = value;
+							case (int) EKeyConfigPad.LP:
+								this.padLP = value;
+								return;
+
+							case (int) EKeyConfigPad.LBD:
+								this.padLBD = value;
 								return;
 
 							case (int) EKeyConfigPad.Capture:
@@ -339,7 +357,8 @@ namespace DTXMania
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padLT_Wail;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padRD;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padSD_G;
-				private CConfigIni.CKeyAssign.STKEYASSIGN[] padHP;
+				private CConfigIni.CKeyAssign.STKEYASSIGN[] padLP;
+				private CConfigIni.CKeyAssign.STKEYASSIGN[] padLBD;
 				private CConfigIni.CKeyAssign.STKEYASSIGN[] padCapture;
 				//-----------------
 				#endregion
@@ -472,6 +491,7 @@ namespace DTXMania
 		public E打ち分け時の再生の優先順位 eHitSoundPriorityCY;
 		public E打ち分け時の再生の優先順位 eHitSoundPriorityFT;
 		public E打ち分け時の再生の優先順位 eHitSoundPriorityHH;
+		public E打ち分け時の再生の優先順位 eHitSoundPriorityLP;
 		public STDGBVALUE<Eランダムモード> eRandom;
 		public Eダメージレベル eダメージレベル;
         public CKeyAssign KeyAssign;
@@ -898,6 +918,8 @@ namespace DTXMania
 			public int FT;
 			public int CY;
 			public int RD;
+            public int LP;
+            public int LBD;
 			public int Guitar;
 			public int Bass;
 			public int this[ int index ]
@@ -934,9 +956,15 @@ namespace DTXMania
 							return this.RD;
 
 						case 9:
-							return this.Guitar;
+							return this.LP;
 
 						case 10:
+							return this.LBD;
+
+						case 11:
+							return this.Guitar;
+
+						case 12:
 							return this.Bass;
 					}
 					throw new IndexOutOfRangeException();
@@ -982,10 +1010,18 @@ namespace DTXMania
 							return;
 
 						case 9:
-							this.Guitar = value;
+							this.LP = value;
 							return;
 
 						case 10:
+							this.LBD = value;
+							return;
+
+						case 11:
+							this.Guitar = value;
+							return;
+
+						case 12:
 							this.Bass = value;
 							return;
 					}
@@ -1020,9 +1056,24 @@ namespace DTXMania
 			}
 
 			CDTXMania.ConfigIni.bIsSwappedGuitarBass_AutoFlagsAreSwapped = !CDTXMania.ConfigIni.bIsSwappedGuitarBass_AutoFlagsAreSwapped;
-		}
-		
-		// コンストラクタ
+        }
+
+        #region[Ver.K追加オプション]
+        //--------------------------
+        #region[Position]
+        public Eレーンタイプ eLaneType;
+        public Eミラー eMirror;
+        public EGraphicType eGraphicType;
+        #endregion
+        #region[System]
+
+        #endregion
+
+
+        //--------------------------
+        #endregion
+
+        // コンストラクタ
 
 		public CConfigIni()
 		{
@@ -1153,6 +1204,8 @@ namespace DTXMania
 			this.nVelocityMin.FT = 0;
 			this.nVelocityMin.CY = 0;
 			this.nVelocityMin.RD = 0;
+            this.nVelocityMin.LP = 0;
+            this.nVelocityMin.LBD = 0;
 			#endregion
 			this.nRisky = 0;							// #23539 2011.7.26 yyagi RISKYモード
 			this.nShowLagType = (int) EShowLagType.OFF;	// #25370 2011.6.3 yyagi ズレ時間表示
@@ -1188,7 +1241,11 @@ namespace DTXMania
 
 			//this.bNoMP3Streaming = false;
 			this.nMasterVolume = 100;					// #33700 2014.4.26 yyagi マスターボリュームの設定(WASAPI/ASIO用)
-		}
+
+            #region[ Ver.K追加 ]
+            this.eLaneType = Eレーンタイプ.TypeA;
+            #endregion
+        }
 		public CConfigIni( string iniファイル名 )
 			: this()
 		{
@@ -1429,6 +1486,10 @@ namespace DTXMania
 			sw.WriteLine( "; 打ち分け時の再生音の優先順位(CYGroup)(0:Chip>Pad, 1:Pad>Chip)" );
 			sw.WriteLine( "; Grouping sound priority(CYGroup)(0:Chip>Pad, 1:Pad>Chip)" );
 			sw.WriteLine( "HitSoundPriorityCY={0}", (int) this.eHitSoundPriorityCY );
+			sw.WriteLine();
+			sw.WriteLine( "; 打ち分け時の再生音の優先順位(LPGroup)(0:Chip>Pad, 1:Pad>Chip)" );
+			sw.WriteLine( "; Grouping sound priority(CYGroup)(0:Chip>Pad, 1:Pad>Chip)" );
+			sw.WriteLine( "HitSoundPriorityLP={0}", (int) this.eHitSoundPriorityLP );
 			sw.WriteLine();
 			sw.WriteLine( "; シンバルフリーモード(0:OFF, 1:ON)" );
 			sw.WriteLine( "; Grouping CY and LC (0:OFF, 1:ON)" );
@@ -1809,6 +1870,8 @@ namespace DTXMania
 			sw.WriteLine( "LT={0}", this.bAutoPlay.LT ? 1 : 0 );
 			sw.WriteLine( "FT={0}", this.bAutoPlay.FT ? 1 : 0 );
 			sw.WriteLine( "CY={0}", this.bAutoPlay.CY ? 1 : 0 );
+			sw.WriteLine( "LP={0}", this.bAutoPlay.LP ? 1 : 0 );
+			sw.WriteLine( "LBD={0}", this.bAutoPlay.LBD ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; Guitar" );
 			//sw.WriteLine( "Guitar={0}", this.bAutoPlay.Guitar ? 1 : 0 );
@@ -1902,8 +1965,11 @@ namespace DTXMania
 			sw.Write( "LC=" );
 			this.tキーの書き出し( sw, this.KeyAssign.Drums.LC );
 			sw.WriteLine();
-			sw.Write( "HP=" );										// #27029 2012.1.4 from
-			this.tキーの書き出し( sw, this.KeyAssign.Drums.HP );	//
+			sw.Write( "LP=" );										// #27029 2012.1.4 from
+			this.tキーの書き出し( sw, this.KeyAssign.Drums.LP );	//
+			sw.WriteLine();											//
+			sw.Write( "LBD=" );										// #27029 2012.1.4 from
+			this.tキーの書き出し( sw, this.KeyAssign.Drums.LBD );	//
 			sw.WriteLine();											//
 			sw.WriteLine();
 			#endregion
@@ -1999,10 +2065,10 @@ namespace DTXMania
 				}
 				t文字列から読み込み( str );
 				CDTXVersion version = new CDTXVersion( this.strDTXManiaのバージョン );
-				if( version.n整数部 <= 69 )
-				{
-					this.tデフォルトのキーアサインに設定する();
-				}
+				//if( version.n整数部 <= 69 )
+				//{
+				//	this.tデフォルトのキーアサインに設定する();
+				//}
 			}
 		}
 
@@ -2300,6 +2366,10 @@ namespace DTXMania
 											else if( str3.Equals( "HitSoundPriorityCY" ) )
 											{
 												this.eHitSoundPriorityCY = (E打ち分け時の再生の優先順位) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 1, (int) this.eHitSoundPriorityCY );
+											}
+											else if( str3.Equals( "HitSoundPriorityLP" ) )
+											{
+												this.eHitSoundPriorityLP = (E打ち分け時の再生の優先順位) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 1, (int) this.eHitSoundPriorityCY );
 											}
 											else if ( str3.Equals( "CymbalFree" ) )
 											{
@@ -2775,11 +2845,19 @@ namespace DTXMania
 										}
 										else if( str3.Equals( "FT" ) )
 										{
-										this.bAutoPlay.FT = C変換.bONorOFF( str4[ 0 ] );
+										    this.bAutoPlay.FT = C変換.bONorOFF( str4[ 0 ] );
 										}
 										else if( str3.Equals( "CY" ) )
 										{
 											this.bAutoPlay.CY = C変換.bONorOFF( str4[ 0 ] );
+										}
+										else if( str3.Equals( "LP" ) )
+										{
+										    this.bAutoPlay.LP = C変換.bONorOFF( str4[ 0 ] );
+										}
+										else if( str3.Equals( "LBD" ) )
+										{
+											this.bAutoPlay.LBD = C変換.bONorOFF( str4[ 0 ] );
 										}
 										//else if( str3.Equals( "Guitar" ) )
 										//{
@@ -2911,9 +2989,13 @@ namespace DTXMania
 											{
 												this.tキーの読み出しと設定( str4, this.KeyAssign.Drums.LC );
 											}
-											else if( str3.Equals( "HP" ) )										// #27029 2012.1.4 from
+											else if( str3.Equals( "LP" ) )										// #27029 2012.1.4 from
 											{																	//
-												this.tキーの読み出しと設定( str4, this.KeyAssign.Drums.HP );	//
+												this.tキーの読み出しと設定( str4, this.KeyAssign.Drums.LP );	//
+											}																	//
+											else if( str3.Equals( "LBD" ) )										// #27029 2012.1.4 from
+											{																	//
+												this.tキーの読み出しと設定( str4, this.KeyAssign.Drums.LBD );	//
 											}																	//
 											continue;
 										}
@@ -3209,7 +3291,8 @@ CY=K022,M049,M052,M055,M057,M091
 HO=K010,M046,M092
 RD=K020,M051,M053,M059,M089
 LC=K026
-HP=M044
+LP=M044
+LBD=
 
 [GuitarKeyAssign]
 
