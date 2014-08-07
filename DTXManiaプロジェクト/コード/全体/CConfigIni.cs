@@ -1778,9 +1778,6 @@ namespace DTXMania
 			sw.WriteLine( "; 演奏速度(5～40)(→x5/20～x40/20)" );
 			sw.WriteLine( "PlaySpeed={0}", this.n演奏速度 );
 			sw.WriteLine();
-			sw.WriteLine( "; ドラムCOMBO文字表示位置(0:左, 1:中, 2:右, 3:OFF)" );
-			sw.WriteLine( "ComboPosition={0}", (int) this.ドラムコンボ文字の表示位置 );
-			sw.WriteLine();
 
             // #24074 2011.01.23 add ikanick
 			sw.WriteLine( "; グラフ表示(0:OFF, 1:ON)" );
