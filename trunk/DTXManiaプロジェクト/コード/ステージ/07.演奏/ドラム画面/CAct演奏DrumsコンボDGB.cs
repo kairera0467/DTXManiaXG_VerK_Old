@@ -58,46 +58,8 @@ namespace DTXMania
 		{
             bool guitar = CDTXMania.DTX.bチップがある.Guitar;
             bool bass = CDTXMania.DTX.bチップがある.Bass;
-            var e表示位置 = CDTXMania.ConfigIni.ドラムコンボ文字の表示位置;
-            int nX中央位置px = 0;
 
-            #region [ e表示位置 の調整 ]
-            //-----------------
-            if (CDTXMania.ConfigIni.bGuitar有効)
-            {
-                if (bass)
-                {
-                    // ベースがあるときは問答無用で LEFT 表示のみ。
-                    e表示位置 = Eドラムコンボ文字の表示位置.LEFT;
-                }
-                else if (guitar && (e表示位置 == Eドラムコンボ文字の表示位置.RIGHT))
-                {
-                    // ベースがなくてもギターがあるなら、RIGHT は CENTER に強制変更。
-                    e表示位置 = Eドラムコンボ文字の表示位置.CENTER;
-                }
-            }
-            //-----------------
-            #endregion
-
-            #region [ コンボ位置 ]
-            switch (e表示位置)
-            {
-                case Eドラムコンボ文字の表示位置.LEFT:
-                    nX中央位置px = 150;
-                    break;
-
-                case Eドラムコンボ文字の表示位置.CENTER:
-                    nX中央位置px = 580;
-                    break;
-
-                case Eドラムコンボ文字の表示位置.RIGHT:
-                    nX中央位置px = 1130;
-                    break;
-            }
-            int nY上辺位置px = CDTXMania.ConfigIni.bReverse.Drums ? 530 : 16;
-            #endregion
-
-            base.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, nX中央位置px, nY上辺位置px);
+            base.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, 1130, 16);
 
             this.n火薬カウント = (nCombo値 / 100);
 
@@ -107,8 +69,8 @@ namespace DTXMania
                 this.Start( nCombo値 );
             }
 
-            int x = nX中央位置px - 180;
-            int y = nY上辺位置px - 95;
+            int x = 1130 - 180;
+            int y = 16 - 95;
 
             if (nCombo値 >= 100)
             {

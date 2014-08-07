@@ -664,17 +664,6 @@ namespace DTXMania
                 new string[] { "P-A", "P-B", "OFF" });
             this.list項目リスト.Add(this.iDrumsPosition);
 
-            this.iDrumsComboPosition = new CItemList("ComboPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.ドラムコンボ文字の表示位置,
-                "演奏時のドラムコンボ文字列の位置\n" +
-                "を指定します。\n" +
-                "OFFにするとゲーム中の\n" +
-                "コンボ数が非表示になります。",
-                "The display position for Drums Combo.\n" +
-                "Note that it doesn't take effect\n" +
-                " at Autoplay ([Left] is forcely used).",
-                new string[] { "Left", "Center", "Right", "OFF" });
-            this.list項目リスト.Add(this.iDrumsComboPosition);
-
             this.iDrumsLaneType = new CItemList("LaneType", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eLaneType.Drums,
                 "ドラムのレーンの配置を変更します。\n" +
                 "Type-A 通常の設定です。\n"+
@@ -2667,7 +2656,6 @@ namespace DTXMania
 
 		private CItemThreeState iDrumsAutoPlayAll;
 		private CItemToggle iDrumsBass;
-		private CItemList iDrumsComboPosition;
 		private CItemToggle iDrumsCymbal;
         private CItemToggle iDrumsRide;
 		private CItemToggle iDrumsFloorTom;
@@ -2926,7 +2914,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAutoPlay.LP = this.iDrumsLeftPedal.bON;
             CDTXMania.ConfigIni.bAutoPlay.LBD = this.iDrumsLeftBassDrum.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Drums = this.iDrumsScrollSpeed.n現在の値;
-			CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置) this.iDrumsComboPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bReverse.Drums = this.iDrumsReverse.bON;
 			CDTXMania.ConfigIni.判定文字表示位置.Drums = (Eタイプ) this.iDrumsPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
