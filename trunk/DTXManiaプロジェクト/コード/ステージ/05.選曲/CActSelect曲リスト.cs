@@ -1613,6 +1613,7 @@ namespace DTXMania
 			public CTexture txタイトル名;
             public CTexture txアーティスト名;
             public CTexture txパネル;
+            public CTexture txカスタム曲名テクスチャ;
             public int nアーティスト名テクスチャの長さdot;
             public int nタイトル名テクスチャの長さdot;
 			public STDGBVALUE<int> nスキル値;
@@ -1902,7 +1903,7 @@ namespace DTXMania
 				
                 this.stバー情報[ i ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
                 //this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strDTXフォルダのパス, this.stバー情報[ i ].eバー種別 );
-                this.tパネルの生成(i, song.strタイトル, this.stバー情報[i].strアーティスト名, song.col文字色);
+                this.tパネルの生成(i, song.strタイトル, this.stバー情報[ i ].strアーティスト名, song.col文字色);
                 if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strDTXフォルダのパス ) )
 				{
 			       //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
@@ -2058,7 +2059,10 @@ namespace DTXMania
             {
                 Bitmap b4font;
                 Bitmap bSongPanel;
+                Bitmap bCustomSongNameTexture;
                 Image imgSongPanel;
+                Image imgCustomSongNameTexture;
+                Image imgCuttomArtistNameTexture;
                 SizeF sz曲名;
                 SizeF szアーティスト名;
 
@@ -2066,10 +2070,24 @@ namespace DTXMania
                 Graphics graphics = Graphics.FromImage( b4font );
                 graphics.PageUnit = GraphicsUnit.Pixel;
                 imgSongPanel = Image.FromFile( CSkin.Path( @"Graphics\5_music panel.png" ) );
+
                 bSongPanel = new Bitmap( 223, 279 );
 
                 graphics = Graphics.FromImage( bSongPanel );
                 graphics.DrawImage( imgSongPanel, 0, 0, 223, 279 );
+                string strPassBefore = this.stバー情報[ nバー番号 ].strDTXフォルダのパス;
+                string strPassAfter = strPassBefore.Replace( this.stバー情報[ nバー番号 ].ar譜面情報.Preimage, "" );
+                string strPath = ( strPassAfter + "TitleTexture.png" );
+                if( File.Exists( ( strPath ) ) )
+                {
+                    imgCustomSongNameTexture = Image.FromFile( strPath );
+                    graphics.DrawImage( imgCustomSongNameTexture, 4, -1, 223, 33 );
+                }
+                if( File.Exists( ( strPassAfter + "ArtistTexture.png" ) ) )
+                {
+                    imgCuttomArtistNameTexture = Image.FromFile( strPassAfter + "ArtistTexture.png" );
+                    graphics.DrawImage( imgCuttomArtistNameTexture, 0, 252, 223, 26 );
+                }
 
 
 				#region [ 曲名表示に必要となるサイズを取得する。]
@@ -2099,8 +2117,10 @@ namespace DTXMania
 					graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 					float y = ( ( ( float ) bmp.Height ) ) - ( ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot ) );
 					//graphics.DrawString( str曲名, this.ft曲リスト用フォント, new SolidBrush( this.color文字影 ), (float) 2f, (float) ( y + 2f ) );
-					graphics.DrawString( str曲名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( color ), 5f, y - 2 );
-                    graphics.DrawString( strアーティスト名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( Color.White ), (float)218f - this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot, 255f);
+                    if( File.Exists( ( strPath ) ) == false )
+					    graphics.DrawString( str曲名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( color ), 5f, y - 2 );
+                    if( File.Exists( ( strPassAfter + "ArtistTexture.png" ) ) == false )
+                        graphics.DrawString( strアーティスト名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( Color.White ), (float)218f - this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot, 255f);
                     //graphics.DrawString( strアーティスト名, this.ft曲リスト用フォント, new SolidBrush( Color.White ), 234f, 258f );
 
 					CDTXMania.t安全にDisposeする( ref this.stバー情報[ nバー番号 ].txパネル );
