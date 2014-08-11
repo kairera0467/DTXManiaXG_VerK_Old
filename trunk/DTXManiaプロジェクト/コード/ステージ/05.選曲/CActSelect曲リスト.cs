@@ -308,13 +308,13 @@ namespace DTXMania
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
                 this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
-                if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strDTXフォルダのパス ) )
+                if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
 			    {
     			    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                    this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strDTXフォルダのパス, this.stバー情報[ i ].eバー種別  );
-				    this.dicThumbnail.Add( this.stバー情報[ i ].strDTXフォルダのパス, this.txTumbnail[ i ] );
+                    this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
+				    this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
 				}
-                txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strDTXフォルダのパス ];
+                txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
 			}
 		}
 		public void t次に移動()
@@ -630,15 +630,15 @@ namespace DTXMania
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
                 this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
                 //this.tパスを指定してサムネイル画像を生成する(i, this.stバー情報[i].strDTXフォルダのパス, this.stバー情報[i].eバー種別);
-                if( this.stバー情報[ i ].strDTXフォルダのパス != null )
+                if( this.stバー情報[ i ].strPreimageのパス != null )
                 {
-                    if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strDTXフォルダのパス ) )
+                    if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
 			        {
     				    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                        this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strDTXフォルダのパス, this.stバー情報[ i ].eバー種別  );
-				        this.dicThumbnail.Add( this.stバー情報[ i ].strDTXフォルダのパス, this.txTumbnail[ i ] );
+                        this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
+				        this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
 				    }
-                    txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strDTXフォルダのパス ];
+                    txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
                 }
             }
             #endregion
@@ -883,18 +883,19 @@ namespace DTXMania
 						this.stバー情報[ index ].strタイトル文字列 = song.strタイトル;
                         this.stバー情報[ index ].strアーティスト名 = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.アーティスト名;
 						this.stバー情報[ index ].col文字色 = song.col文字色;
-                        this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
+                        this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス;
+                        this.stバー情報[ index ].strPreimageのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
 						this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
                         this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
-                        if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strDTXフォルダのパス ) )
+                        if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strPreimageのパス ) )
 				        {
 					        //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                            this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strDTXフォルダのパス, this.stバー情報[ index ].eバー種別  );
-					        this.dicThumbnail.Add( this.stバー情報[ index ].strDTXフォルダのパス, this.txTumbnail[ index ] );
+                            this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別  );
+					        this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス, this.txTumbnail[ index ] );
 				        }
-                        txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strDTXフォルダのパス ];
+                        txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ];
 
 
 						// stバー情報[] の内容を1行ずつずらす。
@@ -959,18 +960,19 @@ namespace DTXMania
 						this.stバー情報[ index ].strタイトル文字列 = song.strタイトル;
                         this.stバー情報[ index ].strアーティスト名 = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す(song) ].譜面情報.アーティスト名;
 						this.stバー情報[ index ].col文字色 = song.col文字色;
-                        this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
+                        this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス;
+                        this.stバー情報[ index ].strPreimageのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
 						this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
                         this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
-                        if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strDTXフォルダのパス ) )
+                        if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strPreimageのパス ) )
 				        {
 					        //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                            this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strDTXフォルダのパス, this.stバー情報[ index ].eバー種別  );
-					        this.dicThumbnail.Add( this.stバー情報[ index ].strDTXフォルダのパス, this.txTumbnail[ index ] );
+                            this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別  );
+					        this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス, this.txTumbnail[ index ] );
 				        }
-                        txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strDTXフォルダのパス ];
+                        txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ];
 
 
 						// stバー情報[] の内容を1行ずつずらす。
@@ -1619,6 +1621,7 @@ namespace DTXMania
 			public STDGBVALUE<int> nスキル値;
 			public Color col文字色;
             public string strDTXフォルダのパス;
+            public string strPreimageのパス;
             public Cスコア.ST譜面情報 ar譜面情報;
 		}
 
@@ -1901,16 +1904,20 @@ namespace DTXMania
                         //this.stバー情報[ i ].ar難易度ラベル[ n ] = song.ar難易度ラベル[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ];
                 }
 				
-                this.stバー情報[ i ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
+                this.stバー情報[ i ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス;
+                this.stバー情報[ i ].strPreimageのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
                 //this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strDTXフォルダのパス, this.stバー情報[ i ].eバー種別 );
                 this.tパネルの生成(i, song.strタイトル, this.stバー情報[ i ].strアーティスト名, song.col文字色);
-                if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strDTXフォルダのパス ) )
-				{
-			       //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                    this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strDTXフォルダのパス, this.stバー情報[ i ].eバー種別  );
-		            this.dicThumbnail.Add( this.stバー情報[ i ].strDTXフォルダのパス, this.txTumbnail[ i ] );
-				}
-                txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strDTXフォルダのパス ];
+                if( this.stバー情報[ i ].strPreimageのパス != null )
+                {
+                    if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
+				    {
+			            //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
+                        this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
+		                this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
+				    }
+                    txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
+                }
 
 				for( int j = 0; j < 3; j++ )
 					this.stバー情報[ i ].nスキル値[ j ] = (int) song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.最大スキル[ j ];
@@ -2066,6 +2073,9 @@ namespace DTXMania
                 SizeF sz曲名;
                 SizeF szアーティスト名;
 
+                bool bFoundTitleTexture = false;
+                bool bFoundArtistTexture = false;
+
                 b4font = new Bitmap( 1, 1 );
                 Graphics graphics = Graphics.FromImage( b4font );
                 graphics.PageUnit = GraphicsUnit.Pixel;
@@ -2075,21 +2085,34 @@ namespace DTXMania
 
                 graphics = Graphics.FromImage( bSongPanel );
                 graphics.DrawImage( imgSongPanel, 0, 0, 223, 279 );
-                string strPassBefore = this.stバー情報[ nバー番号 ].strDTXフォルダのパス;
+
+                string strPassBefore = "";
                 string strPassAfter = "";
-                if( this.stバー情報[ nバー番号 ].ar譜面情報.Preimage != "" )
-                    strPassAfter = strPassBefore.Replace( this.stバー情報[ nバー番号 ].ar譜面情報.Preimage, "" );
-                string strPath = ( strPassAfter + "TitleTexture.png" );
-                if( File.Exists( ( strPath ) ) )
+                try
                 {
-                    imgCustomSongNameTexture = Image.FromFile( strPath );
-                    graphics.DrawImage( imgCustomSongNameTexture, 4, -1, 223, 33 );
+                    strPassBefore = this.stバー情報[ nバー番号 ].strDTXフォルダのパス;
+                    strPassAfter = strPassBefore.Replace(this.stバー情報[nバー番号].ar譜面情報.Preimage, "");
                 }
-                if( File.Exists( ( strPassAfter + "ArtistTexture.png" ) ) )
+                catch
                 {
-                    imgCuttomArtistNameTexture = Image.FromFile( strPassAfter + "ArtistTexture.png" );
-                    graphics.DrawImage( imgCuttomArtistNameTexture, 0, 252, 223, 26 );
+                    //Replaceでエラーが出たらここで適切な処理ができるようにしたい。
+                    strPassBefore = "";
+                    strPassAfter = "";
+
                 }
+                    string strPath = (strPassAfter + "TitleTexture.png");
+                    if (File.Exists((strPath)))
+                    {
+                        imgCustomSongNameTexture = Image.FromFile(strPath);
+                        graphics.DrawImage(imgCustomSongNameTexture, 4, -1, 223, 33);
+                        bFoundTitleTexture = true;
+                    }
+                    if (File.Exists((strPassAfter + "ArtistTexture.png")))
+                    {
+                        imgCuttomArtistNameTexture = Image.FromFile(strPassAfter + "ArtistTexture.png");
+                        graphics.DrawImage(imgCuttomArtistNameTexture, 0, 252, 223, 26);
+                        bFoundArtistTexture = true;
+                    }
 
 
 				#region [ 曲名表示に必要となるサイズを取得する。]
@@ -2119,9 +2142,9 @@ namespace DTXMania
 					graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 					float y = ( ( ( float ) bmp.Height ) ) - ( ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot ) );
 					//graphics.DrawString( str曲名, this.ft曲リスト用フォント, new SolidBrush( this.color文字影 ), (float) 2f, (float) ( y + 2f ) );
-                    if( File.Exists( ( strPath ) ) == false )
+                    if( bFoundTitleTexture == false )
 					    graphics.DrawString( str曲名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( color ), 5f, y - 2 );
-                    if( File.Exists( ( strPassAfter + "ArtistTexture.png" ) ) == false )
+                    if( bFoundArtistTexture == false )
                         graphics.DrawString( strアーティスト名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ), new SolidBrush( Color.White ), (float)218f - this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot, 255f);
                     //graphics.DrawString( strアーティスト名, this.ft曲リスト用フォント, new SolidBrush( Color.White ), 234f, 258f );
 
