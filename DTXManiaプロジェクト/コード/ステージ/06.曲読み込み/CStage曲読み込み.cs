@@ -239,7 +239,7 @@ namespace DTXMania
 
                 CDTX cdtx = new CDTX( strDTXファイルパス, true );
 
-                if ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
+                if ( !CDTXMania.DTXVmode.Enabled && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
                     this.str曲タイトル =  CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
                 else
                     this.str曲タイトル = cdtx.TITLE;
@@ -330,6 +330,15 @@ namespace DTXMania
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
                 this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
                 this.tx黒タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile black 64x64.png" ), false );
+
+                if( !CDTXMania.DTXVmode.Enabled )
+                {
+                    if( File.Exists( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" ) )
+                        this.txカスタム曲名テクスチャ = CDTXMania.tテクスチャの生成( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" );
+                    if( File.Exists( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\ArtistTexture.png" ) )
+                        this.txカスタムアーティスト名テクスチャ = CDTXMania.tテクスチャの生成( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\ArtistTexture.png" );
+                }
+
 		        try
 				{
 					if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
@@ -402,6 +411,8 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txシンボル );
                 CDTXMania.tテクスチャの解放( ref this.txBall );
                 CDTXMania.tテクスチャの解放( ref this.tx黒タイル64x64 );
+                CDTXMania.tテクスチャの解放( ref this.txカスタム曲名テクスチャ );
+                CDTXMania.tテクスチャの解放( ref this.txカスタムアーティスト名テクスチャ );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -482,39 +493,6 @@ namespace DTXMania
                 }
             }
 
-                this.Start();
-                for (int i = 0; i < 8; i++)
-                {
-                    if (this.st泡[i].b使用中)
-                    {
-                        this.st泡[i].n前回のValue = this.st泡[i].ct進行.n現在の値;
-                        this.st泡[i].ct進行.t進行();
-                        if (this.st泡[i].ct進行.b終了値に達した)
-                        {
-                            this.st泡[i].ct進行.t停止();
-                            //this.st泡[i].b使用中 = false;
-                        }
-                        for (int n = this.st泡[i].n前回のValue; n < this.st泡[i].ct進行.n現在の値; n++)
-                        {
-                            this.st泡[i].fX += this.st泡[i].f加速度X;
-                            this.st泡[i].fY -= this.st泡[i].f加速度Y;
-                            this.st泡[i].f加速度X *= this.st泡[i].f加速度の加速度X;
-                            this.st泡[i].f加速度Y *= this.st泡[i].f加速度の加速度Y;
-                        }
-                        Matrix mat = Matrix.Identity;
-
-                        float x = (float)(this.st泡[i].ct進行.n現在の値 / 200.0f);
-                        mat *= Matrix.Scaling(x, x, 1f);
-                        mat *= Matrix.Translation(this.st泡[i].fX - SampleFramework.GameWindowSize.Width / 2, -(this.st泡[i].fY - SampleFramework.GameWindowSize.Height / 2), 0f);
-
-                        if (this.txBall != null)
-                        {
-                            this.txBall.t3D描画(CDTXMania.app.Device, mat);
-                            this.txBall.n透明度 = 200 - this.st泡[i].ct進行.n現在の値;
-                        }
-                    }
-
-                }
             if( this.txシンボル != null )
                 this.txシンボル.t2D描画( CDTXMania.app.Device, 422, 128 );
 
@@ -599,7 +577,7 @@ namespace DTXMania
                     this.txジャケット = CDTXMania.tテクスチャの生成(path);
                 }
 
-                if ( this.txタイトル != null )
+                if ( this.txタイトル != null && !File.Exists( cdtx.strフォルダ名 + "\\TitleTexture.png" ) )
                 {
                     this.fタイトル長 = this.txタイトル.sz画像サイズ.Width * this.txタイトル.vc拡大縮小倍率.X;
 
@@ -608,8 +586,7 @@ namespace DTXMania
 
                     this.txタイトル.t2D描画(CDTXMania.app.Device, 510, 184);
                 }
-
-                if ( this.txアーティスト != null )
+                if( this.txアーティスト != null && !File.Exists( cdtx.strフォルダ名 + "\\ArtistTexture.png" ) )
                 {
                     this.fアーティスト長 = this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X;
 
@@ -617,6 +594,18 @@ namespace DTXMania
                         this.txアーティスト.vc拡大縮小倍率.X = 277f / this.txアーティスト.sz画像サイズ.Width;
 
                     this.txアーティスト.t2D描画(CDTXMania.app.Device, (int)(787 - (this.txアーティスト.sz画像サイズ.Width * this.txアーティスト.vc拡大縮小倍率.X)), 505);
+                }
+
+                if( File.Exists( cdtx.strフォルダ名 + "\\TitleTexture.png" ) )
+                {
+                    if( this.txカスタム曲名テクスチャ != null )
+                        this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 510, 176 );
+                }
+
+                if( File.Exists( cdtx.strフォルダ名 + "\\ArtistTexture.png" ) )
+                {
+                    if( this.txカスタムアーティスト名テクスチャ != null )
+                        this.txカスタムアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 500, 499 );
                 }
                 
                 //this.txジャケット.vc拡大縮小倍率.X = 0.689f;
@@ -1001,6 +990,9 @@ namespace DTXMania
         private CTexture txDrumspeed;
         private CTexture txRISKY;
         private CTexture txシンボル;
+
+        private CTexture txカスタム曲名テクスチャ;
+        private CTexture txカスタムアーティスト名テクスチャ;
         private ST泡[] st泡 = new ST泡[8];
         private CDirectShow ds背景動画;
 

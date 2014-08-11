@@ -230,30 +230,42 @@ namespace DTXMania
                 //2013.09.07.kairera0467 できればこの辺のメンテナンスが楽にできるよう、コードを簡略にしたいが・・・・
                 Bitmap bmpSongTitle = new Bitmap( 1, 1 );
                 #region[ 曲名 ]
-                if( this.nStrlengthbydot > 240 )
+                if( File.Exists( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" ) )
                 {
-                    gNamePlate.ScaleTransform(240.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
-                    {
-                        gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 62f);
-                        gNamePlate.ResetTransform();
-                    }
-                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
-                    {
-                        gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 54f);
-                        gNamePlate.ResetTransform();
-                    }
+                    Image imgCustomSongNameTexture;
+                    imgCustomSongNameTexture = Image.FromFile( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" );
+                    //2014.08.11 kairera0467 XG1とXG2では座標が異なるため、変数を使って対処する。
+                    int x = CDTXMania.ConfigIni.eNamePlate == Eタイプ.A ? 78 : 80;
+                    int y = CDTXMania.ConfigIni.eNamePlate == Eタイプ.A ? 59 : 50;
+                    gNamePlate.DrawImage( imgCustomSongNameTexture, x, y, 245, 33 );
                 }
                 else
                 {
-                    if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
+                    if (this.nStrlengthbydot > 240)
                     {
-                        gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 65f);
-
+                        gNamePlate.ScaleTransform(240.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
+                        if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
+                        {
+                            gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 62f);
+                            gNamePlate.ResetTransform();
+                        }
+                        else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
+                        {
+                            gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f / (240f / (float)this.nStrlengthbydot), 54f);
+                            gNamePlate.ResetTransform();
+                        }
                     }
-                    else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
+                    else
                     {
-                        gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f);
+                        if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
+                        {
+                            gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 65f);
+
+                        }
+                        else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
+                        {
+                            gNamePlate.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 80f, 54f);
+                        }
                     }
                 }
                 #endregion
