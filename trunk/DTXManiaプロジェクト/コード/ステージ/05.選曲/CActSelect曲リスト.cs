@@ -2076,7 +2076,9 @@ namespace DTXMania
                 graphics = Graphics.FromImage( bSongPanel );
                 graphics.DrawImage( imgSongPanel, 0, 0, 223, 279 );
                 string strPassBefore = this.stバー情報[ nバー番号 ].strDTXフォルダのパス;
-                string strPassAfter = strPassBefore.Replace( this.stバー情報[ nバー番号 ].ar譜面情報.Preimage, "" );
+                string strPassAfter = "";
+                if( this.stバー情報[ nバー番号 ].ar譜面情報.Preimage != "" )
+                    strPassAfter = strPassBefore.Replace( this.stバー情報[ nバー番号 ].ar譜面情報.Preimage, "" );
                 string strPath = ( strPassAfter + "TitleTexture.png" );
                 if( File.Exists( ( strPath ) ) )
                 {
