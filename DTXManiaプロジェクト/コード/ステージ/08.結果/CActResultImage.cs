@@ -197,7 +197,7 @@ namespace DTXMania
             }
             #endregion
 
-            this.ftSongNameFont = new System.Drawing.Font("Impact", 24f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.ftSongNameFont = new System.Drawing.Font("Impact", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
             base.On活性化();
 
 		}
@@ -236,6 +236,9 @@ namespace DTXMania
 
                 this.i中央パネル = Image.FromFile( CSkin.Path( @"Graphics\8_center panel.png" ) );
                 this.b中央パネル = new Bitmap(1280, 136);
+                
+                if( File.Exists( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" ) )
+                    this.txカスタム曲名テクスチャ = CDTXMania.tテクスチャの生成( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" );
 
                 this.bmSongNameLength = new Bitmap(1, 1);
                 Bitmap bmpCardName = new Bitmap(1, 1);
@@ -256,7 +259,8 @@ namespace DTXMania
                 graphics = Graphics.FromImage( b中央パネル );
 
                 graphics.DrawImage( this.i中央パネル, 0, 0, 1280, 136 );
-                graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, 578f, 85f);
+                if( this.txカスタム曲名テクスチャ == null )
+                    graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, 578f, 85f);
 
                 songname.Dispose();
                 this.tx中央パネル = new CTexture( CDTXMania.app.Device, this.b中央パネル, CDTXMania.TextureFormat );
@@ -290,6 +294,7 @@ namespace DTXMania
                     this.sfリザルトAVI画像.Dispose();
                     this.sfリザルトAVI画像 = null;
                 }
+                CDTXMania.tテクスチャの解放( ref this.txカスタム曲名テクスチャ );
                 CDTXMania.tテクスチャの解放( ref this.txSongName );
                 CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
                 //CDTXMania.tテクスチャの解放( ref this.txSongLevel );
@@ -394,7 +399,19 @@ namespace DTXMania
                 }
             }
 
-            this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ) + 3, this.n本体0Y + 0x3f);
+            if( File.Exists( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" ) )
+            {
+                if( this.txカスタム曲名テクスチャ != null )
+                {
+                    this.txカスタム曲名テクスチャ.vc拡大縮小倍率 = new Vector3( 0.8f, 0.8f, 1f );
+                    this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 578, 345 );
+                }
+            }
+            else
+            {
+                if( this.txカスタム曲名テクスチャ == null )
+                    this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ) + 3, this.n本体0Y + 0x3f);
+            }
             //this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
 
 			if( !this.ct登場用.b終了値に達した )
@@ -442,6 +459,7 @@ namespace DTXMania
         private Bitmap b中央パネル;
         private Image i中央パネル;
         private CTexture tx中央パネル;
+        private CTexture txカスタム曲名テクスチャ;
 
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
