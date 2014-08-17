@@ -270,7 +270,7 @@ namespace DTXMania
 		private CAct演奏Drumsグラフ actGraph;   // #24074 2011.01.23 add ikanick
 		private CAct演奏Drumsパッド actPad;
         private CAct演奏Drumsレーン actLane;
-        private CAct演奏Drumsドラムセット actDrumSet;
+        public CAct演奏Drumsドラムセット actDrumSet;
         public CAct演奏DrumsBPMバー actBPMBarD;
 		private bool bフィルイン中;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[]
@@ -351,7 +351,7 @@ namespace DTXMania
 			this.tチップのヒット処理( nHitTime, pChip );
 			this.actLaneFlushD.Start( (Eレーン) nLane, ( (float) n強弱度合い0to127 ) / 127f );
 			this.actPad.Hit( nPad );
-            this.actDrumSet.Start( nLane );
+            this.actDrumSet.Start( nPad );
 			if( ( e判定 != E判定.Poor ) && ( e判定 != E判定.Miss ) )
 			{
 				bool flag = this.bフィルイン中;
@@ -1940,7 +1940,7 @@ namespace DTXMania
 					this.actPad.Hit( this.nパッド0Atoパッド08[ pad ] );
 
                     // ドラムセット
-                    this.actDrumSet.Start( this.nパッド0Atoレーン07[ pad ] );
+                    this.actDrumSet.Start( this.nチャンネル0Atoパッド08[ pad ] );
 
 					// 空打ち音
 					if( CDTXMania.ConfigIni.bドラム打音を発声する )

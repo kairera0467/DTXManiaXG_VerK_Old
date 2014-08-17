@@ -1097,6 +1097,7 @@ namespace DTXMania
 #if TEST_NOTEOFFMODE	// 2011.1.4 yyagi test
 							}
 #endif
+                            CDTXMania.stage演奏ドラム画面.actDrumSet.Start( nLane );
 							if ( overwrite )
 							{
 								CDTXMania.DTX.tWavの再生停止( this.n最後に再生した実WAV番号[index] );

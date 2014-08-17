@@ -10,13 +10,12 @@ namespace DTXMania
     internal class CAct演奏Drumsドラムセット : CActivity
     {
         /// <summary>
-        /// レーンを描画するクラス。
-        /// ただレーンを描画するのみ。
+        /// ドラムを描画するクラス。
         /// 
         /// 課題
-        /// ・レーンの透明度対応
-        /// ・レーンタイプの実装
-        /// ・レーン振動の実装
+        /// ・オート時の対応
+        /// ・シンバルの実装
+        /// ・加速度の調整
         /// </summary>
         public CAct演奏Drumsドラムセット()
         {
@@ -114,10 +113,6 @@ namespace DTXMania
             this.n座標BassDrum = 517 - this.stパッド状態[ 3 ].nY座標オフセットdot;
             #endregion
 
-            #region[ バスドラ ]
-            this.txBassDrum.t2D描画( CDTXMania.app.Device, 310, this.n座標BassDrum );
-            #endregion
-
             #region[ スネア ]
             this.txSnare.t2D描画( CDTXMania.app.Device, 0, this.n座標Snare );
             #endregion
@@ -132,6 +127,10 @@ namespace DTXMania
 
             #region[ ロータム ]
             this.txLowTom.t2D描画( CDTXMania.app.Device, 870, this.n座標LowTom );
+            #endregion
+
+            #region[ バスドラ ]
+            this.txBassDrum.t2D描画( CDTXMania.app.Device, 310, this.n座標BassDrum );
             #endregion
 
             return base.On進行描画();
