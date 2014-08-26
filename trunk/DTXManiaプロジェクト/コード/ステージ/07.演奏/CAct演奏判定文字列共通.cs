@@ -24,11 +24,20 @@ namespace DTXMania
 			public float fY方向拡大率_棒;
             public int n相対X座標_棒;
 			public int n相対Y座標_棒;
+
+
             public float fZ軸回転度;
 			public float fX方向拡大率;
 			public float fY方向拡大率;
 			public int n相対X座標;
 			public int n相対Y座標;
+
+            public float fX方向拡大率B;
+            public float fY方向拡大率B;
+            public int n相対X座標B;
+            public int n相対Y座標B;
+            public int n透明度B;
+
 			public int n透明度;
 			public int nLag;								// #25370 2011.2.1 yyagi
             public int nRect;
@@ -125,6 +134,12 @@ namespace DTXMania
 				this.st状態[ nLane ].n相対X座標 = 0;
 				this.st状態[ nLane ].n相対Y座標 = 0;
                 this.st状態[ nLane ].n透明度 = 0xff;
+
+				this.st状態[ nLane ].fX方向拡大率B = 1f;
+				this.st状態[ nLane ].fY方向拡大率B = 1f;
+				this.st状態[ nLane ].n相対X座標B = 0;
+				this.st状態[ nLane ].n相対Y座標B = 0;
+                this.st状態[ nLane ].n透明度B = 0xff;
                 
                 this.st状態[ nLane ].fZ軸回転度_棒 = 0f;
                 this.st状態[ nLane ].fX方向拡大率_棒 = 0;

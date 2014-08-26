@@ -2224,7 +2224,7 @@ namespace DTXMania
             bCustomSongNameTexture = new Bitmap( 240, 40 );
 
             graphicsA = Graphics.FromImage( bCustomSongNameTexture );
-            graphicsA.DrawImage( bCustomSongNameTexture, 0, 0, 196, 33 );
+            graphicsA.DrawImage( bCustomSongNameTexture, 0, 0, 180, 25 );
 
 
             string strPassAfter = "";
@@ -2242,7 +2242,7 @@ namespace DTXMania
             {
                 imgCustomSongNameTexture = Image.FromFile(strPath);
                 imgCustomSongNameTexture = this.CreateNegativeImage( imgCustomSongNameTexture );
-                graphicsA.DrawImage(imgCustomSongNameTexture, 6, 0, 223, 33);
+                graphicsA.DrawImage(imgCustomSongNameTexture, 6, 1, 180, 25);
             }
 
 
