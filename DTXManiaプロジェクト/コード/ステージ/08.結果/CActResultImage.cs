@@ -403,7 +403,7 @@ namespace DTXMania
             {
                 if( this.txカスタム曲名テクスチャ != null )
                 {
-                    this.txカスタム曲名テクスチャ.vc拡大縮小倍率 = new Vector3( 0.8f, 0.8f, 1f );
+                    this.txカスタム曲名テクスチャ.vc拡大縮小倍率 = new Vector3( 0.75f, 0.75f, 1f );
                     this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 578, 345 );
                 }
             }

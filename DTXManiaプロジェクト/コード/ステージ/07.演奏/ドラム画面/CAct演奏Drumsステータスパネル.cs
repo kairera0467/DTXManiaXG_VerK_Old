@@ -237,7 +237,7 @@ namespace DTXMania
                     //2014.08.11 kairera0467 XG1とXG2では座標が異なるため、変数を使って対処する。
                     int x = CDTXMania.ConfigIni.eNamePlate == Eタイプ.A ? 78 : 80;
                     int y = CDTXMania.ConfigIni.eNamePlate == Eタイプ.A ? 59 : 50;
-                    gNamePlate.DrawImage( imgCustomSongNameTexture, x, y, 245, 33 );
+                    gNamePlate.DrawImage( imgCustomSongNameTexture, x, y, 238, 30 );
                 }
                 else
                 {
