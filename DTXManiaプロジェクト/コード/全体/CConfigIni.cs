@@ -508,7 +508,9 @@ namespace DTXMania
 		public string strDTXManiaのバージョン;
 		public string str曲データ検索パス;
 		public string str選曲リストフォント;
-		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
+        public bool bドラムコンボ表示;
+        public bool bギター1Pコンボ表示;
+        public bool bギター2Pコンボ表示;
 		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
 //		public int nハイハット切り捨て下限Velocity;
 //		public int n切り捨て下限Velocity;			// #23857 2010.12.12 yyagi VelocityMin
@@ -1060,18 +1062,33 @@ namespace DTXMania
 
         #region[Ver.K追加オプション]
         //--------------------------
+        //ゲーム内のオプションに加えて、
+        //システム周りのオプションもこのブロックで記述している。
+        #region[Display]
+        //--------------------------
+        public EClipDispType eClipDispType;
+        #endregion
+
         #region[Position]
         public Eレーンタイプ eLaneType;
         public Eミラー eMirror;
-        public EGraphicType eGraphicType;
+
         #endregion
         #region[System]
-
+        public EGraphicType eGraphicType;
         #endregion
-
+        #region[ 画像 ]
+        //--------------------------
+        public int nLeftCymbalFrame;
+        public int nRightCymbalFrame;
+        public int nLeftCymbalInterval;
+        public int nRightCymbalInterval;
+        //--------------------------
+        #endregion
 
         //--------------------------
         #endregion
+
 
         // コンストラクタ
 
@@ -1244,6 +1261,16 @@ namespace DTXMania
 
             #region[ Ver.K追加 ]
             this.eLaneType = Eレーンタイプ.TypeA;
+            this.eClipDispType = EClipDispType.OFF;
+            this.eGraphicType = EGraphicType.XG;
+            this.bドラムコンボ表示 = true;
+            #region[ 画像 ]
+            this.nLeftCymbalFrame = 9;
+            this.nRightCymbalFrame = 9;
+            this.nLeftCymbalInterval = 35;
+            this.nRightCymbalInterval = 35;
+            
+            #endregion
             #endregion
         }
 		public CConfigIni( string iniファイル名 )
@@ -1795,7 +1822,7 @@ namespace DTXMania
 			sw.WriteLine( "PlaySpeed={0}", this.n演奏速度 );
 			sw.WriteLine();
 			sw.WriteLine( "; ドラムCOMBO文字表示位置(0:左, 1:中, 2:右, 3:OFF)" );
-			sw.WriteLine( "ComboPosition={0}", (int) this.ドラムコンボ文字の表示位置 );
+			sw.WriteLine( "ComboDisp={0}", this.bドラムコンボ表示 ? 1 : 0 );
 			sw.WriteLine();
 			//sw.WriteLine( "; 判定・コンボ表示優先度(0:チップの下, 1:チップの上)" );
 			//sw.WriteLine( "JudgeDispPriorityDrums={0}" , (int) this.e判定表示優先度.Drums );
@@ -2746,9 +2773,9 @@ namespace DTXMania
 											{
 												this.n演奏速度 = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 5, 40, this.n演奏速度 );
 											}
-											else if( str3.Equals( "ComboPosition" ) )
+											else if( str3.Equals( "ComboDisp" ) )
 											{
-												this.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.ドラムコンボ文字の表示位置 );
+												this.bドラムコンボ表示 = C変換.bONorOFF( str4[ 0 ] );
 											}
 											//else if ( str3.Equals( "JudgeDispPriorityDrums" ) )
 											//{

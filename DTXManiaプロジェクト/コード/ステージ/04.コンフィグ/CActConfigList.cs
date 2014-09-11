@@ -626,14 +626,12 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsTight );
 
 			#region [ Position ]
-			this.iDrumsComboPosition = new CItemList( "ComboPosition", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.ドラムコンボ文字の表示位置,
-				"演奏時のドラムコンボ文字列の位置\n" +
-				"を指定します。",
-				"The display position for Drums Combo.\n" +
-				"Note that it doesn't take effect\n" +
-				" at Autoplay ([Left] is forcely used).",
-				new string[] { "Left", "Center", "Right", "OFF" } );
-			this.list項目リスト.Add( this.iDrumsComboPosition );
+			this.iDrumsComboDisp = new CItemToggle( "ComboDisp", CDTXMania.ConfigIni.bドラムコンボ表示,
+				"OFFにすると演奏中のコンボが\n" +
+				"表示されなくなります。",
+				"OFFにすると演奏中のコンボが\n" +
+				"表示されなくなります。\n");
+			this.list項目リスト.Add( this.iDrumsComboDisp );
 
 			this.iDrumsPosition = new CItemList( "Position", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.判定文字表示位置.Drums,
 				"ドラムの判定文字の表示位置を指定\n" +
@@ -2419,7 +2417,6 @@ namespace DTXMania
 
 		private CItemThreeState iDrumsAutoPlayAll;
 		private CItemToggle iDrumsBass;
-		private CItemList iDrumsComboPosition;
 		private CItemToggle iDrumsCymbalRide;
 		private CItemToggle iDrumsFloorTom;
 		//private CItemToggle iDrumsHidden;
@@ -2437,6 +2434,7 @@ namespace DTXMania
 		private CItemToggle iDrumsGraph;        // #24074 2011.01.23 add ikanick
         private CItemToggle iDrumsLeftPedal;
         private CItemToggle iDrumsLeftBassDrum;
+        private CItemToggle iDrumsComboDisp;
 
 		//private CItemToggle iGuitarAutoPlay;
 		private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2629,7 +2627,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAutoPlay.LP = this.iDrumsLeftPedal.bON;
             CDTXMania.ConfigIni.bAutoPlay.LBD = this.iDrumsLeftBassDrum.bON;
 			CDTXMania.ConfigIni.n譜面スクロール速度.Drums = this.iDrumsScrollSpeed.n現在の値;
-			CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置) this.iDrumsComboPosition.n現在選択されている項目番号;
+            CDTXMania.ConfigIni.bドラムコンボ表示 = this.iDrumsComboDisp.bON;
 												// "Sudden" || "Sud+Hid"
 			CDTXMania.ConfigIni.bSudden.Drums = ( this.iDrumsSudHid.n現在選択されている項目番号 == 1 || this.iDrumsSudHid.n現在選択されている項目番号 == 3 ) ? true : false;
 												// "Hidden" || "Sud+Hid"

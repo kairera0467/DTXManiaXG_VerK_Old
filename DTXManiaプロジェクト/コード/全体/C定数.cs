@@ -197,13 +197,6 @@ namespace DTXMania
 		フェードイン,
 		フェードアウト
 	}
-	internal enum Eドラムコンボ文字の表示位置
-	{
-		LEFT,
-		CENTER,
-		RIGHT,
-		OFF
-	}
 	internal enum Eレーン
 	{
 		LC = 0,
@@ -691,6 +684,13 @@ namespace DTXMania
     {
         XG,
         XG2
+    }
+    public enum EClipDispType
+    {
+        背景のみ,
+        ウィンドウのみ,
+        両方,
+        OFF
     }
     #endregion
 

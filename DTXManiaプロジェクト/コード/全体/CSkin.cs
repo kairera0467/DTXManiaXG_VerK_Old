@@ -327,6 +327,18 @@ namespace DTXMania
 		public Cシステムサウンド sound決定音 = null;
 		public Cシステムサウンド sound取消音 = null;
 		public Cシステムサウンド sound変更音 = null;
+        //add
+        public Cシステムサウンド bgmリザルト = null;
+        public Cシステムサウンド bgmリザルトループ = null;
+        public Cシステムサウンド sound曲決定音 = null;
+        public Cシステムサウンド soundNovice = null;
+        public Cシステムサウンド soundRegular = null;
+        public Cシステムサウンド soundExpert = null;
+        public Cシステムサウンド soundMaster = null;
+        public Cシステムサウンド soundBasic = null;
+        public Cシステムサウンド soundAdvance = null;
+        public Cシステムサウンド soundExtreme = null;
+
 		public readonly int nシステムサウンド数 = (int)Eシステムサウンド.Count;
 		public Cシステムサウンド this[ Eシステムサウンド sound ]
 		{
