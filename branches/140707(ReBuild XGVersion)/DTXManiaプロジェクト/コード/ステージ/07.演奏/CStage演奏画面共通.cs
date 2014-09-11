@@ -2459,7 +2459,7 @@ namespace DTXMania
 
 			CDTXMania.ConfigIni.nRisky = 0;
 			CDTXMania.ConfigIni.nShowLagType = 0;
-			CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = Eドラムコンボ文字の表示位置.OFF;
+			CDTXMania.ConfigIni.bドラムコンボ表示 = true;
 		}
 
 
@@ -2842,7 +2842,7 @@ namespace DTXMania
 																// #31602 2013.6.23 yyagi 描画遅延対策として、判定ラインの表示位置をオフセット調整できるようにする
 				if ( this.txヒットバー != null )
 				{
-				    this.txヒットバー.t2D描画( CDTXMania.app.Device, 295, y, new Rectangle( 0, 0, 520, 6 ) );
+				    this.txヒットバー.t2D描画( CDTXMania.app.Device, 295, y, new Rectangle( 0, 0, 558, 6 ) );
 				}
 			}
 		}

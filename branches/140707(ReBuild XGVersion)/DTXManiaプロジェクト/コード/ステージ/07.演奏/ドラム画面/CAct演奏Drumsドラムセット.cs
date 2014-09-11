@@ -38,11 +38,17 @@ namespace DTXMania
                 this.stパッド状態[ i ] = stパッド状態;
             }
 
-            this.nLeftCymbalFrame = 9;
-            this.nLeftCymbalInterval = 35;
+            this.nLeftCymbalFrame = CDTXMania.ConfigIni.nLeftCymbalFrame;
+            this.nRightCymbalFrame = CDTXMania.ConfigIni.nRightCymbalFrame;
+            this.nLeftCymbalInterval = CDTXMania.ConfigIni.nLeftCymbalInterval;
+            this.nRightCymbalInterval = CDTXMania.ConfigIni.nRightCymbalInterval;
+            this.nLeftCymbalX = 0;
+            this.nLeftCymbalY = 0;
+            this.nRightCymbalX = 0;
+            this.nRightCymbalY = 0;
 
             this.ctLeftCymbal = new CCounter( 1, this.nLeftCymbalFrame, this.nLeftCymbalInterval, CDTXMania.Timer );
-            this.ctLeftCymbal = new CCounter( 1, this.nRightCymbalFrame, this.nRightCymbalInterval, CDTXMania.Timer );
+            this.ctRightCymbal = new CCounter( 1, this.nRightCymbalFrame, this.nRightCymbalInterval, CDTXMania.Timer );
 
             base.On活性化();
         }
@@ -59,7 +65,8 @@ namespace DTXMania
             this.txLowTom = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_LowTom.png" ) );
             this.txFloorTom = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_FloorTom.png" ) );
             this.txBassDrum = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_BassDrum.png" ) );
-
+            this.txLeftCymbal = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_LCymbal.png" ) );
+            this.txRightCymbal = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Drums_RCymbal.png" ) );
 
             base.OnManagedリソースの作成();
         }
@@ -71,6 +78,8 @@ namespace DTXMania
             CDTXMania.tテクスチャの解放( ref this.txLowTom );
             CDTXMania.tテクスチャの解放( ref this.txFloorTom );
             CDTXMania.tテクスチャの解放( ref this.txBassDrum );
+            CDTXMania.tテクスチャの解放( ref this.txLeftCymbal );
+            CDTXMania.tテクスチャの解放( ref this.txRightCymbal );
 
             base.OnManagedリソースの解放();
         }
@@ -111,6 +120,8 @@ namespace DTXMania
             this.n座標LowTom = 490 + this.stパッド状態[ 5 ].nY座標オフセットdot;
             this.n座標FloorTom = 490 + this.stパッド状態[ 6 ].nY座標オフセットdot;
             this.n座標BassDrum = 517 - this.stパッド状態[ 3 ].nY座標オフセットdot;
+            int nCtLC = this.ctLeftCymbal.n現在の値;
+            int nCtRC = this.ctRightCymbal.n現在の値;
             #endregion
 
             #region[ スネア ]
@@ -133,6 +144,12 @@ namespace DTXMania
             this.txBassDrum.t2D描画( CDTXMania.app.Device, 310, this.n座標BassDrum );
             #endregion
 
+            #region[ 左シンバル ]
+            this.txLeftCymbal.t2D描画( CDTXMania.app.Device, this.nLeftCymbalX, this.nLeftCymbalY, new Rectangle() );
+            #endregion
+            #region[ 右シンバル ]
+            this.txRightCymbal.t2D描画( CDTXMania.app.Device, this.nRightCymbalX, this.nRightCymbalY );
+            #endregion
             return base.On進行描画();
         }
 
@@ -170,11 +187,14 @@ namespace DTXMania
         private int nLeftCymbalY;
         private int nLeftCymbalFrame;
         private int nLeftCymbalInterval;
+        private int nLeftCymbalWidth;
 
         private int nRightCymbalX;
         private int nRightCymbalY;
         private int nRightCymbalFrame;
         private int nRightCymbalInterval;
+        private int nRightCymbalWidth;
+
         //-----------------
         #endregion
     }

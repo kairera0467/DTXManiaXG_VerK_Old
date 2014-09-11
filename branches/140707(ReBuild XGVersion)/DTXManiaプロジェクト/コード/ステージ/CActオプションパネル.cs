@@ -89,7 +89,7 @@ namespace DTXMania
 					this.txオプションパネル.t2D描画( device, 0x1e9, 0x24, this.rcRandom[ (int) configIni.eRandom.Bass ] );
 					#endregion
 					#region [ ComboPosition ]
-					this.txオプションパネル.t2D描画( device, 0x201, 12, this.rcComboPos[ (int) configIni.ドラムコンボ文字の表示位置 ] );
+					this.txオプションパネル.t2D描画( device, 0x201, 12, new Rectangle(0, 0, 0, 0) );
 					#endregion
 					#region [ Light ]
 					this.txオプションパネル.t2D描画( device, 0x201, 0x18, this.rcLight[ configIni.bLight.Guitar ? 1 : 0 ] );

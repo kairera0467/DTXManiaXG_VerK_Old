@@ -212,7 +212,7 @@ namespace DTXMania
 		{
 			#region [ 事前チェック。]
 			//-----------------
-			if( CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 == Eドラムコンボ文字の表示位置.OFF )
+			if( CDTXMania.ConfigIni.bドラムコンボ表示 == false )
 				return;		// 表示OFF。
 
 			if( nCombo値 == 0 )
