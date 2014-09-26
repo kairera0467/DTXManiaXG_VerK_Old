@@ -60,7 +60,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_gauge_drums.png" ) );
+				this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_drums.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}

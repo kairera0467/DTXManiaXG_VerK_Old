@@ -47,8 +47,8 @@ namespace DTXMania
             this.nRightCymbalX = 0;
             this.nRightCymbalY = 0;
 
-            this.ctLeftCymbal = new CCounter( 1, this.nLeftCymbalFrame, this.nLeftCymbalInterval, CDTXMania.Timer );
-            this.ctRightCymbal = new CCounter( 1, this.nRightCymbalFrame, this.nRightCymbalInterval, CDTXMania.Timer );
+            this.ctLeftCymbal = new CCounter( 0, this.nLeftCymbalFrame - 1, this.nLeftCymbalInterval, CDTXMania.Timer );
+            this.ctRightCymbal = new CCounter( 0, this.nRightCymbalFrame - 1, this.nRightCymbalInterval, CDTXMania.Timer );
 
             base.On活性化();
         }
@@ -145,10 +145,12 @@ namespace DTXMania
             #endregion
 
             #region[ 左シンバル ]
-            this.txLeftCymbal.t2D描画( CDTXMania.app.Device, this.nLeftCymbalX, this.nLeftCymbalY, new Rectangle() );
+            int nLCRectX = ( this.txLeftCymbal.szテクスチャサイズ.Width / this.nLeftCymbalFrame ) * this.ctLeftCymbal.n現在の値;
+            this.txLeftCymbal.t2D描画( CDTXMania.app.Device, this.nLeftCymbalX, this.nLeftCymbalY, new Rectangle( nLCRectX, 0, ( this.txLeftCymbal.szテクスチャサイズ.Width / this.nLeftCymbalFrame ), this.txLeftCymbal.szテクスチャサイズ.Height ) );
             #endregion
             #region[ 右シンバル ]
-            this.txRightCymbal.t2D描画( CDTXMania.app.Device, this.nRightCymbalX, this.nRightCymbalY );
+            int nRCRectX = ( this.txRightCymbal.szテクスチャサイズ.Width / this.nRightCymbalFrame ) * this.ctRightCymbal.n現在の値;
+            this.txRightCymbal.t2D描画( CDTXMania.app.Device, this.nRightCymbalX, this.nRightCymbalY, new Rectangle( nRCRectX, 0, ( this.txRightCymbal.szテクスチャサイズ.Width / this.nRightCymbalFrame ), this.txRightCymbal.szテクスチャサイズ.Height ) );
             #endregion
             return base.On進行描画();
         }
