@@ -146,13 +146,13 @@ namespace DTXMania
                             base.st状態[i].n透明度 = 0;
                             */
 
-                            //base.st状態[i].judge = E判定.Great;
+                            //base.st状態[i].judge = E判定.Perfect;
                             //nNowFrame = 22;
                             if( base.st状態[ i ].judge == E判定.Perfect )
                             {
                                 #region[ PERFECT ]
                                 #region[ 0～10 ]
-                                if (nNowFrame == 0)
+                                if( nNowFrame == 0 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1.67f;
                                     base.st状態[i].fY方向拡大率 = 1.67f;
@@ -163,16 +163,16 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = 28;
                                     base.st状態[i].n相対Y座標 = 0;
                                     base.st状態[i].n透明度 = 0;
-
+                                    
                                     base.st状態[i].fX方向拡大率_棒 = 0f;
                                     base.st状態[i].fY方向拡大率_棒 = 0f;
-                                    base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(-43f);
+                                    base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
                                 }
-                                else if (nNowFrame == 1)
+                                else if( nNowFrame == 1 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1.33f;
                                     base.st状態[i].fY方向拡大率 = 1.33f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(7f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 7f );
                                     base.st状態[i].n相対X座標 = 26;
                                     base.st状態[i].n相対Y座標 = 4;
                                     base.st状態[i].n透明度 = 0;
@@ -181,13 +181,13 @@ namespace DTXMania
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -98;
                                     base.st状態[i].n相対Y座標_棒 = 6;
-                                    base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(-43f);
+                                    base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian( -43f );
                                 }
-                                else if (nNowFrame == 2)
+                                else if( nNowFrame == 2 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -204,11 +204,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(-14.5f);
                                 }
-                                else if (nNowFrame == 3)
+                                else if( nNowFrame == 3 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -225,11 +225,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(15f);
                                 }
-                                else if (nNowFrame == 4)
+                                else if( nNowFrame == 4 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -246,11 +246,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(18.5f);
                                 }
-                                else if (nNowFrame == 5)
+                                else if( nNowFrame == 5 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -267,11 +267,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(20.5f);
                                 }
-                                else if (nNowFrame == 6)
+                                else if( nNowFrame == 6 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -288,11 +288,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(20.5f);
                                 }
-                                else if (nNowFrame == 7)
+                                else if( nNowFrame == 7 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -309,11 +309,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(22f);
                                 }
-                                else if (nNowFrame == 8)
+                                else if( nNowFrame == 8 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -330,11 +330,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(23.5f);
                                 }
-                                else if (nNowFrame == 9)
+                                else if( nNowFrame == 9 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -351,11 +351,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(25.5f);
                                 }
-                                else if (nNowFrame == 10)
+                                else if( nNowFrame == 10 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -376,11 +376,11 @@ namespace DTXMania
                                 }
                                 #endregion
                                 #region[ 11～18 ]
-                                else if (nNowFrame == 11)
+                                else if( nNowFrame == 11 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -397,11 +397,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(29.5f);
                                 }
-                                else if (nNowFrame == 12)
+                                else if( nNowFrame == 12 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -418,11 +418,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(31f);
                                 }
-                                else if (nNowFrame == 13)
+                                else if( nNowFrame == 13 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -439,11 +439,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(32.5f);
                                 }
-                                else if (nNowFrame == 14)
+                                else if( nNowFrame == 14 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -460,11 +460,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(34f);
                                 }
-                                else if (nNowFrame == 15)
+                                else if( nNowFrame == 15 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -481,11 +481,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(36f);
                                 }
-                                else if (nNowFrame == 16)
+                                else if( nNowFrame == 16 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -496,11 +496,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(38f);
                                 }
-                                else if (nNowFrame == 17)
+                                else if( nNowFrame == 17 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -511,11 +511,11 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標_棒 = 10;
                                     base.st状態[i].fZ軸回転度_棒 = C変換.DegreeToRadian(40.5f);
                                 }
-                                else if (nNowFrame == 18)
+                                else if( nNowFrame == 18 )
                                 {
                                     base.st状態[i].fX方向拡大率 = 1f;
                                     base.st状態[i].fY方向拡大率 = 1f;
-                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian(15f);
+                                    base.st状態[i].fZ軸回転度 = C変換.DegreeToRadian( 15f );
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
@@ -1503,10 +1503,11 @@ namespace DTXMania
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime.n透明度 = 255;
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
 
-                                    CDTXMania.stage演奏ギター画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
-                                    CDTXMania.stage演奏ギター画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
-                                    CDTXMania.stage演奏ギター画面.tx判定画像anime.n透明度 = 255;
-                                    CDTXMania.stage演奏ギター画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_3.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率B, base.st状態[j].fY方向拡大率B, 1f);
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_3.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_3.n透明度 = base.st状態[j].n透明度B;
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_3.b加算合成 = true;
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_3.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
 
 
                                 }

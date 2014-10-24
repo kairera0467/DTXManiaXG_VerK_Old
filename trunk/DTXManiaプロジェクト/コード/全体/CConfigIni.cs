@@ -558,6 +558,7 @@ namespace DTXMania
         public string strCardName;
         public string strGroupName;
 		public Eドラムコンボ文字の表示位置 ドラムコンボ文字の表示位置;
+        public bool bドラムコンボ文字の表示;
         public STDGBVALUE<Eタイプ> 判定文字表示位置;
         public int nMovieMode;
         public STDGBVALUE<int> nJudgeLine;
@@ -1144,6 +1145,7 @@ namespace DTXMania
 			}
 			this.n演奏速度 = 20;
             this.ドラムコンボ文字の表示位置 = Eドラムコンボ文字の表示位置.RIGHT;
+            this.bドラムコンボ文字の表示 = true;
             this.bCLASSIC譜面判別を有効にする = false;
             this.bSkillModeを自動切換えする = false;
             this.bMutingLP = true;
@@ -1783,6 +1785,11 @@ namespace DTXMania
 			sw.WriteLine( "; グラフ表示(0:OFF, 1:ON)" );
 			sw.WriteLine( "SkillMater={0}", this.bGraph有効 ? 1 : 0 );
 			sw.WriteLine();
+
+            sw.WriteLine("; ドラムコンボの表示(0:OFF, 1:ON)");									// #29500 2012.9.11 kairera0467
+            sw.WriteLine(": DrumPart Display Combo. 0=OFF, 1=ON ");
+            sw.WriteLine("DrumComboDisp={0}", this.bドラムコンボ文字の表示 ? 1 : 0 );									//
+            sw.WriteLine();
 
             #region[DTXManiaXG追加オプション]
             sw.WriteLine("; 譜面仕様変更(0:デフォルト10レーン, 1:XG9レーン, 2:CLASSIC6レーン)");
@@ -2862,10 +2869,6 @@ namespace DTXMania
 											{
 												this.n演奏速度 = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 5, 40, this.n演奏速度 );
 											}
-											else if( str3.Equals( "ComboPosition" ) )
-											{
-												this.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.ドラムコンボ文字の表示位置 );
-											}
 											else if( str3.Equals( "Risky" ) )					// #2359 2011.6.23  yyagi
 											{
 												this.nRisky = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 10, this.nRisky );
@@ -2878,7 +2881,7 @@ namespace DTXMania
                                             {
                                                 this.bAssignToLBD.Drums = C変換.bONorOFF( str4[ 0 ] );
                                             }
-                                            else if (str3.Equals("DrumsJudgeLine"))
+                                            else if (str3.Equals( "DrumsJudgeLine" ) )
                                             {
                                                 this.nJudgeLine.Drums = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Drums);
                                             }
@@ -3071,6 +3074,10 @@ namespace DTXMania
                                             else if ( str3.Equals( "PedalLagTime" ) )
                                             {
                                                 this.nPedalLagTime = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nPedalLagTime );
+                                            }
+                                            else if ( str3.Equals( "DrumComboDisp" ) )				// #29500 2012.9.11 kairera0467
+                                            {
+                                                this.bドラムコンボ文字の表示 = C変換.bONorOFF(str4[0]);
                                             }
 											continue;
 										}

@@ -98,7 +98,7 @@ namespace DTXMania
                 Graphics gNamePlate = Graphics.FromImage( this.b4font );
                 gNamePlate.PageUnit = GraphicsUnit.Pixel;
 
-                Trace.TraceInformation("a");
+                //Trace.TraceInformation("a");
 
                 if ( string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) || ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする ) )
                     this.strPanelString = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;

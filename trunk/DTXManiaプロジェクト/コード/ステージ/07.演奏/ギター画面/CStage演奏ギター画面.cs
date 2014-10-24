@@ -200,6 +200,13 @@ namespace DTXMania
                 this.t進行描画・コンボ();
 				this.t進行描画・演奏情報();
 				//this.t進行描画・Wailing枠();
+                
+                //CDTXMania.act文字コンソール.tPrint( 160, 80, C文字コンソール.Eフォント種別.灰, base.bブーストボーナス.ToString() );
+                //CDTXMania.act文字コンソール.tPrint( 160, 64, C文字コンソール.Eフォント種別.灰, base.ctタイマー[0].db現在の値.ToString() );
+                //if( base.ctタイマー[0].b終了値に達したdb )
+                {
+                    //base.bブーストボーナス = false;
+                }
 
                 this.t進行描画・チップファイアGB();
 				this.t進行描画・STAGEFAILED();

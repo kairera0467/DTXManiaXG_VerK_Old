@@ -599,13 +599,13 @@ namespace DTXMania
                 if( File.Exists( cdtx.strフォルダ名 + "\\TitleTexture.png" ) )
                 {
                     if( this.txカスタム曲名テクスチャ != null )
-                        this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 510, 176 );
+                        this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 504, 175 );
                 }
 
                 if( File.Exists( cdtx.strフォルダ名 + "\\ArtistTexture.png" ) )
                 {
                     if( this.txカスタムアーティスト名テクスチャ != null )
-                        this.txカスタムアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 500, 499 );
+                        this.txカスタムアーティスト名テクスチャ.t2D描画( CDTXMania.app.Device, 502, 499 );
                 }
                 
                 //this.txジャケット.vc拡大縮小倍率.X = 0.689f;

@@ -59,7 +59,8 @@ namespace DTXMania
             bool guitar = CDTXMania.DTX.bチップがある.Guitar;
             bool bass = CDTXMania.DTX.bチップがある.Bass;
 
-            base.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, 1130, 16);
+            if( CDTXMania.ConfigIni.bドラムコンボ文字の表示 )
+                base.tコンボ表示・ドラム(nCombo値, nジャンプインデックス, 1130, 16);
 
             this.n火薬カウント = (nCombo値 / 100);
 
@@ -86,7 +87,7 @@ namespace DTXMania
                             this.st爆発[i].b使用中 = false;
                             this.bn00コンボに到達した[this.nコンボカウント.Drums].Drums = true;
                         }
-                        if ( this.txComboBom != null && CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.OFF )
+                        if ( this.txComboBom != null && CDTXMania.ConfigIni.bドラムコンボ文字の表示 )
                         {
                             this.txComboBom.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, (340 * num1), 360, 340));
                         }

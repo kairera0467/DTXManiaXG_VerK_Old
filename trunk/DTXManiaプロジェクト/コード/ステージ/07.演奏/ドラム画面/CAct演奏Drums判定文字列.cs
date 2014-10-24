@@ -1416,6 +1416,7 @@ namespace DTXMania
                                     CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率B, base.st状態[j].fY方向拡大率B, 1f);
                                     CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
                                     CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.n透明度 = base.st状態[j].n透明度B;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.b加算合成 = true;
                                     CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
                                 }
                                 if (base.st状態[j].judge == E判定.Great)
