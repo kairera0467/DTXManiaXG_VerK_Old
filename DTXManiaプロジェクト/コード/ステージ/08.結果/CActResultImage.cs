@@ -259,12 +259,15 @@ namespace DTXMania
                 graphics = Graphics.FromImage( b中央パネル );
 
                 graphics.DrawImage( this.i中央パネル, 0, 0, 1280, 136 );
-                if( this.txカスタム曲名テクスチャ == null )
-                    graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, 578f, 85f);
+
+                //2014.09.26.kairera0467 PrivateFont化により廃止。
+                //if( this.txカスタム曲名テクスチャ == null )
+                //    graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, 578f, 85f);
 
                 songname.Dispose();
                 this.tx中央パネル = new CTexture( CDTXMania.app.Device, this.b中央パネル, CDTXMania.TextureFormat );
-                this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                //this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
+                this.tx曲名 = this.t曲名テクスチャを生成する( this.strSongName );
                 image.Dispose();
                 this.ftSongNameFont.Dispose();
                 //this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
@@ -296,12 +299,15 @@ namespace DTXMania
                 }
                 CDTXMania.tテクスチャの解放( ref this.txカスタム曲名テクスチャ );
                 CDTXMania.tテクスチャの解放( ref this.txSongName );
+                CDTXMania.tテクスチャの解放( ref this.tx曲名 );
                 CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
                 //CDTXMania.tテクスチャの解放( ref this.txSongLevel );
                     
                 base.OnManagedリソースの解放();
             }
         }
+
+        //unsafeなのでデバッグ実行時には編集しないこと。
 		public override unsafe int On進行描画()
 		{
 			if( base.b活性化してない )
@@ -404,13 +410,17 @@ namespace DTXMania
                 if( this.txカスタム曲名テクスチャ != null )
                 {
                     this.txカスタム曲名テクスチャ.vc拡大縮小倍率 = new Vector3( 0.75f, 0.75f, 1f );
-                    this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 578, 345 );
+                    this.txカスタム曲名テクスチャ.t2D描画( CDTXMania.app.Device, 576, 345 );
                 }
             }
             else
             {
                 if( this.txカスタム曲名テクスチャ == null )
-                    this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ) + 3, this.n本体0Y + 0x3f);
+                {
+                    //this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ) + 3, this.n本体0Y + 0x3f);
+                    this.tx曲名.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ), this.n本体0Y + 0x3f);
+                    this.tx曲名.vc拡大縮小倍率.X = 0.75f;
+                }
             }
             //this.txSongDifficulty.t2D描画(CDTXMania.app.Device, 0x3ea, 20);
 
@@ -453,6 +463,7 @@ namespace DTXMania
         private System.Drawing.Font ftSongNameFont;
         private CTexture txLevel;
         private CTexture txSongName;
+        private CTexture tx曲名;
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
 
@@ -755,6 +766,15 @@ namespace DTXMania
                     x += 20;
                 }
             }
+        }
+        private CTexture t曲名テクスチャを生成する( string str曲名 )
+        {
+            CPrivateFastFont pf曲名フォント = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 18, FontStyle.Regular );
+            Bitmap bmp;
+            bmp = pf曲名フォント.DrawPrivateFont( str曲名, Color.White, Color.Transparent );
+            CTexture txReturn = CDTXMania.tテクスチャの生成( bmp, false );
+
+            return txReturn;
         }
 		//-----------------
 		#endregion

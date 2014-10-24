@@ -120,6 +120,12 @@ namespace DTXMania
                 this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
                 this.strGroupName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
 
+                Image imgCustomSongNameTexture = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
+                if( File.Exists( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" ) )
+                {
+                    imgCustomSongNameTexture = Image.FromFile( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" );
+                }
+
                 //ギターベースの有無を判断する仕様を考えて、生成などは分けておく。
 
                 #region[ ネームカラー ]
@@ -291,29 +297,43 @@ namespace DTXMania
 
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
-                    if (this.nStrlengthbydot > 212)
+                    if( File.Exists(CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png") )
                     {
-                        gSongPanel.ScaleTransform(212f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 22f / (212f / (float)this.nStrlengthbydot), 73f);
-                        gSongPanel.ResetTransform();
+                        gSongPanel.DrawImage(imgCustomSongNameTexture, 16, 70, 238, 30);
                     }
                     else
                     {
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)18f, (float)73f);
+                        if (this.nStrlengthbydot > 212)
+                        {
+                            gSongPanel.ScaleTransform(212f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
+                            gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 22f / (212f / (float)this.nStrlengthbydot), 73f);
+                            gSongPanel.ResetTransform();
+                        }
+                        else
+                        {
+                            gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)18f, (float)73f);
+                        }   
                     }
 
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
-                    if (this.nStrlengthbydot > 250)
+                    if( File.Exists(CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png") )
                     {
-                        gSongPanel.ScaleTransform(250.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 250f / (250f / (float)this.nStrlengthbydot), 18f);
-                        gSongPanel.ResetTransform();
+                        gSongPanel.DrawImage(imgCustomSongNameTexture, 250, 18, 238, 30);
                     }
                     else
                     {
-                        gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)250f, (float)18f);
+                        if (this.nStrlengthbydot > 250)
+                        {
+                            gSongPanel.ScaleTransform(250.0f / (float)this.nStrlengthbydot, 1f, MatrixOrder.Append);
+                            gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, 250f / (250f / (float)this.nStrlengthbydot), 18f);
+                            gSongPanel.ResetTransform();
+                        }
+                        else
+                        {
+                            gSongPanel.DrawString(this.strPanelString, this.ftDisplayFont, Brushes.White, (float)250f, (float)18f);
+                        }
                     }
                 }
                 #endregion

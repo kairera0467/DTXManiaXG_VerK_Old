@@ -282,7 +282,7 @@ namespace DTXMania
 				this.b演奏にMIDI入力を使った[ i ] = false;
 				this.b演奏にマウスを使った[ i ] = false;
                 this.ctタイマー[i] = null;//new CCounter(0, 3000, 1, CDTXMania.Timer);
-                this.ctタイマー[i] = new CCounter(0, 3000, 1, CDTXMania.Timer);
+                this.ctタイマー[i] = new CCounter(0.0, 3.0, 0.1, CSound管理.rc演奏用タイマ);
 			}
 
 			this.bAUTOでないチップが１つでもバーを通過した = false;
@@ -705,7 +705,7 @@ namespace DTXMania
 //      protected bool bDTXVmode;
         protected STDGBVALUE<int> nJudgeLinePosY_delta; // #31602 2013.6.23 yyagi 表示遅延対策として、判定ラインの表示位置をずらす機能を追加する
 
-        private CCounter[] ctタイマー = new CCounter[3];
+        protected CCounter[] ctタイマー = new CCounter[3];
         public bool bブーストボーナス = false;
 	
 		protected STDGBVALUE<Queue<CDTX.CChip>> queWailing;
@@ -1401,21 +1401,8 @@ namespace DTXMania
                 default:
                     break;
             }
-            for (int i = 0; i < 3; i++)
-            {
-                if (this.ctタイマー[i] != null)
-                {
-                    if (!this.ctタイマー[i].b停止中)
-                    {
-                        if (this.ctタイマー[i].b終了値に達した)
-                        {
-                            this.bブーストボーナス = false;
-                            this.ctタイマー[i].t停止();
 
-                        }
-                    }
-                }
-            }
+            
             #region[スコア]
             //!bPChipIsAutoPlayを入れるとオート時にスコアを加算しなくなる。
             if (CDTXMania.ConfigIni.nSkillMode == 1)
@@ -4117,23 +4104,23 @@ namespace DTXMania
 
 					#region [ Chip Fire effects ]
 					bool bSuccessOPEN = bChipIsO && ( autoR || !pushingR ) && ( autoG || !pushingG ) && ( autoB || !pushingB ) && ( autoY || !pushingY ) && ( autoP || !pushingP );
-					if ( ( bChipHasR && ( autoR || pushingR ) && autoPick ) || bSuccessOPEN )
+					if ( ( bChipHasR && ( autoR || pushingR ) && autoPick ) || bSuccessOPEN && autoPick )
 					{
 						this.actChipFireGB.Start( 0 + lo );
 					}
-					if ( ( bChipHasG && ( autoG || pushingG ) && autoPick ) || bSuccessOPEN )
+					if ( ( bChipHasG && ( autoG || pushingG ) && autoPick ) || bSuccessOPEN && autoPick )
 					{
 						this.actChipFireGB.Start( 1 + lo );
 					}
-					if ( ( bChipHasB && ( autoB || pushingB ) && autoPick ) || bSuccessOPEN )
+					if ( ( bChipHasB && ( autoB || pushingB ) && autoPick ) || bSuccessOPEN && autoPick )
 					{
 						this.actChipFireGB.Start( 2 + lo );
 					}
-                    if ( ( bChipHasY && ( autoY || pushingY ) && autoPick ) || bSuccessOPEN )
+                    if ( ( bChipHasY && ( autoY || pushingY ) && autoPick ) || bSuccessOPEN && autoPick )
 					{
 						this.actChipFireGB.Start( 3 + lo );
 					}
-                    if ( ( bChipHasP && ( autoP || pushingP ) && autoPick ) || bSuccessOPEN )
+                    if ( ( bChipHasP && ( autoP || pushingP ) && autoPick ) || bSuccessOPEN && autoPick )
 					{
 						this.actChipFireGB.Start( 4 + lo );
 					}
@@ -4986,7 +4973,7 @@ namespace DTXMania
                             bool bChipHasP = false;
 							bool bChipHasW = ( ( pChip.nチャンネル番号 & 0x0F ) == 0x08 );
 							bool bChipIsO = false;
-                            bool bSuccessOPEN = bChipIsO && ( autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
+                            //bool bSuccessOPEN = bChipIsO && ( autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
 
                             switch ( pChip.nチャンネル番号 )
                             {
@@ -5022,9 +5009,9 @@ namespace DTXMania
                                 case 0x28:
                                     bChipHasW = true;
                                     break;
-                                default:
-                                    switch ( pChip.nチャンネル番号 )
-                                    {
+                                //default:
+                                    //switch ( pChip.nチャンネル番号 )
+                                    //{
                                         case 0x93:
                                             bChipHasY = true;
                                             break;
@@ -5299,10 +5286,11 @@ namespace DTXMania
                                             bChipHasP = true;
                                             break;
                                         //OK
-                                    }
-                                    break;
+                                    //}
+                                    //break;
                             }
 
+                            bool bSuccessOPEN = bChipIsO && (autoR || pushingR == 0) && (autoG || pushingG == 0) && (autoB || pushingB == 0) && (autoY || pushingY == 0) && (autoP || pushingP == 0);
                             int num17 = ( bChipHasR ? 4 : 0 ) | ( bChipHasG ? 2 : 0 ) | ( bChipHasB ? 1 : 0 ) | ( bChipHasY ? 16 : 0 ) | ( bChipHasP ? 32 : 0 );
                             if( pChip != null && ( num17 & ~nAutoMask & 0x3F ) == ( flagRGB & ~nAutoMask & 0x3F ) && e判定 != E判定.Miss )
                             {
@@ -5378,7 +5366,7 @@ namespace DTXMania
 					chipWailing.bHit = true;
 					this.actWailingBonus.Start( inst, this.r現在の歓声Chip[ indexInst ] );
 					//if ( !bIsAutoPlay[indexInst] )
-					if ( !autoW )
+					if ( !autoW || CDTXMania.ConfigIni.bAutoAddGage && autoW )
 					{
                         if (CDTXMania.ConfigIni.nSkillMode == 0)
                         {
@@ -5399,30 +5387,20 @@ namespace DTXMania
 
         private void tブーストボーナス()
         {
-
-            for (int i = 0; i < 1; i++)
+            if (this.ctタイマー[0].b進行中db)
             {
-
-                if (this.ctタイマー[i].b進行中)
-                {
-                    this.ctタイマー[i].t停止();
-                }
-
+                this.ctタイマー[0].t停止();
             }
 
-            for (int i = 0; i < 1; i++)
+            if (!this.ctタイマー[0].b進行中db)
             {
-                if (!this.ctタイマー[i].b進行中)
+                //this.bブーストボーナス = true;
+                this.ctタイマー[0].t進行db();
+                if(this.ctタイマー[0].b終了値に達したdb)
                 {
-                    this.bブーストボーナス = true;
-                    this.ctタイマー[i].t進行();
-                    if(this.ctタイマー[i].b終了値に達した)
-                    {
-                        this.ctタイマー[i].t停止();
-                        this.bブーストボーナス = false;
-                    }
+                    this.ctタイマー[0].t停止();
+                    //this.bブーストボーナス = false;
                 }
-
             }
         }
 

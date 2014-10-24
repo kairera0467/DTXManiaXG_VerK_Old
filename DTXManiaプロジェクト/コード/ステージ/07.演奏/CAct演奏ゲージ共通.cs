@@ -288,6 +288,9 @@ namespace DTXMania
 
 			if ( this.db現在のゲージ値[ (int) part ] > GAUGE_MAX )		// RISKY時は決してゲージが増加しないので、ギタレボモード時のギター/ベース両チェック(上限チェック)はしなくて良い
 				this.db現在のゲージ値[ (int) part ] = GAUGE_MAX;
+
+            if ( !CDTXMania.ConfigIni.bSTAGEFAILED有効 && this.db現在のゲージ値[(int)part] < GAUGE_MIN)
+                this.db現在のゲージ値[ (int) part ] = -0.5;
 		}
 		//-----------------
 		#endregion
