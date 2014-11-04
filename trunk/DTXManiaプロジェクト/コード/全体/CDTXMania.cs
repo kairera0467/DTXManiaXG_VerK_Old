@@ -1688,19 +1688,27 @@ for (int i = 0; i < 3; i++) {
         public static CDirectShow t失敗してもスキップ可能なDirectShowを生成する(string fileName, IntPtr hWnd, bool bオーディオレンダラなし)
         {
             CDirectShow ds = null;
-            try
+            if( File.Exists( fileName ) )
             {
-                ds = new CDirectShow(fileName, hWnd, bオーディオレンダラなし);
+                try
+                {
+                    ds = new CDirectShow(fileName, hWnd, bオーディオレンダラなし);
+                }
+                catch (FileNotFoundException)
+                {
+                    Trace.TraceError("動画ファイルが見つかりませんでした。({0})", fileName);
+                    ds = null;      // Dispose はコンストラクタ内で実施済み
+                }
+                catch
+                {
+                    Trace.TraceError("DirectShow の生成に失敗しました。[{0}]", fileName);
+                    ds = null;      // Dispose はコンストラクタ内で実施済み
+                }
             }
-            catch (FileNotFoundException)
+            else
             {
                 Trace.TraceError("動画ファイルが見つかりませんでした。({0})", fileName);
-                ds = null;      // Dispose はコンストラクタ内で実施済み
-            }
-            catch
-            {
-                Trace.TraceError("DirectShow の生成に失敗しました。[{0}]", fileName);
-                ds = null;      // Dispose はコンストラクタ内で実施済み
+                return null;
             }
 
             return ds;

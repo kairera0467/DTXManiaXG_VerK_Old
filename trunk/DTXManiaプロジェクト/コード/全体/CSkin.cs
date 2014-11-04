@@ -700,6 +700,8 @@ namespace DTXMania
 			this.bgm選曲画面			= new Cシステムサウンド( @"Sounds\Select BGM.ogg",		true,  true,  false );
             this.bgm結果画面            = new Cシステムサウンド( @"Sounds\Result BGM.ogg",      true,  true,  false );
             this.ds選曲画面背景動画     = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\5_background.mp4" ), CDTXMania.app.WindowHandle, true );
+
+            tReadSkinConfig();
 		}
 
 		public void ReloadSkin()
@@ -894,6 +896,109 @@ namespace DTXMania
             }
 
         }
+
+        public void tReadSkinConfig()
+        {
+            if( File.Exists( CSkin.Path( @"SkinConfig.ini" ) ) )
+            {
+                string str;
+				//this.tキーアサインを全部クリアする();
+				using ( StreamReader reader = new StreamReader( CSkin.Path( @"SkinConfig.ini" ), Encoding.GetEncoding( "Shift_JIS" ) ) )
+                {
+				    str = reader.ReadToEnd();
+                }
+                this.t文字列から読み込み( str );
+            }
+        }
+
+        private void t文字列から読み込み(string strAllSettings)	// 2011.4.13 yyagi; refactored to make initial KeyConfig easier.
+        {
+            string[] delimiter = { "\n" };
+            string[] strSingleLine = strAllSettings.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string s in strSingleLine)
+            {
+                string str = s.Replace('\t', ' ').TrimStart(new char[] { '\t', ' ' });
+                if ((str.Length != 0) && (str[0] != ';'))
+                {
+                    try
+                    {
+                        string str3;
+                        string str4;
+                        string[] strArray = str.Split(new char[] { '=' });
+                        if (strArray.Length == 2)
+                        {
+                            str3 = strArray[0].Trim();
+                            str4 = strArray[1].Trim();
+                            //-----------------------------
+                            if (str3.Equals("NamePlateType"))
+                            {
+                                CDTXMania.ConfigIni.eNamePlate = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)CDTXMania.ConfigIni.eNamePlate);
+                            }
+                            else if (str3.Equals("DrumSetMoves"))
+                            {
+                                CDTXMania.ConfigIni.eドラムセットを動かす = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)CDTXMania.ConfigIni.eドラムセットを動かす);
+                            }
+                            else if (str3.Equals("BPMBar"))
+                            {
+                                CDTXMania.ConfigIni.eBPMbar = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)CDTXMania.ConfigIni.eBPMbar);
+                            }
+                            else if (str3.Equals("LivePoint"))
+                            {
+                                CDTXMania.ConfigIni.bLivePoint = C変換.bONorOFF(str4[0]);
+                            }
+                            else if (str3.Equals("Speaker"))
+                            {
+                                CDTXMania.ConfigIni.bSpeaker = C変換.bONorOFF(str4[0]);
+                            }
+                            else if (str3.Equals("JudgeAnimeType"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeAnimeType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, CDTXMania.ConfigIni.nJudgeAnimeType);
+                            }
+                            else if (str3.Equals("JudgeFrames"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeFrames = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeFrames);
+                            }
+                            else if (str3.Equals("JudgeInterval"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeInterval = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeInterval);
+                            }
+                            else if (str3.Equals("JudgeWidgh"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeWidgh = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeWidgh);
+                            }
+                            else if (str3.Equals("JudgeHeight"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeHeight = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeHeight);
+                            }
+                            else if (str3.Equals("ExplosionFrames"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionFrames = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionFrames);
+                            }
+                            else if (str3.Equals("ExplosionInterval"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionInterval = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionInterval);
+                            }
+                            else if (str3.Equals("ExplosionWidgh"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionWidgh);
+                            }
+                            else if (str3.Equals("ExplosionHeight"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionHeight);
+                            }
+                            //-----------------------------
+                        }
+                        continue;
+                    }
+                    catch (Exception exception)
+                    {
+                        Trace.TraceError(exception.Message);
+                        continue;
+                    }
+                }
+            }
+        }
+
 		#region [ IDisposable 実装 ]
 		//-----------------
 		public void Dispose()
