@@ -11,10 +11,10 @@ namespace DTXMania
     {
         /// <summary>
         /// ドラムを描画するクラス。
+        /// TIPS
+        /// ・シンバル動作のスイッチはドラムパッドに寄生しています。
         /// 
         /// 課題
-        /// ・オート時の対応
-        /// ・シンバルの実装
         /// ・加速度の調整
         /// </summary>
         public CAct演奏Drumsドラムセット()
@@ -24,13 +24,13 @@ namespace DTXMania
 
         public void Start( int nlane )
         {
-            this.stパッド状態[ nlane ].nY座標加速度dot = 2;
+            this.stパッド状態[ nlane ].nY座標加速度dot = 3;
         }
 
         public override void On活性化()
         {
             this.nY座標制御タイマ = -1;
-            for( int i = 0; i < 9; i++ )
+            for( int i = 0; i < 10; i++ )
             {
                 STパッド状態 stパッド状態 = new STパッド状態();
                 stパッド状態.nY座標オフセットdot = 0;
@@ -44,7 +44,7 @@ namespace DTXMania
             this.nRightCymbalInterval = CDTXMania.ConfigIni.nRightCymbalInterval;
             this.nLeftCymbalX = 0;
             this.nLeftCymbalY = 0;
-            this.nRightCymbalX = 0;
+            this.nRightCymbalX = 900;
             this.nRightCymbalY = 0;
 
             this.ctLeftCymbal = new CCounter( 0, this.nLeftCymbalFrame - 1, this.nLeftCymbalInterval, CDTXMania.Timer );
@@ -92,6 +92,7 @@ namespace DTXMania
 				base.b初めての進行描画 = false;
 			}
 			long num = FDK.CSound管理.rc演奏用タイマ.n現在時刻;
+            int nIndex = 0;
 			if( num < this.nY座標制御タイマ )
 			{
 				this.nY座標制御タイマ = num;
@@ -112,7 +113,7 @@ namespace DTXMania
 						this.stパッド状態[ k ].nY座標加速度dot = 0;
 					}
 				}
-			    this.nY座標制御タイマ += 5;
+			    this.nY座標制御タイマ += 7;
             }
             #region[ 座標類 ]
             this.n座標Snare = 490 + this.stパッド状態[ 2 ].nY座標オフセットdot;
@@ -165,8 +166,8 @@ namespace DTXMania
             public int nY座標加速度dot;
         }
 
-        private CCounter ctLeftCymbal;
-        private CCounter ctRightCymbal;
+        public CCounter ctLeftCymbal;
+        public CCounter ctRightCymbal;
         
         private CTexture txLeftCymbal;
         private CTexture txSnare;
@@ -177,7 +178,10 @@ namespace DTXMania
         private CTexture txRightCymbal;
 
         private long nY座標制御タイマ;
-        private STパッド状態[] stパッド状態 = new STパッド状態[10];
+        private STパッド状態[] stパッド状態 = new STパッド状態[ 19 ];
+
+        private readonly int[] n描画順 = new int[] { 9, 3, 2, 6, 5, 4, 8, 7, 1, 0 };
+        // LP BD SD FT HT LT RD CY HH LC
 
         private int n座標Snare;
         private int n座標HiTom;

@@ -68,7 +68,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\1_background.jpg" ), false );
+				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\1_background.png" ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -87,6 +87,7 @@ namespace DTXMania
 				if( base.b初めての進行描画 )
 				{
 					this.list進行文字列.Add( "DTXManiaXG Ver.K powered by YAMAHA Silent Session Drums\n" );
+					this.list進行文字列.Add( "Product by.kairera0467 DTXManiaXG(Ver.K) team\n" );
 					this.list進行文字列.Add( "Release: " + CDTXMania.VERSION + " [" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + "]" );
 
 					es = new CEnumSongs();

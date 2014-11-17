@@ -197,6 +197,15 @@ namespace DTXMania
 						this.tx光るパッド.n透明度 = ( this.stパッド状態[ index ].n明るさ * 40 ) + 15;
 						this.tx光るパッド.t2D描画( CDTXMania.app.Device, x, y, this.st基本位置[ index ].rc );
 					}
+
+                    if( index == 0 )
+                    {
+                        CDTXMania.stage演奏ドラム画面.actDrumSet.ctLeftCymbal.t進行();
+                    }
+                    if( index == 7 )
+                    {
+                        CDTXMania.stage演奏ドラム画面.actDrumSet.ctRightCymbal.t進行();
+                    }
 				}
 			}
 			return 0;

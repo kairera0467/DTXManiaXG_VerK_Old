@@ -31,7 +31,14 @@ namespace DTXMania
 
 		
 		// コンストラクタ
-
+        /// <summary>
+        /// ゲージの描画クラス。ドラム側。
+        /// 
+        /// 課題
+        /// ・ゲージの実装。
+        /// ・Danger時にゲージの色が変わる演出の実装。
+        /// ・Danger、MAX時のアニメーション実装。
+        /// </summary>
 		public CAct演奏Drumsゲージ()
 		{
 			base.b活性化してない = true;
@@ -44,16 +51,12 @@ namespace DTXMania
 		{
 			// CAct演奏ゲージ共通.Init()に移動
 			// this.dbゲージ値 = ( CDTXMania.ConfigIni.nRisky > 0 ) ? 1.0 : 0.66666666666666663;
+            this.ctマスク透明度タイマー = new CCounter(0, 1500, 2, CDTXMania.Timer);
 			base.On活性化();
 		}
 		public override void On非活性化()
 		{
-			this.ct本体振動 = null;
-			this.ct本体移動 = null;
-			for( int i = 0; i < 24; i++ )
-			{
-				this.st白い星[ i ].ct進行 = null;
-			}
+            this.ctマスク透明度タイマー = null;
 			base.On非活性化();
 		}
 		public override void OnManagedリソースの作成()
@@ -61,6 +64,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Gauge_drums.png" ) );
+                this.txゲージ中身 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_gauge_bar.png" ) );
+                this.txゲージマスクDANGER = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_gauge_mask_danger.png" ) );
+                this.txゲージマスクMAX = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_gauge_mask_max.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -69,6 +75,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txゲージ );
+                CDTXMania.tテクスチャの解放( ref this.txゲージ中身 );
+                CDTXMania.tテクスチャの解放( ref this.txゲージマスクDANGER );
+                CDTXMania.tテクスチャの解放( ref this.txゲージマスクMAX );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -76,14 +85,32 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない )
 			{
-				if ( base.b初めての進行描画 )
-				{
-					base.b初めての進行描画 = false;
-				}
+                this.ctマスク透明度タイマー.t進行Loop();
 
                 if( this.txゲージ != null )
                 {
-                    this.txゲージ.t2D描画( CDTXMania.app.Device, 258, 656 );
+                    //下地
+                    this.txゲージ.t2D描画( CDTXMania.app.Device, 258, 656, new Rectangle( 0, 0, 592, 45 ) );
+
+                    //ゲージ本体
+                    this.txゲージ中身.vc拡大縮小倍率.X = (float)base.db現在のゲージ値.Drums;
+                    this.txゲージ中身.t2D描画( CDTXMania.app.Device, 303, 666 );
+
+                    //DANGER時のマスク画像
+                    if( this.txゲージマスクDANGER != null && ( this.IsDanger( E楽器パート.DRUMS ) && base.db現在のゲージ値.Drums >= 0.0 ) )
+                    {
+                        this.txゲージマスクDANGER.t2D描画( CDTXMania.app.Device, 259, 629 );
+                        this.txゲージマスクDANGER.n透明度 = ( this.ctマスク透明度タイマー.n現在の値 <= 750 ? (int)( this.ctマスク透明度タイマー.n現在の値 / 2.94 ) : 500 - (int)(( this.ctマスク透明度タイマー.n現在の値) / 2.94 ) );
+                    }
+                    //MAX時のマスク画像
+                    if( this.txゲージマスクMAX != null && base.db現在のゲージ値.Drums == 1.0 )
+                    {
+                        this.txゲージマスクMAX.t2D描画( CDTXMania.app.Device, 259, 629 );
+                        this.txゲージマスクMAX.n透明度 = ( this.ctマスク透明度タイマー.n現在の値 <= 750 ? (int)( this.ctマスク透明度タイマー.n現在の値 / 2.94 ) : 500 - (int)(( this.ctマスク透明度タイマー.n現在の値) / 2.94 ) );
+                    }
+
+                    //文字
+                    this.txゲージ.t2D描画( CDTXMania.app.Device, 258, 656, new Rectangle( 0, 45, 592, 45 ) );
                 }
 
 

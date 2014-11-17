@@ -1076,6 +1076,7 @@ namespace DTXMania
         #endregion
         #region[System]
         public EGraphicType eGraphicType;
+        public bool bDirectShowMode;
         #endregion
         #region[ 画像 ]
         //--------------------------
@@ -1083,6 +1084,10 @@ namespace DTXMania
         public int nRightCymbalFrame;
         public int nLeftCymbalInterval;
         public int nRightCymbalInterval;
+        public int nLeftCymbalX;
+        public int nRightCymbalX;
+        public int nLeftCymbalY;
+        public int nRightCymbalY;
         //--------------------------
         #endregion
 
@@ -1263,12 +1268,17 @@ namespace DTXMania
             this.eLaneType = Eレーンタイプ.TypeA;
             this.eClipDispType = EClipDispType.OFF;
             this.eGraphicType = EGraphicType.XG;
+            this.bDirectShowMode = false;
             this.bドラムコンボ表示 = true;
             #region[ 画像 ]
             this.nLeftCymbalFrame = 9;
             this.nRightCymbalFrame = 9;
             this.nLeftCymbalInterval = 35;
             this.nRightCymbalInterval = 35;
+            this.nLeftCymbalX = 0;
+            this.nLeftCymbalY = 0;
+            this.nRightCymbalX = 0;
+            this.nRightCymbalY = 0;
             
             #endregion
             #endregion
@@ -1654,6 +1664,11 @@ namespace DTXMania
 			//sw.WriteLine( "; (If you feel illegal seek with mp3, please set it to 1.)" );	//
 			//sw.WriteLine( "NoMP3Streaming={0}", this.bNoMP3Streaming ? 1 : 0 );				//
 			//sw.WriteLine();
+            sw.WriteLine( "; 動画再生にDirectShowを使用する(0:OFF, 1:ON)" );
+			sw.WriteLine( "; 動画再生にDirectShowを使うことによって、再生時の負担を軽減できます。");
+			sw.WriteLine( "; ただし使用時にはセットアップが必要になるのでご注意ください。");
+			sw.WriteLine( "DirectShowMode={0}", this.bDirectShowMode ? 1 : 0 );
+
 			#region [ Adjust ]
 			sw.WriteLine( "; 判定タイミング調整(ドラム, ギター, ベース)(-99～99)[ms]" );		// #23580 2011.1.3 yyagi
 			sw.WriteLine("; Revision value to adjust judgement timing for the drums, guitar and bass.");	//
@@ -2616,8 +2631,15 @@ namespace DTXMania
 											//else if ( str3.Equals( "NoMP3Streaming" ) )
 											//{
 											//    this.bNoMP3Streaming = C変換.bONorOFF( str4[ 0 ] );
-											//}
-											continue;
+                                            //}
+                                            #region[ Ver.K追加 ]
+											else if ( str3.Equals( "DirectShowMode" ) )		// #28228 2012.5.1 yyagi
+											{
+                                                this.bDirectShowMode = C変換.bONorOFF( str4[ 0 ] ); ;
+											}
+                                            #endregion
+
+                                            continue;
 										}
 									//-----------------------------
 									#endregion

@@ -191,9 +191,8 @@ namespace DTXMania
 				this.t進行描画・ギターベースフレーム();
 				this.t進行描画・レーンフラッシュGB();
                 this.t進行描画・ギターベース判定ライン();
-                this.t進行描画・ゲージ();
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
-                this.t進行描画・レーン();
+                //this.t進行描画・レーン();
 				this.t進行描画・レーンフラッシュD();
 				this.t進行描画・DANGER();
 				this.t進行描画・判定ライン();
@@ -209,6 +208,7 @@ namespace DTXMania
 				bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
 				this.t進行描画・演奏情報();
 				this.t進行描画・ドラムパッド();
+                this.t進行描画・ゲージ();
 				if ( this.e判定表示優先度 == E判定表示優先度.Chipより上 )
 				{
 					this.t進行描画・RGBボタン();
@@ -422,7 +422,7 @@ namespace DTXMania
 	
 		protected override void t進行描画・AVI()
 		{
-			base.t進行描画・AVI( 338, 57 );
+			base.t進行描画・AVI( 0, 0 );
 		}
 		protected override void t進行描画・BGA()
 		{
@@ -599,6 +599,13 @@ namespace DTXMania
 
 					#region [ (A) ヒットしていればヒット処理して次の inputEvent へ ]
 					//-----------------------------
+                    switch( ( Eパッド ) nPad )
+                    {
+                        case Eパッド.CY:
+                            this.actDrumSet.ctRightCymbal.n現在の値 = 0;
+                            break;
+                    }
+
 					switch( ( (Eパッド) nPad ) )
 					{
 						case Eパッド.HH:
@@ -1930,8 +1937,8 @@ namespace DTXMania
 					//-----------------------------
 					int pad = nPad;	// 以下、nPad の代わりに pad を用いる。（成りすまし用）
 
-					if( nPad == (int) Eパッド.LP )	// #27029 2012.1.4 from: HP&BD 時の HiHatPedal の場合は BD に成りすます。
-						pad = (int) Eパッド.BD;		//（ HP|BD 時のHP入力はここまでこないので無視。）
+					//if( nPad == (int) Eパッド.LP )	// #27029 2012.1.4 from: HP&BD 時の HiHatPedal の場合は BD に成りすます。
+					//	pad = (int) Eパッド.BD;		//（ HP|BD 時のHP入力はここまでこないので無視。）
 
 					// レーンフラッシュ
 					this.actLaneFlushD.Start( (Eレーン) this.nパッド0Atoレーン07[ pad ], ( (float) inputEvent.nVelocity ) / 127f );
@@ -1940,7 +1947,7 @@ namespace DTXMania
 					this.actPad.Hit( this.nパッド0Atoパッド08[ pad ] );
 
                     // ドラムセット
-                    this.actDrumSet.Start( this.nチャンネル0Atoパッド08[ pad ] );
+                    this.actDrumSet.Start( this.nパッド0Atoパッド08[ pad ] );
 
 					// 空打ち音
 					if( CDTXMania.ConfigIni.bドラム打音を発声する )
@@ -2433,6 +2440,7 @@ namespace DTXMania
 					// #31602 2013.6.24 yyagi 判定ラインの表示位置をずらしたら、チップのヒットエフェクトの表示もずらすために、nJudgeLine..を追加
 					this.actChipFireD.Start( (Eレーン)indexSevenLanes, flag, flag2, flag2, 演奏判定ライン座標.nJudgeLinePosY_delta.Drums );
 					this.actPad.Hit( this.nチャンネル0Atoパッド08[ pChip.nチャンネル番号 - 0x11 ] );
+                    this.actDrumSet.Start( this.nチャンネル0Atoパッド08[ pChip.nチャンネル番号 - 0x11 ] );
 					this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量( E楽器パート.DRUMS ) );
 					this.tチップのヒット処理( pChip.n発声時刻ms, pChip );
 					cInvisibleChip.StartSemiInvisible( E楽器パート.DRUMS );
@@ -2703,7 +2711,7 @@ namespace DTXMania
                     // #31602 2013.6.24 yyagi 判定ラインの表示位置をずらしたら、チップのヒットエフェクトの表示もずらすために、nJudgeLine..を追加
                     this.actChipFireD.Start( (Eレーン)indexSevenLanes, flag, flag2, flag2, 演奏判定ライン座標.nJudgeLinePosY_delta.Drums );
 					this.actPad.Hit( this.nチャンネル0Atoパッド08[ pChip.nチャンネル番号 - 0x11 ] );
-                    this.actDrumSet.Start( indexSevenLanes );
+                    this.actDrumSet.Start( this.nチャンネル0Atoパッド08[ pChip.nチャンネル番号 - 0x11 ] );
 					this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量( E楽器パート.DRUMS ) );
 					this.tチップのヒット処理( pChip.n発声時刻ms, pChip );
 				}

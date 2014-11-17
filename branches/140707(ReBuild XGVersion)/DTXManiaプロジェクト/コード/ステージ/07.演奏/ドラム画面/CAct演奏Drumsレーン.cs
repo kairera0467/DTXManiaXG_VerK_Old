@@ -53,7 +53,13 @@ namespace DTXMania
             //2014.07.11 kairera0467
             //とりあえずハリボテ実装。
             //現在は1行のコードで全部表示しているが、後から分割していく。
-            this.txLaneMain.t2D描画( CDTXMania.app.Device, 295, 0 );
+            if( CDTXMania.ConfigIni.eLaneType == Eレーンタイプ.TypeA )
+            {
+                this.txLaneMain.t2D描画( CDTXMania.app.Device, 295, 0 );
+            }
+            #endregion
+            #region[ レーンタイプB ]
+
             #endregion
 
             #region[ ウィンドウクリップ ]

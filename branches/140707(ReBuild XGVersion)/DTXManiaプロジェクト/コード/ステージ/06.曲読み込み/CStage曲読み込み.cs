@@ -34,8 +34,6 @@ namespace DTXMania
 			{
 				this.str曲タイトル = "";
 				this.strSTAGEFILE = "";
-				this.b音符を表示する = false;
-				this.n音符の表示位置X = 0x308;
 				this.ftタイトル表示用フォント = new Font( "MS PGothic", 48f, GraphicsUnit.Pixel );
 				this.nBGM再生開始時刻 = -1;
 				this.nBGMの総再生時間ms = 0;
@@ -53,12 +51,10 @@ namespace DTXMania
 				if( ( ( cdtx.STAGEFILE != null ) && ( cdtx.STAGEFILE.Length > 0 ) ) && ( File.Exists( cdtx.strフォルダ名 + cdtx.STAGEFILE ) && !CDTXMania.ConfigIni.bストイックモード ) )
 				{
 					this.strSTAGEFILE = cdtx.strフォルダ名 + cdtx.STAGEFILE;
-					this.b音符を表示する = false;
 				}
 				else
 				{
 					this.strSTAGEFILE = CSkin.Path( @"Graphics\\6_background.jpg" );
-					this.b音符を表示する = true;
 				}
 				if( ( ( cdtx.SOUND_NOWLOADING != null ) && ( cdtx.SOUND_NOWLOADING.Length > 0 ) ) && File.Exists( cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING ) )
 				{
@@ -104,46 +100,36 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx音符 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\ScreenNowLoading onpu.png" ), false );
 				this.tx背景 = CDTXMania.tテクスチャの生成( this.strSTAGEFILE, false );
-				if( this.b音符を表示する )
+				try
 				{
-					try
+					if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
 					{
-						if( ( this.str曲タイトル != null ) && ( this.str曲タイトル.Length > 0 ) )
-						{
-							Bitmap image = new Bitmap( 1, 1 );
-							Graphics graphics = Graphics.FromImage( image );
-							SizeF ef = graphics.MeasureString( this.str曲タイトル, this.ftタイトル表示用フォント );
-							Size size = new Size( (int) Math.Ceiling( (double) ef.Width ), (int) Math.Ceiling( (double) ef.Height ) );
-							graphics.Dispose();
-							image.Dispose();
-							image = new Bitmap( size.Width, size.Height );
-							graphics = Graphics.FromImage( image );
-							graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-							graphics.DrawString( this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, ( float ) 0f, ( float ) 0f );
-							graphics.Dispose();
-							this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
-							this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
-							image.Dispose();
-							this.n音符の表示位置X = ( ( 1280 - ( (int) ( size.Width * this.txタイトル.vc拡大縮小倍率.X ) ) ) - ( ( this.tx音符 != null ) ? this.tx音符.sz画像サイズ.Width : 0 ) ) - 2;
-						}
-						else
-						{
-							this.txタイトル = null;
-							this.n音符の表示位置X = ( 1280 - ( ( this.tx音符 != null ) ? this.tx音符.sz画像サイズ.Width : 0 ) ) - 2;
-						}
+						Bitmap image = new Bitmap( 1, 1 );
+						Graphics graphics = Graphics.FromImage( image );
+						SizeF ef = graphics.MeasureString( this.str曲タイトル, this.ftタイトル表示用フォント );
+						Size size = new Size( (int) Math.Ceiling( (double) ef.Width ), (int) Math.Ceiling( (double) ef.Height ) );
+						graphics.Dispose();
+						image.Dispose();
+						image = new Bitmap( size.Width, size.Height );
+						graphics = Graphics.FromImage( image );
+						graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+						graphics.DrawString( this.str曲タイトル, this.ftタイトル表示用フォント, Brushes.White, ( float ) 0f, ( float ) 0f );
+						graphics.Dispose();
+						this.txタイトル = new CTexture( CDTXMania.app.Device, image, CDTXMania.TextureFormat );
+						this.txタイトル.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
+						image.Dispose();
 					}
-					catch( CTextureCreateFailedException )
+					else
 					{
-						Trace.TraceError( "テクスチャの生成に失敗しました。({0})", new object[] { this.strSTAGEFILE } );
 						this.txタイトル = null;
-						this.tx背景 = null;
 					}
 				}
-				else
+				catch( CTextureCreateFailedException )
 				{
+					Trace.TraceError( "テクスチャの生成に失敗しました。({0})", new object[] { this.strSTAGEFILE } );
 					this.txタイトル = null;
+					this.tx背景 = null;
 				}
 				base.OnManagedリソースの作成();
 			}
@@ -153,7 +139,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
-				CDTXMania.tテクスチャの解放( ref this.tx音符 );
 				CDTXMania.tテクスチャの解放( ref this.txタイトル );
 				base.OnManagedリソースの解放();
 			}
@@ -216,17 +201,11 @@ namespace DTXMania
 			if( this.tx背景 != null )
 				this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 
-			if( this.b音符を表示する )
+
+			int y = 720 - 45;
+			if( this.txタイトル != null )
 			{
-				int y = 720 - 45;
-				if( this.tx音符 != null )
-				{
-					this.tx音符.t2D描画( CDTXMania.app.Device, this.n音符の表示位置X, y );
-				}
-				if( this.txタイトル != null )
-				{
-					this.txタイトル.t2D描画( CDTXMania.app.Device, (int) ( 1280 - ( this.txタイトル.sz画像サイズ.Width * this.txタイトル.vc拡大縮小倍率.X ) ), y );
-				}
+				this.txタイトル.t2D描画( CDTXMania.app.Device, (int) ( 1280 - ( this.txタイトル.sz画像サイズ.Width * this.txタイトル.vc拡大縮小倍率.X ) ), y );
 			}
 			//-----------------------------
 			#endregion
@@ -427,16 +406,13 @@ namespace DTXMania
 		//-----------------
 //		private CActFIFOBlack actFI;
 		private CActFIFOBlack actFO;
-		private bool b音符を表示する;
 		private Font ftタイトル表示用フォント;
 		private long nBGMの総再生時間ms;
 		private long nBGM再生開始時刻;
-		private int n音符の表示位置X;
 		private CSound sd読み込み音;
 		private string strSTAGEFILE;
 		private string str曲タイトル;
 		private CTexture txタイトル;
-		private CTexture tx音符;
 		private CTexture tx背景;
 		private DateTime timeBeginLoad;
 		private DateTime timeBeginLoadWAV;

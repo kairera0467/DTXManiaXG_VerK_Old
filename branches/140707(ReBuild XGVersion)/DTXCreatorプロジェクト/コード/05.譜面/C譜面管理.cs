@@ -769,7 +769,7 @@ namespace DTXCreator.譜面
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BPM, "BPM", 0x08, 0x03, true, Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.BPM, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BEAT, "BEAT", 0xF8, 0xF3, true, Color.FromArgb( alpha, 160, 160, 160 ), 0, 0, Cレーン.ELaneType.Beat, false ) );
 
-			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "LC",  0x1a, 0x1a, true,  Color.FromArgb( alpha, 0, 0xff, 0xff ), 0, width, Cレーン.ELaneType.Drums, true ) );
+			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "LC",  0x1a, 0x1a, true,  Color.FromArgb( alpha, 0xdf, 0x5f, 0x7f ), 0, width, Cレーン.ELaneType.Drums, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "HH",  0x11, 0x18, false, Color.FromArgb( alpha, 0, 0xff, 0xff ), 0, width, Cレーン.ELaneType.Drums, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "LP",  0x1B, 0x1B, false, Color.FromArgb( alpha, 0xff, 0x9f, 0xcf ), 0, width, Cレーン.ELaneType.Drums, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "LBD", 0x1C, 0x1C, false, Color.FromArgb( alpha, 0xff, 0x9f, 0xcf ), 0, width, Cレーン.ELaneType.Drums, true ) );
@@ -833,7 +833,7 @@ namespace DTXCreator.譜面
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsB, "BsB", 0,    0,    false, Color.FromArgb( alpha, 0, 0x80, 0xff ), 0, width, Cレーン.ELaneType.Bass, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BsW, "BsW", 0xa8, 0xa8, true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.Bass, true ) );
 
-			this.listレーン.Add( new Cレーン( Cレーン.E種別.AVI, "AVI", 0x54, 0x54, true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.AVI, true ) );
+			this.listレーン.Add( new Cレーン( Cレーン.E種別.AVI, "AVI", 0x54, 0x5A, true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.AVI, true ) );
 
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BMP, "BG1", 0x04, 0xc4, true,  Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.BGA1_5, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.BMP, "BG2", 0x07, 0xc7, false, Color.FromArgb( alpha, 160, 160, 160 ), 0, width, Cレーン.ELaneType.BGA1_5, true ) );
