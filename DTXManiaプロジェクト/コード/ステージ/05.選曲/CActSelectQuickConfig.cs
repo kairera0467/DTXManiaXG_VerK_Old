@@ -12,8 +12,6 @@ namespace DTXMania
 	internal class CActSelectQuickConfig : CActSelectPopupMenu
 	{
 		private readonly string QuickCfgTitle = "Quick Config";
-
-
 		// コンストラクタ
 
 		public CActSelectQuickConfig()
@@ -124,7 +122,7 @@ namespace DTXMania
 				new string[] { "None", "Sudden", "Hidden", "Sud+Hid", "S-Invisible", "F-Invisible" } ) );
 			#endregion
 			#region [ 共通 SET切り替え/More/Return ]
-			l.Add( new CSwitchItemList( "Config Set", CItemBase.Eパネル種別.通常, nCurrentConfigSet, "", "", new string[] { "SET-1", "SET-2", "SET-3" } ) );
+			//l.Add( new CSwitchItemList( "Config Set", CItemBase.Eパネル種別.通常, nCurrentConfigSet, "", "", new string[] { "SET-1", "SET-2", "SET-3" } ) );
 			l.Add( new CSwitchItemList( "More...", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "" } ) );
 			l.Add( new CSwitchItemList( "Return", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "", "" } ) );
 			#endregion
@@ -256,21 +254,65 @@ namespace DTXMania
 		{
 			if ( base.n現在の選択行 == (int) EOrder.AutoMode )
 			{
-					if ( tx文字列パネル == null )		// TagetとAuto Modeを全く変更せずにAuto Modeまで動かした場合限り、ここに来る
-					{
-						MakeAutoPanel();
-					}
+				if ( tx文字列パネル == null )		// TagetとAuto Modeを全く変更せずにAuto Modeまで動かした場合限り、ここに来る
+				{
+					MakeAutoPanel();
+				}
 
-					if ( this.txパネル本体 != null )
-					{
-						this.txパネル本体.t2D描画( CDTXMania.app.Device, 213, 167 );
-					}
-					if ( this.tx文字列パネル != null )
-					{
-						int x = ( nCurrentTarget == (int) E楽器パート.DRUMS ) ? 230 : 260;
-						this.tx文字列パネル.t2D描画( CDTXMania.app.Device, x, 190 );
+				if ( this.txパネル本体 != null )
+				{
+					this.txパネル本体.t2D描画( CDTXMania.app.Device, 213, 167 );
+				}
+                
+                //仮段階。ドラムしか使えず、条件分岐も適切ではない。
+                if( this.txAutoパネル != null )
+                {
+                    //2014.11.17 kairera0467
+                    //なんかRDが機能してないので一旦ライドの部分のみ描画対象から外す。
+                    //this.txAutoパネル.t2D描画( CDTXMania.app.Device, 0, 720 - 256, new Rectangle( 0, 0, 450, 256 ) );
+                    this.txAutoパネル.t2D描画( CDTXMania.app.Device, 0, 720 - 256, new Rectangle( 0, 0, 450 - 45, 256 ) );
 
-					}
+                    #region[ オートパネル ]
+                    if( CDTXMania.ConfigIni.bAutoPlay.LC )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 0, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.HH )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 45, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.LP || CDTXMania.ConfigIni.bAutoPlay.LBD )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 90, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.SD )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 135, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.HT )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 180, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.BD )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 225, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.LT )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 270, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.FT )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 315, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.CY )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 360, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+
+                    if( CDTXMania.ConfigIni.bAutoPlay.RD )
+                        this.txAutoパネル.t2D描画( CDTXMania.app.Device, 405, 720 - 256, new Rectangle( 0, 256, 45, 256 ) );
+                    #endregion
+
+
+                }
+
+				if ( this.tx文字列パネル != null )
+				{
+					int x = ( nCurrentTarget == (int) E楽器パート.DRUMS ) ? 230 : 260;
+					this.tx文字列パネル.t2D描画( CDTXMania.app.Device, x, 190 );
+
+				}
 			}
 		}
 
@@ -296,12 +338,13 @@ namespace DTXMania
 					break;
 			}
 			s = GetAutoParameters( nCurrentTarget );
-			for ( int i = 0; i < header.Length; i++ )
-			{
-				graphics.DrawString( header[ i ].ToString(), this.ft表示用フォント, Brushes.White, (float) i * 24, (float) 0f );
-				graphics.DrawString( s[i].ToString(), this.ft表示用フォント, Brushes.White, (float) i * 24, (float) 24f );
-			}
+		    if( nCurrentTarget == (int)E楽器パート.DRUMS )
+            {
+
+            }
 			graphics.Dispose();
+
+
 
 			try
 			{
@@ -370,10 +413,10 @@ namespace DTXMania
 						CDTXMania.ConfigIni.eInvisible[ nCurrentTarget ] = ( EInvisible ) ( sh - 3 );
 					}
 					break;
-				case (int) EOrder.ConfSet:			// CONF-SET切り替え
-					nCurrentConfigSet = (int) GetIndex( (int) EOrder.ConfSet );
+				//case (int) EOrder.ConfSet:			// CONF-SET切り替え
+				//	nCurrentConfigSet = (int) GetIndex( (int) EOrder.ConfSet );
 					//Initialize( lci[ nCurrentConfigSet ], true, QuickCfgTitle, pos );
-					break;
+				//	break;
 
 				case (int) EOrder.More:
 					SetAutoParameters();			// 簡易CONFIGメニュー脱出に伴い、簡易CONFIG内のAUTOの設定をConfigIniクラスに反映する
@@ -426,8 +469,8 @@ namespace DTXMania
 				{
 					CDTXMania.ConfigIni.bAutoPlay[ i + start ] = ( str[ i ] == 'A' ) ? true : false;
 				}
-			}
-		}
+            }
+        }
 
 		/// <summary>
 		/// 簡易CONFIG内のAUTO状態を、文字列で返す。
@@ -530,6 +573,7 @@ namespace DTXMania
 				{
 					this.txパネル本体 = CDTXMania.tテクスチャの生成( pathパネル本体, true );
 				}
+                this.txAutoパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_QuickConfigAutoPanel.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -539,6 +583,7 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.tx文字列パネル );
+                CDTXMania.tテクスチャの解放( ref this.txAutoパネル );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -558,7 +603,7 @@ namespace DTXMania
 			Risky,
 			PlaySpeed,
 			SuddenHidden,
-			ConfSet,
+		//	ConfSet,
 			More,
 			Return, END,
 			Default = 99
@@ -567,6 +612,8 @@ namespace DTXMania
 		private Font ft表示用フォント;
 		private CTexture txパネル本体;
 		private CTexture tx文字列パネル;
+        private CTexture txAutoパネル;
+        private CTexture tx説明文1;
 		//-----------------
 		#endregion
 	}

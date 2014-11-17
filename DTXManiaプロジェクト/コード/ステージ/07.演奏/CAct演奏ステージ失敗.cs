@@ -48,7 +48,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txStageFailed = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_stage failed.jpg" ) );
+				this.txStageFailed = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_stage_failed.jpg" ) );
 				base.OnManagedリソースの作成();
 			}
 		}

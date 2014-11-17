@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+
 using FDK;
 
 namespace DTXMania
 {
+    /// <summary>
+    /// ネームプレートを描画するクラス。
+    /// 
+    /// 課題
+    /// ・角度の再調整
+    /// ・フォントの変更
+    /// ・画像のリサイズ(なんかアレ)
+    /// ・難易度フォントの画像化
+    /// ・もう少しコードを綺麗にする。特にリソース作成部分。
+    /// </summary>
 	internal class CAct演奏Drumsステータスパネル : CAct演奏ステータスパネル共通
 	{
 		// コンストラクタ
-
         public override void On活性化()
         {
             this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 22f, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -71,12 +81,18 @@ namespace DTXMania
 		}
 		public override int On進行描画()
 		{
+            
             SlimDX.Matrix identity = SlimDX.Matrix.Identity;
 
-            identity *= SlimDX.Matrix.Translation( -1135, 150, 0 );
-            identity *= SlimDX.Matrix.Scaling( 0.338f, 0.62f, 1f );
-            identity *= SlimDX.Matrix.RotationY( -0.8f );
+            identity *= SlimDX.Matrix.Scaling( 0.6f, 0.95f, 1.0f );
+            identity *= SlimDX.Matrix.RotationY( C変換.DegreeToRadian( -30f ) );
+            identity *= SlimDX.Matrix.Translation( -481.0f, 207.0f, 0 );
 
+/*
+            identity *= SlimDX.Matrix.Translation(-1135, 150, 0);
+            identity *= SlimDX.Matrix.Scaling(0.338f, 0.62f, 1f);
+            identity *= SlimDX.Matrix.RotationY(-0.8f);
+*/
             this.txNamePlate.t3D描画( CDTXMania.app.Device, identity );
 
             return 0;

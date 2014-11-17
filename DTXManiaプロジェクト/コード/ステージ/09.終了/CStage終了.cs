@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
-//using DirectShowLib;
+using DirectShowLib;
 using SlimDX;
 using FDK;
 
@@ -60,7 +60,7 @@ namespace DTXMania
                 this.tx文字3 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\9_text.png" ) );
 				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\9_background.jpg" ), false );
                 this.tx白 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile white 64x64.png" ), false );
-                //this.ds背景 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\9_background.mp4" ), CDTXMania.app.WindowHandle, true );
+                this.ds背景 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する( CSkin.Path( @"Graphics\9_background.mp4" ), CDTXMania.app.WindowHandle, true );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -73,17 +73,17 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.tx文字2 );
                 CDTXMania.tテクスチャの解放( ref this.tx文字3 );
                 CDTXMania.tテクスチャの解放( ref this.tx白 );
-                //CDTXMania.t安全にDisposeする( ref this.ds背景 );
+                CDTXMania.t安全にDisposeする( ref this.ds背景 );
 				base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
 		{
-            //if( this.ds背景 != null )
+            if( this.ds背景 != null )
             {
-                //this.ds背景.t再生開始();
+                this.ds背景.t再生開始();
                 
-                //this.ds背景.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
+                this.ds背景.t現時点における最新のスナップイメージをTextureに転写する( this.tx背景 );
             }
 			if( !base.b活性化してない )
 			{
@@ -99,14 +99,14 @@ namespace DTXMania
 
 				if( this.tx背景 != null )
 				{
-                    //if( this.ds背景 != null )
+                    if( this.ds背景 != null )
                     {
-                        //if( this.ds背景.b上下反転 )
-                        //    this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
-                        //else
-                        //    this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
+                        if( this.ds背景.b上下反転 )
+                            this.tx背景.t2D上下反転描画( CDTXMania.app.Device, 0, 0 );
+                        else
+                            this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
                     }
-                    //else
+                    else
 					    this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 				}
 

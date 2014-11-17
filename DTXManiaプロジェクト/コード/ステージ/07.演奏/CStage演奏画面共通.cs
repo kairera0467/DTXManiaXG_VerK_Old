@@ -1023,7 +1023,7 @@ namespace DTXMania
 							{
 								index -= 0x11;
 							}
-							else if ( ( 0x31 <= index ) && ( index <= 0x3a ) )
+							else if ( ( 0x31 <= index ) && ( index <= 0x3c ) )
 							{
 								index -= 0x31;
 							}
@@ -1051,10 +1051,12 @@ namespace DTXMania
 								return;
 							}
 							int nLane = this.nチャンネル0Atoレーン07[ index ];
-							if ( ( nLane == 1 ) &&	// 今回演奏するのがHC or HO
-								( index == 0 || ( index == 7 && this.n最後に再生したHHのチャンネル番号 != 0x18 && this.n最後に再生したHHのチャンネル番号 != 0x38 ) )
-								// HCを演奏するか、またはHO演奏＆以前HO演奏でない＆以前不可視HO演奏でない
-							)
+							//if ( ( nLane == 1 ) &&	// 今回演奏するのがHC or HO
+							//	( ( index == 0 || ( index == 7 && this.n最後に再生したHHのチャンネル番号 != 0x18 && this.n最後に再生したHHのチャンネル番号 != 0x38 ) ||
+							//	( index == 8 || ( index == 10 && this.n最後に再生したHHのチャンネル番号 != 0x18 && this.n最後に再生したHHのチャンネル番号 != 0x38 ) ) ) )
+							//	// HCを演奏するか、またはHO演奏＆以前HO演奏でない＆以前不可視HO演奏でない
+							//)
+                            if (((((nLane == 1) && (index == 0)) && ((this.n最後に再生したHHのチャンネル番号 != 0x18) && (this.n最後に再生したHHのチャンネル番号 != 0x38))) || ((((nLane == 8)) && ((index == 10) && (this.n最後に再生したHHのチャンネル番号 != 0x18))) && (this.n最後に再生したHHのチャンネル番号 != 0x38))))
 							// #24772 2011.4.4 yyagi
 							// == HH mute condition == 
 							//			current HH		So, the mute logics are:
@@ -1083,6 +1085,21 @@ namespace DTXMania
 							if (CDTXMania.DTX.b演奏で直前の音を消音する.HH)
 							{
 #endif
+                            if( CDTXMania.ConfigIni.bDrums有効 )
+                            {
+                                //シンバル部分は別で実装。
+                                //ドラムセットの無効化は未実装(そもそも実装するべきなのか疑問)
+                                //if文で分岐させないと、多分同時の際に正常動作しないかも。
+                                if( nLane == 0 )
+                                {
+                                    CDTXMania.stage演奏ドラム画面.actDrumSet.ctLeftCymbal.n現在の値 = 0;
+                                }
+                                if( nLane == 7 )
+                                {
+                                    CDTXMania.stage演奏ドラム画面.actDrumSet.ctRightCymbal.n現在の値 = 0;
+                                }
+                            }
+
 							if ( index == 0 || index == 7 || index == 0x20 || index == 0x27 )			// #23921 HOまたは不可視HO演奏時はそのチップ番号をストックしておく
 							{																			// #24772 HC, 不可視HCも消音キューに追加
 								if ( this.L最後に再生したHHの実WAV番号.Count >= 16 )	// #23921 ただしストック数が16以上になるようなら、頭の1個を削って常に16未満に抑える
@@ -1097,7 +1114,7 @@ namespace DTXMania
 #if TEST_NOTEOFFMODE	// 2011.1.4 yyagi test
 							}
 #endif
-                            CDTXMania.stage演奏ドラム画面.actDrumSet.Start( nLane );
+                            //CDTXMania.stage演奏ドラム画面.actDrumSet.Start( nLane );
 							if ( overwrite )
 							{
 								CDTXMania.DTX.tWavの再生停止( this.n最後に再生した実WAV番号[index] );
@@ -2025,14 +2042,14 @@ namespace DTXMania
 									case EAVI種別.AVI:
 										if ( pChip.rAVI != null )
 										{
-											this.actAVI.Start( pChip.nチャンネル番号, pChip.rAVI, 278, 355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms );
+											this.actAVI.Start( pChip.nチャンネル番号, pChip.rAVI, pChip.rDShow, 278, 355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, pChip.n発声時刻ms );
 										}
 										break;
 
 									case EAVI種別.AVIPAN:
 										if ( pChip.rAVIPan != null )
 										{
-											this.actAVI.Start( pChip.nチャンネル番号, pChip.rAVI, pChip.rAVIPan.sz開始サイズ.Width, pChip.rAVIPan.sz開始サイズ.Height, pChip.rAVIPan.sz終了サイズ.Width, pChip.rAVIPan.sz終了サイズ.Height, pChip.rAVIPan.pt動画側開始位置.X, pChip.rAVIPan.pt動画側開始位置.Y, pChip.rAVIPan.pt動画側終了位置.X, pChip.rAVIPan.pt動画側終了位置.Y, pChip.rAVIPan.pt表示側開始位置.X, pChip.rAVIPan.pt表示側開始位置.Y, pChip.rAVIPan.pt表示側終了位置.X, pChip.rAVIPan.pt表示側終了位置.Y, pChip.n総移動時間, pChip.n発声時刻ms );
+											this.actAVI.Start( pChip.nチャンネル番号, pChip.rAVI, pChip.rDShow, pChip.rAVIPan.sz開始サイズ.Width, pChip.rAVIPan.sz開始サイズ.Height, pChip.rAVIPan.sz終了サイズ.Width, pChip.rAVIPan.sz終了サイズ.Height, pChip.rAVIPan.pt動画側開始位置.X, pChip.rAVIPan.pt動画側開始位置.Y, pChip.rAVIPan.pt動画側終了位置.X, pChip.rAVIPan.pt動画側終了位置.Y, pChip.rAVIPan.pt表示側開始位置.X, pChip.rAVIPan.pt表示側開始位置.Y, pChip.rAVIPan.pt表示側終了位置.X, pChip.rAVIPan.pt表示側終了位置.Y, pChip.n総移動時間, pChip.n発声時刻ms );
 										}
 										break;
 								}
