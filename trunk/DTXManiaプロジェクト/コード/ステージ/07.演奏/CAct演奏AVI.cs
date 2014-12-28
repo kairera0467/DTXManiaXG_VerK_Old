@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using SlimDX;
 using SlimDX.Direct3D9;
@@ -163,9 +164,17 @@ namespace DTXMania
                         this.dsBGV = null;
                         #endregion
                     }
-                    if (this.tx描画用 == null)
+                    if ( this.tx描画用 == null )
                     {
-                        this.tx描画用 = new CTexture(CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+                        try
+                        {
+                            this.tx描画用 = new CTexture( CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
+                        }
+                        catch ( CTextureCreateFailedException e )
+                        {
+                            Trace.TraceError( "CActAVI: OnManagedリソースの作成(): " + e.Message );
+                            this.tx描画用 = null;
+                        }
                     }
 
                     #region[ リサイズ処理 ]

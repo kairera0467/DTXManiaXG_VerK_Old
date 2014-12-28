@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Diagnostics;
 using SlimDX.Direct3D9;
 using FDK;
 
@@ -130,10 +131,17 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txBGAバックパネル = new CTexture(CDTXMania.app.Device, 278, 355, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed);
+                this.txBGAバックパネル = new CTexture( CDTXMania.app.Device, 278, 355, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
 				using( Surface surface = CDTXMania.app.Device.GetBackBuffer( 0, 0 ) )
 				{
-					this.sfBackBuffer = Surface.CreateOffscreenPlain( CDTXMania.app.Device, surface.Description.Width, surface.Description.Height, surface.Description.Format, Pool.SystemMemory );
+                    try
+                    {
+					    this.sfBackBuffer = Surface.CreateOffscreenPlain( CDTXMania.app.Device, surface.Description.Width, surface.Description.Height, surface.Description.Format, Pool.SystemMemory );
+                    }
+                    catch ( Direct3D9Exception e )
+                    {
+                        Trace.TraceError( "CAct演奏BGA: Error: ( " + e.Message + " )" );
+                    }
 				}
 				base.OnManagedリソースの作成();
 			}

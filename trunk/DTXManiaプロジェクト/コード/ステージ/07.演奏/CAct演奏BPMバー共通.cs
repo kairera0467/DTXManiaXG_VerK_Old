@@ -40,19 +40,19 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                string pathBPMFL = CSkin.Path(@"Graphics\7_BPMbar_Flush_L.png");
-                string pathBPMFR = CSkin.Path(@"Graphics\7_BPMbar_Flush_R.png");
-                string pathBPMbarL = CSkin.Path(@"Graphics\7_BPMbarL.png");
-                string pathBPMbarR = CSkin.Path(@"Graphics\7_BPMbarR.png");
-                if(File.Exists(pathBPMbarL) && File.Exists(pathBPMbarR))
+                string pathBPMFL = CSkin.Path( @"Graphics\7_BPMbar_Flush_L.png" );
+                string pathBPMFR = CSkin.Path( @"Graphics\7_BPMbar_Flush_R.png" );
+                string pathBPMbarL = CSkin.Path( @"Graphics\7_BPMbarL.png" );
+                string pathBPMbarR = CSkin.Path( @"Graphics\7_BPMbarR.png" );
+                if( File.Exists( pathBPMbarL ) && File.Exists( pathBPMbarR ) )
                 {
-                    this.txBPMバー左 = CDTXMania.tテクスチャの生成(pathBPMbarL);
-                    this.txBPMバー右 = CDTXMania.tテクスチャの生成(pathBPMbarR);
+                    this.txBPMバー左 = CDTXMania.tテクスチャの生成( pathBPMbarL );
+                    this.txBPMバー右 = CDTXMania.tテクスチャの生成( pathBPMbarR );
                 }
-                if(File.Exists(pathBPMFL) && File.Exists(pathBPMFR))
+                if( File.Exists( pathBPMFL ) && File.Exists( pathBPMFR ) )
                 {
-                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成(pathBPMFL);
-                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成(pathBPMFR);
+                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成( pathBPMFL );
+                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成( pathBPMFR );
                 }
 
 				base.OnManagedリソースの作成();
@@ -62,10 +62,10 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.tテクスチャの解放(ref this.txBPMバー左);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバー右);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバーフラッシュ左);
-                CDTXMania.tテクスチャの解放(ref this.txBPMバーフラッシュ右);
+                CDTXMania.tテクスチャの解放( ref this.txBPMバー左 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバー右 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ左 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ右 );
 
 				base.OnManagedリソースの解放();
 			}

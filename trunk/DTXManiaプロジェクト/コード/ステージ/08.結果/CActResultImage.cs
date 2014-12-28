@@ -418,7 +418,7 @@ namespace DTXMania
                 if( this.txカスタム曲名テクスチャ == null )
                 {
                     //this.txSongName.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ) + 3, this.n本体0Y + 0x3f);
-                    this.tx曲名.t2D描画(CDTXMania.app.Device, ( this.n本体0X + this.nAlbumWidth ), this.n本体0Y + 0x3f);
+                    this.tx曲名.t2D描画(CDTXMania.app.Device, 576, this.n本体0Y + 0x3f);
                     this.tx曲名.vc拡大縮小倍率.X = 0.75f;
                 }
             }
@@ -773,6 +773,8 @@ namespace DTXMania
             Bitmap bmp;
             bmp = pf曲名フォント.DrawPrivateFont( str曲名, Color.White, Color.Transparent );
             CTexture txReturn = CDTXMania.tテクスチャの生成( bmp, false );
+
+            bmp.Dispose();
 
             return txReturn;
         }

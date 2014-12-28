@@ -1201,7 +1201,14 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			else if( this.bDirectSoundである )
 			{
 				int n位置sample = (int) ( this.Buffer.Format.SamplesPerSecond * n位置ms * 0.001 * _db周波数倍率 * _db再生速度 );	// #30839 2013.2.24 yyagi; add _db周波数倍率 and _db再生速度
-				this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
+                try
+                {
+                    this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
+                }
+                catch ( DirectSoundException e )
+                {
+                    Trace.TraceError( "{0}: Seek error: {1}", Path.GetFileName( this.strファイル名 ), n位置ms, e.Message );
+                }
 			}
 		}
 

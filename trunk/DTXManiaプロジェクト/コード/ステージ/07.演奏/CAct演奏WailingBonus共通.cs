@@ -39,6 +39,7 @@ namespace DTXMania
 			if ( !base.b活性化してない )
 			{
 				this.txWailingBonus = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing bonus.png" ) );
+                this.txWailingFlush = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_WailingFlush.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -47,6 +48,7 @@ namespace DTXMania
 			if ( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txWailingBonus );
+                CDTXMania.tテクスチャの解放( ref this.txWailingFlush );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -58,6 +60,7 @@ namespace DTXMania
 		//-----------------
 		protected CCounter[,] ct進行用 = new CCounter[ 3, 4 ];
 		protected CTexture txWailingBonus;
+        protected CTexture txWailingFlush;
 		//-----------------
 		#endregion
 	}

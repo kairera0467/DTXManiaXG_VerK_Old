@@ -2007,6 +2007,7 @@ namespace DTXMania
                     {
                         this.sw2 = Stopwatch.StartNew();
                         this.sw = Stopwatch.StartNew();
+                        //if (this.nJudgeLinePosY.Drums > nJudgeLineMinPosY)
                         if (this.nJudgeLinePosY.Drums > nJudgeLineMinPosY)
                         {
                             this.nJudgeLinePosY.Drums--;
@@ -2014,7 +2015,7 @@ namespace DTXMania
                     }
                     else
                     {
-                        if (this.sw.ElapsedMilliseconds > 10L)
+                        if(this.sw.ElapsedMilliseconds > 10L)
                         {
                             if (this.sw2.IsRunning)
                             {
@@ -2023,7 +2024,8 @@ namespace DTXMania
                                     this.sw2.Reset();
                                 }
                             }
-                            else if (this.nJudgeLinePosY.Drums > nJudgeLineMinPosY)
+                            //else if (this.nJudgeLinePosY.Drums > nJudgeLineMinPosY)
+                            else if (this.nJudgeLinePosY.Drums > -1)
                             {
                                 this.nJudgeLinePosY.Drums--;
                             }
