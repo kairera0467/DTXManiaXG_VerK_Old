@@ -2883,7 +2883,7 @@ namespace DTXMania
                                             }
                                             else if (str3.Equals( "DrumsJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Drums = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Drums);
+                                                this.nJudgeLine.Drums = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 999, this.nJudgeLine.Drums);
                                             }
                                             else if ( str3.Equals( "DrumsShutterIn" ) )
                                             {
@@ -2895,7 +2895,7 @@ namespace DTXMania
                                             }
                                             else if ( str3.Equals( "GuitarJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Guitar);
+                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 999, this.nJudgeLine.Guitar);
                                             }
                                             else if ( str3.Equals( "GuitarShutterIn" ) )
                                             {
@@ -2907,7 +2907,7 @@ namespace DTXMania
                                             }
                                             else if ( str3.Equals( "BassJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 100, this.nJudgeLine.Bass);
+                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 999, this.nJudgeLine.Bass);
                                             }
                                             else if ( str3.Equals( "BassShutterIn" ) )
                                             {
