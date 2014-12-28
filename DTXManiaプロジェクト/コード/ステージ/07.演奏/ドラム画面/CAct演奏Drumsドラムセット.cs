@@ -24,6 +24,8 @@ namespace DTXMania
 		// メソッド
         public override void On非活性化()
         {
+            this.ct左シンバル = null;
+            this.ct右シンバル = null;
 
             base.On非活性化();
         }

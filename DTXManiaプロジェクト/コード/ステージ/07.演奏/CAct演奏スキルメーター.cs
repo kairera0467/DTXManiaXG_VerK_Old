@@ -471,6 +471,9 @@ namespace DTXMania
         private CTexture tx比較;
         private CTexture txグラフ;
         private CTexture txグラフバックパネル;
+
+        private Bitmap bmpGraph;
+        private Graphics gGraph;
         //-----------------
 
 

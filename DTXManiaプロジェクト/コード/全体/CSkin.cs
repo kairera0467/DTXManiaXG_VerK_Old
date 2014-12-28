@@ -669,7 +669,10 @@ namespace DTXMania
 				}
 			}
             if( this.ds選曲画面背景動画 != null )
-                this.ds選曲画面背景動画.Dispose();
+            {
+                CDTXMania.t安全にDisposeする( ref this.ds選曲画面背景動画 );
+                //this.ds選曲画面背景動画.Dispose();
+            }
 
 			this.soundカーソル移動音	= new Cシステムサウンド( @"Sounds\Move.ogg",			false, false, false );
 			this.sound決定音			= new Cシステムサウンド( @"Sounds\Decide.ogg",			false, false, false );

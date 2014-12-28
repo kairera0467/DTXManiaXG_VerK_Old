@@ -915,7 +915,7 @@ namespace DTXMania
                 new string[] { "RD RC", "RC RD" });
             this.list項目リスト.Add(this.iDrumsRDPosition);
 
-            this.iDrumsJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine.Drums,
+            this.iDrumsJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 999, CDTXMania.ConfigIni.nJudgeLine.Drums,
                 "演奏時の判定ラインの高さを変更します。\n" +
                 "0～100の間で指定できます。",
                 "To change the judgeLinePosition for the\n" +

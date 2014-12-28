@@ -278,10 +278,13 @@ Trace.TraceError( "DrawPrivateFont()の入力不正。最小値のbitmapを返�
 			int nEdgePt = (bEdge)? _pt / 4 : 0;
 
 			// 描画サイズを測定する
-			Size stringSize = System.Windows.Forms.TextRenderer.MeasureText( drawstr, this._font );
+			Size stringSize = System.Windows.Forms.TextRenderer.MeasureText( drawstr, this._font, new Size( int.MaxValue, int.MaxValue ),
+                System.Windows.Forms.TextFormatFlags.NoPrefix |
+                System.Windows.Forms.TextFormatFlags.NoPadding
+            );
 
 			//取得した描画サイズを基に、描画先のbitmapを作成する
-			Bitmap bmp = new Bitmap( stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 );
+            Bitmap bmp = new Bitmap( stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 );
 			bmp.MakeTransparent();
 			Graphics g = Graphics.FromImage( bmp );
 			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -291,7 +294,8 @@ Trace.TraceError( "DrawPrivateFont()の入力不正。最小値のbitmapを返�
 			sf.Alignment = StringAlignment.Center;	// 画面中央（水平方向位置）
 
 			// レイアウト枠
-			Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 );
+			//Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 );
+            Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 ); //#34638 2014.11.24 kairera0467 とりあえず文字の横サイズを1.5倍に変更。
 
 			if ( bEdge )	// 縁取り有りの描画
 			{
