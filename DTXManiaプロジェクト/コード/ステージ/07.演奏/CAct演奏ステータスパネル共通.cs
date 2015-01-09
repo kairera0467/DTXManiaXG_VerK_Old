@@ -113,8 +113,29 @@ namespace DTXMania
 		public override void On活性化()
 		{
 			this.nStatus = 0;
-			base.On活性化();
+
+            for( int index = 0; index < 2; index++ )
+            {
+                this.strGroupName[ index ] = "";
+                this.strPlayerName[ index ] = "GUEST";
+            }
+
+                base.On活性化();
 		}
+
+        public override void OnManagedリソースの作成()
+        {
+            this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_score numbers.png" ) );
+
+
+            base.OnManagedリソースの作成();
+        }
+        public override void OnManagedリソースの解放()
+        {
+            CDTXMania.tテクスチャの解放( ref this.txScore );
+
+            base.OnManagedリソースの解放();
+        }
 
 
 		#region [ protected ]
@@ -128,6 +149,14 @@ namespace DTXMania
 
 		protected int nStatus;
 		protected STATUSPANEL[] stパネルマップ = null;
+
+
+        //以下ギタードラム共通部分。
+        protected CTexture txScore;
+        protected Image iAlbum;
+        protected string[] strPlayerName = new string[2];
+        protected string[] strGroupName = new string[2];
+
 		//-----------------
 		#endregion
 	}

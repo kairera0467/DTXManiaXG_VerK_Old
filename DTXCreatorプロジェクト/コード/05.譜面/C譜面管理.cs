@@ -779,6 +779,13 @@ namespace DTXCreator.譜面
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "LT",  0x15, 0x15, false, Color.FromArgb( alpha, 0xff, 0, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "FT",  0x17, 0x17, false, Color.FromArgb( alpha, 0xff, 0x7f, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "CY",  0x16, 0x19, false, Color.FromArgb( alpha, 0, 0xff, 0xff ), 0, width, Cレーン.ELaneType.Drums, true ) );
+
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "MLC", 0x87, 0x87, true,  Color.FromArgb( alpha, 0xdf, 0x5f, 0x7f), 0, width, Cレーン.ELaneType.Drums, true ) );
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "MHH", 0x84, 0x84, false, Color.FromArgb( alpha, 0, 0xff, 0xff), 0, width, Cレーン.ELaneType.Drums, true));
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "MCY", 0x85, 0x85, false, Color.FromArgb( alpha, 0x9f, 0x9f, 0xff), 0, width, Cレーン.ELaneType.Drums, true));
+            this.listレーン.Add( new Cレーン( Cレーン.E種別.WAV, "MRD", 0x86, 0x86, false, Color.FromArgb( alpha, 0, 0xff, 0xff), 0, width, Cレーン.ELaneType.Drums, true));
+
+
 			this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "FI",  0x53, 0x53, true,  Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
             this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN1",  0x4F, 0x4F, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );
             this.listレーン.Add( new Cレーン( Cレーン.E種別.FI,  "BN2",  0x4E, 0x4E, false, Color.FromArgb( alpha, 0xff, 0xff, 0 ), 0, width, Cレーン.ELaneType.Drums, true ) );

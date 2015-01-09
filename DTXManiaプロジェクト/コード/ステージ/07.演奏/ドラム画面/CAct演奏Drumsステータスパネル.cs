@@ -35,7 +35,6 @@ namespace DTXMania
 		{
             if( !base.b活性化してない )
             {
-                this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_score numbers.png" ) );
                 this.iDifficulty = Image.FromFile( CSkin.Path( @"Graphics\7_Difficulty_XG.png" ) );
                 this.iPart = Image.FromFile( CSkin.Path( @"Graphics\7_Part_XG.png" ) );
     
@@ -70,7 +69,7 @@ namespace DTXMania
 		public override void OnManagedリソースの解放()
 		{
             CDTXMania.tテクスチャの解放( ref this.txNamePlate );
-            CDTXMania.tテクスチャの解放( ref this.txScore );
+            
 
             this.ftDisplayFont.Dispose();
             this.iDifficulty.Dispose();
@@ -110,7 +109,6 @@ namespace DTXMania
         private Font ftDisplayFont;
         private Font ftGroupFont;
         private Font ftLevelFont;
-        private Image iAlbum;
         private Image iDrumspeed;
         private Image iRisky;
         private Image iNamePlate;
@@ -119,9 +117,7 @@ namespace DTXMania
         private int nDifficulty;
         private int nCurrentDrumspeed;
         private int nStrlengthbydot;
-        private string strGroupName;
         private string strPanelString;
-        private string strPlayerName;
         private CTexture txNamePlate;
         private CTexture txScore;
 		//-----------------
