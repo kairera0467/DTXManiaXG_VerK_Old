@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 using FDK;
 
 namespace DTXMania
@@ -49,6 +50,8 @@ namespace DTXMania
 
         public override int On進行描画()
         {
+            //9つ生成してそれぞれ操作するよりかは、1つ読み込んでおいて別々に使っていくほうが効率がよい。
+
             #region[ レーンタイプA ]
             //2014.07.11 kairera0467
             //とりあえずハリボテ実装。
@@ -59,7 +62,10 @@ namespace DTXMania
             }
             #endregion
             #region[ レーンタイプB ]
-
+            if( CDTXMania.ConfigIni.eLaneType == Eレーンタイプ.TypeB )
+            {
+                this.txLaneMain.t2D描画( CDTXMania.app.Device, 295, 0 );
+            }
             #endregion
 
             #region[ ウィンドウクリップ ]
@@ -81,6 +87,9 @@ namespace DTXMania
 
         private CTexture txClip;
         private CTexture txClipPanel;
+
+        
+
         //-----------------
         #endregion
     }

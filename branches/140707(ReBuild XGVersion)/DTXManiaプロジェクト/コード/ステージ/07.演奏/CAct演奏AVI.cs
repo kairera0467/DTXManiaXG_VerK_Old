@@ -54,7 +54,7 @@ namespace DTXMania
                     }
                     if( fAVIアスペクト比 < 1.77f )
                     {
-                        //旧企画クリップだった場合
+                        //旧規格クリップだった場合
                         this.ratio1 = 720f / ( ( float )this.frameheight);
                         this.position = ( int )( ( 1280f - (this.framewidth * this.ratio1 ) ) / 2f );
                         int num = ( int )( this.framewidth * this.ratio1);
@@ -164,9 +164,9 @@ namespace DTXMania
                     }
 
                     #region[ リサイズ処理 ]
-                    if (fAVIアスペクト比 < 1.77f)
+                    if( fAVIアスペクト比 < 1.77f )
                     {
-                        //旧企画クリップだった場合
+                        //旧規格クリップだった場合
                         this.ratio1 = 720f / ((float)this.frameheight);
                         this.position = (int)((1280f - (this.framewidth * this.ratio1)) / 2f);
                         int num = (int)(this.framewidth * this.ratio1);
@@ -277,6 +277,8 @@ namespace DTXMania
 			{
 				this.n移動開始時刻ms = -1;
 			}
+
+            this.dsBGV.dshow.t再生一時停止();
 		}
 		public void Cont( int n再開時刻ms )
 		{
