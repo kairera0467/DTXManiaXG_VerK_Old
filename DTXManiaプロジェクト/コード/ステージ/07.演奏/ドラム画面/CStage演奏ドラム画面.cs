@@ -47,7 +47,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actFOClear = new CActFIFOWhite() );
             base.list子Activities.Add( this.actLane = new CAct演奏Drumsレーン() );
             base.list子Activities.Add( this.actDrumSet = new CAct演奏Drumsドラムセット() );
-            base.list子Activities.Add( this.actBPMBarD = new CAct演奏DrumsBPMバー() );
+            base.list子Activities.Add( this.actBPMBar = new CAct演奏DrumsBPMバー() );
 		}
 
 
@@ -271,7 +271,6 @@ namespace DTXMania
 		private CAct演奏Drumsパッド actPad;
         private CAct演奏Drumsレーン actLane;
         public CAct演奏Drumsドラムセット actDrumSet;
-        public CAct演奏DrumsBPMバー actBPMBarD;
 		private bool bフィルイン中;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[]
 		{
@@ -3233,7 +3232,7 @@ namespace DTXMania
 
         public void t進行描画・BPMバー()
         {
-            this.actBPMBarD.On進行描画();
+            this.actBPMBar.On進行描画();
         }
 
 		#endregion
