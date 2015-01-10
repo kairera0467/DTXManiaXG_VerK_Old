@@ -611,6 +611,7 @@ namespace DTXMania
 		protected CAct演奏WailingBonus共通 actWailingBonus;
 		protected CAct演奏スクロール速度 act譜面スクロール速度;
 		public    C演奏判定ライン座標共通 演奏判定ライン座標;
+        protected CAct演奏BPMバー共通 actBPMBar;
 		protected bool bPAUSE;
 		protected STDGBVALUE<bool> b演奏にMIDI入力を使った;
 		protected STDGBVALUE<bool> b演奏にキーボードを使った;
@@ -1866,6 +1867,10 @@ namespace DTXMania
 						{
 							pChip.bHit = true;
 							this.actPlayInfo.dbBPM = ( pChip.n整数値 * ( ( (double) configIni.n演奏速度 ) / 20.0 ) ) + dTX.BASEBPM;
+
+                            this.actBPMBar.UnitTime = ( ( 60.0 / ( this.actPlayInfo.dbBPM ) / 16.0 ) );
+                            this.actBPMBar.ctBPMバー = new CCounter( 1.0, 16.0, this.actBPMBar.UnitTime, CSound管理.rc演奏用タイマ );
+                            //CDTXMania.stage演奏ドラム画面.ctコンボ動作タイマ = new CCounter( 1.0, 16.0, ( ( 60.0 / ( this.actPlayInfo.dbBPM ) / 16.0 ) ), CSound管理.rc演奏用タイマ );
 						}
 						break;
 					#endregion
@@ -1925,6 +1930,9 @@ namespace DTXMania
 							if ( dTX.listBPM.ContainsKey( pChip.n整数値・内部番号 ) )
 							{
 								this.actPlayInfo.dbBPM = ( dTX.listBPM[ pChip.n整数値・内部番号 ].dbBPM値 * ( ( (double) configIni.n演奏速度 ) / 20.0 ) ) + dTX.BASEBPM;
+
+                                this.actBPMBar.UnitTime = ( ( 60.0 / ( this.actPlayInfo.dbBPM ) / 16.0 ) );
+                                this.actBPMBar.ctBPMバー = new CCounter( 1.0, 16.0, this.actBPMBar.UnitTime, CSound管理.rc演奏用タイマ );
 							}
 						}
 						break;
@@ -1998,6 +2006,14 @@ namespace DTXMania
 						}
 						break;
 					#endregion
+                    #region [ 4F、4E、4D、4C: ボーナス(未実装) ]
+                    //case 0x4C:
+                    //case 0x4D:
+                    //case 0x4E:
+                    //case 0x4F:  //追加した順番の都合上、4F、4E・・・・という順でBonus1、Bonus2・・・という割り当てになってます。
+                    //    this.t進行描画・チップ・ボーナス( configIni, ref dTX, ref pChip );
+                    //    break;
+                    #endregion
 					#region [ 50: 小節線 ]
 					case 0x50:	// 小節線
 						{
@@ -2790,6 +2806,10 @@ namespace DTXMania
 			{
 				this.ctWailingチップ模様アニメ.t進行Loop();
 			}
+            if( this.actBPMBar.ctBPMバー != null )
+            {
+                this.actBPMBar.ctBPMバー.t進行LoopDb();
+            }
 		}
 
 		protected bool t進行描画・フェードイン・アウト()

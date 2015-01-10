@@ -511,6 +511,7 @@ namespace DTXMania
         public bool bドラムコンボ表示;
         public bool bギター1Pコンボ表示;
         public bool bギター2Pコンボ表示;
+        public bool bBPMバーを表示する;
 		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
 //		public int nハイハット切り捨て下限Velocity;
 //		public int n切り捨て下限Velocity;			// #23857 2010.12.12 yyagi VelocityMin
