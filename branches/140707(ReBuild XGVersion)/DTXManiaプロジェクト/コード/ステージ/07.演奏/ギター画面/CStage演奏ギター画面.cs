@@ -40,6 +40,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actFI = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
 			base.list子Activities.Add( this.actFOClear = new CActFIFOWhite() );
+            base.list子Activities.Add( this.actBPMBar = new CAct演奏DrumsBPMバー() );
 		}
 
 
@@ -547,6 +548,16 @@ namespace DTXMania
 			if ( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
 			{
 				pChip.bHit = true;
+                switch ( pChip.n整数値 )
+				{
+                    case 0x03:
+                        this.actBPMBar.bサビ区間中 = true;
+                        break;
+
+                    case 0x04:
+                        this.actBPMBar.bサビ区間中 = false;
+                        break;
+                }
 			}
 #if TEST_NOTEOFFMODE	// 2011.1.1 yyagi TEST
 			switch ( pChip.n整数値 )

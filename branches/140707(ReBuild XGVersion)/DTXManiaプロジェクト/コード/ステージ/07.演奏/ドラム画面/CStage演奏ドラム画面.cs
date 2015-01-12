@@ -2954,6 +2954,14 @@ namespace DTXMania
 							}
 						}
 						break;
+
+                    case 0x03:
+                        this.actBPMBar.bサビ区間中 = true;
+                        break;
+
+                    case 0x04:
+                        this.actBPMBar.bサビ区間中 = false;
+                        break;
 #if TEST_NOTEOFFMODE	// 2011.1.1 yyagi TEST
 								case 0x04:	// HH消音あり(従来同等)
 									CDTXMania.DTX.b演奏で直前の音を消音する.HH = true;

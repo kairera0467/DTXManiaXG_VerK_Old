@@ -17,8 +17,10 @@ namespace DTXMania
         protected CTexture txバー下地;
         protected CTexture txバー穴;
         protected CTexture txバー本体;
+        protected CTexture txバーサビ;
         public CCounter ctBPMバー;
         public double UnitTime;
+        public bool bサビ区間中;
 
 		// コンストラクタ
 
@@ -33,6 +35,11 @@ namespace DTXMania
 		{
 			base.On活性化();
 		}
+        public override void On非活性化()
+        {
+            this.bサビ区間中 = false;
+            base.On非活性化();
+        }
 		public override void OnManagedリソースの作成()
 		{
 			if( !base.b活性化してない )
@@ -40,6 +47,7 @@ namespace DTXMania
                 this.txバー下地 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops_base.png" ) );
                 this.txバー穴 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops.png" ) );
                 this.txバー本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops.png" ) );
+                this.txバーサビ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops.png" ) );
                 base.OnManagedリソースの作成();
 			}
 		}
@@ -50,6 +58,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txバー下地 );
                 CDTXMania.tテクスチャの解放( ref this.txバー穴 );
                 CDTXMania.tテクスチャの解放( ref this.txバー本体 );
+                CDTXMania.tテクスチャの解放( ref this.txバーサビ );
 				base.OnManagedリソースの解放();
 			}
 		}
