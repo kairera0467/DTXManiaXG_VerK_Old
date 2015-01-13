@@ -279,6 +279,11 @@ namespace DTXMania
 			}
 
             this.dsBGV.dshow.t再生一時停止();
+            if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
+            {
+                this.dsBGV.dshow.MediaCtrl.Stop();
+                this.bDShowクリップを再生している = false;
+            }
 		}
 		public void Cont( int n再開時刻ms )
 		{
@@ -525,8 +530,35 @@ namespace DTXMania
                     //とりあえず16:9以外は再生しない。
                     if( dbAVI比率 < 1.77 )
 					    this.tx描画用.t2D描画( CDTXMania.app.Device, 0, 0 );
-				}
-			}
+                }
+
+
+                #region[キー入力処理]
+			    IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
+			    if ( keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F1 ) &&
+				    ( keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightShift ) || keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftShift ) ) )
+                {
+                    if( this.b再生トグル == false )
+                    {
+                        if( this.dsBGV != null )
+                        {
+                            if( this.dsBGV.dshow != null )
+                                this.dsBGV.dshow.MediaCtrl.Pause();
+                        }
+                        this.b再生トグル = true;
+                    }
+                    else if( this.b再生トグル == true )
+                    {
+                        if(this.dsBGV != null )
+                        {
+                            if( this.dsBGV.dshow != null )
+                                this.dsBGV.dshow.MediaCtrl.Run();
+                        }
+                        this.b再生トグル = false;
+                    }
+                }
+                #endregion
+            }
 			return 0;
 		}
 
