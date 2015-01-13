@@ -1472,7 +1472,8 @@ namespace DTXMania
                                         {
                                             minus = true;
                                         }
-                                        x = xc - strDispLag.Length * 15 / 2;
+                                        //x = xc - strDispLag.Length * 15 / 2;
+                                        x = ( ( num5 ) + (this.stレーンサイズ[j].w / 2) ) - strDispLag.Length * 15 / 2;
                                         for (int i = 0; i < strDispLag.Length; i++)
                                         {
                                             int p = (strDispLag[i] == '-') ? 11 : (int)(strDispLag[i] - '0');	//int.Parse(strDispLag[i]);
@@ -1502,7 +1503,7 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private readonly int[] n文字の縦表示位置 = new int[] { -1, 1, 1, 2, 0, 0, 1, -1, 2, 1, 2, -1, -1, 0, 0 };
-
+        
 		//-----------------
 		#endregion
 	}
