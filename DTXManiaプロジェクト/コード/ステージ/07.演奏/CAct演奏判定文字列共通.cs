@@ -90,11 +90,11 @@ namespace DTXMania
 				this.st判定文字列[ i ].rc = r[i];
 			}
 
-			this.stLag数値 = new STlag数値[ 15 * 2 ];		// #25370 2011.2.1 yyagi
-			for ( int i = 0; i < 15; i++ )
+			this.stLag数値 = new STlag数値[ 12 * 2 ];		// #25370 2011.2.1 yyagi
+			for ( int i = 0; i < 12; i++ )
 			{
 				this.stLag数値[ i      ].rc = new Rectangle( ( i % 4 ) * 15     , ( i / 4 ) * 19     , 15, 19 );	// plus numbers
-				this.stLag数値[ i + 15 ].rc = new Rectangle( ( i % 4 ) * 15 + 64, ( i / 4 ) * 19 + 64, 15, 19 );	// minus numbers
+				this.stLag数値[ i + 12 ].rc = new Rectangle( ( i % 4 ) * 15 + 64, ( i / 4 ) * 19 + 64, 15, 19 );	// minus numbers
 			}
 			base.b活性化してない = true;
 		}
