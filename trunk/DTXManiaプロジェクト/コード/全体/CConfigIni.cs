@@ -595,6 +595,12 @@ namespace DTXMania
         public int nExplosionInterval;
         public int nExplosionWidgh;
         public int nExplosionHeight;
+        public int nWailingFireFrames;
+        public int nWailingFireInterval;
+        public int nWailingFireWidgh;
+        public int nWailingFireHeight;
+        public STDGBVALUE<int> nWailingFireX;
+        public int nWailingFireY;
         #endregion
 
         public STDGBVALUE<int> nInputAdjustTimeMs;	// #23580 2011.1.3 yyagi タイミングアジャスト機能
@@ -1093,6 +1099,11 @@ namespace DTXMania
             this.nExplosionWidgh = 0;
             this.nExplosionHeight = 0;
 
+            this.nWailingFireFrames = 0;
+            this.nWailingFireInterval = 0;
+            this.nWailingFireWidgh = 0;
+            this.nWailingFireHeight = 0;
+            this.nWailingFireY = 0;
             #endregion
 
             this.nPedalLagTime = 0;
@@ -1142,6 +1153,7 @@ namespace DTXMania
 				this.nInputAdjustTimeMs[ i ] = 0;
                 this.nJudgeLinePosOffset[ i ] = 0;
                 this.nViewerScrollSpeed[ i ] = 1;
+                this.nWailingFireX[ i ] = 0;
 			}
 			this.n演奏速度 = 20;
             this.ドラムコンボ文字の表示位置 = Eドラムコンボ文字の表示位置.RIGHT;
@@ -1930,6 +1942,26 @@ namespace DTXMania
             sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
             sw.WriteLine( "ExplosionHeight={0}", this.nExplosionHeight );
             sw.WriteLine();
+            sw.WriteLine( ";" );
+            sw.WriteLine( "WailingFireFrames={0}", (int)this.nWailingFireFrames );
+            sw.WriteLine();
+            sw.WriteLine( ";アタックエフェクトの1コマのフレーム数" );
+            sw.WriteLine( "WailingFireInterval={0}", (int)this.nWailingFireInterval );
+            sw.WriteLine();
+            sw.WriteLine( ";アタックエフェクトの1コマの幅" );
+            sw.WriteLine( "WailingFireWidgh={0}", this.nWailingFireWidgh );
+            sw.WriteLine();
+            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
+            sw.WriteLine( "WailingFireHeight={0}", this.nExplosionHeight );
+            sw.WriteLine();
+            sw.WriteLine( ";" );
+            sw.WriteLine( "WailingFirePosXGuitar={0}", this.nWailingFireX.Guitar );
+            sw.WriteLine( "WailingFirePosXBass={0}", this.nWailingFireX.Bass );
+            sw.WriteLine();
+            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
+            sw.WriteLine( "WailingFirePosY={0}", this.nWailingFireY );
+            sw.WriteLine();
+
             sw.WriteLine(";-------------------");
             #endregion
             #region [ ViewerOption ]
@@ -3075,6 +3107,36 @@ namespace DTXMania
                                             {
                                                 this.nPedalLagTime = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nPedalLagTime );
                                             }
+
+                                            else if ( str3.Equals( "WailingFireFrames" ))
+                                            {
+                                                this.nWailingFireFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nWailingFireFrames );
+                                            }
+                                            else if (str3.Equals("WailingFireInterval"))
+                                            {
+                                                this.nWailingFireInterval = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, int.MaxValue, (int)this.nWailingFireInterval );
+                                            }
+                                            else if (str3.Equals("WailingFireWidgh"))
+                                            {
+                                                this.nWailingFireWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)this.nWailingFireWidgh);
+                                            }
+                                            else if (str3.Equals("WailingFireHeight"))
+                                            {
+                                                this.nWailingFireHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)this.nWailingFireHeight);
+                                            }
+                                            else if (str3.Equals("WailingFirePosXGuitar"))
+                                            {
+                                                this.nWailingFireX.Guitar = C変換.n値を文字列から取得して返す( str4, this.nWailingFireX.Guitar );
+                                            }
+                                            else if (str3.Equals("WailingFirePosXBass"))
+                                            {
+                                                this.nWailingFireX.Bass = C変換.n値を文字列から取得して返す( str4, this.nWailingFireX.Bass );
+                                            }
+                                            else if (str3.Equals("WailingFirePosY"))
+                                            {
+                                                this.nWailingFireY = C変換.n値を文字列から取得して返す( str4, this.nWailingFireY );
+                                            }
+
                                             else if ( str3.Equals( "DrumComboDisp" ) )				// #29500 2012.9.11 kairera0467
                                             {
                                                 this.bドラムコンボ文字の表示 = C変換.bONorOFF(str4[0]);
