@@ -1628,7 +1628,10 @@ for (int i = 0; i < 3; i++) {
             if( tx != null )
 			    CDTXMania.t安全にDisposeする( ref tx );
 		}
-
+        public static void tテクスチャの解放( ref CTextureAf tx )
+		{
+			CDTXMania.t安全にDisposeする( ref tx );
+		}
 		public static CTexture tテクスチャの生成( byte[] txData )
 		{
 			return tテクスチャの生成( txData, false );
@@ -1683,7 +1686,31 @@ for (int i = 0; i < 3; i++) {
                 return null;
             }
         }
-        
+        public static CTextureAf tテクスチャの生成Af( string fileName )
+		{
+			return tテクスチャの生成Af( fileName, false );
+		}
+		public static CTextureAf tテクスチャの生成Af( string fileName, bool b黒を透過する )
+		{
+			if ( app == null )
+			{
+				return null;
+			}
+			try
+			{
+				return new CTextureAf( app.Device, fileName, TextureFormat, b黒を透過する );
+			}
+			catch ( CTextureCreateFailedException )
+			{
+				Trace.TraceError( "テクスチャの生成に失敗しました。({0})", fileName );
+				return null;
+			}
+			catch ( FileNotFoundException )
+			{
+				Trace.TraceError( "テクスチャファイルが見つかりませんでした。({0})", fileName );
+				return null;
+			}
+		}
 
         public static CDirectShow t失敗してもスキップ可能なDirectShowを生成する(string fileName, IntPtr hWnd, bool bオーディオレンダラなし)
         {

@@ -9,6 +9,14 @@ namespace DTXMania
 	internal class CAct演奏GuitarWailingBonus : CAct演奏WailingBonus共通
 	{
 		// メソッド
+        private int posXGuitar = CDTXMania.ConfigIni.nWailingFireX.Guitar;
+        private int posXBass = CDTXMania.ConfigIni.nWailingFireX.Bass;
+        private int posY = CDTXMania.ConfigIni.nWailingFireY;
+        private int rectW = CDTXMania.ConfigIni.nWailingFireWidgh;
+        private int rectH = CDTXMania.ConfigIni.nWailingFireHeight;
+        private int frames = CDTXMania.ConfigIni.nWailingFireFrames;
+        private int interval = CDTXMania.ConfigIni.nWailingFireInterval;
+
 
 		public CAct演奏GuitarWailingBonus()
 		{
@@ -27,6 +35,7 @@ namespace DTXMania
 					if( ( this.ct進行用[ (int) part, i ] == null ) || this.ct進行用[ (int) part, i ].b停止中 )
 					{
 						this.ct進行用[ (int) part, i ] = new CCounter( 0, 300, 2, CDTXMania.Timer );
+                        this.ctWailing炎[ i ] = new CCounter( 0, frames, interval, CDTXMania.Timer );
 						if( CDTXMania.ConfigIni.b歓声を発声する )
 						{
 							if( r歓声Chip != null )
@@ -54,6 +63,7 @@ namespace DTXMania
 				for( int j = 0; j < 4; j++ )
 				{
 					this.ct進行用[ i, j ] = null;
+                    this.ctWailing炎[ j ] = null;
 				}
 			}
 			base.On活性化();
@@ -78,6 +88,19 @@ namespace DTXMania
 								this.ct進行用[ (int) e楽器パート, k ].t進行();
 							}
 						}
+
+                        if( ( this.ctWailing炎[ k ] != null ) && ( !this.ctWailing炎[ k ].b停止中 ) )
+                        {
+                            if( this.ctWailing炎[ k ].b終了値に達した )
+                            {
+                                this.ctWailing炎[ k ].t停止();
+                            }
+                            else
+                            {
+                                this.ctWailing炎[ k ].t進行();
+                            }
+                        }
+
 					}
 				}
 				for( int j = 0; j < 2; j++ )
@@ -88,7 +111,7 @@ namespace DTXMania
 						if( ( this.ct進行用[ (int) e楽器パート2, m ] != null ) && !this.ct進行用[ (int) e楽器パート2, m ].b停止中 )
 						{
                             //XGではWailingレーンの幅が42px
-							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 160 : 1050 ) + 133;
+							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 160 : 1030 ) + 133;
 							int num6 = 0;
 							int num7 = 0;
 							int num8 = this.ct進行用[ (int) e楽器パート2, m ].n現在の値;
@@ -110,7 +133,7 @@ namespace DTXMania
 							}
 							if( CDTXMania.ConfigIni.bReverse[ (int) e楽器パート2 ] )
 							{
-								num6 = ( 409 - num6 ) - 244;
+								num6 = ( 670 - num6 ) - 244;
 							}
 							Rectangle rectangle = new Rectangle( 0, 0, 26, 122 );
 							if( ( 720 - num6 ) < rectangle.Bottom )
@@ -148,13 +171,28 @@ namespace DTXMania
                             {
                                 for( int i = 0; i <= 12; i++ )
                                 {
-                                    this.txWailingFlush.t2D描画( CDTXMania.app.Device, 283, 64 * i, new Rectangle( 0, 0, 42, 64 ) );
+                                    this.txWailingFlush.t2D描画( CDTXMania.app.Device, ( e楽器パート2 == E楽器パート.GUITAR ) ? 283 : 1153, 64 * i, new Rectangle( 0, 0, 42, 64 ) );
                                 }
 
                                 int count = this.ct進行用[ (int)e楽器パート2, m ].n現在の値;
                                 this.txWailingFlush.n透明度 = ( count <= 55 ? 255 : 255 - count );
                             }
 						}
+
+                        if( ( this.ctWailing炎[ m ] != null ) && !this.ctWailing炎[ m ].b停止中 )
+                        {
+                            if( this.txWailingFire != null )
+                            {
+                                if( e楽器パート2 == E楽器パート.GUITAR )
+                                {
+                                    this.txWailingFire.t2D描画( CDTXMania.app.Device, this.posXGuitar, this.posY, new Rectangle( this.rectW * this.ctWailing炎[ m ].n現在の値, 0, this.rectW, this.rectH ) );
+                                }
+                                if( e楽器パート2 == E楽器パート.BASS )
+                                {
+                                    this.txWailingFire.t2D描画( CDTXMania.app.Device, this.posXBass, this.posY, new Rectangle( this.rectW * this.ctWailing炎[ m ].n現在の値, 0, this.rectW, this.rectH ) );
+                                }
+                            }
+                        }
 					}
 				}
 			}

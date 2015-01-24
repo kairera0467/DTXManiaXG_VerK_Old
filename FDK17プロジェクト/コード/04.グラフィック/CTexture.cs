@@ -53,7 +53,7 @@ namespace FDK
 		public Size sz画像サイズ
 		{
 			get;
-			private set;
+			protected set;
 		}
 		public Texture texture
 		{
@@ -846,8 +846,8 @@ namespace FDK
 		
 		// 2012.3.21 さらなる new の省略作戦
 
-		private Rectangle rc全画像;								// テクスチャ作ったらあとは不変
-		private Color4 color4 = new Color4( 1f, 1f, 1f, 1f );	// アルファ以外は不変
+		protected Rectangle rc全画像;								// テクスチャ作ったらあとは不変
+		protected Color4 color4 = new Color4( 1f, 1f, 1f, 1f );	// アルファ以外は不変
 		//-----------------
 		#endregion
 	}
