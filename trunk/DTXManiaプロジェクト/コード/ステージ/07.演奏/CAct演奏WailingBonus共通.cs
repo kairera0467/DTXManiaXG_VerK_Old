@@ -61,7 +61,7 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
 		protected CCounter[,] ct進行用 = new CCounter[ 3, 4 ];
-        protected CCounter[] ctWailing炎 = new CCounter[ 4 ];
+        protected CCounter[,] ctWailing炎 = new CCounter[ 3, 4 ];
 		protected CTexture txWailingBonus;
         protected CTexture txWailingFlush;
         protected CTextureAf txWailingFire;

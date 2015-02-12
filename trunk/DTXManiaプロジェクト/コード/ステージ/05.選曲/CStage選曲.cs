@@ -461,10 +461,15 @@ namespace DTXMania
 								{
 									switch ( this.act曲リスト.r現在選択中の曲.eノード種別 )
 									{
-										case C曲リストノード.Eノード種別.SCORE:
-                                            CDTXMania.Skin.sound決定音.t再生する();
-											this.t曲を選択する();
-											break;
+                                        case C曲リストノード.Eノード種別.SCORE:
+                                            {
+                                                if( CDTXMania.Skin.sound曲決定 != null )
+                                                    CDTXMania.Skin.sound曲決定.t再生する();
+                                                else
+                                                    CDTXMania.Skin.sound決定音.t再生する();
+                                                this.t曲を選択する();
+                                                break;
+                                            }
 
 										case C曲リストノード.Eノード種別.SCORE_MIDI:
                                             CDTXMania.Skin.sound決定音.t再生する();
@@ -496,9 +501,14 @@ namespace DTXMania
 											break;
 
 										case C曲リストノード.Eノード種別.RANDOM:
-                                            CDTXMania.Skin.sound決定音.t再生する();
-											this.t曲をランダム選択する();
-											break;
+                                            {
+                                                if( CDTXMania.Skin.sound曲決定 != null )
+                                                    CDTXMania.Skin.sound曲決定.t再生する();
+                                                else
+                                                    CDTXMania.Skin.sound決定音.t再生する();
+                                                this.t曲を選択する();
+                                                break;
+                                            }
 									}
 								}
 							}

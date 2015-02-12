@@ -993,7 +993,7 @@ namespace DTXMania
 					}
 					continue;	// ほんの僅かながら高速化
 				}
-				else if( ( nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || ( ( ( 0x20 <= nChannel && nChannel <= 0x28 ) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || (0xD0 <= nChannel && nChannel <= 0xD3)) && chip.nチャンネル番号 == nChannel))
+				else if( ( nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR ) || ( ( ( 0x20 <= nChannel && nChannel <= 0x28 ) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel ) )
 				{
 					if ( chip.n発声時刻ms > nTime )
 					{
@@ -1001,7 +1001,7 @@ namespace DTXMania
 					}
 					nIndex_InitialPositionSearchingToPast = nIndex_NearestChip_Future;
 				}
-                else if( ( nChannel == 0x4F ) &&  ( chip.e楽器パート == E楽器パート.BASS ) || ((( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel))
+                else if( ( nChannel == 0x4F && chip.e楽器パート == E楽器パート.BASS ) || ( ( ( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel ) )
 				{
 					if ( chip.n発声時刻ms > nTime )
 					{
@@ -1023,16 +1023,16 @@ namespace DTXMania
 						break;
 					}
 				}
-				else if( ( nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR) || (((0x20 <= nChannel && nChannel <= 0x28) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel))
+				else if( ( nChannel == 0x2F && chip.e楽器パート == E楽器パート.GUITAR ) || ( ( ( 0x20 <= nChannel && nChannel <= 0x28 ) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel))
 				{
 					if( ( 0x20 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 0x28 ) || (((0x20 <= nChannel && nChannel <= 0x28) || ( 0x93 <= nChannel && nChannel <= 0x9F ) || ( 0xA9 <= nChannel && nChannel <= 0xAF ) || ( 0xD0 <= nChannel && nChannel <= 0xD3 ) ) && chip.nチャンネル番号 == nChannel) )
 					{
 						break;
 					}
 				}
-				else if (((nChannel == 0xAF && chip.e楽器パート == E楽器パート.BASS) || ( ( ( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( 0xC5 <= nChannel && nChannel <= 0xC6) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel)))
+				else if ( ( nChannel == 0xAF && chip.e楽器パート == E楽器パート.BASS ) || ( ( ( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel) )
 				{
-                    if( ( 0xA0 <= nChannel && nChannel <= 0xA8 ) || ( ( ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel ) )
+                    if( ( 0xA0 <= chip.nチャンネル番号 && chip.nチャンネル番号 <= 0xA8 ) || ( ( ( 0xC5 <= nChannel && nChannel <= 0xC6 ) || ( 0xC8 <= nChannel && nChannel <= 0xCF ) || ( 0xDA <= nChannel && nChannel <= 0xDF ) || ( 0xE1 <= nChannel && nChannel <= 0xE8 ) ) && chip.nチャンネル番号 == nChannel ) )
                     {
 					    break;
                     }

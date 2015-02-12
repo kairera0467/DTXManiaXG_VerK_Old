@@ -21,9 +21,9 @@ namespace DTXMania
 
         public override void OnManagedリソースの作成()
         {
-            this.txレーン = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar.png"));
-            this.txレーンダーク = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Paret_Guitar_Dark.png"));
-            this.txレーンフラッシュ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_guitar line.png"));
+            this.txレーン = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Paret_Guitar.png" ) );
+            this.txレーンダーク = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Paret_Guitar_Dark.png" ) );
+            this.txレーンフラッシュ = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_guitar line.png" ) );
 
             base.OnManagedリソースの作成();
         }
@@ -141,7 +141,7 @@ namespace DTXMania
 
         private CTexture txレーン;
         private CTexture txレーンダーク;
-        private CTexture txレーンフラッシュ;
+        private CTextureAf txレーンフラッシュ;
 		//-----------------
 		#endregion
 	}
