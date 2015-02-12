@@ -10,8 +10,8 @@ namespace DTXMania
 
 		protected override void tコンボ表示・ギター( int nCombo値, int nジャンプインデックス )
 		{
-            int x = 490;
-            int y = 150;
+            int x = 540;
+            int y = 200;
 
             base.tコンボ表示・ギター(nCombo値, nジャンプインデックス, x, y);
         }
@@ -21,7 +21,7 @@ namespace DTXMania
 		protected override void tコンボ表示・ベース( int nCombo値, int nジャンプインデックス )
 		{
             int x = 845;
-            int y = 150;
+            int y = 200;
 
             base.tコンボ表示・ベース(nCombo値, nジャンプインデックス, x, y);
         }

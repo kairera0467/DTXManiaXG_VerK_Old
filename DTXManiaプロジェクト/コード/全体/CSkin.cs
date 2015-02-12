@@ -989,24 +989,24 @@ namespace DTXMania
                             {
                                 CDTXMania.ConfigIni.nExplosionHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionHeight);
                             }
-                            else if (str3.Equals("WailingFireFrames"))
-                            {
-                            }
-                            else if (str3.Equals("WailingFireInterval"))
-                            {
-                            }
-                            else if (str3.Equals("WailingFireWidgh"))
-                            {
-                            }
-                            else if (str3.Equals("WailingFireHeight"))
-                            {
-                            }
-                            else if (str3.Equals("WailingFirePositionXGuitar"))
-                            {
-                            }
-                            else if (str3.Equals("WailingFirePositionXBass"))
-                            {
-                            }
+                            //else if (str3.Equals("WailingFireFrames"))
+                            //{
+                            //}
+                            //else if (str3.Equals("WailingFireInterval"))
+                            //{
+                            //}
+                            //else if (str3.Equals("WailingFireWidgh"))
+                            //{
+                            //}
+                            //else if (str3.Equals("WailingFireHeight"))
+                            //{
+                            //}
+                            //else if (str3.Equals("WailingFirePositionXGuitar"))
+                            //{
+                            //}
+                            //else if (str3.Equals("WailingFirePositionXBass"))
+                            //{
+                            //}
                             //-----------------------------
                         }
                         continue;

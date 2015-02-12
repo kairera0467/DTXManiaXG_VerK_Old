@@ -10,10 +10,10 @@ namespace DTXMania
 	{
 		// プロパティ
 
-        protected CTexture txBPMバー左;
-        protected CTexture txBPMバー右;
-        protected CTexture txBPMバーフラッシュ左;
-        protected CTexture txBPMバーフラッシュ右;
+        protected CTextureAf txBPMバー左;
+        protected CTextureAf txBPMバー右;
+        protected CTextureAf txBPMバーフラッシュ左;
+        protected CTextureAf txBPMバーフラッシュ右;
         public CCounter ctBPMバー;
         public double UnitTime;
 
@@ -46,13 +46,13 @@ namespace DTXMania
                 string pathBPMbarR = CSkin.Path( @"Graphics\7_BPMbarR.png" );
                 if( File.Exists( pathBPMbarL ) && File.Exists( pathBPMbarR ) )
                 {
-                    this.txBPMバー左 = CDTXMania.tテクスチャの生成( pathBPMbarL );
-                    this.txBPMバー右 = CDTXMania.tテクスチャの生成( pathBPMbarR );
+                    this.txBPMバー左 = CDTXMania.tテクスチャの生成Af( pathBPMbarL );
+                    this.txBPMバー右 = CDTXMania.tテクスチャの生成Af( pathBPMbarR );
                 }
                 if( File.Exists( pathBPMFL ) && File.Exists( pathBPMFR ) )
                 {
-                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成( pathBPMFL );
-                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成( pathBPMFR );
+                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成Af( pathBPMFL );
+                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成Af( pathBPMFR );
                 }
 
 				base.OnManagedリソースの作成();

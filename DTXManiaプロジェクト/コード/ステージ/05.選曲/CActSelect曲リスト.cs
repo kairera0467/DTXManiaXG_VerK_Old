@@ -611,8 +611,8 @@ namespace DTXMania
                 this.tx選曲パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_image_panel.png"));
 
             this.txパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_music panel.png"));
-            this.tx帯 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_backpanel.png" ) );
-            this.tx色帯 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_ColorBar.png" ) );
+            this.tx帯 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\5_backpanel.png" ) );
+            this.tx色帯 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\5_ColorBar.png" ) );
             this.txランプ用帯 = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_lamppanel.png" ));
             
             this.txクリアランプ = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\5_Clearlamp.png") );
@@ -1070,20 +1070,20 @@ namespace DTXMania
 			//-----------------
             /*
             stマトリックス座標 = new ST中心点[] {            
-            new ST中心点() { x = -940.0000f, y = 4f, z = 320f, rotY = 0.4150f },
-			new ST中心点() { x = -740.0000f, y = 4f, z = 230f, rotY = 0.4150f },
-            new ST中心点() { x = -550.0000f, y = 4f, z = 150f, rotY = 0.4150f },
-			new ST中心点() { x = -370.0000f, y = 4f, z = 70f, rotY = 0.4150f },
-			new ST中心点() { x = -194.0000f,     y = 4f, z = -6f, rotY = 0.4150f },
+            new ST中心点() { x = -980.0000f, y = 4f, z = 350f, rotY = 0.4000f },
+			new ST中心点() { x = -780.0000f, y = 4f, z = 264f, rotY = 0.4000f },
+            new ST中心点() { x = -590.0000f, y = 4f, z = 174f, rotY = 0.4000f },
+			new ST中心点() { x = -400.0000f, y = 4f, z = 92f, rotY = 0.4000f },
+			new ST中心点() { x = -210.0000f, y = 4f, z = 10f, rotY = 0.4000f },
 			new ST中心点() { x = 6.00002622683f, y = 2f, z = 0f, rotY = 0f }, 
-			new ST中心点() { x = 204.0000f, y = 4f, z = 0f, rotY = -0.4150f },
-            new ST中心点() { x = 362.0000f, y = 4f, z = 70f, rotY = -0.4150f },
-            new ST中心点() { x = 528.0000f, y = 4f, z = 146f, rotY = -0.4150f },
-            new ST中心点() { x = 686.0000f, y = 4f, z = 212f, rotY = -0.4150f },
-            new ST中心点() { x = 848.0000f, y = 4f, z = 282f, rotY = -0.4150f },
-            new ST中心点() { x = 1200.0000f, y = 4f, z = 450f, rotY = -0.4150f },
-            new ST中心点() { x = 1500.0000f, y = 4f, z = -289.5575f, rotY = -0.9279888f },
-            new ST中心点() { x = 1500.0000f, y = 4f, z = -289.5575f, rotY = -0.9279888f },
+			new ST中心点() { x = 210.0000f, y = 2f, z = 10f, rotY = -0.4000f },
+            new ST中心点() { x = 400.0000f, y = 2f, z = 92f, rotY = -0.4f },
+            new ST中心点() { x = 590.0000f, y = 2f, z = 174f, rotY = -0.4f },
+            new ST中心点() { x = 780.0000f, y = 2f, z = 264f, rotY = -0.4f },
+            new ST中心点() { x = 980.0000f, y = 2f, z = 350f, rotY = -0.4f },
+            new ST中心点() { x = 1200.0000f, y = 2f, z = 450f, rotY = -0.4f },
+            new ST中心点() { x = 1500.0000f, y = 2f, z = -289.5575f, rotY = -0.9279888f },
+            new ST中心点() { x = 1500.0000f, y = 2f, z = -289.5575f, rotY = -0.9279888f },
 		};
             */
             //-----------------
@@ -1754,17 +1754,17 @@ namespace DTXMania
         protected readonly ST中心点[] stマトリックス曲名座標 = new ST中心点[] {
 			#region [ 実は円弧配置になってない。射影行列間違ってるよスターレインボウ見せる気かよ… ]
 			//-----------------
-            new ST中心点() { x = -980.0000f, y = 2f, z = 360f, rotY = 0.4000f },
-			new ST中心点() { x = -780.0000f, y = 2f, z = 270f, rotY = 0.4000f },
-            new ST中心点() { x = -590.0000f, y = 2f, z = 180f, rotY = 0.4000f },
-			new ST中心点() { x = -400.0000f, y = 2f, z = 90f, rotY = 0.4000f },
-			new ST中心点() { x = -210.0000f, y = 2f, z = 0f, rotY = 0.4000f },
+            new ST中心点() { x = -980.0000f, y = 4f, z = 350f, rotY = 0.4000f },
+			new ST中心点() { x = -780.0000f, y = 4f, z = 264f, rotY = 0.4000f },
+            new ST中心点() { x = -590.0000f, y = 4f, z = 174f, rotY = 0.4000f },
+			new ST中心点() { x = -400.0000f, y = 4f, z = 92f, rotY = 0.4000f },
+			new ST中心点() { x = -210.0000f, y = 4f, z = 10f, rotY = 0.4000f },
 			new ST中心点() { x = 6.00002622683f, y = 2f, z = 0f, rotY = 0f }, 
-			new ST中心点() { x = 210.0000f, y = 2f, z = 0f, rotY = -0.4000f },
-            new ST中心点() { x = 400.0000f, y = 2f, z = 90f, rotY = -0.4f },
-            new ST中心点() { x = 590.0000f, y = 2f, z = 180f, rotY = -0.4f },
-            new ST中心点() { x = 780.0000f, y = 2f, z = 270f, rotY = -0.4f },
-            new ST中心点() { x = 980.0000f, y = 2f, z = 360f, rotY = -0.4f },
+			new ST中心点() { x = 210.0000f, y = 2f, z = 10f, rotY = -0.4000f },
+            new ST中心点() { x = 400.0000f, y = 2f, z = 92f, rotY = -0.4f },
+            new ST中心点() { x = 590.0000f, y = 2f, z = 174f, rotY = -0.4f },
+            new ST中心点() { x = 780.0000f, y = 2f, z = 264f, rotY = -0.4f },
+            new ST中心点() { x = 980.0000f, y = 2f, z = 350f, rotY = -0.4f },
             new ST中心点() { x = 1200.0000f, y = 2f, z = 450f, rotY = -0.4f },
             new ST中心点() { x = 1500.0000f, y = 2f, z = -289.5575f, rotY = -0.9279888f },
             new ST中心点() { x = 1500.0000f, y = 2f, z = -289.5575f, rotY = -0.9279888f },
@@ -1796,8 +1796,8 @@ namespace DTXMania
         private CTexture[] txTumbnail = new CTexture[13];
         private CTexture tx選曲パネル;
         private CTexture txパネル;
-        private CTexture tx帯;
-        private CTexture tx色帯;
+        private CTextureAf tx帯;
+        private CTextureAf tx色帯;
         private CTexture txランプ用帯;
         private CTexture tx選択されている曲の曲名;
         private CTexture tx選択されている曲のアーティスト名;

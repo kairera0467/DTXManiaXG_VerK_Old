@@ -380,7 +380,7 @@ namespace DTXMania
 			{
                 if (CDTXMania.ConfigIni.nExplosionFrames >= 2)
                 {
-                    this.tx火花2 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayDrums chip fire.png"));
+                    this.tx火花2 = CDTXMania.tテクスチャの生成Af(CSkin.Path(@"Graphics\ScreenPlayDrums chip fire.png"));
                     if (this.tx火花2 != null)
                     {
                         this.tx火花2.b加算合成 = true;
@@ -1075,7 +1075,7 @@ namespace DTXMania
 		private ST青い星[] st青い星 = new ST青い星[ STAR_MAX ];
         private ST飛び散るチップ[] st飛び散るチップ = new ST飛び散るチップ[ 8 ];
 		private CTexture[] tx火花 = new CTexture[10];
-        private CTexture tx火花2;
+        private CTextureAf tx火花2;
         private CTexture txボーナス花火;
 		private CTexture tx細波;
 		private CTexture[] tx青い星 = new CTexture[10];

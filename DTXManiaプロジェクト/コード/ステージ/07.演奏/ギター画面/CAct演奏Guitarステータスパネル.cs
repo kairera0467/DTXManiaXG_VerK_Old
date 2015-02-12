@@ -92,9 +92,9 @@ namespace DTXMania
 
             #endregion
 
-            this.pfNameFont = new CPrivateFastFont(new FontFamily("Arial"), 24, FontStyle.Bold); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
-            this.ftGroupFont = new Font("ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ftDisplayFont = new Font("ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 24, FontStyle.Bold ); //2013.09.07.kairera0467 PrivateFontへの移行テスト。
+            this.ftGroupFont = new Font( "ＤＦＧ平成ゴシック体W5", 16f, FontStyle.Regular, GraphicsUnit.Pixel );
+            this.ftDisplayFont = new Font( "ＤＦＧ平成ゴシック体W5", 20f, FontStyle.Regular, GraphicsUnit.Pixel );
 
             this.ftLevelFont = new Font("Impact", 26f, FontStyle.Regular);
             this.ftDifficultyL = new Font("Arial", 30f, FontStyle.Bold);
@@ -107,18 +107,18 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 this.txScore = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Score numbers_Guitar.png" ) );
-                this.txSpeed = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_panel_icons.jpg") );
-                this.txRisky = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_panel_icons2.jpg"));
+                this.txSpeed = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_panel_icons.jpg" ) );
+                this.txRisky = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_panel_icons2.jpg" ) );
 
-                if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
-                    this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part.png"));
-                else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
-                    this.txPart = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Part_XG.png"));
+                if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
+                    this.txPart = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Part.png" ) );
+                else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
+                    this.txPart = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Part_XG.png" ) );
 
                 this.b4font = new Bitmap(1, 1);
 
-                this.strPlayerName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strCardName) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
-                this.strGroupName = string.IsNullOrEmpty(CDTXMania.ConfigIni.strGroupName) ? "" : CDTXMania.ConfigIni.strGroupName;
+                this.strPlayerName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName ) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
+                this.strGroupName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName ) ? "" : CDTXMania.ConfigIni.strGroupName;
 
                 Image imgCustomSongNameTexture = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 if( File.Exists( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" ) )
@@ -474,12 +474,12 @@ namespace DTXMania
 
                 #endregion
 
-                this.txLevelG = new CTexture(CDTXMania.app.Device, this.bLevelG, CDTXMania.TextureFormat, false);
-                this.txLevelB = new CTexture(CDTXMania.app.Device, this.bLevelB, CDTXMania.TextureFormat, false);
+                this.txLevelG = new CTexture( CDTXMania.app.Device, this.bLevelG, CDTXMania.TextureFormat, false );
+                this.txLevelB = new CTexture( CDTXMania.app.Device, this.bLevelB, CDTXMania.TextureFormat, false );
                 //this.txパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_nameplate_Guitar.png" ) );
                 this.txパネル = new CTexture( CDTXMania.app.Device, this.bNamePlate, CDTXMania.TextureFormat, false );
                 //this.tx曲名パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_songpanel.png"));
-                this.tx曲名パネル = new CTexture(CDTXMania.app.Device, this.bSongPanel, CDTXMania.TextureFormat, false);
+                this.tx曲名パネル = new CTexture( CDTXMania.app.Device, this.bSongPanel, CDTXMania.TextureFormat, false );
 
                 gNamePlate.Dispose();
                 gSongPanel.Dispose();

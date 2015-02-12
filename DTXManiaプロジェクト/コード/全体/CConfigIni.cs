@@ -1915,7 +1915,7 @@ namespace DTXMania
 			#endregion
             #region[ 画像周り ]
             sw.WriteLine( ";判定画像のアニメーション方式" );
-            sw.WriteLine( ";(0:旧DTXMania方式 1:コマ方式 2:擬似XG方式)");
+            sw.WriteLine( ";(0:旧DTXMania方式 1:コマ方式 2:擬似XG方式)" );
             sw.WriteLine( "JudgeAnimeType={0}", this.nJudgeAnimeType );
             sw.WriteLine();
             sw.WriteLine( ";判定画像のコマ数" );
@@ -1942,23 +1942,23 @@ namespace DTXMania
             sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
             sw.WriteLine( "ExplosionHeight={0}", this.nExplosionHeight );
             sw.WriteLine();
-            sw.WriteLine( ";" );
+            sw.WriteLine( "ワイリングエフェクトのコマ数;" );
             sw.WriteLine( "WailingFireFrames={0}", (int)this.nWailingFireFrames );
             sw.WriteLine();
-            sw.WriteLine( ";アタックエフェクトの1コマのフレーム数" );
+            sw.WriteLine( ";ワイリングエフェクトの1コマのフレーム数" );
             sw.WriteLine( "WailingFireInterval={0}", (int)this.nWailingFireInterval );
             sw.WriteLine();
-            sw.WriteLine( ";アタックエフェクトの1コマの幅" );
+            sw.WriteLine( ";ワイリングエフェクトの1コマの幅" );
             sw.WriteLine( "WailingFireWidgh={0}", this.nWailingFireWidgh );
             sw.WriteLine();
-            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
-            sw.WriteLine( "WailingFireHeight={0}", this.nExplosionHeight );
+            sw.WriteLine( ";ワイリングエフェクトの1コマの高さ" );
+            sw.WriteLine( "WailingFireHeight={0}", this.nWailingFireHeight );
             sw.WriteLine();
-            sw.WriteLine( ";" );
+            sw.WriteLine( ";ワイリングエフェクトのX座標" );
             sw.WriteLine( "WailingFirePosXGuitar={0}", this.nWailingFireX.Guitar );
             sw.WriteLine( "WailingFirePosXBass={0}", this.nWailingFireX.Bass );
             sw.WriteLine();
-            sw.WriteLine( ";アタックエフェクトの1コマの高さ" );
+            sw.WriteLine( ";ワイリングエフェクトのY座標(Guitar、Bass共通)" );
             sw.WriteLine( "WailingFirePosY={0}", this.nWailingFireY );
             sw.WriteLine();
 
@@ -2913,53 +2913,53 @@ namespace DTXMania
                                             {
                                                 this.bAssignToLBD.Drums = C変換.bONorOFF( str4[ 0 ] );
                                             }
-                                            else if (str3.Equals( "DrumsJudgeLine" ) )
+                                            else if( str3.Equals( "DrumsJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Drums = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 999, this.nJudgeLine.Drums);
+                                                this.nJudgeLine.Drums = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, 0, 999, this.nJudgeLine.Drums );
                                             }
-                                            else if ( str3.Equals( "DrumsShutterIn" ) )
+                                            else if( str3.Equals( "DrumsShutterIn" ) )
                                             {
                                                 this.nShutterInSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Drums );
                                             }
-                                            else if ( str3.Equals( "DrumsShutterOut" ) )
+                                            else if( str3.Equals( "DrumsShutterOut" ) )
                                             {
                                                 this.nShutterOutSide.Drums = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Drums );
                                             }
-                                            else if ( str3.Equals( "GuitarJudgeLine" ) )
+                                            else if( str3.Equals( "GuitarJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 999, this.nJudgeLine.Guitar);
+                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, 0, 999, this.nJudgeLine.Guitar );
                                             }
-                                            else if ( str3.Equals( "GuitarShutterIn" ) )
+                                            else if( str3.Equals( "GuitarShutterIn" ) )
                                             {
                                                 this.nShutterInSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Guitar );
                                             }
-                                            else if ( str3.Equals( "GuitarShutterOut" ) )
+                                            else if( str3.Equals( "GuitarShutterOut" ) )
                                             {
                                                 this.nShutterOutSide.Guitar = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
                                             }
-                                            else if ( str3.Equals( "BassJudgeLine" ) )
+                                            else if( str3.Equals( "BassJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 999, this.nJudgeLine.Bass);
+                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, 0, 999, this.nJudgeLine.Bass );
                                             }
-                                            else if ( str3.Equals( "BassShutterIn" ) )
+                                            else if( str3.Equals( "BassShutterIn" ) )
                                             {
                                                 this.nShutterInSide.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nShutterInSide.Bass );
                                             }
-                                            else if ( str3.Equals( "BassShutterOut" ) )
+                                            else if( str3.Equals( "BassShutterOut" ) )
                                             {
                                                 this.nShutterOutSide.Bass = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, -100, 100, this.nShutterOutSide.Guitar );
                                             }
-                                            else if (str3.Equals("DrumsLaneType"))
+                                            else if( str3.Equals( "DrumsLaneType" ) )
                                             {
-                                                this.eLaneType.Drums = (Eタイプ) C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int) this.eLaneType.Drums);
+                                                this.eLaneType.Drums = ( Eタイプ ) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int)this.eLaneType.Drums );
                                             }
-                                            else if (str3.Equals("RDPosition"))
+                                            else if( str3.Equals( "RDPosition" ))
                                             {
-                                                this.eRDPosition = (ERDPosition)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)this.eRDPosition);
+                                                this.eRDPosition = ( ERDPosition )C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int)this.eRDPosition );
                                             }
-                                            else if (str3.Equals("DrumsTight"))				// #29500 2012.9.11 kairera0467
+                                            else if( str3.Equals( "DrumsTight"))				// #29500 2012.9.11 kairera0467
                                             {
-                                                this.bTight = C変換.bONorOFF(str4[0]);
+                                                this.bTight = C変換.bONorOFF( str4[0] );
                                             }
                                             #region [ XGオプション ]
                                             else if (str3.Equals("NamePlateType"))
@@ -2983,15 +2983,15 @@ namespace DTXMania
                                                 this.bSpeaker = C変換.bONorOFF(str4[0]);
                                             }
                                             #endregion
-                                            else if (str3.Equals("DrumsStageEffect"))
+                                            else if( str3.Equals( "DrumsStageEffect" ) )
                                             {
-                                                this.ボーナス演出を表示する = C変換.bONorOFF(str4[0]);
+                                                this.ボーナス演出を表示する = C変換.bONorOFF( str4[0] );
                                             }
-                                            else if (str3.Equals("CLASSIC"))
+                                            else if( str3.Equals( "CLASSIC" ) )
                                             {
-                                                this.bCLASSIC譜面判別を有効にする = C変換.bONorOFF(str4[0]);
+                                                this.bCLASSIC譜面判別を有効にする = C変換.bONorOFF( str4[0] );
                                             }
-                                            else if (str3.Equals("MutingLP"))
+                                            else if( str3.Equals( "MutingLP" ) )
                                             {
                                                 this.bMutingLP = C変換.bONorOFF(str4[0]);
                                             }
@@ -3136,7 +3136,6 @@ namespace DTXMania
                                             {
                                                 this.nWailingFireY = C変換.n値を文字列から取得して返す( str4, this.nWailingFireY );
                                             }
-
                                             else if ( str3.Equals( "DrumComboDisp" ) )				// #29500 2012.9.11 kairera0467
                                             {
                                                 this.bドラムコンボ文字の表示 = C変換.bONorOFF(str4[0]);
