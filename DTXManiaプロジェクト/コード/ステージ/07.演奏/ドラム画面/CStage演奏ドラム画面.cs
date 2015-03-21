@@ -3178,7 +3178,7 @@ namespace DTXMania
 					int n小節番号 = n小節番号plus1 - 1;
 					CDTXMania.act文字コンソール.tPrint( 858, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 0x11 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 0x11 ), C文字コンソール.Eフォント種別.白, n小節番号.ToString() );
 				}
-				if ( ( ( pChip.b可視 ) && ( this.txチップ != null ) )
+				if ( ( pChip.b可視 ) && ( this.txチップ != null ) )
 				{
 					this.txチップ.n透明度 = 255;
 					this.txチップ.t2D描画( CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 1 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 1 ), new Rectangle( 0, 769, 559, 2 ) );
