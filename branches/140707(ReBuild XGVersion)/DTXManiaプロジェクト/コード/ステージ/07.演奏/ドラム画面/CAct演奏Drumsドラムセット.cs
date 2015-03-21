@@ -55,6 +55,9 @@ namespace DTXMania
 
         public override void On非活性化()
         {
+            this.ctLeftCymbal = null;
+            this.ctRightCymbal = null;
+
             base.On非活性化();
         }
 

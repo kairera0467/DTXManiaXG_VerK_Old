@@ -285,7 +285,7 @@ namespace DTXMania
 				if( this.tx下部パネル != null )
 					this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.sz画像サイズ.Height );
 
-				//this.actステータスパネル.On進行描画();
+				this.actステータスパネル.On進行描画();
 				this.act演奏履歴パネル.On進行描画();
 				this.actPresound.On進行描画();
 				if( this.txコメントバー != null )

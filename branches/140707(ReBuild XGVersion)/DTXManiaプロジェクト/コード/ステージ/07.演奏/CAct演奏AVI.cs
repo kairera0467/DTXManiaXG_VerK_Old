@@ -278,7 +278,6 @@ namespace DTXMania
 				this.n移動開始時刻ms = -1;
 			}
 
-            this.dsBGV.dshow.t再生一時停止();
             if( this.dsBGV != null && CDTXMania.ConfigIni.bDirectShowMode == true )
             {
                 this.dsBGV.dshow.MediaCtrl.Stop();
