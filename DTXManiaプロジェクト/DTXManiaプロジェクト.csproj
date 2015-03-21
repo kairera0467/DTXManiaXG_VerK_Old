@@ -149,6 +149,7 @@
     <Compile Include="コード\ステージ\07.演奏\CInvisibleChip.cs" />
     <Compile Include="コード\ステージ\07.演奏\CStage演奏画面共通.cs" />
     <Compile Include="コード\ステージ\07.演奏\C演奏判定ライン座標共通.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarBPMバー.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarRGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarWailingBonus.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitar判定文字列.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CStage演奏ギター画面.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏シャッター共通.cs" />
+    <Compile Include="コード\ステージ\07.演奏\CAct演奏BPMバー共通.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsDanger.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsRGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ドラム画面\CAct演奏DrumsWailingBonus.cs" />

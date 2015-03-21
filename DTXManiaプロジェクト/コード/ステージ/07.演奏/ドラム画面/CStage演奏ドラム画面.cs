@@ -192,7 +192,7 @@ namespace DTXMania
 				this.t進行描画・レーンフラッシュGB();
                 this.t進行描画・ギターベース判定ライン();
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick
-                //this.t進行描画・レーン();
+                this.t進行描画・レーン();
 				this.t進行描画・レーンフラッシュD();
 				this.t進行描画・DANGER();
 				this.t進行描画・判定ライン();
@@ -3173,18 +3173,18 @@ namespace DTXMania
 			}
 			if ( configIni.bDrums有効 )
 			{
-				if ( configIni.b演奏情報を表示する && ( configIni.eDark == Eダークモード.OFF ) )
+				if ( configIni.b演奏情報を表示する )
 				{
 					int n小節番号 = n小節番号plus1 - 1;
 					CDTXMania.act文字コンソール.tPrint( 858, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 0x11 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 0x11 ), C文字コンソール.Eフォント種別.白, n小節番号.ToString() );
 				}
-				if ( ( ( configIni.eDark != Eダークモード.FULL ) && pChip.b可視 ) && ( this.txチップ != null ) )
+				if ( ( ( pChip.b可視 ) && ( this.txチップ != null ) )
 				{
 					this.txチップ.n透明度 = 255;
 					this.txチップ.t2D描画( CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 1 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 1 ), new Rectangle( 0, 769, 559, 2 ) );
 				}
 			}
-			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( configIni.eDark != Eダークモード.FULL ) && ( this.txチップ != null ) )
+			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( this.txチップ != null ) )
 			{
 				this.txチップ.n透明度 = 255;
 				//int y = configIni.bReverse.Guitar ? ( ( 0x176 - pChip.nバーからの距離dot.Guitar ) - 1 ) : ( ( 0x5f + pChip.nバーからの距離dot.Guitar ) - 1 );
