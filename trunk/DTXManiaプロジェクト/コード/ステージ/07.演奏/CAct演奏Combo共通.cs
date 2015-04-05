@@ -131,7 +131,9 @@ namespace DTXMania
         public float nUnitTime;
         public CCounter ctコンボ;
         public CCounter ctコンボアニメ;
+        public CCounter ctコンボアニメ_2P;
         public int nY1の位座標差分値 = 0;
+        public int nY1の位座標差分値_2P = 0;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct ST爆発
@@ -588,20 +590,20 @@ namespace DTXMania
             int nJump = nジャンプインデックス - (n桁数);
             int y動作差分 = 0;
 
-            this.ctコンボアニメ.t進行();
-            this.ctコンボアニメ.t進行db();
+            this.ctコンボアニメ_2P.t進行();
+            this.ctコンボアニメ_2P.t進行db();
             //CDTXMania.act文字コンソール.tPrint(1200, 0, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.n現在の値.ToString());
             //CDTXMania.act文字コンソール.tPrint(1200, 16, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.db現在の値.ToString());
             //CDTXMania.act文字コンソール.tPrint(1200, 32, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.b進行中.ToString());
             //CDTXMania.act文字コンソール.tPrint(1200, 48, C文字コンソール.Eフォント種別.白, this.ctコンボアニメ.n終了値.ToString());
-            if( this.nY1の位座標差分値 > 0 )
+            if( this.nY1の位座標差分値_2P > 0 )
             {
                 //this.nY1の位座標差分値 -= ( CDTXMania.ConfigIni.b垂直帰線待ちを行う ? 16 : 4);
-                this.nY1の位座標差分値 = this.nY1の位座標差分値 - ( CDTXMania.ConfigIni.b垂直帰線待ちを行う ? (int)this.ctコンボアニメ.db現在の値 : this.ctコンボアニメ.n現在の値);
+                this.nY1の位座標差分値_2P = this.nY1の位座標差分値_2P - ( CDTXMania.ConfigIni.b垂直帰線待ちを行う ? (int)this.ctコンボアニメ_2P.db現在の値 : this.ctコンボアニメ_2P.n現在の値);
             }
             else
             {
-                this.nY1の位座標差分値 = 0;
+                this.nY1の位座標差分値_2P = 0;
             }
 
             if ((nJump >= 0) && (nJump < 180))
@@ -666,7 +668,7 @@ namespace DTXMania
                     this.txCOMBOギター.t2D描画(
                         CDTXMania.app.Device,
                         x - ((int)((nギターコンボの幅) / 2.0f)),
-                        y + y動作差分 - ( i == 0 ? this.nY1の位座標差分値 : 0 ),
+                        y + y動作差分 - ( i == 0 ? this.nY1の位座標差分値_2P : 0 ),
                         new Rectangle((n位の数[i] % 5) * nギターコンボの幅, (n位の数[i] / 5) * nギターコンボの高さ, nギターコンボの幅, nギターコンボの高さ));
                 }
 				//-----------------
@@ -696,8 +698,13 @@ namespace DTXMania
             this.ctコンボ = new CCounter(0, 1, (int)this.nUnitTime, CDTXMania.Timer);
             
             this.ctコンボアニメ = new CCounter( 0, 130, 4, CDTXMania.Timer );
+            this.ctコンボアニメ_2P = new CCounter( 0, 130, 4, CDTXMania.Timer );
             if(CDTXMania.ConfigIni.b垂直帰線待ちを行う)
+            {
                 this.ctコンボアニメ = new CCounter( 0.0, 130.0, 0.003, CSound管理.rc演奏用タイマ );
+                this.ctコンボアニメ_2P = new CCounter( 0.0, 130.0, 0.003, CSound管理.rc演奏用タイマ );
+            }
+
             
 			base.On活性化();
 		}
@@ -821,9 +828,7 @@ namespace DTXMania
 							this.status[ i ].nジャンプインデックス値 = 0;
 							this.status[ i ].n前回の時刻・ジャンプ用 = CDTXMania.Timer.n現在時刻;
                             //this.nY1の位座標差分値 = (CDTXMania.ConfigIni.b垂直帰線待ちを行う ? 80 : 80);
-                            this.nY1の位座標差分値 = 130;
-                            this.ctコンボアニメ.n現在の値 = 0;
-                            this.ctコンボアニメ.db現在の値 = 0;
+
 						}
 
 						this.status[ i ].n現在表示中のCOMBO値 = this.status[ i ].nCOMBO値;
@@ -869,5 +874,21 @@ namespace DTXMania
 
 			return 0;
 		}
+
+        public void tComboAnime( E楽器パート ePart )
+        {
+            if( ePart == E楽器パート.DRUMS || ePart == E楽器パート.GUITAR )
+            {
+                this.ctコンボアニメ.n現在の値 = 0;
+                this.ctコンボアニメ.db現在の値 = 0;
+                this.nY1の位座標差分値 = 130;
+            }
+            else
+            {
+                this.ctコンボアニメ_2P.n現在の値 = 0;
+                this.ctコンボアニメ_2P.db現在の値 = 0;
+                this.nY1の位座標差分値_2P = 130;
+            }
+        }
 	}
 }

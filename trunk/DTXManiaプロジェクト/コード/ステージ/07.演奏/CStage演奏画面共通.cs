@@ -1340,6 +1340,7 @@ namespace DTXMania
                             case E判定.Great:
                             case E判定.Good:
                                 this.actCombo.n現在のコンボ数.Drums++;
+                                this.actCombo.tComboAnime(E楽器パート.DRUMS);
                                 break;
 
                             default:
@@ -1377,6 +1378,7 @@ namespace DTXMania
                         case E判定.Great:
                         case E判定.Good:
                             this.actCombo.n現在のコンボ数[indexInst]++;
+                            this.actCombo.tComboAnime(pChip.e楽器パート);
                             break;
 
                         default:
