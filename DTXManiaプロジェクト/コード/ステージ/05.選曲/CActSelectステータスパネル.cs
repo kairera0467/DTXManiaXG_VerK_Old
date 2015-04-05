@@ -246,7 +246,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_status panel.png" ));
-				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill icon.png" ), false );
+				this.txゲージ用数字他 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_skill icon.png" ));
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_difficulty panel.png"));
                 this.tx難易度数字XG = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\6_LevelNumber.png"));
                 this.txHSアイコン = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_panel_icons.jpg"));
