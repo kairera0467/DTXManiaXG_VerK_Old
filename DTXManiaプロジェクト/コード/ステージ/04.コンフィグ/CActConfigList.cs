@@ -1948,9 +1948,9 @@ namespace DTXMania
 			if( this.b活性化してない )
 				return;
 
-			this.tx通常項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig itembox.png" ), false );
-			this.txその他項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig itembox other.png" ), false );
-			this.tx三角矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig triangle arrow.png" ), false );
+			this.tx通常項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_itembox.png" ), false );
+			this.txその他項目行パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_itembox other.png" ), false );
+			this.tx三角矢印 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_triangle arrow.png" ), false );
 			this.txSkinSample1 = null;		// スキン選択時に動的に設定するため、ここでは初期化しない
 			base.OnManagedリソースの作成();
 		}
@@ -2084,7 +2084,7 @@ namespace DTXMania
 
 			// 描画
 
-			this.ptパネルの基本座標[ 4 ].X = this.b項目リスト側にフォーカスがある ? 276 : 301;		// メニューにフォーカスがあるなら、項目リストの中央は頭を出さない。
+			this.ptパネルの基本座標[ 4 ].X = this.b項目リスト側にフォーカスがある ? 552 : 602;		// メニューにフォーカスがあるなら、項目リストの中央は頭を出さない。
 
 			#region [ 計11個の項目パネルを描画する。]
 			//-----------------
@@ -2128,7 +2128,7 @@ namespace DTXMania
 				#endregion
 				#region [ 現在の行の項目名を描画。]
 				//-----------------
-				CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 0x12, y + 12, this.list項目リスト[ nItem ].str項目名 );
+				CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 56, y + 25, this.list項目リスト[ nItem ].str項目名 );
 				//-----------------
 				#endregion
 				#region [ 現在の行の項目の要素を描画。]
@@ -2138,7 +2138,7 @@ namespace DTXMania
 					case CItemBase.E種別.ONorOFFトグル:
 						#region [ *** ]
 						//-----------------
-						CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, ( (CItemToggle) this.list項目リスト[ nItem ] ).bON ? "ON" : "OFF" );
+						CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, ( (CItemToggle) this.list項目リスト[ nItem ] ).bON ? "ON" : "OFF" );
 						break;
 						//-----------------
 						#endregion
@@ -2149,15 +2149,15 @@ namespace DTXMania
 						switch( ( (CItemThreeState) this.list項目リスト[ nItem ] ).e現在の状態 )
 						{
 							case CItemThreeState.E状態.ON:
-								CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, "ON" );
+								CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, "ON" );
 								break;
 
 							case CItemThreeState.E状態.不定:
-								CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, "- -" );
+								CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, "- -" );
 								break;
 
 							default:
-								CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, "OFF" );
+								CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, "OFF" );
 								break;
 						}
 						break;
@@ -2170,16 +2170,16 @@ namespace DTXMania
 						if( this.list項目リスト[ nItem ] == this.iCommonPlaySpeed )
 						{
 							double d = ( (double) ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値 ) / 20.0;
-							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, d.ToString( "0.000" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
+							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, d.ToString( "0.000" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
 						}
 						else if( this.list項目リスト[ nItem ] == this.iDrumsScrollSpeed || this.list項目リスト[ nItem ] == this.iGuitarScrollSpeed || this.list項目リスト[ nItem ] == this.iBassScrollSpeed )
 						{
 							float f = ( ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値 + 1 ) * 0.5f;
-							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, f.ToString( "x0.0" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
+							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, f.ToString( "x0.0" ), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
 						}
 						else
 						{
-							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値.ToString(), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
+							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, ( (CItemInteger) this.list項目リスト[ nItem ] ).n現在の値.ToString(), ( n行番号 == 0 ) && this.b要素値にフォーカス中 );
 						}
 						break;
 						//-----------------
@@ -2190,7 +2190,7 @@ namespace DTXMania
 						//-----------------
 						{
 							CItemList list = (CItemList) this.list項目リスト[ nItem ];
-							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 210, y + 12, list.list項目値[ list.n現在選択されている項目番号 ] );
+							CDTXMania.stageコンフィグ.actFont.t文字列描画( x + 420, y + 25, list.list項目値[ list.n現在選択されている項目番号 ] );
 
 							#region [ 必要な場合に、Skinのサンプルを生成・描画する。#28195 2012.5.2 yyagi ]
 							if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemSkinSubfolder )
@@ -2375,7 +2375,19 @@ namespace DTXMania
 		private long nスクロール用タイマ値;
 		private int n現在のスクロールカウンタ;
 		private int n目標のスクロールカウンタ;
-		private Point[] ptパネルの基本座標 = new Point[] { new Point( 0x12d, 3 ), new Point( 0x12d, 0x35 ), new Point( 0x12d, 0x67 ), new Point( 0x12d, 0x99 ), new Point( 0x114, 0xcb ), new Point( 0x12d, 0xfd ), new Point( 0x12d, 0x12f ), new Point( 0x12d, 0x161 ), new Point( 0x12d, 0x193 ), new Point( 0x12d, 0x1c5 ) };
+        private Point[] ptパネルの基本座標 = new Point[]
+{
+	new Point(602, 4),
+	new Point(602, 79),
+	new Point(602, 154),
+	new Point(602, 229),
+	new Point(552, 304),
+	new Point(602, 379),
+	new Point(602, 454),
+	new Point(602, 529),
+	new Point(602, 604),
+	new Point(602, 679)
+};
 		private CTexture txその他項目行パネル;
 		private CTexture tx三角矢印;
 		private CTexture tx通常項目行パネル;

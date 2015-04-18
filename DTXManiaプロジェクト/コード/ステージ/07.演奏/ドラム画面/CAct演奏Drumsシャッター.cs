@@ -49,16 +49,7 @@ namespace DTXMania
 
         #region[ private ]
         //-----------------
-        private CTexture txLaneMain;
-        private CTexture txLaneLine;
-        private CTexture txLaneLeftCymbal;
-        private CTexture txLaneBassDrum;
-        private CTexture txLaneHiTom;
 
-        private CTexture txClip;
-        private CTexture txClipPanel;
-
-        
 
         //-----------------
         #endregion
