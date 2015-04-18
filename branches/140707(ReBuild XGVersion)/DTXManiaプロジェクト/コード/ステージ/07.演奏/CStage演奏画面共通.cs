@@ -612,6 +612,7 @@ namespace DTXMania
 		protected CAct演奏スクロール速度 act譜面スクロール速度;
 		public    C演奏判定ライン座標共通 演奏判定ライン座標;
         protected CAct演奏BPMバー共通 actBPMBar;
+        protected CAct演奏シャッター共通 actShutter;
 		protected bool bPAUSE;
 		protected STDGBVALUE<bool> b演奏にMIDI入力を使った;
 		protected STDGBVALUE<bool> b演奏にキーボードを使った;
@@ -1662,6 +1663,10 @@ namespace DTXMania
 					base.eフェーズID = CStage.Eフェーズ.共通_フェードアウト;
 					this.eフェードアウト完了時の戻り値 = E演奏画面の戻り値.演奏中断;
 				}
+                else if( keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F5 ) )
+                {
+
+                }
 			}
 		}
 

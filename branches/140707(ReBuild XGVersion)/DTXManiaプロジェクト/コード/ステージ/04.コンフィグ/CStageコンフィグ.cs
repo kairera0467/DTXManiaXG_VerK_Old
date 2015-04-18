@@ -110,10 +110,10 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_background.jpg" ), false );
-				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig header panel.png" ), true );
-				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig footer panel.png" ), true );
-				this.txMenuカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenConfig menu cursor.png" ), false );
+				this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_background.jpg" ) );
+				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_header panel.png" ) );
+				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_footer panel.png" ) );
+				this.txMenuカーソル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_menu cursor.png" ) );
 				if( this.bメニューにフォーカス中 )
 				{
 					this.t説明文パネルに現在選択されているメニューの説明を描画する();
@@ -162,19 +162,19 @@ namespace DTXMania
 			if( this.txMenuカーソル != null )
 			{
 				Rectangle rectangle;
-				this.txMenuカーソル.n透明度 = this.bメニューにフォーカス中 ? 0xff : 0x80;
-				int x = 0x37;
-				int y = 0x61 + ( this.n現在のメニュー番号 * 0x19 );
-				int num3 = 170;
-				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, 0x10, 0x20 ) );
-				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, ( x + num3 ) - 0x10, y, new Rectangle( 10, 0, 0x10, 0x20 ) );
-				x += 0x10;
-				for( num3 -= 0x20; num3 > 0; num3 -= rectangle.Width )
+				this.txMenuカーソル.n透明度 = this.bメニューにフォーカス中 ? 255 : 128;
+				int x = 110;
+				int y = (int)( 145.5 + ( this.n現在のメニュー番号 * 37.5 ) );
+				int num3 = 340;
+				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, 32, 48 ) );
+				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, ( x + num3 ) - 32, y, new Rectangle( 20, 0, 32, 48 ) );
+				x += 32;
+				for( num3 -= 64; num3 > 0; num3 -= rectangle.Width )
 				{
-					rectangle = new Rectangle( 8, 0, 0x10, 0x20 );
-					if( num3 < 0x10 )
+					rectangle = new Rectangle( 16, 0, 32, 48 );
+					if( num3 < 32 )
 					{
-						rectangle.Width -= 0x10 - num3;
+						rectangle.Width -= 32 - num3;
 					}
 					this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, rectangle );
 					x += rectangle.Width;
@@ -187,7 +187,7 @@ namespace DTXMania
 			string str = "System";
 			int num4 = this.actFont.n文字列長dot( str );
 			bool flag = this.n現在のメニュー番号 == 0;
-			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 100, str, flag );
+			this.actFont.t文字列描画( 282 - ( num4 / 2 ), 155, str, flag );
 			//str = "Drums Keys";
 			//num4 = this.actFont.n文字列長dot( str );
 			//flag = this.n現在のメニュー番号 == 1;
@@ -207,26 +207,26 @@ namespace DTXMania
 			str = "Drums";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 1;
-			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 0x7d, str, flag );
+			this.actFont.t文字列描画( 282 - ( num4 / 2 ), 192, str, flag );
 			str = "Guitar";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 2;
-			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 150, str, flag );
+			this.actFont.t文字列描画( 282 - ( num4 / 2 ), 230, str, flag );
 			str = "Bass";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 3;
-			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 0xaf, str, flag );
+			this.actFont.t文字列描画( 282 - ( num4 / 2 ), 267, str, flag );
 			str = "Exit";
 			num4 = this.actFont.n文字列長dot( str );
 			flag = this.n現在のメニュー番号 == 4;
-			this.actFont.t文字列描画( 0x8a - ( num4 / 2 ), 200, str, flag );
+			this.actFont.t文字列描画( 282 - ( num4 / 2 ), 305, str, flag );
 
 			//---------------------
 			#endregion
 			#region [ 説明文パネル ]
 			//---------------------
 			if( this.tx説明文パネル != null )
-				this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 0x1d, 0xf8 );
+				this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 67, 382 );
 			//---------------------
 			#endregion
 			#region [ アイテム ]
@@ -252,7 +252,7 @@ namespace DTXMania
 			#region [ 下部パネル ]
 			//---------------------
 			if( this.tx下部パネル != null )
-				this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 480 - this.tx下部パネル.szテクスチャサイズ.Height );
+				this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.szテクスチャサイズ.Height );
 			//---------------------
 			#endregion
 			#region [ オプションパネル ]
