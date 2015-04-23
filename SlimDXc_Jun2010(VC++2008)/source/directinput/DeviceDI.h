@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,6 @@
 #include "DeviceImageHeader.h"
 #include "EffectFile.h"
 #include "ObjectData.h"
-#include "RawBufferedData.h"
 
 namespace SlimDX
 {
@@ -107,13 +106,10 @@ namespace SlimDX
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Poll();
 
-			int GetDeviceData(array<RawBufferedData>^ data, bool peek);
-
 			DeviceImageHeader GetDeviceImages();
 			EffectInfo GetEffectInfo( System::Guid guid );
 			Result SendData( array<ObjectData>^ data, bool overlay );
 
-			DeviceObjectInstance GetObjectInfoByOffset(int offset);
 			DeviceObjectInstance GetObjectInfoByUsage( int usageCode );
 			DeviceObjectInstance GetObjectInfoById( int objectId );
 

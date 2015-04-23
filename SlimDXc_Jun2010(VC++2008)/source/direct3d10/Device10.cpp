@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 #include "../DataBox.h"
 #include "../stack_array.h"
 #include "../dxgi/Adapter.h"
-#include "../dxgi/Factory1.h"
 
 #include "Direct3D10Exception.h"
 
@@ -140,40 +139,6 @@ namespace Direct3D10
 		InitializeSubclasses();
 	}
 
-	SlimDX::DXGI::Factory^ Device::Factory::get()
-	{
-		IDXGIDevice *device = 0;
-		if (RECORD_D3D10(InternalPointer->QueryInterface(IID_IDXGIDevice, reinterpret_cast<void**>(&device))).IsFailure)
-			return nullptr;
-
-		IDXGIAdapter *adapter = 0;
-		HRESULT hr = device->GetAdapter(&adapter);
-		if (FAILED(hr))
-			device->Release();
-
-		if (RECORD_D3D10(hr).IsFailure)
-			return nullptr;
-
-		SlimDX::DXGI::Factory^ result = nullptr;
-
-		IDXGIFactory1 *factory1;
-		hr = adapter->GetParent(IID_IDXGIFactory1, reinterpret_cast<void**>(&factory1));
-		if (SUCCEEDED(hr))
-			result = SlimDX::DXGI::Factory1::FromPointer(factory1, this);
-		else
-		{
-			IDXGIFactory *factory;
-			hr = adapter->GetParent(IID_IDXGIFactory, reinterpret_cast<void**>(&factory));
-			if (SUCCEEDED(hr))
-				result = SlimDX::DXGI::Factory::FromPointer(factory, this);
-		}
-
-		adapter->Release();
-		device->Release();
-
-		return result;
-	}
-
 	InputAssemblerWrapper^ Device::InputAssembler::get()
 	{
 		return m_InputAssembler;
@@ -217,33 +182,6 @@ namespace Direct3D10
 	Result Device::DeviceRemovedReason::get()
 	{
 		return Result( InternalPointer->GetDeviceRemovedReason() );
-	}
-
-	System::String^ Device::DebugName::get()
-	{
-		char name[1024];
-		UINT size = sizeof(name) - 1;
-
-		if (FAILED(InternalPointer->GetPrivateData(WKPDID_D3DDebugObjectName, &size, name)))
-			return "";
-
-		name[size] = 0;
-		return gcnew System::String(name);
-	}
-	
-	void Device::DebugName::set(System::String^ value)
-	{
-		if (!String::IsNullOrEmpty(value))
-		{
-			array<Byte>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(value);
-			pin_ptr<Byte> pinnedValue = &valueBytes[0];
-
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, value->Length, pinnedValue);
-		}
-		else
-		{
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0);
-		}
 	}
 	
 	CounterCapabilities Device::GetCounterCapabilities()
@@ -292,17 +230,14 @@ namespace Direct3D10
 	T Device::OpenSharedResource(System::IntPtr handle)
 	{
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		ID3D10Resource* resultPointer;
+		void *resultPointer;
 
-		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, (void**)&resultPointer );
+		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, &resultPointer );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return T();
 
 		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
-		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
-
-		resultPointer->Release();
-		return result;
+		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
 	}
 	
 	void Device::ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, Byte stencil )
@@ -335,11 +270,6 @@ namespace Direct3D10
 	{
 		D3D10_BOX nativeRegion = region.CreateNativeVersion();
 		InternalPointer->CopySubresourceRegion( destination->InternalPointer, destinationSubresource, x, y, z, source->InternalPointer, sourceSubresource, &nativeRegion );
-	}
-	
-	void Device::CopySubresourceRegion( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, int x, int y, int z )
-	{
-		InternalPointer->CopySubresourceRegion( destination->InternalPointer, destinationSubresource, x, y, z, source->InternalPointer, sourceSubresource, NULL );
 	}
 	
 	void Device::ResolveSubresource( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, DXGI::Format format )

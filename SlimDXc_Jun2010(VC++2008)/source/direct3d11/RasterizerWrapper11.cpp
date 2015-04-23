@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -110,15 +110,6 @@ namespace Direct3D11
 		for( UINT i = 0; i < count; i++ )
 			viewports[i] = Viewport( nativeVPs[i].TopLeftX, nativeVPs[i].TopLeftY, nativeVPs[i].Width, nativeVPs[i].Height, nativeVPs[i].MinDepth, nativeVPs[i].MaxDepth );
 		return viewports;
-	}
-
-	Viewport RasterizerWrapper::GetViewport()
-	{
-		D3D11_VIEWPORT vp;
-		UINT count = 1;
-		
-		deviceContext->RSGetViewports(&count, &vp);
-		return Viewport(vp.TopLeftX, vp.TopLeftY, vp.Width, vp.Height, vp.MinDepth, vp.MaxDepth);
 	}
 
 	void RasterizerWrapper::SetScissorRectangles( System::Drawing::Rectangle scissorRectangle )

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -43,17 +43,12 @@ namespace SlimDX
 			
 		public:
 			void SetInputLayout( InputLayout^ layout );
-			InputLayout^ GetInputLayout();
-
 			void SetPrimitiveTopology( PrimitiveTopology topology );
-			PrimitiveTopology GetPrimitiveTopology();
-
+			
 			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
-			void GetIndexBuffer( [Out] Buffer^ %indexBuffer, [Out] DXGI::Format %format, [Out] int %offset );
 			
 			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
 			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );
-			array<VertexBufferBinding>^ GetVertexBuffers( int firstSlot, int count );
 		};
 	}
 };

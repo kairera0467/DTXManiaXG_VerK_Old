@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -35,11 +35,8 @@ namespace SlimDX
 		{
 		internal:
 			DWRITE_GLYPH_RUN ToUnmanaged(stack_array<UINT16> &indices, stack_array<FLOAT> &advances, stack_array<DWRITE_GLYPH_OFFSET> &offsets);
-			GlyphRun(const DWRITE_GLYPH_RUN &run);
 
 		public:
-			GlyphRun() { }
-
 			property FontFace^ FontFace;
 			property float FontSize;
 			property int GlyphCount;

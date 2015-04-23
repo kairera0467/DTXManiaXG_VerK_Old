@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ namespace Direct3D11
 {
 	TimestampQueryData::TimestampQueryData( const D3D11_QUERY_DATA_TIMESTAMP_DISJOINT& native )
 	{
-		Frequency = native.Frequency;
+		Frequency = static_cast<long>( native.Frequency );
 		IsDisjointed = native.Disjoint != 0;
 	}
 	

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace DirectInput
 		instanceGuid = Utilities::ConvertNativeGuid( deviceInstance.guidInstance );
 		productGuid = Utilities::ConvertNativeGuid( deviceInstance.guidProduct );
 		ffDriverGuid = Utilities::ConvertNativeGuid( deviceInstance.guidFFDriver );
-		type = static_cast<DeviceType>( deviceInstance.dwDevType & 0xFF );
+		type = static_cast<DeviceType>( deviceInstance.dwDevType );
 		subType = deviceInstance.dwDevType >> 8;
 		usage = static_cast<SlimDX::Multimedia::UsageId>( deviceInstance.wUsage );
 		usagePage = static_cast<SlimDX::Multimedia::UsagePage>( deviceInstance.wUsagePage );

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -329,16 +329,6 @@ namespace SlimDX
 			count = size - offset;
 	}
 	
-	generic<typename T>
-	int Utilities::GetElementHashCode( array<T>^ a )
-	{
-		int result = 0;
-		for( int index = 0; index < a->Length; ++index )
-			result += a[index]->GetHashCode();
-		
-		return result;
-	}
-
 	generic<typename T>
 	bool Utilities::CheckElementEquality( array<T>^ left, array<T>^ right )
 	{

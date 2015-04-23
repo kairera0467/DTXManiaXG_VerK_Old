@@ -1,5 +1,6 @@
+#include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -19,9 +20,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../stack_array.h"
+#include <d3d10.h>
 
 #include "Direct3D10Exception.h"
 
@@ -46,6 +46,18 @@ namespace Direct3D10
 		m_Pointer = reinterpret_cast<ID3D10EffectShaderResourceVariable*>( pointer.ToPointer() );
 	}
 	
+	Result EffectResourceVariable::SetResource( ShaderResourceView^ view )
+	{
+		if( view == nullptr )
+		{
+			return RECORD_D3D10( m_Pointer->SetResource( 0 ) );
+		}
+		else
+		{
+			return RECORD_D3D10( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
+		}
+	}
+	
 	ShaderResourceView^ EffectResourceVariable::GetResource()
 	{
 		ID3D10ShaderResourceView* view = 0;
@@ -53,51 +65,6 @@ namespace Direct3D10
 			return nullptr;
 			
 		return ShaderResourceView::FromPointer( view );
-	}
-
-	Result EffectResourceVariable::GetResourceArray(array<ShaderResourceView^>^ views)
-	{
-		return GetResourceArray(views, 0, views->Length);
-	}
-
-	Result EffectResourceVariable::GetResourceArray(array<ShaderResourceView^>^ views, int offset, int count)
-	{
-		Utilities::CheckArrayBounds(views, offset, count);
-
-		stack_array<ID3D10ShaderResourceView*> nativeViews = stackalloc(ID3D10ShaderResourceView*, count);
-		HRESULT hr = m_Pointer->GetResourceArray(&nativeViews[0], 0, count);
-		if (RECORD_D3D10(hr).IsFailure)
-			return Result::Last;
-
-		for (int i = 0; i < count; i++)
-			views[i + offset] = ShaderResourceView::FromPointer(nativeViews[i]);
-
-		return Result::Last;
-	}
-	
-	Result EffectResourceVariable::SetResource( ShaderResourceView^ view )
-	{
-		if( view == nullptr )
-			return RECORD_D3D10( m_Pointer->SetResource( 0 ) );
-		else
-			return RECORD_D3D10( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
-	}
-
-	Result EffectResourceVariable::SetResourceArray( array<ShaderResourceView^>^ views )
-	{
-		return SetResourceArray(views, 0, views->Length);
-	}
-
-	Result EffectResourceVariable::SetResourceArray( array<ShaderResourceView^>^ views, int offset, int count )
-	{
-		Utilities::CheckArrayBounds(views, offset, count);
-
-		stack_array<ID3D10ShaderResourceView*> nativeViews = stackalloc(ID3D10ShaderResourceView*, count);
-		for (int i = 0; i < count; i++)
-			nativeViews[i] = views[i + offset] != nullptr ? views[i + offset]->InternalPointer : 0;
-
-		HRESULT hr = m_Pointer->SetResourceArray(&nativeViews[0], 0, count);
-		return RECORD_D3D10(hr);
 	}
 }
 }

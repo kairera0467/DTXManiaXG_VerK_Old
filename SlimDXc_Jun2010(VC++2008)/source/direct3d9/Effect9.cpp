@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -581,14 +581,11 @@ namespace Direct3D9
 	void Effect::StateManager::set( IEffectStateManager^ manager )
 	{
 		if( shim != NULL )
-			shim->Release();
+			delete shim;
 
 		// Manual Allocation: Handled properly
 		// the class needs to keep this pointer around
-		if (manager == nullptr)
-			shim = 0;
-		else
-			shim = new IEffectStateManagerShim(manager, this);
+		shim = new IEffectStateManagerShim( manager, this );
 
 		HRESULT hr = InternalPointer->SetStateManager( shim );
 		RECORD_D3D9( hr );

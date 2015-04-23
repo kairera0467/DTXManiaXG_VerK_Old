@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ extern const IID IID_IDWriteBitmapRenderTarget;
 
 #include "../ComObject.h"
 #include "../math/Color4.h"
-#include "../math/Matrix3x2.h"
+#include "../direct2d/Matrix3x2.h"
 
 #include "Enums.h"
 #include "GlyphRunDW.h"
@@ -49,10 +49,10 @@ namespace SlimDX
 			Result DrawGlyphRun(float baselineOriginX, float baselineOriginY, MeasuringMode measuringMode, GlyphRun^ glyphRun, RenderingParameters^ renderingParameters, Color4 color, [Out] System::Drawing::Rectangle% blackBoxBounds);
 			Result Resize(int width, int height);
 
-			property Matrix3x2 Transform
+			property SlimDX::Direct2D::Matrix3x2 Transform
 			{
-				Matrix3x2 get();
-				void set(Matrix3x2 value);
+				SlimDX::Direct2D::Matrix3x2 get();
+				void set(SlimDX::Direct2D::Matrix3x2 value);
 			}
 
 			property float PixelsPerDip

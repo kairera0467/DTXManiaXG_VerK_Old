@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -79,23 +79,12 @@ namespace SlimDX
 			/// <summary>
 			/// Maps the texture, providing CPU access to its contents.
 			/// </summary>
-			/// <param name="mipSlice">A zero-based index into an array of subtextures; 0 indicates the first, most detailed subtexture (or mipmap level).</param>
+			/// <param name="subresource">The subresource to map.</param>
 			/// <param name="mode">The IO operations to enable on the CPU.</param>
 			/// <param name="flags">Flags indicating how the CPU should respond when the GPU is busy.</param>
 			/// <returns>A data box containing the mapped data. This data stream is invalidated
 			/// when the buffer is unmapped.</returns>
-			DataBox^ Map( int mipSlice, MapMode mode, MapFlags flags );
-
-			/// <summary>
-			/// Maps the texture, providing CPU access to its contents.
-			/// </summary>
-			/// <param name="mipSlice">A zero-based index into an array of subtextures; 0 indicates the first, most detailed subtexture (or mipmap level).</param>
-			/// <param name="arraySlice">The zero-based index of the first texture to use (in an array of textures).</param>
-			/// <param name="mode">The IO operations to enable on the CPU.</param>
-			/// <param name="flags">Flags indicating how the CPU should respond when the GPU is busy.</param>
-			/// <returns>A data box containing the mapped data. This data stream is invalidated
-			/// when the buffer is unmapped.</returns>
-			DataBox^ Map( int mipSlice, int arraySlice, MapMode mode, MapFlags flags );
+			DataBox^ Map( int subresource, MapMode mode, MapFlags flags );
 			
 			/// <summary>
 			/// Unmaps the texture.

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -615,6 +615,12 @@ namespace SlimDX
 			/// Creates a device that supports the debug layer.
 			/// </summary>
 			Debug = D3D11_CREATE_DEVICE_DEBUG,
+
+			/// <summary>
+			/// Creates both a software (REF) and hardware (HAL) version of the device simultaneously, which allows an application to 
+			/// switch to a reference device to enable debugging.
+			/// </summary>
+			SwitchToRef = D3D11_CREATE_DEVICE_SWITCH_TO_REF,
 
 			/// <summary>
 			/// Prevents multiple threads from being created. This flag is not recommended for general use.
@@ -2055,12 +2061,7 @@ namespace SlimDX
 			/// <summary>
 			/// Allow data to be appended to the end of the buffer.
 			/// </summary>
-			AllowAppend = D3D11_BUFFER_UAV_FLAG_APPEND,
-
-			/// <summary>
-			/// Adds a counter to the unordered-access-view buffer.
-			/// </summary>
-			Counter = D3D11_BUFFER_UAV_FLAG_COUNTER
+			AllowAppend = D3D11_BUFFER_UAV_FLAG_APPEND
 		};
 
 		/// <summary>Identifies the type of the resource that will be viewed.</summary>

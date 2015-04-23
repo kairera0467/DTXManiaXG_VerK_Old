@@ -3670,8 +3670,8 @@ namespace DTXMania
             if (!pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
             {
                 pChip.bHit = true;
-                if( eJudgeResult <= E判定.Great || eJudgeResult == E判定.Auto )
-                    this.tボーナスチップのヒット処理( CDTXMania.ConfigIni, CDTXMania.DTX, pChip );
+                //if( eJudgeResult <= E判定.Great || eJudgeResult == E判定.Auto )
+                    //this.tボーナスチップのヒット処理( CDTXMania.ConfigIni, CDTXMania.DTX, pChip );
             }
 
         }
@@ -3681,48 +3681,49 @@ namespace DTXMania
 
             pChip.bHit = true;
             bボーナス = true;
-            if ((this.actCombo.n現在のコンボ数.Drums > 0) && configIni.b歓声を発声する )
+            //if ((this.actCombo.n現在のコンボ数.Drums > 0) && configIni.b歓声を発声する )
+            if( pChip.bボーナスチップ )
             {
                 switch (pChip.n整数値)
                 {
                     case 0x01: //LC
-                        this.actPad.Start(0, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(0, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x02: //HH
-                        this.actPad.Start(1, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(1, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x03: //LP
-                        this.actPad.Start(2, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(2, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x04: //SD
-                        this.actPad.Start(3, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(3, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x05: //HT
-                        this.actPad.Start(4, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(4, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x06: //BD
-                        this.actPad.Start(5, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(5, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x07: //LT
-                        this.actPad.Start(6, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(6, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x08: //FT
-                        this.actPad.Start(7, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(7, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x09: //CY
-                        this.actPad.Start(8, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(8, true, pChip.nチャンネル番号);
                         break;
 
                     case 0x0A: //RD
-                        this.actPad.Start(9, true, pChip.nチャンネル番号 - 0x4C);
+                        this.actPad.Start(9, true, pChip.nチャンネル番号);
                         break;
 
                     default:

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,11 +40,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	SwapChain::SwapChain()
-	{
-		// this is called by SwapChainEx
-	}
-
 	SwapChain::SwapChain( SlimDX::Direct3D9::Device^ device, SlimDX::Direct3D9::PresentParameters^ presentParameters )
 	{
 		if( device == nullptr )

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -53,14 +53,6 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
 			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ profile );
-
-			/// <summary>
-			/// Compiles the provided shader or effect source.
-			/// </summary>
-			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
 			/// <param name="shaderFlags">Shader compilation options.</param>
 			/// <param name="effectFlags">Effect compilation options.</param>
 			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
@@ -90,20 +82,6 @@ namespace SlimDX
 			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
 			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
-
-			/// <summary>
-			/// Compiles the provided shader or effect source.
-			/// </summary>
-			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <param name="shaderFlags">Shader compilation options.</param>
-			/// <param name="effectFlags">Effect compilation options.</param>
-			/// <param name="defines">A set of macros to define during compilation.</param>
-			/// <param name="include">An interface for handling include files.</param>
-			/// <param name="sourceName">The name of the source being compiled. This is only used for error reporting purposes.</param>
-			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, System::String^ sourceName, [Out] System::String^ %compilationErrors );
 
 			/// <summary>
 			/// Compiles the provided shader or effect source.
@@ -146,29 +124,6 @@ namespace SlimDX
 			/// <summary>
 			/// Compiles the provided shader or effect source.
 			/// </summary>
-			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
-			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <param name="shaderFlags">Shader compilation options.</param>
-			/// <param name="effectFlags">Effect compilation options.</param>
-			/// <param name="defines">A set of macros to define during compilation.</param>
-			/// <param name="include">An interface for handling include files.</param>
-			/// <param name="sourceName">The name of the source being compiled. This is only used for error reporting purposes.</param>
-			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, System::String^ sourceName, [Out] System::String^ %compilationErrors );
-
-			/// <summary>
-			/// Compiles the provided shader or effect source.
-			/// </summary>
-			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ profile );
-
-			/// <summary>
-			/// Compiles the provided shader or effect source.
-			/// </summary>
 			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
 			/// <param name="profile">The shader target or set of shader features to compile against.</param>
 			/// <param name="shaderFlags">Shader compilation options.</param>
@@ -200,20 +155,6 @@ namespace SlimDX
 			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
 			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
-
-			/// <summary>
-			/// Compiles the provided shader or effect source.
-			/// </summary>
-			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <param name="shaderFlags">Shader compilation options.</param>
-			/// <param name="effectFlags">Effect compilation options.</param>
-			/// <param name="defines">A set of macros to define during compilation.</param>
-			/// <param name="include">An interface for handling include files.</param>
-			/// <param name="sourceName">The name of the source being compiled. This is only used for error reporting purposes.</param>
-			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, System::String^ sourceName, [Out] System::String^ %compilationErrors );
 
 			/// <summary>
 			/// Compiles the provided shader or effect source.
@@ -252,29 +193,6 @@ namespace SlimDX
 			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
 			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
-
-			/// <summary>
-			/// Compiles the provided shader or effect source.
-			/// </summary>
-			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
-			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <param name="shaderFlags">Shader compilation options.</param>
-			/// <param name="effectFlags">Effect compilation options.</param>
-			/// <param name="defines">A set of macros to define during compilation.</param>
-			/// <param name="include">An interface for handling include files.</param>
-			/// <param name="sourceName">The name of the source being compiled. This is only used for error reporting purposes.</param>
-			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, System::String^ sourceName, [Out] System::String^ %compilationErrors );
-
-			/// <summary>
-			/// Compiles a shader or effect from a file on disk.
-			/// </summary>
-			/// <param name="fileName">The name of the source file to compile.</param>
-			/// <param name="profile">The shader target or set of shader features to compile against.</param>
-			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
-			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile );
 
 			/// <summary>
 			/// Compiles a shader or effect from a file on disk.
@@ -460,8 +378,8 @@ namespace SlimDX
 			/// Strips extraneous information from a compiled shader or effect.
 			/// </summary>
 			/// <param name="flags">Options specifying what to remove from the shader.</param>
-			/// <returns>The stripped shader bytecode.</returns>
-			ShaderBytecode^ Strip(StripFlags flags);
+			/// <returns>A string containing any errors that may have occurred.</returns>
+			System::String^ Strip(StripFlags flags);
 
 			/// <summary>
 			/// Returns the hash code for this instance.

@@ -495,12 +495,16 @@ namespace DTXMania
 			public E楽器パート e楽器パート = E楽器パート.UNKNOWN;
 			public int nチャンネル番号;
 			public STDGBVALUE<int> nバーからの距離dot;
+			public STDGBVALUE<int> nバーから終点チップまでの距離dot;
 			public int n整数値;
 			public int n整数値・内部番号;
 			public int n総移動時間;
 			public int n透明度 = 0xff;
 			public int n発声位置;
 			public int n発声時刻ms;
+            public int nノーツ終了位置;
+            public int nノーツ終了時刻ms;
+            public bool bボーナスチップ;
 			public int nLag;				// 2011.2.1 yyagi
 			public CDTX.CAVI rAVI;
             public CDTX.CDirectShow rDShow;
@@ -703,6 +707,8 @@ namespace DTXMania
 				this.db実数値 = 0.0;
 				this.n発声位置 = 0;
 				this.n発声時刻ms = 0;
+				this.nノーツ終了位置 = 0;
+				this.nノーツ終了時刻ms = 0;
 				this.nLag = -999;
 				this.bIsAutoPlayed = false;
                 this.b演奏終了後も再生が続くチップである = false;
@@ -714,6 +720,9 @@ namespace DTXMania
 				this.nバーからの距離dot.Drums = 0;
 				this.nバーからの距離dot.Guitar = 0;
 				this.nバーからの距離dot.Bass = 0;
+				this.nバーから終点チップまでの距離dot.Drums = 0;
+				this.nバーから終点チップまでの距離dot.Guitar = 0;
+				this.nバーから終点チップまでの距離dot.Bass = 0;
 				this.n総移動時間 = 0;
 			}
 			public override string ToString()
@@ -1333,6 +1342,8 @@ namespace DTXMania
 		public Dictionary<int, CBMPTEX> listBMPTEX;
 		public Dictionary<int, CBPM> listBPM;
 		public List<CChip> listChip;
+		public List<CChip> listGChip;
+		public List<CChip> listBChip;
 		public Dictionary<int, CWAV> listWAV;
 		public string MIDIFILE;
 		public bool MIDINOTE;
@@ -2766,6 +2777,61 @@ namespace DTXMania
             }
         }
 
+        public void t指定された発声位置と同じ位置の指定したチップにボーナスフラグを立てる( int n発声位置, int nレーン )
+        {
+            //ボーナスチップの内部番号→チャンネル番号変換
+            //初期値は0で問題無いはず。
+            int n変換後のレーン番号 = 0;
+            int n変換後のレーン番号2 = 0; //HH、LP用
+            switch( nレーン )
+            {
+                case 1:
+                    n変換後のレーン番号 = 0x1A;
+                    break;
+                case 2:
+                    n変換後のレーン番号 = 0x11;
+                    n変換後のレーン番号2 = 0x18;
+                    break;
+                case 3:
+                    n変換後のレーン番号 = 0x1B;
+                    n変換後のレーン番号2 = 0x1C;
+                    break;
+                case 4:
+                    n変換後のレーン番号 = 0x12;
+                    break;
+                case 5:
+                    n変換後のレーン番号 = 0x14;
+                    break;
+                case 6:
+                    n変換後のレーン番号 = 0x13;
+                    break;
+                case 7:
+                    n変換後のレーン番号 = 0x15;
+                    break;
+                case 8:
+                    n変換後のレーン番号 = 0x17;
+                    break;
+                case 9:
+                    n変換後のレーン番号 = 0x16;
+                    break;
+                case 10:
+                    n変換後のレーン番号 = 0x19;
+                    break;
+            }
+
+            //本当はfor文検索はよろしくないんだろうけど、僕の技術ではこれが限界なんだ...
+            for( int i = 0; i < this.listChip.Count; i++ )
+            {
+                if( this.listChip[ i ].n発声位置 == n発声位置 )
+                {
+                    if( this.listChip[ i ].nチャンネル番号 == n変換後のレーン番号 || this.listChip[ i ].nチャンネル番号 == n変換後のレーン番号2 )
+                    {
+                        this.listChip[ i ].bボーナスチップ = true;
+                    }
+                }
+            }
+            
+        }
 
 
 		public void tWave再生位置自動補正()
@@ -3594,9 +3660,9 @@ namespace DTXMania
 						#endregion
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );
 						//Trace.TraceInformation( "C2 [拍線・小節線表示指定]:  {0}", span.ToString() );
-						//timeBeginLoad = DateTime.Now;
-						#region [ 発声時刻の計算 ]
-						double bpm = 120.0;
+                        //timeBeginLoad = DateTime.Now;
+                        #region [ 発声時刻の計算 ]
+                        double bpm = 120.0;
 						double dbBarLength = 1.0;
 						int n発声位置 = 0;
 						int ms = 0;
@@ -3604,6 +3670,7 @@ namespace DTXMania
 						foreach ( CChip chip in this.listChip )
 						{
 							chip.n発声時刻ms = ms + ( (int) ( ( ( 0x271 * ( chip.n発声位置 - n発声位置 ) ) * dbBarLength ) / bpm ) );
+							chip.nノーツ終了時刻ms = ms + ( (int) ( ( ( 0x271 * ( chip.nノーツ終了位置 - n発声位置 ) ) * dbBarLength ) / bpm ) );
 							if ( ( ( this.e種別 == E種別.BMS ) || ( this.e種別 == E種別.BME ) ) && ( ( dbBarLength != 1.0 ) && ( ( chip.n発声位置 / 384 ) != nBar ) ) )
 							{
 								n発声位置 = chip.n発声位置;
@@ -3681,6 +3748,12 @@ namespace DTXMania
 									}
 								default:
 									{
+                                        if( chip.nチャンネル番号 >= 0x4C && chip.nチャンネル番号 <= 0x4F )
+                                        {
+                                            #region [ TEST ]
+                                            this.t指定された発声位置と同じ位置の指定したチップにボーナスフラグを立てる( chip.n発声位置, chip.n整数値 );
+                                            #endregion
+                                        }
 										continue;
 									}
 							}
@@ -3696,6 +3769,7 @@ namespace DTXMania
 							foreach ( CChip chip in this.listChip )
 							{
 								chip.n発声時刻ms = (int) ( ( (double) chip.n発声時刻ms ) / this.db再生速度 );
+								chip.nノーツ終了時刻ms = (int) ( ( (double) chip.nノーツ終了時刻ms ) / this.db再生速度 );
 							}
 						}
 						#endregion
@@ -4189,6 +4263,8 @@ namespace DTXMania
 			this.listAVI = new Dictionary<int, CAVI>();
             this.listDS = new Dictionary<int, CDirectShow>();
 			this.listChip = new List<CChip>();
+			this.listGChip = new List<CChip>();
+			this.listBChip = new List<CChip>();
 			base.On活性化();
 		}
 		public override void On非活性化()
@@ -4257,6 +4333,14 @@ namespace DTXMania
 			{
 				this.listChip.Clear();
 			}
+			if( this.listGChip != null )
+			{
+				this.listGChip.Clear();
+			}
+			if( this.listBChip != null )
+			{
+				this.listBChip.Clear();
+			}
 			base.On非活性化();
 		}
 		public override void OnManagedリソースの作成()
@@ -4304,6 +4388,302 @@ namespace DTXMania
 			}
 		}
 
+        public void tギターレーンのチップパターンを取得する( int nチャンネル番号, ref bool bR, ref bool bG, ref bool bB, ref bool bY, ref bool bP )
+        {
+            switch (nチャンネル番号)
+            {
+                case 0x21:
+                    bB = true;
+                    break;
+                case 0x22:
+                    bG = true;
+                    break;
+                case 0x23:
+                    bG = true;
+                    bB = true;
+                    break;
+                case 0x24:
+                    bR = true;
+                    break;
+                case 0x25:
+                    bR = true;
+                    bB = true;
+                    break;
+                case 0x26:
+                    bR = true;
+                    bG = true;
+                    break;
+                case 0x27:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    break;
+                case 0x93:
+                    bY = true;
+                    break;
+                case 0x94:
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0x95:
+                    bG = true;
+                    bY = true;
+                    break;
+                case 0x96:
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0x97:
+                    bR = true;
+                    bY = true;
+                    break;
+                case 0x98:
+                    bR = true;
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0x99:
+                    bR = true;
+                    bG = true;
+                    bY = true;
+                    break;
+                case 0x9A:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0x9B:
+                    bP = true;
+                    break;
+                case 0x9C:
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0x9D:
+                    bG = true;
+                    bP = true;
+                    break;
+                case 0x9E:
+                    bG = true;
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0x9F:
+                    bR = true;
+                    bP = true;
+                    break;
+
+                case 0xA1:
+                    bB = true;
+                    break;
+                case 0xA2:
+                    bG = true;
+                    break;
+                case 0xA3:
+                    bG = true;
+                    bB = true;
+                    break;
+                case 0xA4:
+                    bR = true;
+                    break;
+                case 0xA5:
+                    bR = true;
+                    bB = true;
+                    break;
+                case 0xA6:
+                    bR = true;
+                    bG = true;
+                    break;
+                case 0xA7:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    break;
+
+                case 0xA9:
+                    bR = true;
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0xAA:
+                    bR = true;
+                    bG = true;
+                    bP = true;
+                    break;
+                case 0xAB:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0xAC:
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xAD:
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xAE:
+                    bG = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xAF:
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+
+                case 0xC5:
+                    bY = true;
+                    break;
+                case 0xC6:
+                    bB = true;
+                    bY = true;
+                    break;
+
+                case 0xC8:
+                    bG = true;
+                    bY = true;
+                    break;
+                case 0xC9:
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0xCA:
+                    bR = true;
+                    bY = true;
+                    break;
+                case 0xCB:
+                    bR = true;
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0xCC:
+                    bR = true;
+                    bG = true;
+                    bY = true;
+                    break;
+                case 0xCD:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    break;
+                case 0xCE:
+                    bP = true;
+                    break;
+                case 0xCF:
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0xD0:
+                    bR = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xD1:
+                    bR = true;
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xD2:
+                    bR = true;
+                    bG = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xD3:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+
+
+                case 0xDA:
+                    bG = true;
+                    bP = true;
+                    break;
+                case 0xDB:
+                    bG = true;
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0xDC:
+                    bR = true;
+                    bP = true;
+                    break;
+                case 0xDD:
+                    bR = true;
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0xDE:
+                    bR = true;
+                    bG = true;
+                    bP = true;
+                    break;
+                case 0xDF:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    bP = true;
+                    break;
+                case 0xE1:
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE2:
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE3:
+                    bG = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE4:
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE5:
+                    bR = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE6:
+                    bR = true;
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE7:
+                    bR = true;
+                    bG = true;
+                    bY = true;
+                    bP = true;
+                    break;
+                case 0xE8:
+                    bR = true;
+                    bG = true;
+                    bB = true;
+                    bY = true;
+                    bP = true;
+                    break;
+            }
+        }
 
 		// その他
 		
@@ -6561,7 +6941,7 @@ namespace DTXMania
 				{
 					chip.e楽器パート = E楽器パート.DRUMS;
 				}
-                if ( ( nチャンネル番号 >= 0x20 && nチャンネル番号 <= 0x27 ) || ( nチャンネル番号 >= 0x93 && nチャンネル番号 <= 0x9F ) || ( nチャンネル番号 >= 0xA9 && nチャンネル番号 <= 0xAF ) || ( nチャンネル番号 >= 0xD0 && nチャンネル番号 <= 0xD3 ) )
+                if ( ( nチャンネル番号 >= 0x20 && nチャンネル番号 <= 0x27 ) || ( nチャンネル番号 >= 0x93 && nチャンネル番号 <= 0x9F ) || ( nチャンネル番号 >= 0xA9 && nチャンネル番号 <= 0xAF ) || ( nチャンネル番号 >= 0xD0 && nチャンネル番号 <= 0xD3 ) || ( nチャンネル番号 == 0x2A ) )
                 {
                     chip.e楽器パート = E楽器パート.GUITAR;
                 }
@@ -6610,6 +6990,28 @@ namespace DTXMania
 				// チップを配置。
 
 				this.listChip.Add( chip );
+
+                //2015.04.15 kairera0467　ギターベースの場合、chipをギターベースのリストにも入れる。
+                //ここでロングノーツのための発生位置を設定したりする。
+                if( chip.e楽器パート == E楽器パート.GUITAR )
+                {
+                    if( chip.nチャンネル番号 == 0x2A )
+                    {
+                        if( listGChip.Count >= 1 )
+                        {
+                            //Countが0か1だとエラーを起こす。
+                            listGChip[listGChip.Count - 1].nノーツ終了位置 = chip.n発声位置;
+                        }
+                    }
+                    else
+                    {
+                        this.listGChip.Add( chip );
+                    }
+                }
+                else if( chip.e楽器パート == E楽器パート.BASS )
+                {
+
+                }
 			}
 			return true;
 		}

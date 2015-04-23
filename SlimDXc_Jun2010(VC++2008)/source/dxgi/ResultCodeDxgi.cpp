@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -116,11 +116,6 @@ namespace DXGI
 	Result ResultCode::Nonexclusive::get()
 	{
 		return Result( DXGI_ERROR_NONEXCLUSIVE );
-	}
-
-	Result ResultCode::NotCurrentlyAvailable::get()
-	{
-		return Result( DXGI_ERROR_NOT_CURRENTLY_AVAILABLE );
 	}
 
 	Result ResultCode::Success::get()

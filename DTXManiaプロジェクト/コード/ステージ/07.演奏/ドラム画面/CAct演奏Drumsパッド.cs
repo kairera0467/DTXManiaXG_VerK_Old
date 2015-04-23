@@ -121,38 +121,38 @@ namespace DTXMania
                     {
                         this.stボーナス[j].b使用中 = true;
                         this.stボーナス[j].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
-                        this.stボーナス[n代入番号].nLane = nLane;
-                        this.stボーナス[n代入番号].x = -100;//this.nボーナスX座標A[ this.stボーナス[ n代入番号 ].nLane ];
+                        this.stボーナス[i].nLane = nLane;
+                        this.stボーナス[i].x = -100;//this.nボーナスX座標A[ this.stボーナス[ n代入番号 ].nLane ];
 
-                        if( this.stボーナス[ n代入番号 ].nLane != -1 )
+                        if( this.stボーナス[ i ].nLane != -1 )
                         {
                             if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.A)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標A[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標A[this.stボーナス[i].nLane];
                                 else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標A_改[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標A_改[this.stボーナス[i].nLane];
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.B)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標B[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標B[this.stボーナス[i].nLane];
                                 else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標B_改[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標B_改[this.stボーナス[i].nLane];
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標C[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標C[this.stボーナス[i].nLane];
                                 else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標C_改[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標C_改[this.stボーナス[i].nLane];
                             }
                             else if (CDTXMania.ConfigIni.eLaneType.Drums == Eタイプ.C)
                             {
                                 if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RCRD)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標D[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標D[this.stボーナス[i].nLane];
                                 else if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
-                                    this.stボーナス[n代入番号].x = this.nボーナスX座標D_改[this.stボーナス[n代入番号].nLane];
+                                    this.stボーナス[i].x = this.nボーナスX座標D_改[this.stボーナス[i].nLane];
                             }
                         }
 

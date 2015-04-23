@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,6 @@
 * THE SOFTWARE.
 */
 #pragma once
-
-using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -67,10 +65,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the vertex shader currently assigned to the device.
 			/// </summary>
-			/// <param name="count">The number of class instances to retrieve.</param>
-			/// <param name="classInstances">An array that will contain any class instances currently active.</param>
+			/// <param name="classInstances">An array that will be used to contain any class instances currently active.</param>
 			/// <returns>The vertex shader (null if no shader is assigned).</returns>
-			VertexShader^ Get( int count, [Out] array<ClassInstance^>^ %classInstances );
+			VertexShader^ Get( array<ClassInstance^>^ classInstances );
 
 			/// <summary>
 			/// Gets the constant buffers used by the vertex shader stage.

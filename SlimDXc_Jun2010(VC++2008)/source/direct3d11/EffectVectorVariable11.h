@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -71,26 +71,6 @@ namespace SlimDX
 			/// <param name="value">The floating point vector value to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( Vector4 value );
-
-			/// <summary>
-			/// Sets the value of the vector variable.
-			/// </summary>
-			/// <param name="x">The X-component of the vector.</param>
-			/// <param name="y">The Y-component of the vector.</param>
-			/// <param name="z">The Z-component of the vector.</param>
-			/// <param name="w">The W-component of the vector.</param>
-			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result Set( int x, int y, int z, int w );
-
-			/// <summary>
-			/// Sets the value of the vector variable.
-			/// </summary>
-			/// <param name="x">The X-component of the vector.</param>
-			/// <param name="y">The Y-component of the vector.</param>
-			/// <param name="z">The Z-component of the vector.</param>
-			/// <param name="w">The W-component of the vector.</param>
-			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result Set( bool x, bool y, bool z, bool w );
 
 			/// <summary>
 			/// Sets the value of the vector variable.

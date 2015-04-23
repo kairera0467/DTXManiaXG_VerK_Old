@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,6 @@ namespace SlimDX
 			COMOBJECT(ID3D11Device, Device);
 
 		private:
-			DeviceContext^ immediateContext;
 			void Initialize( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, const D3D_FEATURE_LEVEL *featureLevels, int count );
 
 		public:
@@ -58,14 +57,6 @@ namespace SlimDX
 			/// The maximum number of multisample quality levels supported.
 			/// </summary>
 			literal int MultisampleCountMaximum = D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT;
-
-			/// <summary>
-			/// Gets the parent factory associated with the device.
-			/// </summary>
-			property SlimDX::DXGI::Factory^ Factory
-			{
-				SlimDX::DXGI::Factory^ get();
-			}
 
 			/// <summary>
 			/// Gets the flags used to create the device.
@@ -105,16 +96,6 @@ namespace SlimDX
 			property bool IsReferenceDevice
 			{
 				bool get();
-			}
-
-			/// <summary>
-			/// Gets or sets a friendly debug name for the object. This name is used in debug messages
-			/// as well as in the PIX object browser.
-			/// </summary>
-			property System::String^ DebugName
-			{
-				System::String^ get();
-				void set(System::String^ value);
 			}
 
 			/// <summary>
@@ -216,6 +197,12 @@ namespace SlimDX
 			/// <returns>The new reference to the shared resource.</returns>
 			generic<typename T> where T : ComObject
 			T OpenSharedResource(System::IntPtr handle);
+
+			/// <summary>
+			/// Switches between the reference rasterizer and a hardware accelerated device.
+			/// </summary>
+			/// <param name="useReferenceRasterizer"><c>true</c> to use the reference rasterizer; <c>false</c> to switch back to a hardware accelerated device.</param>
+			void SwitchToReference(bool useReferenceRasterizer);
 
 			/// <summary>
 			/// Gets the highest supported hardware feature level of the primary adapter.

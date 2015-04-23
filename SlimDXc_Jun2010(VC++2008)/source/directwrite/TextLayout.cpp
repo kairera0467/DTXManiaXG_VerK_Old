@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
 #include "OverhangMetrics.h"
 #include "TextLayout.h"
 #include "TextMetrics.h"
-#include "ITextRenderer.h"
+#include "TextRenderer.h"
 
 const IID IID_IDWriteTextLayout = __uuidof(IDWriteTextLayout);
 
@@ -68,14 +68,9 @@ namespace DirectWrite
 		return minWidth;
 	}
 
-	Result TextLayout::Draw(IntPtr clientDrawingContext, ITextRenderer ^renderer, float originX, float originY)
+	Result TextLayout::Draw(IntPtr clientDrawingContext, TextRenderer ^renderer, float originX, float originY)
 	{
-		ITextRendererShim *shim = ITextRendererShim::CreateInstance(renderer);
-
-		HRESULT hr = InternalPointer->Draw(static_cast<void *>(clientDrawingContext), shim, originX, originY);
-		shim->Release();
-
-		return RECORD_DW(hr);
+		return RECORD_DW(InternalPointer->Draw(static_cast<void *>(clientDrawingContext), renderer->InternalPointer, originX, originY));
 	}
 
 	HitTestMetrics TextLayout::HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside )

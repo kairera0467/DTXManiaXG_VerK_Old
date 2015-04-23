@@ -30,7 +30,9 @@ namespace DTXCreator.譜面
             BsB,
             BsY,
             BsP,
-            BsW
+            BsW,
+            GtLong,
+            BsLong
         }
 		public enum ELaneType
 		{

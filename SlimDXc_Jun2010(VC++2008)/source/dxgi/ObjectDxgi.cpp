@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -27,21 +27,16 @@ using namespace System;
 using namespace System::Reflection;
 using namespace System::Globalization;
 
-namespace SlimDX
-{
-namespace DXGI
-{
+namespace SlimDX { namespace DXGI {
 	generic<typename T> where T : DXGIObject, ref class
-	T DXGIObject::GetParent()
-	{
+	T DXGIObject::GetParent() {
 		IUnknown* unknown = 0;
 		GUID guid = Utilities::GetNativeGuidForType(T::typeid);
 		RECORD_DXGI(InternalPointer->GetParent(guid, reinterpret_cast<void**>(&unknown)));
 		if(Result::Last.IsFailure)
 			return T();
 
-		if(ObjectTable::Find(IntPtr(unknown)) != nullptr)
-		{
+		if(ObjectTable::Find(IntPtr(unknown)) != nullptr) {
 			unknown->Release();
 			return safe_cast<T>(ObjectTable::Find(IntPtr(unknown)));
 		}
@@ -57,32 +52,4 @@ namespace DXGI
 		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointerReflectionThunk", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
 		return result;
 	}
-
-	System::String^ DXGIObject::DebugName::get()
-	{
-		char name[1024];
-		UINT size = sizeof(name) - 1;
-
-		if (FAILED(InternalPointer->GetPrivateData(WKPDID_D3DDebugObjectName, &size, name)))
-			return "";
-
-		name[size] = 0;
-		return gcnew System::String(name);
-	}
-	
-	void DXGIObject::DebugName::set(System::String^ value)
-	{
-		if (!String::IsNullOrEmpty(value))
-		{
-			array<Byte>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(value);
-			pin_ptr<Byte> pinnedValue = &valueBytes[0];
-
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, value->Length, pinnedValue);
-		}
-		else
-		{
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0);
-		}
-	}
-}
-}
+}}

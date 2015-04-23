@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -66,11 +66,20 @@ namespace SlimDX
 			int fry;
 			int frz;
 			array<int>^ fsliders;
+			int dwOfs;											// 2011.12.3 yyagi; to get POVS/HAT updaate
 
 			JoystickState( const DIJOYSTATE2 &joystate );
 
 		public:
 			JoystickState();
+
+			/// <summary>
+			/// タイムスタンプを返す。
+			/// </summary>
+			property unsigned int TimeStamp
+			{
+				unsigned int get() { return timeStamp; }
+			}
 
 			/// <summary>
 			/// Gets the state of each point-of-view controller on the joystick.
@@ -118,14 +127,6 @@ namespace SlimDX
 			array<bool>^ GetButtons()
 			{
 				return pressedButtons;
-			}
-
-			/// <summary>
-			/// Gets the time stamp.
-			/// </summary>
-			property unsigned int TimeStamp
-			{
-				unsigned int get() { return timeStamp; }
 			}
 
 			/// <summary>
@@ -318,6 +319,11 @@ namespace SlimDX
 			property int TorqueZ
 			{
 				int get() { return frz; }
+			}
+
+			property int JoystickDeviceType
+			{
+				int get() { return dwOfs; }
 			}
 
 			bool IsPressed( int button ) { return pressedButtons[button]; }
