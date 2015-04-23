@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,8 @@ namespace SlimDX
 		public:
 			PerformanceData() { }
 
-			property System::Int64 AudioCyclesSinceLastQuery;
-			property System::Int64 TotalCyclesSinceLastQuery;
+			property long AudioCyclesSinceLastQuery;
+			property long TotalCyclesSinceLastQuery;
 			property int MinimumCyclesPerQuantum;
 			property int MaximumCyclesPerQuantum;
 			property int MemoryUsageInBytes;

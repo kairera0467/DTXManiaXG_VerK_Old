@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -49,11 +49,6 @@ namespace RawInput
 
 	void Device::RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
-		RegisterDevice(usagePage, usageId, flags, target, true);
-	}
-
-	void Device::RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags, IntPtr target, bool addThreadFilter )
-	{
 		RAWINPUTDEVICE device;
 		device.usUsagePage = static_cast<USHORT>( usagePage );
 		device.usUsage = static_cast<USHORT>( usageId );
@@ -63,16 +58,11 @@ namespace RawInput
 		if( RegisterRawInputDevices( &device, 1, sizeof(RAWINPUTDEVICE) ) <= 0 )
 			throw gcnew Win32Exception();
 
-		if( filter == nullptr && addThreadFilter )
+		if( filter == nullptr )
 		{
 			filter = gcnew InputMessageFilter();
 			Application::AddMessageFilter( filter );
 		}
-	}
-
-	void Device::HandleMessage( IntPtr message )
-	{
-		OnWmInput(reinterpret_cast<HRAWINPUT>(message.ToPointer()));
 	}
 
 	void Device::OnWmInput( HRAWINPUT handle )

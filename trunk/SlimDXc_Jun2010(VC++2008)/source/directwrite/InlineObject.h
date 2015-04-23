@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		interface struct ITextRenderer;
+		ref class TextRenderer;
 		interface struct IClientDrawingEffect;
 
 		public ref class InlineObject : public ComObject
@@ -40,7 +40,7 @@ namespace SlimDX
 			COMOBJECT(IDWriteInlineObject, InlineObject);
 
 		public:
-			Result Draw(System::IntPtr clientDrawingContext, ITextRenderer ^renderer,
+			Result Draw(System::IntPtr clientDrawingContext, TextRenderer ^renderer,
 				float originX, float originY, bool isSideways, bool isRightToLeft,
 				IClientDrawingEffect ^clientDrawingEffect);
 			Result GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after);

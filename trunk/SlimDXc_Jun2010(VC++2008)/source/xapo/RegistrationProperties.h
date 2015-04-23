@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ namespace SlimDX
 		public value class RegistrationProperties : System::IEquatable<RegistrationProperties>
 		{
 		internal:
-			XAPO_REGISTRATION_PROPERTIES* ToUnmanaged();
+			XAPO_REGISTRATION_PROPERTIES ToUnmanaged();
 			static RegistrationProperties FromUnmanaged( const XAPO_REGISTRATION_PROPERTIES &properties );
 
 		public:

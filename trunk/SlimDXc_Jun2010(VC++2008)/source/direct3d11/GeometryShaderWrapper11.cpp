@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -70,20 +70,26 @@ namespace Direct3D11
 
 	GeometryShader^ GeometryShaderWrapper::Get()
 	{
-		array<ClassInstance^>^ dummy;
-		return Get( 0, dummy );
+		return Get( nullptr );
 	}
 
-	GeometryShader^ GeometryShaderWrapper::Get( int count, array<ClassInstance^>^ %classInstances )
+	GeometryShader^ GeometryShaderWrapper::Get( array<ClassInstance^>^ classInstances )
 	{
 		ID3D11GeometryShader *shader = NULL;
-		stack_array<ID3D11ClassInstance*> instances = stackalloc(ID3D11ClassInstance*, count);
-		UINT uCount = count;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
 
-		deviceContext->GSGetShader( &shader, &instances[0], &uCount );
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+		}
 
-		classInstances = gcnew array<ClassInstance^>(uCount);
-		for( UINT i = 0; i < uCount; i++ )
+		deviceContext->GSGetShader( &shader, instancePtr, &count );
+
+		for( UINT i = 0; i < count; i++ )
 			classInstances[i] = ClassInstance::FromPointer( instances[i] );
 
 		return shader == NULL ? nullptr : GeometryShader::FromPointer( shader );

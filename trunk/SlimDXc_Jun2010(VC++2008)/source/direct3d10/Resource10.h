@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -91,8 +91,7 @@ namespace SlimDX
 			{
 				ResourceDimension get();
 			}
-			
-			static Result SaveTextureToFile( Resource^ resource, ImageFileFormat destinationFormat, System::String^ destinationFile );
+
 			static Result LoadTextureFromTexture(Resource^ source, Resource^ destination, TextureLoadInformation loadInformation);
 			static Result FilterTexture(Resource^ texture, int sourceLevel, FilterFlags mipFilter);
 			

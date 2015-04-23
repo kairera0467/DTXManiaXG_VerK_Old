@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@
 #include "ComObject.h"
 
 using namespace System;
-using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Globalization;
 using namespace System::Collections::ObjectModel;
@@ -89,18 +88,6 @@ namespace SlimDX
 		}
 	}
 
-	void ObjectTable::RegisterParent( ComObject^ object, ComObject^ owner )
-	{
-		if( owner != nullptr ) 
-		{
-			if( !m_Ancillary->ContainsKey( owner->ComPointer ) )
-			{
-				m_Ancillary->Add( owner->ComPointer, gcnew List<ComObject^>() );
-			}
-			m_Ancillary[owner->ComPointer]->Add( object );
-		}
-	}
-
 	void ObjectTable::Add( ComObject^ object, ComObject^ owner )
 	{
 		if( object == nullptr )
@@ -116,7 +103,15 @@ namespace SlimDX
 		try
 		{
 			m_Table->Add( object->ComPointer, object );
-			RegisterParent( object, owner );
+			
+			if( owner != nullptr ) 
+			{
+				if( !m_Ancillary->ContainsKey( owner->ComPointer ) )
+				{
+					m_Ancillary->Add( owner->ComPointer, gcnew List<ComObject^>() );
+				}
+				m_Ancillary[owner->ComPointer]->Add( object );
+			}
 			
 			ObjectAdded( nullptr, gcnew ObjectTableEventArgs( object ) );
 		}
@@ -167,14 +162,14 @@ namespace SlimDX
 
 	String^ ObjectTable::ReportLeaks()
 	{
-		StringBuilder^ output = gcnew StringBuilder();
+		String^ output = "";
 
 		Monitor::Enter( m_SyncObject );
 		try
 		{
 			for each( KeyValuePair<IntPtr, ComObject^> pair in m_Table )
 			{
-				output->AppendFormat( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
+				output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
 
 				if( pair.Value->CreationSource == nullptr )
 					continue;
@@ -189,7 +184,7 @@ namespace SlimDX
 						continue;
 					}
 
-					output->AppendFormat( CultureInfo::InvariantCulture, "\t{0}({1},{2}): {3}\n",
+					output += String::Format( CultureInfo::InvariantCulture, "\t{0}({1},{2}): {3}\n",
 						frame->GetFileName(),
 						frame->GetFileLineNumber(),
 						frame->GetFileColumnNumber(),
@@ -197,13 +192,13 @@ namespace SlimDX
 				}
 			}
 
-			output->AppendFormat( CultureInfo::InvariantCulture, "Total of {0} objects still alive.\n", m_Table->Count );
+			output += String::Format( CultureInfo::InvariantCulture, "Total of {0} objects still alive.\n", m_Table->Count );
 		}
 		finally
 		{
 			Monitor::Exit( m_SyncObject );
 		}
-		return output->ToString();
+		return output;
 	}
 
 	ReadOnlyCollection<ComObject^>^ ObjectTable::Objects::get()

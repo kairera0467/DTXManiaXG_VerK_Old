@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -103,8 +103,6 @@ namespace SlimDX
 			/// <param name="mipLevels">The total number of mip levels.</param>
 			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
 			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
-
-			static Result SaveTextureToFile( DeviceContext^ context, Resource^ resource, ImageFileFormat destinationFormat, System::String^ desintationFile );
 
 			/// <summary>
 			/// Loads a texture from a texture.

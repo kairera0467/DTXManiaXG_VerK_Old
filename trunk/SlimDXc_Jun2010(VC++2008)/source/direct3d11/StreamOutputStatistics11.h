@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -40,12 +40,12 @@ namespace SlimDX
 			/// <summary>
 			/// Number of primitives (that is, points, lines, and triangles) written to the stream-output buffers.
 			/// </summary>
-			property System::Int64 PrimitivesWritten;
+			property long PrimitivesWritten;
 
 			/// <summary>
 			/// Number of primitives that would have been written to the stream-output buffers if there had been enough space for them all.
 			/// </summary>
-			property System::Int64 StorageNeeded;
+			property long StorageNeeded;
 		
 			/// <summary>
 			/// Tests for equality between two StreamOutputStatisticss.

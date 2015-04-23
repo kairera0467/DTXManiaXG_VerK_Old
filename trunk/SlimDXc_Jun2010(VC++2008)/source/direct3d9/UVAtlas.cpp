@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -103,13 +103,14 @@ namespace Direct3D9
 
 		if( callback != nullptr )
 		{
-			GCHandle handle = GCHandle::Alloc(callback);
+			GCHandle handle = GCHandle::Alloc( callback, GCHandleType::Pinned );
 
 			hr = D3DXUVAtlasCreate( mesh->InternalPointer, maxChartCount, maxStretch, width, height, gutter, textureIndex,
-				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, GCHandle::ToIntPtr(handle).ToPointer(), 
+				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, safe_cast<IntPtr>( handle ).ToPointer(), 
 				static_cast<DWORD>( quality ), &meshOut, &facePartitioning, &vertexRemap, &maxStretchOut, &numChartsOut );
 
-			handle.Free();
+			if( handle.IsAllocated )
+				handle.Free();
 		}
 		else
 		{
@@ -174,13 +175,14 @@ namespace Direct3D9
 
 		if( callback != nullptr )
 		{
-			GCHandle handle = GCHandle::Alloc(callback);
+			GCHandle handle = GCHandle::Alloc( callback, GCHandleType::Pinned );
 
 			hr = D3DXUVAtlasPartition( mesh->InternalPointer, maxChartCount, maxStretch, textureIndex,
-				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, GCHandle::ToIntPtr(handle).ToPointer(), 
+				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, safe_cast<IntPtr>( handle ).ToPointer(), 
 				static_cast<DWORD>( quality ), &meshOut, &facePartitioning, &vertexRemap, &partitionResult, &maxStretchOut, &numChartsOut );
 
-			handle.Free();
+			if( handle.IsAllocated )
+				handle.Free();
 		}
 		else
 		{
@@ -214,13 +216,14 @@ namespace Direct3D9
 
 		if( callback != nullptr )
 		{
-			GCHandle handle = GCHandle::Alloc(callback);
+			GCHandle handle = GCHandle::Alloc( callback, GCHandleType::Pinned );
 
 			hr = D3DXUVAtlasPack( mesh->InternalPointer, width, height, gutter, textureIndex,
-				reinterpret_cast<DWORD*>( pinnedAdj ), NativeAtlasCallback, callbackFrequency, GCHandle::ToIntPtr(handle).ToPointer(), 
+				reinterpret_cast<DWORD*>( pinnedAdj ), NativeAtlasCallback, callbackFrequency, safe_cast<IntPtr>( handle ).ToPointer(), 
 				static_cast<DWORD>( quality ), facePartitioning->GetD3DBuffer() );
 
-			handle.Free();
+			if( handle.IsAllocated )
+				handle.Free();
 		}
 		else
 		{

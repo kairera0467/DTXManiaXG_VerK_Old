@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -53,8 +53,9 @@ namespace Direct3D10
 		if(RECORD_D3D10(hr).IsFailure)
 			return nullptr;
 
-		ComObject^ other = ObjectTable::Find(IntPtr(unknown));
-		return gcnew SlimDX::DXGI::Surface(unknown, other, other == nullptr);
+		SlimDX::DXGI::Surface^ result = gcnew SlimDX::DXGI::Surface(unknown, nullptr);
+
+		return result;
 	}
 
 	generic< class T > where T : Resource, ref class
@@ -135,13 +136,13 @@ namespace Direct3D10
 		switch(type)
 		{
 		case D3D10_RESOURCE_DIMENSION_BUFFER:
-			return Buffer::FromPointer( reinterpret_cast<ID3D10Buffer*>(pointer) );
+			return Buffer::FromPointer( pointer );
 		case D3D10_RESOURCE_DIMENSION_TEXTURE1D:
-			return Texture1D::FromPointer( reinterpret_cast<ID3D10Texture1D*>(pointer) );
+			return Texture1D::FromPointer( pointer );
 		case D3D10_RESOURCE_DIMENSION_TEXTURE2D:
-			return Texture2D::FromPointer( reinterpret_cast<ID3D10Texture2D*>(pointer) );
+			return Texture2D::FromPointer( pointer );
 		case D3D10_RESOURCE_DIMENSION_TEXTURE3D:
-			return Texture3D::FromPointer( reinterpret_cast<ID3D10Texture3D*>(pointer) );
+			return Texture3D::FromPointer( pointer );
 
 		default:
 			throw gcnew InvalidCastException( "Unrecognized resource type." );
@@ -163,12 +164,6 @@ namespace Direct3D10
 		D3D10_RESOURCE_DIMENSION type;
 		InternalPointer->GetType(&type);
 		return static_cast<ResourceDimension>( type );
-	}
-
-	Result Resource::SaveTextureToFile( Resource^ resource, ImageFileFormat destinationFormat, String^ destinationFile )
-	{
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( destinationFile );
-		return RECORD_D3D10( D3DX10SaveTextureToFile( resource->InternalPointer, static_cast<D3DX10_IMAGE_FILE_FORMAT>( destinationFormat ), pinnedName ) );
 	}
 
 	Result Resource::LoadTextureFromTexture(Resource^ source, Resource^ destination, TextureLoadInformation loadInformation)

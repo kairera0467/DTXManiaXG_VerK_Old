@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +99,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return SlimDX::Direct3D9::IndexBuffer::FromPointer( ib, this );
+		return SlimDX::Direct3D9::IndexBuffer::FromPointer( ib );
 	}
 
 	VertexBuffer^ BaseMesh::VertexBuffer::get()
@@ -110,7 +110,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return SlimDX::Direct3D9::VertexBuffer::FromPointer( vb, this );
+		return SlimDX::Direct3D9::VertexBuffer::FromPointer( vb );
 	}
 
 	array<VertexElement>^ BaseMesh::GetDeclaration()

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,6 @@
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
-using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -59,12 +58,8 @@ namespace Direct3D9
 
 	AnimationController::~AnimationController()
 	{
-		if (outputs != nullptr)
-		{
-			for each (GCHandle handle in outputs)
-				handle.Free();
-			outputs = nullptr;
-		}
+		for each (GCHandle handle in outputs)
+			handle.Free();
 	}
 
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
@@ -89,35 +84,19 @@ namespace Direct3D9
 		return gcnew AnimationController( pointer, nullptr );
 	}
 
-	// helper method to create a generic animation set
-	generic<typename T> where T : AnimationSet
-	T CreateAnimationSet(LPD3DXANIMATIONSET set)
-	{
-		Type^ type = T::typeid;
-		if (type == AnimationSet::typeid)
-			type = InternalAnimationSet::typeid;
-
-		MethodInfo^ method = type->GetMethod("FromPointer", BindingFlags::Public | BindingFlags::Static);
-		T result = safe_cast<T>(method->Invoke(nullptr, gcnew array<Object^> { IntPtr(set) }));
-
-		return result;
-	}
-
-	generic<typename T> where T : AnimationSet
-	T AnimationController::GetAnimationSet( int index )
+	AnimationSet^ AnimationController::GetAnimationSet( int index )
 	{
 		LPD3DXANIMATIONSET set;
 
 		HRESULT hr = InternalPointer->GetAnimationSet( index, &set );
 
 		if( RECORD_D3D9( hr ).IsFailure )
-			return T();
+			return nullptr;
 
-		return CreateAnimationSet<T>(set);
+		return InternalAnimationSet::FromPointer( set, this );
 	}
 
-	generic<typename T> where T : AnimationSet
-	T AnimationController::GetAnimationSet( String^ name )
+	AnimationSet^ AnimationController::GetAnimationSet( String^ name )
 	{
 		LPD3DXANIMATIONSET set;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
@@ -126,9 +105,9 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetAnimationSetByName( reinterpret_cast<LPCSTR>( pinnedName ), &set );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
-			return T();
+			return nullptr;
 
-		return CreateAnimationSet<T>(set);
+		return InternalAnimationSet::FromPointer( set, this );
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )

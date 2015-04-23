@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -268,9 +268,6 @@ namespace SlimDX
 			Uniform = DWRITE_LINE_SPACING_METHOD_UNIFORM 
 		};
 
-		/// <summary>
-		/// Specifies the measuring method used for text layout.
-		/// </summary>
 		public enum class MeasuringMode : System::Int32
 		{
 			Natural = DWRITE_MEASURING_MODE_NATURAL,
@@ -357,6 +354,16 @@ namespace SlimDX
 		{
 			Aliased1x1 = DWRITE_TEXTURE_ALIASED_1x1,
 			ClearType3x1 = DWRITE_TEXTURE_CLEARTYPE_3x1
+		};
+
+		/// <summary>
+		/// Specifies the measuring method used for text layout.
+		/// </summary>
+		public enum class MeasuringMethod : System::Int32
+		{
+			Natural = DWRITE_MEASURING_MODE_NATURAL,
+			GdiClassic = DWRITE_MEASURING_MODE_GDI_CLASSIC,
+			GdiNatural = DWRITE_MEASURING_MODE_GDI_NATURAL,
 		};
 
 		/// <summary>

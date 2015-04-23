@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -119,7 +119,7 @@ namespace SlimDX
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::Reset</unmanaged>
-			Result Reset( ... array<PresentParameters^>^ presentParameters );
+			Result Reset( PresentParameters^ presentParameters );
 
 			/// <summary>
 			/// Clears one or more surfaces such as a render target, a stencil buffer, and a depth buffer.

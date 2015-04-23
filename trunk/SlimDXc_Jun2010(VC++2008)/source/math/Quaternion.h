@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -92,12 +92,12 @@ namespace SlimDX
 		property bool IsIdentity { bool get(); }
 
 		/// <summary>
-		/// Gets the axis components of the quaternion. The quaternion must be normalized.
+		/// Gets the axis components of the quaternion.
 		/// </summary>
 		property Vector3 Axis { Vector3 get(); }
 
 		/// <summary>
-		/// Gets the angle of the quaternion. The quaternion must be normalized.
+		/// Gets the angle of the quaternion.
 		/// </summary>
 		property float Angle { float get(); }
 

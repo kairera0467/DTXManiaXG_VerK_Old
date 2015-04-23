@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -41,33 +41,6 @@ namespace Direct3D10
 		ID3D10Device* device = 0;
 		InternalPointer->GetDevice( &device );
 		return SlimDX::Direct3D10::Device::FromPointer( device );
-	}
-
-	System::String^ DeviceChild::DebugName::get()
-	{
-		char name[1024];
-		UINT size = sizeof(name) - 1;
-
-		if (FAILED(InternalPointer->GetPrivateData(WKPDID_D3DDebugObjectName, &size, name)))
-			return "";
-
-		name[size] = 0;
-		return gcnew System::String(name);
-	}
-	
-	void DeviceChild::DebugName::set(System::String^ value)
-	{
-		if (!String::IsNullOrEmpty(value))
-		{
-			array<Byte>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(value);
-			pin_ptr<Byte> pinnedValue = &valueBytes[0];
-
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, value->Length, pinnedValue);
-		}
-		else
-		{
-			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0);
-		}
 	}
 }
 }

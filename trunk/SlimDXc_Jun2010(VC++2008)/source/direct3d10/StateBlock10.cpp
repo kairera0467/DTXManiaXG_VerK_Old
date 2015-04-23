@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -35,13 +35,13 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	StateBlock::StateBlock( SlimDX::Direct3D10::Device^ device, StateBlockMask^ mask )
+	StateBlock::StateBlock( SlimDX::Direct3D10::Device^ device, StateBlockMask mask )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 	
 		ID3D10StateBlock* stateBlock = 0;
-		D3D10_STATE_BLOCK_MASK nativeMask = mask->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nativeMask = mask.CreateNativeVersion();
 		
 		if( RECORD_D3D10( D3D10CreateStateBlock( device->InternalPointer, &nativeMask, &stateBlock ) ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );

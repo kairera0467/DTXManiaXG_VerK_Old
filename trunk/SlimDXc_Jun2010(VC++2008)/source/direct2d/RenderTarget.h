@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,11 @@
 
 #include "../dxgi/SurfaceDxgi.h"
 #include "../math/Color4.h"
-#include "../math/Matrix3x2.h"
 #include "../directwrite/TextLayout.h"
 #include "../directwrite/RenderingParameters.h"
 
 #include "ResourceD2D.h"
+#include "Matrix3x2.h"
 #include "StrokeStyle.h"
 #include "Brush.h"
 #include "PixelFormat.h"
@@ -115,8 +115,8 @@ namespace SlimDX
 #undef DrawText
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush );
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush );
-			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMode measuringMethod );
-			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMode measuringMethod );
+			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMethod measuringMethod );
+			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::MeasuringMethod measuringMethod );
 #pragma pop_macro("DrawText")
 
 			void DrawBitmap( Bitmap^ bitmap );

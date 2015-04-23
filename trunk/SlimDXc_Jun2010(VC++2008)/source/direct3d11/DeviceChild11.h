@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -51,16 +51,6 @@ namespace SlimDX
 			property SlimDX::Direct3D11::Device^ Device
 			{
 				SlimDX::Direct3D11::Device^ get();
-			}
-
-			/// <summary>
-			/// Gets or sets a friendly debug name for the object. This name is used in debug messages
-			/// as well as in the PIX object browser.
-			/// </summary>
-			property System::String^ DebugName
-			{
-				System::String^ get();
-				void set(System::String^ value);
 			}
 		};
 	}

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 #include "DirectWriteException.h"
 #include "IClientDrawingEffect.h"
 #include "InlineObject.h"
-#include "ITextRenderer.h"
+#include "TextRenderer.h"
 
 const IID IID_IDWriteInlineObject = __uuidof(IDWriteInlineObject);
 
@@ -34,20 +34,15 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	Result InlineObject::Draw(IntPtr clientDrawingContext, ITextRenderer ^renderer,
+	Result InlineObject::Draw(IntPtr clientDrawingContext, TextRenderer ^renderer,
 		float originX, float originY, bool isSideways, bool isRightToLeft,
 		IClientDrawingEffect ^clientDrawingEffect)
 	{
 		IUnknown *nativeClientDrawingEffect = clientDrawingEffect == nullptr ? 0 : reinterpret_cast<IUnknown*>(clientDrawingEffect->ComPointer.ToPointer());
 		void *nativeClientDrawingContext = static_cast<void *>(clientDrawingContext);
-
-		ITextRendererShim *shim = ITextRendererShim::CreateInstance(renderer);
-
-		HRESULT hr = InternalPointer->Draw(nativeClientDrawingContext, shim,
-			originX, originY, isSideways ? TRUE : FALSE, isRightToLeft ? TRUE : FALSE, nativeClientDrawingEffect);
-
-		shim->Release();
-		return RECORD_DW(hr);
+		return RECORD_DW(InternalPointer->Draw(nativeClientDrawingContext, renderer->InternalPointer,
+			originX, originY, isSideways ? TRUE : FALSE, isRightToLeft ? TRUE : FALSE,
+			nativeClientDrawingEffect));
 	}
 
 	Result InlineObject::GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after)

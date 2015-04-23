@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -64,18 +64,6 @@ namespace Direct3D11
 	Result EffectVectorVariable::Set( Color4 value )
 	{
 		return RECORD_D3D11( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
-	}
-
-	Result EffectVectorVariable::Set( int x, int y, int z, int w )
-	{
-		int data[] = {x, y, z, w};
-		return RECORD_D3D11(m_Pointer->SetIntVector(data));
-	}
-
-	Result EffectVectorVariable::Set( bool x, bool y, bool z, bool w )
-	{
-		BOOL data[] = {x, y, z, w};
-		return RECORD_D3D11(m_Pointer->SetBoolVector(data));
 	}
 	
 	Result EffectVectorVariable::Set( array<Vector4>^ values )

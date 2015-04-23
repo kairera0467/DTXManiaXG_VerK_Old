@@ -1,5 +1,6 @@
+#include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +20,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <vcclr.h>
 
 #include "../DataStream.h"
 #include "../ComObject.h"
@@ -28,7 +31,6 @@
 #include "../math/Vector2.h"
 
 #include "Device.h"
-#include "DeviceEx.h"
 #include "D3DX.h"
 #include "VolumeTexture.h"
 
@@ -171,7 +173,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory )
 	{
-		return VolumeTexture::FromMemory( device, memory, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
+		return VolumeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
 	}
 
 	VolumeTexture^ VolumeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
@@ -256,7 +258,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream )
 	{
-		return VolumeTexture::FromStream( device, stream, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
+		return VolumeTexture::FromStream( device, stream, Usage::None, Pool::Managed );
 	}
 
 	VolumeTexture^ VolumeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int width, int height, int depth,
@@ -336,7 +338,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName )
 	{
-		return VolumeTexture::FromFile( device, fileName, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
+		return VolumeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
 	}
 
 	DataBox^ VolumeTexture::LockBox( int level, Box box, LockFlags flags )

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Gets the index of the signed-in gamer associated with the device. Can be a value in the range 0ñ3.
+			/// Gets the index of the signed-in gamer associated with the device. Can be a value in the range 0ÅE.
 			/// </summary>
 			property XInput::UserIndex UserIndex
 			{

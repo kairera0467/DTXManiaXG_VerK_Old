@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2010 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -56,13 +56,9 @@ namespace DirectWrite
 
 	Result BitmapRenderTarget::DrawGlyphRun(float baselineOriginX, float baselineOriginY, MeasuringMode measuringMode, GlyphRun^ glyphRun, RenderingParameters^ renderingParameters, Color4 color, [Out] System::Drawing::Rectangle% blackBoxBounds)
 	{
-		int indexCount = (glyphRun->GlyphIndices != nullptr) ? glyphRun->GlyphIndices->Length : 0;
-		int advanceCount = (glyphRun->GlyphAdvances != nullptr) ? glyphRun->GlyphAdvances->Length : 0;
-		int offsetCount = (glyphRun->GlyphOffsets != nullptr) ? glyphRun->GlyphOffsets->Length : 0;
-
-		stack_array<UINT16> indices = stackalloc(UINT16, indexCount);
-		stack_array<FLOAT> advances = stackalloc(FLOAT, advanceCount);
-		stack_array<DWRITE_GLYPH_OFFSET> offsets = stackalloc(DWRITE_GLYPH_OFFSET, offsetCount);
+		stack_array<UINT16> indices = stackalloc(UINT16, (glyphRun->GlyphIndices != nullptr) ? glyphRun->GlyphIndices->Length : 0);
+		stack_array<FLOAT> advances = stackalloc(FLOAT, (glyphRun->GlyphAdvances != nullptr) ? glyphRun->GlyphAdvances->Length : 0);
+		stack_array<DWRITE_GLYPH_OFFSET> offsets = stackalloc(DWRITE_GLYPH_OFFSET, (glyphRun->GlyphOffsets != nullptr) ? glyphRun->GlyphOffsets->Length : 0);
 
 		DWRITE_GLYPH_RUN glyphs = glyphRun->ToUnmanaged(indices, advances, offsets);
 		Color c = color.ToColor();

@@ -151,30 +151,6 @@ namespace DTXMania
             }
 		}
 
-        public void Start()
-		{
-			if(( this.txBall != null ) )
-			{
-				for( int i = 0; i < 8; i++ )
-				{
-					for( int j = 0; j < 8; j++ )
-					{
-						if( !this.st泡[ j ].b使用中 )
-						{
-							this.st泡[ j ].b使用中 = true;
-							int n回転初期値 = CDTXMania.Random.Next( 360 );
-							double num7 = 0.9 + ( ( (double) CDTXMania.Random.Next( 40 ) ) / 100.0 );
-							this.st泡[ j ].ct進行 = new CCounter( 0, 200, 3, CDTXMania.Timer );
-                            this.st泡[ j ].fX = CDTXMania.Random.Next(1280);
-                            this.st泡[ j ].fY = CDTXMania.Random.Next(720);
-							//this.st泡[ j ].f半径 = (float) ( 0.5 + ( ( (double) CDTXMania.Random.Next( 30 ) ) / 100.0 ) );
-							break;
-						}
-					}
-				}
-			}
-		}
-
 		// CStage 実装
 
         public void tラベル名からステータスパネルを決定する(string strラベル名)
@@ -223,9 +199,6 @@ namespace DTXMania
                     this.ds背景動画 = CDTXMania.t失敗してもスキップ可能なDirectShowを生成する(CSkin.Path(@"Graphics\6_background.mp4"), CDTXMania.app.WindowHandle, true);
                 }
 
-                //this.ct進行タイマー = new CCounter((int)0, (int)4000, (int)1, CDTXMania.Timer);
-                //this.counter = new CCounter((int) 0, (int)100, (int)5, CDTXMania.Timer );
-
 				this.nBGM再生開始時刻 = -1L;
 				this.nBGMの総再生時間ms = 0;
 				if( this.sd読み込み音 != null )
@@ -246,12 +219,6 @@ namespace DTXMania
 
                 this.strアーティスト名 = cdtx.ARTIST;
 
-                for (int i = 0; i < 8; i++)
-                {
-                    this.st泡[i] = new ST泡();
-                    this.st泡[i].b使用中 = false;
-                    this.st泡[i].ct進行 = new CCounter();
-                }
 				if( ( ( cdtx.STAGEFILE != null ) && ( cdtx.STAGEFILE.Length > 0 ) ) && ( File.Exists( cdtx.strフォルダ名 + cdtx.STAGEFILE ) && !CDTXMania.ConfigIni.bストイックモード ) )
 				{
 					this.strSTAGEFILE = cdtx.strフォルダ名 + cdtx.STAGEFILE;
@@ -290,10 +257,6 @@ namespace DTXMania
 		{
 			Trace.TraceInformation( "曲読み込みステージを非活性化します。" );
 			Trace.Indent();
-            for (int i = 0; i < 8; i++)
-            {
-                this.st泡[i].ct進行 = null;
-            }
             this.bSTAGEFILEが存在する = false;
             CDTXMania.t安全にDisposeする(ref this.ds背景動画);
             this.ct進行タイマー = null;
@@ -328,7 +291,6 @@ namespace DTXMania
                 this.txヘッダーパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\\6_header panel.png"), false);
                 this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"),false);
                 this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
-                this.txBall = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Ball.png"));
                 this.tx黒タイル64x64 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile black 64x64.png" ), false );
 
                 if( !CDTXMania.DTXVmode.Enabled )
@@ -409,7 +371,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txDrumspeed);
                 CDTXMania.tテクスチャの解放( ref this.txLevel);
                 CDTXMania.tテクスチャの解放( ref this.txシンボル );
-                CDTXMania.tテクスチャの解放( ref this.txBall );
                 CDTXMania.tテクスチャの解放( ref this.tx黒タイル64x64 );
                 CDTXMania.tテクスチャの解放( ref this.txカスタム曲名テクスチャ );
                 CDTXMania.tテクスチャの解放( ref this.txカスタムアーティスト名テクスチャ );
@@ -949,20 +910,6 @@ namespace DTXMania
             public char ch;
             public Point pt;
         }
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ST泡
-        {
-            public bool b使用中;
-            public CCounter ct進行;
-            public int n前回のValue;
-            public float fX;
-            public float fY;
-            public float f加速度X;
-            public float f加速度Y;
-            public float f加速度の加速度X;
-            public float f加速度の加速度Y;
-            public float f半径;
-        }
 //		private CActFIFOBlack actFI;
 		private CActFIFOBlackStart actFO;
 
@@ -993,7 +940,6 @@ namespace DTXMania
 
         private CTexture txカスタム曲名テクスチャ;
         private CTexture txカスタムアーティスト名テクスチャ;
-        private ST泡[] st泡 = new ST泡[8];
         private CDirectShow ds背景動画;
 
         private CCounter ct進行タイマー;
@@ -1006,7 +952,6 @@ namespace DTXMania
         private int nCurrentRISKY;
 //		private CTexture txFilename;
         private CTexture txLevel;
-        private CTexture txBall;
 
         private CTexture tx黒タイル64x64;
 
