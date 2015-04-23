@@ -3280,7 +3280,9 @@ namespace DTXMania
                 }
 
 				int indexSevenLanes = this.nチャンネル0Atoレーン07[ pChip.nチャンネル番号 - 0x11 ];
-				if ( ( configIni.bAutoPlay[ indexSevenLanes ] && !pChip.bHit ) && ( pChip.nバーからの距離dot.Drums < 0 ) )
+
+
+				if ( ( pChip.nチャンネル番号 == 0x1C ? ( configIni.bAutoPlay.LBD && !pChip.bHit ) : ( configIni.bAutoPlay[ indexSevenLanes ] && !pChip.bHit ) ) && ( pChip.nバーからの距離dot.Drums < 0 ) )
 				{
 					pChip.bHit = true;
 					this.actLaneFlushD.Start( (Eレーン) indexSevenLanes, ( (float) CInput管理.n通常音量 ) / 127f );
