@@ -10,20 +10,45 @@ namespace DTXMania
 	internal class CAct演奏判定文字列共通 : CActivity
 	{
 		// プロパティ
-
-		protected STSTATUS[] st状態 = new STSTATUS[ 12 ];
+        public int iP_A;
+        public int iP_B;
+		protected STSTATUS[] st状態 = new STSTATUS[ 15 ];
 		[StructLayout( LayoutKind.Sequential )]
 		protected struct STSTATUS
 		{
-			public CCounter ct進行;
-			public E判定 judge;
-			public float fX方向拡大率;
-			public float fY方向拡大率;
-			public int n相対X座標;
-			public int n相対Y座標;
-			public int n透明度;
-			public int nLag;								// #25370 2011.2.1 yyagi
+            public CCounter ct進行;
+            public E判定 judge;
+            public float fZ軸回転度_棒;
+            public float fX方向拡大率_棒;
+            public float fY方向拡大率_棒;
+            public int n相対X座標_棒;
+            public int n相対Y座標_棒;
+
+
+            public float fZ軸回転度;
+            public float fX方向拡大率;
+            public float fY方向拡大率;
+            public int n相対X座標;
+            public int n相対Y座標;
+
+            public float fX方向拡大率B;
+            public float fY方向拡大率B;
+            public int n相対X座標B;
+            public int n相対Y座標B;
+            public int n透明度B;
+
+            public int n透明度;
+            public int nLag;								// #25370 2011.2.1 yyagi
+            public int nRect;
 		}
+
+        [StructLayout(LayoutKind.Sequential)]
+        protected struct STレーンサイズ
+        {
+            public int x;
+            public int w;
+        }
+        protected STレーンサイズ[] stレーンサイズ;
 
 		protected readonly ST判定文字列[] st判定文字列;
 		[StructLayout( LayoutKind.Sequential )]
@@ -54,6 +79,8 @@ namespace DTXMania
 
 		public CAct演奏判定文字列共通()
 		{
+            this.iP_A = 390;
+            this.iP_B = 0x248;
 			this.st判定文字列 = new ST判定文字列[ 7 ];
 			Rectangle[] r = new Rectangle[] {
 				new Rectangle( 0, 0,    0x80, 0x2a ),		// Perfect
@@ -85,19 +112,55 @@ namespace DTXMania
 
 		public virtual void Start( int nLane, E判定 judge, int lag )
 		{
-			if( ( nLane < 0 ) || ( nLane > 11 ) )
+			if( ( nLane < 0 ) || ( nLane > 14 ) )
 			{
-				throw new IndexOutOfRangeException( "有効範囲は 0～11 です。" );
+				throw new IndexOutOfRangeException( "有効範囲は 0～14 です。" );
 			}
-			if( ( ( nLane >= 8 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != E判定文字表示位置.表示OFF ) ) && ( ( ( nLane != 10 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != E判定文字表示位置.表示OFF ) ) && ( ( nLane != 11 ) || ( ( (E判定文字表示位置) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != E判定文字表示位置.表示OFF ) ) ) )
+			if( ( ( nLane >= 10 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Drums ) != Eタイプ.C ) ) && ( ( ( nLane != 13 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) != Eタイプ.D ) ) && ( ( nLane != 14 ) || ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) != Eタイプ.D ) ) ) )
 			{
-				this.st状態[ nLane ].ct進行 = new CCounter( 0, 300, 1, CDTXMania.Timer );
+                if (CDTXMania.ConfigIni.nJudgeAnimeType != 0)
+                {
+                    //2015.04.18 kairera0467 各種値が0だとそのままフリーズするので対策。
+                    int nFrameEnd = 0;
+                    int nInterval = 0;
+                    if( CDTXMania.ConfigIni.nJudgeFrames < 1 )
+                    {
+                        nFrameEnd = 1;
+                        nInterval = 20;
+                    }
+                    else
+                    {
+                        nFrameEnd = CDTXMania.ConfigIni.nJudgeFrames - 1;
+                        nInterval = CDTXMania.ConfigIni.nJudgeInterval;
+                    }
+
+
+                    this.st状態[ nLane ].ct進行 = new CCounter( 0, nFrameEnd, nInterval, CDTXMania.Timer );
+                }
+                else
+                {
+                    this.st状態[nLane].ct進行 = new CCounter( 0, 300, 1, CDTXMania.Timer );
+                }
 				this.st状態[ nLane ].judge = judge;
 				this.st状態[ nLane ].fX方向拡大率 = 1f;
 				this.st状態[ nLane ].fY方向拡大率 = 1f;
+                this.st状態[ nLane ].fZ軸回転度 = 0f;
 				this.st状態[ nLane ].n相対X座標 = 0;
 				this.st状態[ nLane ].n相対Y座標 = 0;
-				this.st状態[ nLane ].n透明度 = 0xff;
+                this.st状態[ nLane ].n透明度 = 0xff;
+
+				this.st状態[ nLane ].fX方向拡大率B = 1f;
+				this.st状態[ nLane ].fY方向拡大率B = 1f;
+				this.st状態[ nLane ].n相対X座標B = 0;
+				this.st状態[ nLane ].n相対Y座標B = 0;
+                this.st状態[ nLane ].n透明度B = 0xff;
+                
+                this.st状態[ nLane ].fZ軸回転度_棒 = 0f;
+                this.st状態[ nLane ].fX方向拡大率_棒 = 0;
+				this.st状態[ nLane ].fY方向拡大率_棒 = 0;
+				this.st状態[ nLane ].n相対X座標_棒 = 0;
+				this.st状態[ nLane ].n相対Y座標_棒 = 0;                
+
 				this.st状態[ nLane ].nLag = lag;
 			}
 		}
@@ -107,16 +170,60 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			for( int i = 0; i < 12; i++ )
+			for( int i = 0; i < 15; i++ )
 			{
 				this.st状態[ i ].ct進行 = new CCounter();
 			}
-			base.On活性化();
-			this.nShowLagType = CDTXMania.ConfigIni.nShowLagType;
+            this.stレーンサイズ = new STレーンサイズ[15];
+            STレーンサイズ stレーンサイズ = new STレーンサイズ();
+            //                                LC          HH          SD            BD          HT           LT           FT            CY          LP             RD
+            int[,] sizeXW = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 582, 60 }, { 528, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+            int[,] sizeXW_B = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 478, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+            int[,] sizeXW_C = new int[,] { { 290, 80 }, { 367, 46 }, { 470, 54 }, { 534, 60 }, { 590, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 419, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+            int[,] sizeXW_D = new int[,] { { 290, 80 }, { 367, 46 }, { 419, 54 }, { 582, 60 }, { 476, 46 }, { 645, 46 }, { 694, 46 }, { 748, 64 }, { 528, 46 }, { 815, 64 }, { 815, 80 }, { 507, 80 }, { 815, 80 }, { 815, 80 }, { 815, 80 }, };
+
+            for( int i = 0; i < 15; i++ )
+            {
+                this.stレーンサイズ[i] = new STレーンサイズ();
+                if( CDTXMania.ConfigIni.bDrums有効 )
+                {
+                    this.stレーンサイズ[i] = default(CAct演奏Drums判定文字列.STレーンサイズ);
+                    //switch (CDTXMania.ConfigIni.eLaneType.Drums)
+                    //{
+                    //    case Eタイプ.A:
+                            this.stレーンサイズ[i].x = sizeXW[i, 0];
+                            this.stレーンサイズ[i].w = sizeXW[i, 1];
+                            //goto IL_19F;
+                        //case Eタイプ.B:
+                        //    this.stレーンサイズ[i].x = sizeXW_B[i, 0];
+                        //    this.stレーンサイズ[i].w = sizeXW_B[i, 1];
+                        //    goto IL_19F;
+                        //case Eタイプ.C:
+                        //    this.stレーンサイズ[i].x = sizeXW_C[i, 0];
+                        //    this.stレーンサイズ[i].w = sizeXW_C[i, 1];
+                        //    goto IL_19F;
+                        //case Eタイプ.D:
+                        //    this.stレーンサイズ[i].x = sizeXW_D[i, 0];
+                        //    this.stレーンサイズ[i].w = sizeXW_D[i, 1];
+                        //    goto IL_19F;
+                    //}
+                //IL_19F:
+                //    if (i == 7 && CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                //    {
+                //        this.stレーンサイズ[i].x = sizeXW[9, 0] - 24;
+                //    }
+                //    if (i == 9 && CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                //    {
+                //        this.stレーンサイズ[i].x = sizeXW[7, 0] - 18;
+                //    }
+                }
+            }
+            base.On活性化();
+            this.nShowLagType = CDTXMania.ConfigIni.nShowLagType;
 		}
 		public override void On非活性化()
 		{
-			for( int i = 0; i < 12; i++ )
+			for( int i = 0; i < 15; i++ )
 			{
 				this.st状態[ i ].ct進行 = null;
 			}
@@ -126,9 +233,25 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx判定文字列[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 1.png" ) );
-				this.tx判定文字列[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 2.png" ) );
-				this.tx判定文字列[ 2 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 3.png" ) );
+                if(CDTXMania.ConfigIni.nJudgeAnimeType == 1)
+                {
+                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成Af(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    this.tx判定文字列[1] = CDTXMania.tテクスチャの生成Af(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    this.tx判定文字列[2] = CDTXMania.tテクスチャの生成Af(CSkin.Path(@"Graphics\7_judge strings.png"));
+                    //2013.8.2 kairera0467 CStage演奏画面共通側で読み込むテスト。
+                }
+                else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
+                {
+                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_judge strings.png" ) );
+                    this.tx判定文字列[1] = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_judge strings.png" ) );
+                    this.tx判定文字列[2] = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_judge strings.png" ) );
+                }
+                else
+                {
+                    this.tx判定文字列[0] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 1.png" ) );
+                    this.tx判定文字列[1] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 2.png" ) );
+                    this.tx判定文字列[2] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay judge strings 3.png" ) );
+                }
 				this.txlag数値 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenSelect level numbers.png" ) );
 				base.OnManagedリソースの作成();
 			}

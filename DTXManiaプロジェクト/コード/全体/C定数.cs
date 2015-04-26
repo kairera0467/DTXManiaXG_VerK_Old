@@ -29,6 +29,13 @@ namespace DTXMania
         左右ペダルのみ打ち分ける,
         どっちもBD
 	}
+    public enum Eタイプ
+    {
+        A,
+        B,
+        C,
+        D
+    }
 	public enum Eダークモード
 	{
 		OFF,

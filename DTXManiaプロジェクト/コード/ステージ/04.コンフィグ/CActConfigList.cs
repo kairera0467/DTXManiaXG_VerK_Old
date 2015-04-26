@@ -2615,7 +2615,7 @@ namespace DTXMania
 			else if ( this.iBassSudHid.n現在選択されている項目番号 == 5 ) CDTXMania.ConfigIni.eInvisible.Bass = EInvisible.FULL;	// "F-Invisible"
 			else                                                          CDTXMania.ConfigIni.eInvisible.Bass = EInvisible.OFF;
 			CDTXMania.ConfigIni.bReverse.Bass = this.iBassReverse.bON;
-			CDTXMania.ConfigIni.判定文字表示位置.Bass = (E判定文字表示位置) this.iBassPosition.n現在選択されている項目番号;
+			CDTXMania.ConfigIni.判定文字表示位置.Bass = (Eタイプ) this.iBassPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.eRandom.Bass = (Eランダムモード) this.iBassRandom.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bLight.Bass = this.iBassLight.bON;
 			CDTXMania.ConfigIni.bLeft.Bass = this.iBassLeft.bON;
@@ -2648,7 +2648,7 @@ namespace DTXMania
 			else if ( this.iDrumsSudHid.n現在選択されている項目番号 == 5 ) CDTXMania.ConfigIni.eInvisible.Drums = EInvisible.FULL;	// "F-Invisible"
 			else                                                           CDTXMania.ConfigIni.eInvisible.Drums = EInvisible.OFF;
 			CDTXMania.ConfigIni.bReverse.Drums = this.iDrumsReverse.bON;
-			CDTXMania.ConfigIni.判定文字表示位置.Drums = (E判定文字表示位置) this.iDrumsPosition.n現在選択されている項目番号;
+			CDTXMania.ConfigIni.判定文字表示位置.Drums = (Eタイプ) this.iDrumsPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
 			CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums = this.iDrumsInputAdjustTimeMs.n現在の値;		// #23580 2011.1.3 yyagi
 			CDTXMania.ConfigIni.bGraph.Drums = this.iDrumsGraph.bON;// #24074 2011.01.23 add ikanick
@@ -2687,7 +2687,7 @@ namespace DTXMania
 			else if ( this.iGuitarSudHid.n現在選択されている項目番号 == 5 ) CDTXMania.ConfigIni.eInvisible.Guitar = EInvisible.FULL;	// "F-Invisible"
 			else                                                            CDTXMania.ConfigIni.eInvisible.Guitar = EInvisible.OFF;
 			CDTXMania.ConfigIni.bReverse.Guitar = this.iGuitarReverse.bON;
-			CDTXMania.ConfigIni.判定文字表示位置.Guitar = (E判定文字表示位置) this.iGuitarPosition.n現在選択されている項目番号;
+			CDTXMania.ConfigIni.判定文字表示位置.Guitar = (Eタイプ) this.iGuitarPosition.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.eRandom.Guitar = (Eランダムモード) this.iGuitarRandom.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bLight.Guitar = this.iGuitarLight.bON;
 			CDTXMania.ConfigIni.bLeft.Guitar = this.iGuitarLeft.bON;
