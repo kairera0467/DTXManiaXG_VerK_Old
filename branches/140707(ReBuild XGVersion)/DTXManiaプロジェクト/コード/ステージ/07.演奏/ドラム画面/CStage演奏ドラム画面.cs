@@ -2228,7 +2228,7 @@ namespace DTXMania
 		protected override void t背景テクスチャの生成()
 		{
 			Rectangle bgrect = new Rectangle( 338, 57, 278, 355 );
-			string DefaultBgFilename = @"Graphics\ScreenPlayDrums background.jpg";
+			string DefaultBgFilename = @"Graphics\7_background.jpg";
 			string BgFilename = "";
 			if ( ( ( CDTXMania.DTX.BACKGROUND != null ) && ( CDTXMania.DTX.BACKGROUND.Length > 0 ) ) && !CDTXMania.ConfigIni.bストイックモード )
 			{

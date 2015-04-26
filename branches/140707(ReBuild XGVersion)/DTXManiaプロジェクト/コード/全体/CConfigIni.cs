@@ -508,11 +508,7 @@ namespace DTXMania
 		public string strDTXManiaのバージョン;
 		public string str曲データ検索パス;
 		public string str選曲リストフォント;
-        public bool bドラムコンボ表示;
-        public bool bギター1Pコンボ表示;
-        public bool bギター2Pコンボ表示;
-        public bool bBPMバーを表示する;
-		public STDGBVALUE<E判定文字表示位置> 判定文字表示位置;
+		public STDGBVALUE<Eタイプ> 判定文字表示位置; //2015.04.19 kairera0467 そのうちE判定文字表示位置に移行したい。
 //		public int nハイハット切り捨て下限Velocity;
 //		public int n切り捨て下限Velocity;			// #23857 2010.12.12 yyagi VelocityMin
 		public STDGBVALUE<int> nInputAdjustTimeMs;	// #23580 2011.1.3 yyagi タイミングアジャスト機能
@@ -524,7 +520,7 @@ namespace DTXMania
 		public bool bIsEnabledSystemMenu;			// #28200 2012.5.1 yyagi System Menuの使用可否切替
 		public string strSystemSkinSubfolderFullName;	// #28195 2012.5.2 yyagi Skin切替用 System/以下のサブフォルダ名
 		public bool bUseBoxDefSkin;						// #28195 2012.5.6 yyagi Skin切替用 box.defによるスキン変更機能を使用するか否か
-		public bool bConfigIniがないかDTXManiaのバージョンが異なる
+        public bool bConfigIniがないかDTXManiaのバージョンが異なる
 		{
 			get
 			{
@@ -1068,12 +1064,15 @@ namespace DTXMania
         #region[Display]
         //--------------------------
         public EClipDispType eClipDispType;
+        public bool bドラムコンボ表示;
+        public bool bギター1Pコンボ表示;
+        public bool bギター2Pコンボ表示;
+        public bool bBPMバーを表示する;
         #endregion
 
         #region[Position]
         public Eレーンタイプ eLaneType;
         public Eミラー eMirror;
-
         #endregion
         #region[System]
         public EGraphicType eGraphicType;
@@ -1089,6 +1088,12 @@ namespace DTXMania
         public int nRightCymbalX;
         public int nLeftCymbalY;
         public int nRightCymbalY;
+
+        public int nJudgeAnimeType;
+        public int nJudgeFrames;
+        public int nJudgeInterval;
+        public int nJudgeWidgh;
+        public int nJudgeHeight;
         //--------------------------
         #endregion
 
@@ -1162,7 +1167,7 @@ namespace DTXMania
 			this.bLight = new STDGBVALUE<bool>();
 			this.bLeft = new STDGBVALUE<bool>();
 			this.e判定位置 = new STDGBVALUE<E判定位置>();		// #33891 2014.6.26 yyagi
-			this.判定文字表示位置 = new STDGBVALUE<E判定文字表示位置>();
+			this.判定文字表示位置 = new STDGBVALUE<Eタイプ>();
 			this.n譜面スクロール速度 = new STDGBVALUE<int>();
 			this.nInputAdjustTimeMs = new STDGBVALUE<int>();	// #23580 2011.1.3 yyagi
 			this.nJudgeLinePosOffset = new STDGBVALUE<int>();	// #31602 2013.6.23 yyagi
@@ -1176,7 +1181,8 @@ namespace DTXMania
 				this.eRandom[ i ] = Eランダムモード.OFF;
 				this.bLight[ i ] = false;
 				this.bLeft[ i ] = false;
-				this.判定文字表示位置[ i ] = E判定文字表示位置.レーン上;
+				//this.判定文字表示位置[ i ] = E判定文字表示位置.レーン上;
+                this.判定文字表示位置[ i ] = Eタイプ.A;
 				this.n譜面スクロール速度[ i ] = 1;
 				this.nInputAdjustTimeMs[ i ] = 0;
 				this.nJudgeLinePosOffset[ i ] = 0;
@@ -1280,7 +1286,8 @@ namespace DTXMania
             this.nLeftCymbalY = 0;
             this.nRightCymbalX = 0;
             this.nRightCymbalY = 0;
-            
+
+            this.nJudgeAnimeType = 0;
             #endregion
             #endregion
         }
@@ -1851,7 +1858,26 @@ namespace DTXMania
 			sw.WriteLine( "DrumsGraph={0}", this.bGraph.Drums ? 1 : 0 );
 			sw.WriteLine();
 
-			sw.WriteLine( ";-------------------" );
+            #region[ 画像 ]
+            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+			sw.WriteLine( "JudgeAnimeType={0}", this.nJudgeAnimeType );
+			sw.WriteLine();
+            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+			sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
+			sw.WriteLine();
+            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+			sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
+			sw.WriteLine();
+            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+			sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
+			sw.WriteLine();
+            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+			sw.WriteLine( "JudgeHeight={0}", this.nJudgeHeight );
+			sw.WriteLine();
+
+            #endregion
+
+            sw.WriteLine( ";-------------------" );
 			#endregion
 
 			#region [ ViewerOption ]
@@ -2770,15 +2796,15 @@ namespace DTXMania
 											}
 											else if( str3.Equals( "DrumsPosition" ) )
 											{
-												this.判定文字表示位置.Drums = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.判定文字表示位置.Drums );
+												this.判定文字表示位置.Drums = (Eタイプ) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, (int) this.判定文字表示位置.Drums );
 											}
 											else if( str3.Equals( "GuitarPosition" ) )
 											{
-												this.判定文字表示位置.Guitar = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.判定文字表示位置.Guitar );
+												this.判定文字表示位置.Guitar = (Eタイプ) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.判定文字表示位置.Guitar );
 											}
 											else if( str3.Equals( "BassPosition" ) )
 											{
-												this.判定文字表示位置.Bass = (E判定文字表示位置) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.判定文字表示位置.Bass );
+												this.判定文字表示位置.Bass = (Eタイプ) C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int) this.判定文字表示位置.Bass );
 											}
 											else if( str3.Equals( "DrumsScrollSpeed" ) )
 											{
@@ -2819,8 +2845,31 @@ namespace DTXMania
 											else if ( str3.Equals( "DrumsTight" ) )				// #29500 2012.9.11 kairera0467
 											{
 												this.bTight = C変換.bONorOFF( str4[ 0 ] );
+                                            }
+                                            #region[ Ver.K追加(画像) ]
+											else if ( str3.Equals( "JudgeAnimeType" ) )					// #23559 2011.6.23  yyagi
+											{
+												this.nJudgeAnimeType = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, this.nJudgeAnimeType );
 											}
-											continue;
+											else if ( str3.Equals( "JudgeFrames" ) )					// #23559 2011.6.23  yyagi
+											{
+												this.nJudgeFrames = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 999, this.nJudgeFrames );
+											}
+											else if ( str3.Equals( "JudgeInterval" ) )					// #23559 2011.6.23  yyagi
+											{
+												this.nJudgeInterval = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 999, this.nJudgeInterval );
+											}
+											else if ( str3.Equals( "JudgeWidgh" ) )					// #23559 2011.6.23  yyagi
+											{
+												this.nJudgeWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 999, this.nJudgeWidgh );
+											}
+											else if ( str3.Equals( "JudgeHeight" ) )					// #23559 2011.6.23  yyagi
+											{
+												this.nJudgeHeight = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 999, this.nJudgeHeight );
+											}
+                                            #endregion
+
+                                            continue;
 										}
 									//-----------------------------
 									#endregion

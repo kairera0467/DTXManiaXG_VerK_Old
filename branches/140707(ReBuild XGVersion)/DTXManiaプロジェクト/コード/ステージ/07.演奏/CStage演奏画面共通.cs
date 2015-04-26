@@ -388,6 +388,15 @@ namespace DTXMania
 				this.t背景テクスチャの生成();
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
+                if( CDTXMania.ConfigIni.nJudgeAnimeType == 1 )
+                    this.tx判定画像anime = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_judge strings.png" ) );
+                else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
+                {
+                    this.tx判定画像anime = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime_2 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime_3 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                }
+
 
 				base.OnManagedリソースの作成();
 			}
@@ -397,7 +406,9 @@ namespace DTXMania
 			if ( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
-
+                CDTXMania.tテクスチャの解放( ref this.tx判定画像anime );
+                CDTXMania.tテクスチャの解放( ref this.tx判定画像anime_2 );
+                CDTXMania.tテクスチャの解放( ref this.tx判定画像anime_3 );
 				CDTXMania.tテクスチャの解放( ref this.txWailing枠 );
 				base.OnManagedリソースの解放();
 			}
@@ -660,6 +671,10 @@ namespace DTXMania
 		protected CTexture txWailing枠;
 		protected CTexture txチップ;
 		protected CTexture txヒットバー;
+
+        public CTextureAf tx判定画像anime;     //2013.8.2 kairera0467 アニメーションの場合はあらかじめこっちで読み込む。
+        public CTextureAf tx判定画像anime_2;   //2014.3.16 kairera0467 棒とかで必要になる。
+        public CTextureAf tx判定画像anime_3;
 
 		protected CTexture tx背景;
 
@@ -2479,9 +2494,9 @@ namespace DTXMania
 				CDTXMania.ConfigIni.eInvisible[ i ] = EInvisible.OFF;
 				CDTXMania.ConfigIni.eRandom[ i ] = Eランダムモード.OFF;
 				CDTXMania.ConfigIni.n表示可能な最小コンボ数[ i ] = 65535;
-				CDTXMania.ConfigIni.判定文字表示位置[ i ] = E判定文字表示位置.表示OFF;
-				// CDTXMania.ConfigIni.n譜面スクロール速度[ i ] = CDTXMania.ConfigIni.nViewerScrollSpeed[ i ];	// これだけはOn活性化()で行うこと。
-																												// そうしないと、演奏開始直後にスクロール速度が変化して見苦しい。
+				//CDTXMania.ConfigIni.判定文字表示位置[ i ] = E判定文字表示位置.表示OFF;
+                CDTXMania.ConfigIni.判定文字表示位置[ i ] = Eタイプ.A;
+				// CDTXMania.ConfigIni.n譜面スクロール速度[ i ] = CDTXMania.ConfigIni.nViewerScrollSpeed[ i ];	// これだけはOn活性化()で行うこと。																								// そうしないと、演奏開始直後にスクロール速度が変化して見苦しい。
 			}
 
 			CDTXMania.ConfigIni.eDark = Eダークモード.OFF;
