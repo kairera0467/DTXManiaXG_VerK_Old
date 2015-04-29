@@ -121,7 +121,7 @@ namespace DTXMania
                     {
                         this.stボーナス[j].b使用中 = true;
                         this.stボーナス[j].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
-                        this.stボーナス[i].nLane = nLane;
+                        this.stボーナス[j].nLane = nLane;
                         this.stボーナス[i].x = -100;//this.nボーナスX座標A[ this.stボーナス[ n代入番号 ].nLane ];
 
                         if( this.stボーナス[ i ].nLane != -1 )
