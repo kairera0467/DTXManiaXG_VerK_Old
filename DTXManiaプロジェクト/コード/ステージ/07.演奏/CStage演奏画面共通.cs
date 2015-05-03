@@ -2554,8 +2554,9 @@ namespace DTXMania
                         this.t進行描画・チップ・フィルイン(configIni, ref dTX, ref pChip);
                         break;
                     #endregion
-                    #region [ 54: 動画再生 ]
+                    #region [ 54, 5A: 動画再生 ]
                     case 0x54:	// 動画再生
+                    case 0x5A:
                         if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
                         {
                             pChip.bHit = true;
