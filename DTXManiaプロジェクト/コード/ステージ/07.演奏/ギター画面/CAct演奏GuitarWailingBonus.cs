@@ -9,6 +9,14 @@ namespace DTXMania
 	internal class CAct演奏GuitarWailingBonus : CAct演奏WailingBonus共通
 	{
 		// メソッド
+        private int posXGuitar = CDTXMania.ConfigIni.nWailingFireX.Guitar;
+        private int posXBass = CDTXMania.ConfigIni.nWailingFireX.Bass;
+        private int posY = CDTXMania.ConfigIni.nWailingFireY;
+        private int rectW = CDTXMania.ConfigIni.nWailingFireWidgh;
+        private int rectH = CDTXMania.ConfigIni.nWailingFireHeight;
+        private int frames = CDTXMania.ConfigIni.nWailingFireFrames;
+        private int interval = CDTXMania.ConfigIni.nWailingFireInterval;
+
 
 		public CAct演奏GuitarWailingBonus()
 		{
@@ -27,6 +35,7 @@ namespace DTXMania
 					if( ( this.ct進行用[ (int) part, i ] == null ) || this.ct進行用[ (int) part, i ].b停止中 )
 					{
 						this.ct進行用[ (int) part, i ] = new CCounter( 0, 300, 2, CDTXMania.Timer );
+                        this.ctWailing炎[ (int) part, i ] = new CCounter( 0, this.frames, this.interval, CDTXMania.Timer );
 						if( CDTXMania.ConfigIni.b歓声を発声する )
 						{
 							if( r歓声Chip != null )
@@ -54,6 +63,7 @@ namespace DTXMania
 				for( int j = 0; j < 4; j++ )
 				{
 					this.ct進行用[ i, j ] = null;
+                    this.ctWailing炎[ i, j  ] = null;
 				}
 			}
 			base.On活性化();
@@ -78,6 +88,19 @@ namespace DTXMania
 								this.ct進行用[ (int) e楽器パート, k ].t進行();
 							}
 						}
+
+                        if( ( this.ctWailing炎[ (int) e楽器パート, k ] != null ) && ( !this.ctWailing炎[ (int) e楽器パート, k ].b停止中 ) )
+                        {
+                            if( this.ctWailing炎[ (int) e楽器パート, k ].b終了値に達した )
+                            {
+                                this.ctWailing炎[ (int) e楽器パート, k ].t停止();
+                            }
+                            else
+                            {
+                                this.ctWailing炎[ (int) e楽器パート, k ].t進行();
+                            }
+                        }
+
 					}
 				}
 				for( int j = 0; j < 2; j++ )
@@ -87,8 +110,8 @@ namespace DTXMania
 					{
 						if( ( this.ct進行用[ (int) e楽器パート2, m ] != null ) && !this.ct進行用[ (int) e楽器パート2, m ].b停止中 )
 						{
-                            //XGではレーン自体の幅が40pxほど。
-							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 180 : 1050 ) + 0x71;
+                            //XGではWailingレーンの幅が42px
+							int x = ( ( e楽器パート2 == E楽器パート.GUITAR ) ? 160 : 1030 ) + 133;
 							int num6 = 0;
 							int num7 = 0;
 							int num8 = this.ct進行用[ (int) e楽器パート2, m ].n現在の値;
@@ -98,11 +121,11 @@ namespace DTXMania
 							}
 							else if( num8 < 150 )
 							{
-								num6 = (int) ( 120.0 + ( ( 150 - num8 ) * Math.Sin( ( Math.PI * ( ( num8 - 100 ) % 0x19 ) ) / 25.0 ) ) );
+								num6 = (int) ( 120.0 + ( ( 150 - num8 ) * Math.Sin( ( Math.PI * ( ( num8 - 100 ) % 25 ) ) / 25.0 ) ) );
 							}
 							else if( num8 < 200 )
 							{
-								num6 = 0x40;
+								num6 = 64;
 							}
 							else
 							{
@@ -110,9 +133,9 @@ namespace DTXMania
 							}
 							if( CDTXMania.ConfigIni.bReverse[ (int) e楽器パート2 ] )
 							{
-								num6 = ( 409 - num6 ) - 0xf4;
+								num6 = ( 670 - num6 ) - 244;
 							}
-							Rectangle rectangle = new Rectangle( 0, 0, 0x1a, 0x7a );
+							Rectangle rectangle = new Rectangle( 0, 0, 26, 122 );
 							if( ( 720 - num6 ) < rectangle.Bottom )
 							{
 								rectangle.Height = ( 720 - num6 ) - rectangle.Top;
@@ -128,22 +151,48 @@ namespace DTXMania
 								this.txWailingBonus.t2D描画( CDTXMania.app.Device, x, num6 + num7, rectangle );
 							}
 							num7 = 0;
-							rectangle = new Rectangle( 0x1a, 0, 0x1a, 0x7a );
-							if( ( 720 - ( num6 + 0x7a ) ) < rectangle.Bottom )
+							rectangle = new Rectangle( 26, 0, 26, 122 );
+							if( ( 720 - ( num6 + 122 ) ) < rectangle.Bottom )
 							{
-								rectangle.Height = ( 720 - ( num6 + 0x7a ) ) - rectangle.Top;
+								rectangle.Height = ( 720 - ( num6 + 122 ) ) - rectangle.Top;
 							}
 							if( ( num6 + 0x7a ) < 0 )
 							{
-								rectangle.Y = -( num6 + 0x7a );
+								rectangle.Y = -( num6 + 122 );
 								rectangle.Height -= rectangle.Y;
-								num7 = -( num6 + 0x7a );
+								num7 = -( num6 + 122 );
 							}
-							if( ( rectangle.Top < rectangle.Bottom ) && ( this.txWailingBonus != null ) )
+							if( ( rectangle.Top < rectangle.Bottom ) && ( this.txWailingBonus != null ) && CDTXMania.ConfigIni.nWailingFireFrames == 0 )
 							{
-								this.txWailingBonus.t2D描画( CDTXMania.app.Device, x, ( num6 + num7 ) + 0x7a, rectangle );
+								this.txWailingBonus.t2D描画( CDTXMania.app.Device, x, ( num6 + num7 ) + 122, rectangle );
 							}
+
+                            if( this.txWailingFlush != null && CDTXMania.ConfigIni.nWailingFireFrames == 0 )
+                            {
+                                for( int i = 0; i <= 12; i++ )
+                                {
+                                    this.txWailingFlush.t2D描画( CDTXMania.app.Device, ( e楽器パート2 == E楽器パート.GUITAR ) ? 283 : 1153, 64 * i, new Rectangle( 0, 0, 42, 64 ) );
+                                }
+
+                                int count = this.ct進行用[ (int)e楽器パート2, m ].n現在の値;
+                                this.txWailingFlush.n透明度 = ( count <= 55 ? 255 : 255 - count );
+                            }
 						}
+
+                        if( ( this.ctWailing炎[ (int) e楽器パート2, m ] != null ) && !this.ctWailing炎[ (int) e楽器パート2, m ].b停止中 )
+                        {
+                            if( this.txWailingFire != null )
+                            {
+                                if( e楽器パート2 == E楽器パート.GUITAR )
+                                {
+                                    this.txWailingFire.t2D描画( CDTXMania.app.Device, this.posXGuitar, this.posY, new Rectangle( this.rectW * this.ctWailing炎[ (int) e楽器パート2, m ].n現在の値, 0, this.rectW, this.rectH ) );
+                                }
+                                if( e楽器パート2 == E楽器パート.BASS )
+                                {
+                                    this.txWailingFire.t2D描画( CDTXMania.app.Device, this.posXBass, this.posY, new Rectangle( this.rectW * this.ctWailing炎[ (int) e楽器パート2, m ].n現在の値, 0, this.rectW, this.rectH ) );
+                                }
+                            }
+                        }
 					}
 				}
 			}

@@ -72,8 +72,8 @@ namespace DTXMania
                             base.st状態[i].n透明度 = 0;
                             */
 
-                            //base.st状態[i].judge = E判定.Great;
-                            //nNowFrame = 22;
+                            //base.st状態[i].judge = E判定.Perfect;
+                            //nNowFrame = 16;
                             if( base.st状態[ i ].judge == E判定.Perfect )
                             {
                                 #region[ PERFECT ]
@@ -118,6 +118,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1f;
+                                    base.st状態[i].fY方向拡大率B = 1f;
+                                    base.st状態[i].n相対X座標B = -2;
+                                    base.st状態[i].n相対Y座標B = 2;
+                                    base.st状態[i].n透明度B = 127;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -40;
@@ -132,6 +138,12 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率B = 1.1f;
+                                    base.st状態[i].fY方向拡大率B = 1.1f;
+                                    base.st状態[i].n相対X座標B = -3;
+                                    base.st状態[i].n相対Y座標B = 1;
+                                    base.st状態[i].n透明度B = 127;
 
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
@@ -148,6 +160,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.2f;
+                                    base.st状態[i].fY方向拡大率B = 1.2f;
+                                    base.st状態[i].n相対X座標B = -4;
+                                    base.st状態[i].n相対Y座標B = 0;
+                                    base.st状態[i].n透明度B = 127;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -40;
@@ -162,6 +180,12 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率B = 1.25f;
+                                    base.st状態[i].fY方向拡大率B = 1.25f;
+                                    base.st状態[i].n相対X座標B = -5;
+                                    base.st状態[i].n相対Y座標B = -1;
+                                    base.st状態[i].n透明度B = 127;
 
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
@@ -178,6 +202,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.3f;
+                                    base.st状態[i].fY方向拡大率B = 1.3f;
+                                    base.st状態[i].n相対X座標B = -6;
+                                    base.st状態[i].n相対Y座標B = -2;
+                                    base.st状態[i].n透明度B = 127;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -38;
@@ -192,6 +222,12 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率B = 1.35f;
+                                    base.st状態[i].fY方向拡大率B = 1.35f;
+                                    base.st状態[i].n相対X座標B = -7;
+                                    base.st状態[i].n相対Y座標B = -3;
+                                    base.st状態[i].n透明度B = 127;
 
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
@@ -208,6 +244,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.4f;
+                                    base.st状態[i].fY方向拡大率B = 1.4f;
+                                    base.st状態[i].n相対X座標B = -8;
+                                    base.st状態[i].n相対Y座標B = -4;
+                                    base.st状態[i].n透明度B = 127;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -40;
@@ -223,6 +265,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.45f;
+                                    base.st状態[i].fY方向拡大率B = 1.45f;
+                                    base.st状態[i].n相対X座標B = -9;
+                                    base.st状態[i].n相対Y座標B = -5;
+                                    base.st状態[i].n透明度B = 112;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -40;
@@ -237,6 +285,14 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
+
+
+                                    base.st状態[i].fX方向拡大率B = 1.5f;
+                                    base.st状態[i].fY方向拡大率B = 1.5f;
+                                    base.st状態[i].n相対X座標B = -10;
+                                    base.st状態[i].n相対Y座標B = -6;
+                                    base.st状態[i].n透明度B = 100;
+
 
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
@@ -255,6 +311,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.55f;
+                                    base.st状態[i].fY方向拡大率B = 1.55f;
+                                    base.st状態[i].n相対X座標B = -11;
+                                    base.st状態[i].n相対Y座標B = -7;
+                                    base.st状態[i].n透明度B = 70;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -40;
@@ -269,6 +331,12 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率B = 1.6f;
+                                    base.st状態[i].fY方向拡大率B = 1.6f;
+                                    base.st状態[i].n相対X座標B = -12;
+                                    base.st状態[i].n相対Y座標B = -8;
+                                    base.st状態[i].n透明度B = 40;
 
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
@@ -285,6 +353,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.65f;
+                                    base.st状態[i].fY方向拡大率B = 1.65f;
+                                    base.st状態[i].n相対X座標B = -13;
+                                    base.st状態[i].n相対Y座標B = -9;
+                                    base.st状態[i].n透明度B = 40;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -38;
@@ -300,6 +374,12 @@ namespace DTXMania
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
 
+                                    base.st状態[i].fX方向拡大率B = 1.7f;
+                                    base.st状態[i].fY方向拡大率B = 1.7f;
+                                    base.st状態[i].n相対X座標B = -14;
+                                    base.st状態[i].n相対Y座標B = -10;
+                                    base.st状態[i].n透明度B = 20;
+
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
                                     base.st状態[i].n相対X座標_棒 = -38;
@@ -314,6 +394,12 @@ namespace DTXMania
                                     base.st状態[i].n相対X座標 = -2;
                                     base.st状態[i].n相対Y座標 = 2;
                                     base.st状態[i].n透明度 = 0;
+
+                                    base.st状態[i].fX方向拡大率B = 1f;
+                                    base.st状態[i].fY方向拡大率B = 1f;
+                                    base.st状態[i].n相対X座標B = -14;
+                                    base.st状態[i].n相対Y座標B = -10;
+                                    base.st状態[i].n透明度B = 0;
 
                                     base.st状態[i].fX方向拡大率_棒 = 1.25f;
                                     base.st状態[i].fY方向拡大率_棒 = 1f;
@@ -1327,7 +1413,11 @@ namespace DTXMania
                                     CDTXMania.stage演奏ドラム画面.tx判定画像anime.n透明度 = 255;
                                     CDTXMania.stage演奏ドラム画面.tx判定画像anime.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
 
-
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率B, base.st状態[j].fY方向拡大率B, 1f);
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.n透明度 = base.st状態[j].n透明度B;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.b加算合成 = true;
+                                    CDTXMania.stage演奏ドラム画面.tx判定画像anime_3.t2D描画(CDTXMania.app.Device, x, y, new Rectangle(0, 0, nRectX, nRectY));
                                 }
                                 if (base.st状態[j].judge == E判定.Great)
                                 {
@@ -1413,7 +1503,7 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
         private readonly int[] n文字の縦表示位置 = new int[] { -1, 1, 1, 2, 0, 0, 1, -1, 2, 1, 2, -1, -1, 0, 0 };
-
+        
 		//-----------------
 		#endregion
 	}

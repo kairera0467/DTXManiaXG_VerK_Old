@@ -651,7 +651,7 @@ namespace DTXMania
                 + "flow from the bottom to the top.");
             this.list項目リスト.Add(this.iDrumsReverse);
 
-            this.iDrumsPosition = new CItemList("Position", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.判定文字表示位置.Drums,
+            this.iDrumsPosition = new CItemList("JudgePosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.判定文字表示位置.Drums,
                 "ゲーム中に表示される\n"+
                 "判定文字の位置を変更します。\n" +
                 "  P-A: レーン上\n" +
@@ -666,16 +666,10 @@ namespace DTXMania
                 new string[] { "P-A", "P-B", "OFF" });
             this.list項目リスト.Add(this.iDrumsPosition);
 
-            this.iDrumsComboPosition = new CItemList("ComboPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.ドラムコンボ文字の表示位置,
-                "演奏時のドラムコンボ文字列の位置\n" +
-                "を指定します。\n" +
-                "OFFにするとゲーム中の\n" +
-                "コンボ数が非表示になります。",
-                "The display position for Drums Combo.\n" +
-                "Note that it doesn't take effect\n" +
-                " at Autoplay ([Left] is forcely used).",
-                new string[] { "Left", "Center", "Right", "OFF" });
-            this.list項目リスト.Add(this.iDrumsComboPosition);
+            this.iDrumsComboDisp = new CItemToggle("Combo", CDTXMania.ConfigIni.bドラムコンボ文字の表示,
+                "OFFにするとコンボが表示されなくなります。",
+                "Turn ON the Drums Combo Display");
+            this.list項目リスト.Add( this.iDrumsComboDisp );
 
             this.iDrumsLaneType = new CItemList("LaneType", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eLaneType.Drums,
                 "ドラムのレーンの配置を変更します。\n" +
@@ -2810,6 +2804,7 @@ namespace DTXMania
         private CItemInteger iDrumsJudgeLinePos;
         private CItemInteger iDrumsShutterInPos;
         private CItemInteger iDrumsShutterOutPos;
+        private CItemToggle iDrumsComboDisp;
 
         //private CItemToggle iGuitarAutoPlay;
         private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -3067,6 +3062,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.nJudgeLine.Drums = this.iDrumsJudgeLinePos.n現在の値;
             CDTXMania.ConfigIni.nShutterInSide.Drums = this.iDrumsShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide.Drums = this.iDrumsShutterOutPos.n現在の値;
+            CDTXMania.ConfigIni.bドラムコンボ文字の表示 = this.iDrumsComboDisp.bON;
 
             //CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;     // ダークはプリセット切り替えとして使うため、保存はしない。
         }

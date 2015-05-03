@@ -1439,81 +1439,84 @@ for (int i = 0; i < 3; i++) {
 
         // その他
 
-        #region [ 汎用ヘルパー ]
-        //-----------------
-        public static CTexture tテクスチャの生成(string fileName)
-        {
-            return tテクスチャの生成(fileName, false);
-        }
-        public static CTexture tテクスチャの生成(string fileName, bool b黒を透過する)
-        {
-            if (app == null)
-            {
-                return null;
-            }
-            try
-            {
-                return new CTexture(app.Device, fileName, TextureFormat, b黒を透過する);
-            }
-            catch (CTextureCreateFailedException)
-            {
-                Trace.TraceError("テクスチャの生成に失敗しました。({0})", fileName);
-                return null;
-            }
-            catch (FileNotFoundException)
-            {
-                Trace.TraceError("テクスチャファイルが見つかりませんでした。({0})", fileName);
-                return null;
-            }
-        }
-        public static void tテクスチャの解放(ref CTexture tx)
-        {
-            if (tx != null)
-                CDTXMania.t安全にDisposeする(ref tx);
-        }
+		#region [ 汎用ヘルパー ]
+		//-----------------
+		public static CTexture tテクスチャの生成( string fileName )
+		{
+			return tテクスチャの生成( fileName, false );
+		}
+		public static CTexture tテクスチャの生成( string fileName, bool b黒を透過する )
+		{
+			if ( app == null )
+			{
+				return null;
+			}
+			try
+			{
+				return new CTexture( app.Device, fileName, TextureFormat, b黒を透過する );
+			}
+			catch ( CTextureCreateFailedException )
+			{
+				Trace.TraceError( "テクスチャの生成に失敗しました。({0})", fileName );
+				return null;
+			}
+			catch ( FileNotFoundException )
+			{
+				Trace.TraceError( "テクスチャファイルが見つかりませんでした。({0})", fileName );
+				return null;
+			}
+		}
+		public static void tテクスチャの解放( ref CTexture tx )
+		{
+            if( tx != null )
+			    CDTXMania.t安全にDisposeする( ref tx );
+		}
+        public static void tテクスチャの解放( ref CTextureAf tx )
+		{
+			CDTXMania.t安全にDisposeする( ref tx );
+		}
+		public static CTexture tテクスチャの生成( byte[] txData )
+		{
+			return tテクスチャの生成( txData, false );
+		}
+		public static CTexture tテクスチャの生成( byte[] txData, bool b黒を透過する )
+		{
+			if ( app == null )
+			{
+				return null;
+			}
+			try
+			{
+				return new CTexture( app.Device, txData, TextureFormat, b黒を透過する );
+			}
+			catch ( CTextureCreateFailedException )
+			{
+				Trace.TraceError( "テクスチャの生成に失敗しました。(txData)" );
+				return null;
+			}
+		}
 
-        public static CTexture tテクスチャの生成(byte[] txData)
-        {
-            return tテクスチャの生成(txData, false);
-        }
-        public static CTexture tテクスチャの生成(byte[] txData, bool b黒を透過する)
-        {
-            if (app == null)
-            {
-                return null;
-            }
-            try
-            {
-                return new CTexture(app.Device, txData, TextureFormat, b黒を透過する);
-            }
-            catch (CTextureCreateFailedException)
-            {
-                Trace.TraceError("テクスチャの生成に失敗しました。(txData)");
-                return null;
-            }
-        }
-
-        public static CTexture tテクスチャの生成(Bitmap bitmap)
-        {
-            return tテクスチャの生成(bitmap, false);
-        }
-        public static CTexture tテクスチャの生成(Bitmap bitmap, bool b黒を透過する)
-        {
-            if (app == null)
-            {
-                return null;
-            }
-            try
-            {
-                return new CTexture(app.Device, bitmap, TextureFormat, b黒を透過する);
-            }
-            catch (CTextureCreateFailedException)
-            {
-                Trace.TraceError("テクスチャの生成に失敗しました。(txData)");
-                return null;
-            }
-        }
-
+		public static CTexture tテクスチャの生成( Bitmap bitmap )
+		{
+			return tテクスチャの生成( bitmap, false );
+		}
+		public static CTexture tテクスチャの生成( Bitmap bitmap, bool b黒を透過する )
+		{
+			if ( app == null )
+			{
+				return null;
+			}
+			try
+			{
+				return new CTexture( app.Device, bitmap, TextureFormat, b黒を透過する );
+			}
+			catch ( CTextureCreateFailedException )
+			{
+				Trace.TraceError( "テクスチャの生成に失敗しました。(txData)" );
+				return null;
+			}
+		}
+        
         public static CTexture tテクスチャを生成する(int width, int height)
         {
             try
@@ -1526,44 +1529,76 @@ for (int i = 0; i < 3; i++) {
                 return null;
             }
         }
-
+        public static CTextureAf tテクスチャの生成Af( string fileName )
+		{
+			return tテクスチャの生成Af( fileName, false );
+		}
+		public static CTextureAf tテクスチャの生成Af( string fileName, bool b黒を透過する )
+		{
+			if ( app == null )
+			{
+				return null;
+			}
+			try
+			{
+				return new CTextureAf( app.Device, fileName, TextureFormat, b黒を透過する );
+			}
+			catch ( CTextureCreateFailedException )
+			{
+				Trace.TraceError( "テクスチャの生成に失敗しました。({0})", fileName );
+				return null;
+			}
+			catch ( FileNotFoundException )
+			{
+				Trace.TraceError( "テクスチャファイルが見つかりませんでした。({0})", fileName );
+				return null;
+			}
+		}
 
         public static CDirectShow t失敗してもスキップ可能なDirectShowを生成する(string fileName, IntPtr hWnd, bool bオーディオレンダラなし)
         {
             CDirectShow ds = null;
-            try
+            if( File.Exists( fileName ) )
             {
-                ds = new CDirectShow(fileName, hWnd, bオーディオレンダラなし);
+                try
+                {
+                    ds = new CDirectShow(fileName, hWnd, bオーディオレンダラなし);
+                }
+                catch (FileNotFoundException)
+                {
+                    Trace.TraceError("動画ファイルが見つかりませんでした。({0})", fileName);
+                    ds = null;      // Dispose はコンストラクタ内で実施済み
+                }
+                catch
+                {
+                    Trace.TraceError("DirectShow の生成に失敗しました。[{0}]", fileName);
+                    ds = null;      // Dispose はコンストラクタ内で実施済み
+                }
             }
-            catch (FileNotFoundException)
+            else
             {
                 Trace.TraceError("動画ファイルが見つかりませんでした。({0})", fileName);
-                ds = null;      // Dispose はコンストラクタ内で実施済み
-            }
-            catch
-            {
-                Trace.TraceError("DirectShow の生成に失敗しました。[{0}]", fileName);
-                ds = null;      // Dispose はコンストラクタ内で実施済み
+                return null;
             }
 
             return ds;
         }
 
-        /// <summary>プロパティ、インデクサには ref は使用できないので注意。</summary>
-        public static void t安全にDisposeする<T>(ref T obj)
-        {
-            if (obj == null)
-                return;
+		/// <summary>プロパティ、インデクサには ref は使用できないので注意。</summary>
+		public static void t安全にDisposeする<T>( ref T obj )
+		{
+			if ( obj == null )
+				return;
 
-            var d = obj as IDisposable;
+			var d = obj as IDisposable;
 
-            if (d != null)
-                d.Dispose();
+			if ( d != null )
+				d.Dispose();
 
-            obj = default(T);
-        }
-        //-----------------
-        #endregion
+			obj = default( T );
+		}
+		//-----------------
+		#endregion
         #region [ private ]
         //-----------------
         private bool bマウスカーソル表示中 = true;
