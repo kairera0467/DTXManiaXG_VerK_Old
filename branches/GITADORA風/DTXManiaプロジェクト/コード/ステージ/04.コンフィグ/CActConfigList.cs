@@ -757,7 +757,7 @@ namespace DTXMania
                 "左ペダル、左バスドラ、右バスドラの打ち分け\n" +
                 "方法を指定します。\n" +
                 "  BD-0 ... LP | LBD | BD\n" +
-                "  BD-1 ... LP | LBD & BD" +
+                "  BD-1 ... LP | LBD & BD\n" +
                 "  BD-2 ... LP & LBD | BD\n" +
                 "  BD-3 ... LP & LBD & BD\n",
                 new string[] { "BD-0", "BD-1", "BD-2", "BD-3" });
@@ -782,9 +782,7 @@ namespace DTXMania
                 "かを指定します。\n" +
                 "  C > P ... チップの音が優先\n" +
                 "  P > C ... 叩いたパッドの音が優先\n" +
-                "\n" +
-                "※BD Group が BD-1 である場合、\n" +
-                "　この項目は変更できません。\n",
+                "\n",
                 "To specify playing sound in case you're\n" +
                 " using HH-0,1 and 2.\n" +
                 "\n" +
@@ -3021,7 +3019,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAutoPlay.LP = this.iDrumsLeftPedal.bON;
             CDTXMania.ConfigIni.bAutoPlay.LBD = this.iDrumsLeftBassDrum.bON;
             CDTXMania.ConfigIni.n譜面スクロール速度.Drums = this.iDrumsScrollSpeed.n現在の値;
-            CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 = (Eドラムコンボ文字の表示位置)this.iDrumsComboPosition.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bReverse.Drums = this.iDrumsReverse.bON;
             CDTXMania.ConfigIni.判定文字表示位置.Drums = (Eタイプ)this.iDrumsPosition.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bTight = this.iDrumsTight.bON;
