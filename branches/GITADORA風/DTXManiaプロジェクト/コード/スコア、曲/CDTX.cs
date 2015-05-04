@@ -501,6 +501,7 @@ namespace DTXMania
 			public int n透明度 = 0xff;
 			public int n発声位置;
 			public int n発声時刻ms;
+            public bool bボーナスチップ;
 			public int nLag;				// 2011.2.1 yyagi
 			public CDTX.CAVI rAVI;
             public CDTX.CDirectShow rDShow;
@@ -2766,7 +2767,61 @@ namespace DTXMania
             }
         }
 
+        public void t指定された発声位置と同じ位置の指定したチップにボーナスフラグを立てる( int n発声位置, int nレーン )
+        {
+            //ボーナスチップの内部番号→チャンネル番号変換
+            //初期値は0で問題無いはず。
+            int n変換後のレーン番号 = 0;
+            int n変換後のレーン番号2 = 0; //HH、LP用
+            switch( nレーン )
+            {
+                case 1:
+                    n変換後のレーン番号 = 0x1A;
+                    break;
+                case 2:
+                    n変換後のレーン番号 = 0x11;
+                    n変換後のレーン番号2 = 0x18;
+                    break;
+                case 3:
+                    n変換後のレーン番号 = 0x1B;
+                    n変換後のレーン番号2 = 0x1C;
+                    break;
+                case 4:
+                    n変換後のレーン番号 = 0x12;
+                    break;
+                case 5:
+                    n変換後のレーン番号 = 0x14;
+                    break;
+                case 6:
+                    n変換後のレーン番号 = 0x13;
+                    break;
+                case 7:
+                    n変換後のレーン番号 = 0x15;
+                    break;
+                case 8:
+                    n変換後のレーン番号 = 0x17;
+                    break;
+                case 9:
+                    n変換後のレーン番号 = 0x16;
+                    break;
+                case 10:
+                    n変換後のレーン番号 = 0x19;
+                    break;
+            }
 
+            //本当はfor文検索はよろしくないんだろうけど、僕の技術ではこれが限界なんだ...
+            for( int i = 0; i < this.listChip.Count; i++ )
+            {
+                if( this.listChip[ i ].n発声位置 == n発声位置 )
+                {
+                    if( this.listChip[ i ].nチャンネル番号 == n変換後のレーン番号 || this.listChip[ i ].nチャンネル番号 == n変換後のレーン番号2 )
+                    {
+                        this.listChip[ i ].bボーナスチップ = true;
+                    }
+                }
+            }
+            
+        }
 
 		public void tWave再生位置自動補正()
 		{
@@ -3654,6 +3709,12 @@ namespace DTXMania
                                     }
 								default:
 									{
+                                        if( chip.nチャンネル番号 >= 0x4C && chip.nチャンネル番号 <= 0x4F )
+                                        {
+                                            #region [ TEST ]
+                                            this.t指定された発声位置と同じ位置の指定したチップにボーナスフラグを立てる( chip.n発声位置, chip.n整数値 );
+                                            #endregion
+                                        }
 										continue;
 									}
 							}

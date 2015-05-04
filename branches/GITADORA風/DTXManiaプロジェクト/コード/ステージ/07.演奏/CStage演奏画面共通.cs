@@ -1307,6 +1307,7 @@ namespace DTXMania
                             case E判定.Great:
                             case E判定.Good:
                                 this.actCombo.n現在のコンボ数.Drums++;
+                                this.actCombo.tComboAnime(E楽器パート.DRUMS);
                                 break;
 
                             default:
@@ -1314,6 +1315,9 @@ namespace DTXMania
                                 break;
                         }
                     }
+
+                    if( eJudgeResult == E判定.Great || eJudgeResult == E判定.Perfect || eJudgeResult == E判定.Auto )
+                        CDTXMania.stage演奏ドラム画面.tボーナスチップのヒット処理( CDTXMania.ConfigIni, CDTXMania.DTX, pChip );
                     break;
 
                 case E楽器パート.GUITAR:

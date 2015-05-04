@@ -338,7 +338,7 @@ namespace DTXMania
                     #endregion
                 }
 #region[ ボーナス表示 ]
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     //アニメーションは仮のもの。後から強化する予定。
                     if (this.stボーナス[i].b使用中)
@@ -390,7 +390,29 @@ namespace DTXMania
             }
         }
  
+        public void Start( int nLane, bool bボーナス, int n代入番号 )
+        {
+            for ( int j = 0; j < 4; j++ )
+            {
+                if (this.stボーナス[j].b使用中)
+                {
+                    this.stボーナス[j].ct進行.t停止();
+                    this.stボーナス[j].b使用中 = false;
+                }
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if ( !this.stボーナス[ j ].b使用中 )
+                    {
+                        this.stボーナス[j].b使用中 = true;
+                        this.stボーナス[j].ct進行 = new CCounter(0, 1020, 1, CDTXMania.Timer);
+                    }
 
+                }
+            }
+        }
 
 
 		// その他
@@ -436,7 +458,7 @@ namespace DTXMania
 		private CTexture tx光るパッド;
         private CTexture txボーナス文字;
         public bool[] bボーナス文字 = new bool[10];
-        public STボーナス[] stボーナス = new STボーナス[3];
+        public STボーナス[] stボーナス = new STボーナス[4];
 		//-----------------
 		#endregion
 	}
