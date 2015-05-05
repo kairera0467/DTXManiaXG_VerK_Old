@@ -704,6 +704,7 @@ namespace DTXMania
 				this.db実数値 = 0.0;
 				this.n発声位置 = 0;
 				this.n発声時刻ms = 0;
+                this.bボーナスチップ = false;
 				this.nLag = -999;
 				this.bIsAutoPlayed = false;
                 this.b演奏終了後も再生が続くチップである = false;
