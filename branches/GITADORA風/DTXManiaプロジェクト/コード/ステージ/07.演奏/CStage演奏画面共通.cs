@@ -2541,7 +2541,7 @@ namespace DTXMania
                     case 0x4D:
                     case 0x4E:
                     case 0x4F:  //追加した順番の都合上、4F、4E・・・・という順でBonus1、Bonus2・・・という割り当てになってます。
-                        this.t進行描画・チップ・ボーナス(configIni, ref dTX, ref pChip);
+                        //this.t進行描画・チップ・ボーナス(configIni, ref dTX, ref pChip);
                         break;
                     #endregion
 
