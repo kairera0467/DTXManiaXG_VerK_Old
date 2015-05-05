@@ -128,6 +128,16 @@ namespace DTXMania
 						this.pAVIBmp = this.avi.GetFramePtr( frameNoFromTime );
 					}
 				}
+                else
+                {
+                    if( this.b新しいプレビューファイルをまだ読み込んでいない )
+                    {
+						this.tプレビュー画像・動画の変更();
+						CDTXMania.Timer.t更新();
+						this.ct遅延表示.n現在の経過時間ms = CDTXMania.Timer.n現在時刻;
+						this.b新しいプレビューファイルを読み込んだ = true;
+                    }
+                }
 				this.t描画処理・パネル本体();
 				//this.t描画処理・ジャンル文字列();
 				this.t描画処理・プレビュー画像();
