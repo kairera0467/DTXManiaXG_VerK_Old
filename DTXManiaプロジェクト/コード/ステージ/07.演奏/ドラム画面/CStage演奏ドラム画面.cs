@@ -3726,69 +3726,16 @@ namespace DTXMania
                     this.txチップ.n透明度 = 0xff;
                 }
             }
-            bool bPChipIsAutoPlay = bCheckAutoPlay(pChip);
-            if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+
+            bool bPChipIsAutoPlay = bCheckAutoPlay( pChip );
+            E判定 eJudgeResult = E判定.Auto;
+            eJudgeResult = this.e指定時刻からChipのJUDGEを返す( pChip.n発声時刻ms, pChip, this.nInputAdjustTimeMs.Drums);
+            if( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )
             {
                 pChip.bHit = true;
-                bボーナス = true;
-                if (((this.actCombo.n現在のコンボ数.Drums > 0) || configIni.bドラムが全部オートプレイである) && configIni.b歓声を発声する)
-                {
-                    switch (pChip.n整数値)
-                    {
-                        case 0x01: //LC
-                            this.actPad.Start(0, true);
-                            break;
-
-                        case 0x02: //HH
-                            this.actPad.Start(1, true);
-                            break;
-
-                        case 0x03: //LP
-                            this.actPad.Start(2, true);
-                            break;
-
-                        case 0x04: //SD
-                            this.actPad.Start(3, true);
-                            break;
-
-                        case 0x05: //HT
-                            this.actPad.Start(4, true);
-                            break;
-
-                        case 0x06: //BD
-                            this.actPad.Start(5, true);
-                            break;
-
-                        case 0x07: //LT
-                            this.actPad.Start(6, true);
-                            break;
-
-                        case 0x08: //FT
-                            this.actPad.Start(7, true);
-                            break;
-
-                        case 0x09: //CY
-                            this.actPad.Start(8, true);
-                            break;
-
-                        case 0x0A: //RD
-                            this.actPad.Start(9, true);
-                            break;
-
-                        default:
-                            break;
-                    }
-                    if(configIni.ボーナス演出を表示する)
-                    {
-                        this.actAVI.Start(true);
-                        CDTXMania.Skin.sound歓声音.t再生する();
-                        CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
-                    }
-                    if (CDTXMania.ConfigIni.nSkillMode == 1 && ( !configIni.bドラムが全部オートプレイである || CDTXMania.ConfigIni.bAutoAddGage))
-                        this.actScore.Add(E楽器パート.DRUMS, bIsAutoPlay, 500L);
-                }
+                //if( eJudgeResult <= E判定.Great || eJudgeResult == E判定.Auto )
+                    //this.tボーナスチップのヒット処理( CDTXMania.ConfigIni, CDTXMania.DTX, pChip );
             }
-
         }
         
         public void tボーナスチップのヒット処理( CConfigIni configIni, CDTX dTX, CDTX.CChip pChip )
@@ -3799,7 +3746,7 @@ namespace DTXMania
             if( pChip.bボーナスチップ )
             {
                 bボーナス = true;
-                switch (pChip.nチャンネル番号)
+                switch( pChip.nチャンネル番号 )
                 {
                     //case 0x01: //LC
                     //    this.actPad.Start(0, true, pChip.nチャンネル番号);
@@ -3842,57 +3789,57 @@ namespace DTXMania
                     //    break;
 
                     case 0x1A: //LC
-                        this.actPad.Start(0, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 0, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x11: //HH
                     case 0x18:
-                        this.actPad.Start(1, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 1, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x1B: //LP
                     case 0x1C:
-                        this.actPad.Start(2, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 2, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x12: //SD
-                        this.actPad.Start(3, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 3, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x14: //HT
-                        this.actPad.Start(4, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 4, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x13: //BD
-                        this.actPad.Start(5, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 5, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x15: //LT
-                        this.actPad.Start(6, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 6, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x17: //FT
-                        this.actPad.Start(7, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 7, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x16: //CY
-                        this.actPad.Start(8, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 8, true, pChip.nチャンネル番号 );
                         break;
 
                     case 0x19: //RD
-                        this.actPad.Start(9, true, pChip.nチャンネル番号);
+                        this.actPad.Start( 9, true, pChip.nチャンネル番号 );
                         break;
                     default:
                         break;
                 }
-                if ( configIni.ボーナス演出を表示する )
+                if( configIni.ボーナス演出を表示する )
                 {
-                    this.actAVI.Start(true);
+                    this.actAVI.Start( true );
                     CDTXMania.Skin.sound歓声音.t再生する();
                     CDTXMania.Skin.sound歓声音.n位置・次に鳴るサウンド = 0;
                 }
-                if (CDTXMania.ConfigIni.nSkillMode == 1 && (!CDTXMania.ConfigIni.bドラムが全部オートプレイである || CDTXMania.ConfigIni.bAutoAddGage))
-                    this.actScore.Add(E楽器パート.DRUMS, bIsAutoPlay, 500L);
+                if( CDTXMania.ConfigIni.nSkillMode == 1 && ( !CDTXMania.ConfigIni.bドラムが全部オートプレイである || CDTXMania.ConfigIni.bAutoAddGage ) )
+                    this.actScore.Add( E楽器パート.DRUMS, bIsAutoPlay, 500L );
             }
 
 
