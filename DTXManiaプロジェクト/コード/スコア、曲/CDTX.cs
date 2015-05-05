@@ -2819,6 +2819,8 @@ namespace DTXMania
                     break;
             }
 
+
+
             //本当はfor文検索はよろしくないんだろうけど、僕の技術ではこれが限界なんだ...
             for( int i = 0; i < this.listChip.Count; i++ )
             {

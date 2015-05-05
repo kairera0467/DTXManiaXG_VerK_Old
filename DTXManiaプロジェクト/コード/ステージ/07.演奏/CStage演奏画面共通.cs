@@ -1348,9 +1348,11 @@ namespace DTXMania
                                 break;
                         }
                     }
-
-                    if( eJudgeResult == E判定.Great || eJudgeResult == E判定.Perfect || eJudgeResult == E判定.Auto )
-                        CDTXMania.stage演奏ドラム画面.tボーナスチップのヒット処理( CDTXMania.ConfigIni, CDTXMania.DTX, pChip );
+                    if( pChip.bボーナスチップ )
+                    {
+                        if( eJudgeResult == E判定.Great || eJudgeResult == E判定.Perfect || eJudgeResult == E判定.Auto )
+                            CDTXMania.stage演奏ドラム画面.tボーナスチップのヒット処理( CDTXMania.ConfigIni, CDTXMania.DTX, pChip );
+                    }
                     break;
 
                 case E楽器パート.GUITAR:
@@ -2623,7 +2625,7 @@ namespace DTXMania
                     case 0x4D:
                     case 0x4E:
 					case 0x4F:  //追加した順番の都合上、4F、4E・・・・という順でBonus1、Bonus2・・・という割り当てになってます。
-						this.t進行描画・チップ・ボーナス( configIni, ref dTX, ref pChip );
+						//this.t進行描画・チップ・ボーナス( configIni, ref dTX, ref pChip );
 						break;
 					#endregion
 
