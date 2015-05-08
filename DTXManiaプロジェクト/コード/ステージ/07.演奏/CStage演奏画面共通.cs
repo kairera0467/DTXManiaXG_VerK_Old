@@ -389,14 +389,14 @@ namespace DTXMania
                 this.t背景テクスチャの生成();
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
-                this.txボーナスエフェクト = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_Fillin Effect.png" ) );
+                this.txボーナスエフェクト = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Fillin Effect.png" ) );
                 if( CDTXMania.ConfigIni.nJudgeAnimeType == 1 )
-                    this.tx判定画像anime = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_judge strings.png" ) );
+                    this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_judge strings.png" ) );
                 else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
                 {
-                    this.tx判定画像anime = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
-                    this.tx判定画像anime_2 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
-                    this.tx判定画像anime_3 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime_2 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
+                    this.tx判定画像anime_3 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_JudgeStrings_XG.png" ) );
                 }
 
                 base.OnManagedリソースの作成();
@@ -704,10 +704,10 @@ namespace DTXMania
         protected CTexture txWailing枠;
         protected CTexture txチップ;
         protected CTexture txヒットバー;
-        public CTextureAf tx判定画像anime;     //2013.8.2 kairera0467 アニメーションの場合はあらかじめこっちで読み込む。
-        public CTextureAf tx判定画像anime_2;   //2014.3.16 kairera0467 棒とかで必要になる。
-        public CTextureAf tx判定画像anime_3;
-        public CTextureAf txボーナスエフェクト;
+        public CTexture tx判定画像anime;     //2013.8.2 kairera0467 アニメーションの場合はあらかじめこっちで読み込む。
+        public CTexture tx判定画像anime_2;   //2014.3.16 kairera0467 棒とかで必要になる。
+        public CTexture tx判定画像anime_3;
+        public CTexture txボーナスエフェクト;
 
         protected CTexture tx背景;
         protected STDGBVALUE<int> nInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
@@ -2537,12 +2537,16 @@ namespace DTXMania
                         break;
                     #endregion
                     #region [ 4F、4E、4D、4C: ボーナス ]
-                    //case 0x4C:
-                    //case 0x4D:
-                    //case 0x4E:
-                    //case 0x4F:  //追加した順番の都合上、4F、4E・・・・という順でBonus1、Bonus2・・・という割り当てになってます。
+                    case 0x4C:
+                    case 0x4D:
+                    case 0x4E:
+                    case 0x4F:  //追加した順番の都合上、4F、4E・・・・という順でBonus1、Bonus2・・・という割り当てになってます。
                         //this.t進行描画・チップ・ボーナス(configIni, ref dTX, ref pChip);
-                        //break;
+                        if (!pChip.bHit && (pChip.nバーからの距離dot.Drums < 0))
+                        {
+                            pChip.bHit = true;
+                        }
+                        break;
                     #endregion
 
                     #region [ 52: MIDIコーラス ]
