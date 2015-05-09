@@ -253,6 +253,11 @@ namespace DTXMania
 		}
 		public void t次に移動()
 		{
+            if( this.tx選択中の曲名テクスチャ != null )
+            {
+                CDTXMania.tテクスチャの解放( ref this.tx選択中の曲名テクスチャ );
+                CDTXMania.tテクスチャの解放( ref this.tx選択中のアーティスト名テクスチャ );
+            }
 			if( this.r現在選択中の曲 != null )
 			{
 				this.n目標のスクロールカウンタ += 100;
@@ -260,6 +265,11 @@ namespace DTXMania
 		}
 		public void t前に移動()
 		{
+            if( this.tx選択中の曲名テクスチャ != null )
+            {
+                CDTXMania.tテクスチャの解放( ref this.tx選択中の曲名テクスチャ );
+                CDTXMania.tテクスチャの解放( ref this.tx選択中のアーティスト名テクスチャ );
+            }
 			if( this.r現在選択中の曲 != null )
 			{
 				this.n目標のスクロールカウンタ -= 100;
@@ -1080,10 +1090,10 @@ namespace DTXMania
 				}
 				//-----------------
 				#endregion
-                if (this.tx上部パネル != null)
-                    this.tx上部パネル.t2D描画(CDTXMania.app.Device, 0, 0);
-                if (this.tx下部パネル != null)
-                    this.tx下部パネル.t2D描画(CDTXMania.app.Device, 0, 720 - this.tx下部パネル.szテクスチャサイズ.Height);
+                if( this.tx上部パネル != null )
+                    this.tx上部パネル.t2D描画( CDTXMania.app.Device, 0, 0 );
+                if( this.tx下部パネル != null )
+                    this.tx下部パネル.t2D描画( CDTXMania.app.Device, 0, 720 - this.tx下部パネル.szテクスチャサイズ.Height );
 
 			}
 			#region [ スクロール地点の計算(描画はCActSelectShowCurrentPositionにて行う) #27648 ]
