@@ -153,19 +153,19 @@ namespace DTXMania
 
         // CStage 実装
 
-        public void tラベル名からステータスパネルを決定する(string strラベル名)
+        public void tラベル名からステータスパネルを決定する( string strラベル名 )
         {
-            if (string.IsNullOrEmpty(strラベル名))
+            if( string.IsNullOrEmpty( strラベル名 ) )
             {
                 this.nIndex = 0;
             }
             else
             {
                 STATUSPANEL[] array = this.stパネルマップ;
-                for (int i = 0; i < array.Length; i++)
+                for( int i = 0; i < array.Length; i++ )
                 {
-                    STATUSPANEL sTATUSPANEL = array[i];
-                    if (strラベル名.Equals(sTATUSPANEL.label, StringComparison.CurrentCultureIgnoreCase))
+                    STATUSPANEL sTATUSPANEL = array[ i ];
+                    if( strラベル名.Equals( sTATUSPANEL.label, StringComparison.CurrentCultureIgnoreCase ) )
                     {
                         this.nIndex = sTATUSPANEL.status;
                         CDTXMania.nSongDifficulty = sTATUSPANEL.status;
@@ -178,9 +178,8 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            Trace.TraceInformation("曲読み込みステージを活性化します。");
+            Trace.TraceInformation( "曲読み込みステージを活性化します。" );
             Trace.Indent();
-            FontStyle regular = FontStyle.Regular;
             try
             {
                 this.str曲タイトル = "";
@@ -189,33 +188,33 @@ namespace DTXMania
 
                 this.nBGM再生開始時刻 = -1L;
                 this.nBGMの総再生時間ms = 0;
-                if (this.sd読み込み音 != null)
+                if( this.sd読み込み音 != null )
                 {
-                    CDTXMania.Sound管理.tサウンドを破棄する(this.sd読み込み音);
+                    CDTXMania.Sound管理.tサウンドを破棄する( this.sd読み込み音 );
                     this.sd読み込み音 = null;
                 }
 
-                string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
+                string strDTXファイルパス = ( CDTXMania.bコンパクトモード ) ?
                     CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
 
                 CDTX cdtx = new CDTX( strDTXファイルパス, true );
 
-                if ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
+                if( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
                     this.str曲タイトル = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
                 else
                     this.str曲タイトル = cdtx.TITLE;
 
                 this.strアーティスト名 = cdtx.ARTIST;
-                if (((cdtx.SOUND_NOWLOADING != null) && (cdtx.SOUND_NOWLOADING.Length > 0)) && File.Exists(cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING))
+                if( ( ( cdtx.SOUND_NOWLOADING != null ) && ( cdtx.SOUND_NOWLOADING.Length > 0 ) ) && File.Exists( cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING ) )
                 {
                     string strNowLoadingサウンドファイルパス = cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING;
                     try
                     {
-                        this.sd読み込み音 = CDTXMania.Sound管理.tサウンドを生成する(strNowLoadingサウンドファイルパス);
+                        this.sd読み込み音 = CDTXMania.Sound管理.tサウンドを生成する( strNowLoadingサウンドファイルパス );
                     }
                     catch
                     {
-                        Trace.TraceError("#SOUND_NOWLOADING に指定されたサウンドファイルの読み込みに失敗しました。({0})", strNowLoadingサウンドファイルパス);
+                        Trace.TraceError( "#SOUND_NOWLOADING に指定されたサウンドファイルの読み込みに失敗しました。({0})", strNowLoadingサウンドファイルパス );
                     }
                 }
                 int LEVEL = cdtx.LEVEL.Drums;
@@ -226,7 +225,7 @@ namespace DTXMania
             }
             finally
             {
-                Trace.TraceInformation("曲読み込みステージの活性化を完了しました。");
+                Trace.TraceInformation( "曲読み込みステージの活性化を完了しました。" );
                 Trace.Unindent();
             }
         }
@@ -234,10 +233,6 @@ namespace DTXMania
         {
             Trace.TraceInformation("曲読み込みステージを非活性化します。");
             Trace.Indent();
-            for (int i = 0; i < 8; i++)
-            {
-                this.st泡[i].ct進行 = null;
-            }
             try
             {
                 base.On非活性化();
@@ -252,10 +247,9 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                this.tx背景 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_background.jpg"), false);
-                this.txLevel = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_LevelNumber.png"));
-                this.txDrumspeed = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons.jpg"), false);
-                this.txRISKY = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\7_panel_icons2.jpg"), false);
+                this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_background.jpg" ) );
+                this.txLevel = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_LevelNumber.png" ) );
+                this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_Difficulty.png" ) );
 
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
                 try
@@ -288,7 +282,7 @@ namespace DTXMania
                     }
                     #endregion
                 }
-                catch (CTextureCreateFailedException)
+                catch( CTextureCreateFailedException )
                 {
                     Trace.TraceError("テクスチャの生成に失敗しました。({0})", new object[] { this.strSTAGEFILE });
                     this.txタイトル = null;
@@ -300,15 +294,14 @@ namespace DTXMania
         }
         public override void OnManagedリソースの解放()
         {
-            if (!base.b活性化してない)
+            if( !base.b活性化してない )
             {
                 //テクスチャ11枚
-                CDTXMania.tテクスチャの解放(ref this.tx背景);
-                CDTXMania.tテクスチャの解放(ref this.txジャケット);
-                CDTXMania.tテクスチャの解放(ref this.txタイトル);
-                CDTXMania.tテクスチャの解放(ref this.txアーティスト);
-                CDTXMania.tテクスチャの解放(ref this.txRISKY);
-                CDTXMania.tテクスチャの解放(ref this.txDrumspeed);
+                CDTXMania.tテクスチャの解放( ref this.tx背景 );
+                CDTXMania.tテクスチャの解放( ref this.txジャケット );
+                CDTXMania.tテクスチャの解放( ref this.txタイトル );
+                CDTXMania.tテクスチャの解放( ref this.txアーティスト );
+                CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
                 base.OnManagedリソースの解放();
             }
         }
@@ -316,7 +309,7 @@ namespace DTXMania
         {
             string str;
 
-            if (base.b活性化してない)
+            if( base.b活性化してない )
                 return 0;
 
             #region [ 初めての進行描画 ]
@@ -363,30 +356,41 @@ namespace DTXMania
 
             #region [ 背景、レベル、タイトル表示 ]
             //-----------------------------
-            if (this.tx背景 != null)
-                this.tx背景.t2D描画(CDTXMania.app.Device, 0, 0);
+            if( this.tx背景 != null )
+                this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 
             string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
             CDTX cdtx = new CDTX(strDTXファイルパス, true);
 
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
-            if (!File.Exists(path))
+            try
             {
-                this.txジャケット = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\5_preimage default.png"));
+                if( !File.Exists( path ) )
+                {
+                    this.txジャケット = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
+                }
+                else
+                {
+                    this.txジャケット = CDTXMania.tテクスチャの生成( path );
+                }
             }
-            else
+            catch( Exception ex )
             {
-                this.txジャケット = CDTXMania.tテクスチャの生成(path);
             }
+
 
             int y = 184;
-            Matrix mat = Matrix.Identity;
-            mat *= Matrix.Scaling(384.0f / this.txジャケット.sz画像サイズ.Width, 384.0f / this.txジャケット.sz画像サイズ.Height, 1f);
-            mat *= Matrix.Translation(206f, 66f, 0f);
-            mat *= Matrix.RotationZ(0.28f);
+
+            if( this.txジャケット != null )
+            {
+                Matrix mat = Matrix.Identity;
+                mat *= Matrix.Scaling(384.0f / this.txジャケット.sz画像サイズ.Width, 384.0f / this.txジャケット.sz画像サイズ.Height, 1f);
+                mat *= Matrix.Translation(206f, 66f, 0f);
+                mat *= Matrix.RotationZ(0.28f);
 
             this.txジャケット.t3D描画(CDTXMania.app.Device, mat);
+            }
 
             if (this.txタイトル != null)
             {
@@ -404,16 +408,19 @@ namespace DTXMania
                 this.txアーティスト.t2D描画(CDTXMania.app.Device, 190, 360);
             }
 
-            this.txジャケット.Dispose();
+            //this.txジャケット.Dispose();
+            this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
+            if( this.tx難易度パネル != null )
+                this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 191, 102, new Rectangle( 0, this.nIndex * 50, 262, 50 ) );
 
-            if (CDTXMania.ConfigIni.bDrums有効)
+            if( CDTXMania.ConfigIni.bDrums有効 )
             {
                 int i = 0;
 
                 int DTXLevel = cdtx.LEVEL[i];
                 double DTXLevelDeci = cdtx.LEVELDEC[i];
 
-                if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする)
+                if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする )
                 {
                     this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
                 }
@@ -436,7 +443,7 @@ namespace DTXMania
                 }
             }
 
-            if (CDTXMania.ConfigIni.bGuitar有効)
+            if( CDTXMania.ConfigIni.bGuitar有効 )
             {
                 int i = 0;
                 int j = 0;
@@ -690,9 +697,7 @@ namespace DTXMania
         private CTexture txアーティスト;
         private CTexture txジャケット;
         private CTexture tx背景;
-        private CTexture txDrumspeed;
-        private CTexture txRISKY;
-        private ST泡[] st泡 = new ST泡[8];
+        private CTexture tx難易度パネル;
 
         private CPrivateFastFont pfタイトル;
         private CPrivateFastFont pfアーティスト;
