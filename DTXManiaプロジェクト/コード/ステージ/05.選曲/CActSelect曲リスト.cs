@@ -253,11 +253,6 @@ namespace DTXMania
 		}
 		public void t次に移動()
 		{
-            if( this.tx選択中の曲名テクスチャ != null )
-            {
-                CDTXMania.tテクスチャの解放( ref this.tx選択中の曲名テクスチャ );
-                CDTXMania.tテクスチャの解放( ref this.tx選択中のアーティスト名テクスチャ );
-            }
 			if( this.r現在選択中の曲 != null )
 			{
 				this.n目標のスクロールカウンタ += 100;
@@ -265,11 +260,6 @@ namespace DTXMania
 		}
 		public void t前に移動()
 		{
-            if( this.tx選択中の曲名テクスチャ != null )
-            {
-                CDTXMania.tテクスチャの解放( ref this.tx選択中の曲名テクスチャ );
-                CDTXMania.tテクスチャの解放( ref this.tx選択中のアーティスト名テクスチャ );
-            }
 			if( this.r現在選択中の曲 != null )
 			{
 				this.n目標のスクロールカウンタ -= 100;
