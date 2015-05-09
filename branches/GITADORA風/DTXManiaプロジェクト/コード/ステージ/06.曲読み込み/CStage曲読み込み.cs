@@ -336,6 +336,7 @@ namespace DTXMania
                 //				this.actFI.tフェードイン開始();							// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
                 base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                 base.b初めての進行描画 = false;
+                this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
 
                 nWAVcount = 1;
             }
@@ -409,7 +410,6 @@ namespace DTXMania
             }
 
             //this.txジャケット.Dispose();
-            this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
             if( this.tx難易度パネル != null )
                 this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 191, 102, new Rectangle( 0, this.nIndex * 50, 262, 50 ) );
 
