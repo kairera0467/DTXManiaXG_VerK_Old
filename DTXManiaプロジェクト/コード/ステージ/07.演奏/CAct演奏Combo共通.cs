@@ -127,6 +127,7 @@ namespace DTXMania
         protected CSTATUS status;
         protected CTexture txCOMBOギター;
         protected CTexture txCOMBOドラム;
+        protected CTexture txCOMBOドラム1000;
         protected CTexture txComboBom;
         public float nUnitTime;
         public CCounter ctコンボ;
@@ -329,15 +330,31 @@ namespace DTXMania
 
             for (int i = 0; i < n桁数; i++)
             {
-                if ((this.n現在のコンボ数.Drums > (this.n現在のコンボ数.Drums / 100 * 100) && (this.n現在のコンボ数.Drums >= 100 ? this.bn00コンボに到達した[nコンボカウント.Drums].Drums == false : false) && (nジャンプインデックス >= 0 && nジャンプインデックス < 180)))
+                if( n桁数 < 4 )
                 {
-                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 20;
+                    if ((this.n現在のコンボ数.Drums > (this.n現在のコンボ数.Drums / 100 * 100) && (this.n現在のコンボ数.Drums >= 100 ? this.bn00コンボに到達した[nコンボカウント.Drums].Drums == false : false) && (nジャンプインデックス >= 0 && nジャンプインデックス < 180)))
+                    {
+                        x -= nドラムコンボの幅 + nドラムコンボの文字間隔 + 20;
+                    }
+                    else
+                    {
+                        x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
+                        this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
+                    }
                 }
-                else
+                else if( n桁数 >= 4 )
                 {
-                    x -= nドラムコンボの幅 + nドラムコンボの文字間隔;
-                    this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
+                    if ((this.n現在のコンボ数.Drums > (this.n現在のコンボ数.Drums / 100 * 100) && (this.n現在のコンボ数.Drums >= 100 ? this.bn00コンボに到達した[nコンボカウント.Drums].Drums == false : false) && (nジャンプインデックス >= 0 && nジャンプインデックス < 180)))
+                    {
+                        x -= 96 + nドラムコンボの文字間隔 + 20;
+                    }
+                    else
+                    {
+                        x -= 96 + nドラムコンボの文字間隔;
+                        this.txCOMBOドラム.vc拡大縮小倍率 = new Vector3(1.0f, 1.0f, 1.0f);
+                    }
                 }
+
 
                 y = nY上辺位置px;
 
@@ -347,10 +364,26 @@ namespace DTXMania
                     y += this.nジャンプ差分値[nJump];
                 }
 
-                if (this.txCOMBOドラム != null)
+                if( n桁数 < 4 )
                 {
-                    this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x, y + y動作差分,
-                        new Rectangle((n位の数[i] % 5) * nドラムコンボの幅, (n位の数[i] / 5) * nドラムコンボの高さ, nドラムコンボの幅, nドラムコンボの高さ));
+                    if( this.txCOMBOドラム != null )
+                    {
+                        this.txCOMBOドラム.t2D描画(CDTXMania.app.Device, x, y + y動作差分,
+                            new Rectangle((n位の数[i] % 5) * nドラムコンボの幅, (n位の数[i] / 5) * nドラムコンボの高さ, nドラムコンボの幅, nドラムコンボの高さ));
+                    }
+                }
+                else if( n桁数 >= 4 )
+                {
+                    y = nY上辺位置px + 20;
+                    if ((nJump >= 0) && (nJump < 180))
+                    {
+                        y += this.nジャンプ差分値[nJump];
+                    }
+                    if( this.txCOMBOドラム1000 != null )
+                    {
+                        this.txCOMBOドラム1000.t2D描画(CDTXMania.app.Device, x, y + y動作差分,
+                            new Rectangle((n位の数[i] % 5) * 96, (n位の数[i] / 5) * 128, 96, 128));
+                    }
                 }
             }
 
@@ -614,24 +647,26 @@ namespace DTXMania
         }
         public override void OnManagedリソースの作成()
         {
-            if (this.b活性化してない)
+            if( this.b活性化してない )
                 return;
 
-            this.txCOMBOドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayDrums combo.png"));
-            this.txComboBom = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Combobomb.png"));
-            if (this.txComboBom != null)
+            this.txCOMBOドラム = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums combo.png" ) );
+            this.txCOMBOドラム1000 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums combo_2.png" ) );
+            this.txComboBom = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Combobomb.png" ) );
+            if( this.txComboBom != null )
                 this.txComboBom.b加算合成 = true;
-            this.txCOMBOギター = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenPlayGuitar combo.png"));
+            this.txCOMBOギター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayGuitar combo.png" ) );
             base.OnManagedリソースの作成();
         }
         public override void OnManagedリソースの解放()
         {
-            if (this.b活性化してない)
+            if( this.b活性化してない )
                 return;
 
-            CDTXMania.tテクスチャの解放(ref this.txCOMBOドラム);
-            CDTXMania.tテクスチャの解放(ref this.txCOMBOギター);
-            CDTXMania.tテクスチャの解放(ref this.txComboBom);
+            CDTXMania.tテクスチャの解放( ref this.txCOMBOドラム );
+            CDTXMania.tテクスチャの解放( ref this.txCOMBOドラム1000 );
+            CDTXMania.tテクスチャの解放( ref this.txCOMBOギター );
+            CDTXMania.tテクスチャの解放( ref this.txComboBom );
 
             base.OnManagedリソースの解放();
         }
