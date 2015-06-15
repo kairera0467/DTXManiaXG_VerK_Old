@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using FDK;
+
+namespace DTXMania
+{
+	internal class CAct演奏BPMバー共通 : CActivity
+	{
+		// プロパティ
+
+        protected CTextureAf txBPMバー左;
+        protected CTextureAf txBPMバー右;
+        protected CTextureAf txBPMバーフラッシュ左;
+        protected CTextureAf txBPMバーフラッシュ右;
+        public CCounter ctBPMバー;
+        public double UnitTime;
+
+
+		// コンストラクタ
+
+		public CAct演奏BPMバー共通()
+		{
+			base.b活性化してない = true;
+		}
+		
+		
+		// メソッド
+
+		// CActivity 実装
+
+		public override void On活性化()
+		{
+            this.ctBPMバー = null;
+            this.UnitTime = 0.0;
+			base.On活性化();
+		}
+		public override void OnManagedリソースの作成()
+		{
+			if( !base.b活性化してない )
+			{
+                string pathBPMFL = CSkin.Path( @"Graphics\7_BPMbar_Flush_L.png" );
+                string pathBPMFR = CSkin.Path( @"Graphics\7_BPMbar_Flush_R.png" );
+                string pathBPMbarL = CSkin.Path( @"Graphics\7_BPMbarL.png" );
+                string pathBPMbarR = CSkin.Path( @"Graphics\7_BPMbarR.png" );
+                if( File.Exists( pathBPMbarL ) && File.Exists( pathBPMbarR ) )
+                {
+                    this.txBPMバー左 = CDTXMania.tテクスチャの生成Af( pathBPMbarL );
+                    this.txBPMバー右 = CDTXMania.tテクスチャの生成Af( pathBPMbarR );
+                }
+                if( File.Exists( pathBPMFL ) && File.Exists( pathBPMFR ) )
+                {
+                    this.txBPMバーフラッシュ左 = CDTXMania.tテクスチャの生成Af( pathBPMFL );
+                    this.txBPMバーフラッシュ右 = CDTXMania.tテクスチャの生成Af( pathBPMFR );
+                }
+
+				base.OnManagedリソースの作成();
+			}
+		}
+		public override void OnManagedリソースの解放()
+		{
+			if( !base.b活性化してない )
+			{
+                CDTXMania.tテクスチャの解放( ref this.txBPMバー左 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバー右 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ左 );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバーフラッシュ右 );
+
+				base.OnManagedリソースの解放();
+			}
+		}
+	}
+}
