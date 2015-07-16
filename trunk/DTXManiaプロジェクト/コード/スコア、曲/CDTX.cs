@@ -4996,6 +4996,28 @@ namespace DTXMania
 					}
                 }
                 #endregion
+                #region[ GLVDEC ]
+                else if( strコマンド.StartsWith( "GLVDEC", StringComparison.OrdinalIgnoreCase ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "GLVDEC", ref strコマンド, ref strパラメータ);
+                    int gleveldec;
+					if( int.TryParse( strパラメータ, out gleveldec ) )
+					{
+                        this.LEVELDEC.Guitar = Math.Min( Math.Max( gleveldec, 0 ), 10 );
+					}
+                }
+                #endregion
+                #region[ BLVDEC ]
+                else if( strコマンド.StartsWith( "BLVDEC", StringComparison.OrdinalIgnoreCase ) )
+                {
+                    this.t入力・パラメータ食い込みチェック( "BLVDEC", ref strコマンド, ref strパラメータ);
+                    int bleveldec;
+					if( int.TryParse( strパラメータ, out bleveldec ) )
+					{
+                        this.LEVELDEC.Bass = Math.Min( Math.Max( bleveldec, 0 ), 10 );
+					}
+                }
+                #endregion
 #if TEST_NOTEOFFMODE
 				else if (str.StartsWith("SUPRESSNOTEOFF_HIHAT", StringComparison.OrdinalIgnoreCase)) {
 					this.t入力・パラメータ食い込みチェック("SUPRESSNOTEOFF_HIHAT", ref str, ref str2);
