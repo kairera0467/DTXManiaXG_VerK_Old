@@ -283,6 +283,8 @@ namespace DTXMania
 			{
                 this.txベース曲パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base music panel.png"), false);
                 this.txベース難易度パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base drum panel.png"), false);
+                this.txベース難易度パネル_Guitar = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base guitar panel.png"), false);
+                this.txベース難易度パネル_Bass = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_base bass panel.png"), false);
 
                 this.txシンボル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\\6_Symbol.png"), false);
                 this.txLevel = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_LevelNumber.png"), false);
@@ -364,6 +366,8 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txジャケット );
                 CDTXMania.tテクスチャの解放( ref this.txベース曲パネル );
                 CDTXMania.tテクスチャの解放( ref this.txベース難易度パネル );
+                CDTXMania.tテクスチャの解放( ref this.txベース難易度パネル_Guitar );
+                CDTXMania.tテクスチャの解放( ref this.txベース難易度パネル_Bass );
 				CDTXMania.tテクスチャの解放( ref this.txタイトル );
                 CDTXMania.tテクスチャの解放( ref this.txアーティスト );
                 CDTXMania.tテクスチャの解放( ref this.txRISKY );
@@ -436,6 +440,12 @@ namespace DTXMania
             #region [ 背景、レベル、タイトル表示 ]
             //-----------------------------
             //this.ct進行タイマー.t進行();
+            string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
+            CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
+            CDTX cdtx = new CDTX(strDTXファイルパス, false);
+            bool bCLASSIC = CDTXMania.bコンパクトモード ? false : CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums;
+            
+
 
             if( this.ds背景動画 != null && !this.bSTAGEFILEが存在する )
             {
@@ -465,21 +475,35 @@ namespace DTXMania
                 if( this.txベース難易度パネル != null )
                     this.txベース難易度パネル.t2D描画( CDTXMania.app.Device, 254, 183 );
                 if( this.tx難易度パネル != null )
-                    this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194 , new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                    this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+            }
+            else if( CDTXMania.ConfigIni.bGuitar有効 )
+            {
+                if( cdtx.bチップがある.Guitar )
+                {
+                    if( this.txベース難易度パネル_Guitar != null )
+                        this.txベース難易度パネル_Guitar.t2D描画( CDTXMania.app.Device, 254, 162 );
+                    if( this.tx難易度パネル != null )
+                        this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                }
+                if( cdtx.bチップがある.Bass )
+                {
+                    if( this.txベース難易度パネル_Bass != null )
+                        this.txベース難易度パネル_Bass.t2D描画( CDTXMania.app.Device, 870, 162 );
+                    if( this.tx難易度パネル != null )
+                        this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 883, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                }
             }
 
 
             this.txヘッダーパネル.t2D描画( CDTXMania.app.Device, 0, 0 );
 
-            string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
-            CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
-            CDTX cdtx = new CDTX(strDTXファイルパス, true);
-            bool bCLASSIC = CDTXMania.bコンパクトモード ? false : CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums;
-            
+            #region[ 難易度数字 ]
+
             //後に変数にしてギターベースなどでも正常に表示できるようにする予定
             STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
 
-            if (CDTXMania.ConfigIni.bDrums有効)
+            if( CDTXMania.ConfigIni.bDrums有効 )
             {
                 int i = 0;
 
@@ -520,6 +544,62 @@ namespace DTXMania
                     }
                 }
             }
+            else if( CDTXMania.ConfigIni.bGuitar有効 )
+            {
+
+                n表記するLEVEL.Guitar = cdtx.LEVEL.Guitar / 10.0;
+                n表記するLEVEL.Guitar += (cdtx.LEVELDEC.Guitar != 0 ? cdtx.LEVELDEC.Guitar / 100.0 : 0);
+                n表記するLEVEL.Bass = cdtx.LEVEL.Bass / 10.0;
+                n表記するLEVEL.Bass += (cdtx.LEVELDEC.Bass != 0 ? cdtx.LEVELDEC.Bass / 100.0 : 0);
+                STDGBVALUE<int> DTXLevel = cdtx.LEVEL;
+                STDGBVALUE<double> DTXLevelDeci = new STDGBVALUE<double>();
+                DTXLevelDeci.Guitar = (DTXLevel.Guitar * 10 - cdtx.LEVEL.Guitar);
+                DTXLevelDeci.Bass = (DTXLevel.Bass * 10 - cdtx.LEVEL.Bass);
+
+                string strLevel_G = string.Format("{0:0.00}", n表記するLEVEL.Guitar);
+                string strLevel_B = string.Format("{0:0.00}", n表記するLEVEL.Bass);
+
+                //ギター
+                //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                {
+                //    DTXLevel = cdtx.LEVEL[i];
+                //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                }
+                //else
+                {
+                    this.t大文字表示(335, 218, string.Format("{0:0}", strLevel_G.Substring(0, 1)));
+                    this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                    if( cdtx.LEVEL.Guitar > 99 )
+                    {
+                        this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci.Guitar));
+                    }
+                    else
+                    {
+                        this.t小文字表示(354, 236, string.Format("{0:00}", strLevel_G.Substring(1, 3)));
+                    }
+                }
+                //ベース
+                //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                {
+                //    DTXLevel = cdtx.LEVEL[i];
+                //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                }
+                //else
+                {
+                    this.t大文字表示(953, 218, string.Format("{0:0}", strLevel_B.Substring(0, 1)));
+                    this.txLevel.t2D描画(CDTXMania.app.Device, 975, 251, new Rectangle(145, 54, 7, 8));
+                    if( cdtx.LEVEL.Guitar > 99 )
+                    {
+                        this.t小文字表示(983, 238, string.Format("{0,2:00}", DTXLevelDeci.Bass));
+                    }
+                    else
+                    {
+                        this.t小文字表示(971, 236, string.Format("{0:00}", strLevel_B.Substring(1, 3)));
+                    }
+                }
+            }
+
+            #endregion
 
             if( !CDTXMania.bコンパクトモード )
             {
@@ -930,6 +1010,8 @@ namespace DTXMania
         private CTexture txアーティスト;
         private CTexture txベース曲パネル;
         private CTexture txベース難易度パネル;
+        private CTexture txベース難易度パネル_Guitar;
+        private CTexture txベース難易度パネル_Bass;
         private CTexture txヘッダーパネル;
         private CTexture tx難易度パネル;
         private CTexture txジャケット;
