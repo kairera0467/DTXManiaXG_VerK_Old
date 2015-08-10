@@ -32,7 +32,7 @@ namespace DTXMania
                 if (CDTXMania.DTX.bチップがある.Guitar)
                 {
                     if (this.txLivePointゲージ != null)
-                        this.txLivePointゲージ.t2D描画(CDTXMania.app.Device, n本体ギターX, n本体ギターY, new Rectangle(0, 0, 71, 668));
+                        this.txLivePointゲージ.t2D描画(CDTXMania.app.Device, n本体ギターX, n本体ギターY, new Rectangle(117, 0, 71, 668));
 
                     string strG = string.Format("{0,3:##0}", base.n現在のLivePoint.Guitar);
                     for (int i = 0; i < 3; i++)
@@ -68,15 +68,15 @@ namespace DTXMania
                         {
                             if (this.n現在のLivePoint.Guitar >= 20 + (20 * i))
                             {
-                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 574 + n本体ギターY - (41 * i), new Rectangle(71, 536, 46, 44));
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 24, 574 + n本体ギターY - (41 * i), new Rectangle(71, 536, 46, 44));
                             }
                             if (this.n現在のLivePoint.Guitar >= 120 + (20 * i))
                             {
-                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 368 + n本体ギターY - (41 * i), new Rectangle(71, 580, 46, 44));
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 24, 368 + n本体ギターY - (41 * i), new Rectangle(71, 580, 46, 44));
                             }
                             if (this.n現在のLivePoint.Guitar >= 220 + (20 * i))
                             {
-                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 1, 162 + n本体ギターY - (41 * i), new Rectangle(71, 624, 46, 44));
+                                this.txLivePoint.t2D描画(CDTXMania.app.Device, n本体ギターX + 24, 162 + n本体ギターY - (41 * i), new Rectangle(71, 624, 46, 44));
                             }
                         }
                     }

@@ -401,7 +401,7 @@ namespace DTXMania
 				this.t背景テクスチャの生成();
 
 				this.txWailing枠 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlay wailing cursor.png" ) );
-                this.txボーナスエフェクト = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_Fillin Effect.png" ) );
+                //this.txボーナスエフェクト = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_Fillin Effect.png" ) );
                 if( CDTXMania.ConfigIni.nJudgeAnimeType == 1 )
                     this.tx判定画像anime = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\7_judge strings.png" ) );
                 else if( CDTXMania.ConfigIni.nJudgeAnimeType == 2 )
@@ -424,7 +424,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.tx判定画像anime );
                 CDTXMania.tテクスチャの解放( ref this.tx判定画像anime_2 );
                 CDTXMania.tテクスチャの解放( ref this.tx判定画像anime_3 );
-                CDTXMania.tテクスチャの解放( ref this.txボーナスエフェクト );
+                //CDTXMania.tテクスチャの解放( ref this.txボーナスエフェクト );
 				base.OnManagedリソースの解放();
 			}
 		}

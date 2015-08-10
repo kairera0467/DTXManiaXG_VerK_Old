@@ -546,7 +546,6 @@ namespace DTXMania
             }
             else if( CDTXMania.ConfigIni.bGuitar有効 )
             {
-
                 n表記するLEVEL.Guitar = cdtx.LEVEL.Guitar / 10.0;
                 n表記するLEVEL.Guitar += (cdtx.LEVELDEC.Guitar != 0 ? cdtx.LEVELDEC.Guitar / 100.0 : 0);
                 n表記するLEVEL.Bass = cdtx.LEVEL.Bass / 10.0;
@@ -560,41 +559,47 @@ namespace DTXMania
                 string strLevel_B = string.Format("{0:0.00}", n表記するLEVEL.Bass);
 
                 //ギター
-                //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                if( cdtx.bチップがある.Guitar )
                 {
-                //    DTXLevel = cdtx.LEVEL[i];
-                //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
-                }
-                //else
-                {
-                    this.t大文字表示(335, 218, string.Format("{0:0}", strLevel_G.Substring(0, 1)));
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
-                    if( cdtx.LEVEL.Guitar > 99 )
+                    //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
                     {
-                        this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci.Guitar));
+                    //    DTXLevel = cdtx.LEVEL[i];
+                    //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
                     }
-                    else
+                    //else
                     {
-                        this.t小文字表示(354, 236, string.Format("{0:00}", strLevel_G.Substring(1, 3)));
+                        this.t大文字表示(335, 218, string.Format("{0:0}", strLevel_G.Substring(0, 1)));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                        if( cdtx.LEVEL.Guitar > 99 )
+                        {
+                            this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci.Guitar));
+                        }
+                        else
+                        {
+                            this.t小文字表示(354, 236, string.Format("{0:00}", strLevel_G.Substring(1, 3)));
+                        }
                     }
                 }
-                //ベース
-                //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                if( cdtx.bチップがある.Bass )
                 {
-                //    DTXLevel = cdtx.LEVEL[i];
-                //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
-                }
-                //else
-                {
-                    this.t大文字表示(953, 218, string.Format("{0:0}", strLevel_B.Substring(0, 1)));
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 975, 251, new Rectangle(145, 54, 7, 8));
-                    if( cdtx.LEVEL.Guitar > 99 )
+                    //ベース
+                    //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
                     {
-                        this.t小文字表示(983, 238, string.Format("{0,2:00}", DTXLevelDeci.Bass));
+                    //    DTXLevel = cdtx.LEVEL[i];
+                    //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
                     }
-                    else
+                    //else
                     {
-                        this.t小文字表示(971, 236, string.Format("{0:00}", strLevel_B.Substring(1, 3)));
+                        this.t大文字表示(953, 218, string.Format("{0:0}", strLevel_B.Substring(0, 1)));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, 975, 251, new Rectangle(145, 54, 7, 8));
+                        if( cdtx.LEVEL.Guitar > 99 )
+                        {
+                            this.t小文字表示(983, 238, string.Format("{0,2:00}", DTXLevelDeci.Bass));
+                        }
+                        else
+                        {
+                            this.t小文字表示(971, 236, string.Format("{0:00}", strLevel_B.Substring(1, 3)));
+                        }
                     }
                 }
             }
