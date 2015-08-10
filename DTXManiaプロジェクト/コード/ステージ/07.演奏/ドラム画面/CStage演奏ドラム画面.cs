@@ -114,14 +114,6 @@ namespace DTXMania
 				this.txヒットバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar.png" ) );
                 this.txシャッター = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_shutter.png" ) );
                 this.txLaneCover = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_lanes_Cover_cls.png" ) );
-                /*
-				this.txヒットバーGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums hit-bar guitar.png" ) );
-				this.txレーンフレームGB = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums lane parts guitar.png" ) );
-                if( this.txレーンフレームGB != null )
-				{
-					this.txレーンフレームGB.n透明度 = 0xff - CDTXMania.ConfigIni.n背景の透過度;
-				}
-                 */
 
 				base.OnManagedリソースの作成();
 			}
