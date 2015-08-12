@@ -509,6 +509,9 @@ namespace DTXMania
 		public string str曲データ検索パス;
 		public string str選曲リストフォント;
 		public STDGBVALUE<Eタイプ> 判定文字表示位置; //2015.04.19 kairera0467 そのうちE判定文字表示位置に移行したい。
+
+        public int nSkillMode;
+
 //		public int nハイハット切り捨て下限Velocity;
 //		public int n切り捨て下限Velocity;			// #23857 2010.12.12 yyagi VelocityMin
 		public STDGBVALUE<int> nInputAdjustTimeMs;	// #23580 2011.1.3 yyagi タイミングアジャスト機能
@@ -1277,6 +1280,7 @@ namespace DTXMania
             this.eGraphicType = EGraphicType.XG;
             this.bDirectShowMode = false;
             this.bドラムコンボ表示 = true;
+            this.nSkillMode = 1;
             #region[ 画像 ]
             this.nLeftCymbalFrame = 9;
             this.nRightCymbalFrame = 9;
@@ -1287,7 +1291,7 @@ namespace DTXMania
             this.nRightCymbalX = 0;
             this.nRightCymbalY = 0;
 
-            this.nJudgeAnimeType = 0;
+            this.nJudgeAnimeType = 2;
             #endregion
             #endregion
         }
@@ -1676,7 +1680,11 @@ namespace DTXMania
 			sw.WriteLine( "; 動画再生にDirectShowを使うことによって、再生時の負担を軽減できます。");
 			sw.WriteLine( "; ただし使用時にはセットアップが必要になるのでご注意ください。");
 			sw.WriteLine( "DirectShowMode={0}", this.bDirectShowMode ? 1 : 0 );
-
+            sw.WriteLine();
+			sw.WriteLine( "; スキル計算モード(0:DTXManiaOriginal, 1:GITADORA)" );				// #25370 2011.6.3 yyagi
+			sw.WriteLine( "; SkillMode." );	//
+			sw.WriteLine( "SkillMode={0}", this.nSkillMode );							//
+			sw.WriteLine();
 			#region [ Adjust ]
 			sw.WriteLine( "; 判定タイミング調整(ドラム, ギター, ベース)(-99～99)[ms]" );		// #23580 2011.1.3 yyagi
 			sw.WriteLine("; Revision value to adjust judgement timing for the drums, guitar and bass.");	//
@@ -2663,6 +2671,10 @@ namespace DTXMania
 											else if ( str3.Equals( "DirectShowMode" ) )		// #28228 2012.5.1 yyagi
 											{
                                                 this.bDirectShowMode = C変換.bONorOFF( str4[ 0 ] ); ;
+											}
+											else if ( str3.Equals( "SkillMode" ) )		// #28228 2012.5.1 yyagi
+											{
+												this.nSkillMode = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 1, this.nSkillMode );
 											}
                                             #endregion
 

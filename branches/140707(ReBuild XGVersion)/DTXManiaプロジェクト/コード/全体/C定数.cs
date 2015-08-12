@@ -165,6 +165,7 @@ namespace DTXMania
 		Poor	= 3,
 		Miss	= 4,
 		Bad		= 5,
+        XPerfect = 6,
 		Auto
 	}
 	internal enum E判定文字表示位置

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using FDK;
+using SlimDX.Direct3D9;
 
 namespace DTXMania
 {
@@ -37,6 +38,7 @@ namespace DTXMania
             this.txLaneMain = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Paret.png" ) );
             this.txClipPanel = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_ClipPanel.png" ) );
 
+            this.txClip = new CTexture( CDTXMania.app.Device, 1280, 720, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
             base.OnManagedリソースの作成();
         }
 
@@ -68,12 +70,6 @@ namespace DTXMania
             }
             #endregion
 
-            #region[ ウィンドウクリップ ]
-            //2014.08.23 kairera0467 現在はパネルだけを描画する。
-            if( CDTXMania.ConfigIni.eGraphicType == EGraphicType.XG )
-                this.txClipPanel.t2D描画( CDTXMania.app.Device, 854, 142 );
-            #endregion
-
             return base.On進行描画();
         }
 
@@ -85,7 +81,7 @@ namespace DTXMania
         private CTexture txLaneBassDrum;
         private CTexture txLaneHiTom;
 
-        private CTexture txClip;
+        public CTexture txClip;
         private CTexture txClipPanel;
 
         

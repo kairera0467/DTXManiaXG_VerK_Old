@@ -119,7 +119,7 @@ namespace DTXMania
                         f拡大率y = f拡大率x;
                     }
 
-                    this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
+                    this.vcウィンドウクリップ縮小率 = new Vector3(f拡大率x, f拡大率y, 1f);
                     this.vclip = new Vector3(1.42f, 1.42f, 1f);
                 }
 			}
@@ -231,7 +231,7 @@ namespace DTXMania
                         f拡大率y = f拡大率x;
                     }
 
-                    this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
+                    this.vcウィンドウクリップ縮小率 = new Vector3(f拡大率x, f拡大率y, 1f);
                     #endregion
                 }
 
@@ -492,6 +492,8 @@ namespace DTXMania
                     {
                         #region[ ワイドクリップ ]
                         this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
+                        if( CDTXMania.ConfigIni.bDrums有効 == true )
+                            this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( CDTXMania.stage演奏ドラム画面.actWinClip.txClip );
 
                         if( this.dsBGV.dshow.b上下反転 )
                             this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, x, y );
@@ -599,7 +601,8 @@ namespace DTXMania
 		}
 		public override int On進行描画()
 		{
-			throw new InvalidOperationException( "t進行描画(int,int)のほうを使用してください。" );
+			//throw new InvalidOperationException( "t進行描画(int,int)のほうを使用してください。" );
+            return 0;
 		}
 
 
@@ -636,13 +639,13 @@ namespace DTXMania
         private Rectangle rec;
         private Rectangle rec2;
         private Rectangle rec3;
-        public Vector3 smallvc;
+        public Vector3 vcウィンドウクリップ縮小率;
         private Vector3 vclip;
         public Vector3 vector;
 
 		private IntPtr pBmp;
 		private CDTX.CAVI rAVI;
-		private CTexture tx描画用;
+		public CTexture tx描画用;
 
         //DirectShow用
         private bool b再生トグル;

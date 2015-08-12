@@ -48,6 +48,7 @@ namespace DTXMania
             base.list子Activities.Add( this.actLane = new CAct演奏Drumsレーン() );
             base.list子Activities.Add( this.actDrumSet = new CAct演奏Drumsドラムセット() );
             base.list子Activities.Add( this.actBPMBar = new CAct演奏DrumsBPMバー() );
+            base.list子Activities.Add( this.actWinClip = new CAct演奏Drumsウィンドウクリップ() );
 		}
 
 
@@ -208,6 +209,7 @@ namespace DTXMania
 				bIsFinishedPlaying = this.t進行描画・チップ(E楽器パート.DRUMS);
 				this.t進行描画・演奏情報();
 				this.t進行描画・ドラムパッド();
+                this.actWinClip.On進行描画();
                 this.t進行描画・ゲージ();
 				if ( this.e判定表示優先度 == E判定表示優先度.Chipより上 )
 				{
@@ -269,8 +271,9 @@ namespace DTXMania
 		private CAct演奏DrumsチップファイアD actChipFireD;
 		private CAct演奏Drumsグラフ actGraph;   // #24074 2011.01.23 add ikanick
 		private CAct演奏Drumsパッド actPad;
-        private CAct演奏Drumsレーン actLane;
+        public CAct演奏Drumsレーン actLane;
         public CAct演奏Drumsドラムセット actDrumSet;
+        public CAct演奏Drumsウィンドウクリップ actWinClip;
 		private bool bフィルイン中;
 		private readonly Eパッド[] eチャンネルtoパッド = new Eパッド[]
 		{

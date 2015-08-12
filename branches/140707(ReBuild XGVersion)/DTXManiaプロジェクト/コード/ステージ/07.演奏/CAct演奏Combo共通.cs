@@ -280,10 +280,20 @@ namespace DTXMania
             {
                 #region[ "COMBO" ]
                 //XG1では3桁以上はそのまま
-                if( n桁数 >= 2 )
+                if( n桁数 == 2 )
                 {
                     if( this.txCOMBOドラム != null )
 				        this.txCOMBOドラム.t2D描画( CDTXMania.app.Device, x - 170, y + 40, new Rectangle( 0, 230, 160, 64 ) );
+                }
+                else if( n桁数 == 3 )
+                {
+                    if( this.txCOMBOドラム != null )
+				        this.txCOMBOドラム.t2D描画( CDTXMania.app.Device, x - 264, y + 40, new Rectangle( 0, 294, 280, 64 ) );
+                }
+                else
+                {
+                    if( this.txCOMBOドラム != null )
+				        this.txCOMBOドラム.t2D描画( CDTXMania.app.Device, x - 320, y + 40, new Rectangle( 0, 357, 318, 64 ) );
                 }
 
                 #endregion
