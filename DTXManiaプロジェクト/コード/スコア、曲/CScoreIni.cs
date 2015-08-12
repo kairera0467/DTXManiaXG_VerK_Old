@@ -1354,6 +1354,134 @@ namespace DTXMania
 					this.stセクション[ i ] = new C演奏記録();
 			}
 		}
+
+		internal static int tXGランク値を計算して返す( C演奏記録 part )
+		{
+			if( part.b演奏にMIDI入力を使用した || part.b演奏にキーボードを使用した || part.b演奏にジョイパッドを使用した || part.b演奏にマウスを使用した )	// 2010.9.11
+			{
+				int nTotal = part.nPerfect数 + part.nGreat数 + part.nGood数 + part.nPoor数 + part.nMiss数;
+				return tXGランク値を計算して返す( part.db演奏型スキル値 );
+			}
+			return (int)ERANK.UNKNOWN;
+		}
+		internal static int tXGランク値を計算して返す( double dRate )
+		{
+			if( dRate >= 0.95 )
+			{
+				return (int)ERANK.SS;
+			}
+			if( dRate >= 0.8 )
+			{
+				return (int)ERANK.S;
+			}
+			if( dRate >= 0.73 )
+			{
+				return (int)ERANK.A;
+			}
+			if( dRate >= 0.63 )
+			{
+				return (int)ERANK.B;
+			}
+			if( dRate >= 0.53 )
+			{
+				return (int)ERANK.C;
+			}
+			if( dRate >= 0.43 )
+			{
+				return (int)ERANK.D;
+			}
+            if( dRate <= 0.4299 )
+			    return (int)ERANK.E;
+
+            return (int)ERANK.E;
+		}
+        /// <summary>
+        /// XGの曲別スキルを計算する。
+        /// </summary>
+        /// <param name="dbLevel">譜面レベル(double)</param>
+        /// <param name="dbRate">達成率%(double)</param>
+        /// <returns>曲別スキル(double)</returns>
+		internal static double tXGゲーム型スキルを計算して返す( double dbLevel, double dbRate )
+		{
+            //(達成率[%]÷100)×譜面レベル×20
+			double ret;
+
+            //曲別スキルはオート補正無し。
+            ret = ( dbRate / 100.0 ) * dbLevel * 20;
+
+
+			return ret;
+		}
+
+        /// <summary>
+        /// XG達成率を計算する。(ギターベースパート)
+        /// </summary>
+        /// <param name="nTotalNotes">総ノーツ数</param>
+        /// <param name="nPerfect">PERFECT判定数</param>
+        /// <param name="nGreat">GREAT判定数</param>
+        /// <param name="nBad">空MISS回数</param>
+        /// <param name="nMaxCombo">最大コンボ</param>
+        /// <param name="bAutoPlay">オートプレイフラグ</param>
+        /// <returns>XG達成率</returns>
+		internal static double tXGギター演奏型スキルを計算して返す( int nTotalNotes, int nPerfect, int nGreat, int nBad, int nMaxCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
+		{
+            //達成率=(判定値+COMBO値)×オプション補正
+            //GF判定値:(PERFECT数×85+GREAT数×25)/(総ノーツ数+空MISS数)
+            //COMBO値:COMBO数×15/総ノーツ数
+			if( nTotalNotes == 0 )
+				return 0.0;
+			double ret;
+            double judgeValue;
+            double comboValue;
+
+            judgeValue = ( nPerfect * 85.0 + nGreat * 25.0 ) / (double)( nTotalNotes + nBad );
+            comboValue = ( nTotalNotes * 15.0 ) / (double)( nTotalNotes );
+            ret = ( judgeValue + comboValue );
+
+            #region[ オプション補正 ]
+            if( !CDTXMania.ConfigIni.bギターが全部オートプレイである && inst == E楽器パート.GUITAR )
+            {
+                if( bAutoPlay.GtPick )
+                {
+                    ret = 0.0;
+                }
+            }
+            #endregion
+
+            return ret;
+		}
+		internal static double tXGドラム演奏型スキルを計算して返す( int nTotalNotes, int nPerfect, int nGreat, int nMaxCombo, STAUTOPLAY bAutoPlay )
+		{
+            //達成率=(判定値+COMBO値)×オプション補正
+            //DM判定値:(PERFECT数×85+GREAT数×35)/総ノーツ数
+            //COMBO値:COMBO数×15/総ノーツ数
+			if( nTotalNotes == 0 )
+				return 0.0;
+			double ret;
+            double judgeValue;
+            double comboValue;
+
+            judgeValue = ( nPerfect * 85.0 + nGreat * 35.0 ) / (double)nTotalNotes;
+            comboValue = ( nTotalNotes * 15.0 ) / (double)( nTotalNotes );
+            ret = ( judgeValue + comboValue );
+
+            #region[ オプション補正 ]
+            if( !CDTXMania.ConfigIni.bドラムが全部オートプレイである  )
+            {
+                if( bAutoPlay.BD && ( bAutoPlay.LP || bAutoPlay.LBD ) )
+                {
+                    ret *= 0.25;
+                }
+                else if( bAutoPlay.BD || ( bAutoPlay.LP || bAutoPlay.LBD ) )
+                {
+                    ret *= 0.5;
+                }
+            }
+            #endregion
+
+			return ret;
+		}
+
 		internal static int tランク値を計算して返す( C演奏記録 part )
 		{
 			if( part.b演奏にMIDI入力を使用した || part.b演奏にキーボードを使用した || part.b演奏にジョイパッドを使用した || part.b演奏にマウスを使用した )	// 2010.9.11

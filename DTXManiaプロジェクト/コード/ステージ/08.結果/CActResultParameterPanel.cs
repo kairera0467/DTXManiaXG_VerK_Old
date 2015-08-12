@@ -22,91 +22,92 @@ namespace DTXMania
 			st文字位置Array[ 0 ] = st文字位置;
 			ST文字位置 st文字位置2 = new ST文字位置();
 			st文字位置2.ch = '1';
-			st文字位置2.pt = new Point( 11, 0 );
+			st文字位置2.pt = new Point( 14, 0 );
 			st文字位置Array[ 1 ] = st文字位置2;
 			ST文字位置 st文字位置3 = new ST文字位置();
 			st文字位置3.ch = '2';
-			st文字位置3.pt = new Point( 0x16, 0 );
+			st文字位置3.pt = new Point( 28, 0 );
 			st文字位置Array[ 2 ] = st文字位置3;
 			ST文字位置 st文字位置4 = new ST文字位置();
 			st文字位置4.ch = '3';
-			st文字位置4.pt = new Point( 0x21, 0 );
+			st文字位置4.pt = new Point( 42, 0 );
 			st文字位置Array[ 3 ] = st文字位置4;
 			ST文字位置 st文字位置5 = new ST文字位置();
 			st文字位置5.ch = '4';
-			st文字位置5.pt = new Point( 0x2c, 0 );
+			st文字位置5.pt = new Point( 56, 0 );
 			st文字位置Array[ 4 ] = st文字位置5;
 			ST文字位置 st文字位置6 = new ST文字位置();
 			st文字位置6.ch = '5';
-			st文字位置6.pt = new Point( 0, 0x10 );
+			st文字位置6.pt = new Point( 0, 18 );
 			st文字位置Array[ 5 ] = st文字位置6;
 			ST文字位置 st文字位置7 = new ST文字位置();
 			st文字位置7.ch = '6';
-			st文字位置7.pt = new Point( 11, 0x10 );
+			st文字位置7.pt = new Point( 14, 18 );
 			st文字位置Array[ 6 ] = st文字位置7;
 			ST文字位置 st文字位置8 = new ST文字位置();
 			st文字位置8.ch = '7';
-			st文字位置8.pt = new Point( 0x16, 0x10 );
+			st文字位置8.pt = new Point( 28, 18 );
 			st文字位置Array[ 7 ] = st文字位置8;
 			ST文字位置 st文字位置9 = new ST文字位置();
 			st文字位置9.ch = '8';
-			st文字位置9.pt = new Point( 0x21, 0x10 );
+			st文字位置9.pt = new Point( 42, 18 );
 			st文字位置Array[ 8 ] = st文字位置9;
 			ST文字位置 st文字位置10 = new ST文字位置();
 			st文字位置10.ch = '9';
-			st文字位置10.pt = new Point( 0x2c, 0x10 );
+			st文字位置10.pt = new Point( 56, 18 );
 			st文字位置Array[ 9 ] = st文字位置10;
 			ST文字位置 st文字位置11 = new ST文字位置();
 			st文字位置11.ch = '.';
-			st文字位置11.pt = new Point( 0x37, 0x10 );
+			st文字位置11.pt = new Point( 70, 18 );
 			st文字位置Array[ 10 ] = st文字位置11;
 			this.st大文字位置 = st文字位置Array;
-			ST文字位置[] st文字位置Array2 = new ST文字位置[ 11 ];
-			ST文字位置 st文字位置12 = new ST文字位置();
-			st文字位置12.ch = '0';
-			st文字位置12.pt = new Point( 0, 0x20 );
-			st文字位置Array2[ 0 ] = st文字位置12;
-			ST文字位置 st文字位置13 = new ST文字位置();
-			st文字位置13.ch = '1';
-			st文字位置13.pt = new Point( 11, 0x20 );
-			st文字位置Array2[ 1 ] = st文字位置13;
+
+			ST文字位置[] st文字位置Array_em = new ST文字位置[ 11 ];
+			ST文字位置 st文字位置em_0 = new ST文字位置();
+			st文字位置em_0.ch = '0';
+			st文字位置em_0.pt = new Point( 0, 0x20 );
+			st文字位置Array_em[ 0 ] = st文字位置em_0;
+			ST文字位置 st文字位置em_1 = new ST文字位置();
+			st文字位置em_1.ch = '1';
+			st文字位置em_1.pt = new Point( 11, 0x20 );
+			st文字位置Array_em[ 1 ] = st文字位置em_1;
 			ST文字位置 st文字位置14 = new ST文字位置();
 			st文字位置14.ch = '2';
 			st文字位置14.pt = new Point( 0x16, 0x20 );
-			st文字位置Array2[ 2 ] = st文字位置14;
+			st文字位置Array_em[ 2 ] = st文字位置14;
 			ST文字位置 st文字位置15 = new ST文字位置();
 			st文字位置15.ch = '3';
 			st文字位置15.pt = new Point( 0x21, 0x20 );
-			st文字位置Array2[ 3 ] = st文字位置15;
+			st文字位置Array_em[ 3 ] = st文字位置15;
 			ST文字位置 st文字位置16 = new ST文字位置();
 			st文字位置16.ch = '4';
 			st文字位置16.pt = new Point( 0x2c, 0x20 );
-			st文字位置Array2[ 4 ] = st文字位置16;
+			st文字位置Array_em[ 4 ] = st文字位置16;
 			ST文字位置 st文字位置17 = new ST文字位置();
 			st文字位置17.ch = '5';
 			st文字位置17.pt = new Point( 0, 0x30 );
-			st文字位置Array2[ 5 ] = st文字位置17;
+			st文字位置Array_em[ 5 ] = st文字位置17;
 			ST文字位置 st文字位置18 = new ST文字位置();
 			st文字位置18.ch = '6';
 			st文字位置18.pt = new Point( 11, 0x30 );
-			st文字位置Array2[ 6 ] = st文字位置18;
+			st文字位置Array_em[ 6 ] = st文字位置18;
 			ST文字位置 st文字位置19 = new ST文字位置();
 			st文字位置19.ch = '7';
 			st文字位置19.pt = new Point( 0x16, 0x30 );
-			st文字位置Array2[ 7 ] = st文字位置19;
+			st文字位置Array_em[ 7 ] = st文字位置19;
 			ST文字位置 st文字位置20 = new ST文字位置();
 			st文字位置20.ch = '8';
 			st文字位置20.pt = new Point( 0x21, 0x30 );
-			st文字位置Array2[ 8 ] = st文字位置20;
+			st文字位置Array_em[ 8 ] = st文字位置20;
 			ST文字位置 st文字位置21 = new ST文字位置();
 			st文字位置21.ch = '9';
 			st文字位置21.pt = new Point( 0x2c, 0x30 );
-			st文字位置Array2[ 9 ] = st文字位置21;
+			st文字位置Array_em[ 9 ] = st文字位置21;
 			ST文字位置 st文字位置22 = new ST文字位置();
 			st文字位置22.ch = '%';
 			st文字位置22.pt = new Point( 0x37, 0x30 );
-			st文字位置Array2[ 10 ] = st文字位置22;
-			this.st小文字位置 = st文字位置Array2;
+			st文字位置Array_em[ 10 ] = st文字位置22;
+			this.st小文字位置 = st文字位置Array_em;
 			this.ptFullCombo位置 = new Point[] { new Point( 0x80, 0xed ), new Point( 0xdf, 0xed ), new Point( 0x141, 0xed ) };
 			base.b活性化してない = true;
 		}
@@ -124,8 +125,8 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.n本体X = 0xf2;
-			this.n本体Y = 0x44;
+			this.n本体X = 453;
+			this.n本体Y = 11;
 			this.sdDTXで指定されたフルコンボ音 = null;
 			this.bフルコンボ音再生済み = false;
 			base.On活性化();
@@ -147,9 +148,9 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult parameter panel.png" ), true );
+				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_result panel.png" ) );
 				this.tx文字[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult parameter numbers.png" ) );
-				this.tx文字[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult parameter numbers em.png" ) );
+				this.tx文字[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult parameter numbers_em.png" ) );
 				this.txFullCombo = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult fullcombo.png" ) );
 				this.txWhite = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile white 64x64.png" ) );
 				base.OnManagedリソースの作成();
@@ -175,7 +176,7 @@ namespace DTXMania
 			}
 			if( base.b初めての進行描画 )
 			{
-				this.ct表示用 = new CCounter( 0, 0x3e7, 2, CDTXMania.Timer );
+				this.ct表示用 = new CCounter( 0, 999, 2, CDTXMania.Timer );
 				base.b初めての進行描画 = false;
 			}
 			this.ct表示用.t進行();
@@ -351,6 +352,7 @@ namespace DTXMania
 		}
 
 		private bool bフルコンボ音再生済み;
+        private bool b新記録音再生済み;
 		private CCounter ct表示用;
 		private int n本体X;
 		private int n本体Y;
@@ -361,12 +363,17 @@ namespace DTXMania
 		private CTexture txFullCombo;
 		private CTexture txWhite;
 		private CTexture txパネル本体;
+        private CTexture tx達成率ゲージ;
+        private CTexture txDifficulty;
+        private CTexture txHiSpeed;
+        private CTexture txPart;
+        private CTexture txRisky;
 		private CTexture[] tx文字 = new CTexture[ 2 ];
 
-		private void t小文字表示( int x, int y, string str )
-		{
-			this.t小文字表示( x, y, str, false );
-		}
+        private void t小文字表示(int x, int y, string str)
+        {
+            this.t小文字表示(x, y, str, false);
+        }
 		private void t小文字表示( int x, int y, string str, bool b強調 )
 		{
 			foreach( char ch in str )
@@ -375,7 +382,7 @@ namespace DTXMania
 				{
 					if( this.st小文字位置[ i ].ch == ch )
 					{
-						Rectangle rectangle = new Rectangle( this.st小文字位置[ i ].pt.X, this.st小文字位置[ i ].pt.Y, 11, 0x10 );
+						Rectangle rectangle = new Rectangle( this.st小文字位置[ i ].pt.X, this.st小文字位置[ i ].pt.Y, 14, 0x12 );
 						if( ch == '%' )
 						{
 							rectangle.Width -= 2;
@@ -388,7 +395,7 @@ namespace DTXMania
 						break;
 					}
 				}
-				x += 8;
+				x += 11;
 			}
 		}
 		private void t大文字表示( int x, int y, string str )
@@ -403,7 +410,7 @@ namespace DTXMania
 				{
 					if( this.st大文字位置[ i ].ch == ch )
 					{
-						Rectangle rectangle = new Rectangle( this.st大文字位置[ i ].pt.X, this.st大文字位置[ i ].pt.Y, 11, 0x10 );
+						Rectangle rectangle = new Rectangle( this.st大文字位置[ i ].pt.X, this.st大文字位置[ i ].pt.Y, 14, 0x12 );
 						if( ch == '.' )
 						{
 							rectangle.Width -= 2;
@@ -416,7 +423,7 @@ namespace DTXMania
 						break;
 					}
 				}
-				x += 8;
+				x += 11;
 			}
 		}
 		//-----------------
