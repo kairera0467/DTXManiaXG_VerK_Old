@@ -490,16 +490,19 @@ namespace DTXMania
                 {
                     if ( ( this.bDShowクリップを再生している == true ) && this.dsBGV.dshow != null )
                     {
-                        #region[ ワイドクリップ ]
-                        this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
-                        if( CDTXMania.ConfigIni.bDrums有効 == true )
-                            this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( CDTXMania.stage演奏ドラム画面.actWinClip.txClip );
+                        if( CDTXMania.ConfigIni.eClipDispType == EClipDispType.背景のみ || CDTXMania.ConfigIni.eClipDispType == EClipDispType.両方 )
+                        {
+                            #region[ ワイドクリップ ]
+                            this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
+                            if( CDTXMania.ConfigIni.bDrums有効 == true )
+                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( CDTXMania.stage演奏ドラム画面.actWinClip.txClip );
 
-                        if( this.dsBGV.dshow.b上下反転 )
-                            this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, x, y );
-                        else
-                            this.tx描画用.t2D描画( CDTXMania.app.Device, x, y );
-                        #endregion
+                            if( this.dsBGV.dshow.b上下反転 )
+                                this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, x, y );
+                            else
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, x, y );
+                            #endregion
+                        }
                     }
                 }
 				else if ( ( this.tx描画用 != null ) && ( this.n総移動時間ms != -1 ) )

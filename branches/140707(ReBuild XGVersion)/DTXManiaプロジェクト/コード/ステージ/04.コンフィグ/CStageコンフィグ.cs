@@ -59,7 +59,7 @@ namespace DTXMania
 			try
 			{
 				this.n現在のメニュー番号 = 0;													//
-				this.ftフォント = new Font( "MS PGothic", 26f, FontStyle.Bold, GraphicsUnit.Pixel );			//
+				this.ftフォント = new Font( "MS PGothic", 36f, FontStyle.Bold, GraphicsUnit.Pixel );			//
 				for( int i = 0; i < 4; i++ )													//
 				{																				//
 					this.ctキー反復用[ i ] = new CCounter( 0, 0, 0, CDTXMania.Timer );			//
@@ -226,7 +226,7 @@ namespace DTXMania
 			#region [ 説明文パネル ]
 			//---------------------
 			if( this.tx説明文パネル != null )
-				this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 67, 382 );
+				this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 52, 382 );
 			//---------------------
 			#endregion
 			#region [ アイテム ]
@@ -567,7 +567,7 @@ namespace DTXMania
 		{
 			try
 			{
-				var image = new Bitmap( 220 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
+				var image = new Bitmap( 450 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
 				var graphics = Graphics.FromImage( image );
 				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 				
@@ -575,55 +575,35 @@ namespace DTXMania
 				switch( this.n現在のメニュー番号 )
 				{
 					case 0:
-						str[ 0, 0 ] = "システムに関係する項目を設定しま";
-						str[ 0, 1 ] = "す。";
+						str[ 0, 0 ] = "システムに関係する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings for an overall systems.";
 						break;
 
-					//case 1:
-					//    str[0, 0] = "ドラムのキー入力に関する項目を設";
-					//    str[0, 1] = "定します。";
-					//    str[1, 0] = "Settings for the drums key/pad inputs.";
-					//    str[1, 1] = "";
-					//    break;
-
-					//case 2:
-					//    str[0, 0] = "ギターのキー入力に関する項目を設";
-					//    str[0, 1] = "定します。";
-					//    str[1, 0] = "Settings for the guitar key/pad inputs.";
-					//    str[1, 1] = "";
-					//    break;
-
-					//case 3:
-					//    str[0, 0] = "ベースのキー入力に関する項目を設";
-					//    str[0, 1] = "定します。";
-					//    str[1, 0] = "Settings for the bass key/pad inputs.";
-					//    str[1, 1] = "";
-					//    break;
 					case 1:
-						str[ 0, 0 ] = "ドラムの演奏に関する項目を設定し";
-						str[ 0, 1 ] = "ます。";
+						str[ 0, 0 ] = "ドラムの演奏に関する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings to play the drums.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 2:
-						str[ 0, 0 ] = "ギターの演奏に関する項目を設定し";
-						str[ 0, 1 ] = "ます。";
+						str[ 0, 0 ] = "ギターの演奏に関する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings to play the guitar.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 3:
-						str[ 0, 0 ] = "ベースの演奏に関する項目を設定し";
-						str[ 0, 1 ] = "ます。";
+						str[ 0, 0 ] = "ベースの演奏に関する項目を設定します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Settings to play the bass.";
 						str[ 1, 1 ] = "";
 						break;
 
 					case 4:
-						str[ 0, 0 ] = "設定を保存し、コンフィグ画面を終了";
-						str[ 0, 1 ] = "します。";
+						str[ 0, 0 ] = "設定を保存し、コンフィグ画面を終了します。";
+						str[ 0, 1 ] = "";
 						str[ 1, 0 ] = "Save the settings and exit from";
 						str[ 1, 1 ] = "CONFIGURATION menu.";
 						break;
@@ -654,7 +634,7 @@ namespace DTXMania
 		{
 			try
 			{
-				var image = new Bitmap( 220 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
+				var image = new Bitmap( 450 * 2, 192 * 2 );		// 説明文領域サイズの縦横 2 倍。（描画時に 0.5 倍で表示する。）
 				var graphics = Graphics.FromImage( image );
 				graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 

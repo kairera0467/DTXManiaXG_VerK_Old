@@ -13,6 +13,8 @@ namespace DTXMania
 	{
 		// プロパティ
 
+        // 説明文は全角25文字ぐらいまでいける。
+
 		public bool bIsKeyAssignSelected		// #24525 2011.3.15 yyagi
 		{
 			get
@@ -81,34 +83,40 @@ namespace DTXMania
 				"Reload song data." );
 			this.list項目リスト.Add( this.iSystemReloadDTX );
 
+			int nDGmode = CDTXMania.ConfigIni.bDrums有効 ? 1 : 0;
+			this.iSystemGRmode = new CItemList("Drums & GR", CItemBase.Eパネル種別.通常, nDGmode,
+				"使用楽器の選択：\n　DrOnly: ドラムのみ有効にします。\n　GROnly: ギター/ベースのみの専用画面を用います。",
+				"　DrOnly: Only Drums is available.\n　GROnly: Only Guitar/Bass are available.\n You can play them in GR screen.",
+				new string[] { "DrOnly", "GROnly" });
+			this.list項目リスト.Add(this.iSystemGRmode);
+
 			this.iCommonDark = new CItemList( "Dark", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eDark,
-				"HALF: 背景、レーン、ゲージが表示\nされなくなります。\nFULL: さらに小節線、拍線、判定ラ\nイン、パッドも表示されなくなります。",
-				"OFF: all display parts are shown.\nHALF: wallpaper, lanes and gauge are\n disappeared.\nFULL: additionaly to HALF, bar/beat\n lines, hit bar, pads are disappeared.",
+				"　HALF: 背景、レーン、ゲージが表示されなくなります。\n　FULL: さらに小節線、拍線、判定ライン、パッドも表示\n　　　されなくなります。",
+				"　OFF: all display parts are shown.\n　HALF: wallpaper, lanes and gauge are\n disappeared.\n　FULL: additionaly to HALF, bar/beat\n lines, hit bar, pads are disappeared.",
 				new string[] { "OFF", "HALF", "FULL" } );
 			this.list項目リスト.Add( this.iCommonDark );
 
 			this.iSystemRisky = new CItemInteger( "Risky", 0, 10, CDTXMania.ConfigIni.nRisky,
-				"Riskyモードの設定:\n1以上の値にすると、その回数分の\nPoor/MissでFAILEDとなります。\n0にすると無効になり、\nDamageLevelに従ったゲージ増減と\nなります。\nStageFailedの設定と併用できます。",
+				"Riskyモードの設定:\n1以上の値にすると、その回数分のPoor/MissでFAILED\nとなります。\n　0にすると無効になり、DamageLevelに従ったゲージ増減\nとなります。\nStageFailedの設定と併用できます。",
 				"Risky mode:\nSet over 1, in case you'd like to specify\n the number of Poor/Miss times to be\n FAILED.\nSet 0 to disable Risky mode." );
 			this.list項目リスト.Add( this.iSystemRisky );
 
-			int nDGmode = (CDTXMania.ConfigIni.bGuitar有効 ? 2 : 0) + (CDTXMania.ConfigIni.bDrums有効 ? 1 : 0) - 1;
-			this.iSystemGRmode = new CItemList("Drums & GR", CItemBase.Eパネル種別.通常, nDGmode,
-				"使用楽器の選択：\nDrOnly: ドラムのみ有効にします。\nGROnly: ギター/ベースのみの\n専用画面を用います。\nBoth: ドラムとギター/ベースの\n両方を有効にします。\n",
-				"DrOnly: Only Drums is available.\nGROnly: Only Guitar/Bass are available.\n You can play them in GR screen.\nBoth: Both Drums and Guitar/Bass\n are available.",
-				new string[] { "DrOnly", "GROnly", "Both" });
-			this.list項目リスト.Add(this.iSystemGRmode);
+			this.iSystemClipDispType = new CItemList( "Movie", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eClipDispType,
+				"ムービーの表示場所\n　BG:背景にだけ表示する\n　Window:ウィンドウにだけ表示する\n　Both:両方表示する\n　OFF:表示しない",
+				"MoviePosition\n BG:BackgroundOnly\n Window:WindowOnly\n Both:Window&BG\n OFF:disable",
+                new string[] {  "BG", "Window", "Both", "OFF" });
+			this.list項目リスト.Add( this.iSystemClipDispType );
 
 
 			this.iCommonPlaySpeed = new CItemInteger("PlaySpeed", 5, 40, CDTXMania.ConfigIni.n演奏速度,
-				"曲の演奏速度を、速くしたり遅くした\n" +
-				"りすることができます。\n" +
-				"（※一部のサウンドカードでは正しく\n" +
-				"　再生できない可能性があります。）\n" +
+				"曲の演奏速度を、速くしたり遅くしたりすることが\n" +
+				"できます。\n" +
+				"（※一部のサウンドカードでは正しく再生できない\n" +
+				"　可能性があります。）\n" +
 				"\n" +
-				"TimeStretchがONのときに、演奏\n" +
-				"速度をx0.850以下にすると、チップの\n" +
-				"ズレが大きくなります。",
+				"TimeStretchがONのときに、演奏速度をx0.850以下に\n" +
+				"すると、チップのズレが大きくなります。\n" +
+				"",
 				"It changes the song speed.\n" +
 				"For example, you can play in half\n" +
 				" speed by setting PlaySpeed = 0.500\n" +
@@ -122,8 +130,8 @@ namespace DTXMania
 			this.iSystemTimeStretch = new CItemToggle( "TimeStretch", CDTXMania.ConfigIni.bTimeStretch,
 				"演奏速度の変更方式:\n" + 
 				"ONにすると、演奏速度の変更を、\n" +
-				"周波数変更ではなく\n" +
-				"タイムストレッチで行います。" +
+				"周波数変更ではなくタイムストレッチで\n" +
+				"行います。" +
 				"\n" +
 				"これをONにすると、サウンド処理に\n" +
 				"より多くのCPU性能を使用します。\n" +
@@ -140,18 +148,17 @@ namespace DTXMania
 
 
 			this.iSystemFullscreen = new CItemToggle( "Fullscreen", CDTXMania.ConfigIni.b全画面モード,
-				"画面モード設定：\nON で全画面モード、OFF でウィンド\nウモードになります。",
+				"画面モード設定：\nON で全画面モード、OFF でウィンドウモードになります。",
 				"Fullscreen mode or window mode." );
 			this.list項目リスト.Add( this.iSystemFullscreen );
 			this.iSystemStageFailed = new CItemToggle( "StageFailed", CDTXMania.ConfigIni.bSTAGEFAILED有効,
-				"STAGE FAILED 有効：\nON にすると、ゲージがなくなった時\nに STAGE FAILED となり演奏が中断\nされます。OFF の場合は、ゲージが\nなくなっても最後まで演奏できます。",
+				"STAGE FAILED 有効：\nON にすると、ゲージがなくなった時に\n STAGE FAILED となり演奏が中断されます。\nOFF の場合は、ゲージがなくなっても\n最後まで演奏できます。",
 				"Turn OFF if you don't want to encount\n GAME OVER." );
 			this.list項目リスト.Add( this.iSystemStageFailed );
 			this.iSystemRandomFromSubBox = new CItemToggle( "RandSubBox", CDTXMania.ConfigIni.bランダムセレクトで子BOXを検索対象とする,
 				"子BOXをRANDOMの対象とする：\nON にすると、RANDOM SELECT 時\nに子BOXも選択対象とします。",
 				"Turn ON to use child BOX (subfolders)\n at RANDOM SELECT." );
 			this.list項目リスト.Add( this.iSystemRandomFromSubBox );
-
 
 	
 			this.iSystemAdjustWaves = new CItemToggle( "AdjustWaves", CDTXMania.ConfigIni.bWave再生位置自動調整機能有効,
@@ -173,7 +180,7 @@ namespace DTXMania
 				" only when DirectSound is used.");
 			this.list項目リスト.Add( this.iSystemAdjustWaves );
 			this.iSystemVSyncWait = new CItemToggle( "VSyncWait", CDTXMania.ConfigIni.b垂直帰線待ちを行う,
-				"垂直帰線同期：\n画面の描画をディスプレイの垂直帰\n線中に行なう場合には ON を指定し\nます。ON にすると、ガタつきのない\n滑らかな画面描画が実現されます。",
+				"垂直帰線同期：\n画面の描画をディスプレイの垂直帰線中に行なう場合には ON を\n指定します。ON にすると、ガタつきのない\n滑らかな画面描画が実現されます。",
 				"Turn ON to wait VSync (Vertical\n Synchronizing signal) at every\n drawings. (so FPS becomes 60)\nIf you have enough CPU/GPU power,\n the scroll would become smooth." );
 			this.list項目リスト.Add( this.iSystemVSyncWait );
 			this.iSystemAVI = new CItemToggle( "AVI", CDTXMania.ConfigIni.bAVI有効,
@@ -184,11 +191,11 @@ namespace DTXMania
 				"BGAの使用：\n画像(BGA)を表示可能にする場合に\nON にします。BGA の再生には、それ\nなりのマシンパワーが必要とされます。",
 				"To draw BGA (back ground animations)\n or not." );
 			this.list項目リスト.Add( this.iSystemBGA );
-			this.iSystemPreviewSoundWait = new CItemInteger( "PreSoundWait", 0, 0x2710, CDTXMania.ConfigIni.n曲が選択されてからプレビュー音が鳴るまでのウェイトms,
+			this.iSystemPreviewSoundWait = new CItemInteger( "PreSoundWait", 0, 10000, CDTXMania.ConfigIni.n曲が選択されてからプレビュー音が鳴るまでのウェイトms,
 				"プレビュー音演奏までの時間：\n曲にカーソルが合わされてからプレ\nビュー音が鳴り始めるまでの時間を\n指定します。\n0 ～ 10000 [ms] が指定可能です。",
 				"Delay time(ms) to start playing preview\n sound in SELECT MUSIC screen.\nYou can specify from 0ms to 10000ms." );
 			this.list項目リスト.Add( this.iSystemPreviewSoundWait );
-			this.iSystemPreviewImageWait = new CItemInteger( "PreImageWait", 0, 0x2710, CDTXMania.ConfigIni.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms,
+			this.iSystemPreviewImageWait = new CItemInteger( "PreImageWait", 0, 10000, CDTXMania.ConfigIni.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms,
 				"プレビュー画像表示までの時間：\n曲にカーソルが合わされてからプレ\nビュー画像が表示されるまでの時間\nを指定します。\n0 ～ 10000 [ms] が指定可能です。",
 				"Delay time(ms) to show preview image\n in SELECT MUSIC screen.\nYou can specify from 0ms to 10000ms." );
 			this.list項目リスト.Add( this.iSystemPreviewImageWait );
@@ -196,7 +203,7 @@ namespace DTXMania
 				"演奏情報の表示：\n演奏中、BGA領域の下部に演奏情報\n（FPS、BPM、演奏時間など）を表示し\nます。\nまた、小節線の横に小節番号が表示\nされるようになります。",
 				"To show song informations on playing\n BGA area. (FPS, BPM, total time etc)\nYou can ON/OFF the indications\n by pushing [Del] while playing drums,\n guitar or bass." );
 			this.list項目リスト.Add( this.iSystemDebugInfo );
-			this.iSystemBGAlpha = new CItemInteger( "BG Alpha", 0, 0xff, CDTXMania.ConfigIni.n背景の透過度,
+			this.iSystemBGAlpha = new CItemInteger( "BG Alpha", 0, 255, CDTXMania.ConfigIni.n背景の透過度,
 				"背景画像の半透明割合：\n背景画像をDTXManiaのフレーム画像\nと合成する際の、背景画像の透明度\nを指定します。\n0 が完全透明で、255 が完全不透明\nとなります。",
 				"The degree for transparing playing\n screen and wallpaper.\n\n0=completely transparent,\n255=no transparency" );
 			this.list項目リスト.Add( this.iSystemBGAlpha );
@@ -410,9 +417,9 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iSystemSkinSubfolder );
 			this.iSystemUseBoxDefSkin = new CItemToggle( "Skin (Box)", CDTXMania.ConfigIni.bUseBoxDefSkin,
 				"Music boxスキンの利用：\n" +
-				"特別なスキンが設定されたMusic box\n" +
-				"に出入りしたときに、自動でスキンを\n" +
-				"切り替えるかどうかを設定します。\n",
+				"特別なスキンが設定されたMusic boxに出入りしたときに、\n" +
+				"自動でスキンを切り替えるかどうかを設定します。\n" +
+				"\n",
 				//"\n" +
 				//"(Music Boxスキンは、box.defファイル\n" +
 				//" で指定できます)\n",
@@ -423,7 +430,7 @@ namespace DTXMania
 
 	
 			this.iSystemGoToKeyAssign = new CItemBase( "System Keys", CItemBase.Eパネル種別.通常,
-			"システムのキー入力に関する項目を設\n定します。",
+			"システムのキー入力に関する項目を設定します。",
 			"Settings for the system key/pad inputs." );
 			this.list項目リスト.Add( this.iSystemGoToKeyAssign );
 
@@ -447,8 +454,8 @@ namespace DTXMania
 
 			#region [ AutoPlay ]
 			this.iDrumsAutoPlayAll = new CItemThreeState( "AutoPlay (All)", CItemThreeState.E状態.不定,
-				"全パッドの自動演奏の ON/OFF を\n" +
-				"まとめて切り替えます。",
+				"全パッドの自動演奏の ON/OFF をまとめて切り替えます。\n" +
+				"",
 				"You can change whether Auto or not\n" +
 				" for all drums lanes at once." );
 			this.list項目リスト.Add( this.iDrumsAutoPlayAll );
@@ -459,8 +466,8 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsLeftCymbal );
 
 			this.iDrumsHiHat = new CItemToggle( "    HiHat", CDTXMania.ConfigIni.bAutoPlay.HH,
-				"ハイハットを自動で演奏します。\n" +
-				"（クローズ、オープンとも）",
+				"ハイハットを自動で演奏します。(クローズ、オープン共通)\n" +
+				"",
 				"To play HiHat automatically.\n" +
 				"(It effects to both HH-close and\n HH-open)" );
 			this.list項目リスト.Add( this.iDrumsHiHat );
@@ -491,8 +498,8 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsFloorTom );
 
 			this.iDrumsCymbalRide = new CItemToggle( "    Cym/Ride", CDTXMania.ConfigIni.bAutoPlay.CY,
-				"右シンバルとライドシンバルを自動で\n" +
-				"演奏します。",
+				"右シンバルとライドシンバルを自動で演奏します。\n" +
+				"",
 				"To play both right- and Ride-Cymbal\n" +
 				" automatically." );
 			this.list項目リスト.Add( this.iDrumsCymbalRide );
@@ -503,16 +510,16 @@ namespace DTXMania
 			this.list項目リスト.Add( this.iDrumsLeftPedal );
 
 			this.iDrumsLeftBassDrum = new CItemToggle( "    LeftBassDrum", CDTXMania.ConfigIni.bAutoPlay.LBD,
-				"左バスドラムを自動で\n" +
-				"演奏します。",
+				"左バスドラムを自動で演奏します。\n" +
+				"",
 				"To play both LeftBassDrum\n" +
 				" automatically." );
 			this.list項目リスト.Add( this.iDrumsLeftBassDrum );
 			#endregion
 
 			this.iDrumsScrollSpeed = new CItemInteger( "ScrollSpeed", 0, 0x7cf, CDTXMania.ConfigIni.n譜面スクロール速度.Drums,
-				"演奏時のドラム譜面のスクロールの\n" +
-				"速度を指定します。\n" +
+				"演奏時のドラム譜面のスクロールの速度を指定します。\n" +
+				"\n" +
 				"x0.5 ～ x1000.0 を指定可能です。",
 				"To change the scroll speed for the\n" +
 				"drums lanes.\n" +
@@ -523,17 +530,13 @@ namespace DTXMania
 			this.iDrumsSudHid = new CItemList( "Sud+Hid", CItemBase.Eパネル種別.通常, getDefaultSudHidValue(E楽器パート.DRUMS ),
 				"ドラムチップの表示方式:\n" +
 				"OFF:　　チップを常に表示します。\n" +
-				"Sudden: チップが譜面の下の方から\n" +
-				"　　　　表示されるようになります。\n" +
-				"Hidden: チップが譜面の下の方で表示\n" +
-				"　　　　されなくなります。\n" +
-				"Sud+Hid: SuddenとHiddenの効果を\n" +
-				"　　　　同時にかけます。\n" +
-				"S(emi)-Invisible:\n" +
-				"　　　　通常はチップを透明にしますが、\n" +
+				"Sudden: チップが譜面の途中から表示されます。\n" +
+				"Hidden: チップが譜面の途中から表示されます。\n" +
+				"Sud+Hid: SuddenとHiddenの効果を同時にかけます。\n" +
+				"S(emi)-Invisible: 通常はチップを透明にしますが、\n" +
 				"　　　　Poor/Miss時しばらく表示します。\n" +
-				"F(ull)-Invisible:\n" +
-				"　　　　チップを常に透明にします。\n" +
+				"　　　　\n" +
+				"F(ull)-Invisible: チップを常に透明にします。\n" +
 				"　　　　暗譜での練習にお使いください。",
 
 				"Drums chips display type:\n" +
@@ -552,53 +555,15 @@ namespace DTXMania
 				new string[] { "OFF", "Sudden", "Hidden", "Sud+Hid", "S-Invisible", "F-Invisible" } );
 			this.list項目リスト.Add( this.iDrumsSudHid );
 
-			//this.iDrumsSudden = new CItemToggle( "Sudden", CDTXMania.ConfigIni.bSudden.Drums,
-			//    "ドラムチップが譜面の下の方から表\n" +
-			//    "示されるようになります。",
-			//    "Drums chips are disappered until they\n" +
-			//    "come near the hit bar, and suddenly\n" +
-			//    "appears." );
-			//this.list項目リスト.Add( this.iDrumsSudden );
-
-			//this.iDrumsHidden = new CItemToggle( "Hidden", CDTXMania.ConfigIni.bHidden.Drums,
-			//    "ドラムチップが譜面の下の方で表示\n" +
-			//    "されなくなります。",
-			//    "Drums chips are hidden by approaching\n" +
-			//    "to the hit bar. " );
-			//this.list項目リスト.Add( this.iDrumsHidden );
-
-			//this.iDrumsInvisible = new CItemList( "Invisible", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eInvisible.Drums,
-			//    "ドラムチップの透明化\n" +
-			//    "OFF: チップを常に表示します。\n" +
-			//    "SEMI: 通常はチップを透明にしますが、\n" +
-			//    "　　　Poor/Miss時はしばらく表示します。\n" +
-			//    "FULL: チップを常に透明にします。\n" +
-			//    "　　　暗譜での練習にお使いください。\n" +
-			//    "これをONにすると、SuddenとHiddenの\n" +
-			//    "効果は無効になります。",
-			//    "Invisible drums chip:\n" +
-			//    "If you set Blindfold=ON, you can't\n" +
-			//    "see the chips at all.",
-			//    new string[] { "OFF", "SEMI", "FULL" } );
-			//this.list項目リスト.Add( this.iDrumsInvisible );
-
 			this.iCommonDark = new CItemList( "Dark", CItemBase.Eパネル種別.通常, (int) CDTXMania.ConfigIni.eDark,
-				"HALF: 背景、レーン、ゲージが表示\n" +
-				"されなくなります。\n" +
-				"FULL: さらに小節線、拍線、判定ラ\n" +
-				"イン、パッドも表示されなくなります。",
-				"OFF: all display parts are shown.\n" +
-				"HALF: wallpaper, lanes and gauge are\n" +
-				" disappeared.\n" +
-				"FULL: additionaly to HALF, bar/beat\n" +
-				" lines, hit bar, pads are disappeared.",
+				"　HALF: 背景、レーン、ゲージが表示されなくなります。\n　FULL: さらに小節線、拍線、判定ライン、パッドも表示\n　　　されなくなります。",
+				"　OFF: all display parts are shown.\n　HALF: wallpaper, lanes and gauge are\n disappeared.\n　FULL: additionaly to HALF, bar/beat\n lines, hit bar, pads are disappeared.",
 				new string[] { "OFF", "HALF", "FULL" } );
 			this.list項目リスト.Add( this.iCommonDark );
 
-
 			this.iDrumsReverse = new CItemToggle( "Reverse", CDTXMania.ConfigIni.bReverse.Drums,
-				"ドラムチップが譜面の下から上に流\n" +
-				"れるようになります。",
+				"ドラムチップが画面の下から上に流れるようになります。\n" +
+				"",
 				"The scroll way is reversed. Drums chips\n"
 				+ "flow from the bottom to the top." );
 			this.list項目リスト.Add( this.iDrumsReverse );
@@ -627,8 +592,8 @@ namespace DTXMania
 
 			#region [ Position ]
 			this.iDrumsComboDisp = new CItemToggle( "ComboDisp", CDTXMania.ConfigIni.bドラムコンボ表示,
-				"OFFにすると演奏中のコンボが\n" +
-				"表示されなくなります。",
+				"OFFにすると演奏中のコンボが表示されなくなります。\n" +
+				"",
 				"OFFにすると演奏中のコンボが\n" +
 				"表示されなくなります。\n");
 			this.list項目リスト.Add( this.iDrumsComboDisp );
@@ -742,9 +707,9 @@ namespace DTXMania
 
 			this.iSystemCymbalFree = new CItemToggle( "CymbalFree", CDTXMania.ConfigIni.bシンバルフリー,
 				"シンバルフリーモード：\n" +
-				"左シンバル・右シンバルの区別をなく\n" +
-				"します。ライドシンバルまで区別をな\n" +
-				"くすか否かは、CYGroup に従います。\n",
+				"左シンバル・右シンバルの区別をなくします。\n" +
+				"ライドシンバルまで区別をなくすか否かは、\n" +
+				"CYGroup に従います。\n",
 				"Turn ON to group LC (left cymbal) and\n" +
 				" CY (right cymbal).\n" +
 				"Whether RD (ride cymbal) is also\n" +
@@ -843,32 +808,28 @@ namespace DTXMania
 
 			this.iSystemSoundMonitorDrums = new CItemToggle( "DrumsMonitor", CDTXMania.ConfigIni.b演奏音を強調する.Drums,
 				"ドラム音モニタ：\n" +
-				"ドラム音を他の音より大きめの音量で\n" +
-				"発声します。\n" +
-				"ただし、オートプレイの場合は通常音\n" +
-				"量で発声されます。",
+				"ドラム音を他の音より大きめの音量で発声します。\n" +
+				"\n" +
+				"ただし、オートプレイの場合は通常音量で\n" +
+				"発声されます。",
 				"To enhance the drums chip sound\n" +
 				"(except autoplay)." );
 			this.list項目リスト.Add( this.iSystemSoundMonitorDrums );
 
-			this.iSystemMinComboDrums = new CItemInteger( "D-MinCombo", 1, 0x1869f, CDTXMania.ConfigIni.n表示可能な最小コンボ数.Drums,
+			this.iSystemMinComboDrums = new CItemInteger( "D-MinCombo", 1, 99999, CDTXMania.ConfigIni.n表示可能な最小コンボ数.Drums,
 				"表示可能な最小コンボ数（ドラム）：\n" +
-				"画面に表示されるコンボの最小の数\n" +
-				"を指定します。\n" +
+				"画面に表示されるコンボの最小の数を指定します。\n" +
 				"1 ～ 99999 の値が指定可能です。",
-				"Initial number to show the combo\n" +
-				" for the drums.\n" +
+				"Initial number to show the combo for the drums.\n" +
 				"You can specify from 1 to 99999." );
 			this.list項目リスト.Add( this.iSystemMinComboDrums );
 
-
 			// #23580 2011.1.3 yyagi
 			this.iDrumsInputAdjustTimeMs = new CItemInteger( "InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums,
-				"ドラムの入力タイミングの微調整を\n" +
-				"行います。\n" +
+				"ドラムの入力タイミングの微調整を行います。\n" +
 				"-99 ～ 99ms まで指定可能です。\n" +
-				"入力ラグを軽減するためには、負の\n" +
-				"値を指定してください。\n",
+				"入力ラグを軽減するためには、負の値を指定\n" +
+				"してください。\n",
 				"To adjust the drums input timing.\n" +
 				"You can set from -99 to 99ms.\n" +
 				"To decrease input lag, set minus value." );
@@ -876,16 +837,15 @@ namespace DTXMania
 
 			// #24074 2011.01.23 add ikanick
 			this.iDrumsGraph = new CItemToggle( "Graph", CDTXMania.ConfigIni.bGraph.Drums,
-				"最高スキルと比較できるグラフを\n" +
-				"表示します。\n" +
+				"最高スキルと比較できるグラフを表示します。\n" +
 				"オートプレイだと表示されません。",
 				"To draw Graph \n" +
 				" or not." );
 			this.list項目リスト.Add( this.iDrumsGraph );
 
 			this.iDrumsGoToKeyAssign = new CItemBase( "Drums Keys", CItemBase.Eパネル種別.通常,
-				"ドラムのキー入力に関する項目を設\n"+
-				"定します。",
+				"ドラムのキー入力に関する項目を設定します。\n"+
+				"",
 				"Settings for the drums key/pad inputs." );
 			this.list項目リスト.Add( this.iDrumsGoToKeyAssign );
 
@@ -2405,6 +2365,7 @@ namespace DTXMania
 		private CItemBase iSystemGoToKeyAssign;		// #24609
 
 		private CItemList iSystemGRmode;
+        private CItemList iSystemClipDispType;
 
 		//private CItemToggle iBassAutoPlay;
 		private CItemThreeState iBassAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2447,6 +2408,7 @@ namespace DTXMania
         private CItemToggle iDrumsLeftPedal;
         private CItemToggle iDrumsLeftBassDrum;
         private CItemToggle iDrumsComboDisp;
+
 
 		//private CItemToggle iGuitarAutoPlay;
 		private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2597,6 +2559,8 @@ namespace DTXMania
 //Trace.TraceInformation( "Skin現在BoxDef  : " + CSkin.strBoxDefSkinSubfolderFullName );
 			//CDTXMania.ConfigIni.nMasterVolume = this.iSystemMasterVolume.n現在の値;							// #33700 2014.4.26 yyagi
 			CDTXMania.ConfigIni.e判定表示優先度 = (E判定表示優先度) this.iSystemJudgeDispPriority.n現在選択されている項目番号;
+
+            CDTXMania.ConfigIni.eClipDispType = (EClipDispType)this.iSystemClipDispType.n現在選択されている項目番号;
 		}
 		private void tConfigIniへ記録する・Bass()
 		{

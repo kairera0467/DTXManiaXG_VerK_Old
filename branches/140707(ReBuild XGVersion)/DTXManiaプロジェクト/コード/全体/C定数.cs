@@ -695,7 +695,7 @@ namespace DTXMania
     }
     public enum EClipDispType
     {
-        背景のみ,
+        背景のみ = 0,
         ウィンドウのみ,
         両方,
         OFF
