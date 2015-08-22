@@ -51,7 +51,7 @@ namespace DTXMania
                 if( this.txClipPanel != null )
                     this.txClipPanel.t2D描画( CDTXMania.app.Device, 854, 142 );
 
-                //if( CDTXMania.ConfigIni.eClipDispType == EClipDispType.ウィンドウのみ )
+                if( CDTXMania.ConfigIni.eClipDispType == EClipDispType.ウィンドウのみ )
                 {
                     //if()
                     {
