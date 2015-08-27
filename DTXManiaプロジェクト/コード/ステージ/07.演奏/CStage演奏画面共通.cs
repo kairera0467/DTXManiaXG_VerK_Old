@@ -1661,47 +1661,43 @@ namespace DTXMania
             #region[LivePoint]
             if( pChip.e楽器パート != E楽器パート.UNKNOWN )
             {
-                for( int i = 0; i < 3; i++ )
-                {
                     STDGBVALUE<double> dbLPDelta = new STDGBVALUE<double>();
                     double[] db1打あたりのLP = new Double[ 3 ];
+
+                for( int i = 0; i < 3; i++ )
+                {
 
                     //ここでLPの基準値を作成。つまり1打あたりのLP値。
                     db1打あたりのLP[0] = 300.0 / ( CDTXMania.DTX.n可視チップ数.Drums * 0.8 );
                     db1打あたりのLP[1] = 300.0 / ( CDTXMania.DTX.n可視チップ数.Guitar * 0.8 );
                     db1打あたりのLP[2] = 300.0 / ( CDTXMania.DTX.n可視チップ数.Bass * 0.8 );
-                    if( eJudgeResult == E判定.Perfect )
+                    switch( eJudgeResult )
                     {
-                        dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
-                    }
-                    else if( eJudgeResult == E判定.Great )
-                    {
-                        dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
-                    }
-                    else if( eJudgeResult == E判定.Good )
-                    {
-                        dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
-                    }
-                    else if( eJudgeResult == E判定.Poor )
-                    {
-                        if (this.actLivePoint.n現在のLivePoint[ i ] >= 1)
-                        {
-                            dbLPDelta[ i ] = -1.0;
-                        }
-                    }
-                    else if( eJudgeResult == E判定.Miss )
-                    {
-                        if (this.actLivePoint.n現在のLivePoint[ i ] >= 2)
-                            dbLPDelta[ i ] = -2.0;
-                    }
-                    else if( eJudgeResult == E判定.Auto )
-                    {
-                        dbLPDelta[ i ] = 0;
+                        case E判定.Perfect:
+                        case E判定.Great:
+                        case E判定.Good:
+                            dbLPDelta[ i ] = db1打あたりのLP[ i ] * 1.0;
+                            break;
+                        case E判定.Poor:
+                            if( this.actLivePoint.n現在のLivePoint[ i ] >= 1 )
+                                dbLPDelta[ i ] = -1.0;
+                            break;
+                        case E判定.Miss:
+                            if( this.actLivePoint.n現在のLivePoint[ i ] >= 2 )
+                                dbLPDelta[ i ] = -2.0;
+                            break;
+                        case E判定.Auto:
+                            dbLPDelta[ i ] = 0;
+                            break;
                     }
 
-                    if( this.actLivePoint.n現在のLivePoint[ i ] <= 300 )
+                    if( this.actLivePoint.n現在のLivePoint[ i ] < 300 )
                     {
                         this.actLivePoint.n現在のLivePoint[ i ] += dbLPDelta[ i ];
+                    }
+                    else
+                    {
+                        this.actLivePoint.n現在のLivePoint[ i ] = 300;
                     }
                 }
             }
