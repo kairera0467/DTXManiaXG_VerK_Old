@@ -250,6 +250,7 @@ namespace DTXMania
                 this.tx背景 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_background.jpg" ) );
                 this.txLevel = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_LevelNumber.png" ) );
                 this.tx難易度パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\6_Difficulty.png" ) );
+                this.txパートパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\6_Part.png"));
 
                 #region[ 曲名、アーティスト名テクスチャの生成 ]
                 try
@@ -302,6 +303,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txタイトル );
                 CDTXMania.tテクスチャの解放( ref this.txアーティスト );
                 CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
+                CDTXMania.tテクスチャの解放( ref this.txパートパネル );
                 base.OnManagedリソースの解放();
             }
         }
@@ -409,84 +411,66 @@ namespace DTXMania
                 this.txアーティスト.t2D描画(CDTXMania.app.Device, 190, 360);
             }
 
-            //this.txジャケット.Dispose();
-            if( this.tx難易度パネル != null )
-                this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 191, 102, new Rectangle( 0, this.nIndex * 50, 262, 50 ) );
+            int[] iPart = { 0, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 2 : 1, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 2 };
 
-            if( CDTXMania.ConfigIni.bDrums有効 )
+            int j = 0;
+            int k = 0;
+            int DTXLevel = 0;
+            double DTXLevelDeci = 0;
+
+            for (int i = 0; i < 3; i++)
             {
-                int i = 0;
+                j = iPart[i];
 
-                int DTXLevel = cdtx.LEVEL[i];
-                double DTXLevelDeci = cdtx.LEVELDEC[i];
+                DTXLevel = cdtx.LEVEL[j];
+                DTXLevelDeci = cdtx.LEVELDEC[j];
 
-                if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする )
+                if ((CDTXMania.ConfigIni.bDrums有効 && i == 0) || (CDTXMania.ConfigIni.bGuitar有効 && i != 0))
                 {
-                    this.t大文字表示(187, 152, string.Format("{0:00}", DTXLevel));
-                }
-                else
-                {
-                    if (cdtx.LEVEL[i] > 99)
-                    {
-                        DTXLevel = cdtx.LEVEL[i] / 100;
-                        DTXLevelDeci = cdtx.LEVEL[i] - (DTXLevel * 100);
-                    }
-                    else
-                    {
-                        DTXLevel = cdtx.LEVEL[i] / 10;
-                        DTXLevelDeci = ((cdtx.LEVEL[i] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[i];
-                    }
-
-                    this.txLevel.t2D描画(CDTXMania.app.Device, 307, 243, new Rectangle(1000, 92, 30, 38));
-                    this.t大文字表示(187, 152, string.Format("{0:0}", DTXLevel));
-                    this.t大文字表示(357, 152, string.Format("{0:00}", DTXLevelDeci));
-                }
-            }
-
-            if( CDTXMania.ConfigIni.bGuitar有効 )
-            {
-                int i = 0;
-                int j = 0;
-
-                if (CDTXMania.ConfigIni.bIsSwappedGuitarBass)
-                    i = 1;
-
-                for (int k = 1; k < 3; k++)
-                {
-                    i++;
-
-                    if (i == 3)
-                        i = 1;
-
-                    int DTXLevel = cdtx.LEVEL[i];
-                    double DTXLevelDeci = cdtx.LEVELDEC[i];
 
                     if (DTXLevel != 0 || DTXLevelDeci != 0)
                     {
-                        if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[i] && !cdtx.b強制的にXG譜面にする)
+                        if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[j] && !cdtx.b強制的にXG譜面にする)
                         {
-                            this.t大文字表示(187 + j, 152, string.Format("{0:00}", DTXLevel));
+                            this.t大文字表示(187 + k, 152, string.Format("{0:00}", DTXLevel));
                         }
                         else
                         {
-                            if (cdtx.LEVEL[i] > 99)
+                            if (cdtx.LEVEL[j] > 99)
                             {
-                                DTXLevel = cdtx.LEVEL[i] / 100;
-                                DTXLevelDeci = cdtx.LEVEL[i] - (DTXLevel * 100);
+                                DTXLevel = cdtx.LEVEL[j] / 100;
+                                DTXLevelDeci = cdtx.LEVEL[j] - (DTXLevel * 100);
                             }
                             else
                             {
-                                DTXLevel = cdtx.LEVEL[i] / 10;
-                                DTXLevelDeci = ((cdtx.LEVEL[i] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[i];
+                                DTXLevel = cdtx.LEVEL[j] / 10;
+                                DTXLevelDeci = ((cdtx.LEVEL[j] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[j];
                             }
 
-                            this.txLevel.t2D描画(CDTXMania.app.Device, 307 + j, 243, new Rectangle(1000, 92, 30, 38));
-                            this.t大文字表示(187 + j, 152, string.Format("{0:0}", DTXLevel));
-                            this.t大文字表示(357 + j, 152, string.Format("{0:00}", DTXLevelDeci));
+                            if (this.txパートパネル != null)
+                                this.txパートパネル.t2D描画(CDTXMania.app.Device, 191 + k, 52, new Rectangle(0, j * 50, 262, 50));
+
+                            //this.txジャケット.Dispose();
+                            if (this.tx難易度パネル != null)
+                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 191 + k, 102, new Rectangle(0, this.nIndex * 50, 262, 50));
+
+                            this.txLevel.t2D描画(CDTXMania.app.Device, 307 + k, 243, new Rectangle(1000, 92, 30, 38));
+                            this.t大文字表示(187 + k, 152, string.Format("{0:0}", DTXLevel));
+                            this.t大文字表示(357 + k, 152, string.Format("{0:00}", DTXLevelDeci));
+
                         }
 
-                        j = 700;
+                        k = 700;
                     }
+                }
+
+                if (i == 2 && k == 0)
+                {
+                    if (this.txパートパネル != null && CDTXMania.ConfigIni.bDrums有効)
+                        this.txパートパネル.t2D描画(CDTXMania.app.Device, 191, 52, new Rectangle(0, 0, 262, 50));
+
+                    if (this.tx難易度パネル != null)
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 191, 102, new Rectangle(0, this.nIndex * 50, 262, 50));
                 }
             }
             //-----------------------------
@@ -698,6 +682,7 @@ namespace DTXMania
         private CTexture txジャケット;
         private CTexture tx背景;
         private CTexture tx難易度パネル;
+        private CTexture txパートパネル;
 
         private CPrivateFastFont pfタイトル;
         private CPrivateFastFont pfアーティスト;
