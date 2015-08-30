@@ -470,6 +470,8 @@ namespace DTXMania
             if( this.txベース曲パネル != null )
                 this.txベース曲パネル.t2D描画( CDTXMania.app.Device, 503, 173 );
 
+            int iPart = CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 0;
+
             if( CDTXMania.ConfigIni.bDrums有効 )
             {
                 if( this.txベース難易度パネル != null )
@@ -482,16 +484,16 @@ namespace DTXMania
                 if( cdtx.bチップがある.Guitar )
                 {
                     if( this.txベース難易度パネル_Guitar != null )
-                        this.txベース難易度パネル_Guitar.t2D描画( CDTXMania.app.Device, 254, 162 );
+                        this.txベース難易度パネル_Guitar.t2D描画(CDTXMania.app.Device, 254 + (616 * iPart), 162, new Rectangle(0 + (155 * iPart), 0, 155, 362));
                     if( this.tx難易度パネル != null )
-                        this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 268 + (616 * iPart), 194, new Rectangle(130, (this.nIndex * 72), 130, 72));
                 }
                 if( cdtx.bチップがある.Bass )
                 {
                     if( this.txベース難易度パネル_Bass != null )
-                        this.txベース難易度パネル_Bass.t2D描画( CDTXMania.app.Device, 870, 162 );
+                        this.txベース難易度パネル_Bass.t2D描画(CDTXMania.app.Device, 870 - (616 * iPart), 162, new Rectangle(0 + (155 * iPart), 0, 155, 362));
                     if( this.tx難易度パネル != null )
-                        this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 883, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 883 - (616 * iPart), 194, new Rectangle(130, (this.nIndex * 72), 130, 72));
                 }
             }
 
@@ -568,15 +570,15 @@ namespace DTXMania
                     }
                     //else
                     {
-                        this.t大文字表示(335, 218, string.Format("{0:0}", strLevel_G.Substring(0, 1)));
-                        this.txLevel.t2D描画(CDTXMania.app.Device, 359, 251, new Rectangle(145, 54, 7, 8));
+                        this.t大文字表示(335 + (616 * iPart), 218, string.Format("{0:0}", strLevel_G.Substring(0, 1)));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, 359 + (616 * iPart), 251, new Rectangle(145, 54, 7, 8));
                         if( cdtx.LEVEL.Guitar > 99 )
                         {
-                            this.t小文字表示(366, 238, string.Format("{0,2:00}", DTXLevelDeci.Guitar));
+                            this.t小文字表示(366 + (616 * iPart), 238, string.Format("{0,2:00}", DTXLevelDeci.Guitar));
                         }
                         else
                         {
-                            this.t小文字表示(354, 236, string.Format("{0:00}", strLevel_G.Substring(1, 3)));
+                            this.t小文字表示(354 + (616 * iPart), 236, string.Format("{0:00}", strLevel_G.Substring(1, 3)));
                         }
                     }
                 }
@@ -590,15 +592,15 @@ namespace DTXMania
                     }
                     //else
                     {
-                        this.t大文字表示(953, 218, string.Format("{0:0}", strLevel_B.Substring(0, 1)));
-                        this.txLevel.t2D描画(CDTXMania.app.Device, 975, 251, new Rectangle(145, 54, 7, 8));
-                        if( cdtx.LEVEL.Guitar > 99 )
+                        this.t大文字表示(953 - (616 * iPart), 218, string.Format("{0:0}", strLevel_B.Substring(0, 1)));
+                        this.txLevel.t2D描画(CDTXMania.app.Device, 975 - (616 * iPart), 251, new Rectangle(145, 54, 7, 8));
+                        if( cdtx.LEVEL.Bass > 99 )
                         {
-                            this.t小文字表示(983, 238, string.Format("{0,2:00}", DTXLevelDeci.Bass));
+                            this.t小文字表示(983 - (616 * iPart), 238, string.Format("{0,2:00}", DTXLevelDeci.Bass));
                         }
                         else
                         {
-                            this.t小文字表示(971, 236, string.Format("{0:00}", strLevel_B.Substring(1, 3)));
+                            this.t小文字表示(971 - (616 * iPart), 236, string.Format("{0:00}", strLevel_B.Substring(1, 3)));
                         }
                     }
                 }
