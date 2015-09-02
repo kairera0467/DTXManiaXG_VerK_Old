@@ -749,25 +749,39 @@ namespace DTXMania
                     //-----------------
                     for (int j = 0; j < 3; j++)
                     {
-                        if (this.n本体X[j] != 0)
+                        if (this.n本体X[j] != 0 && this.txゲージ用数字他 != null)
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[i][j];
+                                if (this.str難易度ラベル[i] != null && this.db現在選択中の曲の最高スキル値難易度毎[i][j] != 0.00)
+                                {
+                                    int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[i][j];
+
+                                    if (nMaxRank != 99)
+                                    {
+                                        if (nMaxRank < 0)
+                                            nMaxRank = 0;
+
+                                        if (nMaxRank > 6)
+                                            nMaxRank = 6;
+
+                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (7 + this.n本体X[j] + (i * 143)), 61 + this.n本体Y[j] - y差分[i], new Rectangle(42 + (nMaxRank * 32), 0, 32, 32));
+                                    }
+                                }
+                            }
+                            if (flag == 5 && this.db現在選択中の曲の最高スキル値[j] != 0.00)
+                            {
+                                int nMaxRank = this.n現在選択中の曲の最高ランク[j];
+
                                 if (nMaxRank != 99)
                                 {
                                     if (nMaxRank < 0)
-                                    {
                                         nMaxRank = 0;
-                                    }
+
                                     if (nMaxRank > 6)
-                                    {
                                         nMaxRank = 6;
-                                    }
-                                    if (this.txゲージ用数字他 != null && this.str難易度ラベル[i] != null)
-                                    {
-                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (7 + this.n本体X[j] + (i * 143)), 61 + this.n本体Y[j] - y差分[i], new Rectangle(42 + (nMaxRank * 32), 0, 32, 32));
-                                    }
+
+                                    this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, (7 + this.n本体X[j] + (4 * 143)), 61 + this.n本体Y[j] - 10, new Rectangle(42 + (nMaxRank * 32), 0, 32, 32));
                                 }
                             }
                         }
@@ -778,41 +792,21 @@ namespace DTXMania
                     //-----------------
                     for (int j = 0; j < 3; j++)
                     {
-                        if (this.n本体X[j] != 0)
+                        if (this.n本体X[j] != 0 && this.txゲージ用数字他 != null)
                         {
                             for (int i = 0; i < 5; i++)
                             {
                                 if (this.db現在選択中の曲の最高スキル値難易度毎[i][j] == 100 && this.str難易度ラベル[i] != null)
-                                {
-                                    if (this.txゲージ用数字他 != null)
-                                    {
-                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (i * 143), 63 + this.n本体Y[j] - y差分[i], new Rectangle(266, 0, 42, 32));
-                                    }
-                                }
+                                    this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (i * 143), 63 + this.n本体Y[j] - y差分[i], new Rectangle(266, 0, 42, 32));
                                 else if (this.b現在選択中の曲がフルコンボ難易度毎[i][j] && this.str難易度ラベル[i] != null)
-                                {
-                                    if (this.txゲージ用数字他 != null)
-                                    {
-                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (i * 143), 63 + this.n本体Y[j] - y差分[i], new Rectangle(0, 0, 42, 32));
-                                    }
-                                }
+                                    this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (i * 143), 63 + this.n本体Y[j] - y差分[i], new Rectangle(0, 0, 42, 32));
                             }
                             if (flag == 5)
                             {
                                 if (this.db現在選択中の曲の最高スキル値[j] == 100)
-                                {
-                                    if (this.txゲージ用数字他 != null)
-                                    {
-                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (4 * 143), 63 + this.n本体Y[j] - 10, new Rectangle(266, 0, 42, 32));
-                                    }
-                                }
+                                    this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (4 * 143), 63 + this.n本体Y[j] - 10, new Rectangle(266, 0, 42, 32));
                                 else if (this.b現在選択中の曲がフルコンボ[j])
-                                {
-                                    if (this.txゲージ用数字他 != null)
-                                    {
-                                        this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (4 * 143), 63 + this.n本体Y[j] - 10, new Rectangle(0, 0, 42, 32));
-                                    }
-                                }
+                                    this.txゲージ用数字他.t2D描画(CDTXMania.app.Device, 40 + this.n本体X[j] + (4 * 143), 63 + this.n本体Y[j] - 10, new Rectangle(0, 0, 42, 32));
                             }
                         }
                     }
