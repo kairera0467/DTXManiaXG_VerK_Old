@@ -535,6 +535,7 @@ namespace DTXMania
             this.txスキル数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenSelect skill number on list.png"), false);
             this.tx上部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_header song list.png"), false);
             this.tx下部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_footer song list.png"), false);
+            this.txステータスパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_status panel.png"), false);
 
             prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 30, FontStyle.Regular );
             prvFontSmall = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 15, FontStyle.Regular );
@@ -620,6 +621,7 @@ namespace DTXMania
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Other );
             CDTXMania.t安全にDisposeする( ref this.tx上部パネル );
             CDTXMania.t安全にDisposeする( ref this.tx下部パネル );
+            CDTXMania.t安全にDisposeする( ref this.txステータスパネル );
             prvFont.Dispose();
             prvFontSmall.Dispose();
             if( this.tx選択中の曲名テクスチャ != null )
@@ -1023,7 +1025,7 @@ namespace DTXMania
 						if( this.stバー情報[ nパネル番号 ].txタイトル名 != null )
                             this.stバー情報[ nパネル番号 ].txタイトル名.t2D描画( CDTXMania.app.Device, i選択曲バーX座標 + 65, y選曲 );
 
-                        if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE )
+                        if( CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE && this.txステータスパネル == null)
                         {
                             if( this.tx選択中の曲名テクスチャ == null )
                                 this.tx選択中の曲名テクスチャ = this.t指定された文字テクスチャを生成する( this.stバー情報[ nパネル番号 ].strタイトル文字列 );
@@ -1240,6 +1242,7 @@ namespace DTXMania
         private CTexture tx選択中のアーティスト名テクスチャ;
         private CTexture tx上部パネル;
         private CTexture tx下部パネル;
+        private CTexture txステータスパネル;
         private STバー tx曲名バー;
 		private ST選曲バー tx選曲バー;
         private CPrivateFastFont prvFont;

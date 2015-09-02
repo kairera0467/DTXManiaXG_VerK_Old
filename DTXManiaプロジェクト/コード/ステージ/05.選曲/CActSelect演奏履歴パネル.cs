@@ -55,8 +55,6 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
-			this.n本体X = 810;
-			this.n本体Y = 0x22e;
 			this.ft表示用フォント = new Font( "メイリオ", 26f, FontStyle.Bold, GraphicsUnit.Pixel );
 			base.On活性化();
 		}
@@ -75,7 +73,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_play history panel.png" ), true );
-				this.t選択曲が変更された();
+                this.txステータスパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_status panel.png"), true);
+                this.t選択曲が変更された();
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -85,7 +84,8 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.tx文字列パネル );
-				base.OnManagedリソースの解放();
+                CDTXMania.tテクスチャの解放( ref this.txステータスパネル );
+                base.OnManagedリソースの解放();
 			}
 		}
 		public override int On進行描画()
@@ -98,25 +98,27 @@ namespace DTXMania
 					base.b初めての進行描画 = false;
 				}
 				this.ct登場アニメ用.t進行();
+
+                if ( this.txステータスパネル != null )
+                    this.n本体X = 700;
+                else
+                    this.n本体X = 210;
+
 				if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 == null ) )
 				{
-					this.n本体X = 210;
 					this.n本体Y = 0x23a;
 				}
 				else
 				{
 					double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 					double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
-					this.n本体X = 210;
 					this.n本体Y = 0x23a + ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 				}
+
 				if( this.txパネル本体 != null )
 				{
 					this.txパネル本体.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y );
-				}
-				if( this.tx文字列パネル != null )
-				{
-					this.tx文字列パネル.t2D描画( CDTXMania.app.Device, this.n本体X + 0x20, this.n本体Y + 0x1d );
+                    this.tx文字列パネル.t2D描画( CDTXMania.app.Device, this.n本体X + 0x20, this.n本体Y + 0x1d );
 				}
 			}
 			return 0;
@@ -133,7 +135,8 @@ namespace DTXMania
 		private int n本体Y;
 		private CTexture txパネル本体;
 		private CTexture tx文字列パネル;
-		//-----------------
+        private CTexture txステータスパネル;
+        //-----------------
 		#endregion
 	}
 }
