@@ -37,8 +37,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				string[,] infofiles = {		// #25381 2011.6.4 yyagi
-				   { @"Graphics\5_information 1.png", @"Graphics\5_information 2.png" },
-				   { @"Graphics\5_information 1e.png", @"Graphics\5_information 2e.png" }
+				   { @"Graphics\5_information.png", @"Graphics\5_information.png" },
+				   { @"Graphics\5_informatione.png", @"Graphics\5_informatione.png" }
 				};
 				int c = ( CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja" ) ? 0 : 1; 
 				this.txInfo[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( infofiles[ c, 0 ] ), false );
@@ -78,29 +78,29 @@ namespace DTXMania
 					if( this.n画像Index上 >= 0 )
 					{
 						STINFO stinfo = this.stInfo[ this.n画像Index上 ];
-						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y + ( (int) ( 45.0 * n現在の割合 ) ), 512, Convert.ToInt32(45.0 * (1.0 - n現在の割合)) );
+						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y + ( (int) ( 42.0 * n現在の割合 ) ), 240, Convert.ToInt32(42.0 * (1.0 - n現在の割合)) );
 						if( this.txInfo[ stinfo.nTexture番号 ] != null )
 						{
-							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 230, 10, rectangle );
+							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 4, 0, rectangle );
 						}
 					}
 					if( this.n画像Index下 >= 0 )
 					{
 						STINFO stinfo = this.stInfo[ this.n画像Index下 ];
-						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 512, (int) ( 45.0 * n現在の割合 ) );
+						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 240, (int) ( 42.0 * n現在の割合 ) );
 						if( this.txInfo[ stinfo.nTexture番号 ] != null )
 						{
-							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 230, 10 + ( (int) ( 45.0 * ( 1.0 - n現在の割合 ) ) ), rectangle );
+							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 4, 0 + ( (int) ( 42.0 * ( 1.0 - n現在の割合 ) ) ), rectangle );
 						}
 					}
 				}
 				else
 				{
 					STINFO stinfo = this.stInfo[ this.n画像Index下 ];
-					Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 512, 0x43 );
+					Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 240, 42 );
 					if( this.txInfo[ stinfo.nTexture番号 ] != null )
 					{
-						this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 230, 10, rectangle );
+						this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 4, 0, rectangle );
 					}
 				}
 			}
@@ -127,9 +127,9 @@ namespace DTXMania
 		private CCounter ctスクロール用;
 		private int n画像Index下;
 		private int n画像Index上;
-		private readonly STINFO[] stInfo = new STINFO[] { new STINFO(0, 0, 0), new STINFO(0, 0, 0x49), new STINFO(0, 0, 0x93), new STINFO(0, 0, 220), new STINFO(0, 0, 0x126), new STINFO(1, 0, 0), new STINFO(1, 0, 0x49), new STINFO(1, 0, 0x93) };
+        private readonly STINFO[] stInfo = new STINFO[] { new STINFO(0, 0, 0 * 42), new STINFO(0, 0, 1 * 42), new STINFO(0, 0, 2 * 42), new STINFO(0, 0, 3 * 42), new STINFO(0, 0, 4 * 42), new STINFO(0, 0, 5 * 42), new STINFO(0, 0, 6 * 42), new STINFO(0, 0, 7 * 42) };
 
-		private CTexture[] txInfo = new CTexture[ 2 ];
+        private CTexture[] txInfo = new CTexture[ 2 ];
 		//-----------------
 		#endregion
 	}
