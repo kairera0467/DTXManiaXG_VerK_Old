@@ -36,13 +36,12 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				string[,] infofiles = {		// #25381 2011.6.4 yyagi
-				   { @"Graphics\5_information.png", @"Graphics\5_information.png" },
-				   { @"Graphics\5_informatione.png", @"Graphics\5_informatione.png" }
+				string[] infofiles = {		// #25381 2011.6.4 yyagi
+				   @"Graphics\5_information.png" ,
+				   @"Graphics\5_informatione.png"
 				};
 				int c = ( CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "ja" ) ? 0 : 1; 
-				this.txInfo[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( infofiles[ c, 0 ] ), false );
-				this.txInfo[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( infofiles[ c, 1 ] ), false );
+				this.txInfo = CDTXMania.tテクスチャの生成( CSkin.Path( infofiles[ c ] ), false );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -50,8 +49,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				CDTXMania.tテクスチャの解放( ref this.txInfo[ 0 ] );
-				CDTXMania.tテクスチャの解放( ref this.txInfo[ 1 ] );
+				CDTXMania.tテクスチャの解放( ref this.txInfo );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -79,18 +77,18 @@ namespace DTXMania
 					{
 						STINFO stinfo = this.stInfo[ this.n画像Index上 ];
 						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y + ( (int) ( 42.0 * n現在の割合 ) ), 240, Convert.ToInt32(42.0 * (1.0 - n現在の割合)) );
-						if( this.txInfo[ stinfo.nTexture番号 ] != null )
+						if( this.txInfo != null )
 						{
-							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 4, 0, rectangle );
+							this.txInfo.t2D描画( CDTXMania.app.Device, 4, 0, rectangle );
 						}
 					}
 					if( this.n画像Index下 >= 0 )
 					{
 						STINFO stinfo = this.stInfo[ this.n画像Index下 ];
 						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 240, (int) ( 42.0 * n現在の割合 ) );
-						if( this.txInfo[ stinfo.nTexture番号 ] != null )
+						if( this.txInfo != null )
 						{
-							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 4, 0 + ( (int) ( 42.0 * ( 1.0 - n現在の割合 ) ) ), rectangle );
+							this.txInfo.t2D描画( CDTXMania.app.Device, 4, 0 + ( (int) ( 42.0 * ( 1.0 - n現在の割合 ) ) ), rectangle );
 						}
 					}
 				}
@@ -98,9 +96,9 @@ namespace DTXMania
 				{
 					STINFO stinfo = this.stInfo[ this.n画像Index下 ];
 					Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 240, 42 );
-					if( this.txInfo[ stinfo.nTexture番号 ] != null )
+					if( this.txInfo != null )
 					{
-						this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 4, 0, rectangle );
+						this.txInfo.t2D描画( CDTXMania.app.Device, 4, 0, rectangle );
 					}
 				}
 			}
@@ -115,11 +113,9 @@ namespace DTXMania
 		[StructLayout( LayoutKind.Sequential )]
 		private struct STINFO
 		{
-			public int nTexture番号;
 			public Point pt左上座標;
-			public STINFO( int nTexture番号, int x, int y )
+			public STINFO( int x, int y )
 			{
-				this.nTexture番号 = nTexture番号;
 				this.pt左上座標 = new Point( x, y );
 			}
 		}
@@ -127,9 +123,17 @@ namespace DTXMania
 		private CCounter ctスクロール用;
 		private int n画像Index下;
 		private int n画像Index上;
-        private readonly STINFO[] stInfo = new STINFO[] { new STINFO(0, 0, 0 * 42), new STINFO(0, 0, 1 * 42), new STINFO(0, 0, 2 * 42), new STINFO(0, 0, 3 * 42), new STINFO(0, 0, 4 * 42), new STINFO(0, 0, 5 * 42), new STINFO(0, 0, 6 * 42), new STINFO(0, 0, 7 * 42) };
-
-        private CTexture[] txInfo = new CTexture[ 2 ];
+        private readonly STINFO[] stInfo = new STINFO[] {
+            new STINFO(0, 0 * 42),
+            new STINFO(0, 1 * 42),
+            new STINFO(0, 2 * 42),
+            new STINFO(0, 3 * 42),
+            new STINFO(0, 4 * 42),
+            new STINFO(0, 5 * 42),
+            new STINFO(0, 6 * 42),
+            new STINFO(0, 7 * 42)
+        };
+        private CTexture txInfo;
 		//-----------------
 		#endregion
 	}
