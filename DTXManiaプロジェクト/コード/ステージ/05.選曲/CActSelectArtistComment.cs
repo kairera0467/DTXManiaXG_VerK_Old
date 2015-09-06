@@ -169,7 +169,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
                 if (this.txコメントバー != null)
-                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 646, 316);
+                    this.txコメントバー.t2D描画(CDTXMania.app.Device, 560, 257);
 
                 if (this.ctComment.b進行中)
 				{
