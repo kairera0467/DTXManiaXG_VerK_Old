@@ -460,17 +460,20 @@ namespace DTXMania
          */
 		private void t描画処理・パネル本体()
 		{
+            int n基X = 0x12;
+            int n基Y = 0x58;
+
 			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
 			{
-				this.n本体X = 0x12;
-				this.n本体Y = 0x58;
+				this.n本体X = n基X;
+				this.n本体Y = n基Y;
 			}
 			else
 			{
 				double num = ( (double) this.ct登場アニメ用.n現在の値 ) / 100.0;
 				double num2 = Math.Cos( ( 1.5 + ( 0.5 * num ) ) * Math.PI );
-				this.n本体X = 0x12;
-				this.n本体Y = 0x58 - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
+				this.n本体X = n基X;
+				this.n本体Y = n基Y - ( (int) ( this.txパネル本体.sz画像サイズ.Height * ( 1.0 - ( num2 * num2 ) ) ) );
 			}
 			if( this.txパネル本体 != null )
 			{
@@ -481,8 +484,13 @@ namespace DTXMania
 		{
 			if( !CDTXMania.stage選曲.bスクロール中 && ( ( ( this.ct遅延表示 != null ) && ( this.ct遅延表示.n現在の値 > 0 ) ) && !this.b新しいプレビューファイルをまだ読み込んでいない ) )
 			{
-                int x = this.n本体X + 0x25;
-                int y = this.n本体Y + 0x18;
+                int n差X = 0x25;
+                int n差Y = 0x18;
+                int n表示ジャケットサイズ = 368;
+
+                int x = this.n本体X + n差X;
+                int y = this.n本体Y + n差Y;
+                int z = n表示ジャケットサイズ;
 				float num3 = ( (float) this.ct遅延表示.n現在の値 ) / 100f;
 				float num4 = 0.9f + ( 0.1f * num3 );
 				if( ( this.nAVI再生開始時刻 != -1 ) && ( this.sfAVI画像 != null ) )
@@ -509,8 +517,8 @@ namespace DTXMania
 						this.sfAVI画像.UnlockRectangle();
 						this.b動画フレームを作成した = false;
 					}
-                    x += (368 - this.sfAVI画像.Description.Width) / 2;
-                    y += (368 - this.sfAVI画像.Description.Height) / 2;
+                    x += (z - this.sfAVI画像.Description.Width) / 2;
+                    y += (z - this.sfAVI画像.Description.Height) / 2;
                     using (Surface surface = CDTXMania.app.Device.GetBackBuffer(0, 0))
                     {
 						CDTXMania.app.Device.UpdateSurface( this.sfAVI画像, new Rectangle( 0, 0, this.sfAVI画像.Description.Width, this.sfAVI画像.Description.Height ), surface, new Point( x, y ) );
@@ -522,16 +530,16 @@ namespace DTXMania
                     float width = this.r表示するプレビュー画像.sz画像サイズ.Width;
                     float height = this.r表示するプレビュー画像.sz画像サイズ.Height;
                     float f倍率;
-                    if ((368f / width) > (368f / height))
+                    if (((float) z / width) > ((float) z / height))
                     {
-                        f倍率 = 368f / height;
+                        f倍率 = (float) z / height;
                     }
                     else
                     {
-                        f倍率 = 368f / width;
+                        f倍率 = (float) z / width;
                     }
-                    x += (368 - ((int)(width * num4 * f倍率))) / 2;
-                    y += (368 - ((int)(height * num4 * f倍率))) / 2;
+                    x += (z - ((int)(width * num4 * f倍率))) / 2;
+                    y += (z - ((int)(height * num4 * f倍率))) / 2;
                     this.r表示するプレビュー画像.n透明度 = (int)(255f * num3);
                     this.r表示するプレビュー画像.vc拡大縮小倍率.X = num4 * f倍率;
                     this.r表示するプレビュー画像.vc拡大縮小倍率.Y = num4 * f倍率;
