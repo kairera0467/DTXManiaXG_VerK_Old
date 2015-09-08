@@ -104,7 +104,7 @@ namespace DTXMania
                 else
                     this.n本体X = 210;
 
-				if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 == null ) )
+				if( this.ct登場アニメ用.b終了値に達した )
 				{
 					this.n本体Y = 0x23a;
 				}
@@ -118,7 +118,9 @@ namespace DTXMania
 				if( this.txパネル本体 != null )
 				{
 					this.txパネル本体.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y );
-                    this.tx文字列パネル.t2D描画( CDTXMania.app.Device, this.n本体X + 0x20, this.n本体Y + 0x1d );
+
+                    if ( this.tx文字列パネル != null )
+                        this.tx文字列パネル.t2D描画( CDTXMania.app.Device, this.n本体X + 0x20, this.n本体Y + 0x1d );
 				}
 			}
 			return 0;

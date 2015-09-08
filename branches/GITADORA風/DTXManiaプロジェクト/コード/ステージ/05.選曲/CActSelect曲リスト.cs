@@ -903,13 +903,13 @@ namespace DTXMania
 				{
 					if ( this.txEnumeratingSongs != null )
 					{
-						this.txEnumeratingSongs.t2D描画( CDTXMania.app.Device, 800, 200 );
+						this.txEnumeratingSongs.t2D描画( CDTXMania.app.Device, 800, 280 );
 					}
 				}
 				else
 				{
 					if ( this.txSongNotFound != null )
-						this.txSongNotFound.t2D描画( CDTXMania.app.Device, 800, 200 );
+						this.txSongNotFound.t2D描画( CDTXMania.app.Device, 800, 280 );
 				}
 				//-----------------
 				#endregion

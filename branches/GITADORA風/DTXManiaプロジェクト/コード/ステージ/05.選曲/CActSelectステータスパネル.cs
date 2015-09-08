@@ -248,19 +248,27 @@ namespace DTXMania
                 int nBaseX = 30;
                 int nBaseY = 363;
 
+                int n難易度文字X = 70;
+                int n難易度文字Y = 75;
+
+                if (this.txパネル本体 != null)
+                {
+                    n難易度文字X = nBaseX + 10;
+                    n難易度文字Y = nBaseY - 22;
+                }
+
+                #region [ 難易度文字列の描画 ]
+                for (int i = 0; i < 5; i++)
+                {
+                    CDTXMania.act文字コンソール.tPrint(n難易度文字X + (i * 110), n難易度文字Y, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
+                }
+                #endregion
                 //-----------------
 
                 //-----------------
                 if (this.txパネル本体 != null)
                 {
                     this.txパネル本体.t2D描画(CDTXMania.app.Device, nBaseX, nBaseY);
-
-                    #region [ 難易度文字列の描画 ]
-                    for (int i = 0; i < 5; i++)
-                    {
-                        CDTXMania.act文字コンソール.tPrint(nBaseX + 10 + (i * 110), nBaseY - 22, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
-                    }
-                    #endregion
 
                     for (int j = 0; j < 3; j++)
                     {
