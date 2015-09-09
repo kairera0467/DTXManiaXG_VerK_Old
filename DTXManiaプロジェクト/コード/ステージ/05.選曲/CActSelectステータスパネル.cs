@@ -256,7 +256,7 @@ namespace DTXMania
                 int[] nPart = { 0, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 2 : 1, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 2 };
 
                 int nBaseX = 30;
-                int nBaseY = 364;
+                int nBaseY = 348;
 
                 int n難易度文字X = 70;
                 int n難易度文字Y = 75;
@@ -264,7 +264,7 @@ namespace DTXMania
                 if (this.txパネル本体 != null)
                 {
                     n難易度文字X = nBaseX + 10;
-                    n難易度文字Y = nBaseY - 2;
+                    n難易度文字Y = nBaseY + 2;
                 }
 
                 #region [ ステータスパネルの描画 ]
@@ -277,7 +277,7 @@ namespace DTXMania
                     {
 
                         int nPanelX = nBaseX + (187 * nPart[j]);
-                        int nPanelY = nBaseY - 20;
+                        int nPanelY = nBaseY + 22;
 
                         int flag = 0;
 
