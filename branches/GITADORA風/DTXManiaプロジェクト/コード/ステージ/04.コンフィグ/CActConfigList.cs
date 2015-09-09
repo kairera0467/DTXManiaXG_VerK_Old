@@ -1817,6 +1817,7 @@ namespace DTXMania
                 "Pause key assign:\n To assign key/pads for Pause button.");
             this.list項目リスト.Add(this.iKeyAssignBassHelp);
 
+            OnListMenuの初期化();
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignSystem;
         }
@@ -1892,6 +1893,7 @@ namespace DTXMania
                 "Drums key assign:\nTo assign key/pads for RightCymbal\n button.");
             this.list項目リスト.Add(this.iKeyAssignDrumsLBD);
 
+            OnListMenuの初期化();
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignDrums;
         }
@@ -1947,6 +1949,7 @@ namespace DTXMania
                 "Guitar key assign:\nTo assign key/pads for Decide button.");
             this.list項目リスト.Add(this.iKeyAssignGuitarDecide);
 
+            OnListMenuの初期化();
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignGuitar;
         }
@@ -2002,6 +2005,7 @@ namespace DTXMania
                 "Bass key assign:\nTo assign key/pads for Decide button.");
             this.list項目リスト.Add(this.iKeyAssignBassDecide);
 
+            OnListMenuの初期化();
             this.n現在の選択項目 = 0;
             this.eメニュー種別 = Eメニュー種別.KeyAssignBass;
         }
