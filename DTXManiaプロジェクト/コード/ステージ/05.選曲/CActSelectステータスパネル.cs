@@ -220,6 +220,16 @@ namespace DTXMania
                 #region [ 選択曲の BPM の描画 ]
                 if (CDTXMania.stage選曲.r現在選択中の曲 != null && this.txBPM画像 != null)
                 {
+
+                    int nBPM位置X = 490;
+                    int nBPM位置Y = 385;
+
+                    if (this.txパネル本体 != null)
+                    {
+                        nBPM位置X = 90;
+                        nBPM位置Y = 275;
+                    }
+
                     string strBPM;
                     switch (CDTXMania.stage選曲.r現在選択中の曲.eノード種別)
                     {
@@ -235,8 +245,8 @@ namespace DTXMania
                             }
                     }
 
-                    this.txBPM画像.t2D描画(CDTXMania.app.Device, 502, 385);
-                    this.tBPM表示(502, 405, string.Format("{0,3:###}", strBPM));
+                    this.txBPM画像.t2D描画(CDTXMania.app.Device, nBPM位置X, nBPM位置Y);
+                    this.tBPM表示(nBPM位置X + 17, nBPM位置Y + 25, string.Format("{0,3:###}", strBPM));
                     //CDTXMania.act文字コンソール.tPrint(50, 570, C文字コンソール.Eフォント種別.白, string.Format("BPM:{0:####0}", this.n現在選択中の曲のBPM));
                 }
                 #endregion
@@ -246,7 +256,7 @@ namespace DTXMania
                 int[] nPart = { 0, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 2 : 1, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 2 };
 
                 int nBaseX = 30;
-                int nBaseY = 363;
+                int nBaseY = 364;
 
                 int n難易度文字X = 70;
                 int n難易度文字Y = 75;
@@ -254,17 +264,10 @@ namespace DTXMania
                 if (this.txパネル本体 != null)
                 {
                     n難易度文字X = nBaseX + 10;
-                    n難易度文字Y = nBaseY - 22;
+                    n難易度文字Y = nBaseY - 2;
                 }
 
-                #region [ 難易度文字列の描画 ]
-                for (int i = 0; i < 5; i++)
-                {
-                    CDTXMania.act文字コンソール.tPrint(n難易度文字X + (i * 110), n難易度文字Y, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
-                }
-                #endregion
-                //-----------------
-
+                #region [ ステータスパネルの描画 ]
                 //-----------------
                 if (this.txパネル本体 != null)
                 {
@@ -274,7 +277,7 @@ namespace DTXMania
                     {
 
                         int nPanelX = nBaseX + (187 * nPart[j]);
-                        int nPanelY = nBaseY;
+                        int nPanelY = nBaseY - 20;
 
                         int flag = 0;
 
@@ -430,6 +433,14 @@ namespace DTXMania
                         }
                     }
                 }
+                #endregion
+                #region [ 難易度文字列の描画 ]
+                //-----------------
+                for (int i = 0; i < 5; i++)
+                {
+                    CDTXMania.act文字コンソール.tPrint(n難易度文字X + (i * 110), n難易度文字Y, (this.n現在選択中の曲の難易度 == i) ? C文字コンソール.Eフォント種別.赤 : C文字コンソール.Eフォント種別.白, this.str難易度ラベル[i]);
+                }
+                #endregion
             }
             return 0;
         }

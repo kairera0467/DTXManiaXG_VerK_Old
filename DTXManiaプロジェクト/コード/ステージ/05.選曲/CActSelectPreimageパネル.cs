@@ -62,7 +62,8 @@ namespace DTXMania
 //				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
 				this.txプレビュー画像 = null;
 				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
-				this.sfAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
+                this.txステータスパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_status panel.png"));
+                this.sfAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1L;
 				this.n前回描画したフレーム番号 = -1;
 				this.b動画フレームを作成した = false;
@@ -80,7 +81,8 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像がないときの画像 );
                 CDTXMania.tテクスチャの解放( ref this.r表示するプレビュー画像 );
-				if( this.sfAVI画像 != null )
+                CDTXMania.tテクスチャの解放( ref this.txステータスパネル );
+                if ( this.sfAVI画像 != null )
 				{
 					this.sfAVI画像.Dispose();
 					this.sfAVI画像 = null;
@@ -169,7 +171,8 @@ namespace DTXMania
 		private CTexture txプレビュー画像;
 		private CTexture txプレビュー画像がないときの画像;
 		private CTexture r表示するプレビュー画像;
-		private bool b新しいプレビューファイルを読み込んだ;
+        private CTexture txステータスパネル;
+        private bool b新しいプレビューファイルを読み込んだ;
 		private bool b新しいプレビューファイルをまだ読み込んでいない
 		{
 			get
@@ -463,7 +466,13 @@ namespace DTXMania
             int n基X = 0x12;
             int n基Y = 0x58;
 
-			if( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
+            if (this.txステータスパネル != null)
+            {
+                n基X = 250;
+                n基Y = 34;
+            }
+
+            if ( this.ct登場アニメ用.b終了値に達した || ( this.txパネル本体 != null ) )
 			{
 				this.n本体X = n基X;
 				this.n本体Y = n基Y;
@@ -487,6 +496,13 @@ namespace DTXMania
                 int n差X = 0x25;
                 int n差Y = 0x18;
                 int n表示ジャケットサイズ = 368;
+
+                if (this.txステータスパネル != null)
+                {
+                    n差X = 8;
+                    n差Y = 8;
+                    n表示ジャケットサイズ = 292;
+                }
 
                 int x = this.n本体X + n差X;
                 int y = this.n本体Y + n差Y;
