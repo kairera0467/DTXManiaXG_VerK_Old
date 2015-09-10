@@ -447,18 +447,18 @@ namespace DTXMania
                                 DTXLevelDeci = ((cdtx.LEVEL[j] - DTXLevel * 10) * 10) + cdtx.LEVELDEC[j];
                             }
 
-                            if (this.txパートパネル != null)
-                                this.txパートパネル.t2D描画(CDTXMania.app.Device, 191 + k, 52, new Rectangle(0, j * 50, 262, 50));
-
-                            //this.txジャケット.Dispose();
-                            if (this.tx難易度パネル != null)
-                                this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 191 + k, 102, new Rectangle(0, this.nIndex * 50, 262, 50));
-
                             this.txLevel.t2D描画(CDTXMania.app.Device, 307 + k, 243, new Rectangle(1000, 92, 30, 38));
                             this.t大文字表示(187 + k, 152, string.Format("{0:0}", DTXLevel));
                             this.t大文字表示(357 + k, 152, string.Format("{0:00}", DTXLevelDeci));
 
                         }
+
+                        if (this.txパートパネル != null)
+                            this.txパートパネル.t2D描画(CDTXMania.app.Device, 191 + k, 52, new Rectangle(0, j * 50, 262, 50));
+
+                        //this.txジャケット.Dispose();
+                        if (this.tx難易度パネル != null)
+                            this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 191 + k, 102, new Rectangle(0, this.nIndex * 50, 262, 50));
 
                         k = 700;
                     }
