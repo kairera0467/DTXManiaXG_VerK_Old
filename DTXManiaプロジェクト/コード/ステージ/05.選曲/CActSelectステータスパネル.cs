@@ -59,10 +59,6 @@ namespace DTXMania
                             this.b現在選択中の曲がフルコンボ難易度毎[j][i] = c曲リストノード.arスコア[j].譜面情報.フルコンボ[i];
                             this.b現在選択中の曲に譜面がある[j][i] = c曲リストノード.arスコア[j].譜面情報.b譜面がある[i];
                         }
-                        else
-                        {
-                            this.b現在選択中の曲がフルコンボ難易度毎[j][i] = false;
-                        }
                     }
                 }
                 for (int i = 0; i < 5; i++)
@@ -280,6 +276,8 @@ namespace DTXMania
                         int nPanelY = nBaseY + 22;
 
                         int flag = 0;
+                        int n変数;
+                        double db変数;
 
                         if (this.tx難易度パネル != null)
                             this.tx難易度パネル.t2D描画(CDTXMania.app.Device, nPanelX, nPanelY, new Rectangle(187 * j, 0, 187, 321));
@@ -323,22 +321,30 @@ namespace DTXMania
                                     }
                                 }
                                 #endregion
-                                if (this.db現在選択中の曲の最高スキル値難易度毎[i][j] != 0.00)
+                                db変数 = this.db現在選択中の曲の最高スキル値難易度毎[i][j];
+
+                                if (db変数 < 0)
+                                    db変数 = 0;
+
+                                if (db変数 > 100)
+                                    db変数 = 100;
+
+                                if (db変数 != 0.00)
                                 {
                                     if (this.txランク != null)
                                     {
                                         #region [ 選択曲の 最高ランクの描画 ]
-                                        int nMaxRank = this.n現在選択中の曲の最高ランク難易度毎[i][j];
+                                        n変数 = this.n現在選択中の曲の最高ランク難易度毎[i][j];
 
-                                        if (nMaxRank != 99)
+                                        if (n変数 != 99)
                                         {
-                                            if (nMaxRank < 0)
-                                                nMaxRank = 0;
+                                            if (n変数 < 0)
+                                                n変数 = 0;
 
-                                            if (nMaxRank > 6)
-                                                nMaxRank = 6;
+                                            if (n変数 > 6)
+                                                n変数 = 6;
 
-                                            this.txランク.t2D描画(CDTXMania.app.Device, 5 + nBoxX, 5 + nBoxY, rcランク[nMaxRank]);
+                                            this.txランク.t2D描画(CDTXMania.app.Device, 5 + nBoxX, 5 + nBoxY, rcランク[n変数]);
                                         }
                                         #endregion
                                         #region [ 選択曲の FullCombo Excellent の 描画 ]
@@ -349,10 +355,10 @@ namespace DTXMania
                                         #endregion
                                     }
                                     #region [ 選択曲の 最高スキル値ゲージ＋数値の描画 ]
-                                    if (this.tx達成率MAX != null && this.db現在選択中の曲の最高スキル値難易度毎[i][j] == 100)
+                                    if (this.tx達成率MAX != null && db変数 == 100)
                                         this.tx達成率MAX.t2D描画(CDTXMania.app.Device, 40 + nBoxX, 33 + nBoxY);
                                     else
-                                        this.t達成率表示(28 + nBoxX, 33 + nBoxY, string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値難易度毎[i][j]));
+                                        this.t達成率表示(28 + nBoxX, 33 + nBoxY, string.Format("{0,6:##0.00}%", db変数));
                                     #endregion
                                 }
                             }
@@ -398,22 +404,30 @@ namespace DTXMania
                                 }
                             }
                             #endregion
-                            if (this.db現在選択中の曲の最高スキル値[j] != 0.00)
+                            db変数 = this.db現在選択中の曲の最高スキル値[j];
+
+                            if (db変数 < 0)
+                                db変数 = 0;
+
+                            if (db変数 > 100)
+                                db変数 = 100;
+
+                            if (db変数 != 0.00)
                             {
                                 if (this.txランク != null)
                                 {
                                     #region [ 選択曲の 最高ランクの描画 ]
-                                    int nMaxRank = this.n現在選択中の曲の最高ランク[j];
+                                    n変数 = this.n現在選択中の曲の最高ランク[j];
 
-                                    if (nMaxRank != 99)
+                                    if (n変数 != 99)
                                     {
-                                        if (nMaxRank < 0)
-                                            nMaxRank = 0;
+                                        if (n変数 < 0)
+                                            n変数 = 0;
 
-                                        if (nMaxRank > 6)
-                                            nMaxRank = 6;
+                                        if (n変数 > 6)
+                                            n変数 = 6;
 
-                                        this.txランク.t2D描画(CDTXMania.app.Device, 5 + nBoxX, 5 + nBoxY, rcランク[nMaxRank]);
+                                        this.txランク.t2D描画(CDTXMania.app.Device, 5 + nBoxX, 5 + nBoxY, rcランク[n変数]);
                                     }
                                     #endregion
                                     #region [ 選択曲の FullCombo Excellent の 描画 ]
@@ -427,7 +441,7 @@ namespace DTXMania
                                 if (this.tx達成率MAX != null && this.db現在選択中の曲の最高スキル値[j] == 100.00)
                                     this.tx達成率MAX.t2D描画(CDTXMania.app.Device, 40 + nBoxX, 33 + nBoxY);
                                 else
-                                    this.t達成率表示(28 + nBoxX, 33 + nBoxY, string.Format("{0,6:##0.00}%", this.db現在選択中の曲の最高スキル値[j]));
+                                    this.t達成率表示(28 + nBoxX, 33 + nBoxY, string.Format("{0,6:##0.00}%", db変数));
                             }
                                 #endregion
                         }
