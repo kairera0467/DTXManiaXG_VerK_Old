@@ -166,7 +166,7 @@ namespace DTXMania
             }
             if (base.b初めての進行描画)
             {
-                this.ctランク表示 = new CCounter(0, 127, 1, CDTXMania.Timer);
+                this.ctランク表示 = new CCounter(0, 500, 1, CDTXMania.Timer);
                 base.b初めての進行描画 = false;
             }
             this.ctランク表示.t進行();
@@ -174,8 +174,8 @@ namespace DTXMania
             {
                 if (this.txランク文字[j] != null && this.n本体X[j] != 0)
                 {
-                    this.txランク文字[j].n透明度 = this.ctランク表示.n現在の値 * 2;
-                    this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j]);
+                    double num2 = ((double)this.ctランク表示.n現在の値) / 500.0;
+                    this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j] + ((int)((double) this.txランク文字[j].sz画像サイズ.Height * (1.0 - num2))), new Rectangle(0, 0, txランク文字[j].sz画像サイズ.Width, (int)((double)this.txランク文字[j].sz画像サイズ.Height * num2)));
                 }
 
                 #region [ フルコンボ ]
