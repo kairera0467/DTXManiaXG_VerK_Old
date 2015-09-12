@@ -252,7 +252,7 @@ namespace DTXMania
                 int[] nPart = { 0, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 2 : 1, CDTXMania.ConfigIni.bIsSwappedGuitarBass ? 1 : 2 };
 
                 int nBaseX = 30;
-                int nBaseY = 348;
+                int nBaseY = 350;
 
                 int n難易度文字X = 70;
                 int n難易度文字Y = 75;
