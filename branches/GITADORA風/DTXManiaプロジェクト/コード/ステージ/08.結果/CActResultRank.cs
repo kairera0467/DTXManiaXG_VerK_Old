@@ -102,6 +102,7 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
 
+                this.txStageClear = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult StageClear.png"));
                 this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult fullcombo.png"));
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
 
@@ -152,6 +153,7 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
+                CDTXMania.tテクスチャの解放(ref this.txStageClear);
                 CDTXMania.tテクスチャの解放(ref this.txFullCombo);
                 CDTXMania.tテクスチャの解放(ref this.txExcellent);
                 CDTXMania.t安全にDisposeする(ref this.txランク文字);
@@ -166,37 +168,47 @@ namespace DTXMania
             }
             if (base.b初めての進行描画)
             {
-                this.ctランク表示 = new CCounter(0, 500, 1, CDTXMania.Timer);
+                this.ctランク表示 = new CCounter(0, 600, 1, CDTXMania.Timer);
                 base.b初めての進行描画 = false;
             }
             this.ctランク表示.t進行();
+
             for (int j = 0; j < 3; j++)
             {
-                if (this.txランク文字[j] != null && this.n本体X[j] != 0)
-                {
-                    double num2 = ((double)this.ctランク表示.n現在の値) / 500.0;
-                    this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j] + ((int)((double) this.txランク文字[j].sz画像サイズ.Height * (1.0 - num2))), new Rectangle(0, 0, txランク文字[j].sz画像サイズ.Width, (int)((double)this.txランク文字[j].sz画像サイズ.Height * num2)));
-                }
-
-                #region [ フルコンボ ]
-                int num14 = - 165 + this.n本体X[j];
-                int num15 = 100 + this.n本体Y[j];
                 if (this.n本体X[j] != 0)
                 {
+                    #region [ ランク文字 ]
+                    if (this.txランク文字[j] != null)
+                    {
+                        double num2 = ((double)this.ctランク表示.n現在の値 - 100.0) / 500.0;
+
+                        if (this.ctランク表示.n現在の値 >= 100.0)
+                            this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j] + ((int)((double)this.txランク文字[j].sz画像サイズ.Height * (1.0 - num2))), new Rectangle(0, 0, txランク文字[j].sz画像サイズ.Width, (int)((double)this.txランク文字[j].sz画像サイズ.Height * num2)));
+                    }
+                    #endregion
+
+                    #region [ フルコンボ ]
+                    int num14 = -165 + this.n本体X[j];
+                    int num15 = 100 + this.n本体Y[j];
+
                     if (CDTXMania.stage結果.st演奏記録[j].nPerfect数 == CDTXMania.stage結果.st演奏記録[j].n全チップ数)
                     {
-                        //if (this.txExcellent != null)
-                            //this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
+                        if (this.txExcellent != null)
+                            this.txExcellent.t2D描画(CDTXMania.app.Device, num14, num15);
                     }
-                    else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである && CDTXMania.stage結果.st演奏記録[j].nPerfect数 != CDTXMania.stage結果.st演奏記録[j].n全チップ数)
+                    else if (CDTXMania.stage結果.st演奏記録[j].bフルコンボである)
                     {
-                        //if (this.txFullCombo != null)
-                            //this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
+                        if (this.txFullCombo != null)
+                            this.txFullCombo.t2D描画(CDTXMania.app.Device, num14, num15);
                     }
+                    else
+                    {
+                        if (this.txStageClear != null)
+                            this.txStageClear.t2D描画(CDTXMania.app.Device, num14, num15);
+                    }
+                    #endregion
                 }
-                #endregion
             }
-
 
             if (!this.ctランク表示.b終了値に達した)
             {
@@ -215,8 +227,9 @@ namespace DTXMania
         private STDGBVALUE<int> n本体Y;
         private STDGBVALUE<bool> b全オート;
         private STDGBVALUE<CTexture> txランク文字;
-        private CTexture txExcellent;
+        private CTexture txStageClear;
         private CTexture txFullCombo;
+        private CTexture txExcellent;
         //-----------------
         #endregion
     }
