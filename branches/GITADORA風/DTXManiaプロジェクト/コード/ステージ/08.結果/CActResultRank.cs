@@ -168,7 +168,7 @@ namespace DTXMania
             }
             if (base.b初めての進行描画)
             {
-                this.ctランク表示 = new CCounter(0, 600, 1, CDTXMania.Timer);
+                this.ctランク表示 = new CCounter(0, 500, 1, CDTXMania.Timer);
                 base.b初めての進行描画 = false;
             }
             this.ctランク表示.t進行();
@@ -180,9 +180,9 @@ namespace DTXMania
                     #region [ ランク文字 ]
                     if (this.txランク文字[j] != null)
                     {
-                        double num2 = ((double)this.ctランク表示.n現在の値 - 100.0) / 500.0;
+                        double num2 = ((double)this.ctランク表示.n現在の値 - 200.0) / 300.0;
 
-                        if (this.ctランク表示.n現在の値 >= 100.0)
+                        if (this.ctランク表示.n現在の値 >= 200.0)
                             this.txランク文字[j].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y[j] + ((int)((double)this.txランク文字[j].sz画像サイズ.Height * (1.0 - num2))), new Rectangle(0, 0, txランク文字[j].sz画像サイズ.Width, (int)((double)this.txランク文字[j].sz画像サイズ.Height * num2)));
                     }
                     #endregion
