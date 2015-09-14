@@ -102,7 +102,7 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
 
-                this.txStageClear = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult StageClear.png"));
+                this.txStageCleared = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult StageCleared.png"));
                 this.txFullCombo = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult fullcombo.png"));
                 this.txExcellent = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\ScreenResult Excellent.png"));
 
@@ -153,7 +153,7 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                CDTXMania.tテクスチャの解放(ref this.txStageClear);
+                CDTXMania.tテクスチャの解放(ref this.txStageCleared);
                 CDTXMania.tテクスチャの解放(ref this.txFullCombo);
                 CDTXMania.tテクスチャの解放(ref this.txExcellent);
                 CDTXMania.t安全にDisposeする(ref this.txランク文字);
@@ -203,8 +203,8 @@ namespace DTXMania
                     }
                     else
                     {
-                        if (this.txStageClear != null)
-                            this.txStageClear.t2D描画(CDTXMania.app.Device, num14, num15);
+                        if (this.txStageCleared != null)
+                            this.txStageCleared.t2D描画(CDTXMania.app.Device, num14, num15);
                     }
                     #endregion
                 }
@@ -227,7 +227,7 @@ namespace DTXMania
         private STDGBVALUE<int> n本体Y;
         private STDGBVALUE<bool> b全オート;
         private STDGBVALUE<CTexture> txランク文字;
-        private CTexture txStageClear;
+        private CTexture txStageCleared;
         private CTexture txFullCombo;
         private CTexture txExcellent;
         //-----------------
