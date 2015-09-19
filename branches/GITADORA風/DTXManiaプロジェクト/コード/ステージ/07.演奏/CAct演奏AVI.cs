@@ -371,6 +371,17 @@ namespace DTXMania
                 }
                 //this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Fillin Effect.png"));
 
+                this.txフィルインエフェクト = new CTexture[ 31 ];
+                for( int fill = 0; fill < 31; fill++ )
+                {
+                    this.txフィルインエフェクト[ fill ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\StageEffect\7_StageEffect_" + fill.ToString() + ".png" ) );
+                    if( this.txフィルインエフェクト[ fill ] == null )
+                        continue;
+
+                    this.txフィルインエフェクト[ fill ].b加算合成 = true;
+                    this.txフィルインエフェクト[ fill ].vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
+                }
+
                 base.OnManagedリソースの作成();
             }
         }
@@ -404,6 +415,10 @@ namespace DTXMania
                 //CDTXMania.tテクスチャの解放(ref this.txドラム);
                 CDTXMania.tテクスチャの解放(ref this.txクリップパネル);
                 //CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
+                for( int ar = 0; ar < 31; ar++ )
+                {
+                    CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト[ ar ] );
+                }
                 CDTXMania.tテクスチャの解放(ref this.tx黒幕);
                 base.OnManagedリソースの解放();
             }
@@ -711,36 +726,39 @@ namespace DTXMania
                         CDTXMania.stage演奏ギター画面.actBGA.t進行描画(501, 0);
                 }
 
-                if (CDTXMania.ConfigIni.ボーナス演出を表示する == true)
+                if( CDTXMania.ConfigIni.ボーナス演出を表示する == true )
                 {
-                    for (int i = 0; i < 1; i++)
+                    for( int i = 0; i < 1; i++ )
                     {
-                        if (this.stフィルイン[i].b使用中)
+                        if (this.stフィルイン[ i ].b使用中)
                         {
-                            int numf = this.stフィルイン[i].ct進行.n現在の値;
-                            this.stフィルイン[i].ct進行.t進行();
-                            if (this.stフィルイン[i].ct進行.b終了値に達した)
+                            int numf = this.stフィルイン[ i ].ct進行.n現在の値;
+                            this.stフィルイン[ i ].ct進行.t進行();
+                            if( this.stフィルイン[ i ].ct進行.b終了値に達した )
                             {
-                                this.stフィルイン[i].ct進行.t停止();
-                                this.stフィルイン[i].b使用中 = false;
+                                this.stフィルイン[ i ].ct進行.t停止();
+                                this.stフィルイン[ i ].b使用中 = false;
                             }
                             //if ( this.txフィルインエフェクト != null )
-                            CStage演奏ドラム画面 stageDrum = CDTXMania.stage演奏ドラム画面;
-                            CStage演奏ギター画面 stageGuitar = CDTXMania.stage演奏ギター画面;
+                            //CStage演奏ドラム画面 stageDrum = CDTXMania.stage演奏ドラム画面;
+                            //CStage演奏ギター画面 stageGuitar = CDTXMania.stage演奏ギター画面;
 
-                            if ((CDTXMania.ConfigIni.bDrums有効 ? stageDrum.txボーナスエフェクト : stageGuitar.txボーナスエフェクト) != null)
+                            //if( ( CDTXMania.ConfigIni.bDrums有効 ? stageDrum.txボーナスエフェクト : stageGuitar.txボーナスエフェクト ) != null )
                             {
                                 //this.txフィルインエフェクト.vc拡大縮小倍率.X = 2.0f;
                                 //this.txフィルインエフェクト.vc拡大縮小倍率.Y = 2.0f;
                                 //this.txフィルインエフェクト.b加算合成 = true;
                                 //this.txフィルインエフェクト.t2D描画(CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + (360 * numf), 640, 360));
-                                if (CDTXMania.ConfigIni.bDrums有効)
+                                if( CDTXMania.ConfigIni.bDrums有効 )
                                 {
-                                    stageDrum.txボーナスエフェクト.vc拡大縮小倍率 = new Vector3(2.0f, 2.0f, 1.0f);
-                                    stageDrum.txボーナスエフェクト.b加算合成 = true;
-                                    stageDrum.txボーナスエフェクト.t2D描画(CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + (360 * numf), 640, 360));
+                                    //stageDrum.txボーナスエフェクト.vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
+                                    //stageDrum.txボーナスエフェクト.b加算合成 = true;
+                                    //stageDrum.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + ( 360 * numf ), 640, 360 )) ;
+                                    if( this.txフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ] != null )
+                                        this.txフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ].t2D描画( CDTXMania.app.Device, 0, 0 );
                                 }
                             }
+
                         }
                     }
                 }
@@ -1040,7 +1058,7 @@ namespace DTXMania
         private CTexture txlanes;
         private CTexture txクリップパネル;
         //private CTexture txドラム;
-        //private CTexture txフィルインエフェクト;
+        private CTexture[] txフィルインエフェクト;
         private CTexture tx描画用;
         private CTexture tx描画用2;
         private CTexture txDShow汎用;
