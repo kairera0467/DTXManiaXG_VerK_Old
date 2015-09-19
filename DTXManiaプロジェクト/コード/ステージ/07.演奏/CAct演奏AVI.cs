@@ -348,7 +348,6 @@ namespace DTXMania
             if (!base.b活性化してない)
             {
                 //this.txドラム = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
-                this.tx黒幕 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums_black.png"));
                 if (CDTXMania.ConfigIni.bGuitar有効)
                 {
                     this.txクリップパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_ClipPanelC.png"));
@@ -366,7 +365,7 @@ namespace DTXMania
                 for (int i = 0; i < 1; i++)
                 {
                     this.stフィルイン[i] = new STフィルイン();
-                    this.stフィルイン[i].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
+                    this.stフィルイン[i].ct進行 = new CCounter(0, 30, 30, CDTXMania.Timer);
                     this.stフィルイン[i].b使用中 = false;
                 }
                 //this.txフィルインエフェクト = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Fillin Effect.png"));
@@ -419,7 +418,6 @@ namespace DTXMania
                 {
                     CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト[ ar ] );
                 }
-                CDTXMania.tテクスチャの解放(ref this.tx黒幕);
                 base.OnManagedリソースの解放();
             }
         }
@@ -754,8 +752,14 @@ namespace DTXMania
                                     //stageDrum.txボーナスエフェクト.vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
                                     //stageDrum.txボーナスエフェクト.b加算合成 = true;
                                     //stageDrum.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + ( 360 * numf ), 640, 360 )) ;
+                                    try
+                                    {
                                     if( this.txフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ] != null )
                                         this.txフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ].t2D描画( CDTXMania.app.Device, 0, 0 );
+                                    }
+                                    catch( Exception ex )
+                                    {
+                                    }
                                 }
                             }
 
@@ -992,7 +996,7 @@ namespace DTXMania
                     if (!this.stフィルイン[j].b使用中)
                     {
                         this.stフィルイン[j].b使用中 = true;
-                        this.stフィルイン[j].ct進行 = new CCounter(0, 31, 30, CDTXMania.Timer);
+                        this.stフィルイン[j].ct進行 = new CCounter(0, 30, 30, CDTXMania.Timer);
                         break;
                     }
                 }
@@ -1054,7 +1058,6 @@ namespace DTXMania
 
         public CDTX.CDirectShow dsBGV;
 
-        private CTexture tx黒幕;
         private CTexture txlanes;
         private CTexture txクリップパネル;
         //private CTexture txドラム;
