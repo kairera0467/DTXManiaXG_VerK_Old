@@ -772,6 +772,9 @@ namespace DTXMania
 			cスコア.譜面情報.レベル.Drums = br.ReadInt32();
 			cスコア.譜面情報.レベル.Guitar = br.ReadInt32();
 			cスコア.譜面情報.レベル.Bass = br.ReadInt32();
+            cスコア.譜面情報.レベルDec.Drums = br.ReadInt32();
+            cスコア.譜面情報.レベルDec.Guitar = br.ReadInt32();
+            cスコア.譜面情報.レベルDec.Bass = br.ReadInt32();
 			cスコア.譜面情報.最大ランク.Drums = br.ReadInt32();
 			cスコア.譜面情報.最大ランク.Guitar = br.ReadInt32();
 			cスコア.譜面情報.最大ランク.Bass = br.ReadInt32();
