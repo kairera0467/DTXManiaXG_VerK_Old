@@ -70,7 +70,7 @@ namespace DTXMania
 				#region [ strAVIファイル名の作成。]
 				//-----------------
 				string strAVIファイル名;
-                strAVIファイル名 = CSkin.Path(@"Graphics\7_Movie.avi");
+                //strAVIファイル名 = CSkin.Path(@"Graphics\7_Movie.avi");
 				if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
 					strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
 				else
@@ -78,20 +78,20 @@ namespace DTXMania
 				//-----------------
 				#endregion
 
-				if( !File.Exists( strAVIファイル名 ) )
-				{
-					//Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
-                    Trace.TraceWarning("ファイルが存在しません。代わりに汎用AVIを再生します。({0})({1})", this.strコメント文, strAVIファイル名);
-					//this.avi = null;
+                //if( !File.Exists( strAVIファイル名 ) )
+                //{
+                //    //Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
+                //    Trace.TraceWarning("ファイルが存在しません。代わりに汎用AVIを再生します。({0})({1})", this.strコメント文, strAVIファイル名);
+                //    //this.avi = null;
 
-                    CDTXMania.app.b汎用ムービーである = true;
-                    if (!File.Exists(strAVIファイル名))
-                    {
-                        Trace.TraceWarning("汎用AVIファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名);
-                        this.avi = null;
-                        return;
-                    }
-				}
+                //    CDTXMania.app.b汎用ムービーである = true;
+                //    if (!File.Exists(strAVIファイル名))
+                //    {
+                //        Trace.TraceWarning("汎用AVIファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名);
+                //        this.avi = null;
+                //        return;
+                //    }
+                //}
 
 				// AVI の生成。
 
@@ -174,7 +174,7 @@ namespace DTXMania
 				try
 				{
                     this.dshow = new FDK.CDirectShow( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + this.strファイル名, CDTXMania.app.WindowHandle, true);
-					Trace.TraceInformation( "DirectShowを生成しました。({0})({1})({2}byte)", this.strコメント文, str動画ファイル名, this.dshow.nデータサイズbyte );
+					Trace.TraceInformation( "DirectShow動画を生成しました。({0})({1})({2}byte)", this.strコメント文, str動画ファイル名, this.dshow.nデータサイズbyte );
                     CDTXMania.app.b汎用ムービーである = false;
 				}
 				catch( Exception e )
@@ -211,7 +211,7 @@ namespace DTXMania
 					this.dshow.Dispose();
 					this.dshow = null;
 					
-					Trace.TraceInformation( "動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
+					Trace.TraceInformation( "DirectShow動画を解放しました。({0})({1})", this.strコメント文, str動画ファイル名 );
 				}
 
 				this.bDispose済み = true;
@@ -3736,6 +3736,12 @@ namespace DTXMania
 											int num22 = ms + ( (int) ( ( ( 0x271 * ( ( chip.n発声位置 + this.listAVIPAN[ chip.n整数値 ].n移動時間ct ) - n発声位置 ) ) * dbBarLength ) / bpm ) );
 											chip.n総移動時間 = num22 - num21;
 										}
+										if ( this.listDS.ContainsKey( chip.n整数値 ) )
+										{
+											int num21 = ms + ( (int) ( ( ( 0x271 * ( chip.n発声位置 - n発声位置 ) ) * dbBarLength ) / bpm ) );
+											int num22 = ms + ( (int) ( ( ( 0x271 * ( ( chip.n発声位置 + 0 ) - n発声位置 ) ) * dbBarLength ) / bpm ) );
+											chip.n総移動時間 = num22 - num21;
+										}
 										continue;
 									}
 								case 0x5A:	// ワイド(DTX1.00)動画再生
@@ -5326,17 +5332,20 @@ namespace DTXMania
 
 			this.listAVI.Add( zz, avi );
 
-            var ds = new CDirectShow()
+            if( strファイル名.IndexOf( ".avi" ) == -1 )
             {
-                n番号 = zz,
-                strファイル名 = strパラメータ,
-                strコメント文 = strコメント,
-            };
+                var ds = new CDirectShow()
+                {
+                    n番号 = zz,
+                    strファイル名 = strパラメータ,
+                    strコメント文 = strコメント,
+                };
 
-            if (this.listDS.ContainsKey(zz))	// 既にリスト中に存在しているなら削除。後のものが有効。
-                this.listDS.Remove(zz);
+                if (this.listDS.ContainsKey(zz))	// 既にリスト中に存在しているなら削除。後のものが有効。
+                    this.listDS.Remove(zz);
 
-            this.listDS.Add(zz, ds);
+                this.listDS.Add(zz, ds);
+            }
 			//-----------------
 			#endregion
 

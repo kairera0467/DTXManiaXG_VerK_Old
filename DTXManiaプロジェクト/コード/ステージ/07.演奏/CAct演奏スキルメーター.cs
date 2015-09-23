@@ -56,47 +56,47 @@ namespace DTXMania
             ST文字位置[] st文字位置Array = new ST文字位置[11];
             ST文字位置 st文字位置 = new ST文字位置();
             st文字位置.ch = '0';
-            st文字位置.pt = new Point(210, 0);
+            st文字位置.pt = new Point(288, 0);
             st文字位置Array[0] = st文字位置;
             ST文字位置 st文字位置2 = new ST文字位置();
             st文字位置2.ch = '1';
-            st文字位置2.pt = new Point(223, 0);
+            st文字位置2.pt = new Point(300, 0);
             st文字位置Array[1] = st文字位置2;
             ST文字位置 st文字位置3 = new ST文字位置();
             st文字位置3.ch = '2';
-            st文字位置3.pt = new Point(235, 0);
+            st文字位置3.pt = new Point(312, 0);
             st文字位置Array[2] = st文字位置3;
             ST文字位置 st文字位置4 = new ST文字位置();
             st文字位置4.ch = '3';
-            st文字位置4.pt = new Point(247, 0);
+            st文字位置4.pt = new Point(324, 0);
             st文字位置Array[3] = st文字位置4;
             ST文字位置 st文字位置5 = new ST文字位置();
             st文字位置5.ch = '4';
-            st文字位置5.pt = new Point(259, 0);
+            st文字位置5.pt = new Point(336, 0);
             st文字位置Array[4] = st文字位置5;
             ST文字位置 st文字位置6 = new ST文字位置();
             st文字位置6.ch = '5';
-            st文字位置6.pt = new Point(271, 0);
+            st文字位置6.pt = new Point(348, 0);
             st文字位置Array[5] = st文字位置6;
             ST文字位置 st文字位置7 = new ST文字位置();
             st文字位置7.ch = '6';
-            st文字位置7.pt = new Point(283, 0);
+            st文字位置7.pt = new Point(360, 0);
             st文字位置Array[6] = st文字位置7;
             ST文字位置 st文字位置8 = new ST文字位置();
             st文字位置8.ch = '7';
-            st文字位置8.pt = new Point(295, 0);
+            st文字位置8.pt = new Point(372, 0);
             st文字位置Array[7] = st文字位置8;
             ST文字位置 st文字位置9 = new ST文字位置();
             st文字位置9.ch = '8';
-            st文字位置9.pt = new Point(307, 0);
+            st文字位置9.pt = new Point(384, 0);
             st文字位置Array[8] = st文字位置9;
             ST文字位置 st文字位置10 = new ST文字位置();
             st文字位置10.ch = '9';
-            st文字位置10.pt = new Point(319, 0);
+            st文字位置10.pt = new Point(396, 0);
             st文字位置Array[9] = st文字位置10;
             ST文字位置 st文字位置11 = new ST文字位置();
             st文字位置11.ch = '.';
-            st文字位置11.pt = new Point(331, 0);
+            st文字位置11.pt = new Point(408, 0);
             st文字位置Array[10] = st文字位置11;
             this.st小文字位置 = st文字位置Array;
             base.b活性化してない = true;
@@ -107,7 +107,7 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            this.n本体X[0] = 900;
+            this.n本体X[0] = 966;
             this.n本体X[1] = 290;
             this.n本体X[2] = 574;
 
@@ -128,7 +128,7 @@ namespace DTXMania
                 this.txグラフ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
                 this.tx比較 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
                 this.txグラフバックパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
-                this.tx数字 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
+                this.txグラフゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Graph_Gauge.png" ) );
                 base.OnManagedリソースの作成();
             }
         }
@@ -139,7 +139,6 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txグラフ);
                 CDTXMania.tテクスチャの解放(ref this.tx比較);
                 CDTXMania.tテクスチャの解放(ref this.txグラフバックパネル);
-                CDTXMania.tテクスチャの解放(ref this.tx数字);
                 base.OnManagedリソースの解放();
             }
         }
@@ -219,70 +218,18 @@ namespace DTXMania
 
                 //this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
                 // 背景暗幕
-                Rectangle rectangle = new Rectangle(900, 0, 380, 720);
+                Rectangle rectangle = new Rectangle( 2, 2, 280, 720 );
                 if (this.txグラフ != null)
                 {
-                    this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, this.n本体X[j], 0, rectangle);
-                    this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, 141 + this.n本体X[j], 650 - (int)(this.dbグラフ値現在 * 5.56), new Rectangle(499, 0, 201, (int)(this.dbグラフ値現在 * 5.56)));
+                    this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, this.n本体X[j], 50, rectangle );
+                    //this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, 141 + this.n本体X[j], 650 - (int)(this.dbグラフ値現在 * 5.56), new Rectangle(499, 0, 201, (int)(this.dbグラフ値現在 * 5.56)));
                 }
 
-                this.t小文字表示(270 + this.n本体X[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
-                if (CDTXMania.ConfigIni.nInfoType == 0)
-                {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 200, new Rectangle(336, 0, 162, 60));
-                    this.t小文字表示(250 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
-                    if (this.dbグラフ値現在 > this.dbグラフ値目標)
-                    {
-                        this.tx比較.n透明度 = 128;
-                    }
-                }
-                else if (CDTXMania.ConfigIni.nInfoType == 1)
-                {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 200, new Rectangle(336, 205, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 280, new Rectangle(336, 265, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 360, new Rectangle(336, 325, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 440, new Rectangle(336, 385, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 170 + this.n本体X[j], 520, new Rectangle(336, 445, 162, 60));
 
-                    if (j == 0)
-                    {
-                        this.t小文字表示(250 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Perfect));
-                        this.t小文字表示(250 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Great));
-                        this.t小文字表示(250 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Good));
-                        this.t小文字表示(250 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Poor));
-                        this.t小文字表示(250 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Miss));
-                    }
-                    else
-                    {
-                        this.t小文字表示(250 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Perfect));
-                        this.t小文字表示(250 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Great));
-                        this.t小文字表示(250 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Good));
-                        this.t小文字表示(250 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Poor));
-                        this.t小文字表示(250 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Miss));
-                    }
-                }
 
                 // 基準線
                 rectangle = new Rectangle(78, 0, 60, 3);
-                if (this.txグラフ != null)
-                {
-                    //this.txグラフ.n透明度 = 32;
-                    //this.txグラフ.vc拡大縮小倍率 = new Vector3(58f, 1f, 1f);
-                    for (int i = 0; i < 20; i++)
-                    {
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], 94 + (int)(29.26 * i), rectangle);
-                    }
-                    //this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 230f, 1f);
-                    for (int i = 0; i < 2; i++)
-                    {
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j] + (int)(29.26 * i), 94, rectangle);
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j] + (int)(29.26 * i), 94, rectangle);
-                    }
-                }
-                if (this.txグラフ != null)
-                {
-                    //this.txグラフ.vc拡大縮小倍率 = new Vector3(38f, 1f, 1f);
-                }
+
                 for (int i = 0; i < 5; i++)
                 {
                     // 基準線を越えたら線が黄色くなる
@@ -296,7 +243,7 @@ namespace DTXMania
                     }
                     else
                     {
-                        rectangle = new Rectangle(78, 4, 60, 2);
+                        rectangle = new Rectangle(420, 566, 60, 2);
                         if (this.txグラフ != null)
                         {
                             this.txグラフ.n透明度 = 160;
@@ -305,8 +252,7 @@ namespace DTXMania
 
                     if (this.txグラフ != null)
                     {
-                        this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], 94 + (int)(58.52 * i), rectangle);
-
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, 8 + this.n本体X[j], 94 + (int)(58.52 * i), rectangle );
                     }
                 }
                 // グラフ
@@ -319,64 +265,26 @@ namespace DTXMania
                 {
                     this.dbグラフ値現在_表示 = this.dbグラフ値現在;
                 }
-                rectangle = new Rectangle(0, 0, 72, (int)(556f * this.dbグラフ値現在_表示 / 100));
-                if (this.txグラフ != null)
-                {
-                    this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
-                    //this.txグラフ.n透明度 = 192;
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
-                }
-                for (int k = 0; k < 32; k++)
-                {
-                    rectangle = new Rectangle(20, 0, 1, 1);
-                    if (this.txグラフ != null)
-                    {
-                        //this.stキラキラ[ k ].ct進行.t進行Loop();
-                        int num1 = (int)this.stキラキラ[k].x;
-                        //int num2 = this.stキラキラ[ k ].ct進行.n現在の値;
-                        //this.txグラフ.vc拡大縮小倍率 = new Vector3(this.stキラキラ[ k ].fScale, this.stキラキラ[ k ].fScale, this.stキラキラ[ k ].fScale);
-                        //this.txグラフ.n透明度 = 138 - 2 * this.stキラキラ[ k ].Trans;
-                        //if ( num2 < (2.3f * this.dbグラフ値現在_表示) )
-                        {
-                            //this.txグラフ.t2D描画(CDTXMania.app.Device, 860+num1, 318-num2, rectangle);
-                        }
-                    }
-                }
-                // --現在値_追加エフェクト
+                rectangle = new Rectangle(288, 2, 72, (int)(556f * this.dbグラフ値現在_表示 / 100));
 
-                if (this.dbグラフ値直前 != this.dbグラフ値現在)
+                if( this.txグラフゲージ != null )
                 {
-                    this.stフラッシュ[nグラフフラッシュct].y = 0;
-                    this.stフラッシュ[nグラフフラッシュct].Trans = 650;
-                    nグラフフラッシュct++;
-                    if (nグラフフラッシュct >= 16)
-                    {
-                        nグラフフラッシュct = 0;
-                    }
+                    this.txグラフゲージ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
+                    this.txグラフゲージ.n透明度 = 255;
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 3 + this.n本体X[ j ], 650 - ( int )( 556f * this.dbグラフ値現在_表示 / 100.0 ), rectangle );
                 }
 
                 this.dbグラフ値直前 = this.dbグラフ値現在;
-                for (int m = 0; m < 16; m++)
-                {
-                    rectangle = new Rectangle(6, 0, 60, 2);
-                    if ((this.stフラッシュ[m].y >= 0) && (this.stフラッシュ[m].y + 3 < (int)(650f * this.dbグラフ値現在_表示 / 100)) && (this.txグラフ != null))
-                    {
-                        //this.txグラフ.n透明度 = this.stフラッシュ[ m ].Trans;
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], this.stフラッシュ[ m ].y + (620 - (int)(556f * this.dbグラフ値現在_表示 / 100)), rectangle);
-                        //this.txグラフ.n透明度 = this.stフラッシュ[ m ].Trans;
-                        //this.txグラフ.t2D描画(CDTXMania.app.Device, 75 + this.n本体X[j], this.stフラッシュ[ m ].y + 2 + (620 - (int)(556f * this.dbグラフ値現在_表示 / 100)), rectangle);
-                    }
-                    this.stフラッシュ[m].y += 5;
-                    this.stフラッシュ[m].Trans -= 5;
-                }
+
                 // --現在値_目標越
-                rectangle = new Rectangle(0, 0, 10, (int)(556f * this.dbグラフ値現在_表示 / 100));
-                if ((dbグラフ値現在 >= dbグラフ値目標) && (this.txグラフ != null))
+                rectangle = new Rectangle(0, 0, 210, (int)(556f * this.dbグラフ値現在_表示 / 100));
+                if ((dbグラフ値現在 >= dbグラフ値目標) && (this.txグラフゲージ != null))
                 {
                     //this.txグラフ.vc拡大縮小倍率 = new Vector3(1.4f, 1f, 1f);
                     //this.txグラフ.n透明度 = 128;
                     //this.txグラフ.b加算合成 = true;
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値現在_表示 / 100), rectangle);
+                    this.txグラフゲージ.n透明度 = 255;
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 3 + this.n本体X[j], 650 - (int)( 556f * this.dbグラフ値現在_表示 / 100 ), rectangle);
 
                 }
                 // --目標値
@@ -398,36 +306,48 @@ namespace DTXMania
                 //sw.Close();
                 this.dbグラフ値目標_表示 = this.dbグラフ値目標;
                 rectangle = new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値目標_表示 / 100.0));
-                if (this.txグラフ != null)
+                if (this.txグラフゲージ != null)
                 {
-                    //this.txグラフ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
-                    //this.txグラフ.n透明度 = 192;
-                    //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
-                    //this.txグラフ.vc拡大縮小倍率 = new Vector3(1.4f, 1f, 1f);
-                    this.txグラフ.n透明度 = 48;
-                    //this.txグラフ.b加算合成 = true;
-                    //this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556f * this.dbグラフ値目標_表示 / 100), rectangle);
-                    this.txグラフ.t2D描画(CDTXMania.app.Device, 69 + this.n本体X[j], 650 - (int)(556.0 * this.dbグラフ値目標_表示 / 100.0), new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値目標_表示 / 100.0)));
+                    //this.txグラフゲージ.n透明度 = 48;
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X[j], 650 - (int)(556.0 * this.dbグラフ値目標_表示 / 100.0), new Rectangle( 2, 0, 201, (int)( 556.0 * this.dbグラフ値目標_表示 / 100.0 ) ) );
                 }
-                /*
-				for( int k = 32; k < 64; k++ )
-				{
-                    rectangle = new Rectangle(6, 0, 1, 1);
-                    if (this.txグラフ != null)
-                    {
-				    	this.stキラキラ[ k ].ct進行.t進行Loop();
-                        int num1 = (int)this.stキラキラ[ k ].x;
-                        int num2 = this.stキラキラ[ k ].ct進行.n現在の値;
-                        this.txグラフ.vc拡大縮小倍率 = new Vector3(this.stキラキラ[ k ].fScale, this.stキラキラ[ k ].fScale, this.stキラキラ[ k ].fScale);
-                        //this.txグラフ.n透明度 = 138 - 2 * this.stキラキラ[ k ].Trans;
-                        if ( num2 < (2.3f * this.dbグラフ値目標_表示) )
-                        {
-                            this.txグラフ.t2D描画(CDTXMania.app.Device, 75 +this.n本体X[j] + num1, 318 - num2, rectangle);
-                        }
-                    }
-				}
-                 */
 
+
+                this.t小文字表示(204 + this.n本体X[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
+                if (CDTXMania.ConfigIni.nInfoType == 0)
+                {
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
+                    this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                    if (this.dbグラフ値現在 > this.dbグラフ値目標)
+                    {
+                        this.tx比較.n透明度 = 128;
+                    }
+                }
+                else if (CDTXMania.ConfigIni.nInfoType == 1)
+                {
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(336, 205, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 280, new Rectangle(336, 265, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 360, new Rectangle(336, 325, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 440, new Rectangle(336, 385, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 520, new Rectangle(336, 445, 162, 60));
+
+                    if (j == 0)
+                    {
+                        this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Perfect));
+                        this.t小文字表示(186 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Great));
+                        this.t小文字表示(186 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Good));
+                        this.t小文字表示(186 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Poor));
+                        this.t小文字表示(186 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Miss));
+                    }
+                    else
+                    {
+                        this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Perfect));
+                        this.t小文字表示(186 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Great));
+                        this.t小文字表示(186 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Good));
+                        this.t小文字表示(186 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Poor));
+                        this.t小文字表示(186 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[j].Miss));
+                    }
+                }
             }
             return 0;
         }
@@ -467,10 +387,10 @@ namespace DTXMania
         private int nグラフフラッシュct;
         private int n現在演奏されたノーツ数;
         private STDGBVALUE<int> n本体X;
-        private CTexture tx数字;
         private CTexture tx比較;
         private CTexture txグラフ;
         private CTexture txグラフバックパネル;
+        private CTexture txグラフゲージ;
 
         private Bitmap bmpGraph;
         private Graphics gGraph;
@@ -485,19 +405,22 @@ namespace DTXMania
                 {
                     if (this.st小文字位置[i].ch == ch)
                     {
-                        Rectangle rectangle = new Rectangle(this.st小文字位置[i].pt.X, this.st小文字位置[i].pt.Y, 12, 16);
+                        Rectangle rectangle = new Rectangle( this.st小文字位置[i].pt.X, 556, 12, 16 );
                         if (ch == '.')
                         {
                             rectangle.Width -= 8;
                         }
-                        if (this.tx数字 != null)
+                        if (this.txグラフバックパネル != null)
                         {
-                            this.tx数字.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                            this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x, y, rectangle);
                         }
                         break;
                     }
                 }
-                x += 12;
+
+                if( ch == '.' ) x += 6;
+                else x += 12;
+
             }
         }
         #endregion
