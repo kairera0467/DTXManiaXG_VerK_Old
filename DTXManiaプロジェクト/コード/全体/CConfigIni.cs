@@ -1867,23 +1867,29 @@ namespace DTXMania
 			sw.WriteLine();
 
             #region[ 画像 ]
-            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+            sw.WriteLine( "; 判定アニメタイプ( 0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
 			sw.WriteLine( "JudgeAnimeType={0}", this.nJudgeAnimeType );
 			sw.WriteLine();
-            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+            sw.WriteLine( "; 判定アニメのフレーム数( JudgeAnimeType1で使用します。 )" );
 			sw.WriteLine( "JudgeFrames={0}", this.nJudgeFrames );
 			sw.WriteLine();
-            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+            sw.WriteLine( "; 判定アニメの1フレームあたりの時間( JudgeAnimeType1で使用します。 )" );
 			sw.WriteLine( "JudgeInterval={0}", this.nJudgeInterval );
 			sw.WriteLine();
-            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+            sw.WriteLine( "; 判定画像の1コマの幅( JudgeAnimeType1で使用します。 )" );
 			sw.WriteLine( "JudgeWidgh={0}", this.nJudgeWidgh );
 			sw.WriteLine();
-            sw.WriteLine( "; 判定アニメタイプ(0:DTXManiaと同一, 1:コマアニメ方式, 2:XG風 内部処理アニメ )" );
+            sw.WriteLine( "; 判定画像の1コマの高さ( JudgeAnimeType1で使用します。 )" );
 			sw.WriteLine( "JudgeHeight={0}", this.nJudgeHeight );
 			sw.WriteLine();
 
             #endregion
+            #region[ System周り追加 ]
+            sw.WriteLine( "; 動画の表示位置( 0:背景のみ 1:ウィンドウのみ 2:両方 3:表示しない )" );
+            sw.WriteLine( "MovieClipPosition={0}", (int)this.eClipDispType );
+            sw.WriteLine();
+            #endregion
+
 
             sw.WriteLine( ";-------------------" );
 			#endregion

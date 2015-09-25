@@ -48,7 +48,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.txStageFailed = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_stage_failed.jpg" ) );
+				this.txStageFailed = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_stage_failed.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -73,11 +73,11 @@ namespace DTXMania
 			this.ct進行.t進行();
 			if( this.ct進行.n現在の値 < 100 )
 			{
-				int x = (int) ( 320.0 * Math.Cos( ( Math.PI / 2 * this.ct進行.n現在の値 ) / 100.0 ) );
-				if( ( x != 320 ) && ( this.txStageFailed != null ) )
+				int x = (int) ( 640.0 * Math.Cos( ( Math.PI / 2 * this.ct進行.n現在の値 ) / 100.0 ) );
+				if( ( x != 640 ) && ( this.txStageFailed != null ) )
 				{
-					this.txStageFailed.t2D描画( CDTXMania.app.Device, 0, 0, new Rectangle( x, 0, 320 - x, 480 ) );
-					this.txStageFailed.t2D描画( CDTXMania.app.Device, 320 + x, 0, new Rectangle( 320, 0, 320 - x, 480 ) );
+					this.txStageFailed.t2D描画( CDTXMania.app.Device, 0, 0, new Rectangle( x, 0, 640 - x, 720 ) );
+					this.txStageFailed.t2D描画( CDTXMania.app.Device, 640 + x, 0, new Rectangle( 640, 0, 640 - x, 720 ) );
 				}
 			}
 			else

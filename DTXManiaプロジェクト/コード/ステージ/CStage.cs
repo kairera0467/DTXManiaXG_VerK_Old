@@ -54,6 +54,7 @@ namespace DTXMania
 			起動7_完了,
 			タイトル_起動画面からのフェードイン,
 			選曲_結果画面からのフェードイン,
+            選曲_読み込み画面待機,
 			選曲_NowLoading画面へのフェードアウト,
 			NOWLOADING_DTXファイルを読み込む,
 			NOWLOADING_WAVファイルを読み込む,

@@ -35,10 +35,6 @@ namespace DTXMania
 		}
 		public override void On非活性化()
 		{
-			if( this.ct白波移動 != null )
-			{
-				this.ct白波移動 = null;
-			}
 			if( this.ctランク表示 != null )
 			{
 				this.ctランク表示 = null;
@@ -50,7 +46,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txランクパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rank panel.png" ) );
-				this.tx白波 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult rank wave.png" ) );
 				switch ( CDTXMania.stage結果.n総合ランク値 )
 				{
 					case 0:
@@ -94,7 +89,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txランクパネル );
-				CDTXMania.tテクスチャの解放( ref this.tx白波 );
 				CDTXMania.tテクスチャの解放( ref this.txランク文字 );
 				base.OnManagedリソースの解放();
 			}
@@ -107,11 +101,9 @@ namespace DTXMania
 			}
 			if( base.b初めての進行描画 )
 			{
-				this.ct白波移動 = new CCounter( -132, 0x170, 10, CDTXMania.Timer );
 				this.ctランク表示 = new CCounter( 0, 0x514, 2, CDTXMania.Timer );
 				base.b初めての進行描画 = false;
 			}
-			this.ct白波移動.t進行Loop();
 			this.ctランク表示.t進行();
 			if( this.ctランク表示.n現在の値 >= 700 )
 			{
@@ -131,7 +123,6 @@ namespace DTXMania
 					this.txランク文字.t2D描画( CDTXMania.app.Device, this.n本体X, this.n本体Y, new Rectangle( 0, 0, (int) ( 274.0 * num2 ), 274 ) );
 				}
 			}
-			this.t描画・白波();
 			if( !this.ctランク表示.b終了値に達した )
 			{
 				return 0;
@@ -145,46 +136,10 @@ namespace DTXMania
 		#region [ private ]
 		//-----------------
 		private CCounter ctランク表示;
-		private CCounter ct白波移動;
 		private int n本体X;
 		private int n本体Y;
 		private CTexture txランクパネル;
 		private CTexture txランク文字;
-		private CTexture tx白波;
-		
-		private void t描画・白波()
-		{
-			if( !this.ctランク表示.b終了値に達してない )
-			{
-				int num = this.ct白波移動.n現在の値;
-				int num2 = this.n本体X;
-				int y = this.n本体Y + num;
-				if( ( y < ( this.n本体Y + 0x80 ) ) && ( ( y + 0x20 ) > this.n本体Y ) )
-				{
-					Rectangle rectangle = new Rectangle( 0, 0, 0x20, 0x20 );
-					if( y < this.n本体Y )
-					{
-						rectangle.Y += this.n本体Y - y;
-						rectangle.Height -= this.n本体Y - y;
-						y = this.n本体Y;
-					}
-					if( ( y + 0x20 ) > ( this.n本体Y + 0x80 ) )
-					{
-						rectangle.Height -= ( y + 0x20 ) - ( this.n本体Y + 0x80 );
-					}
-					if( rectangle.Bottom > rectangle.Top )
-					{
-						for( int i = 0; i < 4; i++ )
-						{
-							if( this.tx白波 != null )
-							{
-								this.tx白波.t2D描画( CDTXMania.app.Device, num2 + ( i * 0x20 ), y, rectangle );
-							}
-						}
-					}
-				}
-			}
-		}
 		//-----------------
 		#endregion
 	}

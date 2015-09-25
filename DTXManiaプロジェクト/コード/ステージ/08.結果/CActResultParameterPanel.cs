@@ -15,101 +15,152 @@ namespace DTXMania
 
 		public CActResultParameterPanel()
 		{
-			ST文字位置[] st文字位置Array = new ST文字位置[ 11 ];
-			ST文字位置 st文字位置 = new ST文字位置();
-			st文字位置.ch = '0';
-			st文字位置.pt = new Point( 0, 0 );
-			st文字位置Array[ 0 ] = st文字位置;
-			ST文字位置 st文字位置2 = new ST文字位置();
-			st文字位置2.ch = '1';
-			st文字位置2.pt = new Point( 14, 0 );
-			st文字位置Array[ 1 ] = st文字位置2;
-			ST文字位置 st文字位置3 = new ST文字位置();
-			st文字位置3.ch = '2';
-			st文字位置3.pt = new Point( 28, 0 );
-			st文字位置Array[ 2 ] = st文字位置3;
-			ST文字位置 st文字位置4 = new ST文字位置();
-			st文字位置4.ch = '3';
-			st文字位置4.pt = new Point( 42, 0 );
-			st文字位置Array[ 3 ] = st文字位置4;
-			ST文字位置 st文字位置5 = new ST文字位置();
-			st文字位置5.ch = '4';
-			st文字位置5.pt = new Point( 56, 0 );
-			st文字位置Array[ 4 ] = st文字位置5;
-			ST文字位置 st文字位置6 = new ST文字位置();
-			st文字位置6.ch = '5';
-			st文字位置6.pt = new Point( 0, 18 );
-			st文字位置Array[ 5 ] = st文字位置6;
-			ST文字位置 st文字位置7 = new ST文字位置();
-			st文字位置7.ch = '6';
-			st文字位置7.pt = new Point( 14, 18 );
-			st文字位置Array[ 6 ] = st文字位置7;
-			ST文字位置 st文字位置8 = new ST文字位置();
-			st文字位置8.ch = '7';
-			st文字位置8.pt = new Point( 28, 18 );
-			st文字位置Array[ 7 ] = st文字位置8;
-			ST文字位置 st文字位置9 = new ST文字位置();
-			st文字位置9.ch = '8';
-			st文字位置9.pt = new Point( 42, 18 );
-			st文字位置Array[ 8 ] = st文字位置9;
-			ST文字位置 st文字位置10 = new ST文字位置();
-			st文字位置10.ch = '9';
-			st文字位置10.pt = new Point( 56, 18 );
-			st文字位置Array[ 9 ] = st文字位置10;
-			ST文字位置 st文字位置11 = new ST文字位置();
-			st文字位置11.ch = '.';
-			st文字位置11.pt = new Point( 70, 18 );
-			st文字位置Array[ 10 ] = st文字位置11;
-			this.st大文字位置 = st文字位置Array;
+            this.tx文字 = new CTexture[3];
+            ST文字位置[] st文字位置Array = new ST文字位置[11];
+            ST文字位置 st文字位置 = new ST文字位置();
+            st文字位置.ch = '0';
+            st文字位置.pt = new Point(0, 0);
+            st文字位置Array[0] = st文字位置;
+            ST文字位置 st文字位置2 = new ST文字位置();
+            st文字位置2.ch = '1';
+            st文字位置2.pt = new Point(14, 0);
+            st文字位置Array[1] = st文字位置2;
+            ST文字位置 st文字位置3 = new ST文字位置();
+            st文字位置3.ch = '2';
+            st文字位置3.pt = new Point(0x1c, 0);
+            st文字位置Array[2] = st文字位置3;
+            ST文字位置 st文字位置4 = new ST文字位置();
+            st文字位置4.ch = '3';
+            st文字位置4.pt = new Point(0x2a, 0);
+            st文字位置Array[3] = st文字位置4;
+            ST文字位置 st文字位置5 = new ST文字位置();
+            st文字位置5.ch = '4';
+            st文字位置5.pt = new Point(0x38, 0);
+            st文字位置Array[4] = st文字位置5;
+            ST文字位置 st文字位置6 = new ST文字位置();
+            st文字位置6.ch = '5';
+            st文字位置6.pt = new Point(0, 0x12);
+            st文字位置Array[5] = st文字位置6;
+            ST文字位置 st文字位置7 = new ST文字位置();
+            st文字位置7.ch = '6';
+            st文字位置7.pt = new Point(14, 0x12);
+            st文字位置Array[6] = st文字位置7;
+            ST文字位置 st文字位置8 = new ST文字位置();
+            st文字位置8.ch = '7';
+            st文字位置8.pt = new Point(0x1c, 0x12);
+            st文字位置Array[7] = st文字位置8;
+            ST文字位置 st文字位置9 = new ST文字位置();
+            st文字位置9.ch = '8';
+            st文字位置9.pt = new Point(0x2a, 0x12);
+            st文字位置Array[8] = st文字位置9;
+            ST文字位置 st文字位置10 = new ST文字位置();
+            st文字位置10.ch = '9';
+            st文字位置10.pt = new Point(0x38, 0x12);
+            st文字位置Array[9] = st文字位置10;
+            ST文字位置 st文字位置11 = new ST文字位置();
+            st文字位置11.ch = '.';
+            st文字位置11.pt = new Point(70, 0x12);
+            st文字位置Array[10] = st文字位置11;
+            this.st大文字位置 = st文字位置Array;
 
-			ST文字位置[] st文字位置Array_em = new ST文字位置[ 11 ];
-			ST文字位置 st文字位置em_0 = new ST文字位置();
-			st文字位置em_0.ch = '0';
-			st文字位置em_0.pt = new Point( 0, 0x20 );
-			st文字位置Array_em[ 0 ] = st文字位置em_0;
-			ST文字位置 st文字位置em_1 = new ST文字位置();
-			st文字位置em_1.ch = '1';
-			st文字位置em_1.pt = new Point( 11, 0x20 );
-			st文字位置Array_em[ 1 ] = st文字位置em_1;
-			ST文字位置 st文字位置14 = new ST文字位置();
-			st文字位置14.ch = '2';
-			st文字位置14.pt = new Point( 0x16, 0x20 );
-			st文字位置Array_em[ 2 ] = st文字位置14;
-			ST文字位置 st文字位置15 = new ST文字位置();
-			st文字位置15.ch = '3';
-			st文字位置15.pt = new Point( 0x21, 0x20 );
-			st文字位置Array_em[ 3 ] = st文字位置15;
-			ST文字位置 st文字位置16 = new ST文字位置();
-			st文字位置16.ch = '4';
-			st文字位置16.pt = new Point( 0x2c, 0x20 );
-			st文字位置Array_em[ 4 ] = st文字位置16;
-			ST文字位置 st文字位置17 = new ST文字位置();
-			st文字位置17.ch = '5';
-			st文字位置17.pt = new Point( 0, 0x30 );
-			st文字位置Array_em[ 5 ] = st文字位置17;
-			ST文字位置 st文字位置18 = new ST文字位置();
-			st文字位置18.ch = '6';
-			st文字位置18.pt = new Point( 11, 0x30 );
-			st文字位置Array_em[ 6 ] = st文字位置18;
-			ST文字位置 st文字位置19 = new ST文字位置();
-			st文字位置19.ch = '7';
-			st文字位置19.pt = new Point( 0x16, 0x30 );
-			st文字位置Array_em[ 7 ] = st文字位置19;
-			ST文字位置 st文字位置20 = new ST文字位置();
-			st文字位置20.ch = '8';
-			st文字位置20.pt = new Point( 0x21, 0x30 );
-			st文字位置Array_em[ 8 ] = st文字位置20;
-			ST文字位置 st文字位置21 = new ST文字位置();
-			st文字位置21.ch = '9';
-			st文字位置21.pt = new Point( 0x2c, 0x30 );
-			st文字位置Array_em[ 9 ] = st文字位置21;
-			ST文字位置 st文字位置22 = new ST文字位置();
-			st文字位置22.ch = '%';
-			st文字位置22.pt = new Point( 0x37, 0x30 );
-			st文字位置Array_em[ 10 ] = st文字位置22;
-			this.st小文字位置 = st文字位置Array_em;
-			this.ptFullCombo位置 = new Point[] { new Point( 0x80, 0xed ), new Point( 0xdf, 0xed ), new Point( 0x141, 0xed ) };
-			base.b活性化してない = true;
+            ST文字位置[] st文字位置Array2 = new ST文字位置[11];
+            ST文字位置 st文字位置12 = new ST文字位置();
+            st文字位置12.ch = '0';
+            st文字位置12.pt = new Point(0, 0x24);
+            st文字位置Array2[0] = st文字位置12;
+            ST文字位置 st文字位置13 = new ST文字位置();
+            st文字位置13.ch = '1';
+            st文字位置13.pt = new Point(14, 0x24);
+            st文字位置Array2[1] = st文字位置13;
+            ST文字位置 st文字位置14 = new ST文字位置();
+            st文字位置14.ch = '2';
+            st文字位置14.pt = new Point(0x1c, 0x24);
+            st文字位置Array2[2] = st文字位置14;
+            ST文字位置 st文字位置15 = new ST文字位置();
+            st文字位置15.ch = '3';
+            st文字位置15.pt = new Point(0x2a, 0x24);
+            st文字位置Array2[3] = st文字位置15;
+            ST文字位置 st文字位置16 = new ST文字位置();
+            st文字位置16.ch = '4';
+            st文字位置16.pt = new Point(0x38, 0x24);
+            st文字位置Array2[4] = st文字位置16;
+            ST文字位置 st文字位置17 = new ST文字位置();
+            st文字位置17.ch = '5';
+            st文字位置17.pt = new Point(0, 0x36);
+            st文字位置Array2[5] = st文字位置17;
+            ST文字位置 st文字位置18 = new ST文字位置();
+            st文字位置18.ch = '6';
+            st文字位置18.pt = new Point(14, 0x36);
+            st文字位置Array2[6] = st文字位置18;
+            ST文字位置 st文字位置19 = new ST文字位置();
+            st文字位置19.ch = '7';
+            st文字位置19.pt = new Point(0x1c, 0x36);
+            st文字位置Array2[7] = st文字位置19;
+            ST文字位置 st文字位置20 = new ST文字位置();
+            st文字位置20.ch = '8';
+            st文字位置20.pt = new Point(0x2a, 0x36);
+            st文字位置Array2[8] = st文字位置20;
+            ST文字位置 st文字位置21 = new ST文字位置();
+            st文字位置21.ch = '9';
+            st文字位置21.pt = new Point(0x38, 0x36);
+            st文字位置Array2[9] = st文字位置21;
+            ST文字位置 st文字位置22 = new ST文字位置();
+            st文字位置22.ch = '%';
+            st文字位置22.pt = new Point(70, 0x36);
+            st文字位置Array2[10] = st文字位置22;
+            this.st小文字位置 = st文字位置Array2;
+
+            ST文字位置[] st文字位置Array3 = new ST文字位置[12];
+            ST文字位置 st文字位置23 = new ST文字位置();
+            st文字位置23.ch = '0';
+            st文字位置23.pt = new Point(0, 0);
+            st文字位置Array3[0] = st文字位置23;
+            ST文字位置 st文字位置24 = new ST文字位置();
+            st文字位置24.ch = '1';
+            st文字位置24.pt = new Point(0x12, 0);
+            st文字位置Array3[1] = st文字位置24;
+            ST文字位置 st文字位置25 = new ST文字位置();
+            st文字位置25.ch = '2';
+            st文字位置25.pt = new Point(0x24, 0);
+            st文字位置Array3[2] = st文字位置25;
+            ST文字位置 st文字位置26 = new ST文字位置();
+            st文字位置26.ch = '3';
+            st文字位置26.pt = new Point(0x36, 0);
+            st文字位置Array3[3] = st文字位置26;
+            ST文字位置 st文字位置27 = new ST文字位置();
+            st文字位置27.ch = '4';
+            st文字位置27.pt = new Point(0x48, 0);
+            st文字位置Array3[4] = st文字位置27;
+            ST文字位置 st文字位置28 = new ST文字位置();
+            st文字位置28.ch = '5';
+            st文字位置28.pt = new Point(0, 0x18);
+            st文字位置Array3[5] = st文字位置28;
+            ST文字位置 st文字位置29 = new ST文字位置();
+            st文字位置29.ch = '6';
+            st文字位置29.pt = new Point(0x12, 0x18);
+            st文字位置Array3[6] = st文字位置29;
+            ST文字位置 st文字位置30 = new ST文字位置();
+            st文字位置30.ch = '7';
+            st文字位置30.pt = new Point(0x24, 0x18);
+            st文字位置Array3[7] = st文字位置30;
+            ST文字位置 st文字位置31 = new ST文字位置();
+            st文字位置31.ch = '8';
+            st文字位置31.pt = new Point(0x36, 0x18);
+            st文字位置Array3[8] = st文字位置31;
+            ST文字位置 st文字位置32 = new ST文字位置();
+            st文字位置32.ch = '9';
+            st文字位置32.pt = new Point(0x48, 0x18);
+            st文字位置Array3[9] = st文字位置32;
+            ST文字位置 st文字位置33 = new ST文字位置();
+            st文字位置33.ch = '.';
+            st文字位置33.pt = new Point(90, 24);
+            st文字位置Array3[10] = st文字位置33;
+            ST文字位置 st文字位置34 = new ST文字位置();
+            st文字位置34.ch = '%';
+            st文字位置34.pt = new Point(90, 0);
+            st文字位置Array3[11] = st文字位置34;
+            this.st特大文字位置 = st文字位置Array3;
+            base.b活性化してない = true;
 		}
 
 
@@ -149,9 +200,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_result panel.png" ) );
-				this.tx文字[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult parameter numbers.png" ) );
-				this.tx文字[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult parameter numbers_em.png" ) );
-				this.txFullCombo = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenResult fullcombo.png" ) );
+				this.tx文字[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_parameter numbers.png" ) );
+				this.tx文字[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_parameter numbers_em.png" ) );
+                this.tx文字[ 2 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_numbers_large.png" ) );
 				this.txWhite = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile white 64x64.png" ) );
 				base.OnManagedリソースの作成();
 			}
@@ -163,7 +214,7 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.tx文字[ 0 ] );
 				CDTXMania.tテクスチャの解放( ref this.tx文字[ 1 ] );
-				CDTXMania.tテクスチャの解放( ref this.txFullCombo );
+                CDTXMania.tテクスチャの解放( ref this.tx文字[ 2 ] );
 				CDTXMania.tテクスチャの解放( ref this.txWhite );
 				base.OnManagedリソースの解放();
 			}
@@ -284,10 +335,6 @@ namespace DTXMania
 					{
 						if( this.ct表示用.b終了値に達した )
 						{
-							if( this.txFullCombo != null )
-							{
-								this.txFullCombo.t2D描画( CDTXMania.app.Device, 220, 160 );
-							}
 							if( !this.bフルコンボ音再生済み )
 							{
 								if( ( ( CDTXMania.DTX.SOUND_FULLCOMBO != null ) && ( CDTXMania.DTX.SOUND_FULLCOMBO.Length > 0 ) ) && File.Exists( CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.SOUND_FULLCOMBO ) )
@@ -314,19 +361,6 @@ namespace DTXMania
 									CDTXMania.Skin.soundフルコンボ音.t再生する();
 								}
 								this.bフルコンボ音再生済み = true;
-							}
-						}
-						else
-						{
-							double num12 = ( (double) ( this.ct表示用.n現在の値 - 900 ) ) / 100.0;
-							float num13 = (float) ( 2.0 - num12 );
-							if( this.txFullCombo != null )
-							{
-								this.txFullCombo.vc拡大縮小倍率 = new Vector3( num13, num13, 1f );
-								this.txFullCombo.n透明度 = (int) ( 255.0 * num12 );
-								int num14 = ( this.n本体X + this.ptFullCombo位置[ j ].X ) + ( (int) ( ( this.txFullCombo.sz画像サイズ.Width * ( 1f - num13 ) ) / 2f ) );
-								int num15 = ( this.n本体Y + this.ptFullCombo位置[ j ].Y ) + ( (int) ( ( this.txFullCombo.sz画像サイズ.Height * ( 1f - num13 ) ) / 2f ) );
-								this.txFullCombo.t2D描画( CDTXMania.app.Device, 82, 152 );
 							}
 						}
 					}
@@ -356,11 +390,10 @@ namespace DTXMania
 		private CCounter ct表示用;
 		private int n本体X;
 		private int n本体Y;
-		private readonly Point[] ptFullCombo位置;
 		private CSound sdDTXで指定されたフルコンボ音;
 		private readonly ST文字位置[] st小文字位置;
 		private readonly ST文字位置[] st大文字位置;
-		private CTexture txFullCombo;
+        private readonly ST文字位置[] st特大文字位置;
 		private CTexture txWhite;
 		private CTexture txパネル本体;
         private CTexture tx達成率ゲージ;
@@ -426,6 +459,61 @@ namespace DTXMania
 				x += 11;
 			}
 		}
+        private void t特大文字表示( int x, int y, string str )
+        {
+            this.t特大文字表示( x, y, str, false );
+        }
+        private void t特大文字表示( int x, int y, string str, bool bExtraLarge )
+        {
+            foreach( char c in str )
+            {
+                for( int j = 0; j < this.st特大文字位置.Length; j++ )
+                {
+                    if( this.st特大文字位置[ j ].ch == c )
+                    {
+                        int num = 0;
+                        int num2 = 0;
+                        if( bExtraLarge )
+                        {
+                            if( j < 5 )
+                            {
+                                num = 6 * j;
+                                num2 = 48;
+                            }
+                            else if( j < 11 )
+                            {
+                                num = 6 * ( j - 5 );
+                                num2 = 56;
+                            }
+                            else
+                            {
+                                num = 24;
+                                num2 = 48;
+                            }
+                        }
+                        Rectangle rc画像内の描画領域 = new Rectangle( this.st特大文字位置[ j ].pt.X + num, this.st特大文字位置[ j ].pt.Y + num2, bExtraLarge ? 24 : 18, bExtraLarge ? 32 : 24 );
+                        if( c == '.' )
+                        {
+                            rc画像内の描画領域.Width -= 2;
+                            rc画像内の描画領域.Height -= 2;
+                        }
+                        if (this.tx文字[ 2 ] != null)
+                        {
+                            this.tx文字[ 2 ].t2D描画( CDTXMania.app.Device, x, y, rc画像内の描画領域 );
+                        }
+                        break;
+                    }
+                }
+                if (c == '.')
+                {
+                    x += bExtraLarge ? 20 : 14;
+                }
+                else
+                {
+                    x += bExtraLarge ? 23 : 17;
+                }
+            }
+        }
 		//-----------------
 		#endregion
 	}

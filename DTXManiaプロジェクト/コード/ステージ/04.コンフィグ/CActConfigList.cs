@@ -83,7 +83,7 @@ namespace DTXMania
 				"Reload song data." );
 			this.list項目リスト.Add( this.iSystemReloadDTX );
 
-			int nDGmode = CDTXMania.ConfigIni.bDrums有効 ? 1 : 0;
+            int nDGmode = ( CDTXMania.ConfigIni.bGuitar有効 ? 1 : 1 ) + ( CDTXMania.ConfigIni.bDrums有効 ? 0 : 1 ) - 1;
 			this.iSystemGRmode = new CItemList("Drums & GR", CItemBase.Eパネル種別.通常, nDGmode,
 				"使用楽器の選択：\n　DrOnly: ドラムのみ有効にします。\n　GROnly: ギター/ベースのみの専用画面を用います。",
 				"　DrOnly: Only Drums is available.\n　GROnly: Only Guitar/Bass are available.\n You can play them in GR screen.",
