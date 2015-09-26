@@ -282,7 +282,7 @@ namespace DTXMania
                         }
 
                         int nPanelX = nBaseX + this.txパネル本体.sz画像サイズ.Width - this.tx難易度パネル.sz画像サイズ.Width + (nPanelW * nPart[j]);
-                        int nPanelY = nBaseY + this.txパネル本体.sz画像サイズ.Height - this.tx難易度パネル.sz画像サイズ.Height;
+                        int nPanelY = nBaseY + this.txパネル本体.sz画像サイズ.Height - this.tx難易度パネル.sz画像サイズ.Height - 5;
 
                         int flag = 0;
                         int n変数;
@@ -298,6 +298,12 @@ namespace DTXMania
 
                                 int nBoxX = nPanelX;
                                 int nBoxY = nPanelY + (nPanelH * (4 - i)) + (nPanelH / 2);
+
+                                if (this.n現在選択中の曲の難易度 == i && this.tx難易度枠 != null)
+                                {
+                                    if ((CDTXMania.ConfigIni.bDrums有効 && j == 0) || (CDTXMania.ConfigIni.bGuitar有効 && j != 0))
+                                        this.tx難易度枠.t2D描画(CDTXMania.app.Device, nBoxX, nBoxY);
+                                }
 
                                 #region [ 選択曲の Lv の描画 ]
                                 if ((cスコア != null) && (this.tx難易度数字 != null))
@@ -360,16 +366,10 @@ namespace DTXMania
                                     }
                                     #region [ 選択曲の 最高スキル値ゲージ＋数値の描画 ]
                                     if (this.tx達成率MAX != null && db変数 == 100)
-                                        this.tx達成率MAX.t2D描画(CDTXMania.app.Device, nBoxX +  nPanelW- 155, nBoxY + nPanelH - 27);
+                                        this.tx達成率MAX.t2D描画(CDTXMania.app.Device, nBoxX + nPanelW - 155, nBoxY + nPanelH - 27);
                                     else
                                         this.t達成率表示(nBoxX + nPanelW - 157, nBoxY + nPanelH - 27, string.Format("{0,6:##0.00}%", db変数));
                                     #endregion
-                                }
-
-                                if (this.n現在選択中の曲の難易度 == i && this.tx難易度枠 != null)
-                                {
-                                    if ((CDTXMania.ConfigIni.bDrums有効 && j == 0) || (CDTXMania.ConfigIni.bGuitar有効 && j != 0))
-                                        this.tx難易度枠.t2D描画(CDTXMania.app.Device, nBoxX, nBoxY);
                                 }
 
                             }
@@ -382,6 +382,12 @@ namespace DTXMania
                         {
                             int nBoxX = nPanelX;
                             int nBoxY = nPanelY + (nPanelH / 2);
+
+                            if (this.tx難易度枠 != null)
+                            {
+                                if ((CDTXMania.ConfigIni.bDrums有効 && j == 0) || (CDTXMania.ConfigIni.bGuitar有効 && j != 0))
+                                    this.tx難易度枠.t2D描画(CDTXMania.app.Device, nBoxX, nBoxY);
+                            }
 
                             #region [ 選択曲の Lv の描画 ]
                             if ((cスコア != null) && (this.tx難易度数字 != null))
@@ -401,7 +407,7 @@ namespace DTXMania
 
                                 if (this.b現在選択中の曲の譜面[j] && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE)
                                 {
-                                    this.t難易度表示( nBoxX + nPanelW - 77, nBoxY + nPanelH - 35, string.Format("{0,4:0.00}", ((double)n難易度整数) + (((double)n難易度小数) / 100)));
+                                    this.t難易度表示(nBoxX + nPanelW - 77, nBoxY + nPanelH - 35, string.Format("{0,4:0.00}", ((double)n難易度整数) + (((double)n難易度小数) / 100)));
                                 }
                                 else if (!this.b現在選択中の曲の譜面[j] && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE)
                                 {
@@ -448,12 +454,6 @@ namespace DTXMania
                                 else
                                     this.t達成率表示(nBoxX + nPanelW - 157, nBoxY + nPanelH - 27, string.Format("{0,6:##0.00}%", db変数));
                                 #endregion
-                            }
-
-                            if (this.tx難易度枠 != null)
-                            {
-                                if ((CDTXMania.ConfigIni.bDrums有効 && j == 0) || (CDTXMania.ConfigIni.bGuitar有効 && j != 0))
-                                    this.tx難易度枠.t2D描画(CDTXMania.app.Device, nBoxX, nBoxY);
                             }
 
                         }
