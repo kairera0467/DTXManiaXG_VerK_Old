@@ -14,7 +14,8 @@ namespace DTXMania
 
 		public CActSelect演奏履歴パネル()
 		{
-			base.b活性化してない = true;
+            base.list子Activities.Add( this.actステータスパネル = new CActSelectステータスパネル() );
+            base.b活性化してない = true;
 		}
 		public void t選択曲が変更された()
 		{
@@ -73,7 +74,6 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_play history panel.png" ), true );
-                this.txステータスパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_status panel.png"), true);
                 this.t選択曲が変更された();
 				base.OnManagedリソースの作成();
 			}
@@ -84,7 +84,6 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.tx文字列パネル );
-                CDTXMania.tテクスチャの解放( ref this.txステータスパネル );
                 base.OnManagedリソースの解放();
 			}
 		}
@@ -99,7 +98,7 @@ namespace DTXMania
 				}
 				this.ct登場アニメ用.t進行();
 
-                if ( this.txステータスパネル != null )
+                if ( this.actステータスパネル.txパネル本体 != null )
                     this.n本体X = 700;
                 else
                     this.n本体X = 210;
@@ -137,7 +136,7 @@ namespace DTXMania
 		private int n本体Y;
 		private CTexture txパネル本体;
 		private CTexture tx文字列パネル;
-        private CTexture txステータスパネル;
+        private CActSelectステータスパネル actステータスパネル;
         //-----------------
 		#endregion
 	}

@@ -47,7 +47,6 @@ namespace DTXMania
 			base.list子Activities.Add( this.actParameterPanel = new CActResultParameterPanel() );
 			base.list子Activities.Add( this.actRank = new CActResultRank() );
 			base.list子Activities.Add( this.actSongBar = new CActResultSongBar() );
-			//base.list子Activities.Add( this.actOption = new CActオプションパネル() );
 			base.list子Activities.Add( this.actFI = new CActFIFOWhite() );
 			base.list子Activities.Add( this.actFO = new CActFIFOBlack() );
 		}
@@ -311,7 +310,6 @@ namespace DTXMania
                 }
 				this.tx上部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_header panel.png" ), true );
 				this.tx下部パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_footer panel.png" ), true );
-				//this.txオプションパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Screen option panels.png" ) );
 				base.OnManagedリソースの作成();
 			}
 		}
@@ -327,7 +325,6 @@ namespace DTXMania
 				CDTXMania.tテクスチャの解放( ref this.tx背景 );
 				CDTXMania.tテクスチャの解放( ref this.tx上部パネル );
 				CDTXMania.tテクスチャの解放( ref this.tx下部パネル );
-				//CDTXMania.tテクスチャの解放( ref this.txオプションパネル );
 				base.OnManagedリソースの解放();
 			}
 		}
@@ -565,7 +562,6 @@ namespace DTXMania
 		private E戻り値 eフェードアウト完了時の戻り値;
 		private CActFIFOWhite actFI;
 		private CActFIFOBlack actFO;
-		//private CActオプションパネル actOption;
 		private CActResultParameterPanel actParameterPanel;
 		private CActResultRank actRank;
 		private CActResultImage actResultImage;

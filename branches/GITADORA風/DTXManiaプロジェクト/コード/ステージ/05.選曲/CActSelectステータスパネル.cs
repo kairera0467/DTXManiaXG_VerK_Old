@@ -599,9 +599,9 @@ namespace DTXMania
             new ST達成率数字('%', new Rectangle(11 * 12 - 6, 0, 12, 20))
         };
         private readonly Rectangle rcunused = new Rectangle(0, 0x21, 80, 15);
+        public CTexture txパネル本体;
         private CTexture txランク;
         private CTexture tx達成率MAX;
-        private CTexture txパネル本体;
         private CTexture tx難易度パネル;
         private CTexture tx難易度枠;
         private CTexture tx難易度数字;
