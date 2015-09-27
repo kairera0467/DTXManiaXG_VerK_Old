@@ -281,8 +281,10 @@ namespace DTXMania
                             nPanelH = this.tx難易度パネル.sz画像サイズ.Height * 2 / 11;
                         }
 
-                        int nPanelX = nBaseX + this.txパネル本体.sz画像サイズ.Width - this.tx難易度パネル.sz画像サイズ.Width + (nPanelW * nPart[j]);
-                        int nPanelY = nBaseY + this.txパネル本体.sz画像サイズ.Height - this.tx難易度パネル.sz画像サイズ.Height - 5;
+                        int nPanelX = nBaseX + this.txパネル本体.sz画像サイズ.Width + (nPanelW * (nPart[j] - 3));
+                        int nPanelY = nBaseY + this.txパネル本体.sz画像サイズ.Height - (nPanelH * 11 / 2) - 5;
+
+                        int nRankW;
 
                         int flag = 0;
                         int n変数;
@@ -343,6 +345,14 @@ namespace DTXMania
                                 {
                                     if (this.txランク != null)
                                     {
+                                        nRankW = this.txランク.sz画像サイズ.Width / 9;
+
+                                        #region [ 選択曲の FullCombo Excellent の 描画 ]
+                                        if (this.db現在選択中の曲の最高スキル値難易度毎[i][j] == 100)
+                                            this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, new Rectangle(nRankW * 8, 0, nRankW, this.txランク.sz画像サイズ.Height));
+                                        else if (this.b現在選択中の曲がフルコンボ難易度毎[i][j])
+                                            this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, new Rectangle(nRankW * 7, 0, nRankW, this.txランク.sz画像サイズ.Height));
+                                        #endregion
                                         #region [ 選択曲の 最高ランクの描画 ]
                                         n変数 = this.n現在選択中の曲の最高ランク難易度毎[i][j];
 
@@ -354,14 +364,8 @@ namespace DTXMania
                                             if (n変数 > 6)
                                                 n変数 = 6;
 
-                                            this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 7, nBoxY + 5, rcランク[n変数]);
+                                            this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 7, nBoxY + 5, new Rectangle(nRankW * n変数, 0, nRankW, this.txランク.sz画像サイズ.Height));
                                         }
-                                        #endregion
-                                        #region [ 選択曲の FullCombo Excellent の 描画 ]
-                                        if (this.db現在選択中の曲の最高スキル値難易度毎[i][j] == 100)
-                                            this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, rcランク[8]);
-                                        else if (this.b現在選択中の曲がフルコンボ難易度毎[i][j])
-                                            this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, rcランク[7]);
                                         #endregion
                                     }
                                     #region [ 選択曲の 最高スキル値ゲージ＋数値の描画 ]
@@ -427,6 +431,14 @@ namespace DTXMania
                             {
                                 if (this.txランク != null)
                                 {
+                                    nRankW = this.txランク.sz画像サイズ.Width / 9;
+
+                                    #region [ 選択曲の FullCombo Excellent の 描画 ]
+                                    if (this.db現在選択中の曲の最高スキル値[j] == 100)
+                                        this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, new Rectangle(nRankW * 8, 0, nRankW, this.txランク.sz画像サイズ.Height));
+                                    else if (this.b現在選択中の曲がフルコンボ[j])
+                                        this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, new Rectangle(nRankW * 7, 0, nRankW, this.txランク.sz画像サイズ.Height));
+                                    #endregion
                                     #region [ 選択曲の 最高ランクの描画 ]
                                     n変数 = this.n現在選択中の曲の最高ランク[j];
 
@@ -438,14 +450,8 @@ namespace DTXMania
                                         if (n変数 > 6)
                                             n変数 = 6;
 
-                                        this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 7, nBoxY + 5, rcランク[n変数]);
+                                        this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 7, nBoxY + 5, new Rectangle(nRankW * n変数, 0, nRankW, this.txランク.sz画像サイズ.Height));
                                     }
-                                    #endregion
-                                    #region [ 選択曲の FullCombo Excellent の 描画 ]
-                                    if (this.db現在選択中の曲の最高スキル値[j] == 100)
-                                        this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, rcランク[8]);
-                                    else if (this.b現在選択中の曲がフルコンボ[j])
-                                        this.txランク.t2D描画(CDTXMania.app.Device, nBoxX + 42, nBoxY + 5, rcランク[7]);
                                     #endregion
                                 }
                                 #region [ 選択曲の 最高スキル値ゲージ＋数値の描画 ]
@@ -529,6 +535,7 @@ namespace DTXMania
         private int n現在選択中の曲の難易度;
         private int n難易度開始文字位置;
         private const int n難易度表示可能文字数 = 0x24;
+        /*
         private readonly Rectangle[] rcランク = new Rectangle[]
         {
             new Rectangle(0 * 34, 0, 34, 50),
@@ -542,6 +549,7 @@ namespace DTXMania
             new Rectangle(8 * 34, 0, 34, 50),
             new Rectangle(9 * 34, 0, 34, 50)
         };
+         */
         private C曲リストノード r直前の曲;
         public string[] str難易度ラベル = new string[] { "", "", "", "", "" };
         private readonly ST数字[] st数字 = new ST数字[]
