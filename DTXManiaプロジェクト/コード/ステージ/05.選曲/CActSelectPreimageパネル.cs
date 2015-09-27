@@ -16,7 +16,8 @@ namespace DTXMania
 
 		public CActSelectPreimageパネル()
 		{
-			base.b活性化してない = true;
+            base.list子Activities.Add( this.actステータスパネル = new CActSelectステータスパネル() );
+            base.b活性化してない = true;
 		}
 		public void t選択曲が変更された()
 		{
@@ -59,10 +60,8 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage panel.png" ), false );
-//				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
 				this.txプレビュー画像 = null;
 				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
-                this.txステータスパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_status panel.png"));
                 this.sfAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
 				this.nAVI再生開始時刻 = -1L;
 				this.n前回描画したフレーム番号 = -1;
@@ -77,11 +76,9 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
-//				CDTXMania.tテクスチャの解放( ref this.txセンサ );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像がないときの画像 );
                 CDTXMania.tテクスチャの解放( ref this.r表示するプレビュー画像 );
-                CDTXMania.tテクスチャの解放( ref this.txステータスパネル );
                 if ( this.sfAVI画像 != null )
 				{
 					this.sfAVI画像.Dispose();
@@ -141,9 +138,8 @@ namespace DTXMania
                     }
                 }
 				this.t描画処理・パネル本体();
-				//this.t描画処理・ジャンル文字列();
+//				this.t描画処理・ジャンル文字列();
 				this.t描画処理・プレビュー画像();
-//				this.t描画処理・センサ本体();
 			}
 			return 0;
 		}
@@ -162,16 +158,13 @@ namespace DTXMania
 		private int n本体X;
 		private int n本体Y;
 		private IntPtr pAVIBmp;
-		private readonly Rectangle rcセンサ本体下半分 = new Rectangle( 0x80, 0, 0x80, 0xc0 );
-		private readonly Rectangle rcセンサ本体上半分 = new Rectangle( 0, 0, 0x80, 0xc0 );
 		private Surface sfAVI画像;
 		private string str現在のファイル名;
-//		private CTexture txセンサ;
 		private CTexture txパネル本体;
 		private CTexture txプレビュー画像;
 		private CTexture txプレビュー画像がないときの画像;
 		private CTexture r表示するプレビュー画像;
-        private CTexture txステータスパネル;
+        private CActSelectステータスパネル actステータスパネル;
         private bool b新しいプレビューファイルを読み込んだ;
 		private bool b新しいプレビューファイルをまだ読み込んでいない
 		{
@@ -448,25 +441,12 @@ namespace DTXMania
 				CDTXMania.act文字コンソール.tPrint( this.n本体X + 0x12, this.n本体Y - 30, C文字コンソール.Eフォント種別.赤細, str );
 			}
 		}
-        /*
-		private void t描画処理・センサ本体()
-		{
-			int x = this.n本体X + 410;
-			int y = this.n本体Y - 6;
-			if( this.txセンサ != null )
-			{
-				this.txセンサ.t2D描画( CDTXMania.app.Device, x, y, this.rcセンサ本体上半分 );
-				y += 0xc0;
-				this.txセンサ.t2D描画( CDTXMania.app.Device, x, y, this.rcセンサ本体下半分 );
-			}
-		}
-         */
 		private void t描画処理・パネル本体()
 		{
             int n基X = 0x12;
             int n基Y = 0x58;
 
-            if (this.txステータスパネル != null)
+            if (this.actステータスパネル.txパネル本体 != null)
             {
                 n基X = 250;
                 n基Y = 34;
@@ -497,7 +477,7 @@ namespace DTXMania
                 int n差Y = 0x18;
                 int n表示ジャケットサイズ = 368;
 
-                if (this.txステータスパネル != null)
+                if (this.actステータスパネル.txパネル本体 != null)
                 {
                     n差X = 8;
                     n差Y = 8;
