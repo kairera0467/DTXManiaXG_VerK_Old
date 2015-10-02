@@ -284,7 +284,7 @@ namespace DTXMania
                     //this.txグラフ.n透明度 = 128;
                     //this.txグラフ.b加算合成 = true;
                     this.txグラフゲージ.n透明度 = 255;
-                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 3 + this.n本体X[j], 650 - (int)( 556f * this.dbグラフ値現在_表示 / 100 ), rectangle);
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 74 + this.n本体X[j], 650 - (int)( 556f * this.dbグラフ値現在_表示 / 100 ), rectangle);
 
                 }
                 // --目標値

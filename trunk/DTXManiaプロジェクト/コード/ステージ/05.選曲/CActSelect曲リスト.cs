@@ -2190,6 +2190,7 @@ namespace DTXMania
                 var g = Graphics.FromImage( bmpDummy );
                 g.PageUnit = GraphicsUnit.Pixel;
                 sz曲名 = g.MeasureString( str文字, this.ft曲リスト用フォント);
+                g.Dispose();
                 //this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int)g.MeasureString(str文字, this.ft曲リスト用フォント).Width;
             }
             //-----------------
@@ -2256,16 +2257,16 @@ namespace DTXMania
                     strPassAfter = "";
 
                 }
-                    string strPath = (strPassAfter + "TitleTexture.png");
-                    if (File.Exists((strPath)))
+                    string strPath = ( strPassAfter + "TitleTexture.png" );
+                    if( File.Exists( ( strPath ) ) )
                     {
-                        imgCustomSongNameTexture = Image.FromFile(strPath);
-                        graphics.DrawImage(imgCustomSongNameTexture, 4, -1, 223, 33);
+                        imgCustomSongNameTexture = Image.FromFile( strPath );
+                        graphics.DrawImage( imgCustomSongNameTexture, 4, -1, 223, 33 );
                         bFoundTitleTexture = true;
                     }
-                    if (File.Exists((strPassAfter + "ArtistTexture.png")))
+                    if( File.Exists( ( strPassAfter + "ArtistTexture.png" ) ) )
                     {
-                        imgCuttomArtistNameTexture = Image.FromFile(strPassAfter + "ArtistTexture.png");
+                        imgCuttomArtistNameTexture = Image.FromFile( strPassAfter + "ArtistTexture.png" );
                         graphics.DrawImage(imgCuttomArtistNameTexture, 0, 252, 223, 26);
                         bFoundArtistTexture = true;
                     }
@@ -2280,6 +2281,7 @@ namespace DTXMania
 					sz曲名 = g.MeasureString( str曲名, this.ft曲リスト用フォント );
                     szアーティスト名 = g.MeasureString( strアーティスト名, this.ft曲リスト用フォント );
                     this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int) g.MeasureString( strアーティスト名, new Font( CDTXMania.ConfigIni.str選曲リストフォント, 16 ) ).Width;
+                    g.Dispose();
 				}
 				//-----------------
 				#endregion
@@ -2307,9 +2309,15 @@ namespace DTXMania
 					CDTXMania.t安全にDisposeする( ref this.stバー情報[ nバー番号 ].txパネル );
 
                     this.stバー情報[ nバー番号 ].txパネル = new CTexture( CDTXMania.app.Device, bSongPanel, CDTXMania.TextureFormat, false );
+
+                    bmp.Dispose();
+                    g.Dispose();
 				}
 
-
+                b4font.Dispose();
+                bSongPanel.Dispose();
+                imgSongPanel.Dispose();
+                graphics.Dispose();
             }
             catch( CTextureCreateFailedException )
 			{
@@ -2352,20 +2360,25 @@ namespace DTXMania
                 strPassAfter = "";
             }
 
-            string strPath = (strPassAfter + "TitleTexture.png");
-            if (File.Exists((strPath)))
+            string strPath = ( strPassAfter + "TitleTexture.png" );
+            if( File.Exists( ( strPath ) ) )
             {
-                imgCustomSongNameTexture = Image.FromFile(strPath);
+                imgCustomSongNameTexture = Image.FromFile( strPath );
                 imgCustomSongNameTexture = this.CreateNegativeImage( imgCustomSongNameTexture );
-                graphicsA.DrawImage(imgCustomSongNameTexture, 6, 1, 180, 25);
+                graphicsA.DrawImage( imgCustomSongNameTexture, 6, 1, 180, 25 );
+                imgCustomSongNameTexture.Dispose();
             }
 
 
 			//CDTXMania.t安全にDisposeする( ref this.stバー情報[ nバー番号 ].txカスタム曲名テクスチャ );
 			//CDTXMania.t安全にDisposeする( ref this.stバー情報[ nバー番号 ].txカスタムアーティスト名テクスチャ );
             CTexture txTex = new CTexture( CDTXMania.app.Device, bCustomSongNameTexture, CDTXMania.TextureFormat, false );
+
+            b4font.Dispose();
+            graphicsA.Dispose();
+            bCustomSongNameTexture.Dispose();
+
             return txTex;
-          
         }
         private CTexture tカスタムアーティスト名テクスチャの生成( int nバー番号 )
         {
