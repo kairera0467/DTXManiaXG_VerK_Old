@@ -294,7 +294,7 @@ namespace DTXMania
 
                     matFc *= Matrix.Scaling( num1, num1, num1 );
                     matFc *= Matrix.Translation( 0f, 0f, 0f );
-                    this.txFCEXCtext.t3D描画( CDTXMania.app.Device, matFc, new Rectangle( 0, 0, 410, 73 ) );
+                    this.txFCEXCtext.t3D描画( CDTXMania.app.Device, matFc, new Rectangle( 0, 73, 410, 73 ) );
                 }
             }
             if (this.counter.n現在の値 >= 300)

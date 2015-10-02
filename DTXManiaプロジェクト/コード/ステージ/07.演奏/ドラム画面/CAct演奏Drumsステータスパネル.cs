@@ -372,6 +372,7 @@ namespace DTXMania
                 gNamePlate.Dispose();
                 bmpCardName.Dispose();
                 bmpSongTitle.Dispose();
+                b4font.Dispose();
                 //テクスチャ変換
                 this.txNamePlate = new CTexture( CDTXMania.app.Device, this.bNamePlate, CDTXMania.TextureFormat, false );
 
