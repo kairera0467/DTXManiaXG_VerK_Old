@@ -78,7 +78,7 @@ namespace DTXMania
 					if( this.n画像Index上 >= 0 )
 					{
 						STINFO stinfo = this.stInfo[ this.n画像Index上 ];
-						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y + ( (int) ( 45.0 * n現在の割合 ) ), 512, Convert.ToInt32(45.0 * (1.0 - n現在の割合)) );
+						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y + ( (int) ( 67.0 * n現在の割合 ) ), 512, Convert.ToInt32(67.0 * (1.0 - n現在の割合)) );
 						if( this.txInfo[ stinfo.nTexture番号 ] != null )
 						{
 							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 0, 620, rectangle );
@@ -87,17 +87,17 @@ namespace DTXMania
 					if( this.n画像Index下 >= 0 )
 					{
 						STINFO stinfo = this.stInfo[ this.n画像Index下 ];
-						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 512, (int) ( 45.0 * n現在の割合 ) );
+						Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 512, (int) ( 67.0 * n現在の割合 ) );
 						if( this.txInfo[ stinfo.nTexture番号 ] != null )
 						{
-							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 0, 620 + ( (int) ( 45.0 * ( 1.0 - n現在の割合 ) ) ), rectangle );
+							this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 0, 620 + ( (int) ( 67.0 * ( 1.0 - n現在の割合 ) ) ), rectangle );
 						}
 					}
 				}
 				else
 				{
 					STINFO stinfo = this.stInfo[ this.n画像Index下 ];
-					Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 512, 0x43 );
+					Rectangle rectangle = new Rectangle( stinfo.pt左上座標.X, stinfo.pt左上座標.Y, 512, 67 );
 					if( this.txInfo[ stinfo.nTexture番号 ] != null )
 					{
 						this.txInfo[ stinfo.nTexture番号 ].t2D描画( CDTXMania.app.Device, 0, 620, rectangle );

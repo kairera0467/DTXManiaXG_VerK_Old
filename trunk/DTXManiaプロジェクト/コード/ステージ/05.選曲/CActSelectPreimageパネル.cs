@@ -60,7 +60,6 @@ namespace DTXMania
 			{
 				this.txパネル本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage panel.png" ), false );
 				this.txセンサ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor.png" ), false );
-				this.txセンサ光 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_sensor light.png" ), false );
 				this.txプレビュー画像 = null;
 				this.txプレビュー画像がないときの画像 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ), false );
 				this.sfAVI画像 = Surface.CreateOffscreenPlain( CDTXMania.app.Device, 0xcc, 0x10d, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.SystemMemory );
@@ -78,7 +77,6 @@ namespace DTXMania
 			{
 				CDTXMania.tテクスチャの解放( ref this.txパネル本体 );
 				CDTXMania.tテクスチャの解放( ref this.txセンサ );
-				CDTXMania.tテクスチャの解放( ref this.txセンサ光 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像 );
 				CDTXMania.tテクスチャの解放( ref this.txプレビュー画像がないときの画像 );
 				if( this.sfAVI画像 != null )
@@ -135,7 +133,6 @@ namespace DTXMania
 				this.t描画処理・パネル本体();
 				this.t描画処理・ジャンル文字列();
 				this.t描画処理・プレビュー画像();
-				this.t描画処理・センサ光();
 				this.t描画処理・センサ本体();
 			}
 			return 0;
@@ -163,7 +160,6 @@ namespace DTXMania
 		private Surface sfAVI画像;
 		private string str現在のファイル名;
 		private CTexture txセンサ;
-		private CTexture txセンサ光;
 		private CTexture txパネル本体;
 		private CTexture txプレビュー画像;
 		private CTexture txプレビュー画像がないときの画像;
@@ -441,37 +437,6 @@ namespace DTXMania
 						break;
 				}
 				CDTXMania.act文字コンソール.tPrint( this.n本体X + 0x12, this.n本体Y - 1, C文字コンソール.Eフォント種別.赤細, str );
-			}
-		}
-		private void t描画処理・センサ光()
-		{
-			int num = this.ctセンサ光.n現在の値;
-			if( num < 12 )
-			{
-				int x = this.n本体X + 0x198;
-				int y = this.n本体Y + 0xb9;
-				if( this.txセンサ光 != null )
-				{
-					this.txセンサ光.vc拡大縮小倍率 = new Vector3( 1f, 1f, 1f );
-					this.txセンサ光.n透明度 = 0xff;
-					this.txセンサ光.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( ( num % 4 ) * 0x80, ( num / 4 ) * 0x60, 0x80, 0x60 ) );
-				}
-			}
-			else if( num < 0x18 )
-			{
-				int num4 = num - 11;
-				double num5 = ( (double) num4 ) / 11.0;
-				double num6 = 1.0 + ( num5 * 0.5 );
-				int num7 = (int) ( 128.0 * num6 );
-				int num8 = (int) ( 96.0 * num6 );
-				int num9 = ( ( this.n本体X + 0x198 ) + 0x40 ) - ( num7 / 2 );
-				int num10 = ( ( this.n本体Y + 0xb9 ) + 0x30 ) - ( num8 / 2 );
-				if( this.txセンサ光 != null )
-				{
-					this.txセンサ光.vc拡大縮小倍率 = new Vector3( (float) num6, (float) num6, 1f );
-					this.txセンサ光.n透明度 = (int) ( 255.0 * ( 1.0 - num5 ) );
-					this.txセンサ光.t2D描画( CDTXMania.app.Device, num9, num10, this.rcセンサ光 );
-				}
 			}
 		}
 		private void t描画処理・センサ本体()
