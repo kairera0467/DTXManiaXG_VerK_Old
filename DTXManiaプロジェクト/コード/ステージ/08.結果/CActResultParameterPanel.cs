@@ -557,93 +557,58 @@ namespace DTXMania
 				x += 11;
 			}
 		}
-        private void t特大文字表示(int x, int y, string str)
+        private void t特大文字表示( int x, int y, string str )
         {
-            this.t特大文字表示(x, y, str, false);
+            this.t特大文字表示( x, y, str, false );
         }
-        private void t特大文字表示(int x, int y, string str, bool bExtraLarge)
+        private void t特大文字表示( int x, int y, string str, bool bExtraLarge )
         {
-            for (int i = 0; i < str.Length; i++)
+            foreach( char c in str )
             {
-                char c = str[i];
-                for (int j = 0; j < this.st特大文字位置.Length; j++)
+                for( int j = 0; j < this.st特大文字位置.Length; j++ )
                 {
-                    if (this.st特大文字位置[j].ch == c)
+                    if( this.st特大文字位置[ j ].ch == c )
                     {
-                        int num;
-                        int num2;
-                        if (bExtraLarge)
+                        int num = 0;
+                        int num2 = 0;
+                        if( bExtraLarge )
                         {
-                            if (j < 5)
+                            if( j < 5 )
                             {
                                 num = 6 * j;
-                            }
-                            else
-                            {
-                                if (j < 11)
-                                {
-                                    num = 6 * (j - 5);
-                                }
-                                else
-                                {
-                                    num = 24;
-                                }
-                            }
-                            if (j < 5)
-                            {
                                 num2 = 48;
                             }
+                            else if( j < 11 )
+                            {
+                                num = 6 * ( j - 5 );
+                                num2 = 56;
+                            }
                             else
                             {
-                                if (j < 11)
-                                {
-                                    num2 = 56;
-                                }
-                                else
-                                {
-                                    num2 = 48;
-                                }
+                                num = 24;
+                                num2 = 48;
                             }
                         }
-                        else
-                        {
-                            num = 0;
-                            num2 = 0;
-                        }
-                        Rectangle rc画像内の描画領域 = new Rectangle(this.st特大文字位置[j].pt.X + num, this.st特大文字位置[j].pt.Y + num2, bExtraLarge ? 24 : 18, bExtraLarge ? 32 : 24);
-                        if (c == '.')
+                        Rectangle rc画像内の描画領域 = new Rectangle( this.st特大文字位置[ j ].pt.X + num, this.st特大文字位置[ j ].pt.Y + num2, bExtraLarge ? 24 : 18, bExtraLarge ? 32 : 24 );
+                        if( c == '.' )
                         {
                             rc画像内の描画領域.Width -= 2;
                             rc画像内の描画領域.Height -= 2;
                         }
-                        if (this.tx文字[2] != null)
+                        if (this.tx文字[ 2 ] != null)
                         {
-                            this.tx文字[2].t2D描画(CDTXMania.app.Device, x, y, rc画像内の描画領域);
+                            this.tx文字[ 2 ].t2D描画( CDTXMania.app.Device, x, y, rc画像内の描画領域 );
                         }
                         break;
                     }
                 }
-                if (bExtraLarge)
+                if (c == '.')
                 {
-                    if (c == '.')
-                    {
-                        x += 20;
-                    }
-                    else
-                    {
-                        x += 23;
-                    }
+                    x += bExtraLarge ? 20 : 14;
                 }
                 else
                 {
-                    if (c == '.')
-                    {
-                        x += 14;
-                    }
-                    else
-                    {
-                        x += 17;
-                    }
+                    x += bExtraLarge ? 23 : 17;
                 }
             }
         }

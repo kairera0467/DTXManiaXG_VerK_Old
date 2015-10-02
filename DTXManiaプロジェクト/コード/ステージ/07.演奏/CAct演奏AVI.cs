@@ -355,11 +355,6 @@ namespace DTXMania
             {
                 this.txレーンの影 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Drums.png"));
 
-                if ( CDTXMania.ConfigIni.bDrums有効 )
-                    this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops.png"));
-                else if (CDTXMania.ConfigIni.bGuitar有効)
-                    this.txバートップ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_BarTops_Guitar.png"));
-
                 this.tx黒幕 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\Tile black 64x64.png" ) );
 
                 if ( CDTXMania.ConfigIni.bGuitar有効 )
@@ -418,16 +413,10 @@ namespace DTXMania
                     this.txDShow汎用.Dispose();
                     this.txDShow汎用 = null;
                 }
-                if (this.txlanes != null)
-                {
-                    this.txlanes.Dispose();
-                    this.txlanes = null;
-                }
                 //テクスチャ 17枚
 
                 CDTXMania.tテクスチャの解放(ref this.txレーンの影);
 
-                CDTXMania.tテクスチャの解放( ref this.txバートップ );
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
                 //CDTXMania.tテクスチャの解放( ref this.txフィルインエフェクト );
 
@@ -839,26 +828,20 @@ namespace DTXMania
                 }
                 #endregion
 
-                if ( this.txバートップ != null && CDTXMania.ConfigIni.bDrums有効 && CDTXMania.ConfigIni.eBPMbar != Eタイプ.D )
+                if ( CDTXMania.ConfigIni.bDrums有効 && CDTXMania.ConfigIni.eBPMbar != Eタイプ.D )
                 {
                     //this.txバートップ.t2D描画(CDTXMania.app.Device, n振動x座標, 0);
-                    this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
-                    this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
+                    //this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(-506 + 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(0, 0, 640, 720));
+                    //this.txバートップ.t2D描画(CDTXMania.app.Device, (int)(1151 - 42.4 * CDTXMania.stage演奏ドラム画面.ct登場用.n現在の値 - 2) + n振動x座標, 0, new Rectangle(640, 0, 640, 720));
                     CDTXMania.stage演奏ドラム画面.actBPMBar.On進行描画();
                 }
                 if ( CDTXMania.ConfigIni.bGuitar有効 )
                 {
-                    if ( CDTXMania.ConfigIni.bSpeaker )
+                    if( CDTXMania.ConfigIni.bSpeaker )
                         CDTXMania.stage演奏ギター画面.actSpeaker.On進行描画();
 
-                    if (this.txバートップ != null && CDTXMania.ConfigIni.eBPMbar != Eタイプ.D)
+                    if( CDTXMania.ConfigIni.eBPMbar != Eタイプ.D)
                     {
-                        if (CDTXMania.DTX.bチップがある.Guitar)
-                            this.txバートップ.t2D描画(CDTXMania.app.Device, 0, 0, new Rectangle(0, 0, 640, 720));
-
-                        if (CDTXMania.DTX.bチップがある.Bass)
-                            this.txバートップ.t2D描画(CDTXMania.app.Device, 640, 0, new Rectangle(640, 0, 640, 720));
-
                         CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
                     }
                 }
@@ -1170,12 +1153,6 @@ namespace DTXMania
         public CDTX.CDirectShow dsBGV;
 
         private CTexture tx黒幕;
-
-        private CTexture txバートップ;
-
-        
-        private CTexture txlanes;
-        
 
         private CTexture txクリップパネル;
 
