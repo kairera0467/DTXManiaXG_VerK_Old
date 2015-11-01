@@ -163,6 +163,7 @@
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarコンボ.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarスコア.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarステータスパネル.cs" />
+    <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarスピーカー.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitarチップファイア.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏GuitarレーンフラッシュGB.cs" />
     <Compile Include="コード\ステージ\07.演奏\ギター画面\CAct演奏Guitar判定文字列.cs" />
