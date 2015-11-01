@@ -21,7 +21,7 @@ namespace DTXMania
 
 		public void Start()
 		{
-			this.ct進行 = new CCounter( 0, 0x3e8, 2, CDTXMania.Timer );
+			this.ct進行 = new CCounter( 0, 1000, 2, CDTXMania.Timer );
 		}
 
 

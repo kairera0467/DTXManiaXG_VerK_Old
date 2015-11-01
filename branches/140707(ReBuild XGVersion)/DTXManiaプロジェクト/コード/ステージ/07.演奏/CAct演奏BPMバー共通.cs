@@ -14,10 +14,7 @@ namespace DTXMania
         /// 
         /// 2015.01.10 kairera0467 共通クラスにした。
         /// </summary>
-        protected CTexture txバー下地;
-        protected CTexture txバー穴;
-        protected CTexture txバー本体;
-        protected CTexture txバーサビ;
+        protected CTexture txBPMバー;
         public CCounter ctBPMバー;
         public double UnitTime;
         public bool bサビ区間中;
@@ -33,6 +30,8 @@ namespace DTXMania
 
 		public override void On活性化()
 		{
+            this.ctBPMバー = null;
+            this.UnitTime = 0.0;
 			base.On活性化();
 		}
         public override void On非活性化()
@@ -44,10 +43,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.txバー下地 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops_base.png" ) );
-                this.txバー穴 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops.png" ) );
-                this.txバー本体 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops.png" ) );
-                this.txバーサビ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BarTops.png" ) );
+                this.txBPMバー = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_BPMBar.png" ) );
                 base.OnManagedリソースの作成();
 			}
 		}
@@ -55,10 +51,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                CDTXMania.tテクスチャの解放( ref this.txバー下地 );
-                CDTXMania.tテクスチャの解放( ref this.txバー穴 );
-                CDTXMania.tテクスチャの解放( ref this.txバー本体 );
-                CDTXMania.tテクスチャの解放( ref this.txバーサビ );
+                CDTXMania.tテクスチャの解放( ref this.txBPMバー );
 				base.OnManagedリソースの解放();
 			}
 		}
