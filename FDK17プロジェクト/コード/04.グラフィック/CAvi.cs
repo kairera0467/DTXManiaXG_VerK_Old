@@ -37,15 +37,15 @@ namespace FDK
 
 		public CAvi( string filename )
 		{
-			if ( AVIFileOpen( out this.aviFile, filename, OpenFileFlags.OF_READ, IntPtr.Zero ) != 0 )
+			if( AVIFileOpen( out this.aviFile, filename, OpenFileFlags.OF_READ, IntPtr.Zero ) != 0 )
 			{
 				this.Release();
-				throw new Exception( "AVIFileOpen failed." );
+				throw new Exception( "AVIFileOpen() の実行に失敗しました。" );
 			}
-			if ( AVIFileGetStream( this.aviFile, out this.aviStream, streamtypeVIDEO, 0 ) != 0 )
+			if( AVIFileGetStream( this.aviFile, out this.aviStream, streamtypeVIDEO, 0 ) != 0 )
 			{
 				this.Release();
-				throw new Exception( "AVIFileGetStream failed." );
+				throw new Exception( "AVIFileGetStream() の実行に失敗しました。" );
 			}
 			var info = new AVISTREAMINFO();
 			AVIStreamInfo( this.aviStream, ref info, Marshal.SizeOf( info ) );
@@ -60,11 +60,11 @@ namespace FDK
 			catch
 			{
 				this.Release();
-				throw new Exception( "AVIStreamGetFrameOpen failed." );
+				throw new Exception( "AVIStreamGetFrameOpen() の実行に失敗しました。" );
 			}
 		}
 
-
+	
 		// メソッド
 
 		public static void t初期化()
@@ -79,7 +79,7 @@ namespace FDK
 		public Bitmap GetFrame( int no )
 		{
 			if( this.aviStream == IntPtr.Zero )
-				throw new InvalidOperationException();
+				throw new InvalidOperationException( "AVIが開かれていません。" );
 
 			return BitmapUtil.ToBitmap( AVIStreamGetFrame( this.frame, no ) );
 		}
@@ -90,14 +90,14 @@ namespace FDK
 		public IntPtr GetFramePtr( int no )
 		{
 			if( this.aviStream == IntPtr.Zero )
-				throw new InvalidOperationException();
+				throw new InvalidOperationException( "AVIが開かれていません。" );
 
 			return AVIStreamGetFrame( this.frame, no );
 		}
 		public int GetMaxFrameCount()
 		{
 			if( this.aviStream == IntPtr.Zero )
-				throw new InvalidOperationException();
+				throw new InvalidOperationException( "AVIが開かれていません。" );
 
 			return AVIStreamLength( this.aviStream );
 		}

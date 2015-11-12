@@ -13,6 +13,20 @@ namespace DTXMania
 
 		public CAct演奏DrumsチップファイアD()
 		{
+            this.arChipEffectFileName = new string[]
+                {
+                    @"Graphics\ScreenPlayDrums chip fire_LC.png",
+                    @"Graphics\ScreenPlayDrums chip fire_HH.png",
+                    @"Graphics\ScreenPlayDrums chip fire_SD.png",
+                    @"Graphics\ScreenPlayDrums chip fire_BD.png",
+                    @"Graphics\ScreenPlayDrums chip fire_HT.png",
+                    @"Graphics\ScreenPlayDrums chip fire_LT.png",
+                    @"Graphics\ScreenPlayDrums chip fire_FT.png",
+                    @"Graphics\ScreenPlayDrums chip fire_CY.png",
+                    @"Graphics\ScreenPlayDrums chip fire_LP.png",
+                    @"Graphics\ScreenPlayDrums chip fire_RD.png"
+                };
+
 			base.b活性化してない = true;
 		}
 		
@@ -189,20 +203,10 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-				this.tx火花[ 0 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_LC.png" ) );
-                this.tx火花[ 1 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_HH.png" ) );
-                this.tx火花[ 2 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_SD.png" ) );
-                this.tx火花[ 3 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_BD.png" ) );
-                this.tx火花[ 4 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_HT.png" ) );
-                this.tx火花[ 5 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_LT.png" ) );
-                this.tx火花[ 6 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_FT.png" ) );
-                this.tx火花[ 7 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_CY.png" ) );
-                this.tx火花[ 8 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_LP.png" ) );
-                this.tx火花[ 9 ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip fire_RD.png" ) );
-
                 for ( int nTexA = 0; nTexA <= 9; nTexA++ )
                 {
-                    if (this.tx火花[ nTexA ] != null)
+                    this.tx火花[ nTexA ] = CDTXMania.tテクスチャの生成( CSkin.Path( this.arChipEffectFileName[ nTexA ] ) );
+                    if( this.tx火花[ nTexA ] != null )
                     {
                         this.tx火花[ nTexA ].b加算合成 = true;
                     }
@@ -473,6 +477,7 @@ namespace DTXMania
 		private CTexture tx青い星;
 		private CTexture tx大波;
 		private int nJudgeLinePosY_delta_Drums;
+        private string[] arChipEffectFileName;
 		//-----------------
 		#endregion
 	}

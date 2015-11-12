@@ -2057,7 +2057,9 @@ namespace DTXMania
 						}
 						if ( ( ePlayMode == E楽器パート.DRUMS ) && ( configIni.eDark != Eダークモード.FULL ) && pChip.b可視 && ( this.txチップ != null ) )
 						{
+                            this.txチップ.b加算合成 = true;
 							this.txチップ.t2D描画( CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 1 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 1 ), new Rectangle( 0, 772, 559, 2 ) );
+                            this.txチップ.b加算合成 = false;
 						}
 						break;
 					#endregion
@@ -2454,6 +2456,9 @@ namespace DTXMania
 			//CDTXMania.Timer.t再開();
 			this.bPAUSE = false;								// システムがPAUSE状態だったら、強制解除
 			this.actPanel.Start();
+            
+            this.actBPMBar.UnitTime = ( ( 60.0 / ( this.actPlayInfo.dbBPM ) / 16.0 ) ); //2015.11.01 kairera0467 BPMバーの再開
+            this.actBPMBar.ctBPMバー = new CCounter( 1.0, 16.0, this.actBPMBar.UnitTime, CSound管理.rc演奏用タイマ );
 			#endregion
 			#endregion
 		}
