@@ -48,11 +48,10 @@ namespace DTXMania
         {
             if( CDTXMania.ConfigIni.eGraphicType == EGraphicType.XG )
             {
-                if( this.txClipPanel != null )
-                    this.txClipPanel.t2D描画( CDTXMania.app.Device, 854, 142 );
-
-                if( CDTXMania.ConfigIni.eClipDispType == EClipDispType.ウィンドウのみ )
+                if( CDTXMania.ConfigIni.eClipDispType == EClipDispType.ウィンドウのみ || CDTXMania.ConfigIni.eClipDispType == EClipDispType.両方 )
                 {
+                    if( this.txClipPanel != null )
+                        this.txClipPanel.t2D描画( CDTXMania.app.Device, 854, 142 );
                     //if()
                     {
                         if( this.txClip != null && CDTXMania.stage演奏ドラム画面.actAVI.dsBGV != null)
@@ -76,7 +75,31 @@ namespace DTXMania
                     }
                 }
             }
-            
+
+            #region[ キー入力処理 ]
+			IInputDevice keyboard = CDTXMania.Input管理.Keyboard;
+			if( keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F5 ) )
+            {
+                //もっといい処理が無いものか...
+                switch( CDTXMania.ConfigIni.eClipDispType )
+                {
+                    case EClipDispType.OFF:
+                        CDTXMania.ConfigIni.eClipDispType = EClipDispType.ウィンドウのみ;
+                        break;
+                    case EClipDispType.背景のみ:
+                        CDTXMania.ConfigIni.eClipDispType = EClipDispType.両方;
+                        break;
+                    case EClipDispType.ウィンドウのみ:
+                        CDTXMania.ConfigIni.eClipDispType = EClipDispType.背景のみ;
+                        break;
+                    case EClipDispType.両方:
+                        CDTXMania.ConfigIni.eClipDispType = EClipDispType.OFF;
+                        break;
+
+                }
+            }
+            #endregion
+
             return base.On進行描画();
         }
 

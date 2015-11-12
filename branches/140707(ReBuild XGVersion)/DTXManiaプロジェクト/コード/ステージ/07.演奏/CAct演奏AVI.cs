@@ -392,22 +392,17 @@ namespace DTXMania
 					num4 = CSound管理.rc演奏用タイマ.n現在時刻;
 				}
 				time = (int) ( ( CSound管理.rc演奏用タイマ.n現在時刻 - num4 ) * ( ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0 ) );
-				if ( num3 == 0 )
-				{
-				}
-				else
-				{
-				}
                 if( ( this.tx描画用 != null ) && CDTXMania.ConfigIni.bDirectShowMode == true )
                 {
                     if ( ( this.bDShowクリップを再生している == true ) && this.dsBGV.dshow != null )
                     {
+                        if( CDTXMania.ConfigIni.bDrums有効 == true ) //ウィンドウクリップは外に出す
+                            this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( CDTXMania.stage演奏ドラム画面.actWinClip.txClip );
+
                         if( CDTXMania.ConfigIni.eClipDispType == EClipDispType.背景のみ || CDTXMania.ConfigIni.eClipDispType == EClipDispType.両方 )
                         {
                             #region[ ワイドクリップ ]
                             this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( this.tx描画用 );
-                            if( CDTXMania.ConfigIni.bDrums有効 == true )
-                                this.dsBGV.dshow.t現時点における最新のスナップイメージをTextureに転写する( CDTXMania.stage演奏ドラム画面.actWinClip.txClip );
 
                             if( this.dsBGV.dshow.b上下反転 )
                                 this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, x, y );
