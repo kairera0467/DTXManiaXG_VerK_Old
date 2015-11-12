@@ -295,8 +295,6 @@ namespace DTXMania
 		{
 			if ( !base.b活性化してない )
 			{
-				Rectangle rectangle;
-				Rectangle rectangle2;
                 if( !this.bDShowクリップを再生している || ( this.dsBGV.dshow == null || this.dsBGV == null ) )
                 {
 				    if( ( ( this.n移動開始時刻ms == -1 ) || ( this.rAVI == null ) ) || ( this.rAVI.avi == null ) )
@@ -396,95 +394,9 @@ namespace DTXMania
 				time = (int) ( ( CSound管理.rc演奏用タイマ.n現在時刻 - num4 ) * ( ( (double) CDTXMania.ConfigIni.n演奏速度 ) / 20.0 ) );
 				if ( num3 == 0 )
 				{
-					rectangle = new Rectangle( location, size3 );
-					rectangle2 = new Rectangle( point3, size3 );
 				}
 				else
 				{
-					double num5 = ( (double) time ) / ( (double) num3 );
-					Size size5 = new Size( size3.Width + ( (int) ( ( size4.Width - size3.Width ) * num5 ) ), size3.Height + ( (int) ( ( size4.Height - size3.Height ) * num5 ) ) );
-					rectangle = new Rectangle( (int) ( ( point2.X - location.X ) * num5 ), (int) ( ( point2.Y - location.Y ) * num5 ), ( (int) ( ( point2.X - location.X ) * num5 ) ) + size5.Width, ( (int) ( ( point2.Y - location.Y ) * num5 ) ) + size5.Height );
-					rectangle2 = new Rectangle( (int) ( ( point4.X - point3.X ) * num5 ), (int) ( ( point4.Y - point3.Y ) * num5 ), ( (int) ( ( point4.X - point3.X ) * num5 ) ) + size5.Width, ( (int) ( ( point4.Y - point3.Y ) * num5 ) ) + size5.Height );
-					if ( ( ( rectangle.Right <= 0 ) || ( rectangle.Bottom <= 0 ) ) || ( ( rectangle.Left >= szフレーム幅.Width ) || ( rectangle.Top >= szフレーム幅.Height ) ) )
-					{
-						return 0;
-					}
-					if ( ( ( rectangle2.Right <= 0 ) || ( rectangle2.Bottom <= 0 ) ) || ( ( rectangle2.Left >= sz最大フレーム幅.Width ) || ( rectangle2.Top >= sz最大フレーム幅.Height ) ) )
-					{
-						return 0;
-					}
-					if ( rectangle.X < 0 )
-					{
-						int num6 = -rectangle.X;
-						rectangle2.X += num6;
-						rectangle2.Width -= num6;
-						rectangle.X = 0;
-						rectangle.Width -= num6;
-					}
-					if ( rectangle.Y < 0 )
-					{
-						int num7 = -rectangle.Y;
-						rectangle2.Y += num7;
-						rectangle2.Height -= num7;
-						rectangle.Y = 0;
-						rectangle.Height -= num7;
-					}
-					if ( rectangle.Right > szフレーム幅.Width )
-					{
-						int num8 = rectangle.Right - szフレーム幅.Width;
-						rectangle2.Width -= num8;
-						rectangle.Width -= num8;
-					}
-					if ( rectangle.Bottom > szフレーム幅.Height )
-					{
-						int num9 = rectangle.Bottom - szフレーム幅.Height;
-						rectangle2.Height -= num9;
-						rectangle.Height -= num9;
-					}
-					if ( rectangle2.X < 0 )
-					{
-						int num10 = -rectangle2.X;
-						rectangle.X += num10;
-						rectangle.Width -= num10;
-						rectangle2.X = 0;
-						rectangle2.Width -= num10;
-					}
-					if ( rectangle2.Y < 0 )
-					{
-						int num11 = -rectangle2.Y;
-						rectangle.Y += num11;
-						rectangle.Height -= num11;
-						rectangle2.Y = 0;
-						rectangle2.Height -= num11;
-					}
-					if ( rectangle2.Right > sz最大フレーム幅.Width )
-					{
-						int num12 = rectangle2.Right - sz最大フレーム幅.Width;
-						rectangle.Width -= num12;
-						rectangle2.Width -= num12;
-					}
-					if ( rectangle2.Bottom > sz最大フレーム幅.Height )
-					{
-						int num13 = rectangle2.Bottom - sz最大フレーム幅.Height;
-						rectangle.Height -= num13;
-						rectangle2.Height -= num13;
-					}
-					if ( ( rectangle.X >= rectangle.Right ) || ( rectangle.Y >= rectangle.Bottom ) )
-					{
-						return 0;
-					}
-					if ( ( rectangle2.X >= rectangle2.Right ) || ( rectangle2.Y >= rectangle2.Bottom ) )
-					{
-						return 0;
-					}
-					if ( ( ( rectangle.Right < 0 ) || ( rectangle.Bottom < 0 ) ) || ( ( rectangle.X > szフレーム幅.Width ) || ( rectangle.Y > szフレーム幅.Height ) ) )
-					{
-						return 0;
-					}
-					if ( ( ( rectangle2.Right < 0 ) || ( rectangle2.Bottom < 0 ) ) || ( ( rectangle2.X > sz最大フレーム幅.Width ) || ( rectangle2.Y > sz最大フレーム幅.Height ) ) )
-					{
-						return 0;
-					}
 				}
                 if( ( this.tx描画用 != null ) && CDTXMania.ConfigIni.bDirectShowMode == true )
                 {
