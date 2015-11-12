@@ -3184,7 +3184,9 @@ namespace DTXMania
 				if ( ( pChip.b可視 ) && ( this.txチップ != null ) )
 				{
 					this.txチップ.n透明度 = 255;
+                    this.txチップ.b加算合成 = true;
 					this.txチップ.t2D描画( CDTXMania.app.Device, 295, configIni.bReverse.Drums ? ( ( 0x38 + pChip.nバーからの距離dot.Drums ) - 1 ) : ( ( 567 - pChip.nバーからの距離dot.Drums ) - 1 ), new Rectangle( 0, 769, 559, 2 ) );
+                    this.txチップ.b加算合成 = false;
 				}
 			}
 			if ( ( pChip.b可視 && configIni.bGuitar有効 ) && ( this.txチップ != null ) )
