@@ -73,10 +73,10 @@ namespace DTXMania
 							this.st火花[ j ].nLane = (int) lane;
 //							this.st火花[ j ].ct進行 = new CCounter( 0, 35, 6, CDTXMania.Timer );
 							this.st火花[ j ].ct進行 = new CCounter( 0, 70, 3, CDTXMania.Timer );
+                            this.st火花[ j ].f回転単位 = C変換.DegreeToRadian( (float) ( n回転初期値 + ( i * 90f ) ) );
+                            this.st火花[ j ].fサイズ = 1f;
 							break;
 						}
-                        this.st火花[ j ].f回転単位 = C変換.DegreeToRadian( (float) ( n回転初期値 + ( i * 90f ) ) );
-                        this.st火花[ j ].fサイズ = 1f;
 					}
 				}
 			}
@@ -184,7 +184,7 @@ namespace DTXMania
 		}
 		public override void On非活性化()
 		{
-			for( int i = 0; i <FIRE_MAX; i++ )
+			for( int i = 0; i < FIRE_MAX; i++ )
 			{
 				this.st火花[ i ].ct進行 = null;
 			}
