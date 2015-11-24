@@ -40,6 +40,8 @@ namespace DTXMania
 
         public override void OnManagedリソースの解放()
         {
+            CDTXMania.tテクスチャの解放( ref this.txClip );
+            CDTXMania.tテクスチャの解放( ref this.txClipPanel );
 
             base.OnManagedリソースの解放();
         }
@@ -54,7 +56,7 @@ namespace DTXMania
                         this.txClipPanel.t2D描画( CDTXMania.app.Device, 854, 142 );
                     //if()
                     {
-                        if( this.txClip != null && CDTXMania.stage演奏ドラム画面.actAVI.dsBGV != null)
+                        if( this.txClip != null && CDTXMania.stage演奏ドラム画面.actAVI.dsBGV.dshow != null)
                         {
                             this.txClip.vc拡大縮小倍率 = new Vector3(
                                     ((float)417 / (float)CDTXMania.stage演奏ドラム画面.actAVI.dsBGV.dshow.n幅px),

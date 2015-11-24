@@ -23,21 +23,11 @@ namespace DTXMania
 
 		public void Start( int nチャンネル番号, CDTX.CAVI rAVI, CDTX.CDirectShow dsBGV, int n開始サイズW, int n開始サイズH, int n終了サイズW, int n終了サイズH, int n画像側開始位置X, int n画像側開始位置Y, int n画像側終了位置X, int n画像側終了位置Y, int n表示側開始位置X, int n表示側開始位置Y, int n表示側終了位置X, int n表示側終了位置Y, int n総移動時間ms, int n移動開始時刻ms )
 		{
+            this.b再生トグル = true;
 			if ( ( nチャンネル番号 == 0x54 || nチャンネル番号 == 0x5A ) && !CDTXMania.ConfigIni.bDirectShowMode )
 			{
                 this.rAVI = rAVI;
-                this.n開始サイズW = n開始サイズW;
-                this.n開始サイズH = n開始サイズH;
-                this.n終了サイズW = n終了サイズW;
-                this.n終了サイズH = n終了サイズH;
-                this.n画像側開始位置X = n画像側開始位置X;
-                this.n画像側開始位置Y = n画像側開始位置Y;
-                this.n画像側終了位置X = n画像側終了位置X;
-                this.n画像側終了位置Y = n画像側終了位置Y;
-                this.n表示側開始位置X = n表示側開始位置X;
-                this.n表示側開始位置Y = n表示側開始位置Y;
-                this.n表示側終了位置X = n表示側終了位置X;
-                this.n表示側終了位置Y = n表示側終了位置Y;
+
                 this.n総移動時間ms = n総移動時間ms;
                 this.n移動開始時刻ms = (n移動開始時刻ms != -1) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
                 this.n前回表示したフレーム番号 = -1;
@@ -379,12 +369,6 @@ namespace DTXMania
                 //2014.11.17 kairera0467 フレーム幅をrAVIから参照していたため、先にローカル関数で決めるよう変更。
 				Size szフレーム幅 = new Size( nフレーム幅, nフレーム高さ );
 				Size sz最大フレーム幅 = new Size( 1280, 720 );
-				Size size3 = new Size( this.n開始サイズW, this.n開始サイズH );
-				Size size4 = new Size( this.n終了サイズW, this.n終了サイズH );
-				Point location = new Point( this.n画像側開始位置X, this.n画像側終了位置Y );
-				Point point2 = new Point( this.n画像側終了位置X, this.n画像側終了位置Y );
-				Point point3 = new Point( this.n表示側開始位置X, this.n表示側開始位置Y );
-				Point point4 = new Point( this.n表示側終了位置X, this.n表示側終了位置Y );
 				long num3 = this.n総移動時間ms;
 				long num4 = this.n移動開始時刻ms;
 				if ( CSound管理.rc演奏用タイマ.n現在時刻 < num4 )
