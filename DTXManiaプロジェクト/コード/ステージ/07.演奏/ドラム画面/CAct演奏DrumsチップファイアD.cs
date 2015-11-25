@@ -26,7 +26,19 @@ namespace DTXMania
                     @"Graphics\ScreenPlayDrums chip fire_LP.png",
                     @"Graphics\ScreenPlayDrums chip fire_RD.png"
                 };
-
+            this.arChipMiniEffectFileName = new string[]
+                {
+                    @"Graphics\ScreenPlayDrums chip star_LC.png",
+                    @"Graphics\ScreenPlayDrums chip star_HH.png",
+                    @"Graphics\ScreenPlayDrums chip star_SD.png",
+                    @"Graphics\ScreenPlayDrums chip star_BD.png",
+                    @"Graphics\ScreenPlayDrums chip star_HT.png",
+                    @"Graphics\ScreenPlayDrums chip star_LT.png",
+                    @"Graphics\ScreenPlayDrums chip star_FT.png",
+                    @"Graphics\ScreenPlayDrums chip star_CY.png",
+                    @"Graphics\ScreenPlayDrums chip star_LP.png",
+                    @"Graphics\ScreenPlayDrums chip star_RD.png"
+                };
 			base.b活性化してない = true;
 		}
 		
@@ -80,6 +92,58 @@ namespace DTXMania
 					}
 				}
 			}
+            if( ( this.tx青い星 != null ) /*&& (CDTXMania.ConfigIni.eAttackEffect.Drums == Eタイプ.A || CDTXMania.ConfigIni.eAttackEffect.Drums == Eタイプ.B)*/ )
+            {
+                for( int i = 0; i < 12; i++ )
+                {
+                    for( int j = 0; j < STAR_MAX; j++ )
+                    {
+                        if (!this.st青い星[j].b使用中)
+                        {
+                            this.st青い星[j].b使用中 = true;
+                            int n回転初期値 = CDTXMania.Random.Next( 360 );
+                            double num7 = 0.80 + ( 1 / 100.0 ); // 拡散の大きさ
+                            this.st青い星[j].nLane = (int)lane;
+                            this.st青い星[j].ct進行 = new CCounter( 0, 40, 7, CDTXMania.Timer ); // カウンタ
+                            this.st青い星[j].fX = this.nレーンの中央X座標[(int)lane] + 320; //X座標
+                            if( CDTXMania.ConfigIni.eLaneType == Eレーンタイプ.TypeA )
+                            {
+                                //if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                //    this.st青い星[j].fX = this.nレーンの中央X座標_改[(int)lane] + 320;
+                            }
+                            else if( CDTXMania.ConfigIni.eLaneType == Eレーンタイプ.TypeB )
+                            {
+                                this.st青い星[j].fX = this.nレーンの中央X座標B[(int)lane] + 320;
+
+                                //if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                //    this.st青い星[j].fX = this.nレーンの中央X座標B_改[(int)lane] + 320;
+                            }
+                            else if( CDTXMania.ConfigIni.eLaneType == Eレーンタイプ.TypeC )
+                            {
+                                this.st青い星[j].fX = this.nレーンの中央X座標C[(int)lane] + 320;
+                                //if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                //    this.st青い星[j].fX = this.nレーンの中央X座標C_改[(int)lane] + 320;
+                            }
+                            else if( CDTXMania.ConfigIni.eLaneType == Eレーンタイプ.TypeD )
+                            {
+                                this.st青い星[j].fX = this.nレーンの中央X座標D[(int)lane] + 320;
+                                //if (CDTXMania.ConfigIni.eRDPosition == ERDPosition.RDRC)
+                                //    this.st青い星[j].fX = this.nレーンの中央X座標D_改[(int)lane] + 320;
+                            }
+                            this.st青い星[j].fY = ((((float)375) + 350 + nJudgeLinePosY_delta_Drums + (((float)Math.Sin((double)this.st青い星[j].f半径)) * this.st青い星[j].f半径)) - 170f); //Y座標
+                            this.st青い星[j].f加速度X = (float)(num7 * Math.Cos((Math.PI * 2 * n回転初期値) / 360.0));
+                            this.st青い星[j].f加速度Y = (float)(num7 * (Math.Sin((Math.PI * 2 * n回転初期値) / 360.0)) - 0.1);
+                            this.st青い星[j].f加速度の加速度X = 1.000f;
+                            this.st青い星[j].f加速度の加速度Y = 1.010f;
+                            this.st青い星[j].f重力加速度 = 0.02040f;
+                            this.st青い星[j].f半径 = (float)(0.3 + (((double)CDTXMania.Random.Next(30)) / 100.0));
+                            break;
+                        }
+                    }
+                }
+            }
+
+
 			if( bフィルイン && ( this.tx青い星 != null ) )
 			{
 				for( int i = 0; i < 0x10; i++ )
@@ -211,11 +275,14 @@ namespace DTXMania
                         this.tx火花[ nTexA ].b加算合成 = true;
                     }
                 }
-				this.tx青い星 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip star.png" ) );
-				if( this.tx青い星 != null )
-				{
-					this.tx青い星.b加算合成 = true;
-				}
+                for ( int nTexB = 0; nTexB <= 9; nTexB++ )
+                {
+                    this.tx青い星[ nTexB ] = CDTXMania.tテクスチャの生成( CSkin.Path( this.arChipMiniEffectFileName[ nTexB ] ) );
+                    if( this.tx青い星[ nTexB ] != null )
+                    {
+                        this.tx青い星[ nTexB ].b加算合成 = true;
+                    }
+                }
 				this.tx大波 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\ScreenPlayDrums chip wave.png" ) );
 				if( this.tx大波 != null )
 				{
@@ -236,9 +303,8 @@ namespace DTXMania
                 for ( int nTexA = 0; nTexA <= 9; nTexA++ )
                 {
 				    CDTXMania.tテクスチャの解放( ref this.tx火花[ nTexA ] );
+                    CDTXMania.tテクスチャの解放( ref this.tx青い星[ nTexA ] );
                 }
-
-				CDTXMania.tテクスチャの解放( ref this.tx青い星 );
 				CDTXMania.tテクスチャの解放( ref this.tx大波 );
 				CDTXMania.tテクスチャの解放( ref this.tx細波 );
 				base.OnManagedリソースの解放();
@@ -301,9 +367,9 @@ namespace DTXMania
 							-(this.st青い星[i].fY - SampleFramework.GameWindowSize.Height / 2),
 							0f
 						);
-						if( this.tx青い星 != null )
+						if( this.tx青い星[ this.st青い星[ i ].nLane ] != null )
 						{
-							this.tx青い星.t3D描画( CDTXMania.app.Device, mat );
+							this.tx青い星[ this.st青い星[ i ].nLane ].t3D描画( CDTXMania.app.Device, mat );
 						}
 					}
 				}
@@ -461,12 +527,24 @@ namespace DTXMania
 		private bool b細波Balance;
 		private bool b大波Balance;
 		private const int FIRE_MAX = 8 * 8;
-		private readonly float[] fY波の最小仰角 = new float[] { -130f, -126f, -120f, -118f, -110f, -108f, -103f, -97f };
-		private readonly float[] fY波の最大仰角 = new float[] { 70f, 72f, 77f, 84f, 89f, 91f, 99f, 107f };
+        private readonly float[] fY波の最小仰角 = new float[] { -130f, -126f, -120f, -118f, -110f, -108f, -103f, -97f, -85f, -91f, -91f };
+                                                            //   LC      HH     SD     BD     HT     LT    FT     CY    RD    LP   LP
+        private readonly float[] fY波の最大仰角 = new float[] { 70f, 72f, 77f, 84f, 89f, 91f, 99f, 107f, 117f, 112f, 112f };
 
         //2014.07.16 kairera0467　現時点でLP、RD
-		private readonly int[] nレーンの中央X座標 = new int[]       { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
         private readonly int[] nチップエフェクト用X座標 = new int[] { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
+
+		private int[] nレーンの中央X座標 =     new int[] { 7, 71, 176, 293, 230, 349, 398, 464, 124, 514, 124 };
+        private int[] nレーンの中央X座標_改 =  new int[] { 7, 71, 176, 293, 230, 349, 398, 498, 124, 448, 124 };
+        private int[] nレーンの中央X座標B =    new int[] { 7, 71, 124, 240, 297, 349, 398, 464, 180, 514, 180 };
+        private int[] nレーンの中央X座標B_改 = new int[] { 7, 71, 124, 240, 297, 349, 398, 500, 180, 448, 180 };
+        private int[] nレーンの中央X座標C =    new int[] { 7, 71, 176, 242, 297, 349, 398, 464, 124, 508, 124 };
+        private int[] nレーンの中央X座標C_改 = new int[] { 7, 71, 176, 242, 297, 349, 398, 500, 124, 448, 124 };
+        private int[] nレーンの中央X座標D =    new int[] { 7, 71, 124, 294, 182, 349, 398, 464, 230, 514, 230 };
+        private int[] nレーンの中央X座標D_改 = new int[] { 7, 71, 124, 294, 182, 349, 398, 500, 230, 448, 230 };
+        private readonly int[] nノーツの左上X座標 = new int[] { 448 + 90, 60 + 10, 106 + 20, 0, 160 + 30, 206 + 40, 252 + 50, 298 + 60, 550 + 110, 362 + 70, 400 + 80 };
+        private readonly int[] nノーツの幅 = new int[] { 64, 46, 54, 60, 46, 46, 46, 60, 48, 48, 48 };
+
 		private const int STAR_MAX = 0x100;
 		private ST火花[] st火花 = new ST火花[ FIRE_MAX ];
 		private ST大波[] st大波 = new ST大波[ BIGWAVE_MAX ];
@@ -474,10 +552,11 @@ namespace DTXMania
 		private ST青い星[] st青い星 = new ST青い星[ STAR_MAX ];
 		private CTexture[] tx火花 = new CTexture[ 10 ];
 		private CTexture tx細波;
-		private CTexture tx青い星;
+		private CTexture[] tx青い星 = new CTexture[ 10 ];
 		private CTexture tx大波;
 		private int nJudgeLinePosY_delta_Drums;
         private string[] arChipEffectFileName;
+        private string[] arChipMiniEffectFileName;
 		//-----------------
 		#endregion
 	}
