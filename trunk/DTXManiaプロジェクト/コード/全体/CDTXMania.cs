@@ -23,7 +23,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public static readonly string VERSION = "Ver3.35(150811)";
+		public static readonly string VERSION = "Ver3.50(160101)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -330,6 +330,9 @@ namespace DTXMania
 			get;
 			set;
 		}
+        //fork
+        public static STDGBVALUE< List<int> > listAutoGhostLag = new STDGBVALUE<List<int>>();
+        public static STDGBVALUE< List<int> > listTargetGhsotLag = new STDGBVALUE<List<int>>();
 
 		// コンストラクタ
 

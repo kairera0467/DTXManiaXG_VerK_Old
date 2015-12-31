@@ -96,7 +96,18 @@ namespace DTXMania
 			}
 			else
 			{
-                this.actGraph.dbグラフ値目標_渡 = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[0];	// #24074 2011.01.23 add ikanick
+                this.actGraph.dbグラフ値目標_渡 = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];	// #24074 2011.01.23 add ikanick
+
+                //fork
+                // #35411 2015.08.21 chnmr0 add
+                // ゴースト利用可のなとき、0で初期化
+                if (CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE)
+                {
+                    if (CDTXMania.listTargetGhsotLag[(int)E楽器パート.DRUMS] != null)
+                    {
+                        this.actGraph.dbグラフ値ゴースト_渡 = 0;
+                    }
+                }
             }
             dtLastQueueOperation = DateTime.MinValue;
 		}
@@ -486,14 +497,26 @@ namespace DTXMania
 		{
 			E判定 eJudgeResult = tチップのヒット処理( nHitTime, pChip, E楽器パート.DRUMS, bCorrectLane );
 			// #24074 2011.01.23 add ikanick
-            if (CDTXMania.ConfigIni.nSkillMode == 0)
+            if( CDTXMania.ConfigIni.nSkillMode == 0 )
             {
-                this.actGraph.dbグラフ値現在_渡 = CScoreIni.t旧演奏型スキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.nヒット数・Auto含まない.Drums.Perfect, this.nヒット数・Auto含まない.Drums.Great, this.nヒット数・Auto含まない.Drums.Good, this.nヒット数・Auto含まない.Drums.Poor, this.nヒット数・Auto含まない.Drums.Miss, E楽器パート.DRUMS, bIsAutoPlay);
+                this.actGraph.dbグラフ値現在_渡 = CScoreIni.t旧演奏型スキルを計算して返す( CDTXMania.DTX.n可視チップ数.Drums, this.nヒット数・Auto含まない.Drums.Perfect, this.nヒット数・Auto含まない.Drums.Great, this.nヒット数・Auto含まない.Drums.Good, this.nヒット数・Auto含まない.Drums.Poor, this.nヒット数・Auto含まない.Drums.Miss, E楽器パート.DRUMS, bIsAutoPlay );
             }
-            else if (CDTXMania.ConfigIni.nSkillMode == 1)
+            else if( CDTXMania.ConfigIni.nSkillMode == 1 )
             {
-                this.actGraph.dbグラフ値現在_渡 = CScoreIni.t演奏型スキルを計算して返す(CDTXMania.DTX.n可視チップ数.Drums, this.nヒット数・Auto含まない.Drums.Perfect, this.nヒット数・Auto含まない.Drums.Great, this.nヒット数・Auto含まない.Drums.Good, this.nヒット数・Auto含まない.Drums.Poor, this.nヒット数・Auto含まない.Drums.Miss, this.actCombo.n現在のコンボ数.最高値.Drums, E楽器パート.DRUMS, bIsAutoPlay);
+                this.actGraph.dbグラフ値現在_渡 = CScoreIni.t演奏型スキルを計算して返す( CDTXMania.DTX.n可視チップ数.Drums, this.nヒット数・Auto含まない.Drums.Perfect, this.nヒット数・Auto含まない.Drums.Great, this.nヒット数・Auto含まない.Drums.Good, this.nヒット数・Auto含まない.Drums.Poor, this.nヒット数・Auto含まない.Drums.Miss, this.actCombo.n現在のコンボ数.最高値.Drums, E楽器パート.DRUMS, bIsAutoPlay );
             }
+            //fork
+			// #35411 2015.09.07 add chnmr0
+			if( CDTXMania.listTargetGhsotLag.Drums != null &&
+                CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.ONLINE &&
+				CDTXMania.DTX.n可視チップ数.Drums > 0 )
+			{
+				// Online Stats の計算式
+				this.actGraph.dbグラフ値現在_渡 = 100 *
+								(this.nヒット数・Auto含まない.Drums.Perfect * 17 +
+								 this.nヒット数・Auto含まない.Drums.Great * 7 +
+								 this.actCombo.n現在のコンボ数.最高値.Drums * 3) / (20.0 * CDTXMania.DTX.n可視チップ数.Drums);
+			}
 			return eJudgeResult;
 		}
 
@@ -3286,9 +3309,31 @@ namespace DTXMania
                 }
 
 				int indexSevenLanes = this.nチャンネル0Atoレーン07[ pChip.nチャンネル番号 - 0x11 ];
+                //fork
+				// #35411 chnmr0 modified
+				bool autoPlayCondition = ( pChip.nチャンネル番号 == 0x1C ? ( configIni.bAutoPlay.LBD && !pChip.bHit ) : ( configIni.bAutoPlay[ indexSevenLanes ] && !pChip.bHit ) );
+                bool UsePerfectGhost = true;
+                long ghostLag = 0;
 
+                if( CDTXMania.ConfigIni.eAutoGhost.Drums != EAutoGhostData.PERFECT &&
+                    CDTXMania.listAutoGhostLag.Drums != null &&
+                    0 <= pChip.n楽器パートでの出現順 && pChip.n楽器パートでの出現順 < CDTXMania.listAutoGhostLag.Drums.Count)
 
-				if( ( pChip.nチャンネル番号 == 0x1C ? ( configIni.bAutoPlay.LBD && !pChip.bHit ) : ( configIni.bAutoPlay[ indexSevenLanes ] && !pChip.bHit ) ) && ( pChip.nバーからの距離dot.Drums < 0 ) )
+                {
+                    // ゴーストデータが有効 : ラグに合わせて判定
+					ghostLag = CDTXMania.listAutoGhostLag.Drums[pChip.n楽器パートでの出現順];
+					ghostLag = (ghostLag & 255) - 128;
+					ghostLag -= this.nInputAdjustTimeMs.Drums;
+					autoPlayCondition &= !pChip.bHit && (ghostLag + pChip.n発声時刻ms <= CSound管理.rc演奏用タイマ.n現在時刻ms);
+                    UsePerfectGhost = false;
+                }
+                if( UsePerfectGhost )
+                {
+                    // 従来の AUTO : バー下で判定
+                    autoPlayCondition &= ( pChip.nバーからの距離dot.Drums < 0 );
+                }
+
+				if( autoPlayCondition )
 				{
 					pChip.bHit = true;
 					this.actLaneFlushD.Start( ( Eレーン ) indexSevenLanes, ( ( float ) CInput管理.n通常音量 ) / 127f );
@@ -3298,9 +3343,61 @@ namespace DTXMania
                     // #31602 2013.6.24 yyagi 判定ラインの表示位置をずらしたら、チップのヒットエフェクトの表示もずらすために、nJudgeLine..を追加
                     this.actChipFireD.Start( ( Eレーン )indexSevenLanes, flag, flag2, flag2, nJudgeLinePosY_delta.Drums );
 					this.actPad.Hit( this.nチャンネル0Atoパッド08[ pChip.nチャンネル番号 - 0x11 ] );
-					this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量( E楽器パート.DRUMS ) );
-					this.tチップのヒット処理( pChip.n発声時刻ms, pChip );
+					//this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms, E楽器パート.DRUMS, dTX.nモニタを考慮した音量( E楽器パート.DRUMS ) );
+					//this.tチップのヒット処理( pChip.n発声時刻ms, pChip );
+					this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms + ghostLag, E楽器パート.DRUMS, dTX.nモニタを考慮した音量( E楽器パート.DRUMS ) );
+					this.tチップのヒット処理( pChip.n発声時刻ms + ghostLag, pChip );
 				}
+
+                // #35411 2015.08.21 chnmr0 add
+                // 目標値グラフにゴーストの達成率を渡す
+                if (CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE &&
+                    CDTXMania.listTargetGhsotLag.Drums != null)
+                {
+                    double val = 0;
+                    if (CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.ONLINE)
+                    {
+                        if (CDTXMania.DTX.n可視チップ数.Drums > 0)
+                        {
+                        	// Online Stats の計算式
+                            val = 100 *
+                                (this.nヒット数_TargetGhost.Drums.Perfect * 17 +
+                                 this.nヒット数_TargetGhost.Drums.Great * 7 +
+                                 this.n最大コンボ数_TargetGhost.Drums * 3) / (20.0 * CDTXMania.DTX.n可視チップ数.Drums);
+                        }
+                    }
+                    else
+                    {
+                        switch( CDTXMania.ConfigIni.nSkillMode )
+                        {
+                            case 0:
+                                val = CScoreIni.t旧演奏型スキルを計算して返す(
+                                    CDTXMania.DTX.n可視チップ数.Drums,
+                                    this.nヒット数_TargetGhost.Drums.Perfect,
+                                    this.nヒット数_TargetGhost.Drums.Great,
+                                    this.nヒット数_TargetGhost.Drums.Good,
+                                    this.nヒット数_TargetGhost.Drums.Poor,
+                                    this.nヒット数_TargetGhost.Drums.Miss,
+                                    E楽器パート.DRUMS, new STAUTOPLAY());
+                                break;
+                            case 1:
+                                val = CScoreIni.t演奏型スキルを計算して返す(
+                                    CDTXMania.DTX.n可視チップ数.Drums,
+                                    this.nヒット数_TargetGhost.Drums.Perfect,
+                                    this.nヒット数_TargetGhost.Drums.Great,
+                                    this.nヒット数_TargetGhost.Drums.Good,
+                                    this.nヒット数_TargetGhost.Drums.Poor,
+                                    this.nヒット数_TargetGhost.Drums.Miss,
+                                    this.actCombo.n現在のコンボ数.最高値.Drums, //苦肉の策
+                                    E楽器パート.DRUMS, new STAUTOPLAY()
+                                    );
+                                break;
+                        }
+                    }
+                    if (val < 0) val = 0;
+                    if (val > 100) val = 100;
+                    this.actGraph.dbグラフ値ゴースト_渡 = val;
+                }
 				return;
 			}	// end of "if configIni.bDrums有効"
 			if( !pChip.bHit && ( pChip.nバーからの距離dot.Drums < 0 ) )

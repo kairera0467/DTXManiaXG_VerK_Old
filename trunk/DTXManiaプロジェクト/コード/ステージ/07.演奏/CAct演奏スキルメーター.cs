@@ -37,6 +37,17 @@ namespace DTXMania
                 this.dbグラフ値現在 = value;
             }
         }
+        public double dbグラフ値ゴースト_渡 //2015.12.31 kairera0467 XG2を見る限り、ゴースト数値はゲージ画像と比較数値にしか使用されていないので、ゴースト数値と目標値は別に扱うことにした。
+        {
+            get
+            {
+                return this.dbグラフ値ゴースト;
+            }
+            set
+            {
+                this.dbグラフ値ゴースト = value;
+            }
+        }
         public double dbグラフ値目標_渡
         {
             get
@@ -125,10 +136,17 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                this.txグラフ = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
-                this.tx比較 = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
-                this.txグラフバックパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\7_Graph_main.png"));
+                this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 16, FontStyle.Bold );
+
+                this.txグラフ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Graph_main.png" ) );
+                this.tx比較 = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Graph_main.png" ) );
+                this.txグラフバックパネル = CDTXMania.tテクスチャの生成( CSkin.Path(@"Graphics\7_Graph_main.png" ) );
                 this.txグラフゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Graph_Gauge.png" ) );
+
+                if( this.pfNameFont != null )
+                {
+                    this.txPlayerName = this.t指定された文字テクスチャを生成する( "DJ AUTO" );
+                }
                 base.OnManagedリソースの作成();
             }
         }
@@ -136,9 +154,10 @@ namespace DTXMania
         {
             if (!base.b活性化してない)
             {
-                CDTXMania.tテクスチャの解放(ref this.txグラフ);
-                CDTXMania.tテクスチャの解放(ref this.tx比較);
-                CDTXMania.tテクスチャの解放(ref this.txグラフバックパネル);
+                CDTXMania.tテクスチャの解放( ref this.txグラフ );
+                CDTXMania.tテクスチャの解放( ref this.tx比較 );
+                CDTXMania.tテクスチャの解放( ref this.txグラフバックパネル );
+                CDTXMania.tテクスチャの解放( ref this.txPlayerName );
                 base.OnManagedリソースの解放();
             }
         }
@@ -314,22 +333,38 @@ namespace DTXMania
 
 
                 this.t小文字表示(204 + this.n本体X[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
-                if (CDTXMania.ConfigIni.nInfoType == 0)
+                if( CDTXMania.ConfigIni.nInfoType == 0 )
                 {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
-                    this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
-                    if (this.dbグラフ値現在 > this.dbグラフ値目標)
-                    {
-                        this.tx比較.n透明度 = 128;
-                    }
+                    //if( CDTXMania.ConfigIni.eAutoGhost.Drums == EAutoGhostData.PERFECT || CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
+                    //{
+                    //    this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X[ j ], 200, new Rectangle( 288, 2, 162, 85 ) );
+                    //    this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
+                    //    if( this.dbグラフ値現在 > this.dbグラフ値目標 )
+                    //    {
+                    //        this.tx比較.n透明度 = 128;
+                    //    }
+                    //    if( this.txPlayerName != null )
+                    //    {
+                    //        this.txPlayerName.t2D描画( CDTXMania.app.Device, 96 + this.n本体X[ j ], 214 );
+                    //    }
+                    //}
+                    //else
+                    //{
+                        this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
+                        this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                        if (this.dbグラフ値現在 > this.dbグラフ値目標)
+                        {
+                            this.tx比較.n透明度 = 128;
+                        }
+                    //}
                 }
-                else if (CDTXMania.ConfigIni.nInfoType == 1)
+                else if( CDTXMania.ConfigIni.nInfoType == 1 )
                 {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(336, 205, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 280, new Rectangle(336, 265, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 360, new Rectangle(336, 325, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 440, new Rectangle(336, 385, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 520, new Rectangle(336, 445, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 226, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 280, new Rectangle(288, 292, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 360, new Rectangle(288, 358, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 440, new Rectangle(288, 424, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 520, new Rectangle(288, 490, 162, 60));
 
                     if (j == 0)
                     {
@@ -379,6 +414,7 @@ namespace DTXMania
         private CCounter ct爆発エフェクト;
         public double db現在の判定数合計;
         private double dbグラフ値目標;
+        private double dbグラフ値ゴースト;
         public double dbグラフ値比較;
         private double dbグラフ値目標_表示;
         private double dbグラフ値現在;
@@ -391,11 +427,30 @@ namespace DTXMania
         private CTexture txグラフ;
         private CTexture txグラフバックパネル;
         private CTexture txグラフゲージ;
+        private CTexture txPlayerName;
 
         private Bitmap bmpGraph;
         private Graphics gGraph;
+        private CPrivateFastFont pfNameFont;
         //-----------------
 
+        private CTexture t指定された文字テクスチャを生成する( string str文字 )
+        {
+            //2015.12.27.kairera0467 こいついつも使いまわししてんな。
+            //まだDJ.AUTO専用なので、文字列の長さとかそういうのは考慮してません。
+            Bitmap bmp;
+            
+            bmp = this.pfNameFont.DrawPrivateFont( str文字, Color.White, Color.Transparent );
+
+            CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
+
+            if( tx文字テクスチャ != null )
+                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( 1.0f, 1.0f, 1f );
+
+            bmp.Dispose();
+
+            return tx文字テクスチャ;
+        }
 
         private void t小文字表示(int x, int y, string str)
         {
