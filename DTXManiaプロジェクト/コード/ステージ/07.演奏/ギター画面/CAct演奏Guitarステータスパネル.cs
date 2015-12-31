@@ -13,6 +13,8 @@ namespace DTXMania
 	{
         public override void On活性化()
         {
+            this.strGroupName = new string[2];
+            this.strPlayerName = new string[2];
 
             #region [ 本体位置 ]
 
@@ -117,8 +119,10 @@ namespace DTXMania
 
                 this.b4font = new Bitmap(1, 1);
 
-                this.strPlayerName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName ) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
-                this.strGroupName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName ) ? "" : CDTXMania.ConfigIni.strGroupName;
+                this.strPlayerName[ 0 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 0 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[0];
+                this.strPlayerName[ 1 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 0 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[0];
+                this.strGroupName[ 0 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 0 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[0];
+                this.strGroupName[ 1 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 1 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[1];
 
                 Image imgCustomSongNameTexture = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 if( File.Exists( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" ) )
@@ -129,92 +133,107 @@ namespace DTXMania
                 //ギターベースの有無を判断する仕様を考えて、生成などは分けておく。
 
                 #region[ ネームカラー ]
-                //--------------------
-                Color clNameColor = Color.White;
-                Color clNameColorLower = Color.White;
-                switch (CDTXMania.ConfigIni.nNameColor)
-                {
-                    case 0:
-                        clNameColor = Color.White;
-                        break;
-                    case 1:
-                        clNameColor = Color.LightYellow;
-                        break;
-                    case 2:
-                        clNameColor = Color.Yellow;
-                        break;
-                    case 3:
-                        clNameColor = Color.Green;
-                        break;
-                    case 4:
-                        clNameColor = Color.Blue;
-                        break;
-                    case 5:
-                        clNameColor = Color.Purple;
-                        break;
-                    case 6:
-                        clNameColor = Color.Red;
-                        break;
-                    case 7:
-                        clNameColor = Color.Brown;
-                        break;
-                    case 8:
-                        clNameColor = Color.Silver;
-                        break;
-                    case 9:
-                        clNameColor = Color.Gold;
-                        break;
+                //-------------------
+                Color[] clNameColor;
+                Color[] clNameColorLower;
 
-                    case 10:
-                        clNameColor = Color.White;
-                        break;
-                    case 11:
-                        clNameColor = Color.LightYellow;
-                        clNameColorLower = Color.White;
-                        break;
-                    case 12:
-                        clNameColor = Color.Yellow;
-                        clNameColorLower = Color.White;
-                        break;
-                    case 13:
-                        clNameColor = Color.FromArgb(0, 255, 33);
-                        clNameColorLower = Color.White;
-                        break;
-                    case 14:
-                        clNameColor = Color.FromArgb(0, 38, 255);
-                        clNameColorLower = Color.White;
-                        break;
-                    case 15:
-                        clNameColor = Color.FromArgb(72, 0, 255);
-                        clNameColorLower = Color.White;
-                        break;
-                    case 16:
-                        clNameColor = Color.FromArgb(255, 255, 0, 0);
-                        clNameColorLower = Color.White;
-                        break;
-                    case 17:
-                        clNameColor = Color.FromArgb(255, 232, 182, 149);
-                        clNameColorLower = Color.FromArgb(255, 122, 69, 26);
-                        break;
-                    case 18:
-                        clNameColor = Color.FromArgb(246, 245, 255);
-                        clNameColorLower = Color.FromArgb(125, 128, 137);
-                        break;
-                    case 19:
-                        clNameColor = Color.FromArgb(255, 238, 196, 85);
-                        clNameColorLower = Color.FromArgb(255, 255, 241, 200);
-                        break;
+                //初期化
+                clNameColor = new Color[ 2 ];
+                clNameColorLower = new Color[ 2 ];
+
+                for( int i = 0; i < 2; i++ )
+                {
+                    switch( CDTXMania.ConfigIni.nNameColor[ i + 1 ] ) // 0はDrumなので+1する。
+                    {
+                        case 0:
+                            clNameColor[ i ] = Color.White;
+                            break;
+                        case 1:
+                            clNameColor[ i ] = Color.LightYellow;
+                            break;
+                        case 2:
+                            clNameColor[ i ] = Color.Yellow;
+                            break;
+                        case 3:
+                            clNameColor[ i ] = Color.Green;
+                            break;
+                        case 4:
+                            clNameColor[ i ] = Color.Blue;
+                            break;
+                        case 5:
+                            clNameColor[ i ] = Color.Purple;
+                            break;
+                        case 6:
+                            clNameColor[ i ] = Color.Red;
+                            break;
+                        case 7:
+                            clNameColor[ i ] = Color.Brown;
+                            break;
+                        case 8:
+                            clNameColor[ i ] = Color.Silver;
+                            break;
+                        case 9:
+                            clNameColor[ i ] = Color.Gold;
+                            break;
+
+                        case 10:
+                            clNameColor[ i ] = Color.White;
+                            break;
+                        case 11:
+                            clNameColor[ i ] = Color.LightYellow;
+                            clNameColorLower[ i ] = Color.White;
+                            break;
+                        case 12:
+                            clNameColor[ i ] = Color.Yellow;
+                            clNameColorLower[ i ] = Color.White;
+                            break;
+                        case 13:
+                            clNameColor[ i ] = Color.FromArgb(0, 255, 33);
+                            clNameColorLower[ i ] = Color.White;
+                            break;
+                        case 14:
+                            clNameColor[ i ] = Color.FromArgb(0, 38, 255);
+                            clNameColorLower[ i ] = Color.White;
+                            break;
+                        case 15:
+                            clNameColor[ i ] = Color.FromArgb(72, 0, 255);
+                            clNameColorLower[ i ] = Color.White;
+                            break;
+                        case 16:
+                            clNameColor[ i ] = Color.FromArgb(255, 255, 0, 0);
+                            clNameColorLower[ i ] = Color.White;
+                            break;
+                        case 17:
+                            clNameColor[ i ] = Color.FromArgb(255, 232, 182, 149);
+                            clNameColorLower[ i ] = Color.FromArgb(255, 122, 69, 26);
+                            break;
+                        case 18:
+                            clNameColor[ i ] = Color.FromArgb(246, 245, 255);
+                            clNameColorLower[ i ] = Color.FromArgb(125, 128, 137);
+                            break;
+                        case 19:
+                            clNameColor[ i ] = Color.FromArgb(255, 238, 196, 85);
+                            clNameColorLower[ i ] = Color.FromArgb(255, 255, 241, 200);
+                            break;
+                    }
+
+
                 }
 
-                Bitmap bmpCardName = new Bitmap(1, 1);
 
-                if (CDTXMania.ConfigIni.nNameColor >= 11)
+
+                Bitmap bmpCardName = new Bitmap(1, 1);
+                Bitmap bmpCardName2P = new Bitmap(1, 1);
+
+                if( CDTXMania.ConfigIni.nNameColor[ 1 ] >= 11 )
                 {
-                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
+                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName[ 1 ], clNameColor[ 0 ], Color.Transparent, clNameColor[ 0 ], clNameColorLower[ 0 ] );
+                    bmpCardName2P = this.pfNameFont.DrawPrivateFont(this.strPlayerName[ 2 ], clNameColor[ 1 ], Color.Transparent, clNameColor[ 1 ], clNameColorLower[ 1 ] );
                 }
                 else
                 {
-                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent);
+                    bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName[ 1 ], clNameColor[ 0 ], Color.Transparent);
+                    bmpCardName2P = this.pfNameFont.DrawPrivateFont( this.strPlayerName[ 2 ], clNameColor[ 1 ], Color.Transparent);
                 }
                 //--------------------
                 #endregion
@@ -233,7 +252,7 @@ namespace DTXMania
                     Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 38), 234, 38);
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                     gNamePlate.DrawImage(bmpCardName, 44f, 46f);
-                    gNamePlate.DrawString(this.strGroupName, this.ftGroupFont, Brushes.White, 16f, 30f);
+                    gNamePlate.DrawString(this.strGroupName[ 0 ], this.ftGroupFont, Brushes.White, 16f, 30f);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
@@ -768,9 +787,9 @@ namespace DTXMania
         private int nCurrentBassSpeed;
         private int nStrlengthbydot;
         private int nDifficulty;
-        private string strGroupName;
+        private string[] strGroupName;
         private string strPanelString;
-        private string strPlayerName;
+        private string[] strPlayerName;
         private Font ftDifficultyL;
         private Font ftDifficultyS;
         private Font ftDisplayFont;

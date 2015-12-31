@@ -241,6 +241,58 @@ namespace DTXMania
 						Trace.TraceError( "#SOUND_NOWLOADING に指定されたサウンドファイルの読み込みに失敗しました。({0})", strNowLoadingサウンドファイルパス );
 					}
 				}
+
+                // 2015.12.26 kairera0467 本家DTXからつまみ食い。
+                // #35411 2015.08.19 chnmr0 add
+                // Read ghost data by config
+                // It does not exist a ghost file for 'perfect' actually
+                string [] inst = {"dr", "gt", "bs"};
+				if( CDTXMania.ConfigIni.bIsSwappedGuitarBass )
+				{
+					inst[1] = "bs";
+					inst[2] = "gt";
+				}
+
+                for(int instIndex = 0; instIndex < inst.Length; ++instIndex)
+                {
+                    bool readAutoGhostCond = false;
+                    readAutoGhostCond |= instIndex == 0 ? CDTXMania.ConfigIni.bドラムが全部オートプレイである : false;
+                    readAutoGhostCond |= instIndex == 1 ? CDTXMania.ConfigIni.bギターが全部オートプレイである : false;
+                    readAutoGhostCond |= instIndex == 2 ? CDTXMania.ConfigIni.bベースが全部オートプレイである : false;
+
+                    CDTXMania.listTargetGhsotLag[instIndex] = null;
+                    CDTXMania.listAutoGhostLag[instIndex] = null;
+
+                    if ( readAutoGhostCond )
+                    {
+                        string[] prefix = { "perfect", "lastplay", "hiskill", "hiscore", "online" };
+                        int indPrefix = (int)CDTXMania.ConfigIni.eAutoGhost[ instIndex ];
+                        string filename = cdtx.strフォルダ名 + "\\" + cdtx.strファイル名 + "." + prefix[ indPrefix ] + "." + inst[ instIndex ] + ".ghost";
+                        if( File.Exists( filename ) )
+                        {
+                            CDTXMania.listAutoGhostLag[ instIndex ] = new List<int>();
+                            ReadGhost(filename, CDTXMania.listAutoGhostLag[ instIndex ]);
+                        }
+                    }
+
+                    if( CDTXMania.ConfigIni.eTargetGhost[instIndex] != ETargetGhostData.NONE )
+                    {
+                        string[] prefix = { "none", "perfect", "lastplay", "hiskill", "hiscore", "online" };
+                        int indPrefix = (int)CDTXMania.ConfigIni.eTargetGhost[ instIndex ];
+                        string filename = cdtx.strフォルダ名 + "\\" + cdtx.strファイル名 + "." + prefix[ indPrefix ] + "." + inst[ instIndex ] + ".ghost";
+                        if( File.Exists( filename ) )
+                        {
+                            CDTXMania.listTargetGhsotLag[instIndex] = new List<int>();
+                            ReadGhost(filename, CDTXMania.listTargetGhsotLag[instIndex]);
+                        }
+                        else if( CDTXMania.ConfigIni.eTargetGhost[instIndex] == ETargetGhostData.PERFECT )
+                        {
+                            // All perfect
+                            CDTXMania.listTargetGhsotLag[instIndex] = new List<int>();
+                        }
+                    }
+                }
+
                 int LEVEL = cdtx.LEVEL.Drums;
                 if( !CDTXMania.bコンパクトモード )
                     this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
@@ -714,6 +766,20 @@ namespace DTXMania
                         Trace.TraceInformation("FILE: {0}",  CDTXMania.DTX.strファイル名の絶対パス);
                         Trace.TraceInformation("---------------------------");
 
+                        // #35411 2015.08.19 chnmr0 add ゴースト機能のためList chip 読み込み後楽器パート出現順インデックスを割り振る
+                        int[] curCount = new int[(int)E楽器パート.UNKNOWN];
+                        for (int i = 0; i < curCount.Length; ++i)
+                        {
+                            curCount[i] = 0;
+                        }
+                        foreach (CDTX.CChip chip in CDTXMania.DTX.listChip)
+                        {
+                            if (chip.e楽器パート != E楽器パート.UNKNOWN)
+                            {
+                                //chip.n楽器パートでの出現順 = curCount[(int)chip.e楽器パート]++;
+                            }
+                        }
+
                         span = (TimeSpan)(DateTime.Now - timeBeginLoad);
                         Trace.TraceInformation("DTX読込所要時間:           {0}", span.ToString());
 
@@ -1057,6 +1123,35 @@ namespace DTXMania
         public int nIndex;
         public STATUSPANEL[] stパネルマップ;
 		//-----------------
+
+        private void ReadGhost( string filename, List<int> list ) // #35411 2015.08.19 chnmr0 add
+        {
+            return; //2015.12.31 kairera0467 以下封印
+
+            if( File.Exists( filename ) )
+            {
+                using( FileStream fs = new FileStream( filename, FileMode.Open, FileAccess.Read ) )
+                {
+                    using( BinaryReader br = new BinaryReader( fs ) )
+                    {
+                        try
+                        {
+                            int cnt = br.ReadInt32();
+                            for( int i = 0; i < cnt; ++i )
+                            {
+                                short lag = br.ReadInt16();
+                                list.Add( lag );
+                            }
+                        }
+                        catch( EndOfStreamException )
+                        {
+                            Trace.TraceInformation("ゴーストデータは正しく読み込まれませんでした。");
+                            list.Clear();
+                        }
+                    }
+                }
+            }
+        }
 
         private void t小文字表示(int x, int y, string str)
         {

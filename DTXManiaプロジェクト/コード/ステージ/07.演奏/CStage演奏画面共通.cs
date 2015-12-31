@@ -267,6 +267,7 @@ namespace DTXMania
 				//{
 					this.nヒット数・Auto含まない[ k ] = new CHITCOUNTOFRANK();
 					this.nヒット数・Auto含む[ k ] = new CHITCOUNTOFRANK();
+                    this.nヒット数_TargetGhost[ k ] = new CHITCOUNTOFRANK(); // #35411 2015.08.21 chnmr0 add
 				//}
 				this.queWailing[ k ] = new Queue<CDTX.CChip>();
 				this.r現在の歓声Chip[ k ] = null;
@@ -722,6 +723,11 @@ namespace DTXMania
         public CTextureAf tx判定画像anime_2;   //2014.3.16 kairera0467 棒とかで必要になる。
         public CTextureAf tx判定画像anime_3;
         public CTextureAf txボーナスエフェクト;
+        
+        //fork
+        protected STDGBVALUE<CHITCOUNTOFRANK> nヒット数_TargetGhost; // #35411 2015.08.21 chnmr0 add
+        protected STDGBVALUE<int> nコンボ数_TargetGhost;
+        protected STDGBVALUE<int> n最大コンボ数_TargetGhost;
 
 		protected CTexture tx背景;
 		protected STDGBVALUE<int> nInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
@@ -786,9 +792,26 @@ namespace DTXMania
 		}
 
 		protected E判定 e指定時刻からChipのJUDGEを返す( long nTime, CDTX.CChip pChip, int nInputAdjustTime )
+        {
+            return this.e指定時刻からChipのJUDGEを返す( nTime, pChip, nInputAdjustTime, true );
+        }
+
+		protected E判定 e指定時刻からChipのJUDGEを返す( long nTime, CDTX.CChip pChip, int nInputAdjustTime, bool saveLag )
 		{
 			if ( pChip != null )
 			{
+                // #35411 2015.08.22 chnmr0 modified add check save lag flag for ghost
+                int lag = (int)(nTime + nInputAdjustTime - pChip.n発声時刻ms);
+                if (saveLag)
+                {
+                    pChip.nLag = lag;       // #23580 2011.1.3 yyagi: add "nInputAdjustTime" to add input timing adjust feature
+					if (pChip.e楽器パート != E楽器パート.UNKNOWN)
+					{
+						pChip.nCurrentComboForGhost = this.actCombo.n現在のコンボ数[(int)pChip.e楽器パート];
+					}
+                }
+                // #35411 modify end
+
 				pChip.nLag = (int) ( nTime + nInputAdjustTime - pChip.n発声時刻ms );		// #23580 2011.1.3 yyagi: add "nInputAdjustTime" to add input timing adjust feature
 				int nDeltaTime = Math.Abs( pChip.nLag );
 				if ( nDeltaTime <= CDTXMania.nPerfect範囲ms )
@@ -1218,14 +1241,21 @@ namespace DTXMania
             bool bPChipIsAutoPlay = bCheckAutoPlay(pChip);
             pChip.bIsAutoPlayed = bPChipIsAutoPlay;			// 2011.6.10 yyagi
             E判定 eJudgeResult = E判定.Auto;
-            switch (pChip.e楽器パート)
-            {
-                case E楽器パート.DRUMS:
-                    {
-                        int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Drums;
-                        eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
-                        this.actJudgeString.Start( this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11], bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag );
 
+            //fork
+            // #35411 2015.08.20 chnmr0 modified (begin)
+            bool bIsPerfectGhost = CDTXMania.ConfigIni.eAutoGhost[(int)pChip.e楽器パート] == EAutoGhostData.PERFECT ||
+                CDTXMania.listAutoGhostLag[(int)pChip.e楽器パート] == null;
+            int nInputAdjustTime = bPChipIsAutoPlay && bIsPerfectGhost ? 0 : this.nInputAdjustTimeMs[(int)pChip.e楽器パート];
+            eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
+
+            if( pChip.e楽器パート != E楽器パート.UNKNOWN )
+            {
+                int nChannel = -1;
+                switch( pChip.e楽器パート )
+                {
+                    case E楽器パート.DRUMS:
+                        nChannel = this.nチャンネル0Atoレーン07[pChip.nチャンネル番号 - 0x11];
                         if (eJudgeResult == E判定.Auto)
                         {
                             if(pChip.nチャンネル番号 == 0x1A)
@@ -1233,35 +1263,23 @@ namespace DTXMania
                             else if(pChip.nチャンネル番号 == 0x16)
                                 CDTXMania.stage演奏ドラム画面.actDrumSet.ct右シンバル.n現在の値 = 0;
                         }
-                    }
-                    break;
-
-                case E楽器パート.GUITAR:
-                    {
-                        int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Guitar;
-                        eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
-                        this.actJudgeString.Start(13, bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag);
-                    }
-                    break;
-
-                case E楽器パート.BASS:
-                    {
-                        int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Bass;
-                        eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
-                        this.actJudgeString.Start(14, bPChipIsAutoPlay ? E判定.Auto : eJudgeResult, pChip.nLag);
-                    }
-                    break;
-
-                case E楽器パート.UNKNOWN:
-                    {
+                        break;
+                    case E楽器パート.GUITAR:
+                        nChannel = 10;
+                        break;
+                    case E楽器パート.BASS:
+                        nChannel = 11;
+                        break;
+                    case E楽器パート.UNKNOWN:
                         if( pChip.nチャンネル番号 == 0x4F )
                         {
-                            int nInputAdjustTime = bPChipIsAutoPlay ? 0 : this.nInputAdjustTimeMs.Drums;
-                            eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す(nHitTime, pChip, nInputAdjustTime) : E判定.Miss;
+                            eJudgeResult = (bCorrectLane) ? this.e指定時刻からChipのJUDGEを返す( nHitTime, pChip, nInputAdjustTime ) : E判定.Miss;
                         }
-                    }
-                    break;
+                        break;
+                }
+                this.actJudgeString.Start(nChannel, bPChipIsAutoPlay && bIsPerfectGhost ? E判定.Auto : eJudgeResult, pChip.nLag);
             }
+            // #35411 end
 
             if (CDTXMania.ConfigIni.bAutoAddGage == false)
             {
@@ -2406,6 +2424,53 @@ namespace DTXMania
 				{
                     this.tチップのヒット処理( CSound管理.rc演奏用タイマ.n現在時刻, pChip);
 				}
+
+
+                //fork
+                // #35411 chnmr0 add (ターゲットゴースト)
+                int instIndex = (int)pChip.e楽器パート;
+                if ( CDTXMania.ConfigIni.eTargetGhost[instIndex] != ETargetGhostData.NONE &&
+                     CDTXMania.listTargetGhsotLag[instIndex] != null &&
+                     pChip.e楽器パート != E楽器パート.UNKNOWN &&
+                     pChip.nバーからの距離dot[instIndex] < 0 )
+                {
+                    if ( !pChip.bTargetGhost判定済み )
+                    {
+                        pChip.bTargetGhost判定済み = true;
+
+						int ghostLag = 128;
+						if( 0 <= pChip.n楽器パートでの出現順 && pChip.n楽器パートでの出現順 < CDTXMania.listTargetGhsotLag[instIndex].Count )
+                        {
+                            ghostLag = CDTXMania.listTargetGhsotLag[instIndex][pChip.n楽器パートでの出現順];
+							// 上位８ビットが１ならコンボが途切れている（ギターBAD空打ちでコンボ数を再現するための措置）
+							if( ghostLag > 255 )
+							{
+								this.nコンボ数_TargetGhost[instIndex] = 0;
+							}
+							ghostLag = (ghostLag & 255) - 128;
+						}
+                        else if( CDTXMania.ConfigIni.eTargetGhost[instIndex] == ETargetGhostData.PERFECT )
+                        {
+                            ghostLag = 0;
+                        }
+                        
+                        if ( ghostLag <= 127 )
+                        {
+                            E判定 eJudge = this.e指定時刻からChipのJUDGEを返す(pChip.n発声時刻ms + ghostLag , pChip, 0, false);
+                            this.nヒット数_TargetGhost[instIndex][(int)eJudge]++;
+                            if (eJudge == E判定.Miss || eJudge == E判定.Poor)
+                            {
+                                this.n最大コンボ数_TargetGhost[instIndex] = Math.Max(this.n最大コンボ数_TargetGhost[instIndex], this.nコンボ数_TargetGhost[instIndex]);
+                                this.nコンボ数_TargetGhost[instIndex] = 0;
+                            }
+                            else
+                            {
+                                this.nコンボ数_TargetGhost[instIndex]++;
+                            }
+                        }
+                    }
+                }
+
 				switch ( pChip.nチャンネル番号 )
 				{
                     //描画順の都合上こちらから描画。

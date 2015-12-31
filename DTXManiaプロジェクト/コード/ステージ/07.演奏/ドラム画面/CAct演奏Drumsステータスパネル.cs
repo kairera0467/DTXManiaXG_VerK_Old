@@ -105,8 +105,8 @@ namespace DTXMania
                 else
                     this.strPanelString = CDTXMania.DTX.TITLE;
 
-                this.strPlayerName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName ) ? "GUEST" : CDTXMania.ConfigIni.strCardName;
-                this.strGroupName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName ) ? "" : CDTXMania.ConfigIni.strGroupName;
+                this.strPlayerName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[0] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[0];
+                this.strGroupName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[0] ) ? "" : CDTXMania.ConfigIni.strGroupName[0];
                 this.nStrlengthbydot = (int)gNamePlate.MeasureString(this.strPanelString, this.ftDisplayFont).Width;
                 gNamePlate.Dispose();
 
@@ -139,7 +139,7 @@ namespace DTXMania
                 //--------------------
                 Color clNameColor = Color.White;
                 Color clNameColorLower = Color.White;
-                switch( CDTXMania.ConfigIni.nNameColor )
+                switch( CDTXMania.ConfigIni.nNameColor[ 0 ] )
                 {
                     case 0:
                         clNameColor = Color.White;
@@ -215,7 +215,7 @@ namespace DTXMania
 
                 Bitmap bmpCardName = new Bitmap( 1, 1 );
 
-                if (CDTXMania.ConfigIni.nNameColor >= 11)
+                if (CDTXMania.ConfigIni.nNameColor[ 0 ] >= 11)
                 {
                     bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName, clNameColor, Color.Transparent, clNameColor, clNameColorLower);
                 }
