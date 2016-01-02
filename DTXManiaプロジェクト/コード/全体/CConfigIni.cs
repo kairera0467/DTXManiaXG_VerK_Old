@@ -549,7 +549,7 @@ namespace DTXMania
 		public int n自動再生音量;
 		public int n手動再生音量;
 		public int n選曲リストフォントのサイズdot;
-        public int[] nNameColor = new int[ 3 ];
+        public int[] nNameColor;
 		public STDGBVALUE<int> n表示可能な最小コンボ数;
 		public STDGBVALUE<int> n譜面スクロール速度;
 		public string strDTXManiaのバージョン;
@@ -1092,6 +1092,7 @@ namespace DTXMania
 
             this.strCardName = new string[3];
             this.strGroupName = new string[3];
+            this.nNameColor = new int[ 3 ];
 
             #region[ 画像関連 ]
             this.nJudgeAnimeType = 1;
