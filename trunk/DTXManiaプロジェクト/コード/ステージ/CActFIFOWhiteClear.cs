@@ -167,23 +167,24 @@ namespace DTXMania
             this.ctFCEXCText.t進行();
             bool bドラムフルコン = false;
             bool bドラムエクセ = false;
-            
-            if( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
-            {
-                if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor == 0 )
-                    bドラムエクセ = true;
-            }
-            else
-            {
-                if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0 )
-                    bドラムフルコン = true;
-                if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect == CDTXMania.DTX.n可視チップ数.Drums )
-                    bドラムエクセ = true;
-            }
-
 
             if( CDTXMania.ConfigIni.bDrums有効 == true )
             {
+                if( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
+                {
+                    if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor == 0 )
+                        bドラムエクセ = true;
+                }
+                else
+                {
+                    if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0 )
+                        bドラムフルコン = true;
+                    if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect == CDTXMania.DTX.n可視チップ数.Drums )
+                        bドラムエクセ = true;
+                }
+
+
+
                 if( bドラムエクセ )
                 {
                     this.tx黒幕.n透明度 = 200;

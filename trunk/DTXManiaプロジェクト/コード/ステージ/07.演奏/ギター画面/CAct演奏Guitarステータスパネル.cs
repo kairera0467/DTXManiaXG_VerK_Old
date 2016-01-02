@@ -119,10 +119,10 @@ namespace DTXMania
 
                 this.b4font = new Bitmap(1, 1);
 
-                this.strPlayerName[ 0 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 0 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[0];
-                this.strPlayerName[ 1 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 0 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[0];
-                this.strGroupName[ 0 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 0 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[0];
-                this.strGroupName[ 1 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 1 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[1];
+                this.strPlayerName[ 0 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 1 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[1];
+                this.strPlayerName[ 1 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 2 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[2];
+                this.strGroupName[ 0 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 1 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[1];
+                this.strGroupName[ 1 ] = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 2 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[2];
 
                 Image imgCustomSongNameTexture = Image.FromFile(CSkin.Path(@"Graphics\7_Dummy.png"));
                 if( File.Exists( CDTXMania.DTX.strフォルダ名 + "\\TitleTexture.png" ) )
@@ -227,13 +227,13 @@ namespace DTXMania
 
                 if( CDTXMania.ConfigIni.nNameColor[ 1 ] >= 11 )
                 {
-                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName[ 1 ], clNameColor[ 0 ], Color.Transparent, clNameColor[ 0 ], clNameColorLower[ 0 ] );
-                    bmpCardName2P = this.pfNameFont.DrawPrivateFont(this.strPlayerName[ 2 ], clNameColor[ 1 ], Color.Transparent, clNameColor[ 1 ], clNameColorLower[ 1 ] );
+                    bmpCardName = this.pfNameFont.DrawPrivateFont(this.strPlayerName[ 0 ], clNameColor[ 0 ], Color.Transparent, clNameColor[ 0 ], clNameColorLower[ 0 ] );
+                    bmpCardName2P = this.pfNameFont.DrawPrivateFont(this.strPlayerName[ 1 ], clNameColor[ 1 ], Color.Transparent, clNameColor[ 1 ], clNameColorLower[ 1 ] );
                 }
                 else
                 {
-                    bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName[ 1 ], clNameColor[ 0 ], Color.Transparent);
-                    bmpCardName2P = this.pfNameFont.DrawPrivateFont( this.strPlayerName[ 2 ], clNameColor[ 1 ], Color.Transparent);
+                    bmpCardName = this.pfNameFont.DrawPrivateFont( this.strPlayerName[ 0 ], clNameColor[ 0 ], Color.Transparent);
+                    bmpCardName2P = this.pfNameFont.DrawPrivateFont( this.strPlayerName[ 1 ], clNameColor[ 1 ], Color.Transparent);
                 }
                 //--------------------
                 #endregion
