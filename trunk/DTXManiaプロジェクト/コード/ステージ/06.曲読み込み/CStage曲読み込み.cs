@@ -213,7 +213,7 @@ namespace DTXMania
                 CDTX cdtx = new CDTX( strDTXファイルパス, true );
 
                 if ( !CDTXMania.DTXVmode.Enabled && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
-                    this.str曲タイトル =  CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
+                    this.str曲タイトル =  CDTXMania.stage選曲.r確定された曲.strタイトル;
                 else
                     this.str曲タイトル = cdtx.TITLE;
 
@@ -255,6 +255,7 @@ namespace DTXMania
 
                 for(int instIndex = 0; instIndex < inst.Length; ++instIndex)
                 {
+                    break; //2016.01.03 kairera0467 以下封印。
                     bool readAutoGhostCond = false;
                     readAutoGhostCond |= instIndex == 0 ? CDTXMania.ConfigIni.bドラムが全部オートプレイである : false;
                     readAutoGhostCond |= instIndex == 1 ? CDTXMania.ConfigIni.bギターが全部オートプレイである : false;
