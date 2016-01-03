@@ -506,7 +506,7 @@ namespace DTXMania
                                                     CDTXMania.Skin.sound曲決定.t再生する();
                                                 else
                                                     CDTXMania.Skin.sound決定音.t再生する();
-                                                this.t曲を選択する();
+                                                this.t曲をランダム選択する();
                                                 break;
                                             }
 									}
