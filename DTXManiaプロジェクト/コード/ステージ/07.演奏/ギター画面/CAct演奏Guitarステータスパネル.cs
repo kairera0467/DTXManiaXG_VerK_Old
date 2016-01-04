@@ -45,7 +45,8 @@ namespace DTXMania
                 this.nグラフNX = 267;
             }
 
-            if (CDTXMania.ConfigIni.bGraph有効)
+            //if (CDTXMania.ConfigIni.bGraph有効)
+            if(false)
             {
                 if (!CDTXMania.DTX.bチップがある.Bass)
                 {

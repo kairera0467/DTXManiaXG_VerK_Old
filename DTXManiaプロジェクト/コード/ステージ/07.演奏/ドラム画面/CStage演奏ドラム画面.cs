@@ -105,7 +105,7 @@ namespace DTXMania
                 {
                     if (CDTXMania.listTargetGhsotLag[(int)E楽器パート.DRUMS] != null)
                     {
-                        this.actGraph.dbグラフ値ゴースト_渡 = 0;
+                        //this.actGraph.dbグラフ値ゴースト_渡 = 0;
                     }
                 }
             }
@@ -517,6 +517,7 @@ namespace DTXMania
 								 this.nヒット数・Auto含まない.Drums.Great * 7 +
 								 this.actCombo.n現在のコンボ数.最高値.Drums * 3) / (20.0 * CDTXMania.DTX.n可視チップ数.Drums);
 			}
+            //2016.01.03 kairera0467 
 			return eJudgeResult;
 		}
 
@@ -3388,7 +3389,7 @@ namespace DTXMania
                                     this.nヒット数_TargetGhost.Drums.Good,
                                     this.nヒット数_TargetGhost.Drums.Poor,
                                     this.nヒット数_TargetGhost.Drums.Miss,
-                                    this.actCombo.n現在のコンボ数.最高値.Drums, //苦肉の策
+                                    this.n最大コンボ数_TargetGhost.Drums, //苦肉の策
                                     E楽器パート.DRUMS, new STAUTOPLAY()
                                     );
                                 break;
@@ -3396,7 +3397,7 @@ namespace DTXMania
                     }
                     if (val < 0) val = 0;
                     if (val > 100) val = 100;
-                    this.actGraph.dbグラフ値ゴースト_渡 = val;
+                    //this.actGraph.dbグラフ値ゴースト_渡 = val;
                 }
 				return;
 			}	// end of "if configIni.bDrums有効"

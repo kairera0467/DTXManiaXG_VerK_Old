@@ -261,6 +261,7 @@ namespace DTXMania
 			}
 			this.r現在の空うちギターChip = null;
 			this.r現在の空うちベースChip = null;
+            this.n最大コンボ数_TargetGhost = new STDGBVALUE<int>(); // #35411 2015.08.21 chnmr0 add
 			for ( int k = 0; k < 3; k++ )
 			{
 				//for ( int n = 0; n < 5; n++ )
@@ -800,6 +801,7 @@ namespace DTXMania
 		{
 			if ( pChip != null )
 			{
+                saveLag = true;
                 // #35411 2015.08.22 chnmr0 modified add check save lag flag for ghost
                 int lag = (int)(nTime + nInputAdjustTime - pChip.n発声時刻ms);
                 if (saveLag)
@@ -812,7 +814,7 @@ namespace DTXMania
                 }
                 // #35411 modify end
 
-				pChip.nLag = (int) ( nTime + nInputAdjustTime - pChip.n発声時刻ms );		// #23580 2011.1.3 yyagi: add "nInputAdjustTime" to add input timing adjust feature
+				//pChip.nLag = (int) ( nTime + nInputAdjustTime - pChip.n発声時刻ms );		// #23580 2011.1.3 yyagi: add "nInputAdjustTime" to add input timing adjust feature
 				int nDeltaTime = Math.Abs( pChip.nLag );
 				if ( nDeltaTime <= CDTXMania.nPerfect範囲ms )
 				{
@@ -1265,10 +1267,10 @@ namespace DTXMania
                         }
                         break;
                     case E楽器パート.GUITAR:
-                        nChannel = 10;
+                        nChannel = 13;
                         break;
                     case E楽器パート.BASS:
-                        nChannel = 11;
+                        nChannel = 14;
                         break;
                     case E楽器パート.UNKNOWN:
                         if( pChip.nチャンネル番号 == 0x4F )
@@ -2419,6 +2421,7 @@ namespace DTXMania
 
 				int nInputAdjustTime = ( bPChipIsAutoPlay || (pChip.e楽器パート == E楽器パート.UNKNOWN) )? 0 : this.nInputAdjustTimeMs[ (int) pChip.e楽器パート ];
 
+                int instIndex = (int)pChip.e楽器パート;
 				if ( ( ( pChip.e楽器パート != E楽器パート.UNKNOWN ) && !pChip.bHit ) &&
                     ((pChip.nバーからの距離dot.Drums < 0) && (this.e指定時刻からChipのJUDGEを返す( CSound管理.rc演奏用タイマ.n現在時刻, pChip, nInputAdjustTime) == E判定.Miss)))
 				{
@@ -2428,7 +2431,6 @@ namespace DTXMania
 
                 //fork
                 // #35411 chnmr0 add (ターゲットゴースト)
-                int instIndex = (int)pChip.e楽器パート;
                 if ( CDTXMania.ConfigIni.eTargetGhost[instIndex] != ETargetGhostData.NONE &&
                      CDTXMania.listTargetGhsotLag[instIndex] != null &&
                      pChip.e楽器パート != E楽器パート.UNKNOWN &&

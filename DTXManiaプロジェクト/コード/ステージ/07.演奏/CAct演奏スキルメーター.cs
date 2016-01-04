@@ -145,7 +145,14 @@ namespace DTXMania
 
                 if( this.pfNameFont != null )
                 {
-                    this.txPlayerName = this.t指定された文字テクスチャを生成する( "DJ AUTO" );
+                    if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT || CDTXMania.ConfigIni.eTargetGhost.Guitar == ETargetGhostData.PERFECT || CDTXMania.ConfigIni.eTargetGhost.Bass == ETargetGhostData.PERFECT )
+                    {
+                        this.txPlayerName = this.t指定された文字テクスチャを生成する( "DJ AUTO" );
+                    }
+                    else if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY || CDTXMania.ConfigIni.eTargetGhost.Guitar == ETargetGhostData.LAST_PLAY || CDTXMania.ConfigIni.eTargetGhost.Bass == ETargetGhostData.LAST_PLAY )
+                    {
+                        this.txPlayerName = this.t指定された文字テクスチャを生成する( "LAST PLAY" );
+                    }
                 }
                 base.OnManagedリソースの作成();
             }
@@ -323,40 +330,43 @@ namespace DTXMania
                 //System.IO.StreamWriter sw = new System.IO.StreamWriter(@"debug.txt", true, System.Text.Encoding.GetEncoding("shift_jis"));
                 //sw.WriteLine("TotalJudgeは{0}で、Ghostは{1}です。", db現在の判定数合計, this.dbグラフ値目標_Ghost);
                 //sw.Close();
-                this.dbグラフ値目標_表示 = this.dbグラフ値目標;
-                rectangle = new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値目標_表示 / 100.0));
+                this.dbグラフ値ゴースト_表示 = this.dbグラフ値ゴースト;
+                rectangle = new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0));
                 if (this.txグラフゲージ != null)
                 {
                     //this.txグラフゲージ.n透明度 = 48;
-                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X[j], 650 - (int)(556.0 * this.dbグラフ値目標_表示 / 100.0), new Rectangle( 2, 0, 201, (int)( 556.0 * this.dbグラフ値目標_表示 / 100.0 ) ) );
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X[j], 650 - (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 2, 0, 201, (int)( 556.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
                 }
 
 
                 this.t小文字表示(204 + this.n本体X[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
                 if( CDTXMania.ConfigIni.nInfoType == 0 )
                 {
-                    //if( CDTXMania.ConfigIni.eAutoGhost.Drums == EAutoGhostData.PERFECT || CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
-                    //{
-                    //    this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X[ j ], 200, new Rectangle( 288, 2, 162, 85 ) );
-                    //    this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
-                    //    if( this.dbグラフ値現在 > this.dbグラフ値目標 )
-                    //    {
-                    //        this.tx比較.n透明度 = 128;
-                    //    }
-                    //    if( this.txPlayerName != null )
-                    //    {
-                    //        this.txPlayerName.t2D描画( CDTXMania.app.Device, 96 + this.n本体X[ j ], 214 );
-                    //    }
-                    //}
-                    //else
-                    //{
+                    if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT || CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
+                    {
+                        this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X[ j ], 200, new Rectangle( 288, 2, 162, 85 ) );
+                        if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
+                            this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", this.dbグラフ値ゴースト ) );
+                        else
+                            this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
+                        if( this.dbグラフ値現在 > this.dbグラフ値目標 )
+                        {
+                            this.tx比較.n透明度 = 128;
+                        }
+                        if( this.txPlayerName != null )
+                        {
+                            this.txPlayerName.t2D描画( CDTXMania.app.Device, 96 + this.n本体X[ j ], 214 );
+                        }
+                    }
+                    else
+                    {
                         this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
                         this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
                         if (this.dbグラフ値現在 > this.dbグラフ値目標)
                         {
                             this.tx比較.n透明度 = 128;
                         }
-                    //}
+                    }
                 }
                 else if( CDTXMania.ConfigIni.nInfoType == 1 )
                 {
@@ -415,6 +425,7 @@ namespace DTXMania
         public double db現在の判定数合計;
         private double dbグラフ値目標;
         private double dbグラフ値ゴースト;
+        private double dbグラフ値ゴースト_表示;
         public double dbグラフ値比較;
         private double dbグラフ値目標_表示;
         private double dbグラフ値現在;

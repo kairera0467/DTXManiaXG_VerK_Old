@@ -255,7 +255,7 @@ namespace DTXMania
 
                 for(int instIndex = 0; instIndex < inst.Length; ++instIndex)
                 {
-                    break; //2016.01.03 kairera0467 以下封印。
+                    //break; //2016.01.03 kairera0467 以下封印。
                     bool readAutoGhostCond = false;
                     readAutoGhostCond |= instIndex == 0 ? CDTXMania.ConfigIni.bドラムが全部オートプレイである : false;
                     readAutoGhostCond |= instIndex == 1 ? CDTXMania.ConfigIni.bギターが全部オートプレイである : false;
@@ -777,7 +777,7 @@ namespace DTXMania
                         {
                             if (chip.e楽器パート != E楽器パート.UNKNOWN)
                             {
-                                //chip.n楽器パートでの出現順 = curCount[(int)chip.e楽器パート]++;
+                                chip.n楽器パートでの出現順 = curCount[(int)chip.e楽器パート]++;
                             }
                         }
 
