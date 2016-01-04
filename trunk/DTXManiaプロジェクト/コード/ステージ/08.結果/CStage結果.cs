@@ -287,7 +287,7 @@ namespace DTXMania
         // #35411 chnmr0 add
         private void SaveGhost(int sectionIndex)
         {
-            return; //2015.12.31 kairera0467 以下封印
+            //return; //2015.12.31 kairera0467 以下封印
 
             STDGBVALUE<bool> saveCond = new STDGBVALUE<bool>();
             saveCond.Drums = true;
@@ -373,7 +373,8 @@ namespace DTXMania
                 }
             }
 
-            if( saveCond[(int)inst] )
+            //if( saveCond[(int)inst] )
+            if(false)
             {
                 using (FileStream fs = new FileStream(directory + "\\" + filename, FileMode.Create, FileAccess.Write))
                 {
@@ -398,7 +399,7 @@ namespace DTXMania
 								}
 								byte lower = (byte)(lag + 128);
 								int upper = chip.nCurrentComboForGhost == 0 ? 1 : 0;
-								//bw.Write((short)( (upper<<8) | lower));
+								bw.Write((short)( (upper<<8) | lower));
                             }
                         }
                     }

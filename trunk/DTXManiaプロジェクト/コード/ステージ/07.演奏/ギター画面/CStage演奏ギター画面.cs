@@ -186,7 +186,7 @@ namespace DTXMania
 
 				this.t進行描画・DANGER();
 
-                this.t進行描画・グラフ();
+                //this.t進行描画・グラフ();
 
 				this.t進行描画・WailingBonus();
 				this.t進行描画・譜面スクロール速度();

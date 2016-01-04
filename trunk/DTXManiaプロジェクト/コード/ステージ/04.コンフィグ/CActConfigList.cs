@@ -453,8 +453,10 @@ namespace DTXMania
             // #24074 2011.01.23 add ikanick
             this.iSystemGraph = new CItemToggle( "SkillMater", CDTXMania.ConfigIni.bGraph有効,
                 "最高スキルと比較できるグラフを表示します。\n" +
+                "(※現状ドラムパートのみ)\n" +
                 "オートプレイだと表示されません。",
-                "To draw Graph  or not.");
+                "To draw Graph  or not.\n"+
+                "(drums only)");
             this.list項目リスト.Add( this.iSystemGraph );
 
 			this.iSystemSkinSubfolder = new CItemList( "Skin (General)", CItemBase.Eパネル種別.通常, nSkinIndex,
