@@ -194,6 +194,14 @@ namespace DTXMania
                 this.t進行描画・小節線(E楽器パート.GUITAR);
                 flag = this.t進行描画・チップ(E楽器パート.GUITAR);
                 this.t進行描画・RGBボタン();
+                if( CDTXMania.ConfigIni.eBPMbar != Eタイプ.D)
+                {
+                    CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
+                }
+                if( CDTXMania.ConfigIni.bLivePoint )
+                {
+                    CDTXMania.stage演奏ギター画面.actLivePoint.On進行描画();
+                }
                 this.t進行描画・ギターベース判定ライン();
 				this.t進行描画・判定文字列();
                 this.t進行描画・ゲージ();

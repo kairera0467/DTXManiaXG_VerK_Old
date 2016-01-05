@@ -15,11 +15,11 @@ namespace DTXMania
             {
                 int num1 = (int)base.ctBPMバー.db現在の値;
 
-                float fギター左X = 70;
-                float fギター右X = 322;
+                float fギター左X = 67;
+                float fギター右X = 331;
                 float fベース左X = 940;
-                float fベース右X = 1192;
-                float fバーY = 54;
+                float fベース右X = 1201;
+                float fバーY = 57;
 
                 if( base.txBPMバー != null )
                 {
@@ -28,14 +28,14 @@ namespace DTXMania
                     //ギター
                     if( CDTXMania.DTX.bチップがある.Guitar )
                     {
-                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 71, 42, new Rectangle( 0, 0, 14, 627 ) );
-                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 325, 42, new Rectangle( 14, 0, 14, 627 ) );
+                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 71, 45, new Rectangle( 0, 0, 14, 627 ) );
+                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 323, 45, new Rectangle( 14, 0, 14, 627 ) );
                     }
                     //ベース
                     if( CDTXMania.DTX.bチップがある.Bass )
                     {
-                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 945, 42, new Rectangle( 0, 0, 14, 627 ) );
-                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 1195, 42, new Rectangle( 14, 0, 14, 627 ) );
+                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 945, 45, new Rectangle( 0, 0, 14, 627 ) );
+                        base.txBPMバー.t2D描画( CDTXMania.app.Device, 1192, 45, new Rectangle( 14, 0, 14, 627 ) );
                     }
                 }
 
