@@ -302,6 +302,10 @@ namespace DTXMania
                 #endregion
                 this.t進行描画・判定ライン();
                 this.t進行描画・ドラムパッド();
+                if( CDTXMania.ConfigIni.bLivePoint )
+                {
+                    CDTXMania.stage演奏ドラム画面.actLivePoint.On進行描画();
+                }
                 this.t進行描画・スコア();
                 this.t進行描画・DANGER();
                 this.t進行描画・グラフ();   // #24074 2011.01.23 add ikanick

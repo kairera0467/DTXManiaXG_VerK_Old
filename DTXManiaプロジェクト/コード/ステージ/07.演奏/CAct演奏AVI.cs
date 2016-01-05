@@ -842,7 +842,7 @@ namespace DTXMania
 
                     if( CDTXMania.ConfigIni.eBPMbar != Eタイプ.D)
                     {
-                        CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
+                        //CDTXMania.stage演奏ギター画面.actBPMBar.On進行描画();
                     }
                 }
                 long lPos = 0;
@@ -853,17 +853,17 @@ namespace DTXMania
                     //CDTXMania.act文字コンソール.tPrint(0, 380, C文字コンソール.Eフォント種別.白, string.Format("Time:         {0:######0}", this.lStopPosition));
                 //}
 
-                if (CDTXMania.ConfigIni.bLivePoint)
-                {
-                    if ( CDTXMania.ConfigIni.bDrums有効 )
-                    {
-                        CDTXMania.stage演奏ドラム画面.actLivePoint.On進行描画();
-                    }
-                    else if (CDTXMania.ConfigIni.bGuitar有効)
-                    {
-                        CDTXMania.stage演奏ギター画面.actLivePoint.On進行描画();
-                    }
-                }
+                //if (CDTXMania.ConfigIni.bLivePoint)
+                //{
+                //    if ( CDTXMania.ConfigIni.bDrums有効 )
+                //    {
+                //        CDTXMania.stage演奏ドラム画面.actLivePoint.On進行描画();
+                //    }
+                //    else if (CDTXMania.ConfigIni.bGuitar有効)
+                //    {
+                //        CDTXMania.stage演奏ギター画面.actLivePoint.On進行描画();
+                //    }
+                //}
                 //CDTXMania.act文字コンソール.tPrint(200, 0, C文字コンソール.Eフォント種別.白, string.Format("{0:####0}", this.actFill.lDshowPosition));
                 //コンボ、ネームプレート
                 //グラフ無効&ネームプレートA,C
