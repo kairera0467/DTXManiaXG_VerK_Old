@@ -529,8 +529,9 @@ namespace DTXMania
             {
                 if( this.txベース難易度パネル != null )
                     this.txベース難易度パネル.t2D描画( CDTXMania.app.Device, 254, 183 );
-                if( this.tx難易度パネル != null )
-                    this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                //if( this.tx難易度パネル != null )
+                    //this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 268, 194, new Rectangle( 130 , ( this.nIndex * 72 ), 130 , 72 ) );
+                this.t難易度パネルを描画する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ], 268, 194 );
             }
             else if( CDTXMania.ConfigIni.bGuitar有効 )
             {
@@ -1216,6 +1217,50 @@ namespace DTXMania
                     x += 24;
                 }
             }
+        }
+
+        private void t難易度パネルを描画する( string strラベル名, int nX, int nY )
+        {
+            string strRawScriptFile;
+
+            Rectangle rect = new Rectangle( 0, 0, 130, 72 );
+
+            //ファイルの存在チェック
+            if( File.Exists( CSkin.Path( @"Script\difficult.dtxs" ) ) )
+            {
+                //スクリプトを開く
+                StreamReader reader = new StreamReader( CSkin.Path( @"Script\difficult.dtxs" ), Encoding.GetEncoding( "Shift_JIS" ) );
+                strRawScriptFile = reader.ReadToEnd();
+
+                strRawScriptFile = strRawScriptFile.Replace( Environment.NewLine, "\n" );
+                string[] delimiter = { "\n" };
+                string[] strSingleLine = strRawScriptFile.Split( delimiter, StringSplitOptions.RemoveEmptyEntries );
+
+                for( int i = 0; i < strSingleLine.Length; i++ )
+                {
+                    if( strSingleLine[ i ].StartsWith( "//" ) )
+                        continue; //コメント行の場合は無視
+
+                    //まずSplit
+                    string[] arScriptLine = strSingleLine[ i ].Split( ',' );
+                    
+                    if( arScriptLine.Length != 4 )
+                        continue; //引数が4つじゃなければ無視。
+
+                    if( arScriptLine[ 0 ] != "6" )
+                        continue; //使用するシーンが違うなら無視。
+
+                    if( arScriptLine[ 1 ] != strラベル名 )
+                        continue; //ラベル名が違うなら無視。
+
+                    rect.X = Convert.ToInt32( arScriptLine[ 2 ] );
+                    rect.Y = Convert.ToInt32( arScriptLine[ 3 ] );
+                    break;
+                }
+            }
+
+            if( this.tx難易度パネル != null )
+                this.tx難易度パネル.t2D描画( CDTXMania.app.Device, nX, nY, rect );
         }
         #endregion
     }
