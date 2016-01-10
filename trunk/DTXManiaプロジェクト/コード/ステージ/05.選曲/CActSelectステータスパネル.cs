@@ -608,29 +608,22 @@ namespace DTXMania
 
                     #region [ 選択曲の Lv の描画 ]
                     //-----------------
-                    if ((cスコア != null) && (this.tx難易度数字XG != null))
+                    if( ( cスコア != null ) && ( this.tx難易度数字XG != null ) )
                     {
-                        this.tx難易度数字XG.n透明度 = (int)(CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[5].n現在の値 * 2.6f);
-                        for (int j = 0; j < 3; j++)
+                        this.tx難易度数字XG.n透明度 = (int)( CDTXMania.stage選曲.act曲リスト.ct登場アニメ用[ 5 ].n現在の値 * 2.6f );
+                        for( int j = 0; j < 3; j++ )
                         {
-                            if ( this.n本体X[j] != 0 )
+                            if( this.n本体X[j] != 0 )
                             {
-                                for (int i = 0; i < 5; i++)
+                                for( int i = 0; i < 5; i++ )
                                 {
                                     int[] n難易度整数 = new int[5];
                                     int[] n難易度小数 = new int[5];
-                                    if (n選択中の曲のレベル難易度毎[i] > 100)
-                                    {
-                                        n難易度整数[i] = (int)this.n現在選択中の曲のレベル難易度毎DGB[i][j] / 100;
-                                        n難易度小数[i] = (n選択中の曲のレベル難易度毎[i] - (n難易度整数[i] * 100));
-                                    }
-                                    else
-                                    {
-                                        n難易度整数[i] = (int)this.n現在選択中の曲のレベル難易度毎DGB[i][j] / 10;
-                                        n難易度小数[i] = (this.n現在選択中の曲のレベル難易度毎DGB[i][j] - (n難易度整数[i] * 10)) * 10;
-                                    }
+                                    n難易度整数[ i ] = (int)this.n現在選択中の曲のレベル難易度毎DGB[ i ][ j ] / 10;
+                                    n難易度小数[ i ] = ( this.n現在選択中の曲のレベル難易度毎DGB[ i ][ j ] - (n難易度整数[ i ] * 10 ) ) * 10;
+                                    n難易度小数[ i ] += this.n現在選択中の曲のレベル小数点難易度毎DGB[ i ][ j ];
 
-                                    if (this.str難易度ラベル[i] != null && this.b現在選択中の曲に譜面がある[i][j])
+                                    if( this.str難易度ラベル[ i ] != null && this.b現在選択中の曲に譜面がある[ i ][ j ])
                                     {
                                         this.t大文字表示(73 + this.n本体X[j] + (i * 143), 19 + this.n本体Y[j] - y差分[i], string.Format("{0:0}", n難易度整数[i]));
                                         this.t小文字表示(102 + this.n本体X[j] + (i * 143), 37 + this.n本体Y[j] - y差分[i], string.Format("{0,2:00}", n難易度小数[i]));
@@ -643,20 +636,12 @@ namespace DTXMania
                                         this.tx難易度数字XG.t2D描画(CDTXMania.app.Device, 94 + this.n本体X[j] + (i * 143), 51 + this.n本体Y[j] - y差分[i], new Rectangle(145, 54, 7, 8));
                                     }
                                 }
-                                if (flag == 5)
+                                if( flag == 5 )
                                 {
                                     int n難易度整数 = 0;
                                     int n難易度小数 = 0;
-                                    if (this.n現在選択中の曲のレベル[j] >= 100)
-                                    {
-                                        n難易度整数 = (int)this.n現在選択中の曲のレベル[j] / 100;
-                                        n難易度小数 = (this.n現在選択中の曲のレベル[j] - (n難易度整数 * 100));
-                                    }
-                                    else
-                                    {
-                                        n難易度整数 = (int)this.n現在選択中の曲のレベル[j] / 10;
-                                        n難易度小数 = (this.n現在選択中の曲のレベル[j] - (n難易度整数 * 10)) * 10;
-                                    }
+                                    n難易度整数 = (int)this.n現在選択中の曲のレベル[j] / 10;
+                                    n難易度小数 = (this.n現在選択中の曲のレベル[j] - (n難易度整数 * 10)) * 10;
 
                                     if (this.b現在選択中の曲の譜面[j] && CDTXMania.stage選曲.r現在選択中の曲.eノード種別 == C曲リストノード.Eノード種別.SCORE)
                                     {
