@@ -1818,12 +1818,12 @@ namespace DTXMania
 
             //fork
             // #35411 2015.8.18 chnmr0 add
-            sw.WriteLine("; AUTOゴースト種別 (0:PERFECT, 1:LAST_PLAY, 2:HI_SKILL, 3:HI_SCORE, 4:ONLINE)" );
+            sw.WriteLine("; AUTOゴースト種別 (0:PERFECT, 1:LAST_PLAY, 2:HI_SKILL, 3:HI_SCORE)" );
             sw.WriteLine("DrumAutoGhost={0}", (int)eAutoGhost.Drums);
             sw.WriteLine("GuitarAutoGhost={0}", (int)eAutoGhost.Guitar);
             sw.WriteLine("BassAutoGhost={0}", (int)eAutoGhost.Bass);
             sw.WriteLine();
-            sw.WriteLine("; ターゲットゴースト種別 (0:NONE, 1:PERFECT, 2:LAST_PLAY, 3:HI_SKILL, 4:HI_SCORE, 5:ONLINE)");
+            sw.WriteLine("; ターゲットゴースト種別 (0:NONE, 1:PERFECT, 2:LAST_PLAY, 3:HI_SKILL, 4:HI_SCORE)");
             sw.WriteLine("DrumTargetGhost={0}", (int)eTargetGhost.Drums);
             sw.WriteLine("GuitarTargetGhost={0}", (int)eTargetGhost.Guitar);
             sw.WriteLine("BassTargetGhost={0}", (int)eTargetGhost.Bass);
@@ -3186,27 +3186,27 @@ namespace DTXMania
                                             //fork
                                             else if (str3.Equals("DrumAutoGhost")) // #35411 2015.08.18 chnmr0 add
                                             {
-                                                //this.eAutoGhost.Drums = (EAutoGhostData)C変換.n値を文字列から取得して返す(str4, 0);
+                                                this.eAutoGhost.Drums = (EAutoGhostData)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, 0);
                                             }
                                             else if (str3.Equals("GuitarAutoGhost")) // #35411 2015.08.18 chnmr0 add
                                             {
-                                                //this.eAutoGhost.Guitar = (EAutoGhostData)C変換.n値を文字列から取得して返す(str4, 0);
+                                                this.eAutoGhost.Guitar = (EAutoGhostData)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, 0);
                                             }
                                             else if (str3.Equals("BassAutoGhost")) // #35411 2015.08.18 chnmr0 add
                                             {
-                                                //this.eAutoGhost.Bass = (EAutoGhostData)C変換.n値を文字列から取得して返す(str4, 0);
+                                                this.eAutoGhost.Bass = (EAutoGhostData)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, 0);
                                             }
                                             else if (str3.Equals("DrumTargetGhost")) // #35411 2015.08.18 chnmr0 add
                                             {
-                                                //this.eTargetGhost.Drums = (ETargetGhostData)C変換.n値を文字列から取得して返す(str4, 0);
+                                                this.eTargetGhost.Drums = (ETargetGhostData)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, 0);
                                             }
                                             else if (str3.Equals("GuitarTargetGhost")) // #35411 2015.08.18 chnmr0 add
                                             {
-                                                //this.eTargetGhost.Guitar = (ETargetGhostData)C変換.n値を文字列から取得して返す(str4, 0);
+                                                this.eTargetGhost.Guitar = (ETargetGhostData)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, 0);
                                             }
                                             else if (str3.Equals("BassTargetGhost")) // #35411 2015.08.18 chnmr0 add
                                             {
-                                                //this.eTargetGhost.Bass = (ETargetGhostData)C変換.n値を文字列から取得して返す(str4, 0);
+                                                this.eTargetGhost.Bass = (ETargetGhostData)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 4, 0);
                                             }
 											continue;
 										}

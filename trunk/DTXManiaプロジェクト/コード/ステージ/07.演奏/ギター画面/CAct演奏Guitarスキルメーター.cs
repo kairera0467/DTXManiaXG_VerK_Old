@@ -9,7 +9,7 @@ using FDK;
 
 namespace DTXMania
 {
-    internal class CAct演奏スキルメーター : CActivity
+    internal class CAct演奏Guitarスキルメーター : CActivity
     {
 
 
@@ -26,7 +26,7 @@ namespace DTXMania
 
         // プロパティ
 
-        public double dbグラフ値現在_渡
+        public double dbグラフ値現在G_渡
         {
             get
             {
@@ -37,7 +37,7 @@ namespace DTXMania
                 this.dbグラフ値現在 = value;
             }
         }
-        public double dbグラフ値ゴースト_渡 //2015.12.31 kairera0467 XG2を見る限り、ゴースト数値はゲージ画像と比較数値にしか使用されていないので、ゴースト数値と目標値は別に扱うことにした。
+        public double dbグラフ値ゴーストG_渡 //2015.12.31 kairera0467 XG2を見る限り、ゴースト数値はゲージ画像と比較数値にしか使用されていないので、ゴースト数値と目標値は別に扱うことにした。
         {
             get
             {
@@ -48,7 +48,41 @@ namespace DTXMania
                 this.dbグラフ値ゴースト = value;
             }
         }
-        public double dbグラフ値目標_渡
+        public double dbグラフ値目標G_渡
+        {
+            get
+            {
+                return this.dbグラフ値目標;
+            }
+            set
+            {
+                this.dbグラフ値目標 = value;
+            }
+        }
+
+        public double dbグラフ値現在B_渡
+        {
+            get
+            {
+                return this.dbグラフ値現在;
+            }
+            set
+            {
+                this.dbグラフ値現在 = value;
+            }
+        }
+        public double dbグラフ値ゴーストB_渡 //2015.12.31 kairera0467 XG2を見る限り、ゴースト数値はゲージ画像と比較数値にしか使用されていないので、ゴースト数値と目標値は別に扱うことにした。
+        {
+            get
+            {
+                return this.dbグラフ値ゴースト;
+            }
+            set
+            {
+                this.dbグラフ値ゴースト = value;
+            }
+        }
+        public double dbグラフ値目標B_渡
         {
             get
             {
@@ -62,7 +96,7 @@ namespace DTXMania
 
         // コンストラクタ
 
-        public CAct演奏スキルメーター()
+        public CAct演奏Guitarスキルメーター()
         {
             ST文字位置[] st文字位置Array = new ST文字位置[11];
             ST文字位置 st文字位置 = new ST文字位置();
@@ -218,7 +252,7 @@ namespace DTXMania
                     //int n逆算Great = drums.nGreat数・Auto含まない / this.n現在演奏されたノーツ数;
                     //this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数[j], drums.nPerfect数, drums.nGreat数, drums.nGood数, drums.nPoor数, drums.nMiss数, E楽器パート[j]) * rate;
                     //this.dbグラフ値比較 = ((this.dbグラフ値目標_渡) / (double)CDTXMania.DTX.n可視チップ数[j]) * rate;
-                    this.dbグラフ値比較 = this.dbグラフ値目標_渡;
+                    this.dbグラフ値比較 = this.dbグラフ値目標G_渡;
                 }
                 else if (CDTXMania.ConfigIni.nSkillMode == 1)
                 {

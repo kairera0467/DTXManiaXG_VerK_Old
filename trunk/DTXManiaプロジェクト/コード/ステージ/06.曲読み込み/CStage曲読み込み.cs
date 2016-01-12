@@ -263,6 +263,8 @@ namespace DTXMania
 
                     CDTXMania.listTargetGhsotLag[instIndex] = null;
                     CDTXMania.listAutoGhostLag[instIndex] = null;
+                    CDTXMania.listTargetGhostScoreData[instIndex] = null;
+                    this.nCurrentInst = instIndex;
 
                     if ( readAutoGhostCond )
                     {
@@ -284,6 +286,7 @@ namespace DTXMania
                         if( File.Exists( filename ) )
                         {
                             CDTXMania.listTargetGhsotLag[instIndex] = new List<int>();
+                            CDTXMania.listTargetGhostScoreData[ instIndex ] = new CScoreIni.C演奏記録();
                             ReadGhost(filename, CDTXMania.listTargetGhsotLag[instIndex]);
                         }
                         else if( CDTXMania.ConfigIni.eTargetGhost[instIndex] == ETargetGhostData.PERFECT )
@@ -1073,6 +1076,7 @@ namespace DTXMania
 		private Font ftタイトル表示用フォント;
         private Font ftアーティスト名表示フォント;
         private bool bSTAGEFILEが存在する;
+        private int nCurrentInst;
 		private long nBGMの総再生時間ms;
 		private long nBGM再生開始時刻;
 		private CSound sd読み込み音;
@@ -1128,7 +1132,7 @@ namespace DTXMania
 
         private void ReadGhost( string filename, List<int> list ) // #35411 2015.08.19 chnmr0 add
         {
-            return; //2015.12.31 kairera0467 以下封印
+            //return; //2015.12.31 kairera0467 以下封印
 
             if( File.Exists( filename ) )
             {
@@ -1149,6 +1153,68 @@ namespace DTXMania
                         {
                             Trace.TraceInformation("ゴーストデータは正しく読み込まれませんでした。");
                             list.Clear();
+                        }
+                    }
+                }
+            }
+
+            if( File.Exists( filename + ".score" ) )
+            {
+                using( FileStream fs = new FileStream( filename + ".score", FileMode.Open, FileAccess.Read ) )
+                {
+                    using( StreamReader sr = new StreamReader( fs ) )
+                    {
+                        try
+                        {
+                            string strScoreDataFile = sr.ReadToEnd();
+
+                            strScoreDataFile = strScoreDataFile.Replace( Environment.NewLine, "\n" );
+                            string[] delimiter = { "\n" };
+                            string[] strSingleLine = strScoreDataFile.Split( delimiter, StringSplitOptions.RemoveEmptyEntries );
+
+                            for( int i = 0; i < strSingleLine.Length; i++ )
+                            {
+                                string[] strA = strSingleLine[ i ].Split( '=' );
+                                if (strA.Length != 2)
+                                    continue;
+
+                                switch( strA[ 0 ] )
+                                {
+                                    case "Score":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nスコア = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "PlaySkill":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].db演奏型スキル値 = Convert.ToDouble( strA[ 1 ] );
+                                        continue;
+                                    case "Skill":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].dbゲーム型スキル値 = Convert.ToDouble( strA[ 1 ] );
+                                        continue;
+                                    case "Perfect":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nPerfect数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Great":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nGreat数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Good":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nGood数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Poor":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nPoor数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Miss":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nMiss数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "MaxCombo":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].n最大コンボ数 = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    default:
+                                        continue;
+                                }
+                            }
+                        }
+                        catch( EndOfStreamException )
+                        {
+                            Trace.TraceInformation("ゴーストデータの記録が正しく読み込まれませんでした。");
                         }
                     }
                 }
@@ -1243,18 +1309,34 @@ namespace DTXMania
 
                     //まずSplit
                     string[] arScriptLine = strSingleLine[ i ].Split( ',' );
-                    
-                    if( arScriptLine.Length != 4 )
-                        continue; //引数が4つじゃなければ無視。
+
+                    if( ( arScriptLine.Length >= 4 && arScriptLine.Length <= 5 ) == false )
+                        continue; //引数が4つか5つじゃなければ無視。
 
                     if( arScriptLine[ 0 ] != "6" )
                         continue; //使用するシーンが違うなら無視。
 
-                    if( arScriptLine[ 1 ] != strラベル名 )
-                        continue; //ラベル名が違うなら無視。
-
+                    if( arScriptLine.Length == 4 )
+                    {
+                        if( String.Compare( arScriptLine[ 1 ], strラベル名, true ) != 0 )
+                            continue; //ラベル名が違うなら無視。大文字小文字区別しない
+                    }
+                    else if( arScriptLine.Length == 5 )
+                    {
+                        if( arScriptLine[ 4 ] == "1" )
+                        {
+                            if( arScriptLine[ 1 ] != strラベル名 )
+                                continue; //ラベル名が違うなら無視。
+                        }
+                        else
+                        {
+                            if( String.Compare( arScriptLine[ 1 ], strラベル名, true ) != 0 )
+                                continue; //ラベル名が違うなら無視。大文字小文字区別しない
+                        }
+                    }
                     rect.X = Convert.ToInt32( arScriptLine[ 2 ] );
                     rect.Y = Convert.ToInt32( arScriptLine[ 3 ] );
+
                     break;
                 }
             }

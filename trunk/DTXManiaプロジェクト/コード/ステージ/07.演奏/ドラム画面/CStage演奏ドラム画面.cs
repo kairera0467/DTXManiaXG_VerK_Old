@@ -29,7 +29,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actDANGER = new CAct演奏DrumsDanger() );
 			base.list子Activities.Add( this.actChipFireD = new CAct演奏DrumsチップファイアD() );
             base.list子Activities.Add( this.actGauge = new CAct演奏Drumsゲージ() );
-            base.list子Activities.Add( this.actGraph = new CAct演奏スキルメーター() ); // #24074 2011.01.23 add ikanick
+            base.list子Activities.Add( this.actGraph = new CAct演奏Drumsスキルメーター() ); // #24074 2011.01.23 add ikanick
 			base.list子Activities.Add( this.actJudgeString = new CAct演奏Drums判定文字列() );
 			base.list子Activities.Add( this.actLaneFlushD = new CAct演奏DrumsレーンフラッシュD() );
 			base.list子Activities.Add( this.actScore = new CAct演奏Drumsスコア() );
@@ -101,11 +101,16 @@ namespace DTXMania
                 //fork
                 // #35411 2015.08.21 chnmr0 add
                 // ゴースト利用可のなとき、0で初期化
-                if (CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE)
+                if( CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE )
                 {
-                    if (CDTXMania.listTargetGhsotLag[(int)E楽器パート.DRUMS] != null)
+                    if( CDTXMania.listTargetGhsotLag[ (int)E楽器パート.DRUMS ] != null )
                     {
+                        this.actGraph.dbグラフ値目標_渡 = 0.0;
                         //this.actGraph.dbグラフ値ゴースト_渡 = 0;
+                    }
+                    if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
+                    {
+                        this.actGraph.dbグラフ値目標_渡 = 100.0;
                     }
                 }
             }
@@ -422,7 +427,7 @@ namespace DTXMania
         public int nミス数;
         public int nパフェ数;
 		private CAct演奏DrumsチップファイアD actChipFireD;
-        public CAct演奏スキルメーター actGraph;   // #24074 2011.01.23 add ikanick
+        public CAct演奏Drumsスキルメーター actGraph;   // #24074 2011.01.23 add ikanick
 		public CAct演奏Drumsパッド actPad;
         public CAct演奏Drumsドラムセット actDrumSet;
 		public bool bフィルイン中;
@@ -3371,6 +3376,34 @@ namespace DTXMania
                                  this.n最大コンボ数_TargetGhost.Drums * 3) / (20.0 * CDTXMania.DTX.n可視チップ数.Drums);
                         }
                     }
+                    else if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
+                    {
+                        switch( CDTXMania.ConfigIni.nSkillMode )
+                        {
+                            case 0:
+                                val = CScoreIni.t旧演奏型スキルを計算して返す(
+                                    CDTXMania.DTX.n可視チップ数.Drums,
+                                    this.nヒット数_TargetGhost.Drums.Perfect,
+                                    this.nヒット数_TargetGhost.Drums.Great,
+                                    this.nヒット数_TargetGhost.Drums.Good,
+                                    this.nヒット数_TargetGhost.Drums.Poor,
+                                    this.nヒット数_TargetGhost.Drums.Miss,
+                                    E楽器パート.DRUMS, new STAUTOPLAY());
+                                break;
+                            case 1:
+                                val = CScoreIni.t演奏型スキルを計算して返す(
+                                    CDTXMania.DTX.n可視チップ数.Drums,
+                                    this.nヒット数_TargetGhost.Drums.Perfect,
+                                    this.nヒット数_TargetGhost.Drums.Great,
+                                    this.nヒット数_TargetGhost.Drums.Good,
+                                    this.nヒット数_TargetGhost.Drums.Poor,
+                                    this.nヒット数_TargetGhost.Drums.Miss,
+                                    this.nヒット数_TargetGhost.Drums.Perfect, //苦肉の策
+                                    E楽器パート.DRUMS, new STAUTOPLAY()
+                                    );
+                                break;
+                        }
+                    }
                     else
                     {
                         switch( CDTXMania.ConfigIni.nSkillMode )
@@ -3401,7 +3434,7 @@ namespace DTXMania
                     }
                     if (val < 0) val = 0;
                     if (val > 100) val = 100;
-                    //this.actGraph.dbグラフ値ゴースト_渡 = val;
+                    this.actGraph.dbグラフ値ゴースト_渡 = val;
                 }
 				return;
 			}	// end of "if configIni.bDrums有効"
