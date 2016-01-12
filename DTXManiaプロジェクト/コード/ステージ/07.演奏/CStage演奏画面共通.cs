@@ -728,7 +728,7 @@ namespace DTXMania
         //fork
         protected STDGBVALUE<CHITCOUNTOFRANK> nヒット数_TargetGhost; // #35411 2015.08.21 chnmr0 add
         protected STDGBVALUE<int> nコンボ数_TargetGhost;
-        protected STDGBVALUE<int> n最大コンボ数_TargetGhost;
+        public STDGBVALUE<int> n最大コンボ数_TargetGhost;
 
 		protected CTexture tx背景;
 		protected STDGBVALUE<int> nInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
@@ -2467,6 +2467,8 @@ namespace DTXMania
                             }
                             else
                             {
+                                if( this.n最大コンボ数_TargetGhost[instIndex] <= 1 || this.n最大コンボ数_TargetGhost[instIndex] <= this.nコンボ数_TargetGhost[instIndex] )
+                                    this.n最大コンボ数_TargetGhost[instIndex]++; // 16.01.10 kairera0467 add ゴーストがミスしないと最大コンボ数が出力されないのは非常に困るので。
                                 this.nコンボ数_TargetGhost[instIndex]++;
                             }
                         }

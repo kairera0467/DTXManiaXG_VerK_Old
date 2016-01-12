@@ -376,7 +376,7 @@ namespace DTXMania
 				for ( int i = 0; i < lciMenuItems.Count; i++ )
 				{
 					bool bItemBold = ( i == nItemSelecting && !bShowAllItems ) ? true : false;
-					font.t文字列描画( n本体X + 30, n本体Y + 40 + i * 32, lciMenuItems[i].str項目名, bItemBold, 1.0f );
+					font.t文字列描画( n本体X + 14, n本体Y + 40 + i * 32, lciMenuItems[i].str項目名, bItemBold, 1.0f );
 
 					bool bValueBold = (bItemBold || (i == nItemSelecting && bIsSelectingIntItem)) ? true : false;
 					if ( bItemBold || bShowAllItems )
@@ -401,7 +401,7 @@ namespace DTXMania
 								s = lciMenuItems[ i ].obj現在値().ToString();
 								break;
 						}
-						font.t文字列描画( n本体X + 180, n本体Y + 40 + i * 32, s, bValueBold, 1.0f );
+						font.t文字列描画( n本体X + 184, n本体Y + 40 + i * 32, s, bValueBold, 1.0f );
 					}
 				}
 				#endregion
