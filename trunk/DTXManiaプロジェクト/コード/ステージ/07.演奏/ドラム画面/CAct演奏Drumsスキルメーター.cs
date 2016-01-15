@@ -331,9 +331,19 @@ namespace DTXMania
                         this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X[ j ], 200, new Rectangle( 288, 2, 162, 85 ) );
                         if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
                         {
-                            this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値 ) );
+                            double dbSkill = 0.0;
+                            if(CDTXMania.listTargetGhostScoreData.Drums != null)
+                            {
+                                dbSkill = CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値;
+                            }
+                            else
+                            {
+                                dbSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                            }
+
+                            this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", dbSkill ) );
                             
-                            if( this.dbグラフ値現在 > CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値 )
+                            if( this.dbグラフ値現在 > dbSkill )
                                 this.tx比較.n透明度 = 128;
                         }
                         else
@@ -359,9 +369,19 @@ namespace DTXMania
                     }
                     else if( CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE )
                     {
+                        double dbSkill = 0.0;
+                        if (CDTXMania.listTargetGhostScoreData.Drums != null)
+                        {
+                            dbSkill = CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値;
+                        }
+                        else
+                        {
+                            dbSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                        }
+
                         this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
-                        this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値 ));
-                        if( this.dbグラフ値現在 > CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値 )
+                        this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", dbSkill ));
+                        if( this.dbグラフ値現在 > dbSkill )
                             this.tx比較.n透明度 = 128;
 
                         string strPlus = "";
