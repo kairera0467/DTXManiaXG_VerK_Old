@@ -112,6 +112,50 @@ namespace DTXMania
             st文字位置11.pt = new Point(408, 0);
             st文字位置Array[10] = st文字位置11;
             this.st小文字位置 = st文字位置Array;
+
+            st文字位置Array = new ST文字位置[13];
+            st文字位置.ch = '0';
+            st文字位置.pt = new Point(0, 0);
+            st文字位置Array[0] = st文字位置;
+            st文字位置2.ch = '1';
+            st文字位置2.pt = new Point(10, 0);
+            st文字位置Array[1] = st文字位置2;
+            st文字位置3.ch = '2';
+            st文字位置3.pt = new Point(20, 0);
+            st文字位置Array[2] = st文字位置3;
+            st文字位置4.ch = '3';
+            st文字位置4.pt = new Point(30, 0);
+            st文字位置Array[3] = st文字位置4;
+            st文字位置5.ch = '4';
+            st文字位置5.pt = new Point(40, 0);
+            st文字位置Array[4] = st文字位置5;
+            st文字位置6.ch = '5';
+            st文字位置6.pt = new Point(50, 0);
+            st文字位置Array[5] = st文字位置6;
+            st文字位置7.ch = '6';
+            st文字位置7.pt = new Point(60, 0);
+            st文字位置Array[6] = st文字位置7;
+            st文字位置8.ch = '7';
+            st文字位置8.pt = new Point(70, 0);
+            st文字位置Array[7] = st文字位置8;
+            st文字位置9.ch = '8';
+            st文字位置9.pt = new Point(80, 0);
+            st文字位置Array[8] = st文字位置9;
+            st文字位置10.ch = '9';
+            st文字位置10.pt = new Point(90, 0);
+            st文字位置Array[9] = st文字位置10;
+            st文字位置11.ch = '.';
+            st文字位置11.pt = new Point(100, 0);
+            st文字位置Array[10] = st文字位置11;
+            ST文字位置 st文字位置12 = new ST文字位置();
+            st文字位置12.ch = '-';
+            st文字位置12.pt = new Point(110, 0);
+            st文字位置Array[11] = st文字位置12;
+            ST文字位置 st文字位置13 = new ST文字位置();
+            st文字位置13.ch = '+';
+            st文字位置13.pt = new Point(120, 0);
+            st文字位置Array[12] = st文字位置13;
+            this.st比較数字位置 = st文字位置Array;
             base.b活性化してない = true;
         }
 
@@ -120,7 +164,7 @@ namespace DTXMania
 
         public override void On活性化()
         {
-            this.n本体X[0] = 966;
+            this.n本体X = 966;
 
             this.dbグラフ値目標 = 80f;
             this.dbグラフ値現在 = 0f;
@@ -131,6 +175,7 @@ namespace DTXMania
             this.dbグラフ値現在_表示 = 0f;
             this.dbグラフ値目標_表示 = 0f;
             this.dbグラフ値ゴースト_表示 = 0f;
+            this.bUseGhost = false;
             base.On活性化();
         }
         public override void On非活性化()
@@ -175,8 +220,6 @@ namespace DTXMania
         }
         public override int On進行描画()
         {
-            int j = 0;
-
             if (!base.b活性化してない)
             {
                 if (base.b初めての進行描画)
@@ -184,71 +227,92 @@ namespace DTXMania
                     this.ct爆発エフェクト = new CCounter(0, 13, 20, CDTXMania.Timer);
                     base.b初めての進行描画 = false;
                 }
+                #region[ 事前に各種数値を定義しておく ]
                 double db1ノーツごとの達成率 = (double)this.dbグラフ値目標 / CDTXMania.DTX.n可視チップ数.Drums;
                 this.n現在演奏されたノーツ数 =
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[j].Perfect +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[j].Great +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[j].Good +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[j].Poor +
-                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む[j].Miss;
+                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Perfect +
+                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Great +
+                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Good +
+                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor +
+                    CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss;
                 CScoreIni.C演奏記録 drums = new CScoreIni.C演奏記録();
-
                 double rate = (double)n現在演奏されたノーツ数 / (double)CDTXMania.DTX.n可視チップ数.Drums;
 
-                if (CDTXMania.ConfigIni.nSkillMode == 0)
+                //ゴースト判別
+                if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
                 {
-                    //int n逆算Perfect = drums.nPerfect数・Auto含まない / this.n現在演奏されたノーツ数;
-                    //int n逆算Great = drums.nGreat数・Auto含まない / this.n現在演奏されたノーツ数;
-                    //this.dbグラフ値比較 = CScoreIni.t旧ゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数[j], drums.nPerfect数, drums.nGreat数, drums.nGood数, drums.nPoor数, drums.nMiss数, E楽器パート[j]) * rate;
-                    //this.dbグラフ値比較 = ((this.dbグラフ値目標_渡) / (double)CDTXMania.DTX.n可視チップ数[j]) * rate;
-                    this.dbグラフ値比較 = this.dbグラフ値目標_渡;
+                    bUseGhost = true; //AUTOの場合は無条件で使用可能。
+                    this.dbグラフ値目標 = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
                 }
-                else if (CDTXMania.ConfigIni.nSkillMode == 1)
+                else if( CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE )
                 {
-                    E楽器パート ePart = E楽器パート.UNKNOWN;
-                    switch( j )
+                    bUseGhost = true;
+                    //ゴーストデータはあるけどゴーストスコアデータが無い場合はScoreIni側から持ってくる。
+                    if( CDTXMania.listTargetGhsotLag.Drums != null && CDTXMania.listTargetGhostScoreData.Drums != null )
                     {
-                        case 0:
-                            ePart = E楽器パート.DRUMS;
-                            break;
-                        case 1:
-                            ePart = E楽器パート.GUITAR;
-                            break;
-                        case 2:
-                            ePart = E楽器パート.BASS;
-                            break;
+                        if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT || CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
+                            this.dbグラフ値目標 = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                        else
+                            this.dbグラフ値目標 = CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値;
                     }
-
-
-                    this.dbグラフ値比較 = CScoreIni.tゴーストスキルを計算して返す(CDTXMania.DTX.n可視チップ数[j], this.n現在演奏されたノーツ数, drums.n最大コンボ数, ePart );
-                    //this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
+                    else
+                    {
+                        if( CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.LAST_PLAY )
+                            this.dbグラフ値目標 = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                    }
                 }
+                #endregion
 
-
-                //this.dbグラフ値比較 = (double)(db1ノーツごとの達成率 * n現在演奏されたノーツ数);
-                // 背景暗幕
                 Rectangle rectangle = new Rectangle( 2, 2, 280, 720 );
                 if (this.txグラフ != null)
                 {
-                    this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, this.n本体X[j], 50, rectangle );
-                    //this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, 141 + this.n本体X[j], 650 - (int)(this.dbグラフ値現在 * 5.56), new Rectangle(499, 0, 201, (int)(this.dbグラフ値現在 * 5.56)));
+                    this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, this.n本体X, 50, new Rectangle( 2, 2, 280, 720 ) );
                 }
 
+                this.dbグラフ値現在_表示 = this.dbグラフ値現在;
+                if( this.txグラフゲージ != null )
+                {
+                    this.txグラフゲージ.n透明度 = 255;
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 9 + this.n本体X, 650 - ( int )( 560f * this.dbグラフ値現在_表示 / 100.0f ), new Rectangle( 418, 2, 60, (int)( 560f * this.dbグラフ値現在_表示 / 100.0f ) ) );
+                }
 
+                //矢印模様
+                if( this.txグラフゲージ != null )
+                {
+                    this.txグラフゲージ.n透明度 = 32;
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 9 + this.n本体X, 90, new Rectangle( 550, 2, 60, 560 ) );
+
+                    this.txグラフゲージ.n透明度 = 255;
+                }
 
                 // 基準線
                 rectangle = new Rectangle(78, 0, 60, 3);
-
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
-                    // 基準線を越えたら線が黄色くなる
-                    if (this.dbグラフ値現在 >= (100 - i * 10))
+                    //560.0 * this.dbグラフ値ゴースト_表示 / 100.0
+                    //グラフ下部 649
+                    int linepos = 0;
+                    double target = 0.0;
+                    switch( i )
                     {
-                        rectangle = new Rectangle(78, 1, 60, 2);//黄色
-                        if (this.txグラフ != null)
-                        {
-                            //this.txグラフ.n透明度 = 224;
-                        }
+                        case 0:{ linepos = 0; target = 100.0; }
+                            break;
+                        case 1:{ linepos = 28; target = 95.0; }
+                            break;
+                        case 2:{ linepos = 112; target = 80.0; }
+                            break;
+                        case 3:{ linepos = 151; target = 73.0; }
+                            break;
+                        case 4:{ linepos = 207; target = 63.0; }
+                            break;
+                        case 5:{ linepos = 263; target = 53.0; }
+                            break;
+                    }
+
+                    // 基準線を越えたら線が黄色くなる
+                    if( this.dbグラフ値現在 >= target )
+                    {
+                        rectangle = new Rectangle(420, 556, 60, 2);//黄色
                     }
                     else
                     {
@@ -259,169 +323,136 @@ namespace DTXMania
                         }
                     }
 
-                    if (this.txグラフ != null)
+                    if( this.txグラフ != null && CDTXMania.ConfigIni.nSkillMode == 1 )
                     {
-                        this.txグラフ.t2D描画( CDTXMania.app.Device, 8 + this.n本体X[j], 94 + (int)(58.52 * i), rectangle );
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, 8 + this.n本体X, 90 + linepos, rectangle );
                     }
-                }
-                // グラフ
-                // --現在値
-                if (this.dbグラフ値現在_表示 < this.dbグラフ値現在)
-                {
-                    this.dbグラフ値現在_表示 += (this.dbグラフ値現在 - this.dbグラフ値現在_表示) / 5 + 0.01;
-                }
-                if (this.dbグラフ値現在_表示 >= this.dbグラフ値現在)
-                {
-                    this.dbグラフ値現在_表示 = this.dbグラフ値現在;
-                }
-                rectangle = new Rectangle(288, 2, 72, (int)(556f * this.dbグラフ値現在_表示 / 100));
-
-                if( this.txグラフゲージ != null )
-                {
-                    this.txグラフゲージ.vc拡大縮小倍率 = new Vector3(1f, 1f, 1f);
-                    this.txグラフゲージ.n透明度 = 255;
-                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 3 + this.n本体X[ j ], 650 - ( int )( 556f * this.dbグラフ値現在_表示 / 100.0 ), rectangle );
                 }
 
                 this.dbグラフ値直前 = this.dbグラフ値現在;
 
-                // --現在値_目標越
-                rectangle = new Rectangle(0, 0, 210, (int)(556f * this.dbグラフ値現在_表示 / 100));
-                if ((dbグラフ値現在 >= dbグラフ値目標) && (this.txグラフゲージ != null))
-                {
-                    //this.txグラフ.vc拡大縮小倍率 = new Vector3(1.4f, 1f, 1f);
-                    //this.txグラフ.n透明度 = 128;
-                    //this.txグラフ.b加算合成 = true;
-                    this.txグラフゲージ.n透明度 = 255;
-                    //this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 74 + this.n本体X[j], 650 - (int)( 556f * this.dbグラフ値現在_表示 / 100 ), rectangle);
-
-                }
                 // --目標値
-
-                if (this.dbグラフ値目標_表示 < this.dbグラフ値目標)
-                {
-                    this.dbグラフ値目標_表示 += (this.dbグラフ値目標 - this.dbグラフ値目標_表示) / 5 + 0.01;
-                }
-                if (this.dbグラフ値目標_表示 >= this.dbグラフ値目標)
-                {
-                    this.dbグラフ値目標_表示 = this.dbグラフ値目標;
-                }
+                this.dbグラフ値目標_表示 = this.dbグラフ値目標;
 
                 db現在の判定数合計 = 0;
 
                 this.dbグラフ値ゴースト_表示 = this.dbグラフ値ゴースト;
-                if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.NONE || CDTXMania.listTargetGhsotLag.Drums != null )
+                if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.NONE || CDTXMania.listTargetGhsotLag.Drums == null )
                 {
                     //ゴーストを使用しない、またはゴーストのラグデータが無い場合は大きさを固定する。
                     this.dbグラフ値ゴースト_表示 = this.dbグラフ値目標_表示;
                 }
                 rectangle = new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0));
-                if (this.txグラフゲージ != null)
+                if( this.txグラフゲージ != null )
                 {
-                    //this.txグラフゲージ.n透明度 = 48;
-                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X[j], 650 - (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 2, 0, 201, (int)( 556.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
-                }
-
-
-                this.t小文字表示(204 + this.n本体X[j], 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
-                if( CDTXMania.ConfigIni.nInfoType == 0 ) //達成率表示
-                {
-                    bool bUseGhost = false;
-
-                    if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
-                        bUseGhost = true; //AUTOの場合は無条件で使用可能。
-                    else if( CDTXMania.ConfigIni.eTargetGhost.Drums != ETargetGhostData.NONE )
+                    if( this.bUseGhost == false )
                     {
-                        if( CDTXMania.listTargetGhsotLag.Drums != null && CDTXMania.listTargetGhostScoreData.Drums != null )
+                        this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X, 650 - (int)(560.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 2, 2, 201, (int)( 560.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
+                    }
+                    else
+                    {
+                        if( this.dbグラフ値ゴースト_表示 < this.dbグラフ値現在 )
                         {
-                            bUseGhost = true;
+                            this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X, 650 - (int)(560.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 2, 2, 201, (int)( 560.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
+                        }
+                        else
+                        {
+                            this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X, 650 - (int)(560.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 210, 2, 201, (int)( 560.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
                         }
                     }
 
+                }
+
+
+                this.t小文字表示(204 + this.n本体X, 658, string.Format("{0,6:##0.00}%", this.dbグラフ値現在));
+                if( CDTXMania.ConfigIni.nInfoType == 0 ) //達成率表示
+                {
                     if( bUseGhost == true )
                     {
+                        double dbTargetSkill = 0.0;
+                        if( CDTXMania.listTargetGhostScoreData.Drums != null )
+                        {
+                            dbTargetSkill = CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値;
+                        }
+                        else
+                        {
+//                            dbTargetSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                        }
+
                         switch( CDTXMania.ConfigIni.eTargetGhost.Drums )
                         {
                             case ETargetGhostData.PERFECT:
                             case ETargetGhostData.LAST_PLAY:
                                 {
-                                    this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X[ j ], 200, new Rectangle( 288, 2, 162, 85 ) );
+                                    //LASTまたはAUTOの場合は自己ベストも表示させる。
+                                    int ntargetPos = 200;
+                                    int nbestskillPos = 290;
+                                    if( dbTargetSkill <= this.dbグラフ値目標 )
+                                    {
+                                        ntargetPos = 260;
+                                        nbestskillPos = 200;
+                                    }
+
+
                                     if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
                                     {
-                                        double dbSkill = 0.0;
-                                        if( CDTXMania.listTargetGhostScoreData.Drums != null )
-                                        {
-                                            dbSkill = CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値;
-                                        }
-                                        else
-                                        {
-                                            dbSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
-                                        }
+                                        if( this.dbグラフ値現在 > dbTargetSkill )
+                                            this.tx比較.n透明度 = 128;
+                                        this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X, ntargetPos, new Rectangle( 288, 2, 162, 85 ) );
 
-                                        this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", dbSkill ) );
-                            
-                                        if( this.dbグラフ値現在 > dbSkill )
-                                        this.tx比較.n透明度 = 128;
+                                        this.t小文字表示( 192 + this.n本体X, ntargetPos + 50, string.Format( "{0,6:##0.00}%", dbTargetSkill ) );
                                     }
                                     else
                                     {
-                                        this.t小文字表示( 192 + this.n本体X[ j ], 250, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
                                         if( this.dbグラフ値現在 >= 100.0 )
                                             this.tx比較.n透明度 = 128;
+                                        this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X, ntargetPos, new Rectangle( 288, 2, 162, 85 ) );
+
+                                        this.t小文字表示( 192 + this.n本体X, ntargetPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
                                     }
+
+                                    if( this.dbグラフ値現在 > this.dbグラフ値目標 )
+                                        this.tx比較.n透明度 = 128;
+                                    else
+                                        this.tx比較.n透明度 = 255;
+                                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, nbestskillPos, new Rectangle(288, 160, 162, 60));
+                                    this.t小文字表示( 192 + this.n本体X, nbestskillPos + 24, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
 
 
                                     if( this.txPlayerName != null )
                                     {
-                                        this.txPlayerName.t2D描画( CDTXMania.app.Device, 96 + this.n本体X[ j ], 214 );
+                                        this.txPlayerName.t2D描画( CDTXMania.app.Device, 96 + this.n本体X, ntargetPos + 14 );
                                     }
-
-                                    string strPlus = "";
-                                    if ( this.dbグラフ値現在 > this.dbグラフ値ゴースト )
-                                        strPlus = "+";
-                                    else
-                                        strPlus = "";
-                                    CDTXMania.act文字コンソール.tPrint( 6 + this.n本体X[j], 652 - (int)(556.0 * this.dbグラフ値現在_表示 / 100.0) - 18, C文字コンソール.Eフォント種別.白, string.Format( strPlus + "{0,6:##0.00}%", this.dbグラフ値現在 - this.dbグラフ値ゴースト ) );
-                                    CDTXMania.act文字コンソール.tPrint( 75 + this.n本体X[j], 652 - (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0) - 18, C文字コンソール.Eフォント種別.白, string.Format( "{0,6:##0.00}%", this.dbグラフ値ゴースト ) );
                                 }
                                 break;
                             case ETargetGhostData.HI_SCORE:
                             case ETargetGhostData.HI_SKILL:
                                 {
-                                    double dbSkill = 0.0;
-                                    if (CDTXMania.listTargetGhostScoreData.Drums != null)
-                                    {
-                                        dbSkill = CDTXMania.listTargetGhostScoreData.Drums.db演奏型スキル値;
-                                    }
-                                    else
-                                    {
-                                        dbSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
-                                    }
-
-                                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
-                                    this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", dbSkill ));
-                                    if( this.dbグラフ値現在 > dbSkill )
+                                    this.tx比較.n透明度 = 255;
+                                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 200, new Rectangle(288, 160, 162, 60));
+                                    this.t小文字表示(186 + this.n本体X, 224, string.Format("{0,6:##0.00}%", dbTargetSkill ));
+                                    if( this.dbグラフ値現在 > dbTargetSkill )
                                         this.tx比較.n透明度 = 128;
-
-                                    string strPlus = "";
-                                    if ( this.dbグラフ値現在 > this.dbグラフ値ゴースト )
-                                        strPlus = "+";
-                                    else
-                                        strPlus = "";
-                                    CDTXMania.act文字コンソール.tPrint( 6 + this.n本体X[j], 652 - (int)(556.0 * this.dbグラフ値現在_表示 / 100.0) - 18, C文字コンソール.Eフォント種別.白, string.Format( strPlus + "{0,6:##0.00}%", this.dbグラフ値現在 - this.dbグラフ値ゴースト ) );
-                                    CDTXMania.act文字コンソール.tPrint( 75 + this.n本体X[j], 652 - (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0) - 18, C文字コンソール.Eフォント種別.白, string.Format( "{0,6:##0.00}%", this.dbグラフ値ゴースト ) );
-
                                 }
                                 break;
                         }
+
+                        string strPlus = "";
+                        if ( this.dbグラフ値現在 >= this.dbグラフ値ゴースト )
+                            strPlus = "+";
+                        else
+                            strPlus = "-";
+                        this.t比較数字表示( 10 + this.n本体X, 668 - (int)(560.0 * this.dbグラフ値現在 / 100.0) - 18, string.Format( strPlus + "{0,5:#0.00}", Math.Abs(this.dbグラフ値現在 - this.dbグラフ値ゴースト) ) );
+                        //CDTXMania.act文字コンソール.tPrint( 75 + this.n本体X[j], 652 - (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0) - 18, C文字コンソール.Eフォント種別.白, string.Format( "{0,6:##0.00}%", this.dbグラフ値ゴースト ) );
+
                     }
 
                     if( bUseGhost == false )
                     {
                         //比較対象のゴーストデータが無い
                         //ゴーストを使わない
-                        this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 160, 162, 60));
-                        this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                        this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 200, new Rectangle(288, 160, 162, 60));
+                        this.t小文字表示(186 + this.n本体X, 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
                         if (this.dbグラフ値現在 > this.dbグラフ値目標)
                         {
                             this.tx比較.n透明度 = 128;
@@ -430,17 +461,17 @@ namespace DTXMania
                 }
                 else if( CDTXMania.ConfigIni.nInfoType == 1 ) //判定数表示
                 {
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 200, new Rectangle(288, 226, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 280, new Rectangle(288, 292, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 360, new Rectangle(288, 358, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 440, new Rectangle(288, 424, 162, 60));
-                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X[j], 520, new Rectangle(288, 490, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 200, new Rectangle(288, 226, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 280, new Rectangle(288, 292, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 360, new Rectangle(288, 358, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 440, new Rectangle(288, 424, 162, 60));
+                    this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 520, new Rectangle(288, 490, 162, 60));
 
-                    this.t小文字表示(186 + this.n本体X[j], 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Perfect));
-                    this.t小文字表示(186 + this.n本体X[j], 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Great));
-                    this.t小文字表示(186 + this.n本体X[j], 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Good));
-                    this.t小文字表示(186 + this.n本体X[j], 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Poor));
-                    this.t小文字表示(186 + this.n本体X[j], 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない[j].Miss));
+                    this.t小文字表示(186 + this.n本体X, 224, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect));
+                    this.t小文字表示(186 + this.n本体X, 304, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Great));
+                    this.t小文字表示(186 + this.n本体X, 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good));
+                    this.t小文字表示(186 + this.n本体X, 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor));
+                    this.t小文字表示(186 + this.n本体X, 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss));
                 }
             }
             return 0;
@@ -467,9 +498,11 @@ namespace DTXMania
             public Point pt;
         }
         private readonly ST文字位置[] st小文字位置;
+        private readonly ST文字位置[] st比較数字位置;
         private STキラキラ[] stキラキラ = new STキラキラ[64];
         private STキラキラ[] stフラッシュ = new STキラキラ[16];
 
+        private bool bUseGhost;
         private CCounter ct爆発エフェクト;
         public double db現在の判定数合計;
         private double dbグラフ値目標;
@@ -482,7 +515,7 @@ namespace DTXMania
         private double dbグラフ値直前;
         private int nグラフフラッシュct;
         private int n現在演奏されたノーツ数;
-        private STDGBVALUE<int> n本体X;
+        private int n本体X;
         private CTexture tx比較;
         private CTexture txグラフ;
         private CTexture txグラフバックパネル;
@@ -535,6 +568,27 @@ namespace DTXMania
 
                 if( ch == '.' ) x += 6;
                 else x += 12;
+
+            }
+        }
+        private void t比較数字表示(int x, int y, string str)
+        {
+            foreach (char ch in str)
+            {
+                for (int i = 0; i < this.st比較数字位置.Length; i++)
+                {
+                    if (this.st比較数字位置[i].ch == ch)
+                    {
+                        Rectangle rectangle = new Rectangle( 288 + this.st比較数字位置[i].pt.X, 578, 10, 14 );
+                        if (this.txグラフバックパネル != null)
+                        {
+                            this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                        }
+                        break;
+                    }
+                }
+
+                x += 9;
 
             }
         }
