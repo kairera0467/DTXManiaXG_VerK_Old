@@ -1219,6 +1219,10 @@ namespace DTXMania
                     }
                 }
             }
+            else
+            {
+                CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ] = null;
+            }
         }
 
         private void t小文字表示(int x, int y, string str)
