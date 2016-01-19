@@ -274,6 +274,7 @@ namespace DTXMania
                         if( File.Exists( filename ) )
                         {
                             CDTXMania.listAutoGhostLag[ instIndex ] = new List<int>();
+                            CDTXMania.listTargetGhostScoreData[ instIndex ] = new CScoreIni.C演奏記録();
                             ReadGhost(filename, CDTXMania.listAutoGhostLag[ instIndex ]);
                         }
                     }
@@ -1211,6 +1212,10 @@ namespace DTXMania
                                         continue;
                                 }
                             }
+                        }
+                        catch( NullReferenceException )
+                        {
+                            Trace.TraceInformation("ゴーストデータの記録が正しく読み込まれませんでした。");
                         }
                         catch( EndOfStreamException )
                         {
