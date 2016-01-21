@@ -55,15 +55,113 @@ namespace DTXMania
 		};
 
 
-		// クラス
+        // クラス
 
-		public class CAVI : IDisposable
+        #region[ 旧AVI ]
+        //public class CAVI : IDisposable
+        //{
+        //    public CAvi avi;
+        //    private bool bDispose済み;
+        //    public int n番号;
+        //    public string strコメント文 = "";
+        //    public string strファイル名 = "";
+
+        //    public void OnDeviceCreated()
+        //    {
+        //        #region [ strAVIファイル名の作成。]
+        //        //-----------------
+        //        string strAVIファイル名;
+        //        //strAVIファイル名 = CSkin.Path(@"Graphics\7_Movie.avi");
+        //        if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+        //            strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+        //        else
+        //            strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+        //        //-----------------
+        //        #endregion
+
+        //        //if( !File.Exists( strAVIファイル名 ) )
+        //        //{
+        //        //    //Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
+        //        //    Trace.TraceWarning("ファイルが存在しません。代わりに汎用AVIを再生します。({0})({1})", this.strコメント文, strAVIファイル名);
+        //        //    //this.avi = null;
+
+        //        //    CDTXMania.app.b汎用ムービーである = true;
+        //        //    if (!File.Exists(strAVIファイル名))
+        //        //    {
+        //        //        Trace.TraceWarning("汎用AVIファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名);
+        //        //        this.avi = null;
+        //        //        return;
+        //        //    }
+        //        //}
+
+        //        // AVI の生成。
+
+        //        try
+        //        {
+        //            this.avi = new CAvi( strAVIファイル名 );
+        //            Trace.TraceInformation( "動画を生成しました。({0})({1})({2}frames)", this.strコメント文, strAVIファイル名, this.avi.GetMaxFrameCount() );
+        //            CDTXMania.app.b汎用ムービーである = false;
+        //        }
+        //        catch( Exception e )
+        //        {
+        //            Trace.TraceError( e.Message );
+        //            Trace.TraceError( "動画の生成に失敗しました。({0})({1})", this.strコメント文, strAVIファイル名 );
+        //            this.avi = null;
+        //        }
+        //    }
+        //    public override string ToString()
+        //    {
+        //        return string.Format( "CAVI{0}: File:{1}, Comment:{2}", CDTX.tZZ( this.n番号 ), this.strファイル名, this.strコメント文 );
+        //    }
+
+        //    #region [ IDisposable 実装 ]
+        //    //-----------------
+        //    public void Dispose()
+        //    {
+        //        if( this.bDispose済み )
+        //            return;
+
+        //        if( this.avi != null )
+        //        {
+        //            #region [ strAVIファイル名 の作成。 ]
+        //            //-----------------
+        //            string strAVIファイル名;
+        //            if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+        //                strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+        //            else
+        //                strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+        //            //-----------------
+        //            #endregion
+
+        //            this.avi.Dispose();
+        //            this.avi = null;
+					
+        //            Trace.TraceInformation( "動画を解放しました。({0})({1})", this.strコメント文, strAVIファイル名 );
+        //        }
+
+        //        this.bDispose済み = true;
+        //    }
+        //    //-----------------
+        //    #endregion
+        //}
+        #endregion
+        #region[ 新AVI ]
+        public class CAVI : IDisposable
 		{
-			public CAvi avi;
+			public CAviDS avi;
 			private bool bDispose済み;
 			public int n番号;
 			public string strコメント文 = "";
 			public string strファイル名 = "";
+            public double dbPlaySpeed = 1.0;
+
+			public CAVI( int number, string filename, string comment, double playSpeed )
+			{
+				n番号 = number;
+				strファイル名 = filename;
+				strコメント文 = comment;
+				dbPlaySpeed = playSpeed;
+			}
 
 			public void OnDeviceCreated()
 			{
@@ -97,8 +195,8 @@ namespace DTXMania
 
 				try
 				{
-					this.avi = new CAvi( strAVIファイル名 );
-					Trace.TraceInformation( "動画を生成しました。({0})({1})({2}frames)", this.strコメント文, strAVIファイル名, this.avi.GetMaxFrameCount() );
+					this.avi = new CAviDS( strAVIファイル名, this.dbPlaySpeed );
+					Trace.TraceInformation( "動画を生成しました。({0})({1})({2}frames)", this.strコメント文, strAVIファイル名, this.avi.GetDuration() );
                     CDTXMania.app.b汎用ムービーである = false;
 				}
 				catch( Exception e )
@@ -142,7 +240,9 @@ namespace DTXMania
 			}
 			//-----------------
 			#endregion
-		}
+        }
+        #endregion
+        #region[ DirectShow(MemoryRenderer) ]
         public class CDirectShow : IDisposable
 		{
 			public FDK.CDirectShow dshow;
@@ -218,8 +318,9 @@ namespace DTXMania
 			}
 			//-----------------
 			#endregion
-		}
-		public class CAVIPAN
+        }
+        #endregion
+        public class CAVIPAN
 		{
 			public int nAVI番号;
 			public int n移動時間ct;
@@ -802,9 +903,7 @@ namespace DTXMania
 				{
 					if ( this.rAVI != null && this.rAVI.avi != null )
 					{
-						int dwRate = (int) this.rAVI.avi.dwレート;
-						int dwScale = (int) this.rAVI.avi.dwスケール;
-						nDuration = (int) ( 1000.0f * dwScale / dwRate * this.rAVI.avi.GetMaxFrameCount() );
+                        nDuration = this.rAVI.avi.GetDuration();
 					}
 				}
 
@@ -5326,11 +5425,12 @@ namespace DTXMania
 
 			#region [ AVIリストに {zz, avi} の組を登録する。 ]
 			//-----------------
-			var avi = new CAVI() {
-				n番号 = zz,
-				strファイル名 = strパラメータ,
-				strコメント文 = strコメント,
-			};
+			var avi = new CAVI(
+			    zz,
+				strパラメータ,
+				strコメント,
+                CDTXMania.ConfigIni.n演奏速度
+			);
 
 			if( this.listAVI.ContainsKey( zz ) )	// 既にリスト中に存在しているなら削除。後のものが有効。
 				this.listAVI.Remove( zz );
