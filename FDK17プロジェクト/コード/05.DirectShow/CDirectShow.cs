@@ -835,6 +835,69 @@ namespace FDK
 				C共通.tCOMオブジェクトを解放する( ref audioRenderer );
 			}
 		}
+		public static void ConnectNullRendererFromSampleGrabber(IGraphBuilder graphBuilder, IBaseFilter sampleGrabber)
+		{
+			int hr = 0;
+			IBaseFilter videoRenderer = null;
+			IPin renderInputPin = null;
+			IPin connectedOutputPin = null;
+			IPin nullRendererInputPin = null;
+			IPin rendererConnectedOutputPin = null;
+			IPin grabberOutputPin = null;
+			IPin grabberOutputConnectedPin = null;
+
+			try
+			{
+				// videoRenderer を探す。
+				CDirectShow.tビデオレンダラとその入力ピンを探して返す(graphBuilder, out videoRenderer, out renderInputPin);
+				if(videoRenderer==null||renderInputPin==null)
+				{
+					return;
+				}
+				// 既存のレンダラにつながっているピン対を取得
+				hr = renderInputPin.ConnectedTo(out connectedOutputPin);
+				DsError.ThrowExceptionForHR(hr);
+				hr = renderInputPin.ConnectedTo(out rendererConnectedOutputPin);
+				DsError.ThrowExceptionForHR(hr);
+				
+				// それらを切断。前段の出力ピンとビデオレンダラの入力ピンを切断する。双方向から切断しないとグラフから切り離されないので注意。
+				hr = renderInputPin.Disconnect();
+				DsError.ThrowExceptionForHR(hr);
+				hr = connectedOutputPin.Disconnect();
+				DsError.ThrowExceptionForHR(hr);
+				
+				// ビデオレンダラをグラフから除去し、ヌルレンダラを追加
+				hr = graphBuilder.RemoveFilter(videoRenderer);
+				DsError.ThrowExceptionForHR(hr);
+				IBaseFilter nullRenderer = new NullRenderer() as IBaseFilter;
+				hr = graphBuilder.AddFilter(nullRenderer, "Null Renderer");
+				DsError.ThrowExceptionForHR(hr);
+
+				// nullRenderer の入力ピンを探す。
+				hr = nullRenderer.FindPin("In", out nullRendererInputPin);
+				DsError.ThrowExceptionForHR(hr);
+				hr = nullRendererInputPin.Disconnect();
+				DsError.ThrowExceptionForHR(hr);
+
+				// グラバの Out と Null Renderer の In を接続する。
+				hr = sampleGrabber.FindPin("Out", out grabberOutputPin);
+				DsError.ThrowExceptionForHR(hr);
+				hr = grabberOutputPin.ConnectedTo(out grabberOutputConnectedPin);
+				DsError.ThrowExceptionForHR(hr);
+				hr = grabberOutputConnectedPin.Disconnect();
+				DsError.ThrowExceptionForHR(hr);
+				hr = grabberOutputPin.Disconnect();
+				DsError.ThrowExceptionForHR(hr);
+				hr = grabberOutputPin.Connect(nullRendererInputPin, null);
+				DsError.ThrowExceptionForHR(hr);
+			}
+			finally
+			{
+				C共通.tCOMオブジェクトを解放する(ref connectedOutputPin);
+				C共通.tCOMオブジェクトを解放する(ref renderInputPin);
+				C共通.tCOMオブジェクトを解放する(ref videoRenderer);
+			}
+		}
 		public static void tビデオレンダラをグラフから除去する( IGraphBuilder graphBuilder )
 		{
 			int hr = 0;
