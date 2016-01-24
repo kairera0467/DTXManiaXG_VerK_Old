@@ -1112,15 +1112,17 @@ namespace DTXMania
                 barU[ i ] *= SlimDX.Matrix.Translation( 592f * fRate, -106f, 186f);
             }
 
-
-            this.txパネル帯.t3D描画( CDTXMania.app.Device, barU[ 0 ], new Rectangle( 2, 74, 1000, 30 ) );
-            this.txパネル帯.t3D描画( CDTXMania.app.Device, barU[ 1 ], new Rectangle( 2, 74, 1000, 30 ) );
-            this.txパネル帯.t3D描画( CDTXMania.app.Device, bar, new Rectangle( 2, 38, 1000, 30 ) );   //右の帯。
-            this.txパネル帯.t3D描画( CDTXMania.app.Device, barL, new Rectangle( 2, 38, 1000, 30 ) );   //左の帯。
-            //this.tx帯.t3D描画(CDTXMania.app.Device, barL);   //左の帯。
-            //this.txパネル帯.n透明度 = 155 + this.ct登場アニメ用[10].n現在の値;
-            this.txパネル帯.t3D描画( CDTXMania.app.Device, barC[ 0 ], new Rectangle( 2, 2, 1000, 30 ) );
-            this.txパネル帯.t3D描画( CDTXMania.app.Device, barC[ 1 ], new Rectangle( 2, 2, 1000, 30 ) );
+            if( this.txパネル帯 != null )
+            {
+                this.txパネル帯.t3D描画( CDTXMania.app.Device, barU[ 0 ], new Rectangle( 2, 74, 1000, 30 ) );
+                this.txパネル帯.t3D描画( CDTXMania.app.Device, barU[ 1 ], new Rectangle( 2, 74, 1000, 30 ) );
+                this.txパネル帯.t3D描画( CDTXMania.app.Device, bar, new Rectangle( 2, 38, 1000, 30 ) );   //右の帯。
+                this.txパネル帯.t3D描画( CDTXMania.app.Device, barL, new Rectangle( 2, 38, 1000, 30 ) );   //左の帯。
+                //this.tx帯.t3D描画(CDTXMania.app.Device, barL);   //左の帯。
+                //this.txパネル帯.n透明度 = 155 + this.ct登場アニメ用[10].n現在の値;
+                this.txパネル帯.t3D描画( CDTXMania.app.Device, barC[ 0 ], new Rectangle( 2, 2, 1000, 30 ) );
+                this.txパネル帯.t3D描画( CDTXMania.app.Device, barC[ 1 ], new Rectangle( 2, 2, 1000, 30 ) );
+            }
 
 			#region [ デバッグ補助 ]
 			//-----------------

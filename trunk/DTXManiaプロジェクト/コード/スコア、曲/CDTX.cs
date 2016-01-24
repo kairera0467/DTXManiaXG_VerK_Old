@@ -167,29 +167,27 @@ namespace DTXMania
 			{
 				#region [ strAVIファイル名の作成。]
 				//-----------------
-				string strAVIファイル名;
-                //strAVIファイル名 = CSkin.Path(@"Graphics\7_Movie.avi");
-				if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
-					strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
-				else
-					strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                string strAVIファイル名;
+                if( CDTXMania.DTX != null && !Path.IsPathRooted( this.strファイル名 ) )     // CDTX抜きでCAVI単体で使うことを考慮(選曲画面, リザルト画面)
+				{																			// 演奏終了直後はCDTXオブジェクトが残っているので、ファイル名がフルパスかどうかでプレビュー判定する
+					if ( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+						strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+					else
+						strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+				}
+                else
+				{
+					strAVIファイル名 = this.strファイル名;
+				}
 				//-----------------
 				#endregion
 
-                //if( !File.Exists( strAVIファイル名 ) )
-                //{
-                //    //Trace.TraceWarning( "ファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名 );
-                //    Trace.TraceWarning("ファイルが存在しません。代わりに汎用AVIを再生します。({0})({1})", this.strコメント文, strAVIファイル名);
-                //    //this.avi = null;
-
-                //    CDTXMania.app.b汎用ムービーである = true;
-                //    if (!File.Exists(strAVIファイル名))
-                //    {
-                //        Trace.TraceWarning("汎用AVIファイルが存在しません。({0})({1})", this.strコメント文, strAVIファイル名);
-                //        this.avi = null;
-                //        return;
-                //    }
-                //}
+                if( !File.Exists( strAVIファイル名 ) )
+				{
+					Trace.TraceWarning( "CAVI: ファイルが存在しません。({0})({1})", this.strコメント文, Path.GetFileName( strAVIファイル名 ) );
+					this.avi = null;
+					return;
+				}
 
 				// AVI の生成。
 
@@ -197,7 +195,6 @@ namespace DTXMania
 				{
 					this.avi = new CAviDS( strAVIファイル名, this.dbPlaySpeed );
 					Trace.TraceInformation( "動画を生成しました。({0})({1})({2}frames)", this.strコメント文, strAVIファイル名, this.avi.GetDuration() );
-                    CDTXMania.app.b汎用ムービーである = false;
 				}
 				catch( Exception e )
 				{
@@ -223,10 +220,17 @@ namespace DTXMania
 					#region [ strAVIファイル名 の作成。 ]
 					//-----------------
 					string strAVIファイル名;
-					if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
-						strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+					if( CDTXMania.DTX != null && !Path.IsPathRooted( this.strファイル名 ) )	// CDTX抜きでCAVI単体で使うことを考慮(選曲画面, リザルト画面)
+					{																			// 演奏終了直後はCDTXオブジェクトが残っているので、ファイル名がフルパスかどうかでプレビュー判定する
+						if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
+							strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
+						else
+							strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+					}
 					else
-						strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+					{
+						strAVIファイル名 = this.strファイル名;
+					}
 					//-----------------
 					#endregion
 
@@ -274,13 +278,13 @@ namespace DTXMania
 				try
 				{
                     this.dshow = new FDK.CDirectShow( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + this.strファイル名, CDTXMania.app.WindowHandle, true);
-					Trace.TraceInformation( "DirectShow動画を生成しました。({0})({1})({2}byte)", this.strコメント文, str動画ファイル名, this.dshow.nデータサイズbyte );
+					Trace.TraceInformation( "MemoryRendererで動画を生成しました。({0})({1})({2}byte)", this.strコメント文, str動画ファイル名, this.dshow.nデータサイズbyte );
                     CDTXMania.app.b汎用ムービーである = false;
 				}
 				catch( Exception e )
 				{
 					Trace.TraceError( e.Message );
-					Trace.TraceError( "DirectShowの生成に失敗しました。({0})({1})", this.strコメント文, str動画ファイル名 );
+					Trace.TraceError( "MemoryRendererでの動画の生成に失敗しました。({0})({1})", this.strコメント文, str動画ファイル名 );
 					this.dshow= null;
 				}
 			}
@@ -5437,7 +5441,7 @@ namespace DTXMania
 
 			this.listAVI.Add( zz, avi );
 
-            if( strファイル名.IndexOf( ".avi" ) == -1 )
+            if( CDTXMania.ConfigIni.bDirectShowMode ) // MemoryRendererモードが有効になってる時だけ
             {
                 var ds = new CDirectShow()
                 {
