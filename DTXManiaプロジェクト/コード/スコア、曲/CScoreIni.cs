@@ -1488,10 +1488,10 @@ namespace DTXMania
             if (nTotal == 0)
                 return 0.0;
 
-            int nAuto = nTotal - (nPerfect + nGreat + nGood + nPoor + nMiss);
-            double dbPERFECT率 = (100.0 * nPerfect / nTotal);
-            double dbGREAT率 = (100.0 * nGreat / nTotal);
-            double dbCOMBO率 = (100.0 * nCombo / (nTotal));
+            double nAuto = nTotal - ( nPerfect + nGreat + nGood + nPoor + nMiss );
+            double dbPERFECT率 = ( 100.0 * nPerfect / nTotal );
+            double dbGREAT率 = ( 100.0 * nGreat / nTotal );
+            double dbCOMBO率 = ( 100.0 * nCombo / ( nTotal ) );
 
             if (nTotal == nAuto)
             {

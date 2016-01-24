@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using SlimDX;
 using FDK;
@@ -376,7 +377,7 @@ namespace DTXMania
                         }
                         else
                         {
-//                            dbTargetSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                            dbTargetSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
                         }
 
                         switch( CDTXMania.ConfigIni.eTargetGhost.Drums )
@@ -408,15 +409,15 @@ namespace DTXMania
                                             this.tx比較.n透明度 = 128;
                                         this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X, ntargetPos, new Rectangle( 288, 2, 162, 85 ) );
 
-                                        this.t小文字表示( 192 + this.n本体X, ntargetPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
+                                        this.t小文字表示( 192 + this.n本体X, ntargetPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
                                     }
 
-                                    if( this.dbグラフ値現在 > this.dbグラフ値目標 )
+                                    if( this.dbグラフ値現在 > this.dbグラフ値目標_表示 )
                                         this.tx比較.n透明度 = 128;
                                     else
                                         this.tx比較.n透明度 = 255;
                                     this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, nbestskillPos, new Rectangle(288, 160, 162, 60));
-                                    this.t小文字表示( 192 + this.n本体X, nbestskillPos + 24, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標 ) );
+                                    this.t小文字表示( 192 + this.n本体X, nbestskillPos + 24, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
 
 
                                     if( this.txPlayerName != null )
@@ -443,6 +444,7 @@ namespace DTXMania
                         else
                             strPlus = "-";
                         this.t比較数字表示( 10 + this.n本体X, 668 - (int)(560.0 * this.dbグラフ値現在 / 100.0) - 18, string.Format( strPlus + "{0,5:#0.00}", Math.Abs(this.dbグラフ値現在 - this.dbグラフ値ゴースト) ) );
+                        //this.t比較数字表示( 100 + this.n本体X, 668 - (int)(560.0 * this.dbグラフ値ゴースト / 100.0) - 18, string.Format( strPlus + "{0,5:#0.00}", this.dbグラフ値ゴースト ));
                         //CDTXMania.act文字コンソール.tPrint( 75 + this.n本体X[j], 652 - (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0) - 18, C文字コンソール.Eフォント種別.白, string.Format( "{0,6:##0.00}%", this.dbグラフ値ゴースト ) );
 
                     }
@@ -452,7 +454,7 @@ namespace DTXMania
                         //比較対象のゴーストデータが無い
                         //ゴーストを使わない
                         this.tx比較.t2D描画(CDTXMania.app.Device, 102 + this.n本体X, 200, new Rectangle(288, 160, 162, 60));
-                        this.t小文字表示(186 + this.n本体X, 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標));
+                        this.t小文字表示(186 + this.n本体X, 224, string.Format("{0,6:##0.00}%", this.dbグラフ値目標_表示));
                         if (this.dbグラフ値現在 > this.dbグラフ値目標)
                         {
                             this.tx比較.n透明度 = 128;
