@@ -12,8 +12,6 @@ namespace DTXMania
 {
     internal class CAct演奏Drumsスキルメーター : CActivity
     {
-
-
         // #24074 2011.01.23 ikanick グラフの描画
         // 実装内容
         // ・左を現在、右を目標
@@ -67,96 +65,7 @@ namespace DTXMania
 
         public CAct演奏Drumsスキルメーター()
         {
-            ST文字位置[] st文字位置Array = new ST文字位置[11];
-            ST文字位置 st文字位置 = new ST文字位置();
-            st文字位置.ch = '0';
-            st文字位置.pt = new Point(288, 0);
-            st文字位置Array[0] = st文字位置;
-            ST文字位置 st文字位置2 = new ST文字位置();
-            st文字位置2.ch = '1';
-            st文字位置2.pt = new Point(300, 0);
-            st文字位置Array[1] = st文字位置2;
-            ST文字位置 st文字位置3 = new ST文字位置();
-            st文字位置3.ch = '2';
-            st文字位置3.pt = new Point(312, 0);
-            st文字位置Array[2] = st文字位置3;
-            ST文字位置 st文字位置4 = new ST文字位置();
-            st文字位置4.ch = '3';
-            st文字位置4.pt = new Point(324, 0);
-            st文字位置Array[3] = st文字位置4;
-            ST文字位置 st文字位置5 = new ST文字位置();
-            st文字位置5.ch = '4';
-            st文字位置5.pt = new Point(336, 0);
-            st文字位置Array[4] = st文字位置5;
-            ST文字位置 st文字位置6 = new ST文字位置();
-            st文字位置6.ch = '5';
-            st文字位置6.pt = new Point(348, 0);
-            st文字位置Array[5] = st文字位置6;
-            ST文字位置 st文字位置7 = new ST文字位置();
-            st文字位置7.ch = '6';
-            st文字位置7.pt = new Point(360, 0);
-            st文字位置Array[6] = st文字位置7;
-            ST文字位置 st文字位置8 = new ST文字位置();
-            st文字位置8.ch = '7';
-            st文字位置8.pt = new Point(372, 0);
-            st文字位置Array[7] = st文字位置8;
-            ST文字位置 st文字位置9 = new ST文字位置();
-            st文字位置9.ch = '8';
-            st文字位置9.pt = new Point(384, 0);
-            st文字位置Array[8] = st文字位置9;
-            ST文字位置 st文字位置10 = new ST文字位置();
-            st文字位置10.ch = '9';
-            st文字位置10.pt = new Point(396, 0);
-            st文字位置Array[9] = st文字位置10;
-            ST文字位置 st文字位置11 = new ST文字位置();
-            st文字位置11.ch = '.';
-            st文字位置11.pt = new Point(408, 0);
-            st文字位置Array[10] = st文字位置11;
-            this.st小文字位置 = st文字位置Array;
-
-            st文字位置Array = new ST文字位置[13];
-            st文字位置.ch = '0';
-            st文字位置.pt = new Point(0, 0);
-            st文字位置Array[0] = st文字位置;
-            st文字位置2.ch = '1';
-            st文字位置2.pt = new Point(10, 0);
-            st文字位置Array[1] = st文字位置2;
-            st文字位置3.ch = '2';
-            st文字位置3.pt = new Point(20, 0);
-            st文字位置Array[2] = st文字位置3;
-            st文字位置4.ch = '3';
-            st文字位置4.pt = new Point(30, 0);
-            st文字位置Array[3] = st文字位置4;
-            st文字位置5.ch = '4';
-            st文字位置5.pt = new Point(40, 0);
-            st文字位置Array[4] = st文字位置5;
-            st文字位置6.ch = '5';
-            st文字位置6.pt = new Point(50, 0);
-            st文字位置Array[5] = st文字位置6;
-            st文字位置7.ch = '6';
-            st文字位置7.pt = new Point(60, 0);
-            st文字位置Array[6] = st文字位置7;
-            st文字位置8.ch = '7';
-            st文字位置8.pt = new Point(70, 0);
-            st文字位置Array[7] = st文字位置8;
-            st文字位置9.ch = '8';
-            st文字位置9.pt = new Point(80, 0);
-            st文字位置Array[8] = st文字位置9;
-            st文字位置10.ch = '9';
-            st文字位置10.pt = new Point(90, 0);
-            st文字位置Array[9] = st文字位置10;
-            st文字位置11.ch = '.';
-            st文字位置11.pt = new Point(100, 0);
-            st文字位置Array[10] = st文字位置11;
-            ST文字位置 st文字位置12 = new ST文字位置();
-            st文字位置12.ch = '-';
-            st文字位置12.pt = new Point(110, 0);
-            st文字位置Array[11] = st文字位置12;
-            ST文字位置 st文字位置13 = new ST文字位置();
-            st文字位置13.ch = '+';
-            st文字位置13.pt = new Point(120, 0);
-            st文字位置Array[12] = st文字位置13;
-            this.st比較数字位置 = st文字位置Array;
+            //スクリプト化の都合で、ここに置いていたコードは移動。活性化のタイミングで実行するようにした。
             base.b活性化してない = true;
         }
 
@@ -166,6 +75,8 @@ namespace DTXMania
         public override void On活性化()
         {
             this.n本体X = 966;
+            this.list文字位置 = new List<ST文字位置>();
+            this.t座標スクリプトを読み込む();
 
             this.dbグラフ値目標 = 80f;
             this.dbグラフ値現在 = 0f;
@@ -265,16 +176,47 @@ namespace DTXMania
                 #endregion
 
                 Rectangle rectangle = new Rectangle( 2, 2, 280, 720 );
-                if (this.txグラフ != null)
+                //グラフの背景
+                if( this.txグラフバックパネル != null )
                 {
-                    this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, this.n本体X, 50, new Rectangle( 2, 2, 280, 720 ) );
+                    this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, this.stグラフ背景.nX, this.stグラフ背景.nY, this.stグラフ背景.rect );
+                }
+
+                //比較対象
+                if( this.txグラフ != null )
+                {
+                    int nTarget = 0;
+                    switch( CDTXMania.ConfigIni.eTargetGhost.Drums )
+                    {
+                        case ETargetGhostData.NONE:
+                            break;
+                        case ETargetGhostData.PERFECT:
+                            nTarget = 1;
+                            break;
+                        case ETargetGhostData.HI_SKILL:
+                            nTarget = 2;
+                            break;
+                        case ETargetGhostData.HI_SCORE:
+                            nTarget = 3;
+                            break;
+                        case ETargetGhostData.LAST_PLAY:
+                            nTarget = 5;
+                            break;
+                    }
+                    if( !bUseGhost ) nTarget = 0;
+
+                    this.txグラフ.n透明度 = 255;
+                    this.txグラフ.t2D描画( CDTXMania.app.Device, 32 + this.n本体X, 662, new Rectangle( 288, 556 + ( nTarget * 16 ), 48, 16 ) );
                 }
 
                 this.dbグラフ値現在_表示 = this.dbグラフ値現在;
                 if( this.txグラフゲージ != null )
                 {
+                    //複雑な計算が必要になったよコンチキショウ!
+                    //グラフ(100%時)のY座標にグラフ全体の高さを足す。これで0%時のY座標が算出できる。
+                    int gaugeY = this.stゲージ現在.nY + this.stゲージ現在.rect.Height;
                     this.txグラフゲージ.n透明度 = 255;
-                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 9 + this.n本体X, 650 - ( int )( 560f * this.dbグラフ値現在_表示 / 100.0f ), new Rectangle( 418, 2, 60, (int)( 560f * this.dbグラフ値現在_表示 / 100.0f ) ) );
+                    this.txグラフゲージ.t2D描画( CDTXMania.app.Device, this.stゲージ現在.nX, gaugeY - (int)( (float)this.stゲージ現在.rect.Height * this.dbグラフ値現在_表示 / 100.0f ), new Rectangle( this.stゲージ現在.rect.X, this.stゲージ現在.rect.Y, this.stゲージ現在.rect.Width, (int)( (float)this.stゲージ現在.rect.Height * this.dbグラフ値現在_表示 / 100.0f ) ) );
                 }
 
                 //矢印模様
@@ -313,11 +255,11 @@ namespace DTXMania
                     // 基準線を越えたら線が黄色くなる
                     if( this.dbグラフ値現在 >= target )
                     {
-                        rectangle = new Rectangle(420, 556, 60, 2);//黄色
+                        rectangle = this.stゲージ基準線達成.rect;//黄色
                     }
                     else
                     {
-                        rectangle = new Rectangle(420, 566, 60, 2);
+                        rectangle = this.stゲージ基準線.rect;
                         if (this.txグラフ != null)
                         {
                             this.txグラフ.n透明度 = 160;
@@ -326,7 +268,7 @@ namespace DTXMania
 
                     if( this.txグラフ != null && CDTXMania.ConfigIni.nSkillMode == 1 )
                     {
-                        this.txグラフ.t2D描画( CDTXMania.app.Device, 8 + this.n本体X, 90 + linepos, rectangle );
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, this.stゲージ基準線.nX, this.stゲージ基準線.nY + linepos, rectangle );
                     }
                 }
 
@@ -346,19 +288,21 @@ namespace DTXMania
                 rectangle = new Rectangle(138, 0, 72, (int)(556.0 * this.dbグラフ値ゴースト_表示 / 100.0));
                 if( this.txグラフゲージ != null )
                 {
+                    int gaugeTargetYF = this.stゲージ比較_敗.nY + this.stゲージ比較_敗.rect.Height;
+                    int gaugeTargetYC = this.stゲージ比較_勝.nY + this.stゲージ比較_勝.rect.Height;
                     if( this.bUseGhost == false )
                     {
-                        this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X, 650 - (int)(560.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 2, 2, 201, (int)( 560.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
+                        this.txグラフゲージ.t2D描画( CDTXMania.app.Device, this.stゲージ比較_敗.nX, gaugeTargetYF - (int)(this.stゲージ比較_敗.rect.Height * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( this.stゲージ比較_敗.rect.X, this.stゲージ比較_敗.rect.Y, this.stゲージ比較_敗.rect.Width, (int)( (float)this.stゲージ比較_敗.rect.Height * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
                     }
                     else
                     {
                         if( this.dbグラフ値ゴースト_表示 < this.dbグラフ値現在 )
                         {
-                            this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X, 650 - (int)(560.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 2, 2, 201, (int)( 560.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
+                            this.txグラフゲージ.t2D描画( CDTXMania.app.Device, this.stゲージ比較_敗.nX, gaugeTargetYF - (int)(this.stゲージ比較_敗.rect.Height * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( this.stゲージ比較_敗.rect.X, this.stゲージ比較_敗.rect.Y, this.stゲージ比較_敗.rect.Width, (int)( (float)this.stゲージ比較_敗.rect.Height * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
                         }
                         else
                         {
-                            this.txグラフゲージ.t2D描画( CDTXMania.app.Device, 75 + this.n本体X, 650 - (int)(560.0 * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( 210, 2, 201, (int)( 560.0 * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
+                            this.txグラフゲージ.t2D描画( CDTXMania.app.Device, this.stゲージ比較_勝.nX, gaugeTargetYC - (int)(this.stゲージ比較_勝.rect.Height * this.dbグラフ値ゴースト_表示 / 100.0), new Rectangle( this.stゲージ比較_勝.rect.X, this.stゲージ比較_勝.rect.Y, this.stゲージ比較_勝.rect.Width, (int)( (float)this.stゲージ比較_勝.rect.Height * this.dbグラフ値ゴースト_表示 / 100.0 ) ) );
                         }
                     }
 
@@ -379,6 +323,8 @@ namespace DTXMania
                         {
                             dbTargetSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
                         }
+                        if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
+                            dbTargetSkill = 100.0;
 
                         switch( CDTXMania.ConfigIni.eTargetGhost.Drums )
                         {
@@ -409,7 +355,7 @@ namespace DTXMania
                                             this.tx比較.n透明度 = 128;
                                         this.tx比較.t2D描画( CDTXMania.app.Device, 102 + this.n本体X, ntargetPos, new Rectangle( 288, 2, 162, 85 ) );
 
-                                        this.t小文字表示( 192 + this.n本体X, ntargetPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
+                                        this.t小文字表示( 192 + this.n本体X, ntargetPos + 50, string.Format( "{0,6:##0.00}%", dbTargetSkill ) );
                                     }
 
                                     if( this.dbグラフ値現在 > this.dbグラフ値目標_表示 )
@@ -496,11 +442,12 @@ namespace DTXMania
         [StructLayout(LayoutKind.Sequential)]
         private struct ST文字位置
         {
+            public string strMode;
             public char ch;
             public Point pt;
+            public Rectangle rect;
         }
-        private readonly ST文字位置[] st小文字位置;
-        private readonly ST文字位置[] st比較数字位置;
+        private List<ST文字位置> list文字位置;
         private STキラキラ[] stキラキラ = new STキラキラ[64];
         private STキラキラ[] stフラッシュ = new STキラキラ[16];
 
@@ -527,6 +474,27 @@ namespace DTXMania
         private Bitmap bmpGraph;
         private Graphics gGraph;
         private CPrivateFastFont pfNameFont;
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct STスクリプト座標
+        {
+            public string strParam;
+            public int nX;
+            public int nY;
+            public Rectangle rect;
+            public bool b本体座標を加算する;
+            public string str;
+        }
+        #region[ スクリプトから取得した座標を格納する変数 ]
+        private STスクリプト座標 stグラフ背景;
+        private STスクリプト座標 stゲージ現在;
+        private STスクリプト座標 stゲージ比較_敗;
+        private STスクリプト座標 stゲージ比較_勝;
+        private STスクリプト座標 stゲージ矢印;
+        private STスクリプト座標 stゲージ基準線;
+        private STスクリプト座標 stゲージ基準線達成;
+        #endregion
+
         //-----------------
 
         private CTexture t指定された文字テクスチャを生成する( string str文字 )
@@ -551,18 +519,35 @@ namespace DTXMania
         {
             foreach (char ch in str)
             {
-                for (int i = 0; i < this.st小文字位置.Length; i++)
+                //for (int i = 0; i < this.st小文字位置.Length; i++)
+                //{
+                //    if (this.st小文字位置[i].ch == ch)
+                //    {
+                //        Rectangle rectangle = new Rectangle( this.st小文字位置[i].pt.X, 556, 12, 16 );
+                //        if (ch == '.')
+                //        {
+                //            rectangle.Width -= 8;
+                //        }
+                //        if (this.txグラフバックパネル != null)
+                //        {
+                //            this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                //        }
+                //        break;
+                //    }
+                //}
+
+                //if( ch == '.' ) x += 6;
+                //else x += 12;
+
+                //2016.01.30 kairera0467 ちょっと変更。
+                for( int i = 0; i < this.list文字位置.Count; i++ )
                 {
-                    if (this.st小文字位置[i].ch == ch)
+                    if( this.list文字位置[ i ].ch == ch && this.list文字位置[ i ].strMode == "recpanel_number" )
                     {
-                        Rectangle rectangle = new Rectangle( this.st小文字位置[i].pt.X, 556, 12, 16 );
-                        if (ch == '.')
+                        Rectangle rectangle = new Rectangle( this.list文字位置[ i ].rect.X, this.list文字位置[ i ].rect.Y, this.list文字位置[ i ].rect.Width, this.list文字位置[ i ].rect.Height );
+                        if( this.txグラフバックパネル != null )
                         {
-                            rectangle.Width -= 8;
-                        }
-                        if (this.txグラフバックパネル != null)
-                        {
-                            this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                            this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, x, y, rectangle );
                         }
                         break;
                     }
@@ -570,21 +555,34 @@ namespace DTXMania
 
                 if( ch == '.' ) x += 6;
                 else x += 12;
-
             }
         }
         private void t比較数字表示(int x, int y, string str)
         {
             foreach (char ch in str)
             {
-                for (int i = 0; i < this.st比較数字位置.Length; i++)
+                //for (int i = 0; i < this.st比較数字位置.Length; i++)
+                //{
+                //    if (this.st比較数字位置[i].ch == ch)
+                //    {
+                //        Rectangle rectangle = new Rectangle( 342 + this.st比較数字位置[i].pt.X, 578, 10, 14 );
+                //        if (this.txグラフバックパネル != null)
+                //        {
+                //            this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                //        }
+                //        break;
+                //    }
+                //}
+
+                //2016.01.30 kairera0467 ちょっと変更。
+                for( int i = 0; i < this.list文字位置.Count; i++ )
                 {
-                    if (this.st比較数字位置[i].ch == ch)
+                    if( this.list文字位置[ i ].ch == ch && this.list文字位置[ i ].strMode == "target_number" )
                     {
-                        Rectangle rectangle = new Rectangle( 288 + this.st比較数字位置[i].pt.X, 578, 10, 14 );
-                        if (this.txグラフバックパネル != null)
+                        Rectangle rectangle = new Rectangle( this.list文字位置[ i ].rect.X, this.list文字位置[ i ].rect.Y, this.list文字位置[ i ].rect.Width, this.list文字位置[ i ].rect.Height );
+                        if( this.txグラフバックパネル != null )
                         {
-                            this.txグラフバックパネル.t2D描画(CDTXMania.app.Device, x, y, rectangle);
+                            this.txグラフバックパネル.t2D描画( CDTXMania.app.Device, x, y, rectangle );
                         }
                         break;
                     }
@@ -593,6 +591,102 @@ namespace DTXMania
                 x += 9;
 
             }
+        }
+        private void t座標スクリプトを読み込む()
+        {
+            string strRawScriptFile;
+
+            //ファイルの存在チェック
+            if( File.Exists( CSkin.Path( @"Script\SkillMater.dtxs" ) ) )
+            {
+                //スクリプトを開く
+                StreamReader reader = new StreamReader( CSkin.Path( @"Script\SkillMater.dtxs" ), Encoding.GetEncoding( "Shift_JIS" ) );
+                strRawScriptFile = reader.ReadToEnd();
+
+                strRawScriptFile = strRawScriptFile.Replace( Environment.NewLine, "\n" );
+                string[] delimiter = { "\n" };
+                string[] strSingleLine = strRawScriptFile.Split( delimiter, StringSplitOptions.RemoveEmptyEntries );
+
+                for( int i = 0; i < strSingleLine.Length; i++ )
+                {
+                    if( strSingleLine[ i ].StartsWith( "//" ) )
+                        continue; //コメント行の場合は無視
+
+                    //まずSplit
+                    string[] arScriptLine = strSingleLine[ i ].Split( ',' );
+
+                    if( ( arScriptLine.Length >= 7 && arScriptLine.Length <= 9 ) == false )
+                        continue; //引数が7～9でなければ無視。
+                    var st = new STスクリプト座標();
+
+                    if( arScriptLine.Length >= 7 )
+                    {
+                        st.strParam = arScriptLine[ 0 ];
+                        st.nX = Convert.ToInt32( arScriptLine[ 1 ] );
+                        st.nY = Convert.ToInt32( arScriptLine[ 2 ] );
+                        st.rect.X = Convert.ToInt32( arScriptLine[ 3 ] );
+                        st.rect.Y = Convert.ToInt32( arScriptLine[ 4 ] );
+                        st.rect.Width = Convert.ToInt32( arScriptLine[ 5 ] );
+                        st.rect.Height = Convert.ToInt32( arScriptLine[ 6 ] );
+                    }
+                    if( arScriptLine.Length == 8 )
+                    {
+                        st.b本体座標を加算する = Convert.ToBoolean( arScriptLine[ 7 ] == "0" ? false : true );
+                    }
+                    if( arScriptLine.Length == 9 )
+                    {
+                        st.str = arScriptLine[ 8 ];
+                    }
+
+                    //本体座標を加算する場合はここで加算する。
+                    if( st.b本体座標を加算する )
+                    {
+                        st.nX += this.n本体X;
+                    }
+
+                    this.tパラメーターから座標の格納先を決定する( st.strParam, st );
+                }
+            }
+        }
+        private void tパラメーターから座標の格納先を決定する( string strParam, STスクリプト座標 stScriptPosSet )
+        {
+            switch( strParam )
+            {
+                case "backpanel":
+                    this.stグラフ背景 = stScriptPosSet;
+                    break;
+                case "recpanel_number":
+                case "target_number":
+                    this.t文字位置リストに追加する( stScriptPosSet );
+                    break;
+                case "gauge_red":
+                    this.stゲージ現在 = stScriptPosSet;
+                    break;
+                case "gauge_target_failed":
+                    this.stゲージ比較_敗 = stScriptPosSet;
+                    break;
+                case "gauge_target_clear":
+                    this.stゲージ比較_勝 = stScriptPosSet;
+                    break;
+                case "gaugeline_failed":
+                    this.stゲージ基準線 = stScriptPosSet;
+                    break;
+                case "gaugeline_clear":
+                    this.stゲージ基準線達成 = stScriptPosSet;
+                    break;
+
+            }
+        }
+        private void t文字位置リストに追加する( STスクリプト座標 stScriptPosSet )
+        {
+            ST文字位置 stCharPos = new ST文字位置();
+            stCharPos.strMode = stScriptPosSet.strParam;
+            stCharPos.ch = stScriptPosSet.str[ 0 ];
+            stCharPos.pt.X = stScriptPosSet.rect.X;
+            stCharPos.pt.Y = stScriptPosSet.rect.Y;
+            stCharPos.rect = stScriptPosSet.rect;
+
+            this.list文字位置.Add( stCharPos );
         }
         #endregion
     }

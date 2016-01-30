@@ -114,7 +114,7 @@ namespace DTXMania
                         this.bDShowクリップを再生している = true;
                     }
                 }
-                else
+                else if( this.bUseCAviDS )
                 {
                     //CAviDS
                     this.rAVI = rAVI;
@@ -213,7 +213,106 @@ namespace DTXMania
 
                         this.smallvc = new Vector3( f拡大率x, f拡大率y, 1f );
                         this.vclip = new Vector3( 1.42f, 1.42f, 1f );
-                        this.rAVI.avi.Run();
+                        //this.rAVI.avi.Run();
+                    }
+                }
+                else
+                {
+                    this.rAVI = rAVI;
+                    this.n開始サイズW = n開始サイズW;
+                    this.n開始サイズH = n開始サイズH;
+                    this.n終了サイズW = n終了サイズW;
+                    this.n終了サイズH = n終了サイズH;
+                    this.n画像側開始位置X = n画像側開始位置X;
+                    this.n画像側開始位置Y = n画像側開始位置Y;
+                    this.n画像側終了位置X = n画像側終了位置X;
+                    this.n画像側終了位置Y = n画像側終了位置Y;
+                    this.n表示側開始位置X = n表示側開始位置X;
+                    this.n表示側開始位置Y = n表示側開始位置Y;
+                    this.n表示側終了位置X = n表示側終了位置X;
+                    this.n表示側終了位置Y = n表示側終了位置Y;
+                    this.n総移動時間ms = n総移動時間ms;
+                    this.n移動開始時刻ms = ( n移動開始時刻ms != -1 ) ? n移動開始時刻ms : CSound管理.rc演奏用タイマ.n現在時刻;
+                    this.n前回表示したフレーム番号 = -1;
+                    if( ( this.rAVI != null ) && ( this.rAVI.avi != null ) )
+                    {
+                        float f拡大率x;
+                        float f拡大率y;
+                        this.framewidth = this.rAVI.avi.nフレーム幅;
+                        this.frameheight = this.rAVI.avi.nフレーム高さ;
+                        if( this.tx描画用 == null )
+                        {
+                            this.tx描画用 = new CTexture( CDTXMania.app.Device, (int)this.framewidth, (int)this.frameheight, CDTXMania.app.GraphicsDeviceManager.CurrentSettings.BackBufferFormat, Pool.Managed );
+                        }
+                        if( fClipアスペクト比 < 1.77f )
+                        {
+                            //旧規格クリップだった場合
+                            this.ratio1 = 720.0f / this.frameheight;
+                            this.position = (int)( ( 1280.0f - ( this.framewidth * this.ratio1 ) ) / 2.0f );
+                            int num = (int)( this.framewidth * this.ratio1 );
+                            if( num <= 565 )
+                            {
+                                this.position = 295 + ( (int)( ( 565f - ( this.framewidth * this.ratio1 ) ) / 2f ) );
+                                this.i1 = 0;
+                                this.i2 = (int)this.framewidth;
+                                this.rec = new Rectangle(0, 0, 0, 0);
+                                this.rec3 = new Rectangle(0, 0, 0, 0);
+                                this.rec2 = new Rectangle(0, 0, (int)this.framewidth, (int)this.frameheight);
+                            }
+                            else
+                            {
+                                this.position = 295 - ((int)(((this.framewidth * this.ratio1) - 565f) / 2f));
+                                this.i1 = (int)(((float)(295 - this.position)) / this.ratio1);
+                                this.i2 = (int)((565f / ((float)num)) * this.framewidth);
+                                this.rec = new Rectangle(0, 0, this.i1, (int)this.frameheight);
+                                this.rec3 = new Rectangle(this.i1 + this.i2, 0, (((int)this.framewidth) - this.i1) - this.i2, (int)this.frameheight);
+                                this.rec2 = new Rectangle(this.i1, 0, this.i2, (int)this.frameheight);
+                            }
+                            this.tx描画用.vc拡大縮小倍率.X = this.ratio1;
+                            this.tx描画用.vc拡大縮小倍率.Y = this.ratio1;
+                        }
+                        else
+                        {
+                            //ワイドクリップの処理
+                            this.ratio1 = 1280f / ((float)this.framewidth);
+                            this.position = (int)((720f - (this.frameheight * this.ratio1)) / 2f);
+                            this.i1 = (int)(this.framewidth * 0.23046875);
+                            this.i2 = (int)(this.framewidth * 0.44140625);
+                            this.rec = new Rectangle(0, 0, this.i1, (int)this.frameheight);
+                            this.rec2 = new Rectangle(this.i1, 0, this.i2, (int)this.frameheight);
+                            this.rec3 = new Rectangle(this.i1 + this.i2, 0, (((int)this.framewidth) - this.i1) - this.i2, (int)this.frameheight);
+                            this.tx描画用.vc拡大縮小倍率.X = this.ratio1;
+                            this.tx描画用.vc拡大縮小倍率.Y = this.ratio1;
+                        }
+
+
+                        if (this.framewidth > 420)
+                        {
+                            f拡大率x = 420f / ((float)this.framewidth);
+                        }
+                        else
+                        {
+                            f拡大率x = 1f;
+                        }
+                        if (this.frameheight > 580)
+                        {
+                            f拡大率y = 580f / ((float)this.frameheight);
+                        }
+                        else
+                        {
+                            f拡大率y = 1f;
+                        }
+                        if (f拡大率x > f拡大率y)
+                        {
+                            f拡大率x = f拡大率y;
+                        }
+                        else
+                        {
+                            f拡大率y = f拡大率x;
+                        }
+
+                        this.smallvc = new Vector3(f拡大率x, f拡大率y, 1f);
+                        this.vclip = new Vector3(1.42f, 1.42f, 1f);
                     }
                 }
             }
@@ -395,8 +494,10 @@ namespace DTXMania
                         this.dsBGV.dshow.MediaSeeking.GetPositions( out this.lDshowPosition, out this.lStopPosition );
                         frameNoFromTime = (int)lDshowPosition;
                     }
-                    else
+                    else if( this.bUseCAviDS )
                         frameNoFromTime = time;
+                    else
+                        frameNoFromTime = this.rAVI.avi.GetFrameNoFromTime( time );
                     #endregion
 
                     if( ( this.n総移動時間ms != 0 ) && ( this.n総移動時間ms < time ) )
@@ -404,8 +505,14 @@ namespace DTXMania
                         this.n総移動時間ms = 0;
                         this.n移動開始時刻ms = -1L;
                     }
-                    if((((this.n前回表示したフレーム番号 != frameNoFromTime) || !this.bフレームを作成した)) && ( fClipアスペクト比 < 1.77f || !this.bUseMRenderer ))
+                    if((((this.n前回表示したフレーム番号 != frameNoFromTime) || !this.bフレームを作成した)) && ( fClipアスペクト比 < 1.77f || ( !this.bUseMRenderer ) ))
                     {
+                        this.n前回表示したフレーム番号 = frameNoFromTime;
+                        this.bフレームを作成した = true;
+                    }
+                    if( !this.bUseMRenderer && !this.bUseCAviDS )
+                    {
+                        this.pBmp = this.rAVI.avi.GetFramePtr( frameNoFromTime );
                         this.n前回表示したフレーム番号 = frameNoFromTime;
                         this.bフレームを作成した = true;
                     }
@@ -521,12 +628,12 @@ namespace DTXMania
                             #endregion
                         }
                     }
-                    else
+                    else if( this.bUseCAviDS  )
                     {
                         if( ( this.tx描画用 != null ) && ( this.n総移動時間ms != -1 ) )
                         {
                             #region[ フレームの生成 ]
-                            this.rAVI.avi.tGetBitmap( CDTXMania.app.Device, this.tx描画用, time );
+                            //this.rAVI.avi.tGetBitmap( CDTXMania.app.Device, this.tx描画用, time );
                             #endregion
 
                             if( this.bFullScreen )
@@ -555,6 +662,59 @@ namespace DTXMania
                                 #endregion
                             }
                         }
+                    }
+                    else
+                    {
+                        #region[ 通常の動画生成&再生処理 ]
+                        if( this.bフレームを作成した && ( this.pBmp != IntPtr.Zero ) )
+                        {
+                            #region[ フレームの生成 ]
+                            DataRectangle rectangle3 = this.tx描画用.texture.LockRectangle( 0, LockFlags.None );
+                            DataStream data = rectangle3.Data;
+                            int num14 = rectangle3.Pitch / this.tx描画用.szテクスチャサイズ.Width;
+                            BitmapUtil.BITMAPINFOHEADER* pBITMAPINFOHEADER = (BitmapUtil.BITMAPINFOHEADER*)this.pBmp.ToPointer();
+                            if (pBITMAPINFOHEADER->biBitCount == 0x18)
+                            {
+                                switch (num14)
+                                {
+                                    case 2:
+                                        this.rAVI.avi.tBitmap24ToGraphicsStreamR5G6B5( pBITMAPINFOHEADER, data, this.tx描画用.szテクスチャサイズ.Width, this.tx描画用.szテクスチャサイズ.Height );
+                                        break;
+
+                                    case 4:
+                                        this.rAVI.avi.tBitmap24ToGraphicsStreamX8R8G8B8( pBITMAPINFOHEADER, data, this.tx描画用.szテクスチャサイズ.Width, this.tx描画用.szテクスチャサイズ.Height );
+                                        break;
+                                }
+                            }
+                            this.tx描画用.texture.UnlockRectangle(0);
+                            this.bフレームを作成した = false;
+                            #endregion
+                        }
+                        if( this.bFullScreen )
+                        {
+                            #region[ 動画の描画 ]
+                            if( fClipアスペクト比 > 1.77f )
+                            {
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, this.position, 0 );
+                                this.tx描画用.t2D描画( CDTXMania.app.Device, 0, this.position );
+                            }
+                            else
+                            {
+                                if( CDTXMania.ConfigIni.bDrums有効 )
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = this.vclip;
+                                    this.tx描画用.t2D描画(CDTXMania.app.Device, 882, 0);
+                                }
+                                else if( CDTXMania.ConfigIni.bGuitar有効 )
+                                {
+                                    this.tx描画用.vc拡大縮小倍率 = new Vector3( 1f, 1f, 1f );
+                                    this.PositionG = (int)( ( 1280f - (float)( this.framewidth ) ) / 2f );
+                                    this.tx描画用.t2D描画( CDTXMania.app.Device, this.PositionG, 0 );
+                                }
+                            }
+                            #endregion
+                        }
+                        #endregion
                     }
                 }
 
@@ -861,11 +1021,11 @@ namespace DTXMania
                             if( this.dsBGV.dshow != null )
                                 this.dsBGV.dshow.MediaCtrl.Pause();
                         }
-                        if( !this.bUseMRenderer )
+                        if( !this.bUseMRenderer && this.bUseCAviDS )
                         {
                             if( this.rAVI.avi != null )
                             {
-                                this.rAVI.avi.Pause();
+                                //this.rAVI.avi.Pause();
                             }
                         }
                         this.b再生トグル = true;
@@ -877,11 +1037,11 @@ namespace DTXMania
                             if( this.dsBGV.dshow != null )
                                 this.dsBGV.dshow.MediaCtrl.Run();
                         }
-                        if( !this.bUseMRenderer )
+                        if( !this.bUseMRenderer && this.bUseCAviDS )
                         {
                             if( this.rAVI.avi != null )
                             {
-                                this.rAVI.avi.Run();
+                                //this.rAVI.avi.Run();
                             }
                         }
                         this.b再生トグル = false;
@@ -933,6 +1093,7 @@ namespace DTXMania
         private bool b再生トグル;
         private bool bDShowクリップを再生している;
         private bool bUseMRenderer = true;
+        private bool bUseCAviDS = false;
         public float fClipアスペクト比;
         private uint frameheight;
         private uint framewidth;

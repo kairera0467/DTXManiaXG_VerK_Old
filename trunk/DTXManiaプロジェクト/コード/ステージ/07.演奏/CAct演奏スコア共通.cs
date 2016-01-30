@@ -12,6 +12,8 @@ namespace DTXMania
 		public STDGBVALUE<long> nスコアの増分;
         public STDGBVALUE<int>[] x位置 = new STDGBVALUE<int>[10];
 		public STDGBVALUE<double> n現在の本当のスコア;
+		public STDGBVALUE<double> n現在の本当のスコア_ボーナスなし;
+		public STDGBVALUE<double> n現在の本当のスコア_ボーナスのみ;
 		public STDGBVALUE<long> n現在表示中のスコア;
 		public long n進行用タイマ;
 		protected CTexture txScore;
@@ -111,6 +113,26 @@ namespace DTXMania
 				#endregion
 			}
 			this.Set( part, this.Get( part ) + delta * rev );
+		}
+
+		public void BonusSet( E楽器パート part, double nScore )
+		{
+			int nPart = (int) part;
+
+            if( CDTXMania.ConfigIni.nSkillMode == 1 )
+            {
+
+            }
+
+			if( this.n現在の本当のスコア[ nPart ] != nScore )
+			{
+				this.n現在の本当のスコア[ nPart ] = nScore;
+				this.nスコアの増分[ nPart ] = (long) ( ( (double) ( this.n現在の本当のスコア[ nPart ] - this.n現在表示中のスコア[ nPart ] ) ) / 20.0 );
+				if( this.nスコアの増分[ nPart ] < 1L )
+				{
+					this.nスコアの増分[ nPart ] = 1L;
+				}
+			}
 		}
 
 
