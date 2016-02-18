@@ -221,7 +221,7 @@ namespace DTXMania
 
 				if( ( ( cdtx.STAGEFILE != null ) && ( cdtx.STAGEFILE.Length > 0 ) ) && ( File.Exists( cdtx.strフォルダ名 + cdtx.STAGEFILE ) && !CDTXMania.ConfigIni.bストイックモード ) )
 				{
-					this.strSTAGEFILE = cdtx.strフォルダ名 + cdtx.STAGEFILE;
+					this.strSTAGEFILE = cdtx.strフォルダ名 + cdtx.PATH + cdtx.STAGEFILE;
                     this.bSTAGEFILEが存在する = true;
 				}
 				else
@@ -231,7 +231,7 @@ namespace DTXMania
 				}
 				if( ( ( cdtx.SOUND_NOWLOADING != null ) && ( cdtx.SOUND_NOWLOADING.Length > 0 ) ) && File.Exists( cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING ) )
 				{
-					string strNowLoadingサウンドファイルパス = cdtx.strフォルダ名 + cdtx.SOUND_NOWLOADING;
+					string strNowLoadingサウンドファイルパス = cdtx.strフォルダ名 + cdtx.PATH + cdtx.SOUND_NOWLOADING;
 					try
 					{
 						this.sd読み込み音 = CDTXMania.Sound管理.tサウンドを生成する( strNowLoadingサウンドファイルパス );
@@ -672,7 +672,7 @@ namespace DTXMania
                     this.tSkillModeを譜面に応じて切り替える(cdtx);
             }
 
-            string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
+            string path = cdtx.strフォルダ名 + cdtx.PATH + cdtx.PREIMAGE;
                 if (!File.Exists(path))
                 {
                     //Trace.TraceWarning("ファイルが存在しません。({0})", new object[] { path });
@@ -836,10 +836,10 @@ namespace DTXMania
                                 }
                                 nWAVcount++;
                             }
-                            //if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
+                            /*if (nWAVcount <= CDTXMania.DTX.listWAV.Count)
                             {
-                                //ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
-                            }
+                                ShowProgressByFilename(CDTXMania.DTX.listWAV[nWAVcount].strファイル名);
+                            }*/
                             if (nWAVcount > CDTXMania.DTX.listWAV.Count)
                             {
                                 TimeSpan span = (TimeSpan)(DateTime.Now - timeBeginLoadWAV);
@@ -1029,7 +1029,7 @@ namespace DTXMania
 				}
 				txFilename = new CTexture( CDTXMania.app.Device, bitmapFilename, CDTXMania.TextureFormat );
 				txFilename.vc拡大縮小倍率 = new Vector3( 0.5f, 0.5f, 1f );
-				txFilename.t2D描画( CDTXMania.app.Device, 0, 720 - 16 );
+				txFilename.t2D描画( CDTXMania.app.Device, 0, 0 );
             }
             */
             #endregion

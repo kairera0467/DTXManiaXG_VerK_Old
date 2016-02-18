@@ -75,7 +75,7 @@ namespace DTXMania
                 if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
                     strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
                 else
-                    strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                    strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + this.strファイル名;
                 //-----------------
                 #endregion
 
@@ -129,7 +129,7 @@ namespace DTXMania
                     if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
                         strAVIファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
                     else
-                        strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+                        strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + this.strファイル名;
                     //-----------------
                     #endregion
 
@@ -263,7 +263,7 @@ namespace DTXMania
 				if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
 					str動画ファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
 				else
-					str動画ファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+					str動画ファイル名 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + this.strファイル名;
 				//-----------------
 				#endregion
 
@@ -308,7 +308,7 @@ namespace DTXMania
 					if( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
 						str動画ファイル名 = CDTXMania.DTX.PATH_WAV + this.strファイル名;
 					else
-						str動画ファイル名 = CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+						str動画ファイル名 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + this.strファイル名;
 					//-----------------
 					#endregion
 
@@ -458,7 +458,7 @@ namespace DTXMania
                         if ( !string.IsNullOrEmpty( CDTXMania.DTX.PATH_WAV ) )
 						    return CDTXMania.DTX.PATH_WAV + this.strファイル名;
 					    else
-						    return CDTXMania.DTX.strフォルダ名 + this.strファイル名;
+						    return CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + this.strファイル名;
                     }
                     return "";
 				}
@@ -1465,6 +1465,7 @@ namespace DTXMania
 		public const int n小節の解像度 = 384;
 		public string PANEL;
 		public string PATH_WAV;
+		public string PATH;
 		public string PREIMAGE;
 		public string PREMOVIE;
 		public string PREVIEW;
@@ -1506,6 +1507,7 @@ namespace DTXMania
 			this.BACKGROUND = "";
 			this.BACKGROUND_GR = "";
 			this.PATH_WAV = "";
+			this.PATH = "";
 			this.MIDIFILE = "";
 			this.SOUND_STAGEFAILED = "";
 			this.SOUND_FULLCOMBO = "";
@@ -3021,7 +3023,7 @@ namespace DTXMania
 //				count++;
 
 				string str = string.IsNullOrEmpty(this.PATH_WAV) ? this.strフォルダ名 : this.PATH_WAV;
-				str = str + cwav.strファイル名;
+				str = str + this.PATH + cwav.strファイル名;
 				bool bIsDirectSound = ( CDTXMania.Sound管理.GetCurrentSoundDeviceType() == "DirectSound" );
 				try
 				{
@@ -5025,6 +5027,15 @@ namespace DTXMania
 				{
 					this.t入力・パラメータ食い込みチェック( "PATH_WAV", ref strコマンド, ref strパラメータ );
 					this.PATH_WAV = strパラメータ;
+				}
+				//-----------------
+				#endregion
+				#region [ PATH ]
+				//----------------- #36034 ikanick add 16.2.18
+				else if( strコマンド.StartsWith( "PATH", StringComparison.OrdinalIgnoreCase ) )
+				{
+					this.t入力・パラメータ食い込みチェック( "PATH", ref strコマンド, ref strパラメータ );
+					this.PATH = ( strパラメータ != "PATH_WAV" ) ? strパラメータ : "";
 				}
 				//-----------------
 				#endregion

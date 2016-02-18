@@ -846,9 +846,9 @@ namespace DTXMania
 									c曲リストノード.arスコア[ i ].譜面情報.アーティスト名 = cdtx.ARTIST;
 									c曲リストノード.arスコア[ i ].譜面情報.コメント = cdtx.COMMENT;
 									c曲リストノード.arスコア[ i ].譜面情報.ジャンル = cdtx.GENRE;
-									c曲リストノード.arスコア[ i ].譜面情報.Preimage = cdtx.PREIMAGE;
-									c曲リストノード.arスコア[ i ].譜面情報.Premovie = cdtx.PREMOVIE;
-									c曲リストノード.arスコア[ i ].譜面情報.Presound = cdtx.PREVIEW;
+									c曲リストノード.arスコア[ i ].譜面情報.Preimage = cdtx.PATH + cdtx.PREIMAGE;
+									c曲リストノード.arスコア[ i ].譜面情報.Premovie = cdtx.PATH + cdtx.PREMOVIE;
+									c曲リストノード.arスコア[ i ].譜面情報.Presound = cdtx.PATH + cdtx.PREVIEW;
 									c曲リストノード.arスコア[ i ].譜面情報.Backgound = ( ( cdtx.BACKGROUND != null ) && ( cdtx.BACKGROUND.Length > 0 ) ) ? cdtx.BACKGROUND : cdtx.BACKGROUND_GR;
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Drums = cdtx.LEVEL.Drums;
 									c曲リストノード.arスコア[ i ].譜面情報.レベル.Guitar = cdtx.LEVEL.Guitar;
