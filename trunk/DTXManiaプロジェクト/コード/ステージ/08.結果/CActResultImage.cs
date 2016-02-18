@@ -582,7 +582,7 @@ namespace DTXMania
 			}
 			CDTXMania.tテクスチャの解放( ref this.txリザルト画像 );
 			this.r表示するリザルト画像 = null;
-			string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREIMAGE;
+			string path = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + CDTXMania.DTX.PREIMAGE;
 			if( !File.Exists( path ) )
 			{
 				Trace.TraceWarning( "ファイルが存在しません。({0})", new object[] { path } );
@@ -602,7 +602,7 @@ namespace DTXMania
 			{
 				return false;
 			}
-			this.strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PREMOVIE;
+			this.strAVIファイル名 = CDTXMania.DTX.strフォルダ名 + CDTXMania.DTX.PATH + CDTXMania.DTX.PREMOVIE;
 			if( !File.Exists( this.strAVIファイル名 ) )
 			{
 				Trace.TraceWarning( "ファイルが存在しません。({0})", new object[] { this.strAVIファイル名 } );
