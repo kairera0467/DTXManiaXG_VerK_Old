@@ -1380,7 +1380,11 @@ namespace DTXMania
                             if (j < 10)
                             {
                                 num5 = base.stレーンサイズ[j].x;
-                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ? -(this.n文字の縦表示位置[j] * 0x20) : (this.n文字の縦表示位置[j] * 0x20)) : base.iP_B;
+                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ?
+                                    base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ?
+                                        -(this.n文字の縦表示位置[j] * 0x20) :
+                                        (this.n文字の縦表示位置[j] * 0x20)) :
+                                    base.iP_B;
                             }
 
                             int nRectX = 85;

@@ -167,7 +167,7 @@ namespace DTXMania
 				int y = 144 + ( this.n現在のメニュー番号 * 38 );
 				int num3 = 340;
 				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, x, y, new Rectangle( 0, 0, 0x20, 0x30 ) );
-				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, ( x + num3 ) - 0x20, y, new Rectangle( 20, 0, 0x20, 0x30 ) );
+				this.txMenuカーソル.t2D描画( CDTXMania.app.Device, ( x + num3 ) - 32, y, new Rectangle( 20, 0, 32, 48 ) );
 				x += 0x20;
 				for( num3 -= 0x40; num3 > 0; num3 -= rectangle.Width )
 				{

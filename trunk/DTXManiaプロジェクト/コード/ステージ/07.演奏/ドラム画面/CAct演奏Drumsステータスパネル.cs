@@ -376,7 +376,6 @@ namespace DTXMania
                 //テクスチャ変換
                 this.txNamePlate = new CTexture( CDTXMania.app.Device, this.bNamePlate, CDTXMania.TextureFormat, false );
 
-                //
                 this.iAlbum.Dispose();
                 this.iNamePlate.Dispose();
                 this.iDifficulty.Dispose();
@@ -443,12 +442,10 @@ namespace DTXMania
                     if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                     {
                         gNamePlate.DrawImage( this.iDrumspeed, new Rectangle( 209, 156, 42, 48 ), new Rectangle( 0, ( ( this.nCurrentDrumspeed > 15 ) ? 15 : this.nCurrentDrumspeed ) * 0x30, 0x2a, 0x30 ), GraphicsUnit.Pixel );
-                        gNamePlate.DrawImage( this.iRisky,     new Rectangle( 260, 156, 42, 48 ), new Rectangle( 0, ( ( CDTXMania.ConfigIni.nRisky > 10 ) ? 10 : CDTXMania.ConfigIni.nRisky ) * 48, 42, 48 ), GraphicsUnit.Pixel );
                     }
                     else if(CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                     {
                         gNamePlate.DrawImage( this.iDrumspeed, new Rectangle( 210, 141, 42, 48 ), new Rectangle( 0, ( ( this.nCurrentDrumspeed > 15 ) ? 15 : this.nCurrentDrumspeed ) * 0x30, 0x2a, 0x30 ), GraphicsUnit.Pixel );
-                        gNamePlate.DrawImage( this.iRisky,     new Rectangle( 260, 141, 42, 48 ), new Rectangle( 0, ( ( CDTXMania.ConfigIni.nRisky > 10 ) ? 10 : CDTXMania.ConfigIni.nRisky ) * 48, 42, 48 ), GraphicsUnit.Pixel );
                     }
                     gNamePlate.Dispose();
                     this.txNamePlate.Dispose();
