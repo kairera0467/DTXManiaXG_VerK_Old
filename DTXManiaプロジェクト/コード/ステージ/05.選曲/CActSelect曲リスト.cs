@@ -1315,6 +1315,7 @@ namespace DTXMania
                 }
                 #endregion
                 #region[ タイトル・アーティスト名 ]
+                //曲名テクスチャ 生成
                 if( File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "TitleTexture.png" ) && this.tx選択されている曲の曲名 == null )
                 {
                     this.tx選択されている曲の曲名 = this.tカスタム曲名の生成( n選択曲のパネル番号 );
@@ -1324,22 +1325,31 @@ namespace DTXMania
                     if( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != null && this.tx選択されている曲の曲名 == null )
                         this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 );
                 }
-                if( File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) && this.tx選択されている曲のアーティスト名 == null )
+                //曲名テクスチャ 描画
+		        if( this.tx選択されている曲の曲名 != null )
+				    this.tx選択されている曲の曲名.t2D描画( CDTXMania.app.Device, 552, 210 );
+
+                //アーティスト名テクスチャ 生成と描画
+
+                if( File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) )
                 {
+                    if( this.tx選択されている曲のアーティスト名 == null )
                     this.tx選択されている曲のアーティスト名 = this.tカスタムアーティスト名テクスチャの生成( n選択曲のパネル番号 );
-                    if (this.tx選択されている曲のアーティスト名 != null)
-                        this.tx選択されている曲のアーティスト名.t2D描画(CDTXMania.app.Device, 552, 470);
+
+                    if( this.tx選択されている曲のアーティスト名 != null )
+                        this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, 552, 470 );
                 }
-                else
+                else if( !File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) )
                 {
                     if( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != "" && this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != null && this.tx選択されている曲のアーティスト名 == null )
                         this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 );
-                }
 
-		        if( this.tx選択されている曲の曲名 != null )
-				    this.tx選択されている曲の曲名.t2D描画( CDTXMania.app.Device, 552, 210 );
-                if( this.tx選択されている曲のアーティスト名 != null )
-                    this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, 770 - this.stバー情報[ n選択曲のパネル番号 ].nアーティスト名テクスチャの長さdot, 470 );
+                    if( this.tx選択されている曲のアーティスト名 != null )
+                    {
+                        int nアーティスト名X座標 = 782 - this.tx選択されている曲のアーティスト名.szテクスチャサイズ.Width;
+                        this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, nアーティスト名X座標, 470 );
+                    }
+                }
                 #endregion
 				//-----------------
 				#endregion
@@ -1463,6 +1473,7 @@ namespace DTXMania
                 }
                 #endregion
                 #region[ タイトル・アーティスト名 ]
+                //曲名テクスチャ 生成
                 if( File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "TitleTexture.png" ) && this.tx選択されている曲の曲名 == null )
                 {
                     this.tx選択されている曲の曲名 = this.tカスタム曲名の生成( n選択曲のパネル番号 );
@@ -1472,24 +1483,32 @@ namespace DTXMania
                     if( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != null && this.tx選択されている曲の曲名 == null )
                         this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 );
                 }
-                if( File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) && this.tx選択されている曲のアーティスト名 == null )
+                //曲名テクスチャ 描画
+		        if( this.tx選択されている曲の曲名 != null )
+				    this.tx選択されている曲の曲名.t2D描画( CDTXMania.app.Device, 552, 210 );
+
+                //アーティスト名テクスチャ 生成と描画
+
+                if( File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) )
                 {
+                    if( this.tx選択されている曲のアーティスト名 == null )
                     this.tx選択されている曲のアーティスト名 = this.tカスタムアーティスト名テクスチャの生成( n選択曲のパネル番号 );
-                    if (this.tx選択されている曲のアーティスト名 != null)
-                        this.tx選択されている曲のアーティスト名.t2D描画(CDTXMania.app.Device, 552, 470);
+
+                    if( this.tx選択されている曲のアーティスト名 != null )
+                        this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, 552, 470 );
                 }
-                else
+                else if( !File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) )
                 {
                     if( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != "" && this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != null && this.tx選択されている曲のアーティスト名 == null )
                         this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 );
+
+                    if( this.tx選択されている曲のアーティスト名 != null )
+                    {
+                        int nアーティスト名X座標 = 782 - this.tx選択されている曲のアーティスト名.szテクスチャサイズ.Width;
+                        this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, nアーティスト名X座標, 470 );
+                    }
                 }
-
-		        if( this.tx選択されている曲の曲名 != null )
-				    this.tx選択されている曲の曲名.t2D描画( CDTXMania.app.Device, 552, 210 );
-                if( this.tx選択されている曲のアーティスト名 != null )
-                    this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, 770 - this.stバー情報[ n選択曲のパネル番号 ].nアーティスト名テクスチャの長さdot, 470 );
                 #endregion
-
                 //-----------------
 				#endregion
 
@@ -1940,39 +1959,22 @@ namespace DTXMania
             //現在は機能しない(面倒なので実装してない)が、そのうち使用する予定。
             //PrivateFontの試験運転も兼ねて。
             //CPrivateFastFont
-            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
+            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 14, FontStyle.Regular );
             Bitmap bmp;
             
             bmp = prvFont.DrawPrivateFont( str文字, Color.Black, Color.Transparent );
 
-            SizeF sz曲名;
-
-            #region [ 曲名表示に必要となるサイズを取得する。]
-            //-----------------
-            using( var bmpDummy = new Bitmap(1, 1) )
-            {
-                var g = Graphics.FromImage( bmpDummy );
-                g.PageUnit = GraphicsUnit.Pixel;
-                sz曲名 = g.MeasureString( str文字, this.ft曲リスト用フォント);
-                g.Dispose();
-                //this.stバー情報[ nバー番号 ].nタイトル名テクスチャの長さdot = (int)g.MeasureString(str文字, this.ft曲リスト用フォント).Width;
-            }
-            //-----------------
-            #endregion
-            int n最大幅px = 200;
-            int height = 25;
-            int width = (int)((sz曲名.Width + 2) * 0.5f);
-            if (width > (CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2))
-                width = CDTXMania.app.Device.Capabilities.MaxTextureWidth / 2;	// 右端断ち切れ仕方ないよね
-
-            float f拡大率X = (width <= n最大幅px) ? 0.5f : (((float)n最大幅px / (float)width) * 0.5f);	// 長い文字列は横方向に圧縮。
-
             CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
 
             if( tx文字テクスチャ != null )
-                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( f拡大率X, 0.5f, 1f );
+                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( 0.75f, 1f, 1f );
 
-            //prvFont.Dispose();
+            int n最大幅 = 290;
+            if( tx文字テクスチャ.szテクスチャサイズ.Width > n最大幅 )
+            {
+                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( ( n最大幅 / ( tx文字テクスチャ.szテクスチャサイズ.Width / 0.75f ) ), 1f, 1f );
+            }
+
             bmp.Dispose();
 
             return tx文字テクスチャ;
