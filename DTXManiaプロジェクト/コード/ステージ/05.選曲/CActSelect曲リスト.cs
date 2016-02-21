@@ -305,7 +305,7 @@ namespace DTXMania
 			this.tバーの初期化();
 			for( int i = 0; i < 15; i++ )
 			{
-				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
+				//this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
                 this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
                 if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
@@ -626,7 +626,7 @@ namespace DTXMania
             //ここは最初に表示される画像の復元に必要。
             for (int i = 0; i < 15; i++)
             {
-                this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
+                //this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
                 this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
                 //this.tパスを指定してサムネイル画像を生成する(i, this.stバー情報[i].strDTXフォルダのパス, this.stバー情報[i].eバー種別);
@@ -887,7 +887,7 @@ namespace DTXMania
 						this.stバー情報[ index ].col文字色 = song.col文字色;
                         this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス;
                         this.stバー情報[ index ].strPreimageのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
-						this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
+						//this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
                         this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
@@ -964,7 +964,7 @@ namespace DTXMania
 						this.stバー情報[ index ].col文字色 = song.col文字色;
                         this.stバー情報[ index ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス;
                         this.stバー情報[ index ].strPreimageのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
-						this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
+						//this.t曲名バーの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].col文字色 );
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
                         this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
@@ -1398,30 +1398,6 @@ namespace DTXMania
                             matJacket[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y - 1.5f, fZ );
 
                             this.txTumbnail[ nパネル番号 ].t3D描画(CDTXMania.app.Device, matJacket[ i ] );
-                        }
-                        //-----------------
-                        #endregion
-                        #region [ タイトル名テクスチャを描画。]
-                        //-----------------
-                        if (this.stバー情報[nパネル番号].txタイトル名 != null)
-                        {
-                            var mat = SlimDX.Matrix.Identity;
-                            mat *= SlimDX.Matrix.Scaling(0.35f, 0.45f, 1.0f);
-                            mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[i].rotY + (this.stマトリックス座標[i].rotY - this.stマトリックス座標[i].rotY));
-                            mat *= SlimDX.Matrix.Translation(
-                                (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
-                                (this.stマトリックス座標[i].y + 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
-                                (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
-                        }
-                        if (this.stバー情報[nパネル番号].txアーティスト名 != null)
-                        {
-                            var mat = SlimDX.Matrix.Identity;
-                            mat *= SlimDX.Matrix.Scaling(0.35f, 0.45f, 1.0f);
-                            mat *= SlimDX.Matrix.RotationY(this.stマトリックス座標[i].rotY + (this.stマトリックス座標[i].rotY - this.stマトリックス座標[i].rotY));
-                            mat *= SlimDX.Matrix.Translation(
-                                (this.stマトリックス座標[i].x + (int)((this.stマトリックス座標[i].x - this.stマトリックス座標[i].x))) * CTexture.f画面比率,
-                                (this.stマトリックス座標[i].y - 110 + (int)((this.stマトリックス座標[i].y - this.stマトリックス座標[i].y))) * CTexture.f画面比率,
-                                (this.stマトリックス座標[i].z + (int)((this.stマトリックス座標[i].z - this.stマトリックス座標[i].z))) * CTexture.f画面比率);
                         }
                         //-----------------
                         #endregion
@@ -2129,7 +2105,6 @@ namespace DTXMania
 
             graphicsA.PageUnit = GraphicsUnit.Pixel;
 
-            imgCustomSongNameTexture = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
 
             
             bCustomSongNameTexture = new Bitmap( 240, 40 );
@@ -2181,10 +2156,6 @@ namespace DTXMania
             Graphics graphics = Graphics.FromImage( b4font );
 
             graphics.PageUnit = GraphicsUnit.Pixel;
-
-            imgCustomArtistNameTexture = Image.FromFile( CSkin.Path( @"Graphics\7_Dummy.png" ) );
-
-            
             bCustomArtistNameTexture = new Bitmap( 210, 27 );
 
             graphics = Graphics.FromImage( bCustomArtistNameTexture );

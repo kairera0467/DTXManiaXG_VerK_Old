@@ -1087,7 +1087,7 @@ namespace DTXMania
                                                         continue;
                                                     }
                                             }
-                                            throw new Exception("HHGroup の値が無効です。");
+                                            throw new Exception("BDGroup の値が無効です。");
                                         }
                                         #endregion
 										#region [ HitSoundPriorityHH ]

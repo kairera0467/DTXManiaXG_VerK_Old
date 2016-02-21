@@ -493,6 +493,23 @@ namespace DTXMania
         private STスクリプト座標 stゲージ矢印;
         private STスクリプト座標 stゲージ基準線;
         private STスクリプト座標 stゲージ基準線達成;
+
+        private STスクリプト座標 stパネル筐体トップ;
+        private STスクリプト座標 stパネル自己ベスト;
+        private STスクリプト座標 stパネルPERFECT;
+        private STスクリプト座標 stパネルGREAT;
+        private STスクリプト座標 stパネルGOOD;
+        private STスクリプト座標 stパネルPOOR;
+        private STスクリプト座標 stパネルMISS;
+
+        private STスクリプト座標 stパネル数字座標;
+        private STスクリプト座標 st比較用数字座標;
+
+        private STスクリプト座標 st比較対象名_自己ベスト;
+        private STスクリプト座標 st比較対象名_オート;
+        private STスクリプト座標 st比較対象名_ハイスキル;
+        private STスクリプト座標 st比較対象名_ハイスコア;
+        private STスクリプト座標 st比較対象名_オンライン;
         #endregion
 
         //-----------------
@@ -655,12 +672,43 @@ namespace DTXMania
                 case "backpanel":
                     this.stグラフ背景 = stScriptPosSet;
                     break;
+                case "recpanel_cabtop":
+                    break;
+                case "recpanel_mybest":
+                    break;
+                case "recpanel_perfect":
+                    break;
+                case "recpanel_great":
+                    break;
+                case "recpanel_good":
+                    break;
+                case "recpanel_poor":
+                    break;
+                case "recpanel_miss":
+                    break;
+                case "recpanel_number_pos":
+                    break;
+                case "target_number_pos":
+                    break;
+                case "targetname_mybest":
+                    break;
+                case "targetname_auto":
+                    break;
+                case "targetname_hiskill":
+                    break;
+                case "targetname_hiscore":
+                    break;
+                case "targetname_online":
+                    break;
                 case "recpanel_number":
                 case "target_number":
                     this.t文字位置リストに追加する( stScriptPosSet );
                     break;
                 case "gauge_red":
                     this.stゲージ現在 = stScriptPosSet;
+                    break;
+                case "gauge_mark":
+                    this.stゲージ矢印 = stScriptPosSet;
                     break;
                 case "gauge_target_failed":
                     this.stゲージ比較_敗 = stScriptPosSet;
