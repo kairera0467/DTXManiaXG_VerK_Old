@@ -1346,7 +1346,7 @@ namespace DTXMania
 
                     if( this.tx選択されている曲のアーティスト名 != null )
                     {
-                        int nアーティスト名X座標 = 782 - this.tx選択されている曲のアーティスト名.szテクスチャサイズ.Width;
+                        int nアーティスト名X座標 = 763 - (int)( this.tx選択されている曲のアーティスト名.szテクスチャサイズ.Width * 0.75f );
                         this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, nアーティスト名X座標, 470 );
                     }
                 }
@@ -1504,7 +1504,7 @@ namespace DTXMania
 
                     if( this.tx選択されている曲のアーティスト名 != null )
                     {
-                        int nアーティスト名X座標 = 782 - this.tx選択されている曲のアーティスト名.szテクスチャサイズ.Width;
+                        int nアーティスト名X座標 = 763 - (int)( this.tx選択されている曲のアーティスト名.szテクスチャサイズ.Width * 0.75f );
                         this.tx選択されている曲のアーティスト名.t2D描画( CDTXMania.app.Device, nアーティスト名X座標, 470 );
                     }
                 }

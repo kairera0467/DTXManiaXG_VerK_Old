@@ -766,7 +766,7 @@ namespace DTXMania
                 "左ペダル、左バスドラ、右バスドラの打ち分け\n" +
                 "方法を指定します。\n" +
                 "  BD-0 ... LP | LBD | BD\n" +
-                "  BD-1 ... LP | LBD & BD" +
+                "  BD-1 ... LP | LBD & BD\n" +
                 "  BD-2 ... LP & LBD | BD\n" +
                 "  BD-3 ... LP & LBD & BD\n",
                 new string[] { "BD-0", "BD-1", "BD-2", "BD-3" });

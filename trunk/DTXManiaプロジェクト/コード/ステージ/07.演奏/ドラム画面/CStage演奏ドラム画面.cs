@@ -2605,11 +2605,24 @@ namespace DTXMania
                                                 rChip = chipLP;
                                                 break;
                                             case EBDGroup.左右ペダルのみ打ち分ける:
-                                                #region[左右ペダル]
-                                                rChip = (chipLP != null) ? chipLP : chipLBD;
+                                                #region[ 左右ペダル ]
+                                                if( chipLP != null && chipLBD != null )
+                                                {
+                                                    if( chipLP.n発声時刻ms > chipLBD.n発声時刻ms )
+                                                        rChip = chipLP;
+                                                    else
+                                                        rChip = chipLBD;
+                                                }
+                                                else if( chipLP == null )
+                                                {
+                                                    rChip = chipLBD;
+                                                }
+                                                else if( chipLBD == null )
+                                                {
+                                                    rChip = chipLP;
+                                                }
                                                 #endregion
                                                 break;
-
                                             case EBDGroup.どっちもBD:
                                                 #region[共通]
                                                 if( chipLP != null )
@@ -2653,11 +2666,24 @@ namespace DTXMania
                                                 rChip = chipLBD;
                                                 break;
                                             case EBDGroup.左右ペダルのみ打ち分ける:
-                                                #region [ *** ]
-                                                rChip = (chipLBD != null) ? chipLBD : chipBD;
+                                                #region [ 左右ペダル ]
+                                                if( chipLP != null && chipLBD != null )
+                                                {
+                                                    if( chipLP.n発声時刻ms > chipLBD.n発声時刻ms )
+                                                        rChip = chipLP;
+                                                    else
+                                                        rChip = chipLBD;
+                                                }
+                                                else if( chipLP == null )
+                                                {
+                                                    rChip = chipLBD;
+                                                }
+                                                else if( chipLBD == null )
+                                                {
+                                                    rChip = chipLP;
+                                                }
                                                 #endregion
                                                 break;
-
                                             case EBDGroup.どっちもBD:
                                                 #region[ *** ]
                                                 if (chipLBD != null)
