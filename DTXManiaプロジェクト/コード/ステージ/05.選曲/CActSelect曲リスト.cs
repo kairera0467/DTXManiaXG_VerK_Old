@@ -1452,6 +1452,9 @@ namespace DTXMania
 					var g = Graphics.FromImage( bmpDummy );
 					g.PageUnit = GraphicsUnit.Pixel;
 					sz曲名 = g.MeasureString( str曲名, this.ft曲リスト用フォント );
+
+                    g.Dispose();
+                    bmpDummy.Dispose();
 				}
 				//-----------------
 				#endregion
@@ -1476,6 +1479,8 @@ namespace DTXMania
 
 					this.stバー情報[ nバー番号 ].txタイトル名 = new CTexture( CDTXMania.app.Device, bmp, CDTXMania.TextureFormat );
 					this.stバー情報[ nバー番号 ].txタイトル名.vc拡大縮小倍率 = new Vector3( f拡大率X, 0.5f, 1f );
+
+                    g.Dispose();
 				}
 			}
 			catch( CTextureCreateFailedException )
