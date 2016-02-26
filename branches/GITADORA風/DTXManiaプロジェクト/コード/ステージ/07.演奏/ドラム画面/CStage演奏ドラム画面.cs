@@ -1124,7 +1124,7 @@ namespace DTXMania
                                         #region[ BD & LBD | LP ]
                                         if( e判定BD != E判定.Miss && e判定LBD != E判定.Miss )
                                         {
-                                            if( chipBD.n発声位置 < chipLP.n発声位置 )
+                                            if( chipBD.n発声位置 < chipLBD.n発声位置 )
                                             {
                                                 this.tドラムヒット処理( nTime, Eパッド.BD, chipBD, inputEvent.nVelocity );
                                             }
@@ -1280,7 +1280,6 @@ namespace DTXMania
                                         }
                                         break;
                                         #endregion
-
 
                                     default:
                                         #region [ 全部打ち分け時のヒット処理 ]
@@ -2590,6 +2589,24 @@ namespace DTXMania
                                                 rChip = (chipBD != null) ? chipBD : chipLP;
                                                 break;
 
+                                            case EBDGroup.BDとLPで打ち分ける:
+                                                if( chipBD != null && chipLBD != null )
+                                                {
+                                                    if( chipBD.n発声時刻ms >= chipLBD.n発声時刻ms )
+                                                        rChip = chipBD;
+                                                    else if( chipBD.n発声時刻ms < chipLBD.n発声時刻ms )
+                                                        rChip = chipLBD;
+                                                }
+                                                else if( chipLBD != null )
+                                                {
+                                                    rChip = chipLBD;
+                                                }
+                                                else
+                                                {
+                                                    rChip = chipBD;
+                                                }
+                                                break;
+
                                             case EBDGroup.どっちもBD:
                                                 #region [ *** ]
                                                 if (chipBD != null)
@@ -2637,7 +2654,11 @@ namespace DTXMania
                                                 rChip = (chipLP != null) ? chipLP : chipLBD;
                                                 #endregion
                                                 break;
-
+                                            case EBDGroup.BDとLPで打ち分ける:
+                                                #region[ BDとLP ]
+                                                if( chipLP != null ){ rChip = chipLP; }
+                                                #endregion
+                                                break;
                                             case EBDGroup.どっちもBD:
                                                 #region[共通]
                                                 if (chipLP != null)
@@ -2685,7 +2706,25 @@ namespace DTXMania
                                                 rChip = (chipLBD != null) ? chipLBD : chipBD;
                                                 #endregion
                                                 break;
-
+                                            case EBDGroup.BDとLPで打ち分ける:
+                                                #region[ BDとLBD ]
+                                                if( chipBD != null && chipLBD != null )
+                                                {
+                                                    if( chipBD.n発声時刻ms <= chipLBD.n発声時刻ms )
+                                                        rChip = chipLBD;
+                                                    else if( chipBD.n発声時刻ms > chipLBD.n発声時刻ms )
+                                                        rChip = chipBD;
+                                                }
+                                                else if( chipLBD != null )
+                                                {
+                                                    rChip = chipLBD;
+                                                }
+                                                else
+                                                {
+                                                    rChip = chipBD;
+                                                }
+                                                #endregion
+                                                break;
                                             case EBDGroup.どっちもBD:
                                                 #region[ *** ]
                                                 if (chipLBD != null)
