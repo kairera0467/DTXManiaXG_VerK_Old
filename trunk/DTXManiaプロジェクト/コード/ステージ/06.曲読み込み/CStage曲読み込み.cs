@@ -500,9 +500,12 @@ namespace DTXMania
             string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
             CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
             CDTX cdtx = new CDTX(strDTXファイルパス, false);
-            bool bCLASSIC = CDTXMania.bコンパクトモード ? false : CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums;
-            
+            STDGBVALUE< bool > bCLASSIC = new STDGBVALUE<bool>();
 
+            for( int i = 0; i < 3; i++ )
+            {
+                bCLASSIC[ i ] = CDTXMania.bコンパクトモード ? false : CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である[ i ];
+            }
 
             if( this.ds背景動画 != null && !this.bSTAGEFILEが存在する )
             {
@@ -559,20 +562,17 @@ namespace DTXMania
             this.txヘッダーパネル.t2D描画( CDTXMania.app.Device, 0, 0 );
 
             #region[ 難易度数字 ]
-
-            //後に変数にしてギターベースなどでも正常に表示できるようにする予定
             STDGBVALUE<double> n表記するLEVEL = new STDGBVALUE<double>();
-
             if( CDTXMania.ConfigIni.bDrums有効 )
             {
                 int i = 0;
 
-                n表記するLEVEL[i] = cdtx.LEVEL[i] / 10.0;
-                n表記するLEVEL[i] += (cdtx.LEVELDEC[i] != 0 ? cdtx.LEVELDEC[i] / 100.0 : 0);
-                int DTXLevel = cdtx.LEVEL[i];
-                double DTXLevelDeci = (DTXLevel * 10 - cdtx.LEVEL[i]);
+                n表記するLEVEL[ i ] = cdtx.LEVEL[ i ] / 10.0;
+                n表記するLEVEL[ i ] += ( cdtx.LEVELDEC[ i ] != 0 ? cdtx.LEVELDEC[ i ] / 100.0 : 0 );
+                int DTXLevel = cdtx.LEVEL[ i ];
+                double DTXLevelDeci = ( DTXLevel * 10 - cdtx.LEVEL[ i ] );
 
-                string strLevel = string.Format("{0:0.00}", n表記するLEVEL[i]);
+                string strLevel = string.Format( "{0:0.00}", n表記するLEVEL[ i ] );
 
                 if (cdtx.LEVEL[i] > 99)
                 {
@@ -585,10 +585,10 @@ namespace DTXMania
                     DTXLevelDeci = (cdtx.LEVEL[i] - DTXLevel * 10);
                 }
 
-                if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                if( bCLASSIC.Drums && !cdtx.b強制的にXG譜面にする )
                 {
-                    DTXLevel = cdtx.LEVEL[i];
-                    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                    DTXLevel = cdtx.LEVEL[ i ];
+                    this.t大文字表示( 338, 220, string.Format("{0,2:00}", DTXLevel));
                 }
                 else
                 {
@@ -621,12 +621,12 @@ namespace DTXMania
                 //ギター
                 if( cdtx.bチップがある.Guitar )
                 {
-                    //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                    if( bCLASSIC.Guitar && !cdtx.b強制的にXG譜面にする )
                     {
-                    //    DTXLevel = cdtx.LEVEL[i];
-                    //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                        DTXLevel.Guitar = cdtx.LEVEL.Guitar;
+                        this.t大文字表示(338, 220, string.Format( "{0,2:00}", DTXLevel.Guitar ));
                     }
-                    //else
+                    else
                     {
                         this.t大文字表示(335 + (616 * iPart), 218, string.Format("{0:0}", strLevel_G.Substring(0, 1)));
                         this.txLevel.t2D描画(CDTXMania.app.Device, 359 + (616 * iPart), 251, new Rectangle(145, 54, 7, 8));
@@ -643,12 +643,12 @@ namespace DTXMania
                 if( cdtx.bチップがある.Bass )
                 {
                     //ベース
-                    //if (bCLASSIC && !cdtx.b強制的にXG譜面にする)
+                    if( bCLASSIC.Bass && !cdtx.b強制的にXG譜面にする )
                     {
-                    //    DTXLevel = cdtx.LEVEL[i];
-                    //    this.t大文字表示(338, 220, string.Format("{0,2:00}", DTXLevel));
+                        DTXLevel.Bass = cdtx.LEVEL.Bass;
+                        this.t大文字表示( 338, 220, string.Format( "{0,2:00}", DTXLevel.Bass ) );
                     }
-                    //else
+                    else
                     {
                         this.t大文字表示(953 - (616 * iPart), 218, string.Format("{0:0}", strLevel_B.Substring(0, 1)));
                         this.txLevel.t2D描画(CDTXMania.app.Device, 975 - (616 * iPart), 251, new Rectangle(145, 54, 7, 8));
@@ -1037,7 +1037,9 @@ namespace DTXMania
 
         private void tSkillModeを譜面に応じて切り替える( CDTX cdtx )
         {
-            if( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums && !cdtx.b強制的にXG譜面にする )
+            if( CDTXMania.ConfigIni.bDrums有効 ? ( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Drums ) :
+                                                 ( CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Guitar | CDTXMania.stage選曲.r確定されたスコア.譜面情報.b完全にCLASSIC譜面である.Bass ) &&
+              !cdtx.b強制的にXG譜面にする )
                 CDTXMania.ConfigIni.nSkillMode = 0;
             else
                 CDTXMania.ConfigIni.nSkillMode = 1;
