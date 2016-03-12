@@ -321,7 +321,7 @@ namespace DTXMania
                         }
                         else
                         {
-                            dbTargetSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
+                            //dbTargetSkill = CDTXMania.stage選曲.r確定されたスコア.譜面情報.最大スキル[ 0 ];
                         }
                         if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
                             dbTargetSkill = 100.0;

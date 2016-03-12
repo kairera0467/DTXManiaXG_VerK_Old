@@ -374,7 +374,23 @@ namespace DTXMania
 
                     string strLevel = string.Format("{0:0.00}", n表記するLEVEL[i]);
 
-                    if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                    #region[ CLASSIC譜面判別 ]
+                    STDGBVALUE<bool> bClassic = new STDGBVALUE<bool>();
+                    if( i == 0 )
+                    {
+                        bClassic[ 0 ] = ( (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false) );
+                    }
+                    else if( i == 1 )
+                    {
+                        bClassic[ 1 ] = !CDTXMania.DTX.bチップがある.YPGuitar;
+                    }
+                    else if( i == 2 )
+                    {
+                        bClassic[ 2 ] = !CDTXMania.DTX.bチップがある.YPBass;
+                    }
+                    #endregion
+
+                    if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && bClassic[ i ] )
                     {
                         num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]);
                     }
@@ -390,7 +406,7 @@ namespace DTXMania
                         }
                     }
 
-                    if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && (CDTXMania.DTX.bチップがある.LeftCymbal == false) && (CDTXMania.DTX.bチップがある.LP == false) && (CDTXMania.DTX.bチップがある.LBD == false) && (CDTXMania.DTX.bチップがある.FT == false) && (CDTXMania.DTX.bチップがある.Ride == false))
+                    if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && bClassic[i] )
                     {
                         //    graphics.DrawString(string.Format("{0:00}", num), this.ftSongDifficultyFont, new SolidBrush(Color.FromArgb(0xba, 0xba, 0xba)), (float)0f, (float)-4f);
                         this.t大文字表示(this.n本体X[i] + 653, this.n本体Y[i] + 11, num.ToString());

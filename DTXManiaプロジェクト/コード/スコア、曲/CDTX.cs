@@ -7151,7 +7151,7 @@ namespace DTXMania
 				this.listChip.Add( chip );
 
                 //2015.04.15 kairera0467　ギターベースの場合、chipをギターベースのリストにも入れる。
-                //ここでロングノーツのための発生位置を設定したりする。
+                //ここでロングノーツのための発声位置を設定したりする。
                 if( chip.e楽器パート == E楽器パート.GUITAR )
                 {
                     if( chip.nチャンネル番号 == 0x2A )
