@@ -687,13 +687,22 @@ namespace DTXMania
                 new string[] { "Type-A", "Type-B", "Type-C", "Type-D" });
             this.list項目リスト.Add(this.iDrumsLaneType);
 
+            this.iDrumsRDPosition = new CItemList("RDPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRDPosition,
+                "ライドシンバルレーンの表示\n" +
+                "位置を変更します。\n"+
+                "RD RC:最右端はRCレーンになります\n"+
+                "RC RD: 最右端はRDレーンになります",
+                "To change the displaying position of\n" +
+                "the ride cymbal.",
+                new string[] { "RD RC", "RC RD" });
+            this.list項目リスト.Add(this.iDrumsRDPosition);
+
             //----------SpecialOption----------
 
             this.iDrumsHAZARD = new CItemToggle("HAZARD", CDTXMania.ConfigIni.bHAZARD,
                 "ドSハザードモード\n" +
-                "GREAT以下の判定でも\n"+
-                "ライフが減ります。",
-                "\n" +
+                "GREAT以下の判定でも回数が減ります。",
+                "SuperHazardMode\n" +
                 "");
             this.list項目リスト.Add(this.iDrumsHAZARD);
 
@@ -905,16 +914,6 @@ namespace DTXMania
                 "B: In LP and LBD Color-coded.",
                 new string[] { "Type A", "Type B" });
             this.list項目リスト.Add(this.iDrumsLBDGraphics);
-
-            this.iDrumsRDPosition = new CItemList("RDPosition", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eRDPosition,
-                "ライドシンバルレーンの表示\n" +
-                "位置を変更します。\n" +
-                "RD RC:最右端はRCレーンになります\n" +
-                "RC RD: 最右端はRDレーンになります",
-                "To change the displaying position of\n" +
-                "the ride cymbal.",
-                new string[] { "RD RC", "RC RD" });
-            this.list項目リスト.Add(this.iDrumsRDPosition);
 
             this.iDrumsJudgeLinePos = new CItemInteger("JudgeLinePos", 0, 100, CDTXMania.ConfigIni.nJudgeLine.Drums,
                 "判定ラインの位置を\n" +
