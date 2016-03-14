@@ -1341,7 +1341,7 @@ namespace DTXMania
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.B ) ? 770 : 1020;
+								num5 = ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.B ) ? 770 : 1060;
                                 if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Bass ) == Eタイプ.C )
                                     num6 = CDTXMania.ConfigIni.bReverse.Bass ? 650 : 80;
                                 else
@@ -1354,7 +1354,7 @@ namespace DTXMania
 									// goto Label_06B7;
 									continue;
 								}
-								num5 = ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.B ) ? 420 : 160;
+								num5 = ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.B ) ? 420 : 180;
                                 if ( ( (Eタイプ) CDTXMania.ConfigIni.判定文字表示位置.Guitar ) == Eタイプ.C )
                                     num6 = CDTXMania.ConfigIni.bReverse.Guitar ? 650 : 80;
                                 else
