@@ -298,7 +298,6 @@ namespace DTXMania
                     }
                 }
 
-                int LEVEL = cdtx.LEVEL.Drums;
                 if( !CDTXMania.bコンパクトモード )
                     this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
 				cdtx.On非活性化();
