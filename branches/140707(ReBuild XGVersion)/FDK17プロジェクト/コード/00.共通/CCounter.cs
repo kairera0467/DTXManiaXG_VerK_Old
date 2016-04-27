@@ -7,17 +7,6 @@ namespace FDK
 	/// <summary>
 	/// 一定間隔で単純増加する整数（カウント値）を扱う。
 	/// </summary>
-    /// <remarks>
-    /// ○使い方
-    /// 1.CCounterの変数をつくる。
-    /// 2.CCounterを生成
-    ///   ctCounter = new CCounter( 0, 3, 10, CDTXMania.Timer );
-    /// 3.進行メソッドを使用する。
-    /// 4.ウマー。
-    ///
-    /// double値を使う場合、t進行db、t進行LoopDbを使うこと。
-    /// また、double版では間隔の値はミリ秒単位ではなく、通常の秒単位になります。
-    /// </remarks>
 	public class CCounter
 	{
 		// 値プロパティ
@@ -43,27 +32,6 @@ namespace FDK
 			set;
 		}
 
-        public double db開始値
-        {
-            get;
-            private set;
-        }
-        public double db終了値
-        {
-            get;
-            private set;
-        }
-        public double db現在の値
-        {
-            get;
-            set;
-        }
-        public double db現在の経過時間
-        {
-            get;
-            set;
-        }
-
 
 		// 状態プロパティ
 
@@ -84,30 +52,6 @@ namespace FDK
 			get { return !this.b終了値に達した; }
 		}
 
-        /// <summary>通常のCCounterでは使用できません。</summary>
-        public bool b進行中db
-        {
-            get { return ( this.db現在の経過時間 != -1 ); }
-        }
-
-        /// <summary>通常のCCounterでは使用できません。</summary>
-        public bool b停止中db
-        {
-            get { return !this.b進行中db; }
-        }
-
-        /// <summary>通常のCCounterでは使用できません。</summary>
-        public bool b終了値に達したdb
-        {
-            get { return ( this.db現在の値 >= this.db終了値 ); }
-        }
-
-        /// <summary>通常のCCounterでは使用できません。</summary>
-        public bool b終了値に達してないdb
-        {
-            get { return !this.b終了値に達したdb; }
-        }
-
 
 		// コンストラクタ
 
@@ -119,12 +63,6 @@ namespace FDK
 			this.n間隔ms = 0;
 			this.n現在の値 = 0;
 			this.n現在の経過時間ms = CTimer.n未使用;
-
-            this.db開始値 = 0;
-            this.db終了値 = 0;
-            this.db間隔 = 0;
-            this.db現在の値 = 0;
-            this.db現在の経過時間 = CSoundTimer.n未使用;
 		}
 
 		/// <summary>生成と同時に開始する。</summary>
@@ -133,13 +71,6 @@ namespace FDK
 		{
 			this.t開始( n開始値, n終了値, n間隔ms, timer );
 		}
-
-        /// <summary>生成と同時に開始する。(double版)</summary>
-        public CCounter( double db開始値, double db終了値, double db間隔, CSoundTimer timer )
-            : this()
-        {
-            this.t開始( db開始値, db終了値, db間隔 * 1000.0, timer );
-        }
 
 
 		// 状態操作メソッド
@@ -161,23 +92,6 @@ namespace FDK
 			this.n現在の値 = n開始値;
 		}
 
-        /// <summary>
-		/// カウントを開始する。(double版)
-		/// </summary>
-		/// <param name="db開始値">最初のカウント値。</param>
-		/// <param name="db終了値">最後のカウント値。</param>
-		/// <param name="db間隔">カウント値を１増加させるのにかける時間（秒単位）。</param>
-		/// <param name="timer">カウントに使用するタイマ。</param>
-		public void t開始( double db開始値, double db終了値, double db間隔, CSoundTimer timer )
-		{
-			this.db開始値 = db開始値;
-			this.db終了値 = db終了値;
-			this.db間隔 = db間隔;
-			this.timerdb = timer;
-			this.db現在の経過時間 = this.timerdb.dbシステム時刻;
-			this.db現在の値 = db開始値;
-		}
-
 		/// <summary>
 		/// 前回の t進行() の呼び出しからの経過時間をもとに、必要なだけカウント値を増加させる。
 		/// カウント値が終了値に達している場合は、それ以上増加しない（終了値を維持する）。
@@ -196,28 +110,6 @@ namespace FDK
 						this.n現在の値 = this.n終了値;
 
 					this.n現在の経過時間ms += this.n間隔ms;
-				}
-			}
-		}
-
-        /// <summary>
-		/// 前回の t進行() の呼び出しからの経過時間をもとに、必要なだけカウント値を増加させる。
-		/// カウント値が終了値に達している場合は、それ以上増加しない（終了値を維持する）。
-		/// </summary>
-		public void t進行db()
-		{
-			if ( ( this.timerdb != null ) && ( this.db現在の経過時間 != CSoundTimer.n未使用 ) )
-			{
-				double num = this.timerdb.n現在時刻;
-				if ( num < this.db現在の経過時間 )
-					this.db現在の経過時間 = num;
-
-				while ( ( num - this.db現在の経過時間 ) >= this.db間隔 )
-				{
-					if ( ++this.db現在の値 > this.db終了値 )
-						this.db現在の値 = this.db終了値;
-
-					this.db現在の経過時間 += this.db間隔;
 				}
 			}
 		}
@@ -244,28 +136,6 @@ namespace FDK
 			}
 		}
 
-        /// <summary>
-		/// 前回の t進行Loop() の呼び出しからの経過時間をもとに、必要なだけカウント値を増加させる。
-		/// カウント値が終了値に達している場合は、次の増加タイミングで開始値に戻る（値がループする）。
-		/// </summary>
-		public void t進行LoopDb()
-		{
-			if ( ( this.timerdb != null ) && ( this.db現在の経過時間 != CSoundTimer.n未使用 ) )
-			{
-				double num = this.timerdb.n現在時刻;
-				if ( num < this.n現在の経過時間ms )
-					this.db現在の経過時間 = num;
-
-				while ( ( num - this.db現在の経過時間 ) >= this.db間隔 )
-				{
-					if ( ++this.db現在の値 > this.db終了値 )
-						this.db現在の値 = this.db開始値;
-
-					this.db現在の経過時間 += this.db間隔;
-				}
-			}
-		}
-
 		/// <summary>
 		/// カウントを停止する。
 		/// これ以降に t進行() や t進行Loop() を呼び出しても何も処理されない。
@@ -273,7 +143,6 @@ namespace FDK
 		public void t停止()
 		{
 			this.n現在の経過時間ms = CTimer.n未使用;
-            this.db現在の経過時間 = CSoundTimer.n未使用;
 		}
 
 
@@ -339,9 +208,7 @@ namespace FDK
 		#region [ private ]
 		//-----------------
 		private CTimer timer;
-        private CSoundTimer timerdb;
 		private int n間隔ms;
-        private double db間隔;
 		//-----------------
 		#endregion
 	}

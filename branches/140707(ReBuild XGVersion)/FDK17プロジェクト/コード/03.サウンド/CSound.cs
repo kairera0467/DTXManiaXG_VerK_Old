@@ -63,6 +63,7 @@ namespace FDK
 			//{
 			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI )
 			//    {
+			//			// LINEARでなくWINDOWS(2)を使う必要があるが、exclusive時は使用不可、またデバイス側が対応してないと使用不可
 			//        bool b = BassWasapi.BASS_WASAPI_SetVolume( BASSWASAPIVolume.BASS_WASAPI_CURVE_LINEAR, value / 100.0f );
 			//        if ( !b )
 			//        {
@@ -118,7 +119,7 @@ namespace FDK
 		#region [ WASAPI/ASIO/DirectSound設定値 ]
 		/// <summary>
 		/// <para>WASAPI 排他モード出力における再生遅延[ms]（の希望値）。最終的にはこの数値を基にドライバが決定する）。</para>
-		/// <para>→ WASAPI初期化時に自動設定するようにしたため、ここで設定した値は使用しないようになった。</para>
+		/// <para>0以下の値を指定すると、この数値はWASAPI初期化時に自動設定する。正数を指定すると、その値を設定しようと試みる。</para>
 		/// </summary>
 		public static int SoundDelayExclusiveWASAPI = 0;		// SSTでは、50ms
 		public int GetSoundExclusiveWASAPI()
@@ -757,7 +758,6 @@ namespace FDK
 		{
 			this.e作成方法 = E作成方法.ファイルから;
 			this.strファイル名 = strファイル名;
-
 			if ( String.Compare( Path.GetExtension( strファイル名 ), ".xa", true ) == 0 ||
 				 String.Compare( Path.GetExtension( strファイル名 ), ".mp3", true ) == 0 ||
 				 String.Compare( Path.GetExtension( strファイル名 ), ".ogg", true ) == 0 )	// caselessで文字列比較
@@ -841,7 +841,7 @@ namespace FDK
 			wfx.SamplesPerSecond = (int) cw32wfx.nSamplesPerSec;
 
 			// セカンダリバッファを作成し、PCMデータを書き込む。
-			tDirectSoundサウンドを作成する・セカンダリバッファの作成とWAVデータ書き込み
+			tDirectSoundサウンドを作成する_セカンダリバッファの作成とWAVデータ書き込み
 				( ref this.byArrWAVファイルイメージ, DirectSound, CSoundDeviceDirectSound.DefaultFlags, wfx,
 				  nPCMサイズbyte, nPCMデータの先頭インデックス );
 		}
@@ -951,11 +951,11 @@ namespace FDK
 
 
 			// セカンダリバッファを作成し、PCMデータを書き込む。
-			tDirectSoundサウンドを作成する・セカンダリバッファの作成とWAVデータ書き込み(
+			tDirectSoundサウンドを作成する_セカンダリバッファの作成とWAVデータ書き込み(
 				ref byArrWAVファイルイメージ, DirectSound, flags, wfx, nPCMサイズbyte, nPCMデータの先頭インデックス );
 		}
 
-		private void tDirectSoundサウンドを作成する・セカンダリバッファの作成とWAVデータ書き込み
+		private void tDirectSoundサウンドを作成する_セカンダリバッファの作成とWAVデータ書き込み
 			( ref byte[] byArrWAVファイルイメージ, DirectSound DirectSound, BufferFlags flags, WaveFormat wfx,
 			int nPCMサイズbyte, int nPCMデータの先頭インデックス )
 		{
@@ -1199,19 +1199,69 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		{
 			if( this.bBASSサウンドである )
 			{
-				bool b = BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ), BASSMode.BASS_POS_BYTES );
-				if ( !b )
+				bool b = true;
+				try
 				{
-					BASSError be = Bass.BASS_ErrorGetCode();
-					Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + be.ToString() );
+					b = BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ), BASSMode.BASS_POS_BYTES );
 				}
+				catch( Exception e )
+				{
+					Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + e.ToString() + ": " + n位置ms + "ms" );
+				}
+				finally
+				{
+					if ( !b )
+					{
+						BASSError be = Bass.BASS_ErrorGetCode();
+						Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + be.ToString() + ": " + n位置ms + "MS" );
+					}
+				}
+				//if ( this.n総演奏時間ms > 5000 )
+				//{
+				//    Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seeked to " + n位置ms + "ms = " + Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ) );
+				//}
 			}
 			else if( this.bDirectSoundである )
 			{
 				int n位置sample = (int) ( this.Buffer.Format.SamplesPerSecond * n位置ms * 0.001 * _db周波数倍率 * _db再生速度 );	// #30839 2013.2.24 yyagi; add _db周波数倍率 and _db再生速度
-				this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
+				try
+				{
+					this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
+				}
+				catch ( DirectSoundException e )
+				{
+					Trace.TraceError( "{0}: Seek error: {1}", Path.GetFileName( this.strファイル名 ), n位置ms, e.Message );
+				}
+				//if ( this.n総演奏時間ms > 5000 )
+				//{
+				//    Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seeked to " + n位置ms + "ms = " + n位置sample );
+				//}
 			}
 		}
+		/// <summary>
+		/// デバッグ用
+		/// </summary>
+		/// <param name="n位置byte"></param>
+		/// <param name="db位置ms"></param>
+		public void t再生位置を取得する( out long n位置byte, out double db位置ms )
+		{
+			if ( this.bBASSサウンドである )
+			{
+				n位置byte = BassMix.BASS_Mixer_ChannelGetPosition( this.hBassStream );
+				db位置ms = Bass.BASS_ChannelBytes2Seconds( this.hBassStream, n位置byte );
+			}
+			else if ( this.bDirectSoundである )
+			{
+				n位置byte = this.Buffer.CurrentPlayPosition;
+				db位置ms = n位置byte / this.Buffer.Format.SamplesPerSecond / 0.001 / _db周波数倍率 / _db再生速度;
+			}
+			else
+			{
+				n位置byte = 0;
+				db位置ms = 0.0;
+			}
+		}
+
 
 		public static void tすべてのサウンドを初期状態に戻す()
 		{
@@ -1432,11 +1482,25 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 
 		private void tBASSサウンドを作成する( string strファイル名, int hMixer, BASSFlag flags )
 		{
-			if ( String.Compare( Path.GetExtension( strファイル名 ), ".xa", true ) == 0 )	// caselessで文字列比較
+			#region [ xaとwav(RIFF chunked vorbis)に対しては専用の処理をする ]
+			switch ( Path.GetExtension( strファイル名 ).ToLower() )
 			{
-				tBASSサウンドを作成するXA( strファイル名, hMixer, flags );
-				return;
+				case ".xa":
+					tBASSサウンドを作成するXA( strファイル名, hMixer, flags );
+					return;
+
+				case ".wav":
+					if ( tRIFFchunkedVorbisならDirectShowでDecodeする( strファイル名, ref byArrWAVファイルイメージ ) )
+					{
+						tBASSサウンドを作成する( byArrWAVファイルイメージ, hMixer, flags );
+						return;
+					}
+					break;
+
+				default:
+					break;
 			}
+			#endregion
 
 			this.e作成方法 = E作成方法.ファイルから;
 			this.strファイル名 = strファイル名;
@@ -1450,7 +1514,7 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			
 			nBytes = Bass.BASS_ChannelGetLength( this._hBassStream );
 			
-			tBASSサウンドを作成する・ストリーム生成後の共通処理( hMixer );
+			tBASSサウンドを作成する_ストリーム生成後の共通処理( hMixer );
 		}
 		private void tBASSサウンドを作成する( byte[] byArrWAVファイルイメージ, int hMixer, BASSFlag flags )
 		{
@@ -1467,8 +1531,57 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 
 			nBytes = Bass.BASS_ChannelGetLength( this._hBassStream );
 	
-			tBASSサウンドを作成する・ストリーム生成後の共通処理( hMixer );
+			tBASSサウンドを作成する_ストリーム生成後の共通処理( hMixer );
 		}
+
+		/// <summary>
+		/// Decode "RIFF chunked Vorbis" to "raw wave"
+		/// because BASE.DLL has two problems for RIFF chunked Vorbis;
+		/// 1. time seek is not fine  2. delay occurs (about 10ms)
+		/// </summary>
+		/// <param name="strファイル名">wave filename</param>
+		/// <param name="byArrWAVファイルイメージ">wav file image</param>
+		/// <returns></returns>
+		private bool tRIFFchunkedVorbisならDirectShowでDecodeする( string strファイル名, ref byte[] byArrWAVファイルイメージ )
+		{
+			bool bファイルにVorbisコンテナが含まれている = false;
+
+			#region [ ファイルがWAVかつ、Vorbisコンテナが含まれているかを調べ、それに該当するなら、DirectShowでデコードする。]
+			//-----------------
+			try
+			{
+				using ( var ws = new WaveStream( strファイル名 ) )
+				{
+					if ( ws.Format.FormatTag == (WaveFormatTag) 0x6770 ||	// Ogg Vorbis Mode 2+
+						 ws.Format.FormatTag == (WaveFormatTag) 0x6771 )	// Ogg Vorbis Mode 3+
+					{
+						Trace.TraceInformation( Path.GetFileName( strファイル名 ) + ": RIFF chunked Vorbis. Decode to raw Wave first, to avoid BASS.DLL troubles" );
+						try
+						{
+							CDStoWAVFileImage.t変換( strファイル名, out byArrWAVファイルイメージ );
+							bファイルにVorbisコンテナが含まれている = true;
+						}
+						catch
+						{
+							Trace.TraceWarning( "Warning: " + Path.GetFileName( strファイル名 ) + " : RIFF chunked Vorbisのデコードに失敗しました。" );
+						}
+					}
+				}
+			}
+			catch ( InvalidDataException )
+			{
+				// DirectShowのデコードに失敗したら、次はACMでのデコードを試すことになるため、ここではエラーログを出さない。
+				// Trace.TraceWarning( "Warning: " + Path.GetFileName( strファイル名 ) + " : デコードに失敗しました。" );
+			}
+			catch ( Exception )
+			{
+				Trace.TraceWarning( "Warning: " + Path.GetFileName( strファイル名 ) + " : 読み込みに失敗しました。" );
+			}
+			#endregion
+
+			return bファイルにVorbisコンテナが含まれている;
+		}
+
 		private void tBASSサウンドを作成するXA( string strファイル名, int hMixer, BASSFlag flags )
 		{
 			int nPCMデータの先頭インデックス;
@@ -1502,11 +1615,11 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			nBytes = Bass.BASS_ChannelGetLength( this._hBassStream );
 
 
-			tBASSサウンドを作成する・ストリーム生成後の共通処理( hMixer );
+			tBASSサウンドを作成する_ストリーム生成後の共通処理( hMixer );
 		}
 
 
-		private void tBASSサウンドを作成する・ストリーム生成後の共通処理( int hMixer )
+		private void tBASSサウンドを作成する_ストリーム生成後の共通処理( int hMixer )
 		{
 			CSound管理.nStreams++;
 
@@ -1655,6 +1768,10 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 				throw new NotImplementedException();
 			}
 
+			if ( !File.Exists( strファイル名 ) )
+			{
+				throw new Exception( string.Format( "ファイルが見つかりませんでした。({0})", strファイル名 ) );
+			}
 			int nHandle = sounddecoder.Open( strファイル名 );
 			if ( nHandle < 0 )
 			{

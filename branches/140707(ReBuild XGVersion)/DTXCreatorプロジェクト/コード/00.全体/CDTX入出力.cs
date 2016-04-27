@@ -28,20 +28,21 @@ namespace DTXCreator
 		public void tDTX出力( StreamWriter sw, bool bBGMのみ出力 )
 		{
 			sw.WriteLine( "; Created by DTXCreator " + Resources.DTXC_VERSION );
-			this.tDTX出力・タイトルと製作者とコメントその他( sw );
-			this.tDTX出力・自由入力欄( sw );
-			this.tDTX出力・WAVリスト( sw, bBGMのみ出力 );
-			this.tDTX出力・BMPリスト( sw );
-			this.tDTX出力・AVIリスト( sw );
-			this.tDTX出力・小節長倍率( sw );
-			this.tDTX出力・BPxリスト( sw );
-			this.tDTX出力・全チップ( sw );
+			this.tDTX出力_タイトルと製作者とコメントその他( sw );
+			this.tDTX出力_自由入力欄( sw );
+			this.tDTX出力_WAVリスト( sw, bBGMのみ出力 );
+			this.tDTX出力_BMPリスト( sw );
+			this.tDTX出力_AVIリスト( sw );
+			this.tDTX出力_小節長倍率( sw );
+			this.tDTX出力_BPxリスト( sw );
+			this.tDTX出力_BEATチップのf値( sw );
+			this.tDTX出力_全チップ( sw );
 			sw.WriteLine();
-			this.tDTX出力・レーン割付チップ( sw );
-			this.tDTX出力・WAVリスト色設定( sw );
-			this.tDTX出力・BMPリスト色設定( sw );
-			this.tDTX出力・AVIリスト色設定( sw );
-			this.tDTX出力・チップパレット( sw );
+			this.tDTX出力_レーン割付チップ( sw );
+			this.tDTX出力_WAVリスト色設定( sw );
+			this.tDTX出力_BMPリスト色設定( sw );
+			this.tDTX出力_AVIリスト色設定( sw );
+			this.tDTX出力_チップパレット( sw );
 		}
 		public void tDTX入力( E種別 e種別, ref string str全入力文字列 )
 		{
@@ -49,6 +50,7 @@ namespace DTXCreator
 			if( str全入力文字列.Length != 0 )
 			{
 				this.dic小節長倍率 = new Dictionary<int, float>();
+				this.dicBEATチップf値 = new Dictionary<int, float>();
 				this.listチップパレット = new List<int>();
 				this.listBGMWAV番号 = new List<int>();											// #26775 2011.11.21 yyagi
 				this.nLastBarConverted = -1;
@@ -64,7 +66,7 @@ namespace DTXCreator
 				{
 					do
 					{
-						if( !this.tDTX入力・空白と改行をスキップする( ref ce ) )
+						if( !this.tDTX入力_空白と改行をスキップする( ref ce ) )
 						{
 							break;
 						}
@@ -73,15 +75,15 @@ namespace DTXCreator
 							if( ce.MoveNext() )
 							{
 								StringBuilder sbコマンド文字列 = new StringBuilder( 0x20 );
-								if( this.tDTX入力・コマンド文字列を抜き出す( ref ce, ref sbコマンド文字列 ) )
+								if( this.tDTX入力_コマンド文字列を抜き出す( ref ce, ref sbコマンド文字列 ) )
 								{
 									StringBuilder sbパラメータ文字列 = new StringBuilder( 0x400 );
-									if( this.tDTX入力・パラメータ文字列を抜き出す( ref ce, ref sbパラメータ文字列 ) )
+									if( this.tDTX入力_パラメータ文字列を抜き出す( ref ce, ref sbパラメータ文字列 ) )
 									{
 										StringBuilder sbコメント文字列 = new StringBuilder( 0x400 );
-										if( this.tDTX入力・コメント文字列を抜き出す( ref ce, ref sbコメント文字列 ) )
+										if( this.tDTX入力_コメント文字列を抜き出す( ref ce, ref sbコメント文字列 ) )
 										{
-											if( !this.tDTX入力・行解析( ref sbコマンド文字列, ref sbパラメータ文字列, ref sbコメント文字列 ) )
+											if( !this.tDTX入力_行解析( ref sbコマンド文字列, ref sbパラメータ文字列, ref sbコメント文字列 ) )
 											{
 												builder.Append( string.Concat( "#", sbコマンド文字列, ": ", sbパラメータ文字列 ) );
 												if( sbコメント文字列.Length > 0 )
@@ -98,19 +100,20 @@ namespace DTXCreator
 							break;
 						}
 					}
-					while( this.tDTX入力・コメントをスキップする( ref ce ) );
+					while( this.tDTX入力_コメントをスキップする( ref ce ) );
 					CUndoRedo管理.bUndoRedoした直後 = true;
 					this._Form.textBox自由入力欄.Text = this._Form.textBox自由入力欄.Text + builder.ToString();
-					this.tDTX入力・小節内のチップリストを発声位置でソートする();
-					this.tDTX入力・小節長倍率配列を昇順ソート済みの小節リストに適用する();
-					this.tDTX入力・BPMチップにBPx数値をバインドする();
-					this.tDTX入力・キャッシュからListViewを一括構築する();
-					this.tDTX入力・チップパレットのListViewを一括構築する();
-					if( this.listBGMWAV番号.Count > 0 )							// #26775 2011.11.21 yyagi
+					this.tDTX入力_小節内のチップリストを発声位置でソートする();
+					this.tDTX入力_小節長倍率配列を昇順ソート済みの小節リストに適用する();
+					this.tDTX入力_BPMチップにBPx数値をバインドする();
+					this.tDTX入力_キャッシュからListViewを一括構築する();
+					this.tDTX入力_チップパレットのListViewを一括構築する();
+					//this.tDTX入力_BEATチップにf値をバインドする();
+					if ( this.listBGMWAV番号.Count > 0 )							// #26775 2011.11.21 yyagi
 					{
 						foreach ( int nBGMWAV番号 in listBGMWAV番号 )			// #26775 2011.11.21 yyagi
 						{
-							this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す・なければ新規生成する( nBGMWAV番号 ).bBGMとして使用 = true;
+							this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す_なければ新規生成する( nBGMWAV番号 ).bBGMとして使用 = true;
 						}
 					}
 					this._Form.listViewWAVリスト.EndUpdate();
@@ -182,11 +185,12 @@ namespace DTXCreator
 		private IEnumerator eDTXbgmChs;			// #25990 2011.8.12 yyagi BMS/BME→DTX変換用
 #endregion
 		private Dictionary<int, float> dic小節長倍率;
+		private Dictionary<int, float> dicBEATチップf値;
 		private E種別 e種別;
 		private List<int> listチップパレット;
 		private List<int> listBGMWAV番号 = null;			// #26775 2011.11.21 yyagi
 		
-		private void tDTX入力・BPMチップにBPx数値をバインドする()
+		private void tDTX入力_BPMチップにBPx数値をバインドする()
 		{
 			foreach( KeyValuePair<int, C小節> pair in this._Form.mgr譜面管理者.dic小節 )
 			{
@@ -195,21 +199,21 @@ namespace DTXCreator
 				{
 					Cチップ cチップ = c小節.listチップ[ i ];
 					float num2 = 0f;
-					if( ( cチップ.nチャンネル番号00toFF == 8 ) && this._Form.mgr譜面管理者.dicBPx.TryGetValue( cチップ.n値・整数1to1295, out num2 ) )
+					if( ( cチップ.nチャンネル番号00toFF == 8 ) && this._Form.mgr譜面管理者.dicBPx.TryGetValue( cチップ.n値_整数1to1295, out num2 ) )
 					{
-						cチップ.f値・浮動小数 = num2;
+						cチップ.f値_浮動小数 = num2;
 					}
 					if( cチップ.nチャンネル番号00toFF == 3 )
 					{
 						cチップ.nチャンネル番号00toFF = 8;
-						cチップ.f値・浮動小数 = cチップ.n値・整数1to1295;
+						cチップ.f値_浮動小数 = cチップ.n値_整数1to1295;
 						cチップ.b裏 = false;
 						for( int j = 1; j <= 36 * 36 - 1; j++ )
 						{
 							if( !this._Form.mgr譜面管理者.dicBPx.ContainsKey( j ) )
 							{
-								this._Form.mgr譜面管理者.dicBPx.Add( j, cチップ.f値・浮動小数 );
-								cチップ.n値・整数1to1295 = j;
+								this._Form.mgr譜面管理者.dicBPx.Add( j, cチップ.f値_浮動小数);
+								cチップ.n値_整数1to1295 = j;
 								break;
 							}
 						}
@@ -217,7 +221,40 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX入力・キャッシュからListViewを一括構築する()
+		//private void tDTX入力_BEATチップにf値をバインドする()
+		//{
+		//    foreach ( KeyValuePair<int, C小節> pair in this._Form.mgr譜面管理者.dic小節 )
+		//    {
+		//        C小節 c小節 = pair.Value;
+		//        for ( int i = 0; i < c小節.listチップ.Count; i++ )
+		//        {
+		//            Cチップ cチップ = c小節.listチップ[ i ];
+		//            float num2 = 0f;
+		//            if ( ( cチップ.nチャンネル番号00toFF == 0xF8 || cチップ.nチャンネル番号00toFF == 0xF3 )
+		//                && this._Form.mgr譜面管理者.dicBPx.TryGetValue( cチップ.n値・整数1to1295, out num2 ) )
+		//            {
+		//                cチップ.f値・浮動小数 = num2;
+		//            }
+		//            if ( cチップ.nチャンネル番号00toFF == 3 )
+		//            {
+		//                cチップ.nチャンネル番号00toFF = 8;
+		//                cチップ.f値・浮動小数 = cチップ.n値・整数1to1295;
+		//                cチップ.b裏 = false;
+		//                for ( int j = 1; j <= 36 * 36 - 1; j++ )
+		//                {
+		//                    if ( !this._Form.mgr譜面管理者.dicBPx.ContainsKey( j ) )
+		//                    {
+		//                        this._Form.mgr譜面管理者.dicBPx.Add( j, cチップ.f値・浮動小数 );
+		//                        cチップ.n値・整数1to1295 = j;
+		//                        break;
+		//                    }
+		//                }
+		//            }
+		//        }
+		//    }
+		//}
+
+		private void tDTX入力_キャッシュからListViewを一括構築する()
 		{
 			for( int i = 1; i <= 36 * 36 - 1; i++ )
 			{
@@ -238,9 +275,9 @@ namespace DTXCreator
 				}
 			}
 		}
-		private bool tDTX入力・コマンド文字列を抜き出す( ref CharEnumerator ce, ref StringBuilder sb文字列 )
+		private bool tDTX入力_コマンド文字列を抜き出す( ref CharEnumerator ce, ref StringBuilder sb文字列 )
 		{
-			if( this.tDTX入力・空白をスキップする( ref ce ) )
+			if( this.tDTX入力_空白をスキップする( ref ce ) )
 			{
 				while( ( ( ce.Current != ':' ) && ( ce.Current != ' ' ) ) && ( ( ce.Current != ';' ) && ( ce.Current != '\n' ) ) )
 				{
@@ -256,7 +293,7 @@ namespace DTXCreator
 					{
 						return false;
 					}
-					if( !this.tDTX入力・空白をスキップする( ref ce ) )
+					if( !this.tDTX入力_空白をスキップする( ref ce ) )
 					{
 						return false;
 					}
@@ -265,7 +302,7 @@ namespace DTXCreator
 			}
 			return false;
 		}
-		private bool tDTX入力・コメントをスキップする( ref CharEnumerator ce )
+		private bool tDTX入力_コメントをスキップする( ref CharEnumerator ce )
 		{
 			while( ce.Current != '\n' )
 			{
@@ -276,7 +313,7 @@ namespace DTXCreator
 			}
 			return ce.MoveNext();
 		}
-		private bool tDTX入力・コメント文字列を抜き出す( ref CharEnumerator ce, ref StringBuilder sb文字列 )
+		private bool tDTX入力_コメント文字列を抜き出す( ref CharEnumerator ce, ref StringBuilder sb文字列 )
 		{
 			if( ce.Current != ';' )
 			{
@@ -296,7 +333,7 @@ namespace DTXCreator
 			}
 			return false;
 		}
-		private void tDTX入力・チップパレットのListViewを一括構築する()
+		private void tDTX入力_チップパレットのListViewを一括構築する()
 		{
 			for( int i = 0; i < ( this.listチップパレット.Count / 2 ); i += 2 )
 			{
@@ -356,9 +393,9 @@ namespace DTXCreator
 				}
 			}
 		}
-		private bool tDTX入力・パラメータ文字列を抜き出す( ref CharEnumerator ce, ref StringBuilder sb文字列 )
+		private bool tDTX入力_パラメータ文字列を抜き出す( ref CharEnumerator ce, ref StringBuilder sb文字列 )
 		{
-			if( this.tDTX入力・空白をスキップする( ref ce ) )
+			if( this.tDTX入力_空白をスキップする( ref ce ) )
 			{
 				while( ( ce.Current != '\n' ) && ( ce.Current != ';' ) )
 				{
@@ -372,7 +409,7 @@ namespace DTXCreator
 			}
 			return false;
 		}
-		private bool tDTX入力・空白と改行をスキップする( ref CharEnumerator ce )
+		private bool tDTX入力_空白と改行をスキップする( ref CharEnumerator ce )
 		{
 			while( ( ce.Current == ' ' ) || ( ce.Current == '\n' ) )
 			{
@@ -383,7 +420,7 @@ namespace DTXCreator
 			}
 			return true;
 		}
-		private bool tDTX入力・空白をスキップする( ref CharEnumerator ce )
+		private bool tDTX入力_空白をスキップする( ref CharEnumerator ce )
 		{
 			while( ce.Current == ' ' )
 			{
@@ -394,33 +431,113 @@ namespace DTXCreator
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析( ref StringBuilder sbコマンド, ref StringBuilder sbパラメータ, ref StringBuilder sbコメント )
+		private bool tDTX入力_行解析( ref StringBuilder sbコマンド, ref StringBuilder sbパラメータ, ref StringBuilder sbコメント )
 		{
 			string strコマンド = sbコマンド.ToString();
 			string strパラメータ = sbパラメータ.ToString().Trim();
 			string strコメント = sbコメント.ToString();
 			return (
-				this.tDTX入力・行解析・TITLE_ARTIST_COMMENT_その他( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・WAVVOL_VOLUME( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・WAVPAN_PAN( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・WAV( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・BGMWAV( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・BMPTEX( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・BMP( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・AVI_AVIPAN( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・BPx( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_LANEBINDEDCHIP( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_WAVFORECOLOR( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_WAVBACKCOLOR( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_BMPFORECOLOR( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_BMPBACKCOLOR( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_AVIFORECOLOR( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_AVIBACKCOLOR( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・DTXC_CHIPPALETTE( strコマンド, strパラメータ, strコメント ) ||
-				this.tDTX入力・行解析・チャンネル( strコマンド, strパラメータ, strコメント )
+				this.tDTX入力_行解析_TITLE_ARTIST_COMMENT_その他( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_WAVVOL_VOLUME( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_WAVPAN_PAN( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_WAV( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_BGMWAV( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_BMPTEX( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_BMP( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_AVI_AVIPAN( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_BPx( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_LANEBINDEDCHIP( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_WAVFORECOLOR( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_WAVBACKCOLOR( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_BMPFORECOLOR( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_BMPBACKCOLOR( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_AVIFORECOLOR( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_AVIBACKCOLOR( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_DTXC_CHIPPALETTE( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_BEATチップのf値( strコマンド, strパラメータ, strコメント ) ||
+				this.tDTX入力_行解析_チャンネル( strコマンド, strパラメータ, strコメント )
 			);
 		}
-		private bool tDTX入力・行解析・AVI_AVIPAN( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_BEATチップのf値( string strコマンド, string strパラメータ, string strコメント )
+		{
+			if ( strコマンド.StartsWith( "BEAT", StringComparison.OrdinalIgnoreCase ) )
+			{
+				strコマンド = strコマンド.Substring( 4 );
+			}
+			else
+			{
+				return false;
+			}
+			int num = C変換.n値を文字列から取得して返す( strコマンド, 0 );
+			if ( num < 0 )
+			{
+				return false;
+			}
+
+			// 小節番号, grid, f値
+			string[] strParams = strパラメータ.Split( new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries );
+
+			#region [ パラメータ引数は全3個ないと無効。]
+			//-----------------
+			if ( strParams.Length < 3 )
+			{
+				//Trace.TraceError( "BEAT: 引数が足りません。[{0}: {1}行]", this.strファイル名の絶対パス, this.n現在の行数 );
+				return false;
+			}
+			//-----------------
+			#endregion
+
+			int i = 0;
+
+			#region [ 1. 小節番号 ]
+			//-----------------
+			if ( string.IsNullOrEmpty( strParams[ i ] ) )
+			{
+				//Trace.TraceError( "BGAPAN: {2}番目の数（BMP番号）が異常です。[{0}: {1}行]", this.strファイル名の絶対パス, this.n現在の行数, i + 1 );
+				return false;
+			}
+			int n小節番号 = C変換.n値を文字列から取得して返す( strParams[ i ], 0 );
+			if ( n小節番号 < 0 )
+			{
+				//Trace.TraceError( "BGAPAN: {2}番目の数（BMP番号）が異常です。[{0}: {1}行]", this.strファイル名の絶対パス, this.n現在の行数, i + 1 );
+				return false;
+			}
+			i++;
+			#endregion
+			#region [ 2. Grid ]
+			//-----------------
+			if ( string.IsNullOrEmpty( strParams[ i ] ) )
+			{
+				//Trace.TraceError( "BGAPAN: {2}番目の数（BMP番号）が異常です。[{0}: {1}行]", this.strファイル名の絶対パス, this.n現在の行数, i + 1 );
+				return false;
+			}
+			int nGrid = C変換.n値を文字列から取得して返す( strParams[ i ], 0 );
+			if ( nGrid < 0 )
+			{
+				//Trace.TraceError( "BGAPAN: {2}番目の数（BMP番号）が異常です。[{0}: {1}行]", this.strファイル名の絶対パス, this.n現在の行数, i + 1 );
+				return false;
+			}
+			i++;
+			#endregion
+			#region [ 3. f値 ]
+			//-----------------
+			if ( string.IsNullOrEmpty( strParams[ i ] ) )
+			{
+				//Trace.TraceError( "BGAPAN: {2}番目の数（BMP番号）が異常です。[{0}: {1}行]", this.strファイル名の絶対パス, this.n現在の行数, i + 1 );
+				return false;
+			}
+			decimal f値 = 0;
+			if ( ( !this.TryParse( strParams[ i ], out f値 ) || ( f値 < 0 ) ) )
+			{
+				return false;
+			}
+			#endregion
+//Debug.WriteLine( "入力: n小節番号=" + n小節番号 + ", nGrid=" + nGrid + ", f値=" + f値 + ", strParam=" + strParams[i] );
+			this.dicBEATチップf値.Add( n小節番号 * 192 + nGrid, (float) f値 );
+
+			return true;
+		}
+		private bool tDTX入力_行解析_AVI_AVIPAN( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( !strコマンド.StartsWith( "AVIPAN", StringComparison.OrdinalIgnoreCase ) && strコマンド.StartsWith( "AVI", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -435,12 +552,12 @@ namespace DTXCreator
 			{
 				return false;
 			}
-			CAVI cavi = this._Form.mgrAVIリスト管理者.tAVIをキャッシュから検索して返す・なければ新規生成する( num );
+			CAVI cavi = this._Form.mgrAVIリスト管理者.tAVIをキャッシュから検索して返す_なければ新規生成する( num );
 			cavi.strラベル名 = strコメント;
 			cavi.strファイル名 = strパラメータ;
 			return true;
 		}
-		private bool tDTX入力・行解析・BGMWAV( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_BGMWAV( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( strコマンド.StartsWith( "bgmwav", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -458,7 +575,7 @@ namespace DTXCreator
 			this.listBGMWAV番号.Add( num );
 			return true;
 		}
-		private bool tDTX入力・行解析・BMP( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_BMP( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( ( strコマンド.Length > 3 ) && strコマンド.StartsWith( "BMP", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -473,13 +590,13 @@ namespace DTXCreator
 			{
 				return false;
 			}
-			CBMP cbmp = this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す・なければ新規生成する( num );
+			CBMP cbmp = this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す_なければ新規生成する( num );
 			cbmp.strラベル名 = strコメント;
 			cbmp.strファイル名 = strパラメータ;
 			cbmp.bテクスチャ = false;
 			return true;
 		}
-		private bool tDTX入力・行解析・BMPTEX( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_BMPTEX( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( strコマンド.StartsWith( "BMPTEX", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -494,13 +611,13 @@ namespace DTXCreator
 			{
 				return false;
 			}
-			CBMP cbmp = this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す・なければ新規生成する( num );
+			CBMP cbmp = this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す_なければ新規生成する( num );
 			cbmp.strラベル名 = strコメント;
 			cbmp.strファイル名 = strパラメータ;
 			cbmp.bテクスチャ = true;
 			return true;
 		}
-		private bool tDTX入力・行解析・BPx( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_BPx( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( strコマンド.StartsWith( "BPM", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -523,7 +640,7 @@ namespace DTXCreator
 			this._Form.mgr譜面管理者.dicBPx.Add(key, (float)result);
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_AVIBACKCOLOR( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_AVIBACKCOLOR( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nChipNo;
 			if( !strコマンド.Equals( "DTXC_AVIBACKCOLOR", StringComparison.OrdinalIgnoreCase ) )
@@ -546,11 +663,11 @@ namespace DTXCreator
 			Color color = ColorTranslator.FromHtml( strArray[ 1 ] );
 			if( ( nChipNo >= 0 ) && ( nChipNo <= 36 * 36 - 2 ) )
 			{
-				this._Form.mgrAVIリスト管理者.tAVIをキャッシュから検索して返す・なければ新規生成する( nChipNo + 1 ).col背景色 = color;
+				this._Form.mgrAVIリスト管理者.tAVIをキャッシュから検索して返す_なければ新規生成する( nChipNo + 1 ).col背景色 = color;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_AVIFORECOLOR( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_AVIFORECOLOR( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nChipNo;
 			if( !strコマンド.Equals( "DTXC_AVIFORECOLOR", StringComparison.OrdinalIgnoreCase ) )
@@ -573,11 +690,11 @@ namespace DTXCreator
 			Color color = ColorTranslator.FromHtml( strArray[ 1 ] );
 			if( ( nChipNo >= 0 ) && ( nChipNo <= 36 * 36 - 2 ) )
 			{
-				this._Form.mgrAVIリスト管理者.tAVIをキャッシュから検索して返す・なければ新規生成する( nChipNo + 1 ).col文字色 = color;
+				this._Form.mgrAVIリスト管理者.tAVIをキャッシュから検索して返す_なければ新規生成する( nChipNo + 1 ).col文字色 = color;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_BMPBACKCOLOR( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_BMPBACKCOLOR( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nChipNo;
 			if( !strコマンド.Equals( "DTXC_BMPBACKCOLOR", StringComparison.OrdinalIgnoreCase ) )
@@ -600,11 +717,11 @@ namespace DTXCreator
 			Color color = ColorTranslator.FromHtml( strArray[ 1 ] );
 			if( ( nChipNo >= 0 ) && ( nChipNo <= 36 * 36 - 2 ) )
 			{
-				this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す・なければ新規生成する( nChipNo + 1 ).col背景色 = color;
+				this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す_なければ新規生成する( nChipNo + 1 ).col背景色 = color;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_BMPFORECOLOR( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_BMPFORECOLOR( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nChipNo;
 			if( !strコマンド.Equals( "DTXC_BMPFORECOLOR", StringComparison.OrdinalIgnoreCase ) )
@@ -627,11 +744,11 @@ namespace DTXCreator
 			Color color = ColorTranslator.FromHtml( strArray[ 1 ] );
 			if( ( nChipNo >= 0 ) && ( nChipNo <= 36 * 36 - 2 ) )
 			{
-				this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す・なければ新規生成する( nChipNo + 1 ).col文字色 = color;
+				this._Form.mgrBMPリスト管理者.tBMPをキャッシュから検索して返す_なければ新規生成する( nChipNo + 1 ).col文字色 = color;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_CHIPPALETTE( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_CHIPPALETTE( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( !strコマンド.Equals( "DTXC_CHIPPALETTE", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -653,7 +770,7 @@ namespace DTXCreator
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_LANEBINDEDCHIP( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_LANEBINDEDCHIP( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( strコマンド.Equals( "DTXC_LANEBINDEDCHIP", StringComparison.OrdinalIgnoreCase ) && ( strパラメータ.Length == 8 ) )
 			{
@@ -676,18 +793,18 @@ namespace DTXCreator
 				{
 					if( nChipNoFore != 0 )
 					{
-						this._Form.mgr譜面管理者.listレーン[ nLaneNo ].nレーン割付チップ・表0or1to1295 = nChipNoFore;
+						this._Form.mgr譜面管理者.listレーン[ nLaneNo ].nレーン割付チップ_表0or1to1295 = nChipNoFore;
 					}
 					if( nChipNoBack != 0 )
 					{
-						this._Form.mgr譜面管理者.listレーン[ nLaneNo ].nレーン割付チップ・裏0or1to1295 = nChipNoBack;
+						this._Form.mgr譜面管理者.listレーン[ nLaneNo ].nレーン割付チップ_裏0or1to1295 = nChipNoBack;
 					}
 					return true;
 				}
 			}
 			return false;
 		}
-		private bool tDTX入力・行解析・DTXC_WAVBACKCOLOR( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_WAVBACKCOLOR( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nChipNo;
 			if( !strコマンド.Equals( "DTXC_WAVBACKCOLOR", StringComparison.OrdinalIgnoreCase ) )
@@ -710,11 +827,11 @@ namespace DTXCreator
 			Color color = ColorTranslator.FromHtml( strArray[ 1 ] );
 			if( ( nChipNo >= 0 ) && ( nChipNo <= 36 * 36 - 2 ) )
 			{
-				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す・なければ新規生成する( nChipNo + 1 ).col背景色 = color;
+				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す_なければ新規生成する( nChipNo + 1 ).col背景色 = color;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・DTXC_WAVFORECOLOR( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_DTXC_WAVFORECOLOR( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nChipNo;
 			if( !strコマンド.Equals( "DTXC_WAVFORECOLOR", StringComparison.OrdinalIgnoreCase ) )
@@ -737,11 +854,11 @@ namespace DTXCreator
 			Color color = ColorTranslator.FromHtml( strArray[ 1 ] );
 			if( ( nChipNo >= 0 ) && ( nChipNo <= 36 * 36 - 2 ) )
 			{
-				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す・なければ新規生成する( nChipNo + 1 ).col文字色 = color;
+				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す_なければ新規生成する( nChipNo + 1 ).col文字色 = color;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・TITLE_ARTIST_COMMENT_その他( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_TITLE_ARTIST_COMMENT_その他( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( strコマンド.Equals( "TITLE", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -759,6 +876,12 @@ namespace DTXCreator
 			{
 				CUndoRedo管理.bUndoRedoした直後 = true;
 				this._Form.textBoxGenre.Text = strパラメータ.Trim();
+				return true;
+			}
+			if( strコマンド.Equals( "USE556X710BGAAVI", StringComparison.OrdinalIgnoreCase) )
+			{
+				CUndoRedo管理.bUndoRedoした直後 = true;
+				this._Form.check556x710BGAAVI.Checked = strパラメータ.Trim() == "1" ? true : false;
 				return true;
 			}
 			if( strコマンド.Equals( "COMMENT", StringComparison.OrdinalIgnoreCase ) )
@@ -914,7 +1037,7 @@ namespace DTXCreator
 				return false;
 			}
 		}
-		private bool tDTX入力・行解析・WAV( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_WAV( string strコマンド, string strパラメータ, string strコメント )
 		{
 			if( strコマンド.StartsWith( "wav", StringComparison.OrdinalIgnoreCase ) )
 			{
@@ -929,12 +1052,12 @@ namespace DTXCreator
 			{
 				return false;
 			}
-			CWAV cwav = this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す・なければ新規生成する( nChipNo );
+			CWAV cwav = this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す_なければ新規生成する( nChipNo );
 			cwav.strラベル名 = strコメント;
 			cwav.strファイル名 = strパラメータ;
 			return true;
 		}
-		private bool tDTX入力・行解析・WAVPAN_PAN( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_WAVPAN_PAN( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nPan;
 			if( strコマンド.StartsWith( "WAVPAN", StringComparison.OrdinalIgnoreCase ) )
@@ -964,11 +1087,11 @@ namespace DTXCreator
 				{
 					nPan = 100;
 				}
-				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す・なければ新規生成する( nChipNo ).n位置_100to100 = nPan;
+				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す_なければ新規生成する( nChipNo ).n位置_100to100 = nPan;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・WAVVOL_VOLUME( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_WAVVOL_VOLUME( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nVol;
 			if( strコマンド.StartsWith( "WAVVOL", StringComparison.OrdinalIgnoreCase ) )
@@ -998,14 +1121,14 @@ namespace DTXCreator
 				{
 					nVol = 100;
 				}
-				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す・なければ新規生成する( nChipNo ).n音量0to100 = nVol;
+				this._Form.mgrWAVリスト管理者.tWAVをキャッシュから検索して返す_なければ新規生成する( nChipNo ).n音量0to100 = nVol;
 			}
 			return true;
 		}
-		private bool tDTX入力・行解析・チャンネル( string strコマンド, string strパラメータ, string strコメント )
+		private bool tDTX入力_行解析_チャンネル( string strコマンド, string strパラメータ, string strコメント )
 		{
 			int nBar, nCh;
-			if( !this.tDTX入力・行解析・チャンネル・コマンドから小節番号とチャンネル番号を抜き出す( strコマンド, out nBar, out nCh ) )
+			if( !this.tDTX入力_行解析_チャンネル_コマンドから小節番号とチャンネル番号を抜き出す( strコマンド, out nBar, out nCh ) )
 			{
 				return false;
 			}
@@ -1017,13 +1140,13 @@ namespace DTXCreator
 					dBarLength = 1m;
 				}
 				this.dic小節長倍率.Add( nBar, (float)dBarLength );
-				this.tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( nBar );	// #32609 2013.12.16 yyagi
+				this.tDTX入力_行解析_チャンネル_小節番号に対応する小節を探すか新規に作って返す( nBar );	// #32609 2013.12.16 yyagi
 				return true;
 			}
 			#region [ Guitar ]
 			if ( ( nCh >= 0x20 ) && ( nCh <= 0x27 ) )
 			{
-				C小節 c小節 = this.tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( nBar );
+				C小節 c小節 = this.tDTX入力_行解析_チャンネル_小節番号に対応する小節を探すか新規に作って返す( nBar );
 				int startIndex = 0;
 				while( ( startIndex = strパラメータ.IndexOf( '_' ) ) != -1 )
 				{
@@ -1042,7 +1165,7 @@ namespace DTXCreator
 						Cチップ item = new Cチップ();
 						item.nレーン番号0to = nLaneGtV;
 						item.n位置grid = i;
-						item.n値・整数1to1295 = nChipNo;
+						item.n値_整数1to1295 = nChipNo;
 						item.n読み込み時の解像度 = nChips;
 						c小節.listチップ.Add( item );
 						switch( nCh )
@@ -1051,7 +1174,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 2;
+								item.n値_整数1to1295 = 2;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1060,7 +1183,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1069,7 +1192,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1078,13 +1201,13 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1093,7 +1216,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1102,13 +1225,13 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1117,13 +1240,13 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1132,19 +1255,19 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneGtB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1157,7 +1280,7 @@ namespace DTXCreator
 			#region [ Bass ]
 			if ( ( nCh >= 0xa0 ) && ( nCh <= 0xa7 ) )
 			{
-				C小節 c小節 = this.tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( nBar );
+				C小節 c小節 = this.tDTX入力_行解析_チャンネル_小節番号に対応する小節を探すか新規に作って返す( nBar );
 				int startIndex = 0;
 				while( ( startIndex = strパラメータ.IndexOf( '_' ) ) != -1 )
 				{
@@ -1176,7 +1299,7 @@ namespace DTXCreator
 						Cチップ item = new Cチップ();
 						item.nレーン番号0to = nLaneBsV;
 						item.n位置grid = i;
-						item.n値・整数1to1295 = nChipNo;
+						item.n値_整数1to1295 = nChipNo;
 						item.n読み込み時の解像度 = nChips;
 						c小節.listチップ.Add( item );
 						switch( nCh )
@@ -1185,7 +1308,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 2;
+								item.n値_整数1to1295 = 2;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1194,7 +1317,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1203,7 +1326,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLanrBsG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1212,13 +1335,13 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLanrBsG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1227,7 +1350,7 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1236,13 +1359,13 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1251,13 +1374,13 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLanrBsG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1266,19 +1389,19 @@ namespace DTXCreator
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsR;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLanrBsG;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								item = new Cチップ();
 								item.nレーン番号0to = nLaneBsB;
 								item.n位置grid = i;
-								item.n値・整数1to1295 = 1;
+								item.n値_整数1to1295 = 1;
 								item.n読み込み時の解像度 = nChips;
 								c小節.listチップ.Add( item );
 								break;
@@ -1291,9 +1414,9 @@ namespace DTXCreator
 			#region [ Other Channels ]
 			int nレーン番号 = -1;
 			bool flag = false;
-			if( this.tDTX入力・行解析・チャンネル・チャンネルに該当するレーン番号を返す( nCh, out nレーン番号, out flag ) )
+			if( this.tDTX入力_行解析_チャンネル_チャンネルに該当するレーン番号を返す( nCh, out nレーン番号, out flag ) )
 			{
-				C小節 c小節 = this.tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( nBar );
+				C小節 c小節 = this.tDTX入力_行解析_チャンネル_小節番号に対応する小節を探すか新規に作って返す( nBar );
 				int nPosOf_ = 0;
 				while( ( nPosOf_ = strパラメータ.IndexOf( '_' ) ) != -1 )
 				{
@@ -1310,8 +1433,15 @@ namespace DTXCreator
 						cチップ.nレーン番号0to = nレーン番号;
 						cチップ.n位置grid = i;
 						cチップ.n読み込み時の解像度 = nChips;
-						cチップ.n値・整数1to1295 = nChipNo;
+						cチップ.n値_整数1to1295 = nChipNo;
 						cチップ.b裏 = flag;
+						float f;
+						if ( ( nCh == 0xF8 || nCh == 0xF3 ) &&												// BEATチップの場合
+							dicBEATチップf値.TryGetValue( nBar * 192 + (i * 192 / nChips ), out f ) )
+						{
+							cチップ.f値_浮動小数 = f;
+//Debug.WriteLine( "f値: nBar=" + nBar + ", f値=" + f );
+						}
 						c小節.listチップ.Add( cチップ );
 					}
 				}
@@ -1329,7 +1459,7 @@ namespace DTXCreator
 			return true;
 			#endregion
 		}
-		private int tDTX入力・行解析・チャンネル・GDAチャンネル文字列２桁をチャンネル番号にして返す( string strチャンネル文字列２桁 )
+		private int tDTX入力_行解析_チャンネル_GDAチャンネル文字列２桁をチャンネル番号にして返す( string strチャンネル文字列２桁 )
 		{
 			if( strチャンネル文字列２桁.Length == 2 )
 			{
@@ -1523,7 +1653,7 @@ namespace DTXCreator
 		}
 
 		// #25990 2011.8.12 yyagi BMS/BME→DTX変換メイン
-		private int tDTX入力・行解析・チャンネル・BMSチャンネル文字列２桁をチャンネル番号にして返す( string strチャンネル文字列２桁, int bar, E種別 eType )
+		private int tDTX入力_行解析_チャンネル_BMSチャンネル文字列２桁をチャンネル番号にして返す( string strチャンネル文字列２桁, int bar, E種別 eType )
 		{
 			if ( bar >= 0 &&  strチャンネル文字列２桁.Length == 2 )
 			{
@@ -1553,18 +1683,18 @@ namespace DTXCreator
 			}
 			return -1;
 		}
-		private bool tDTX入力・行解析・チャンネル・コマンドから小節番号とチャンネル番号を抜き出す( string strコマンド, out int n小節番号, out int nチャンネル番号 )
+		private bool tDTX入力_行解析_チャンネル_コマンドから小節番号とチャンネル番号を抜き出す( string strコマンド, out int n小節番号, out int nチャンネル番号 )
 		{
 			if( strコマンド.Length >= 5 )
 			{
 				n小節番号 = C変換.n小節番号の文字列3桁を数値に変換して返す( strコマンド.Substring( 0, 3 ) );
 				if( ( this.e種別 == E種別.GDA ) || ( this.e種別 == E種別.G2D ) )
 				{
-					nチャンネル番号 = this.tDTX入力・行解析・チャンネル・GDAチャンネル文字列２桁をチャンネル番号にして返す( strコマンド.Substring( 3, 2 ) );
+					nチャンネル番号 = this.tDTX入力_行解析_チャンネル_GDAチャンネル文字列２桁をチャンネル番号にして返す( strコマンド.Substring( 3, 2 ) );
 				}
 				else if( ( this.e種別 == E種別.BMS ) || ( this.e種別 == E種別.BME ) )	// #25990 2011.8.12 yyagi
 				{
-					nチャンネル番号 = this.tDTX入力・行解析・チャンネル・BMSチャンネル文字列２桁をチャンネル番号にして返す( strコマンド.Substring( 3, 2 ), n小節番号, this.e種別 );
+					nチャンネル番号 = this.tDTX入力_行解析_チャンネル_BMSチャンネル文字列２桁をチャンネル番号にして返す( strコマンド.Substring( 3, 2 ), n小節番号, this.e種別 );
 				}
 				else
 				{
@@ -1576,20 +1706,20 @@ namespace DTXCreator
 			nチャンネル番号 = -1;
 			return false;
 		}
-		private bool tDTX入力・行解析・チャンネル・チャンネルに該当するレーン番号を返す( int nチャンネル番号, out int nレーン番号, out bool b裏 )
+		private bool tDTX入力_行解析_チャンネル_チャンネルに該当するレーン番号を返す( int nチャンネル番号, out int nレーン番号, out bool b裏 )
 		{
 			nレーン番号 = -1;
 			b裏 = false;
 			for( int i = 0; i < this._Form.mgr譜面管理者.listレーン.Count; i++ )
 			{
 				Cレーン cレーン = this._Form.mgr譜面管理者.listレーン[ i ];
-				if( cレーン.nチャンネル番号・表00toFF == nチャンネル番号 )
+				if( cレーン.nチャンネル番号_表00toFF == nチャンネル番号 )
 				{
 					nレーン番号 = i;
 					b裏 = false;
 					return true;
 				}
-				if( cレーン.nチャンネル番号・裏00toFF == nチャンネル番号 )
+				if( cレーン.nチャンネル番号_裏00toFF == nチャンネル番号 )
 				{
 					nレーン番号 = i;
 					b裏 = true;
@@ -1598,7 +1728,7 @@ namespace DTXCreator
 			}
 			return false;
 		}
-		private C小節 tDTX入力・行解析・チャンネル・小節番号に対応する小節を探すか新規に作って返す( int n小節番号 )
+		private C小節 tDTX入力_行解析_チャンネル_小節番号に対応する小節を探すか新規に作って返す( int n小節番号 )
 		{
 			C小節 c小節 = this._Form.mgr譜面管理者.p小節を返す( n小節番号 );
 			if( c小節 == null )
@@ -1617,7 +1747,7 @@ namespace DTXCreator
 			}
 			return c小節;
 		}
-		private void tDTX入力・小節長倍率配列を昇順ソート済みの小節リストに適用する()
+		private void tDTX入力_小節長倍率配列を昇順ソート済みの小節リストに適用する()
 		{
 			float num = 1f;
 			for( int i = 0; i < this._Form.mgr譜面管理者.dic小節.Count; i++ )
@@ -1637,7 +1767,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX入力・小節内のチップリストを発声位置でソートする()
+		private void tDTX入力_小節内のチップリストを発声位置でソートする()
 		{
 			foreach( KeyValuePair<int, C小節> pair in this._Form.mgr譜面管理者.dic小節 )
 			{
@@ -1645,7 +1775,7 @@ namespace DTXCreator
 			}
 		}
 
-		private void tDTX出力・AVIリスト( StreamWriter sw )
+		private void tDTX出力_AVIリスト( StreamWriter sw )
 		{
 			sw.WriteLine();
 			for( int i = 1; i <= 36 * 36 - 1; i++ )
@@ -1663,7 +1793,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・AVIリスト色設定( StreamWriter sw )
+		private void tDTX出力_AVIリスト色設定( StreamWriter sw )
 		{
 			Color color = ColorTranslator.FromHtml( "window" );
 			Color color2 = ColorTranslator.FromHtml( "windowtext" );
@@ -1683,7 +1813,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・BMPリスト( StreamWriter sw )
+		private void tDTX出力_BMPリスト( StreamWriter sw )
 		{
 			sw.WriteLine();
 			for( int i = 1; i <= 36 * 36 - 1; i++ )
@@ -1713,7 +1843,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・BMPリスト色設定( StreamWriter sw )
+		private void tDTX出力_BMPリスト色設定( StreamWriter sw )
 		{
 			Color color = ColorTranslator.FromHtml( "window" );
 			Color color2 = ColorTranslator.FromHtml( "windowtext" );
@@ -1733,7 +1863,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・BPxリスト( StreamWriter sw )
+		private void tDTX出力_BPxリスト( StreamWriter sw )
 		{
 			sw.WriteLine();
 			foreach( KeyValuePair<int, float> pair in this._Form.mgr譜面管理者.dicBPx )
@@ -1741,7 +1871,7 @@ namespace DTXCreator
 				sw.WriteLine( "#BPM{0}: {1}", C変換.str数値を36進数2桁に変換して返す( pair.Key ), pair.Value );
 			}
 		}
-		private void tDTX出力・WAVリスト( StreamWriter sw, bool bBGMのみ出力 )
+		private void tDTX出力_WAVリスト( StreamWriter sw, bool bBGMのみ出力 )
 		{
 			sw.WriteLine();
 			for( int i = 1; i <= 36 * 36 - 1; i++ )
@@ -1771,7 +1901,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・WAVリスト色設定( StreamWriter sw )
+		private void tDTX出力_WAVリスト色設定( StreamWriter sw )
 		{
 			Color color = ColorTranslator.FromHtml( "window" );
 			Color color2 = ColorTranslator.FromHtml( "windowtext" );
@@ -1791,7 +1921,7 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・タイトルと製作者とコメントその他( StreamWriter sw )
+		private void tDTX出力_タイトルと製作者とコメントその他( StreamWriter sw )
 		{
 			sw.WriteLine();
 			if( this._Form.textBox曲名.Text.Length == 0 )
@@ -1809,6 +1939,10 @@ namespace DTXCreator
 			if( this._Form.textBoxGenre.Text.Length > 0 )
 			{
 				sw.WriteLine( "#GENRE: " + this._Form.textBoxGenre.Text );
+			}
+			if( this._Form.check556x710BGAAVI.Checked )
+			{
+				sw.WriteLine("#USE556X710BGAAVI: 1");
 			}
 			if( this._Form.textBoxコメント.Text.Length > 0 )
 			{
@@ -1863,7 +1997,7 @@ namespace DTXCreator
 				sw.WriteLine( "#DTXVPLAYSPEED: " + ( 1.5f - ( this._Form.toolStripComboBox演奏速度.SelectedIndex * 0.1f ) ) );
 			}
 		}
-		private void tDTX出力・チップパレット( StreamWriter sw )
+		private void tDTX出力_チップパレット( StreamWriter sw )
 		{
 			sw.Write( "#DTXC_CHIPPALETTE: " );
 			foreach( ListViewItem item in this._Form.dlgチップパレット.listViewチップリスト.Items )
@@ -1872,19 +2006,19 @@ namespace DTXCreator
 			}
 			sw.WriteLine();
 		}
-		private void tDTX出力・レーン割付チップ( StreamWriter sw )
+		private void tDTX出力_レーン割付チップ( StreamWriter sw )
 		{
 			sw.WriteLine();
 			for( int i = 0; i < this._Form.mgr譜面管理者.listレーン.Count; i++ )
 			{
 				Cレーン cレーン = this._Form.mgr譜面管理者.listレーン[ i ];
-				if( ( cレーン.nレーン割付チップ・表0or1to1295 > 0 ) || ( cレーン.nレーン割付チップ・裏0or1to1295 > 0 ) )
+				if( ( cレーン.nレーン割付チップ_表0or1to1295 > 0 ) || ( cレーン.nレーン割付チップ_裏0or1to1295 > 0 ) )
 				{
-					sw.WriteLine( "#DTXC_LANEBINDEDCHIP: {0} {1} {2}", i.ToString( "00" ), C変換.str数値を36進数2桁に変換して返す( cレーン.nレーン割付チップ・表0or1to1295 ), C変換.str数値を36進数2桁に変換して返す( cレーン.nレーン割付チップ・裏0or1to1295 ) );
+					sw.WriteLine( "#DTXC_LANEBINDEDCHIP: {0} {1} {2}", i.ToString( "00" ), C変換.str数値を36進数2桁に変換して返す( cレーン.nレーン割付チップ_表0or1to1295), C変換.str数値を36進数2桁に変換して返す( cレーン.nレーン割付チップ_裏0or1to1295) );
 				}
 			}
 		}
-		private void tDTX出力・自由入力欄( StreamWriter sw )
+		private void tDTX出力_自由入力欄( StreamWriter sw )
 		{
 			sw.WriteLine();
 			if( this._Form.textBox自由入力欄.Text.Length > 0 )
@@ -1894,7 +2028,7 @@ namespace DTXCreator
 				sw.WriteLine();
 			}
 		}
-		private void tDTX出力・小節長倍率( StreamWriter sw )
+		private void tDTX出力_小節長倍率( StreamWriter sw )
 		{
 			sw.WriteLine();
 			float num = 1f;
@@ -1908,7 +2042,28 @@ namespace DTXCreator
 				}
 			}
 		}
-		private void tDTX出力・全チップ( StreamWriter sw )
+		private void tDTX出力_BEATチップのf値( StreamWriter sw )
+		{
+			sw.WriteLine();
+			int laneBEAT = this._Form.mgr譜面管理者.nレーン名に対応するレーン番号を返す( "BEAT" );
+// Debug.WriteLine( "laneBEAT=" + laneBEAT );
+			int c = 0;
+			foreach ( KeyValuePair<int, C小節> pair in this._Form.mgr譜面管理者.dic小節 )
+			{
+				C小節 c小節 = pair.Value;
+				for ( int index = 0; index < c小節.listチップ.Count; index++ )
+				{
+					if ( c小節.listチップ[ index ].nレーン番号0to == laneBEAT )
+					{
+// int n小節番号 = c小節.n小節番号0to3599;
+// Debug.WriteLine( "n小節番号=" + c小節.n小節番号0to3599 + ", 小節内Grid=" + c小節.listチップ[ index ].n位置grid + ",lane=" + c小節.listチップ[ index ].nレーン番号0to + ", f値=" + c小節.listチップ[ index ].f値・浮動小数 );
+						//string str = C変換.str数値を36進数2桁に変換して返す( c );
+						sw.WriteLine( "#BEAT{0}: {1}, {2}, {3}", c++, c小節.n小節番号0to3599, c小節.listチップ[ index ].n位置grid, c小節.listチップ[ index ].f値_浮動小数);
+					}
+				}
+			}
+		}
+		private void tDTX出力_全チップ( StreamWriter sw )
 		{
 			sw.WriteLine();
 			foreach( KeyValuePair<int, C小節> pair in this._Form.mgr譜面管理者.dic小節 )
@@ -1935,7 +2090,7 @@ namespace DTXCreator
 						{
 							if( cチップ2.nチャンネル番号00toFF == num )
 							{
-								numArray[ cチップ2.n位置grid, 0 ] = cチップ2.n値・整数1to1295;
+								numArray[ cチップ2.n位置grid, 0 ] = cチップ2.n値_整数1to1295;
 							}
 						}
 						int num3 = 0;
@@ -1948,7 +2103,7 @@ namespace DTXCreator
 							int num5 = c小節.n小節長倍率を考慮した現在の小節の高さgrid;
 							foreach( int num6 in this.arr素数リスト )
 							{
-								while( this.tDTX出力・全チップ・解像度をＮ分の１にできる( num6, ref numArray, num5 ) )
+								while( this.tDTX出力_全チップ_解像度をＮ分の１にできる( num6, ref numArray, num5 ) )
 								{
 									num5 /= num6;
 									for( int num7 = 0; num7 < num5; num7++ )
@@ -1984,12 +2139,12 @@ namespace DTXCreator
 					{
 						case Cレーン.E種別.GtV:
 							{
-								numArray[ cチップ3.n位置grid, 0 ] = cチップ3.n値・整数1to1295;
+								numArray[ cチップ3.n位置grid, 0 ] = cチップ3.n値_整数1to1295;
 								continue;
 							}
 						case Cレーン.E種別.GtR:
 							{
-								numArray[ cチップ3.n位置grid, 1 ] |= ( cチップ3.n値・整数1to1295 == 1 ) ? 0x04 : 0xFF; // OPEN = 0xFF
+								numArray[ cチップ3.n位置grid, 1 ] |= ( cチップ3.n値_整数1to1295 == 1 ) ? 0x04 : 0xFF; // OPEN = 0xFF
 								continue;
 							}
 						case Cレーン.E種別.GtG:
@@ -2002,6 +2157,16 @@ namespace DTXCreator
 								numArray[ cチップ3.n位置grid, 1 ] |= 0x01;
 								continue;
 							}
+                        case Cレーン.E種別.GtY:
+                            {
+                                numArray[ cチップ3.n位置grid, 1 ] |= 16;
+                                continue;
+                            }
+                        case Cレーン.E種別.GtP:
+                            {
+                                numArray[ cチップ3.n位置grid, 1 ] |= 32;
+                                continue;
+                            }
 					}
 				}
 				for( int j = 0; j < c小節.n小節長倍率を考慮した現在の小節の高さgrid; j++ )
@@ -2015,7 +2180,7 @@ namespace DTXCreator
 				int num11 = c小節.n小節長倍率を考慮した現在の小節の高さgrid;
 				foreach( int num12 in this.arr素数リスト )
 				{
-					while( this.tDTX出力・全チップ・解像度をＮ分の１にできる( num12, ref numArray, num11 ) )
+					while( this.tDTX出力_全チップ_解像度をＮ分の１にできる( num12, ref numArray, num11 ) )
 					{
 						num11 /= num12;
 						for( int num13 = 0; num13 < num11; num13++ )
@@ -2064,11 +2229,120 @@ namespace DTXCreator
 						}
 					}
 				}
-				for( int num20 = 0; num20 < 8; num20++ )
+                //for( int num20 = 0; num20 < 8; num20++ )
+                //{
+                //    if( builderArray[ num20 ].Length != 0 )
+                //    {
+                //        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 0x20 + num20 ), builderArray[ num20 ].ToString() );
+                //    }
+                //}
+				for( int num20 = 0; num20 < 255; num20++ )
 				{
 					if( builderArray[ num20 ].Length != 0 )
 					{
-						sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 0x20 + num20 ), builderArray[ num20 ].ToString() );
+                        int num16 = 0;
+                        if (num20 < 16)
+                        {
+                            num16 = num20 + 32;
+                        }
+                        if (num20 == 16)
+                        {
+                            num16 = 147;
+                        }
+                        if (num20 == 17)
+                        {
+                            num16 = 148;
+                        }
+                        if (num20 == 18)
+                        {
+                            num16 = 149;
+                        }
+                        if (num20 == 19)
+                        {
+                            num16 = 150;
+                        }
+                        if (num20 == 20)
+                        {
+                            num16 = 151;
+                        }
+                        if (num20 == 21)
+                        {
+                            num16 = 152;
+                        }
+                        if (num20 == 22)
+                        {
+                            num16 = 153;
+                        }
+                        if (num20 == 23)
+                        {
+                            num16 = 154;
+                        }
+                        if (num20 == 32)
+                        {
+                            num16 = 155;
+                        }
+                        if (num20 == 33)
+                        {
+                            num16 = 156;
+                        }
+                        if (num20 == 34)
+                        {
+                            num16 = 157;
+                        }
+                        if (num20 == 35)
+                        {
+                            num16 = 158;
+                        }
+                        if (num20 == 36)
+                        {
+                            num16 = 159;
+                        }
+                        if (num20 == 37)
+                        {
+                            num16 = 169;
+                        }
+                        if (num20 == 38)
+                        {
+                            num16 = 170;
+                        }
+                        if (num20 == 39)
+                        {
+                            num16 = 171;
+                        }
+                        if (num20 == 48)
+                        {
+                            num16 = 172;
+                        }
+                        if (num20 == 49)
+                        {
+                            num16 = 173;
+                        }
+                        if (num20 == 50)
+                        {
+                            num16 = 174;
+                        }
+                        if (num20 == 51)
+                        {
+                            num16 = 175;
+                        }
+                        if (num20 == 52)
+                        {
+                            num16 = 208;
+                        }
+                        if (num20 == 53)
+                        {
+                            num16 = 209;
+                        }
+                        if (num20 == 54)
+                        {
+                            num16 = 210;
+                        }
+                        if (num20 == 55)
+                        {
+                            num16 = 211;
+                        }
+
+						sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( num16 ), builderArray[ num20 ].ToString() );
 					}
 				}
 				for( int num21 = 0; num21 < c小節.n小節長倍率を考慮した現在の小節の高さgrid; num21++ )
@@ -2082,12 +2356,12 @@ namespace DTXCreator
 					{
 						case Cレーン.E種別.BsV:
 							{
-								numArray[ cチップ4.n位置grid, 0 ] = cチップ4.n値・整数1to1295;
+								numArray[ cチップ4.n位置grid, 0 ] = cチップ4.n値_整数1to1295;
 								continue;
 							}
 						case Cレーン.E種別.BsR:
 							{
-								numArray[ cチップ4.n位置grid, 1 ] |= ( cチップ4.n値・整数1to1295 == 1 ) ? 4 : 0xff;	// OPEN = 0xFF
+								numArray[ cチップ4.n位置grid, 1 ] |= ( cチップ4.n値_整数1to1295 == 1 ) ? 4 : 0xff;	// OPEN = 0xFF
 								continue;
 							}
 						case Cレーン.E種別.BsG:
@@ -2100,6 +2374,17 @@ namespace DTXCreator
 								numArray[ cチップ4.n位置grid, 1 ] |= 0x01;
 								continue;
 							}
+                        case Cレーン.E種別.BsY:
+                            {
+                                numArray[cチップ4.n位置grid, 1] |= 16;
+                                continue;
+                            }
+                        case Cレーン.E種別.BsP:
+                            {
+                                numArray[cチップ4.n位置grid, 1] |= 32;
+                                continue;
+                            }
+
 					}
 				}
 				for( int num22 = 0; num22 < c小節.n小節長倍率を考慮した現在の小節の高さgrid; num22++ )
@@ -2113,7 +2398,7 @@ namespace DTXCreator
 				int num23 = c小節.n小節長倍率を考慮した現在の小節の高さgrid;
 				foreach( int num24 in this.arr素数リスト )
 				{
-					while( this.tDTX出力・全チップ・解像度をＮ分の１にできる( num24, ref numArray, num23 ) )
+					while( this.tDTX出力_全チップ_解像度をＮ分の１にできる( num24, ref numArray, num23 ) )
 					{
 						num23 /= num24;
 						for( int num25 = 0; num25 < num23; num25++ )
@@ -2162,16 +2447,124 @@ namespace DTXCreator
 						}
 					}
 				}
-				for( int num32 = 0; num32 < 8; num32++ )
-				{
-					if( builderArray2[ num32 ].Length != 0 )
-					{
-						sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 160 + num32 ), builderArray2[ num32 ].ToString() );
-					}
-				}
+                //for( int num32 = 0; num32 < 8; num32++ )
+                //{
+                //    if( builderArray2[ num32 ].Length != 0 )
+                //    {
+                //        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 160 + num32 ), builderArray2[ num32 ].ToString() );
+                //    }
+                //}
+                for (int num32 = 0; num32 < 255; num32++)
+                {
+                    if (builderArray2[num32].Length != 0)
+                    {
+                        int num33 = 0;
+                        if (num32 < 16)
+                        {
+                            num33 = num32 + 160;
+                        }
+                        if (num32 == 16)
+                        {
+                            num33 = 197;
+                        }
+                        if (num32 == 17)
+                        {
+                            num33 = 198;
+                        }
+                        if (num32 == 18)
+                        {
+                            num33 = 200;
+                        }
+                        if (num32 == 19)
+                        {
+                            num33 = 201;
+                        }
+                        if (num32 == 20)
+                        {
+                            num33 = 202;
+                        }
+                        if (num32 == 21)
+                        {
+                            num33 = 203;
+                        }
+                        if (num32 == 22)
+                        {
+                            num33 = 204;
+                        }
+                        if (num32 == 23)
+                        {
+                            num33 = 205;
+                        }
+                        if (num32 == 32)
+                        {
+                            num33 = 206;
+                        }
+                        if (num32 == 33)
+                        {
+                            num33 = 207;
+                        }
+                        if (num32 == 34)
+                        {
+                            num33 = 218;
+                        }
+                        if (num32 == 35)
+                        {
+                            num33 = 219;
+                        }
+                        if (num32 == 36)
+                        {
+                            num33 = 220;
+                        }
+                        if (num32 == 37)
+                        {
+                            num33 = 221;
+                        }
+                        if (num32 == 38)
+                        {
+                            num33 = 222;
+                        }
+                        if (num32 == 39)
+                        {
+                            num33 = 223;
+                        }
+                        if (num32 == 48)
+                        {
+                            num33 = 225;
+                        }
+                        if (num32 == 49)
+                        {
+                            num33 = 226;
+                        }
+                        if (num32 == 50)
+                        {
+                            num33 = 227;
+                        }
+                        if (num32 == 51)
+                        {
+                            num33 = 228;
+                        }
+                        if (num32 == 52)
+                        {
+                            num33 = 229;
+                        }
+                        if (num32 == 53)
+                        {
+                            num33 = 230;
+                        }
+                        if (num32 == 54)
+                        {
+                            num33 = 231;
+                        }
+                        if (num32 == 55)
+                        {
+                            num33 = 232;
+                        }
+                        sw.WriteLine("#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す(c小節.n小節番号0to3599), C変換.str数値を16進数2桁に変換して返す(num33), builderArray2[num32].ToString());
+                    }
+                }
 			}
 		}
-		private bool tDTX出力・全チップ・解像度をＮ分の１にできる( int N, ref int[ , ] arrチップ配列, int n現在の解像度 )
+		private bool tDTX出力_全チップ_解像度をＮ分の１にできる( int N, ref int[ , ] arrチップ配列, int n現在の解像度 )
 		{
 			if( ( n現在の解像度 % N ) != 0 )
 			{

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
@@ -8,17 +8,30 @@ using System.Diagnostics;
 using SlimDX;
 using SlimDX.Direct3D9;
 
+//2016.03.11 kairera0467
+//注意:DTXMania104のFDKとは一部の処理が異なります。
 namespace FDK
 {
 	public class CTexture : IDisposable
 	{
-		// プロパティ
+		#region [ プロパティ ]
+
 		public bool b加算合成
 		{
 			get;
 			set; 
 		}
+		public bool bFlipY
+		{
+			get;
+			set;
+		}
 		public float fZ軸中心回転
+		{
+			get;
+			set;
+		}
+		public float fY軸中心回転
 		{
 			get;
 			set;
@@ -48,7 +61,7 @@ namespace FDK
 		public Size szテクスチャサイズ
 		{
 			get; 
-			private set;
+			protected set;
 		}
 		public Size sz画像サイズ
 		{
@@ -66,17 +79,13 @@ namespace FDK
 			protected set;
 		}
 		public Vector3 vc拡大縮小倍率;
-
-        	// 画面が変わるたび以下のプロパティを設定し治すこと。
-
-        	public static Size sz論理画面 = Size.Empty;
-        	public static Size sz物理画面 = Size.Empty;
-        	public static Rectangle rc物理画面描画領域 = Rectangle.Empty;
-        	/// <summary>
-        	/// <para>論理画面を1とする場合の物理画面の倍率。</para>
-        	/// <para>論理値×画面比率＝物理値。</para>
-        	/// </summary>
-        	public static float f画面比率 = 1.0f;
+        /// <summary>
+        /// <para>論理画面を1とする場合の物理画面の倍率。</para>
+        /// <para>論理値×画面比率＝物理値。</para>
+        /// </summary>
+        public static float f画面比率 = 1.0f;
+        public static Rectangle rc物理画面描画領域 = Rectangle.Empty;
+		#endregion
 
 		// コンストラクタ
 
@@ -89,7 +98,9 @@ namespace FDK
 			this.cvPositionColoredVertexies = null;
 			this.b加算合成 = false;
 			this.fZ軸中心回転 = 0f;
+			this.fY軸中心回転 = 0f;
 			this.vc拡大縮小倍率 = new Vector3( 1f, 1f, 1f );
+			this.bFlipY = false;
 //			this._txData = null;
 		}
 		
@@ -265,6 +276,10 @@ namespace FDK
 				this.rc全画像 = new Rectangle( 0, 0, this.sz画像サイズ.Width, this.sz画像サイズ.Height );
 				int colorKey = ( b黒を透過する ) ? unchecked( (int) 0xFF000000 ) : 0;
 				this.szテクスチャサイズ = this.t指定されたサイズを超えない最適なテクスチャサイズを返す( device, this.sz画像サイズ );
+				//if ( ( device.Capabilities.TextureFilterCaps & FilterCaps.MagPoint ) != 0 )
+				//{
+				//	device.SetSamplerState( 0, SamplerState.MagFilter, TextureFilter.Point );
+				//}
 #if TEST_Direct3D9Ex
 				pool = poolvar;
 #endif
@@ -297,6 +312,10 @@ namespace FDK
 				this.rc全画像 = new Rectangle( 0, 0, this.sz画像サイズ.Width, this.sz画像サイズ.Height );
 				int colorKey = ( b黒を透過する ) ? unchecked( (int) 0xFF000000 ) : 0;
 				this.szテクスチャサイズ = this.t指定されたサイズを超えない最適なテクスチャサイズを返す( device, this.sz画像サイズ );
+				//if ( ( device.Capabilities.TextureFilterCaps & FilterCaps.MagPoint ) != 0 )
+				//{
+				//	device.SetSamplerState( 0, SamplerState.MagFilter, TextureFilter.Point );
+				//}
 #if TEST_Direct3D9Ex
 				pool = poolvar;
 #endif
@@ -363,7 +382,7 @@ namespace FDK
 		{
 			this.t2D描画( device, x, y, 1f, rc画像内の描画領域 );
 		}
-        public void t2D描画( Device device, float x, float y )
+		public void t2D描画( Device device, float x, float y )
 		{
 			this.t2D描画( device, (int)x, (int)y, 1f, this.rc全画像 );
 		}
@@ -373,12 +392,12 @@ namespace FDK
 		}
 		public void t2D描画( Device device, int x, int y, float depth, Rectangle rc画像内の描画領域 )
 		{
-            if (this.texture == null)
-                return;
+			if( this.texture == null )
+				return;
 
 			this.tレンダリングステートの設定( device );
 
-			if( this.fZ軸中心回転 == 0f )
+			if( this.fZ軸中心回転 == 0f && this.fY軸中心回転 == 0f )
 			{
 				#region [ (A) 回転なし ]
 				//-----------------
@@ -393,7 +412,14 @@ namespace FDK
 				this.color4.Alpha = ( (float) this._透明度 ) / 255f;
 				int color = this.color4.ToArgb();
 
-				if( this.cvTransformedColoredVertexies == null )
+				if( this.bFlipY )
+				{
+					float swap = f上V値;
+					f上V値 = f下V値;
+					f下V値 = swap;
+				}
+
+				if ( this.cvTransformedColoredVertexies == null )
 					this.cvTransformedColoredVertexies = new TransformedColoredTexturedVertex[ 4 ];
 
 				// #27122 2012.1.13 from: 以下、マネージドオブジェクト（＝ガベージ）の量産を抑えるため、new は使わず、メンバに値を１つずつ直接上書きする。
@@ -489,6 +515,7 @@ namespace FDK
 				var vc3移動量 = new Vector3( n描画領域内X - ( ( (float) device.Viewport.Width ) / 2f ), -( n描画領域内Y - ( ( (float) device.Viewport.Height ) / 2f ) ), 0f );
 				
 				var matrix = Matrix.Identity * Matrix.Scaling( this.vc拡大縮小倍率 );
+				matrix *= Matrix.RotationY( this.fY軸中心回転 );
 				matrix *= Matrix.RotationZ( this.fZ軸中心回転 );
 				matrix *= Matrix.Translation( vc3移動量 );
 				device.SetTransform( TransformState.World, matrix );
@@ -580,29 +607,6 @@ namespace FDK
 			this.t2D上下反転描画( device, pt.X, pt.Y, depth, rc画像内の描画領域 );
 		}
 
-        public static Vector3 t論理画面座標をワールド座標へ変換する(int x, int y)
-        {
-            return CTexture.t論理画面座標をワールド座標へ変換する(new Vector3((float)x, (float)y, 0f));
-        }
-        public static Vector3 t論理画面座標をワールド座標へ変換する(float x, float y)
-        {
-            return CTexture.t論理画面座標をワールド座標へ変換する(new Vector3(x, y, 0f));
-        }
-        public static Vector3 t論理画面座標をワールド座標へ変換する(Point pt論理画面座標)
-        {
-            return CTexture.t論理画面座標をワールド座標へ変換する(new Vector3(pt論理画面座標.X, pt論理画面座標.Y, 0.0f));
-        }
-        public static Vector3 t論理画面座標をワールド座標へ変換する(Vector2 v2論理画面座標)
-        {
-            return CTexture.t論理画面座標をワールド座標へ変換する(new Vector3(v2論理画面座標, 0f));
-        }
-        public static Vector3 t論理画面座標をワールド座標へ変換する(Vector3 v3論理画面座標)
-        {
-            return new Vector3(
-                (v3論理画面座標.X - (CTexture.sz論理画面.Width / 2.0f)) * CTexture.f画面比率,
-                (-(v3論理画面座標.Y - (CTexture.sz論理画面.Height / 2.0f)) * CTexture.f画面比率),
-                v3論理画面座標.Z);
-        }
 
 		/// <summary>
 		/// テクスチャを 3D 画像と見なして描画する。
@@ -618,73 +622,6 @@ namespace FDK
 
 			float x = ( (float) rc画像内の描画領域.Width ) / 2f;
 			float y = ( (float) rc画像内の描画領域.Height ) / 2f;
-			float z = 0.0f;
-			float f左U値 = ( (float) rc画像内の描画領域.Left ) / ( (float) this.szテクスチャサイズ.Width );
-			float f右U値 = ( (float) rc画像内の描画領域.Right ) / ( (float) this.szテクスチャサイズ.Width );
-			float f上V値 = ( (float) rc画像内の描画領域.Top ) / ( (float) this.szテクスチャサイズ.Height );
-			float f下V値 = ( (float) rc画像内の描画領域.Bottom ) / ( (float) this.szテクスチャサイズ.Height );
-			this.color4.Alpha = ( (float) this._透明度 ) / 255f;
-			int color = this.color4.ToArgb();
-			
-			if( this.cvPositionColoredVertexies == null )
-				this.cvPositionColoredVertexies = new PositionColoredTexturedVertex[ 4 ];
-
-			// #27122 2012.1.13 from: 以下、マネージドオブジェクト（＝ガベージ）の量産を抑えるため、new は使わず、メンバに値を１つずつ直接上書きする。
-
-			this.cvPositionColoredVertexies[ 0 ].Position.X = -x;
-			this.cvPositionColoredVertexies[ 0 ].Position.Y = y;
-			this.cvPositionColoredVertexies[ 0 ].Position.Z = z;
-			this.cvPositionColoredVertexies[ 0 ].Color = color;
-			this.cvPositionColoredVertexies[ 0 ].TextureCoordinates.X = f左U値;
-			this.cvPositionColoredVertexies[ 0 ].TextureCoordinates.Y = f上V値;
-
-			this.cvPositionColoredVertexies[ 1 ].Position.X = x;
-			this.cvPositionColoredVertexies[ 1 ].Position.Y = y;
-			this.cvPositionColoredVertexies[ 1 ].Position.Z = z;
-			this.cvPositionColoredVertexies[ 1 ].Color = color;
-			this.cvPositionColoredVertexies[ 1 ].TextureCoordinates.X = f右U値;
-			this.cvPositionColoredVertexies[ 1 ].TextureCoordinates.Y = f上V値;
-
-			this.cvPositionColoredVertexies[ 2 ].Position.X = -x;
-			this.cvPositionColoredVertexies[ 2 ].Position.Y = -y;
-			this.cvPositionColoredVertexies[ 2 ].Position.Z = z;
-			this.cvPositionColoredVertexies[ 2 ].Color = color;
-			this.cvPositionColoredVertexies[ 2 ].TextureCoordinates.X = f左U値;
-			this.cvPositionColoredVertexies[ 2 ].TextureCoordinates.Y = f下V値;
-
-			this.cvPositionColoredVertexies[ 3 ].Position.X = x;
-			this.cvPositionColoredVertexies[ 3 ].Position.Y = -y;
-			this.cvPositionColoredVertexies[ 3 ].Position.Z = z;
-			this.cvPositionColoredVertexies[ 3 ].Color = color;
-			this.cvPositionColoredVertexies[ 3 ].TextureCoordinates.X = f右U値;
-			this.cvPositionColoredVertexies[ 3 ].TextureCoordinates.Y = f下V値;
-
-			this.tレンダリングステートの設定( device );
-
-			device.SetTransform( TransformState.World, mat );
-			device.SetTexture( 0, this.texture );
-			device.VertexFormat = PositionColoredTexturedVertex.Format;
-			device.DrawUserPrimitives( PrimitiveType.TriangleStrip, 2, this.cvPositionColoredVertexies );
-		}
-
-        public void t3D左上基準描画( Device device, Matrix mat )
-		{
-			this.t3D左上基準描画( device, mat, this.rc全画像 );
-		}
-		/// <summary>
-		/// ○覚書
-		///   SlimDX.Matrix mat = SlimDX.Matrix.Identity;
-		///   mat *= SlimDX.Matrix.Translation( x, y, z );
-		/// 「mat =」ではなく「mat *=」であることを忘れないこと。
-		/// </summary>
-		public void t3D左上基準描画( Device device, Matrix mat, Rectangle rc画像内の描画領域 )
-		{
-			//とりあえず補正値などは無し。にしても使う機会少なさそうだなー・・・・
-			if( this.texture == null )
-				return;
-
-			float x = 0.0f;
-			float y = 0.0f;
 			float z = 0.0f;
 			float f左U値 = ( (float) rc画像内の描画領域.Left ) / ( (float) this.szテクスチャサイズ.Width );
 			float f右U値 = ( (float) rc画像内の描画領域.Right ) / ( (float) this.szテクスチャサイズ.Width );
@@ -758,16 +695,10 @@ namespace FDK
 
 		#region [ private ]
 		//-----------------
-		private int _透明度;
+		protected int _透明度;
 		private bool bDispose完了済み;
-		private PositionColoredTexturedVertex[] cvPositionColoredVertexies;
-        protected TransformedColoredTexturedVertex[] cvTransformedColoredVertexies = new TransformedColoredTexturedVertex[]
-		{
-			new TransformedColoredTexturedVertex(),
-			new TransformedColoredTexturedVertex(),
-			new TransformedColoredTexturedVertex(),
-			new TransformedColoredTexturedVertex(),
-		};
+		protected PositionColoredTexturedVertex[] cvPositionColoredVertexies;
+		protected TransformedColoredTexturedVertex[] cvTransformedColoredVertexies;
 		private const Pool poolvar =												// 2011.4.25 yyagi
 #if TEST_Direct3D9Ex
 			Pool.Default;
@@ -777,7 +708,7 @@ namespace FDK
 //		byte[] _txData;
 		static object lockobj = new object();
 
-		private void tレンダリングステートの設定( Device device )
+		protected void tレンダリングステートの設定( Device device )
 		{
 			if( this.b加算合成 )
 			{
@@ -792,7 +723,7 @@ namespace FDK
 				device.SetRenderState( RenderState.DestinationBlend, SlimDX.Direct3D9.Blend.InverseSourceAlpha );	// 6
 			}
 		}
-		private Size t指定されたサイズを超えない最適なテクスチャサイズを返す( Device device, Size sz指定サイズ )
+		protected Size t指定されたサイズを超えない最適なテクスチャサイズを返す( Device device, Size sz指定サイズ )
 		{
 			bool b条件付きでサイズは２の累乗でなくてもOK = ( device.Capabilities.TextureCaps & TextureCaps.NonPow2Conditional ) != 0;
 			bool bサイズは２の累乗でなければならない = ( device.Capabilities.TextureCaps & TextureCaps.Pow2 ) != 0;

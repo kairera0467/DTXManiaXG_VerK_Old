@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Xml;
 using FDK;
 
 namespace DTXMania
@@ -15,7 +16,6 @@ namespace DTXMania
 		BGMコンフィグ画面,
 		BGM起動画面,
 		BGM選曲画面,
-        BGM結果画面,
 		SOUNDステージ失敗音,
 		SOUNDカーソル移動音,
 		SOUNDゲーム開始音,
@@ -28,17 +28,7 @@ namespace DTXMania
 		SOUND決定音,
 		SOUND取消音,
 		SOUND変更音,
-        SOUND曲決定,
-        SOUNDエクセレント音,
-        SOUND新記録音,
-        SOUNDSELECTMUSIC,
-        SOUNDNOVICE,
-        SOUNDREGULAR,
-        SOUNDEXPERT,
-        SOUNDMASTER,
-        SOUNDBASIC,
-        SOUNDADVANCED,
-        SOUNDEXTREME,
+        SOUND曲決定音,
 		Count				// システムサウンド総数の計算用
 	}
 
@@ -70,7 +60,7 @@ namespace DTXMania
 					return this.rSound[ 1 - this.n次に鳴るサウンド番号 ].b再生中;
 				}
 			}
-			public int n位置・現在のサウンド
+			public int n位置_現在のサウンド
 			{
 				get
 				{
@@ -87,7 +77,7 @@ namespace DTXMania
 						sound.n位置 = value;
 				}
 			}
-			public int n位置・次に鳴るサウンド
+			public int n位置_次に鳴るサウンド
 			{
 				get
 				{
@@ -104,7 +94,7 @@ namespace DTXMania
 						sound.n位置 = value;
 				}
 			}
-			public int n音量・現在のサウンド
+			public int n音量_現在のサウンド
 			{
 				get
 				{
@@ -121,7 +111,7 @@ namespace DTXMania
 						sound.n音量 = value;
 				}
 			}
-			public int n音量・次に鳴るサウンド
+			public int n音量_次に鳴るサウンド
 			{
 				get
 				{
@@ -141,7 +131,7 @@ namespace DTXMania
 					}
 				}
 			}
-			public int n長さ・現在のサウンド
+			public int n長さ_現在のサウンド
 			{
 				get
 				{
@@ -153,7 +143,7 @@ namespace DTXMania
 					return sound.n総演奏時間ms;
 				}
 			}
-			public int n長さ・次に鳴るサウンド
+			public int n長さ_次に鳴るサウンド
 			{
 				get
 				{
@@ -327,7 +317,6 @@ namespace DTXMania
 		public Cシステムサウンド bgmコンフィグ画面 = null;
 		public Cシステムサウンド bgm起動画面 = null;
 		public Cシステムサウンド bgm選曲画面 = null;
-        public Cシステムサウンド bgm結果画面 = null;
 		public Cシステムサウンド soundSTAGEFAILED音 = null;
 		public Cシステムサウンド soundカーソル移動音 = null;
 		public Cシステムサウンド soundゲーム開始音 = null;
@@ -340,17 +329,7 @@ namespace DTXMania
 		public Cシステムサウンド sound決定音 = null;
 		public Cシステムサウンド sound取消音 = null;
 		public Cシステムサウンド sound変更音 = null;
-        public Cシステムサウンド sound曲決定 = null;
-        public Cシステムサウンド soundエクセレント音 = null;
-        public Cシステムサウンド sound新記録音 = null;
-        public Cシステムサウンド soundSelectMusic = null;
-        public Cシステムサウンド soundNovice = null;
-        public Cシステムサウンド soundRegular = null;
-        public Cシステムサウンド soundExpert = null;
-        public Cシステムサウンド soundMaster = null;
-        public Cシステムサウンド soundBasic = null;
-        public Cシステムサウンド soundAdvanced = null;
-        public Cシステムサウンド soundExtreme = null;
+        public Cシステムサウンド sound曲決定音 = null;
 		public readonly int nシステムサウンド数 = (int)Eシステムサウンド.Count;
 		public Cシステムサウンド this[ Eシステムサウンド sound ]
 		{
@@ -388,44 +367,11 @@ namespace DTXMania
 					case Eシステムサウンド.SOUNDフルコンボ音:
 						return this.soundフルコンボ音;
 
-                    case Eシステムサウンド.SOUNDエクセレント音:
-                        return this.soundエクセレント音;
-
-                    case Eシステムサウンド.SOUND新記録音:
-                        return this.sound新記録音;
-
 					case Eシステムサウンド.SOUND曲読込開始音:
 						return this.sound曲読込開始音;
 
 					case Eシステムサウンド.SOUNDタイトル音:
 						return this.soundタイトル音;
-
-                    case Eシステムサウンド.SOUND曲決定:
-                        return this.sound曲決定;
-
-                    case Eシステムサウンド.SOUNDNOVICE:
-                        return this.soundNovice;
-
-                    case Eシステムサウンド.SOUNDREGULAR:
-                        return this.soundRegular;
-
-                    case Eシステムサウンド.SOUNDEXPERT:
-                        return this.soundExpert;
-
-                    case Eシステムサウンド.SOUNDMASTER:
-                        return this.soundMaster;
-
-                    case Eシステムサウンド.SOUNDBASIC:
-                        return this.soundBasic;
-
-                    case Eシステムサウンド.SOUNDADVANCED:
-                        return this.soundAdvanced;
-
-                    case Eシステムサウンド.SOUNDEXTREME:
-                        return this.soundExtreme;
-
-                    case Eシステムサウンド.SOUNDSELECTMUSIC:
-                        return this.soundSelectMusic;
 
 					case Eシステムサウンド.BGM起動画面:
 						return this.bgm起動画面;
@@ -439,8 +385,8 @@ namespace DTXMania
 					case Eシステムサウンド.BGM選曲画面:
 						return this.bgm選曲画面;
 
-                    case Eシステムサウンド.BGM結果画面:
-						return this.bgm結果画面;
+                    case Eシステムサウンド.SOUND曲決定音:
+                        return this.sound曲決定音;
 				}
 				throw new IndexOutOfRangeException();
 			}
@@ -476,64 +422,31 @@ namespace DTXMania
 						return this.soundゲーム終了音;
 
 					case 8:
+						return this.soundステージクリア音;
+
+					case 9:
 						return this.soundフルコンボ音;
 
-                    case 9:
-                        return this.soundエクセレント音;
-
-                    case 10:
-                        return this.sound新記録音;
-
-					case 11:
+					case 10:
 						return this.sound曲読込開始音;
 
-					case 12:
+					case 11:
 						return this.soundタイトル音;
 
-                    case 13:
-                        return this.sound曲決定;
-
-					case 14:
+					case 12:
 						return this.bgm起動画面;
 
-					case 15:
+					case 13:
 						return this.bgmオプション画面;
 
-					case 16:
+					case 14:
 						return this.bgmコンフィグ画面;
 
-                    case 17:
-                        return this.bgm選曲画面;
+					case 15:
+						return this.bgm選曲画面;
 
-                    case 18:
-                        return this.bgm結果画面;
-
-                    case 19:
-                        return this.soundステージクリア音;
-
-                    case 20:
-                        return this.soundNovice;
-
-                    case 21:
-                        return this.soundRegular;
-
-                    case 22:
-                        return this.soundExpert;
-
-                    case 23:
-                        return this.soundMaster;
-
-                    case 24:
-                        return this.soundSelectMusic;
-                    
-                    case 25:
-                        return this.soundBasic;
-
-                    case 26:
-                        return this.soundAdvanced;
-
-                    case 27:
-                        return this.soundExtreme;
+                    case 16:
+                        return this.sound曲決定音;
 				}
 				throw new IndexOutOfRangeException();
 			}
@@ -666,7 +579,6 @@ namespace DTXMania
 					this[ i ].Dispose();
 				}
 			}
-
 			this.soundカーソル移動音	= new Cシステムサウンド( @"Sounds\Move.ogg",			false, false, false );
 			this.sound決定音			= new Cシステムサウンド( @"Sounds\Decide.ogg",			false, false, false );
 			this.sound変更音			= new Cシステムサウンド( @"Sounds\Change.ogg",			false, false, false );
@@ -675,26 +587,18 @@ namespace DTXMania
 			this.soundSTAGEFAILED音		= new Cシステムサウンド( @"Sounds\Stage failed.ogg",	false, true,  true  );
 			this.soundゲーム開始音		= new Cシステムサウンド( @"Sounds\Game start.ogg",		false, false, false );
 			this.soundゲーム終了音		= new Cシステムサウンド( @"Sounds\Game end.ogg",		false, true,  false );
-			this.soundステージクリア音	= new Cシステムサウンド( @"Sounds\Stage clear.ogg",		false, true,  false );
+			this.soundステージクリア音	= new Cシステムサウンド( @"Sounds\Stage clear.ogg",		false, true,  true  );
 			this.soundフルコンボ音		= new Cシステムサウンド( @"Sounds\Full combo.ogg",		false, false, true  );
-            this.sound新記録音          = new Cシステムサウンド( @"Sounds\New Record.ogg",      false, false, true  );
-            this.soundエクセレント音    = new Cシステムサウンド( @"Sounds\Excellent.ogg",       false, false, true  );
 			this.sound曲読込開始音		= new Cシステムサウンド( @"Sounds\Now loading.ogg",		false, true,  true  );
 			this.soundタイトル音		= new Cシステムサウンド( @"Sounds\Title.ogg",			false, true,  false );
-            this.sound曲決定            = new Cシステムサウンド( @"Sounds\MusicDecide.ogg",     false, false, false );
-            this.soundNovice            = new Cシステムサウンド( @"Sounds\Novice.ogg",          false, false, false );
-            this.soundRegular           = new Cシステムサウンド( @"Sounds\Regular.ogg",         false, false, false );
-			this.soundExpert		    = new Cシステムサウンド( @"Sounds\Expert.ogg",		    false, false, false );
-            this.soundBasic             = new Cシステムサウンド( @"Sounds\Basic.ogg",           false, false, false );
-            this.soundAdvanced          = new Cシステムサウンド( @"Sounds\Advanced.ogg",        false, false, false );
-			this.soundExtreme	        = new Cシステムサウンド( @"Sounds\Extreme.ogg",		    false, false, false );
-			this.soundMaster		    = new Cシステムサウンド( @"Sounds\Master.ogg",			false, false, false );
-            this.soundSelectMusic       = new Cシステムサウンド( @"Sounds\SelectMusic.ogg",     false, false, false );
 			this.bgm起動画面			= new Cシステムサウンド( @"Sounds\Setup BGM.ogg",		true,  true,  false );
 			this.bgmオプション画面		= new Cシステムサウンド( @"Sounds\Option BGM.ogg",		true,  true,  false );
 			this.bgmコンフィグ画面		= new Cシステムサウンド( @"Sounds\Config BGM.ogg",		true,  true,  false );
 			this.bgm選曲画面			= new Cシステムサウンド( @"Sounds\Select BGM.ogg",		true,  true,  false );
-            this.bgm結果画面            = new Cシステムサウンド( @"Sounds\Result BGM.ogg",      true,  true,  false );
+            if( File.Exists( CSkin.Path( @"Sounds\MusicDecide.ogg" ) ) )
+			    this.sound曲決定音 = new Cシステムサウンド( @"Sounds\MusicDecide.ogg",		false, false, false );
+            else
+			    this.sound曲決定音 = new Cシステムサウンド( @"Sounds\Decide.ogg",		    false, false, false );
 
             tReadSkinConfig();
 		}
@@ -874,29 +778,44 @@ namespace DTXMania
 		public bool bIsValid( string skinPathFullName )
 		{
 			string filePathTitle;
-			filePathTitle = System.IO.Path.Combine( skinPathFullName, @"Graphics\1_background.png" );
+			filePathTitle = System.IO.Path.Combine( skinPathFullName, @"Graphics\2_background.png" );
 			return ( File.Exists( filePathTitle ) );
 		}
 
 
-        public void tRemoveMixerAll()
-        {
-            for (int i = 0; i < nシステムサウンド数; i++)
-            {
-                if (this[i] != null && this[i].b読み込み成功)
-                {
-                    this[i].t停止する();
-                    this[i].tRemoveMixer();
-                }
-            }
+		public void tRemoveMixerAll()
+		{
+			for ( int i = 0; i < nシステムサウンド数; i++ )
+			{
+				if ( this[ i ] != null && this[ i ].b読み込み成功 )
+				{
+					this[ i ].t停止する();
+					this[ i ].tRemoveMixer();
+				}
+			}
 
-        }
+		}
+		#region [ IDisposable 実装 ]
+		//-----------------
+		public void Dispose()
+		{
+			if( !this.bDisposed済み )
+			{
+				for( int i = 0; i < this.nシステムサウンド数; i++ )
+					this[ i ].Dispose();
 
+				this.bDisposed済み = true;
+			}
+		}
+		//-----------------
+		#endregion
+        
         public void tReadSkinConfig()
         {
             if( File.Exists( CSkin.Path( @"SkinConfig.ini" ) ) )
             {
                 string str;
+				//this.tキーアサインを全部クリアする();
 				using ( StreamReader reader = new StreamReader( CSkin.Path( @"SkinConfig.ini" ), Encoding.GetEncoding( "Shift_JIS" ) ) )
                 {
 				    str = reader.ReadToEnd();
@@ -924,10 +843,10 @@ namespace DTXMania
                             str3 = strArray[0].Trim();
                             str4 = strArray[1].Trim();
                             //-----------------------------
-                            //if (str3.Equals("NamePlateType"))
-                            //{
-                            //    CDTXMania.ConfigIni.eNamePlate = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)CDTXMania.ConfigIni.eNamePlate);
-                            //}
+                            if (str3.Equals("NamePlateType"))
+                            {
+                                CDTXMania.ConfigIni.eNamePlateType = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 3, (int)CDTXMania.ConfigIni.eNamePlateType );
+                            }
                             //else if (str3.Equals("DrumSetMoves"))
                             //{
                             //    CDTXMania.ConfigIni.eドラムセットを動かす = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)CDTXMania.ConfigIni.eドラムセットを動かす);
@@ -944,41 +863,59 @@ namespace DTXMania
                             //{
                             //    CDTXMania.ConfigIni.bSpeaker = C変換.bONorOFF(str4[0]);
                             //}
-                            //else if (str3.Equals("JudgeAnimeType"))
+                            else if (str3.Equals("JudgeAnimeType"))
+                            {
+                                CDTXMania.ConfigIni.eJudgeAnimeType = ( Eタイプ )C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, (int)CDTXMania.ConfigIni.eJudgeAnimeType );
+                            }
+                            else if (str3.Equals("JudgeFrames"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeFrames = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeFrames);
+                            }
+                            else if (str3.Equals("JudgeInterval"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeInterval = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeInterval);
+                            }
+                            else if (str3.Equals("JudgeWidgh"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeWidgh = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeWidgh);
+                            }
+                            else if (str3.Equals("JudgeHeight"))
+                            {
+                                CDTXMania.ConfigIni.nJudgeHeight = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeHeight);
+                            }
+                            else if (str3.Equals("ExplosionFrames"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionFrames = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionFrames);
+                            }
+                            else if (str3.Equals("ExplosionInterval"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionInterval = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionInterval);
+                            }
+                            else if (str3.Equals("ExplosionWidgh"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionWidgh);
+                            }
+                            else if (str3.Equals("ExplosionHeight"))
+                            {
+                                CDTXMania.ConfigIni.nExplosionHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionHeight);
+                            }
+                            //else if (str3.Equals("WailingFireFrames"))
                             //{
-                            //    CDTXMania.ConfigIni.nJudgeAnimeType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, CDTXMania.ConfigIni.nJudgeAnimeType);
                             //}
-                            //else if (str3.Equals("JudgeFrames"))
+                            //else if (str3.Equals("WailingFireInterval"))
                             //{
-                            //    CDTXMania.ConfigIni.nJudgeFrames = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeFrames);
                             //}
-                            //else if (str3.Equals("JudgeInterval"))
+                            //else if (str3.Equals("WailingFireWidgh"))
                             //{
-                            //    CDTXMania.ConfigIni.nJudgeInterval = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeInterval);
                             //}
-                            //else if (str3.Equals("JudgeWidgh"))
+                            //else if (str3.Equals("WailingFireHeight"))
                             //{
-                            //    CDTXMania.ConfigIni.nJudgeWidgh = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeWidgh);
                             //}
-                            //else if (str3.Equals("JudgeHeight"))
+                            //else if (str3.Equals("WailingFirePositionXGuitar"))
                             //{
-                            //    CDTXMania.ConfigIni.nJudgeHeight = C変換.n値を文字列から取得して返す(str4, CDTXMania.ConfigIni.nJudgeHeight);
                             //}
-                            //else if (str3.Equals("ExplosionFrames"))
+                            //else if (str3.Equals("WailingFirePositionXBass"))
                             //{
-                            //    CDTXMania.ConfigIni.nExplosionFrames = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionFrames);
-                            //}
-                            //else if (str3.Equals("ExplosionInterval"))
-                            //{
-                            //    CDTXMania.ConfigIni.nExplosionInterval = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionInterval);
-                            //}
-                            //else if (str3.Equals("ExplosionWidgh"))
-                            //{
-                            //    CDTXMania.ConfigIni.nExplosionWidgh = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionWidgh);
-                            //}
-                            //else if (str3.Equals("ExplosionHeight"))
-                            //{
-                            //    CDTXMania.ConfigIni.nExplosionHeight = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, int.MaxValue, (int)CDTXMania.ConfigIni.nExplosionHeight);
                             //}
                             //-----------------------------
                         }
@@ -993,24 +930,18 @@ namespace DTXMania
             }
         }
 
-		#region [ IDisposable 実装 ]
-		//-----------------
-		public void Dispose()
-		{
-			if( !this.bDisposed済み )
-			{
-				for( int i = 0; i < this.nシステムサウンド数; i++ )
-					this[ i ].Dispose();
-
-				this.bDisposed済み = true;
-			}
-		}
-		//-----------------
-		#endregion
-
+        private void tXMLから設定を読み込む()
+        {
+            if( File.Exists( CSkin.Path( "SkinConfig.xml" ) ) )
+            {
+                XmlDocument xmlConfig = new XmlDocument();
+                xmlConfig.LoadXml( CSkin.Path( "SkinConfig.xml" ) );
+                XmlElement xmleConfig = ( XmlElement )xmlConfig.SelectSingleNode( "" );
+            }
+        }
 
 		// その他
-
+        public bool b曲決定後に背景画像を変更する;
 		#region [ private ]
 		//-----------------
 		private bool bDisposed済み;
