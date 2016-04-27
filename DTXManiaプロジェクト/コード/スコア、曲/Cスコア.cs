@@ -59,8 +59,10 @@ namespace DTXMania
 			public string Presound;
 			public string Backgound;
 			public STDGBVALUE<int> レベル;
+            public STDGBVALUE<int> レベルDec;
 			public STRANK 最大ランク;
 			public STSKILL 最大スキル;
+            public STMUSICSKILL 最大曲別スキル;
 			public STDGBVALUE<bool> フルコンボ;
 			public STDGBVALUE<int> 演奏回数;
 			public STHISTORY 演奏履歴;
@@ -68,6 +70,8 @@ namespace DTXMania
 			public CDTX.E種別 曲種別;
 			public double Bpm;
 			public int Duration;
+            public STDGBVALUE<bool> b完全にCLASSIC譜面である;
+            public STDGBVALUE<bool> b譜面がある;
 
 			[Serializable]
 			[StructLayout( LayoutKind.Sequential )]
@@ -227,6 +231,55 @@ namespace DTXMania
 					}
 				}
 			}
+
+			[Serializable]
+			[StructLayout( LayoutKind.Sequential )]
+			public struct STMUSICSKILL
+			{
+				public double Drums;
+				public double Guitar;
+				public double Bass;
+				public double this[ int index ]
+				{
+					get
+					{
+						switch( index )
+						{
+							case 0:
+								return this.Drums;
+
+							case 1:
+								return this.Guitar;
+
+							case 2:
+								return this.Bass;
+						}
+						throw new IndexOutOfRangeException();
+					}
+					set
+					{
+						if( ( value < 0.0 ) || ( value > 200.0 ) )
+						{
+							throw new ArgumentOutOfRangeException();
+						}
+						switch( index )
+						{
+							case 0:
+								this.Drums = value;
+								return;
+
+							case 1:
+								this.Guitar = value;
+								return;
+
+							case 2:
+								this.Bass = value;
+								return;
+						}
+						throw new IndexOutOfRangeException();
+					}
+				}
+			}
 		}
 
 		public bool bSongDBにキャッシュがあった;
@@ -256,6 +309,7 @@ namespace DTXMania
 			this.譜面情報.Presound = "";
 			this.譜面情報.Backgound = "";
 			this.譜面情報.レベル = new STDGBVALUE<int>();
+            this.譜面情報.レベルDec = new STDGBVALUE<int>();
 			this.譜面情報.最大ランク = new ST譜面情報.STRANK();
 			this.譜面情報.最大ランク.Drums =  (int)CScoreIni.ERANK.UNKNOWN;
 			this.譜面情報.最大ランク.Guitar = (int)CScoreIni.ERANK.UNKNOWN;
@@ -270,9 +324,16 @@ namespace DTXMania
 			this.譜面情報.演奏履歴.行5 = "";
 			this.譜面情報.レベルを非表示にする = false;
 			this.譜面情報.最大スキル = new ST譜面情報.STSKILL();
+            this.譜面情報.最大曲別スキル = new ST譜面情報.STMUSICSKILL();
 			this.譜面情報.曲種別 = CDTX.E種別.DTX;
 			this.譜面情報.Bpm = 120.0;
 			this.譜面情報.Duration = 0;
+            this.譜面情報.b完全にCLASSIC譜面である.Drums = false;
+            this.譜面情報.b完全にCLASSIC譜面である.Guitar = false;
+            this.譜面情報.b完全にCLASSIC譜面である.Bass = false;
+            this.譜面情報.b譜面がある.Drums = false;
+            this.譜面情報.b譜面がある.Guitar = false;
+            this.譜面情報.b譜面がある.Bass = false;
 		}
 	}
 }

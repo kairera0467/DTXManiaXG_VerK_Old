@@ -182,6 +182,7 @@ namespace DTXMania
 			public Eダークモード eDark;
 			public EFTGroup eFTGroup;
 			public EHHGroup eHHGroup;
+            public EBDGroup eBDGroup;
 			public E打ち分け時の再生の優先順位 eHitSoundPriorityCY;
 			public E打ち分け時の再生の優先順位 eHitSoundPriorityFT;
 			public E打ち分け時の再生の優先順位 eHitSoundPriorityHH;
@@ -198,11 +199,11 @@ namespace DTXMania
 			public int nPerfect数;
 			public int nPoorになる範囲ms;
 			public int nPoor数;
-			public int nPerfect数・Auto含まない;
-			public int nGreat数・Auto含まない;
-			public int nGood数・Auto含まない;
-			public int nPoor数・Auto含まない;
-			public int nMiss数・Auto含まない;
+			public int nPerfect数_Auto含まない;
+			public int nGreat数_Auto含まない;
+			public int nGood数_Auto含まない;
+			public int nPoor数_Auto含まない;
+			public int nMiss数_Auto含まない;
 			public long nスコア;
 			public int n演奏速度分子;
 			public int n演奏速度分母;
@@ -212,6 +213,7 @@ namespace DTXMania
 			public bool レーン9モード;
 			public int nRisky;		// #23559 2011.6.20 yyagi 0=OFF, 1-10=Risky
 			public string 最終更新日時;
+			public bool bギターとベースを入れ替えた; // #35417 2015.08.30 chnmr0 add
 
 			public C演奏記録()
 			{
@@ -284,6 +286,7 @@ namespace DTXMania
 				this.Hash = "00000000000000000000000000000000";
 				this.レーン9モード = true;
 				this.nRisky = 0;									// #23559 2011.6.20 yyagi
+				this.bギターとベースを入れ替えた = false; // #35417 2015.08.30 chnmr0 add
 			}
 
 			public bool bフルコンボじゃない
@@ -312,7 +315,7 @@ namespace DTXMania
 			{
 				get
 				{
-					return (this.n全チップ数 - this.nPerfect数・Auto含まない - this.nGreat数・Auto含まない - this.nGood数・Auto含まない - this.nPoor数・Auto含まない - this.nMiss数・Auto含まない) == this.n全チップ数;
+					return (this.n全チップ数 - this.nPerfect数_Auto含まない - this.nGreat数_Auto含まない - this.nGood数_Auto含まない - this.nPoor数_Auto含まない - this.nMiss数_Auto含まない) == this.n全チップ数;
 				}
 			}
 #if false
@@ -811,6 +814,10 @@ namespace DTXMania
 									}
 								}
 							}
+							else if ( item.Equals("GBFlip" ) )
+							{
+								c演奏記録.bギターとベースを入れ替えた = C変換.bONorOFF( para[0] );
+							}
 							else if ( item.Equals( "Risky" ) )
 							{
 								c演奏記録.nRisky = int.Parse( para );
@@ -1076,6 +1083,30 @@ namespace DTXMania
 											throw new Exception( "CYGroup の値が無効です。" );
 										}
 										#endregion
+                                        #region [ BDGroup ]
+                                        if( item.Equals( "BDGroup" ) )
+                                        {
+                                            switch( int.Parse( para ) )
+                                            {
+                                                case 0:
+                                                    {
+                                                        c演奏記録.eBDGroup = EBDGroup.打ち分ける;
+                                                        continue;
+                                                    }
+                                                case 1:
+                                                    {
+                                                        c演奏記録.eBDGroup = EBDGroup.左右ペダルのみ打ち分ける;
+                                                        continue;
+                                                    }
+                                                case 2:
+                                                    {
+                                                        c演奏記録.eBDGroup = EBDGroup.どっちもBD;
+                                                        continue;
+                                                    }
+                                            }
+                                            throw new Exception( "BDGroup の値が無効です。" );
+                                        }
+                                        #endregion
 										#region [ HitSoundPriorityHH ]
 										if ( item.Equals( "HitSoundPriorityHH" ) )
 										{
@@ -1255,7 +1286,7 @@ namespace DTXMania
 			this.iniファイルのあるフォルダ名 = Path.GetDirectoryName( iniファイル名 );
 			this.iniファイル名 = Path.GetFileName( iniファイル名 );
 
-			StreamWriter writer = new StreamWriter( iniファイル名, false, Encoding.GetEncoding( "Shift_JIS" ) );
+			StreamWriter writer = new StreamWriter( iniファイル名, false, Encoding.GetEncoding( "utf-16" ) );
 			writer.WriteLine( "[File]" );
 			writer.WriteLine( "Title={0}", this.stファイル.Title );
 			writer.WriteLine( "Name={0}", this.stファイル.Name );
@@ -1297,6 +1328,7 @@ namespace DTXMania
 					writer.Write( this.stセクション[ i ].bAutoPlay[ j ] ? 1 : 0 );
 				}
 				writer.WriteLine();
+				writer.WriteLine( "GBFlip={0}", this.stセクション[i].bギターとベースを入れ替えた ? 1 : 0);
 				writer.WriteLine( "Risky={0}", this.stセクション[ i ].nRisky );
 				writer.WriteLine( "SuddenDrums={0}", this.stセクション[ i ].bSudden.Drums ? 1 : 0 );
 				writer.WriteLine( "SuddenGuitar={0}", this.stセクション[ i ].bSudden.Guitar ? 1 : 0 );
@@ -1354,140 +1386,21 @@ namespace DTXMania
 					this.stセクション[ i ] = new C演奏記録();
 			}
 		}
-
-		internal static int tXGランク値を計算して返す( C演奏記録 part )
-		{
-			if( part.b演奏にMIDI入力を使用した || part.b演奏にキーボードを使用した || part.b演奏にジョイパッドを使用した || part.b演奏にマウスを使用した )	// 2010.9.11
-			{
-				int nTotal = part.nPerfect数 + part.nGreat数 + part.nGood数 + part.nPoor数 + part.nMiss数;
-				return tXGランク値を計算して返す( part.db演奏型スキル値 );
-			}
-			return (int)ERANK.UNKNOWN;
-		}
-		internal static int tXGランク値を計算して返す( double dRate )
-		{
-			if( dRate >= 0.95 )
-			{
-				return (int)ERANK.SS;
-			}
-			if( dRate >= 0.8 )
-			{
-				return (int)ERANK.S;
-			}
-			if( dRate >= 0.73 )
-			{
-				return (int)ERANK.A;
-			}
-			if( dRate >= 0.63 )
-			{
-				return (int)ERANK.B;
-			}
-			if( dRate >= 0.53 )
-			{
-				return (int)ERANK.C;
-			}
-			if( dRate >= 0.43 )
-			{
-				return (int)ERANK.D;
-			}
-            if( dRate <= 0.4299 )
-			    return (int)ERANK.E;
-
-            return (int)ERANK.E;
-		}
-        /// <summary>
-        /// XGの曲別スキルを計算する。
-        /// </summary>
-        /// <param name="dbLevel">譜面レベル(double)</param>
-        /// <param name="dbRate">達成率%(double)</param>
-        /// <returns>曲別スキル(double)</returns>
-		internal static double tXGゲーム型スキルを計算して返す( double dbLevel, double dbRate )
-		{
-            //(達成率[%]÷100)×譜面レベル×20
-			double ret;
-
-            //曲別スキルはオート補正無し。
-            ret = ( dbRate / 100.0 ) * dbLevel * 20;
-
-
-			return ret;
-		}
-
-        /// <summary>
-        /// XG達成率を計算する。(ギターベースパート)
-        /// </summary>
-        /// <param name="nTotalNotes">総ノーツ数</param>
-        /// <param name="nPerfect">PERFECT判定数</param>
-        /// <param name="nGreat">GREAT判定数</param>
-        /// <param name="nBad">空MISS回数</param>
-        /// <param name="nMaxCombo">最大コンボ</param>
-        /// <param name="bAutoPlay">オートプレイフラグ</param>
-        /// <returns>XG達成率</returns>
-		internal static double tXGギター演奏型スキルを計算して返す( int nTotalNotes, int nPerfect, int nGreat, int nBad, int nMaxCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
-		{
-            //達成率=(判定値+COMBO値)×オプション補正
-            //GF判定値:(PERFECT数×85+GREAT数×25)/(総ノーツ数+空MISS数)
-            //COMBO値:COMBO数×15/総ノーツ数
-			if( nTotalNotes == 0 )
-				return 0.0;
-			double ret;
-            double judgeValue;
-            double comboValue;
-
-            judgeValue = ( nPerfect * 85.0 + nGreat * 25.0 ) / (double)( nTotalNotes + nBad );
-            comboValue = ( nTotalNotes * 15.0 ) / (double)( nTotalNotes );
-            ret = ( judgeValue + comboValue );
-
-            #region[ オプション補正 ]
-            if( !CDTXMania.ConfigIni.bギターが全部オートプレイである && inst == E楽器パート.GUITAR )
-            {
-                if( bAutoPlay.GtPick )
-                {
-                    ret = 0.0;
-                }
-            }
-            #endregion
-
-            return ret;
-		}
-		internal static double tXGドラム演奏型スキルを計算して返す( int nTotalNotes, int nPerfect, int nGreat, int nMaxCombo, STAUTOPLAY bAutoPlay )
-		{
-            //達成率=(判定値+COMBO値)×オプション補正
-            //DM判定値:(PERFECT数×85+GREAT数×35)/総ノーツ数
-            //COMBO値:COMBO数×15/総ノーツ数
-			if( nTotalNotes == 0 )
-				return 0.0;
-			double ret;
-            double judgeValue;
-            double comboValue;
-
-            judgeValue = ( nPerfect * 85.0 + nGreat * 35.0 ) / (double)nTotalNotes;
-            comboValue = ( nTotalNotes * 15.0 ) / (double)( nTotalNotes );
-            ret = ( judgeValue + comboValue );
-
-            #region[ オプション補正 ]
-            if( !CDTXMania.ConfigIni.bドラムが全部オートプレイである  )
-            {
-                if( bAutoPlay.BD && ( bAutoPlay.LP || bAutoPlay.LBD ) )
-                {
-                    ret *= 0.25;
-                }
-                else if( bAutoPlay.BD || ( bAutoPlay.LP || bAutoPlay.LBD ) )
-                {
-                    ret *= 0.5;
-                }
-            }
-            #endregion
-
-			return ret;
-		}
-
 		internal static int tランク値を計算して返す( C演奏記録 part )
 		{
 			if( part.b演奏にMIDI入力を使用した || part.b演奏にキーボードを使用した || part.b演奏にジョイパッドを使用した || part.b演奏にマウスを使用した )	// 2010.9.11
 			{
 				int nTotal = part.nPerfect数 + part.nGreat数 + part.nGood数 + part.nPoor数 + part.nMiss数;
 				return tランク値を計算して返す( nTotal, part.nPerfect数, part.nGreat数, part.nGood数, part.nPoor数, part.nMiss数 );
+			}
+			return (int)ERANK.UNKNOWN;
+		}
+		internal static int tXGランク値を計算して返す( C演奏記録 part )
+		{
+			if( part.b演奏にMIDI入力を使用した || part.b演奏にキーボードを使用した || part.b演奏にジョイパッドを使用した || part.b演奏にマウスを使用した )	// 2010.9.11
+			{
+				int nTotal = part.nPerfect数 + part.nGreat数 + part.nGood数 + part.nPoor数 + part.nMiss数;
+				return tXGランク値を計算して返す( nTotal, part.nPerfect数, part.nGreat数, part.nGood数, part.nPoor数, part.nMiss数, part.n最大コンボ数 );
 			}
 			return (int)ERANK.UNKNOWN;
 		}
@@ -1529,6 +1442,126 @@ namespace DTXMania
 			}
 			return (int)ERANK.E;
 		}
+        /// <summary>
+        /// nDummy 適当な数値を入れてください。特に使いません。
+        /// dRate 達成率を入れます。
+        /// </summary>
+        internal static int tXGランク値を計算して返す( double dRate )
+        {
+            if ( dRate == 0 )
+                return (int)ERANK.UNKNOWN;
+
+            if ( dRate >= 95.0 )
+            {
+                return (int)ERANK.SS;
+            }
+            if ( dRate >= 80.0 )
+            {
+                return (int)ERANK.S;
+            }
+            if ( dRate >= 73.0 )
+            {
+                return (int)ERANK.A;
+            }
+            if ( dRate >= 63.0 )
+            {
+                return (int)ERANK.B;
+            }
+            if ( dRate >= 53.0 )
+            {
+                return (int)ERANK.C;
+            }
+            if ( dRate >= 45.0 )
+            {
+                return (int)ERANK.D;
+            }
+            return (int)ERANK.E;
+        }
+        internal static int tXGランク値を計算して返す(int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, int nCombo)
+        {
+            if( nTotal <= 0 )
+                return (int)ERANK.UNKNOWN;
+
+            int nAuto = nTotal - ( nPerfect + nGreat + nGood + nPoor + nMiss );
+            if( nTotal <= nAuto )
+            {
+                return (int)ERANK.SS;
+            }
+            double dRate = ( ( ( ( 100.0 * nPerfect / ( nTotal - nAuto ) ) ) * 0.85 ) + ( ( ( 100.0 * nGreat / ( nTotal - nAuto ) ) ) * 0.35 ) + ( ( 100.0 * nCombo / ( nTotal - nAuto ) ) ) * 0.15 );
+
+            if( dRate >= 95.0 )
+            {
+                return (int)ERANK.SS;
+            }
+            if( dRate >= 80.0 )
+            {
+                return (int)ERANK.S;
+            }
+            if( dRate >= 73 )
+            {
+                return (int)ERANK.A;
+            }
+            if( dRate >= 63 )
+            {
+                return (int)ERANK.B;
+            }
+            if( dRate >= 53 )
+            {
+                return (int)ERANK.C;
+            }
+            if( dRate >= 45 )
+            {
+                return (int)ERANK.D;
+            }
+            return (int)ERANK.E;
+        }
+        internal static double tXG曲別スキルを計算して返す(double dbLevel, int nLevelDec, int nTotal, int nPerfect, int nGreat, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        {
+            //こちらはプレイヤースキル・全曲スキルに加算される得点。いわゆる曲別スキル。
+            double dbPERFECT率 = (100.0 * nPerfect / nTotal);
+            double dbGREAT率 = (100.0 * nGreat / nTotal);
+            double dbCOMBO率 = (100.0 * nCombo / nTotal);
+
+            double ret;
+            double dbRate = (dbPERFECT率 * 0.85 + dbGREAT率 * 0.35 + dbCOMBO率 * 0.15);
+            if ((nTotal == 0) || ((nPerfect == 0) && (nCombo == 0)))
+                ret = 0.0;
+
+            dbLevel = dbLevel / 10.0 + ( nLevelDec != 0 ? 0 : nLevelDec / 100.0 );
+
+            ret = ((dbRate * dbLevel * 0.2));
+            ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
+            if( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
+            {
+                return 0;
+            }
+            return ret;
+        }
+        internal static double tXG演奏型スキルを計算して返す(int nTotal, int nPerfect, int nGreat, int nGood, int nPoor, int nMiss, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay)
+        {
+            if (nTotal == 0)
+                return 0.0;
+
+            double nAuto = nTotal - ( nPerfect + nGreat + nGood + nPoor + nMiss );
+            double dbPERFECT率 = ( 100.0 * nPerfect / nTotal );
+            double dbGREAT率 = ( 100.0 * nGreat / nTotal );
+            double dbCOMBO率 = ( 100.0 * nCombo / ( nTotal ) );
+
+            if (nTotal == nAuto)
+            {
+                dbCOMBO率 = 0.0;
+            }
+
+            double ret = dbPERFECT率 * 0.85 + dbGREAT率 * 0.35 + dbCOMBO率 * 0.15;
+
+            //System.IO.StreamWriter sw = new System.IO.StreamWriter(@"debug.txt", true, System.Text.Encoding.GetEncoding("shift_jis"));
+            //sw.WriteLine("retの値は{0}です。", ret);
+            //sw.WriteLine("nTotalは{0}で、dbPERFECT率は{1}、dbGREAT率は{2}です。", nTotal, dbPERFECT率, dbGREAT率);
+            //sw.Close();
+
+            ret *= dbCalcReviseValForDrGtBsAutoLanes(inst, bAutoPlay);
+            return ret;
+        }
 		internal static double tゲーム型スキルを計算して返す( int nLevel, int nTotal, int nPerfect, int nCombo, E楽器パート inst, STAUTOPLAY bAutoPlay )
 		{
 			double ret;
@@ -1550,7 +1583,7 @@ namespace DTXMania
 			double ret = ( 100.0 * ( ( Math.Pow( 1.03, y ) - 1.0 ) / ( Math.Pow( 1.03, 100.0 ) - 1.0 ) ) );
 
 			ret *= dbCalcReviseValForDrGtBsAutoLanes( inst, bAutoPlay );
-			return ret;
+			return ret;    
 		}
 		internal static double dbCalcReviseValForDrGtBsAutoLanes( E楽器パート inst, STAUTOPLAY bAutoPlay )	// #28607 2012.6.7 yyagi
 		{
@@ -1562,19 +1595,33 @@ namespace DTXMania
 				case E楽器パート.UNKNOWN:
 					throw new ArgumentException();
 				#endregion
-				#region [ Drums ]
-				case E楽器パート.DRUMS:
-					if ( !CDTXMania.ConfigIni.bドラムが全部オートプレイである )
-					{
-						#region [ Auto BD ]
-						if ( bAutoPlay.BD )
-						{
-							ret /= 2;
-						}
-						#endregion
-					}
-					break;
-				#endregion
+                #region [ Drums ]
+                case E楽器パート.DRUMS:
+                    if (!CDTXMania.ConfigIni.bドラムが全部オートプレイである)
+                    {
+                        #region [ Auto BD ]
+                        if (bAutoPlay.BD && bAutoPlay.LP == false && bAutoPlay.LBD == false)
+                        {
+                            ret /= 2;
+                        }
+                        #endregion
+
+                        #region [ Auto LP ]
+                        else if (bAutoPlay.BD == false && bAutoPlay.LP || bAutoPlay.LBD)
+                        {
+                            ret /= 2;
+                        }
+                        #endregion
+
+                        #region [ 2Pedal Auto ]
+                        else if (bAutoPlay.BD && bAutoPlay.LP && bAutoPlay.LBD)
+                        {
+                            ret *= 0.25;
+                        }
+                        #endregion
+                    }
+                    break;
+                #endregion
 				#region [ Guitar ]
 				case E楽器パート.GUITAR:
 					if ( !CDTXMania.ConfigIni.bギターが全部オートプレイである )
@@ -1697,7 +1744,7 @@ namespace DTXMania
 			builder.Append( cc.strDTXManiaのバージョン );
 			builder.Append( cc.最終更新日時 );
 
-			byte[] bytes = Encoding.GetEncoding( "Shift_JIS" ).GetBytes( builder.ToString() );
+			byte[] bytes = Encoding.GetEncoding( "utf-16" ).GetBytes( builder.ToString() );
 			StringBuilder builder2 = new StringBuilder(0x21);
 			{
 				MD5CryptoServiceProvider m = new MD5CryptoServiceProvider();
@@ -1716,12 +1763,17 @@ namespace DTXMania
 		internal static int t総合ランク値を計算して返す( C演奏記録 Drums, C演奏記録 Guitar, C演奏記録 Bass )
 		{
 			int nTotal   = Drums.n全チップ数              + Guitar.n全チップ数              + Bass.n全チップ数;
-			int nPerfect = Drums.nPerfect数・Auto含まない + Guitar.nPerfect数・Auto含まない + Bass.nPerfect数・Auto含まない;	// #24569 2011.3.1 yyagi: to calculate result rank without AUTO chips
-			int nGreat =   Drums.nGreat数・Auto含まない   + Guitar.nGreat数・Auto含まない   + Bass.nGreat数・Auto含まない;		//
-			int nGood =    Drums.nGood数・Auto含まない    + Guitar.nGood数・Auto含まない    + Bass.nGood数・Auto含まない;		//
-			int nPoor =    Drums.nPoor数・Auto含まない    + Guitar.nPoor数・Auto含まない    + Bass.nPoor数・Auto含まない;		//
-			int nMiss =    Drums.nMiss数・Auto含まない    + Guitar.nMiss数・Auto含まない    + Bass.nMiss数・Auto含まない;		//
-			return tランク値を計算して返す( nTotal, nPerfect, nGreat, nGood, nPoor, nMiss );
+			int nPerfect = Drums.nPerfect数_Auto含まない + Guitar.nPerfect数_Auto含まない + Bass.nPerfect数_Auto含まない;	// #24569 2011.3.1 yyagi: to calculate result rank without AUTO chips
+			int nGreat =   Drums.nGreat数_Auto含まない + Guitar.nGreat数_Auto含まない + Bass.nGreat数_Auto含まない;		//
+			int nGood =    Drums.nGood数_Auto含まない + Guitar.nGood数_Auto含まない + Bass.nGood数_Auto含まない;		//
+			int nPoor =    Drums.nPoor数_Auto含まない + Guitar.nPoor数_Auto含まない + Bass.nPoor数_Auto含まない;		//
+			int nMiss =    Drums.nMiss数_Auto含まない + Guitar.nMiss数_Auto含まない + Bass.nMiss数_Auto含まない;		//
+            int nCombo = Drums.n最大コンボ数 + Guitar.n最大コンボ数 + Bass.n最大コンボ数;		//
+            if( CDTXMania.ConfigIni.eSkillMode == ESkillType.DTXMania )
+            {
+			    return tランク値を計算して返す( nTotal, nPerfect, nGreat, nGood, nPoor, nMiss );
+            }
+            return tXGランク値を計算して返す( nTotal, nPerfect, nGreat, nGood, nPoor, nMiss, nCombo );
 		}
 
 		// その他

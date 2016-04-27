@@ -78,13 +78,32 @@ namespace FDK
 			// this.timer = new CTimer( CTimer.E種別.MultiMedia );
 
 			this.list入力デバイス = new List<IInputDevice>( 10 );
-			this.list入力デバイス.Add( new CInputKeyboard( hWnd, directInput ) );
-			this.list入力デバイス.Add( new CInputMouse( hWnd, directInput ) );
-			foreach( DeviceInstance instance in this.directInput.GetDevices( DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly ) )
+			#region [ Enumerate keyboard/mouse: exception is masked if keyboard/mouse is not connected ]
+			CInputKeyboard cinputkeyboard = null;
+			CInputMouse cinputmouse = null;
+			try
+			{
+				cinputkeyboard = new CInputKeyboard( hWnd, directInput );
+				cinputmouse = new CInputMouse( hWnd, directInput );
+			}
+			catch ( DirectInputException )
+			{
+			}
+			if (cinputkeyboard != null)
+			{
+				this.list入力デバイス.Add( cinputkeyboard );
+			}
+			if ( cinputmouse != null )
+			{
+				this.list入力デバイス.Add( cinputmouse );
+			}
+			#endregion
+			#region [ Enumerate joypad ]
+			foreach ( DeviceInstance instance in this.directInput.GetDevices( DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly ) )
 			{
 				this.list入力デバイス.Add( new CInputJoystick( hWnd, instance, directInput ) );
 			}
-
+			#endregion
 			if ( bUseMidiIn )
 			{
 				this.proc = new CWin32.MidiInProc( this.MidiInCallback );
@@ -243,7 +262,7 @@ namespace FDK
 		private void MidiInCallback( uint hMidiIn, uint wMsg, int dwInstance, int dwParam1, int dwParam2 )
 		{
 			int p = dwParam1 & 0xF0;
-			if( wMsg != CWin32.MIM_DATA || ( p != 0x80 && p != 0x90 ) )
+			if( wMsg != CWin32.MIM_DATA || ( p != 0x80 && p != 0x90 && p != 0xB0 ) )
 				return;
 
             long time = CSound管理.rc演奏用タイマ.nシステム時刻;	// lock前に取得。演奏用タイマと同じタイマを使うことで、BGMと譜面、入力ずれを防ぐ。
