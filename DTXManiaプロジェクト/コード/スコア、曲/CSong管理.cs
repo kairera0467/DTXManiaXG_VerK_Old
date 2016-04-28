@@ -1362,7 +1362,7 @@ namespace DTXMania
 			int nL12345 = (int)p[ 0 ];
 			if ( part != E楽器パート.UNKNOWN )
 			{
-				ノードリスト.Sort( delegate( C曲リストノード n1, C曲リストノード n2 )
+				ノードリスト.Sort( delegate( C曲リストノード n1, C曲リストノード n2 ) //2016.03.12 kairera0467 少数第2位も考慮するようにするテスト。
 				{
 					#region [ 共通処理 ]
 					if ( n1 == n2 )
@@ -1382,11 +1382,11 @@ namespace DTXMania
 					int nSumPlayCountN1 = 0, nSumPlayCountN2 = 0;
 					if ( n1.arスコア[ nL12345 ] != null )
 					{
-						nSumPlayCountN1 = n1.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ];
+						nSumPlayCountN1 = n1.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] + n1.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ];
 					}
 					if ( n2.arスコア[ nL12345 ] != null )
 					{
-						nSumPlayCountN2 = n2.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ];
+						nSumPlayCountN2 = n2.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] + n1.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ];
 					}
 					num = nSumPlayCountN2 - nSumPlayCountN1;
 					if ( num != 0 )
