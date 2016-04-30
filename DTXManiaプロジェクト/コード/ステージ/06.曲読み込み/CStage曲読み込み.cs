@@ -645,7 +645,7 @@ namespace DTXMania
                     if( bCLASSIC.Bass && !cdtx.b強制的にXG譜面にする )
                     {
                         DTXLevel.Bass = cdtx.LEVEL.Bass;
-                        this.t大文字表示( 338, 220, string.Format( "{0,2:00}", DTXLevel.Bass ) );
+                        this.t大文字表示( 953, 220, string.Format( "{0,2:00}", DTXLevel.Bass ) );
                     }
                     else
                     {
