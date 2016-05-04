@@ -246,7 +246,7 @@ namespace DTXMania
                 if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.A )
                 {
                     Rectangle Rect1 = new Rectangle( 7, 91, 234, 38 );
-                    Rectangle RectDifficulty = new Rectangle( 0, 0 + ( this.nDifficulty * 38 ), 234, 38 );
+                    Rectangle RectDifficulty = new Rectangle( base.rectDiffPanelPoint.X, base.rectDiffPanelPoint.Y, 234, 38 );
 
                     this.bNamePlate = new Bitmap( 250, 266 );
                     gNamePlate = Graphics.FromImage( this.bNamePlate );
@@ -269,7 +269,7 @@ namespace DTXMania
                 else if( CDTXMania.ConfigIni.eNamePlate == Eタイプ.B )
                 {
                     Rectangle Rect1 = new Rectangle( 6, 50, 234, 60 );
-                    Rectangle RectDifficulty = new Rectangle( 0, 0 + ( this.nDifficulty * 60 ), 234, 60 );
+                    Rectangle RectDifficulty = new Rectangle( base.rectDiffPanelPoint.X, base.rectDiffPanelPoint.Y, 234, 60 );
 
                     this.bNamePlate = new Bitmap( 250, 297 );
                     gNamePlate = Graphics.FromImage( this.bNamePlate );

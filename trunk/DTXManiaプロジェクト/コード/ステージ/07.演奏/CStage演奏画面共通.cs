@@ -288,8 +288,8 @@ namespace DTXMania
 			}
 
 			this.bAUTOでないチップが１つでもバーを通過した = false;
+            this.tステータスパネルの選択();
 			base.On活性化();
-			this.tステータスパネルの選択();
 			this.tパネル文字列の設定();
             this.nJudgeLinePosY.Drums = (CDTXMania.ConfigIni.bReverse.Drums ? 159 + CDTXMania.ConfigIni.nJudgeLine.Drums : 561 - CDTXMania.ConfigIni.nJudgeLine.Drums);
             this.nJudgeLinePosY.Guitar = (CDTXMania.ConfigIni.bReverse.Guitar ? 611 - CDTXMania.ConfigIni.nJudgeLine.Guitar : 154 + CDTXMania.ConfigIni.nJudgeLine.Guitar);
