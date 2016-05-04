@@ -118,13 +118,13 @@ namespace DTXMania
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {
                     Rectangle Rect1 = new Rectangle(7, 167, 150, 38);
-                    Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 38), 150, 38);
+                    Rectangle Rect2 = new Rectangle( base.rectDiffPanelPoint.X, base.rectDiffPanelPoint.Y, 150, 38 );
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                 }
                 else if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.B)
                 {
                     Rectangle Rect1 = new Rectangle(7, 138, 194, 60);
-                    Rectangle Rect2 = new Rectangle(0, 0 + (this.nDifficulty * 60), 194, 60);
+                    Rectangle Rect2 = new Rectangle( base.rectDiffPanelPoint.X, base.rectDiffPanelPoint.Y, 194, 60 );
                     gNamePlate.DrawImage(this.iDifficulty, Rect1, Rect2, GraphicsUnit.Pixel);
                     if (this.iPart != null)
                     {
