@@ -528,6 +528,7 @@ namespace DTXMania
         #region[ Ver.K追加 ]
         public bool bCLASSIC譜面判別を有効にする;
         public bool b曲名表示をdefのものにする;
+        public bool bJudgeCountDisp;
         public bool bSkillModeを自動切替えする;
         public bool bXPerfect判定を有効にする;
 
@@ -1304,6 +1305,7 @@ namespace DTXMania
 
             #region[ Ver.K追加 ]
             this.bCLASSIC譜面判別を有効にする = true;
+            this.bJudgeCountDisp = false;
             this.bSkillModeを自動切替えする = true;
             this.bXPerfect判定を有効にする = false;
             this.b曲名表示をdefのものにする = true;
@@ -2064,9 +2066,12 @@ namespace DTXMania
             sw.WriteLine( "GuitarLaneFlush={0}", this.bLaneFlush.Guitar ? 1 : 0 );
             sw.WriteLine( "BassLaneFlush={0}", this.bLaneFlush.Bass ? 1 : 0 );
             sw.WriteLine();
-            sw.WriteLine( ";判定画像のアニメーション方式" );
+            sw.WriteLine( "; 判定画像のアニメーション方式" );
             sw.WriteLine( ";(0:旧DTXMania方式 1:コマ方式 2:擬似XG方式)" );
             sw.WriteLine( "JudgeAnimeType={0}", (int)this.eJudgeAnimeType );
+            sw.WriteLine();
+            sw.WriteLine( "; 判定数の表示(0:表示しない, 1:表示する)");
+            sw.WriteLine("JudgeCountDisp={0}", this.bJudgeCountDisp ? 1 : 0);
             sw.WriteLine();
             #endregion
 			sw.WriteLine( ";-------------------" );
@@ -3183,6 +3188,10 @@ namespace DTXMania
                                             else if( str3.Equals( "XPerfectJudgeMode" ) )
                                             {
                                                 this.bXPerfect判定を有効にする = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if( str3.Equals( "JudgeCountDisp" ) )
+                                            {
+                                                this.bJudgeCountDisp = C変換.bONorOFF( str4[ 0 ] );
                                             }
 											continue;
 										}
