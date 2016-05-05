@@ -426,6 +426,8 @@ namespace DTXMania
                     this.t小文字表示(186 + this.n本体X, 384, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Good));
                     this.t小文字表示(186 + this.n本体X, 464, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor));
                     this.t小文字表示(186 + this.n本体X, 544, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss));
+
+
                 }
             }
             return 0;

@@ -101,7 +101,7 @@ namespace DTXMania
                 //Trace.TraceInformation("a");
 
                 if ( string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) || ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする ) )
-                    this.strPanelString = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
+                    this.strPanelString = CDTXMania.stage選曲.r確定された曲.strタイトル;
                 else
                     this.strPanelString = CDTXMania.DTX.TITLE;
 
