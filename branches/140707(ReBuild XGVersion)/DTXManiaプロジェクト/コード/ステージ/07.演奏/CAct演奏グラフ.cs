@@ -216,7 +216,7 @@ namespace DTXMania
                     this.txグラフ_ゲージ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + this.nGraphGauge_XPos[ nPart ] + 3, nGraphBG_YPos + 40, new Rectangle( 562, 2, 60, 560 ) );
 
                     //ゲージ比較
-                    int nTargetGaugeSize = (int)( 560.0f * (float)this.dbグラフ値目標 / 100.0f );
+                    int nTargetGaugeSize = (int)( 560.0f * ( (float)this.dbグラフ値目標 / 100.0f ) );
                     int nTargetGaugePosY = 650 - nTargetGaugeSize;
                     int nTargetGaugeRectX = this.dbグラフ値現在 > this.dbグラフ値目標 ? 2 : 210;
                     this.txグラフ_ゲージ.n透明度 = 255;
@@ -229,44 +229,98 @@ namespace DTXMania
                 //2016.03.07 kairera0467 とりあえず自己ベストの表示だけ。
                 if( this.txグラフ != null )
                 {
-                    int nBoardPos = 200;
-                    int[] nBoardX = new int[] { 102, 16 };
-                    int[] arBoardPos = new int[ 2 ];
-                    if( this.dbグラフ値自己ベスト >= this.dbグラフ値目標_表示 ) nBoardPos += 85;
-
-                    //ゴーストが存在するか
-                    if( CDTXMania.listTargetGhsotLag[ this.nGraphUsePart ] != null )
+                    if( CDTXMania.ConfigIni.bJudgeCountDisp == false )
                     {
-                        if( CDTXMania.listTargetGhostScoreData[ this.nGraphUsePart ] != null )
+                        int nBoardPos = 200;
+                        int[] nBoardX = new int[] { 102, 16 };
+                        int[] arBoardPos = new int[ 2 ];
+                        if( this.dbグラフ値自己ベスト >= this.dbグラフ値目標_表示 ) nBoardPos += 85;
+
+                        //ゴーストが存在するか
+                        if( CDTXMania.listTargetGhsotLag[ this.nGraphUsePart ] != null )
                         {
-                            switch( CDTXMania.ConfigIni.eTargetGhost[ this.nGraphUsePart ] )
+                            if( CDTXMania.listTargetGhostScoreData[ this.nGraphUsePart ] != null )
                             {
-                                case ETargetGhostData.PERFECT:
-                                    {
-                                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 2, 162, 85 ) );
-                                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
-                                    }
-                                    break;
-                                case ETargetGhostData.LAST_PLAY:
-                                case ETargetGhostData.HI_SCORE:
-                                case ETargetGhostData.HI_SKILL:
-                                    {
-                                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 2, 162, 85 ) );
-                                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
-                                    }
-                                    break;
+                                switch( CDTXMania.ConfigIni.eTargetGhost[ this.nGraphUsePart ] )
+                                {
+                                    case ETargetGhostData.PERFECT:
+                                        {
+                                            this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 2, 162, 85 ) );
+                                            this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
+                                        }
+                                        break;
+                                    case ETargetGhostData.LAST_PLAY:
+                                    case ETargetGhostData.HI_SCORE:
+                                    case ETargetGhostData.HI_SKILL:
+                                        {
+                                            this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 2, 162, 85 ) );
+                                            this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
+                                        }
+                                        break;
+                                }
+                                arBoardPos[ 1 ] = nBoardPos;
                             }
-                            arBoardPos[ 1 ] = nBoardPos;
                         }
+                        if( this.dbグラフ値自己ベスト >= this.dbグラフ値目標_表示 ) nBoardPos -= 85;
+                            arBoardPos[ 0 ] = nBoardPos;
+
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 160, 162, 60 ) );
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 24, string.Format( "{0,6:##0.00}%", this.dbグラフ値自己ベスト ) );
+
+                        this.t折れ線を描画する( arBoardPos[ 0 ], arBoardPos[ 1 ] );
                     }
-                    if( this.dbグラフ値自己ベスト >= this.dbグラフ値目標_表示 ) nBoardPos -= 85;
-                        arBoardPos[ 0 ] = nBoardPos;
+                    if( CDTXMania.ConfigIni.bJudgeCountDisp )
+                    {
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 102, 240, new Rectangle( 288, 226, 162, 60 ) );
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 102, 320, new Rectangle( 288, 292, 162, 60 ) );
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 102, 400, new Rectangle( 288, 358, 162, 60 ) );
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 102, 480, new Rectangle( 288, 424, 162, 60 ) );
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 102, 560, new Rectangle( 288, 490, 162, 60 ) );
 
-                    this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 160, 162, 60 ) );
-                    this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 24, string.Format( "{0,6:##0.00}%", this.dbグラフ値自己ベスト ) );
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + 186, 264, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect));
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + 186, 344, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Great));
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + 186, 424, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Good));
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + 186, 504, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Poor));
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + 186, 584, string.Format("{0,6:###0}", CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Miss));
 
-                    this.t折れ線を描画する( arBoardPos[ 0 ], arBoardPos[ 1 ] );
+                        int nBoardPos = 50;
+                        int[] nBoardX = new int[] { 102, 16 };
+                        int[] arBoardPos = new int[ 2 ];
+                        if( this.dbグラフ値自己ベスト >= this.dbグラフ値目標_表示 ) nBoardPos += 85;
 
+                        //ゴーストが存在するか
+                        if( CDTXMania.listTargetGhsotLag[ this.nGraphUsePart ] != null )
+                        {
+                            if( CDTXMania.listTargetGhostScoreData[ this.nGraphUsePart ] != null )
+                            {
+                                switch( CDTXMania.ConfigIni.eTargetGhost[ this.nGraphUsePart ] )
+                                {
+                                    case ETargetGhostData.PERFECT:
+                                        {
+                                            this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 2, 162, 85 ) );
+                                            this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
+                                        }
+                                        break;
+                                    case ETargetGhostData.LAST_PLAY:
+                                    case ETargetGhostData.HI_SCORE:
+                                    case ETargetGhostData.HI_SKILL:
+                                        {
+                                            this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 2, 162, 85 ) );
+                                            this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 50, string.Format( "{0,6:##0.00}%", this.dbグラフ値目標_表示 ) );
+                                        }
+                                        break;
+                                }
+                                arBoardPos[ 1 ] = nBoardPos;
+                            }
+                        }
+                        if( this.dbグラフ値自己ベスト >= this.dbグラフ値目標_表示 ) nBoardPos -= 85;
+                            arBoardPos[ 0 ] = nBoardPos;
+
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ], nGraphBG_YPos + nBoardPos, new Rectangle( 288, 160, 162, 60 ) );
+                        this.t達成率文字表示( nGraphBG_XPos[ this.nGraphUsePart ] + nBoardX[ nPart ] + 90, nGraphBG_YPos + nBoardPos + 24, string.Format( "{0,6:##0.00}%", this.dbグラフ値自己ベスト ) );
+
+                        this.t折れ線を描画する( arBoardPos[ 0 ], arBoardPos[ 1 ] );
+                    }
                 }
 			}
 			return 0;
