@@ -10,7 +10,7 @@ using FDK;
 
 namespace DTXMania
 {
-    internal class CAct演奏Drumsスキルメーター : CActivity
+    internal class CAct演奏スキルメーター : CActivity
     {
         // #24074 2011.01.23 ikanick グラフの描画
         // 実装内容
@@ -24,8 +24,6 @@ namespace DTXMania
         // ・画像がないと落ちる→修正済
 
         // プロパティ
-
-        // 2016.01.10 kairera0467 再びドラム、ギターで分離
 
         public double dbグラフ値現在_渡
         {
@@ -63,7 +61,7 @@ namespace DTXMania
 
         // コンストラクタ
 
-        public CAct演奏Drumsスキルメーター()
+        public CAct演奏スキルメーター()
         {
             //スクリプト化の都合で、ここに置いていたコードは移動。活性化のタイミングで実行するようにした。
             base.b活性化してない = true;
@@ -132,10 +130,18 @@ namespace DTXMania
         }
         public override int On進行描画()
         {
-            if (!base.b活性化してない)
+            if( !base.b活性化してない )
             {
-                if (base.b初めての進行描画)
+                if( base.b初めての進行描画 )
                 {
+                    if( CDTXMania.ConfigIni.bDrums有効 )
+                    {
+                        this.eGraphUsePart = E楽器パート.DRUMS;
+                    }
+                    else if( CDTXMania.ConfigIni.bGuitar有効 )
+                    {
+
+                    }
                     this.ct爆発エフェクト = new CCounter(0, 13, 20, CDTXMania.Timer);
                     base.b初めての進行描画 = false;
                 }
@@ -474,6 +480,7 @@ namespace DTXMania
         private Bitmap bmpGraph;
         private Graphics gGraph;
         private CPrivateFastFont pfNameFont;
+        private E楽器パート eGraphUsePart;
 
         [StructLayout(LayoutKind.Sequential)]
         private struct STスクリプト座標
