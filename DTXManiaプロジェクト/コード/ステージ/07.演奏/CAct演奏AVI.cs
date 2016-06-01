@@ -419,21 +419,21 @@ namespace DTXMania
                 #region[ 演奏パートやスキルメーターの有無に応じて、読み込むクリップパネル画像を変更する ]
                 if( CDTXMania.ConfigIni.bGuitar有効 )
                     this.txクリップパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_ClipPanelC.png" ) );
-                else if( CDTXMania.ConfigIni.bGraph有効 && CDTXMania.ConfigIni.bDrums有効 )
+                else if( CDTXMania.ConfigIni.bGraph有効.Drums && CDTXMania.ConfigIni.bDrums有効 )
                     this.txクリップパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_ClipPanelB.png" ) );
                 else
                     this.txクリップパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_ClipPanel.png" ) );
                 #endregion
-                this.txArフィルインエフェクト = new CTexture[ 31 ];
-                for( int ar = 0; ar < 31; ar++ )
-                {
-                    this.txArフィルインエフェクト[ ar ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\StageEffect\7_StageEffect_" + ar.ToString() + ".png" ) );
-                    if( this.txArフィルインエフェクト[ ar ] == null )
-                        continue; //テクスチャが欠けていた場合は、事故防止のためにループを1つスキップする。
+                //this.txArフィルインエフェクト = new CTexture[ 31 ];
+                //for( int ar = 0; ar < 31; ar++ )
+                //{
+                //    this.txArフィルインエフェクト[ ar ] = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\StageEffect\7_StageEffect_" + ar.ToString() + ".png" ) );
+                //    if( this.txArフィルインエフェクト[ ar ] == null )
+                //        continue; //テクスチャが欠けていた場合は、事故防止のためにループを1つスキップする。
 
-                    this.txArフィルインエフェクト[ ar ].b加算合成 = true;
-                    this.txArフィルインエフェクト[ ar ].vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
-                }
+                //    this.txArフィルインエフェクト[ ar ].b加算合成 = true;
+                //    this.txArフィルインエフェクト[ ar ].vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
+                //}
                 for( int i = 0; i < 1; i++ )
                 {
                     this.stフィルイン[ i ] = new STフィルイン();
@@ -469,10 +469,10 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txクリップパネル );
                 CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
 
-                for( int ar = 0; ar < 31; ar++ )
-                {
-                    CDTXMania.tテクスチャの解放( ref this.txArフィルインエフェクト[ ar ] );
-                }
+                //for( int ar = 0; ar < 31; ar++ )
+                //{
+                //    CDTXMania.tテクスチャの解放( ref this.txArフィルインエフェクト[ ar ] );
+                //}
                 base.OnManagedリソースの解放();
             }
         }
@@ -733,20 +733,41 @@ namespace DTXMania
                 {
                     for( int i = 0; i < 1; i++ )
                     {
-                        if( this.stフィルイン[i].b使用中 )
+                        if (this.stフィルイン[ i ].b使用中)
                         {
-                            int numf = this.stフィルイン[i].ct進行.n現在の値;
-                            this.stフィルイン[i].ct進行.t進行();
-                            if ( this.stフィルイン[i].ct進行.b終了値に達した )
+                            int numf = this.stフィルイン[ i ].ct進行.n現在の値;
+                            this.stフィルイン[ i ].ct進行.t進行();
+                            if( this.stフィルイン[ i ].ct進行.b終了値に達した )
                             {
-                                this.stフィルイン[i].ct進行.t停止();
-                                this.stフィルイン[i].b使用中 = false;
+                                this.stフィルイン[ i ].ct進行.t停止();
+                                this.stフィルイン[ i ].b使用中 = false;
                             }
-                            if( CDTXMania.ConfigIni.bDrums有効 )
+                            //if ( this.txフィルインエフェクト != null )
+                            CStage演奏ドラム画面 stageDrum = CDTXMania.stage演奏ドラム画面;
+                            //CStage演奏ギター画面 stageGuitar = CDTXMania.stage演奏ギター画面;
+
+                            //if( ( CDTXMania.ConfigIni.bDrums有効 ? stageDrum.txボーナスエフェクト : stageGuitar.txボーナスエフェクト ) != null )
                             {
-                                if( this.txArフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ] != null )
-                                    this.txArフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ].t2D描画( CDTXMania.app.Device, 0, 0 );
+                                //this.txフィルインエフェクト.vc拡大縮小倍率.X = 2.0f;
+                                //this.txフィルインエフェクト.vc拡大縮小倍率.Y = 2.0f;
+                                //this.txフィルインエフェクト.b加算合成 = true;
+                                //this.txフィルインエフェクト.t2D描画(CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + (360 * numf), 640, 360));
+                                if( CDTXMania.ConfigIni.bDrums有効 )
+                                {
+                                    stageDrum.txボーナスエフェクト.vc拡大縮小倍率 = new Vector3( 2.0f, 2.0f, 1.0f );
+                                    stageDrum.txボーナスエフェクト.b加算合成 = true;
+                                    stageDrum.txボーナスエフェクト.t2D描画( CDTXMania.app.Device, 0, -2, new Rectangle(0, 0 + ( 360 * numf ), 640, 360 )) ;
+                                    try
+                                    {
+                                    //if( this.txフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ] != null )
+                                    //    this.txフィルインエフェクト[ this.stフィルイン[ i ].ct進行.n現在の値 ].t2D描画( CDTXMania.app.Device, 0, 0 );
+                                    }
+                                    catch( Exception ex )
+                                    {
+                                    }
+                                }
                             }
+
                         }
                     }
                 }
@@ -857,7 +878,7 @@ namespace DTXMania
 
                 //コンボ、ネームプレート
                 //グラフ無効&ネームプレートA,C
-                if (CDTXMania.ConfigIni.bGraph有効 == false && CDTXMania.ConfigIni.eNamePlate == Eタイプ.A && CDTXMania.ConfigIni.bドラムコンボ文字の表示 == true )
+                if (CDTXMania.ConfigIni.bGraph有効.Drums == false && CDTXMania.ConfigIni.eNamePlate == Eタイプ.A && CDTXMania.ConfigIni.bドラムコンボ文字の表示 == true )
                 {
                     CDTXMania.stage演奏ドラム画面.actCombo.On進行描画();
                 }
@@ -870,7 +891,7 @@ namespace DTXMania
 
                     if( CDTXMania.ConfigIni.bDrums有効 )
                     {
-                        if( CDTXMania.ConfigIni.bGraph有効 )
+                        if( CDTXMania.ConfigIni.bGraph有効.Drums )
                         {
                             #region[ スキルメーター有効 ]
                             this.n本体X = 2;
@@ -966,9 +987,9 @@ namespace DTXMania
                         this.n本体Y = 50;
                         int nグラフX = 267;
 
-                        if( CDTXMania.ConfigIni.bGraph有効 && !CDTXMania.DTX.bチップがある.Bass )
+                        if( CDTXMania.ConfigIni.bGraph有効.Bass && !CDTXMania.DTX.bチップがある.Bass )
                             this.n本体X = this.n本体X + nグラフX;
-                        if( CDTXMania.ConfigIni.bGraph有効 && !CDTXMania.DTX.bチップがある.Guitar )
+                        if( CDTXMania.ConfigIni.bGraph有効.Guitar && !CDTXMania.DTX.bチップがある.Guitar )
                             this.n本体X = this.n本体X - nグラフX;
                         #endregion
 

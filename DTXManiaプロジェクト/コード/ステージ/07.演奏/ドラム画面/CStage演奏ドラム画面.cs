@@ -29,7 +29,7 @@ namespace DTXMania
 			base.list子Activities.Add( this.actDANGER = new CAct演奏DrumsDanger() );
 			base.list子Activities.Add( this.actChipFireD = new CAct演奏DrumsチップファイアD() );
             base.list子Activities.Add( this.actGauge = new CAct演奏Drumsゲージ() );
-            base.list子Activities.Add( this.actGraph = new CAct演奏Drumsスキルメーター() ); // #24074 2011.01.23 add ikanick
+            base.list子Activities.Add( this.actGraph = new CAct演奏スキルメーター() ); // #24074 2011.01.23 add ikanick
 			base.list子Activities.Add( this.actJudgeString = new CAct演奏Drums判定文字列() );
 			base.list子Activities.Add( this.actLaneFlushD = new CAct演奏DrumsレーンフラッシュD() );
 			base.list子Activities.Add( this.actScore = new CAct演奏Drumsスコア() );
@@ -317,7 +317,7 @@ namespace DTXMania
 
                 this.t進行描画・ステータスパネル();
 
-                if (CDTXMania.ConfigIni.eNamePlate != Eタイプ.A || CDTXMania.ConfigIni.bGraph有効 || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT)
+                if (CDTXMania.ConfigIni.eNamePlate != Eタイプ.A || CDTXMania.ConfigIni.bGraph有効.Drums || CDTXMania.ConfigIni.ドラムコンボ文字の表示位置 != Eドラムコンボ文字の表示位置.RIGHT)
                         this.t進行描画・コンボ();
 
                 this.t進行描画・ゲージ();
@@ -427,7 +427,6 @@ namespace DTXMania
         public int nミス数;
         public int nパフェ数;
 		private CAct演奏DrumsチップファイアD actChipFireD;
-        public CAct演奏Drumsスキルメーター actGraph;   // #24074 2011.01.23 add ikanick
 		public CAct演奏Drumsパッド actPad;
         public CAct演奏Drumsドラムセット actDrumSet;
 		public bool bフィルイン中;
@@ -526,7 +525,13 @@ namespace DTXMania
 								 this.nヒット数・Auto含まない.Drums.Great * 7 +
 								 this.actCombo.n現在のコンボ数.最高値.Drums * 3) / (20.0 * CDTXMania.DTX.n可視チップ数.Drums);
 			}
-            //2016.01.03 kairera0467 
+            //2016.01.03 kairera0467
+
+            this.actGraph.n現在のAutoを含まない判定数_渡[ 0 ] = this.nヒット数・Auto含まない.Drums.Perfect;
+            this.actGraph.n現在のAutoを含まない判定数_渡[ 1 ] = this.nヒット数・Auto含まない.Drums.Great;
+            this.actGraph.n現在のAutoを含まない判定数_渡[ 2 ] = this.nヒット数・Auto含まない.Drums.Good;
+            this.actGraph.n現在のAutoを含まない判定数_渡[ 3 ] = this.nヒット数・Auto含まない.Drums.Poor;
+            this.actGraph.n現在のAutoを含まない判定数_渡[ 4 ] = this.nヒット数・Auto含まない.Drums.Miss;
 			return eJudgeResult;
 		}
 
@@ -737,12 +742,11 @@ namespace DTXMania
 		}
         */
 
-		private void t進行描画・グラフ()        
+		private void t進行描画・グラフ()
         {
-            if (CDTXMania.ConfigIni.bGraph有効)
+            if( CDTXMania.ConfigIni.bGraph有効.Drums )
             {
                 this.actGraph.On進行描画();
-                this.actGraph.db現在の判定数合計 = this.nヒット数・Auto含む.Drums.Perfect + this.nヒット数・Auto含む.Drums.Great + this.nヒット数・Auto含む.Drums.Good + this.nヒット数・Auto含む.Drums.Miss + this.nヒット数・Auto含む.Drums.Poor;
             }
         }
 
@@ -3502,7 +3506,7 @@ namespace DTXMania
                     }
                     if (val < 0) val = 0;
                     if (val > 100) val = 100;
-                    this.actGraph.dbグラフ値ゴースト_渡 = val;
+                    this.actGraph.dbグラフ値目標_渡 = val;
                 }
 				return;
 			}	// end of "if configIni.bDrums有効"

@@ -79,7 +79,7 @@ namespace DTXMania
                     
                     
                 }
-                else if (CDTXMania.ConfigIni.nInfoType == 1 && !CDTXMania.ConfigIni.bGraph有効)
+                else if (CDTXMania.ConfigIni.nInfoType == 1 && ( !CDTXMania.ConfigIni.bGraph有効.Drums && !CDTXMania.ConfigIni.bGraph有効.Guitar && !CDTXMania.ConfigIni.bGraph有効.Bass ) )
                 {
                     
                     y += 0x123;

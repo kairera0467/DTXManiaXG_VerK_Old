@@ -339,8 +339,9 @@ namespace DTXMania
                     if (this.txリザルトパネル != null)
                         this.txリザルトパネル.t2D描画(CDTXMania.app.Device, this.n本体X[i], this.n本体Y[i]);
 
-                    if (this.txDifficulty != null)
-                        this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体X[i] + 510, this.n本体Y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 120, 20));
+                    //if (this.txDifficulty != null)
+                    //    this.txDifficulty.t2D描画(CDTXMania.app.Device, this.n本体X[i] + 510, this.n本体Y[i] + 8, new Rectangle(0, CDTXMania.nSongDifficulty * 20, 120, 20));
+                    this.t難易度パネルを描画する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ], 941, 19 );
 
                     if (this.txPart != null)
                         this.txPart.t2D描画(CDTXMania.app.Device, this.n本体X[i] + 388, this.n本体Y[i] + 8, new Rectangle(0, 0 + (20 * i), 120, 20));
@@ -499,8 +500,6 @@ namespace DTXMania
         private CTexture txRisky;
         private CTexture txリザルトパネル;
         private CTexture[] tx文字;
-        protected Rectangle rectDiffPanelPoint;
-
 
         private void t小文字表示(int x, int y, string str)
         {
@@ -613,9 +612,11 @@ namespace DTXMania
                 }
             }
         }
-        private void tスクリプトから難易度ラベルを取得する( string strラベル名 )
+        private void t難易度パネルを描画する( string strラベル名, int nX, int nY )
         {
             string strRawScriptFile;
+
+            Rectangle rect = new Rectangle( 0, 0, 120, 20 );
 
             //ファイルの存在チェック
             if( File.Exists( CSkin.Path( @"Script\difficult.dtxs" ) ) )
@@ -660,13 +661,15 @@ namespace DTXMania
                                 continue; //ラベル名が違うなら無視。大文字小文字区別しない
                         }
                     }
-                    this.rectDiffPanelPoint.X = Convert.ToInt32( arScriptLine[ 2 ] );
-                    this.rectDiffPanelPoint.Y = Convert.ToInt32( arScriptLine[ 3 ] );
+                    rect.X = Convert.ToInt32( arScriptLine[ 2 ] );
+                    rect.Y = Convert.ToInt32( arScriptLine[ 3 ] );
 
-                    reader.Close();
                     break;
                 }
             }
+
+            if( this.txDifficulty != null )
+                this.txDifficulty.t2D描画( CDTXMania.app.Device, nX, nY, rect );
         }
 		//-----------------
 		#endregion
