@@ -444,13 +444,6 @@ namespace DTXMania
              
             #endregion
 
-            // #24074 2011.01.23 add ikanick
-            this.iSystemGraph = new CItemToggle("SkillMeter", CDTXMania.ConfigIni.bGraph有効,
-                "最高スキルと比較できるグラフを表示します。\n" +
-                "オートプレイだと表示されません。",
-                "To draw Graph  or not.");
-            this.list項目リスト.Add(this.iSystemGraph);
-
             this.iSystemSkinSubfolder = new CItemList("Skin (General)", CItemBase.Eパネル種別.通常, nSkinIndex,
                 "スキン切替：スキンを切り替えます。\n" +
                 "\n",
@@ -882,17 +875,7 @@ namespace DTXMania
                 " for the drums.\n" +
                 "You can specify from 1 to 99999.");
             this.list項目リスト.Add(this.iSystemMinComboDrums);
-
-            // #23580 2011.1.3 yyagi
-            this.iDrumsInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums,
-                "ドラムの入力タイミングの微調整を行います。\n" +
-                "-99 ～ 99ms まで指定可能です。\n" +
-                "値を指定してください。\n",
-                "To adjust the drums input timing.\n" +
-                "You can set from -99 to 0ms.\n" +
-                "To decrease input lag, set minus value.");
-            this.list項目リスト.Add(this.iDrumsInputAdjustTimeMs);
-
+            
             this.iDrumsHHOGraphics = new CItemList("HHOGraphics", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eHHOGraphics.Drums,
                 "オープンハイハットの表示画像を変更します。\n" +
                 "A: DTXMania元仕様\n" +
@@ -1024,6 +1007,22 @@ namespace DTXMania
                 "chip randomly",
                 new string[] { "OFF", "Mirror", "Part", "Super", "Hyper", "Master", "Another" });
             this.list項目リスト.Add(this.iDrumsRandomPedal);
+
+			this.iDrumsGraph = new CItemToggle( "Graph", CDTXMania.ConfigIni.bGraph有効.Drums,
+				"最高スキルと比較できるグラフを表示します。\n" +
+				"オートプレイだと表示されません。",
+				"To draw Graph or not." );
+			this.list項目リスト.Add( this.iDrumsGraph );
+
+            // #23580 2011.1.3 yyagi
+            this.iDrumsInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Drums,
+                "ドラムの入力タイミングの微調整を行います。\n" +
+                "-99 ～ 99ms まで指定可能です。\n" +
+                "値を指定してください。\n",
+                "To adjust the drums input timing.\n" +
+                "You can set from -99 to 0ms.\n" +
+                "To decrease input lag, set minus value.");
+            this.list項目リスト.Add(this.iDrumsInputAdjustTimeMs);
 
             this.iDrumsGoToKeyAssign = new CItemBase("Drums Keys", CItemBase.Eパネル種別.通常,
                 "ドラムのキー入力に関する項目を設定します。",
@@ -1222,6 +1221,14 @@ namespace DTXMania
                 "Initial number to show the combo\n for the guitar.\nYou can specify from 1 to 99999.");
             this.list項目リスト.Add(this.iSystemMinComboGuitar);
 
+			this.iGuitarGraph = new CItemToggle( "Graph", CDTXMania.ConfigIni.bGraph有効.Guitar,
+				"最高スキルと比較できるグラフを表示します。\n" +
+				"オートプレイだと表示されません。\n" +
+                "この項目を有効にすると、ベースパートのグラフは\n" +
+                "無効になります。",
+				"To draw Graph or not." );
+			this.list項目リスト.Add( this.iGuitarGraph );
+
             // #23580 2011.1.3 yyagi
             this.iGuitarInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Guitar,
                 "ギターの入力タイミングの微調整を行います。\n-99 ～ 99ms まで指定可能です。\n入力ラグを軽減するためには、\n負の値を指定してください。",
@@ -1415,6 +1422,14 @@ namespace DTXMania
                 "\n" +
                 "");
             this.list項目リスト.Add(this.iBassShutterOutPos);
+
+			this.iBassGraph = new CItemToggle( "Graph", CDTXMania.ConfigIni.bGraph有効.Bass,
+				"最高スキルと比較できるグラフを表示します。\n" +
+				"オートプレイだと表示されません。\n" +
+                "この項目を有効にすると、ギターパートのグラフは\n" +
+                "無効になります。",
+				"To draw Graph or not." );
+			this.list項目リスト.Add( this.iBassGraph );
 
             // #23580 2011.1.3 yyagi
             this.iBassInputAdjustTimeMs = new CItemInteger("InputAdjust", -99, 99, CDTXMania.ConfigIni.nInputAdjustTimeMs.Bass,
@@ -2677,7 +2692,6 @@ namespace DTXMania
         private CItemList iSystemSkillMode;
         private CItemToggle iMutingLP;
         private CItemToggle iSystemClassicNotes;
-        private CItemToggle iSystemGraph;        // #24074 2011.01.23 add ikanick
 
         #region [ GDオプション ]
         
@@ -2764,6 +2778,7 @@ namespace DTXMania
         private CItemInteger iBassShutterInPos;
         private CItemInteger iBassShutterOutPos;
         private CItemToggle iBassLaneFlush;
+        private CItemToggle iBassGraph;
 
         private CItemInteger iCommonPlaySpeed;
         //		private CItemBase iCommonReturnToMenu;
@@ -2806,6 +2821,7 @@ namespace DTXMania
         private CItemInteger iDrumsShutterInPos;
         private CItemInteger iDrumsShutterOutPos;
         private CItemToggle iDrumsComboDisp;
+        private CItemToggle iDrumsGraph;
 
         //private CItemToggle iGuitarAutoPlay;
         private CItemThreeState iGuitarAutoPlayAll;			// #23886 2012.5.8 yyagi
@@ -2833,6 +2849,7 @@ namespace DTXMania
         private CItemInteger iGuitarShutterInPos;
         private CItemInteger iGuitarShutterOutPos;
         private CItemToggle iGuitarLaneFlush;
+        private CItemToggle iGuitarGraph;
 
         private CItemInteger iDrumsInputAdjustTimeMs;		// #23580 2011.1.3 yyagi
         private CItemInteger iGuitarInputAdjustTimeMs;		//
@@ -2926,7 +2943,6 @@ namespace DTXMania
             CDTXMania.ConfigIni.bAVI有効 = this.iSystemAVI.bON;
             CDTXMania.ConfigIni.bBGA有効 = this.iSystemBGA.bON;
             CDTXMania.ConfigIni.bDirectShowMode = this.iSystemDirectShowMode.bON;
-            CDTXMania.ConfigIni.bGraph有効 = this.iSystemGraph.bON;
             CDTXMania.ConfigIni.n曲が選択されてからプレビュー音が鳴るまでのウェイトms = this.iSystemPreviewSoundWait.n現在の値;
             CDTXMania.ConfigIni.n曲が選択されてからプレビュー画像が表示開始されるまでのウェイトms = this.iSystemPreviewImageWait.n現在の値;
             CDTXMania.ConfigIni.b演奏情報を表示する = this.iSystemDebugInfo.bON;
@@ -3007,6 +3023,7 @@ namespace DTXMania
 
             CDTXMania.ConfigIni.b演奏音を強調する.Bass = this.iSystemSoundMonitorBass.bON;
             CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass = this.iSystemMinComboBass.n現在の値;
+            CDTXMania.ConfigIni.bGraph有効.Bass = this.iBassGraph.bON;
         }
         private void tConfigIniへ記録する・Drums()
         {
@@ -3063,6 +3080,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.nShutterInSide.Drums = this.iDrumsShutterInPos.n現在の値;
             CDTXMania.ConfigIni.nShutterOutSide.Drums = this.iDrumsShutterOutPos.n現在の値;
             CDTXMania.ConfigIni.bドラムコンボ文字の表示 = this.iDrumsComboDisp.bON;
+            CDTXMania.ConfigIni.bGraph有効.Drums = this.iDrumsGraph.bON;
 
             //CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;     // ダークはプリセット切り替えとして使うため、保存はしない。
         }
@@ -3095,6 +3113,7 @@ namespace DTXMania
 
             CDTXMania.ConfigIni.n表示可能な最小コンボ数.Guitar = this.iSystemMinComboGuitar.n現在の値;
             CDTXMania.ConfigIni.b演奏音を強調する.Guitar = this.iSystemSoundMonitorGuitar.bON;
+            CDTXMania.ConfigIni.bGraph有効.Guitar = this.iGuitarGraph.bON;
         }
         //-----------------
         #endregion

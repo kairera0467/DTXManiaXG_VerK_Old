@@ -117,6 +117,18 @@ namespace DTXMania
                 new string[] { "OFF", "HIDDEN", "SUDDEN", "HID/SUD", "STEALTH" }));
             //ドラム、ギター、ベースでのHIDDEN/SUDDENの設定の分離を考えなければならない。
             #endregion
+            #region [ 個別 Ghost ]
+            l.Add( new CItemList("AUTO Ghost", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eAutoGhost[ nInst ],
+                "AUTOプレーのゴーストを指定します。\n",
+                "Specify Play Ghost data.\n",
+                new string[] {"Perfect", "Last Play", "Hi Skill", "Hi Score", "Online" }
+                ));
+            l.Add(new CItemList("Target Ghost", CItemBase.Eパネル種別.通常, (int)CDTXMania.ConfigIni.eTargetGhost[ nInst ],
+                "ターゲットゴーストを指定します。\n",
+                "Specify Target Ghost data.\n",
+                new string[] {"None", "Perfect", "Last Play", "Hi Skill", "Hi Score", "Online" }
+                ));
+            #endregion
             #region [ 共通 SET切り替え/More/Return ]
             l.Add(new CSwitchItemList("Config Set", CItemBase.Eパネル種別.通常, nCurrentConfigSet, "", "", new string[] { "SET-1", "SET-2", "SET-3" }));
             l.Add(new CSwitchItemList("More...", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "" }));
@@ -420,6 +432,15 @@ namespace DTXMania
                     }
                     //CDTXMania.ConfigIni.nHidSud = (int) GetObj現在値((int) EOrder.SuddenHidden);
                     break;
+                case (int) EOrder.AutoGhost: // #35411 chnmr0 AUTOゴーストデータ
+                    EAutoGhostData gd = (EAutoGhostData)GetIndex((int)EOrder.AutoGhost);
+                    CDTXMania.ConfigIni.eAutoGhost[ nCurrentTarget ] = gd;
+                    break;
+
+                case (int)EOrder.TargetGhost: // #35411 chnmr0 ターゲットゴーストデータ
+                    ETargetGhostData gtd = (ETargetGhostData)GetIndex((int)EOrder.TargetGhost);
+                    CDTXMania.ConfigIni.eTargetGhost[ nCurrentTarget ] = gtd;
+                    break;
                 case (int)EOrder.ConfSet:			// CONF-SET切り替え
                     nCurrentConfigSet = (int)GetIndex((int)EOrder.ConfSet);
                     //Initialize( lci[ nCurrentConfigSet ], true, QuickCfgTitle, pos );
@@ -621,6 +642,8 @@ namespace DTXMania
             Risky,
             PlaySpeed,
             SuddenHidden,
+            AutoGhost,
+            TargetGhost,
             ConfSet,
             More,
             Return, END,
