@@ -481,7 +481,7 @@ namespace DTXMania
 		public bool bSTAGEFAILED有効;
 		public STDGBVALUE<bool> bSudden;
 		public bool bTight;
-		public bool bGraph有効;     // #24074 2011.01.23 add ikanick
+		public STDGBVALUE<bool> bGraph有効;     // #24074 2011.01.23 add ikanick
 		public bool bWave再生位置自動調整機能有効;
 		public bool bシンバルフリー;
 		public bool bストイックモード;
@@ -1769,7 +1769,9 @@ namespace DTXMania
 
             // #24074 2011.01.23 add ikanick
 			sw.WriteLine( "; グラフ表示(0:OFF, 1:ON)" );
-			sw.WriteLine( "SkillMater={0}", this.bGraph有効 ? 1 : 0 );
+			sw.WriteLine( "DrumGraph={0}", this.bGraph有効.Drums ? 1 : 0 );
+			sw.WriteLine( "GuitarGraph={0}", this.bGraph有効.Guitar ? 1 : 0 );
+			sw.WriteLine( "BassGraph={0}", this.bGraph有効.Bass ? 1 : 0 );
 			sw.WriteLine();
 
             sw.WriteLine( "; ドラムコンボの表示(0:OFF, 1:ON)" );									// #29500 2012.9.11 kairera0467
@@ -2761,9 +2763,17 @@ namespace DTXMania
 									//-----------------------------
 									case Eセクション種別.PlayOption:
 										{
-											if( str3.Equals( "SkillMater" ) )  // #24074 2011.01.23 addikanick
+                                            if( str3.Equals( "DrumSkillMater" ) )  // #24074 2011.01.23 addikanick
 											{
-												this.bGraph有効 = C変換.bONorOFF( str4[ 0 ] );
+												this.bGraph有効.Drums = C変換.bONorOFF( str4[ 0 ] );
+											}
+											else if( str3.Equals( "GuitarSkillMater" ) )  // #24074 2011.01.23 addikanick
+											{
+												this.bGraph有効.Guitar = C変換.bONorOFF( str4[ 0 ] );
+											}
+											else if( str3.Equals( "BassSkillMater" ) )  // #24074 2011.01.23 addikanick
+											{
+												this.bGraph有効.Bass = C変換.bONorOFF( str4[ 0 ] );
 											}
 											else if( str3.Equals( "DrumsReverse" ) )
 											{

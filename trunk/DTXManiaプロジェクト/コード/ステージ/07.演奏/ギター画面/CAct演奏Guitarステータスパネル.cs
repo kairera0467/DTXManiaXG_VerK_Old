@@ -17,7 +17,10 @@ namespace DTXMania
             this.strPlayerName = new string[2];
 
             #region [ 本体位置 ]
-
+            //n本体X[ 0 ] 曲名パネルのX座標
+            //n本体X[ 1 ] ギター側のY座標
+            //n本体X[ 2 ] ベース側のX座標
+            //
             if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
             {
                 this.n本体X[0] = 515;
@@ -45,8 +48,8 @@ namespace DTXMania
                 this.nグラフNX = 267;
             }
 
-            //if (CDTXMania.ConfigIni.bGraph有効)
-            if(false)
+            if (CDTXMania.ConfigIni.bGraph有効.Guitar || CDTXMania.ConfigIni.bGraph有効.Bass)
+            //if(false)
             {
                 if (!CDTXMania.DTX.bチップがある.Bass)
                 {
@@ -551,8 +554,10 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                if ( CDTXMania.ConfigIni.bShowMusicInfo )
+                if( CDTXMania.ConfigIni.bShowMusicInfo )
+                {
                     this.tx曲名パネル.t2D描画(CDTXMania.app.Device, this.n本体X[0], this.n本体NY);
+                }
 
                 if (CDTXMania.ConfigIni.eNamePlate == Eタイプ.A)
                 {

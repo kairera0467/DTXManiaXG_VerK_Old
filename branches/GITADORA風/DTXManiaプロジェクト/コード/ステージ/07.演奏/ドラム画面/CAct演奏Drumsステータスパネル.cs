@@ -396,8 +396,8 @@ namespace DTXMania
                 this.t小文字表示(167 + this.n本体X[i], 192 + this.n本体Y, string.Format("{0,3:##0}%", dbMISS率));
                 this.t小文字表示(167 + this.n本体X[i], 222 + this.n本体Y, string.Format("{0,3:##0}%", dbMAXCOMBO率));
 
-                this.t大文字表示(58 + this.n本体X[i], 277 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡));
-                this.t大文字表示(88 + this.n本体X[i], 363 + this.n本体Y, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actGraph.dbグラフ値現在_渡 * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
+                this.t大文字表示(58 + this.n本体X[i], 277 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage演奏ドラム画面.actStatusPanels.db現在の達成率.Drums ) );
+                this.t大文字表示(88 + this.n本体X[i], 363 + this.n本体Y, string.Format("{0,6:##0.00}", (CDTXMania.stage演奏ドラム画面.actStatusPanels.db現在の達成率.Drums * (CDTXMania.DTX.LEVEL[i] / 10.0) * 0.2)));
 
                 if (this.tx難易度パネル != null)
                     this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[i], 266 + this.n本体Y, new Rectangle(0, 60 * nIndex, 60, 60));
