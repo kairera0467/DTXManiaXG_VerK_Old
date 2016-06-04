@@ -87,7 +87,7 @@ namespace DTXMania
             base.On活性化();
         }
 
-        private void tスクリプトから難易度ラベルを取得する( string strラベル名 )
+        public void tスクリプトから難易度ラベルを取得する( string strラベル名 )
         {
             string strRawScriptFile;
 

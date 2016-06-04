@@ -1184,13 +1184,13 @@ namespace DTXMania
         }
         protected void tステータスパネルの選択()
         {
-            if (CDTXMania.bコンパクトモード)
+            if( CDTXMania.bコンパクトモード )
             {
-                this.actStatusPanels.tラベル名からステータスパネルを決定する(null);
+                this.actStatusPanels.tスクリプトから難易度ラベルを取得する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
             }
-            else if (CDTXMania.stage選曲.r確定された曲 != null)
+            else if( CDTXMania.stage選曲.r確定された曲 != null )
             {
-                this.actStatusPanels.tラベル名からステータスパネルを決定する(CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[CDTXMania.stage選曲.n確定された曲の難易度]);
+                this.actStatusPanels.tスクリプトから難易度ラベルを取得する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
             }
         }
         protected E判定 tチップのヒット処理(long nHitTime, CDTX.CChip pChip)

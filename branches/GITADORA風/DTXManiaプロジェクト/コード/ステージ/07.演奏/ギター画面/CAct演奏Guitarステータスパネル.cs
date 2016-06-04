@@ -434,7 +434,7 @@ namespace DTXMania
                 this.t大文字表示(88 + this.n本体X[ i ], 363 + this.n本体Y, string.Format( "{0,6:##0.00}", CDTXMania.stage演奏ギター画面.actStatusPanels.db現在の達成率.Guitar * ( CDTXMania.DTX.LEVEL[ i ] / 10.0 ) * 0.2 ) );
 
                 if( this.tx難易度パネル != null )
-                    this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 14 + this.n本体X[ i ], 266 + this.n本体Y, new Rectangle( 0, 60 * nIndex, 60, 60 ) );
+                    this.tx難易度パネル.t2D描画( CDTXMania.app.Device, 14 + this.n本体X[ i ], 266 + this.n本体Y, new Rectangle( base.rectDiffPanelPoint.X, base.rectDiffPanelPoint.Y, 60, 60 ) );
                 this.tレベル数字描画( ( bCLASSIC == true ? 26 : 18 ) + this.n本体X[ i ], 290 + this.n本体Y, str );
                     }
                 }
