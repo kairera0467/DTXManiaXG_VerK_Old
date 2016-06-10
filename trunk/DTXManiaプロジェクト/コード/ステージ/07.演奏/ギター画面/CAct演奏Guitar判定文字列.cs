@@ -1496,7 +1496,7 @@ namespace DTXMania
 
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime_2.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率_棒, base.st状態[j].fY方向拡大率_棒, 1f);
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime_2.fZ軸中心回転 = base.st状態[j].fZ軸回転度_棒;
-                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x_棒, y_棒, new Rectangle(0, 110, 210, 15));
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x_棒, y_棒, new Rectangle(0, 110, 210, 20));
 
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;
@@ -1515,7 +1515,7 @@ namespace DTXMania
                                 {
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime_2.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率_棒, base.st状態[j].fY方向拡大率_棒, 1f);
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime_2.fZ軸中心回転 = base.st状態[j].fZ軸回転度_棒;
-                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x_棒, y_棒, new Rectangle(0, 125, 210, 15));
+                                    CDTXMania.stage演奏ギター画面.tx判定画像anime_2.t2D描画(CDTXMania.app.Device, x_棒, y_棒, new Rectangle(0, 130, 210, 20));
 
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime.vc拡大縮小倍率 = new Vector3(base.st状態[j].fX方向拡大率, base.st状態[j].fY方向拡大率, 1f);
                                     CDTXMania.stage演奏ギター画面.tx判定画像anime.fZ軸中心回転 = base.st状態[j].fZ軸回転度;

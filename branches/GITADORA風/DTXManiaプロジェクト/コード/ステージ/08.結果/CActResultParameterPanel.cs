@@ -279,8 +279,8 @@ namespace DTXMania
             }
             #endregion
 
-            this.ft表示用フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 24f, FontStyle.Regular, GraphicsUnit.Pixel);
-            this.ft称号フォント = new System.Drawing.Font(CDTXMania.ConfigIni.str曲名表示フォント, 16f, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.prv表示用フォント = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str曲名表示フォント ), 20, FontStyle.Regular );
+            this.prv称号フォント = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str曲名表示フォント ), 12, FontStyle.Regular );
 
 			this.sdDTXで指定されたフルコンボ音 = null;
 			base.On活性化();
@@ -291,16 +291,6 @@ namespace DTXMania
 			{
 				this.ct表示用 = null;
 			}
-            if (this.ft表示用フォント != null)
-            {
-                this.ft表示用フォント.Dispose();
-                this.ft表示用フォント = null;
-            }
-            if (this.ft称号フォント != null)
-            {
-                this.ft称号フォント.Dispose();
-                this.ft称号フォント = null;
-            }
             if (this.sdDTXで指定されたフルコンボ音 != null)
 			{
 				CDTXMania.Sound管理.tサウンドを破棄する( this.sdDTXで指定されたフルコンボ音 );
@@ -328,12 +318,106 @@ namespace DTXMania
 
                 this.strPlayerName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strCardName[ 1 ] ) ? "GUEST" : CDTXMania.ConfigIni.strCardName[ 1 ];
                 this.strTitleName = string.IsNullOrEmpty( CDTXMania.ConfigIni.strGroupName[ 1 ] ) ? "" : CDTXMania.ConfigIni.strGroupName[ 1 ];
-                Bitmap image2 = new Bitmap(200, 100);
-                Graphics graネームプレート用 = Graphics.FromImage(image2);
-                graネームプレート用.DrawString(this.strTitleName, this.ft称号フォント, Brushes.White, (float)8f, (float)12f);
-                graネームプレート用.DrawString(this.strPlayerName, this.ft表示用フォント, Brushes.White, (float)8f, (float)32f);
-                this.txネームプレート用文字 = new CTexture(CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false);
+                Bitmap image2 = new Bitmap( 257, 100 );
+                Graphics graネームプレート用 = Graphics.FromImage( image2 );
+
+                #region[ ネームカラー ]
+                //--------------------
+                Color clNameColor = Color.White;
+                Color clNameColorLower = Color.White;
+                switch( CDTXMania.ConfigIni.nNameColor[ 0 ] )
+                {
+                    case 0:
+                        clNameColor = Color.White;
+                        break;
+                    case 1:
+                        clNameColor = Color.LightYellow;
+                        break;
+                    case 2:
+                        clNameColor = Color.Yellow;
+                        break;
+                    case 3:
+                        clNameColor = Color.Green;
+                        break;
+                    case 4:
+                        clNameColor = Color.Blue;
+                        break;
+                    case 5:
+                        clNameColor = Color.Purple;
+                        break;
+                    case 6:
+                        clNameColor = Color.Red;
+                        break;
+                    case 7:
+                        clNameColor = Color.Brown;
+                        break;
+                    case 8:
+                        clNameColor = Color.Silver;
+                        break;
+                    case 9:
+                        clNameColor = Color.Gold;
+                        break;
+
+                    case 10:
+                        clNameColor = Color.White;
+                        break;
+                    case 11:
+                        clNameColor = Color.LightYellow;
+                        clNameColorLower = Color.White;
+                        break;
+                    case 12:
+                        clNameColor = Color.Yellow;
+                        clNameColorLower = Color.White;
+                        break;
+                    case 13:
+                        clNameColor = Color.FromArgb(0, 255, 33);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 14:
+                        clNameColor = Color.FromArgb(0, 38, 255);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 15:
+                        clNameColor = Color.FromArgb(72, 0, 255);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 16:
+                        clNameColor = Color.FromArgb(255, 255, 0, 0);
+                        clNameColorLower = Color.White;
+                        break;
+                    case 17:
+                        clNameColor = Color.FromArgb(255, 232, 182, 149);
+                        clNameColorLower = Color.FromArgb(255, 122, 69, 26);
+                        break;
+                    case 18:
+                        clNameColor = Color.FromArgb(246, 245, 255);
+                        clNameColorLower = Color.FromArgb(125, 128, 137);
+                        break;
+                    case 19:
+                        clNameColor = Color.FromArgb(255, 238, 196, 85);
+                        clNameColorLower = Color.FromArgb(255, 255, 241, 200);
+                        break;
+                }
+                //--------------------
+                #endregion
+                #region[ 名前とか ]
+                Bitmap bmpCardName = new Bitmap(1, 1);
+                bmpCardName = this.prv表示用フォント.DrawPrivateFont( this.strPlayerName, Color.White, Color.Transparent, clNameColor, ( CDTXMania.ConfigIni.nNameColor[ 0 ] > 11 ? clNameColorLower : clNameColor ) );
+                Bitmap bmpTitleName = new Bitmap(1, 1);
+                bmpTitleName = this.prv称号フォント.DrawPrivateFont( this.strTitleName, Color.White, Color.Transparent );
+
+                graネームプレート用.DrawImage( bmpCardName, -2f, 26f );
+                graネームプレート用.DrawImage( bmpTitleName, 6f, 8f );
+                #endregion
+
+                this.prv表示用フォント.Dispose();
+                this.prv称号フォント.Dispose();
+                bmpCardName.Dispose();
+                bmpTitleName.Dispose();
+                this.txネームプレート用文字 = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false );
                 image2.Dispose();
+
+                graネームプレート用.Dispose();
 
                 base.OnManagedリソースの作成();
             }
@@ -424,7 +508,7 @@ namespace DTXMania
                     this.t大文字表示(88 + this.n本体X[j], 363 + this.n本体Y, string.Format("{0,6:##0.00}", CDTXMania.stage結果.st演奏記録[j].dbゲーム型スキル値));
                     
                     if(this.tx難易度パネル != null)
-                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[j], 266 + this.n本体Y, new Rectangle(0, 60 * CDTXMania.nSongDifficulty, 60, 60));
+                        this.tx難易度パネル.t2D描画(CDTXMania.app.Device, 14 + this.n本体X[j], 266 + this.n本体Y, new Rectangle( this.rectDiffPanelPoint.X, this.rectDiffPanelPoint.Y, 60, 60));
                     this.tレベル数字描画((bCLASSIC == true ? 26 : 18) + this.n本体X[j], 290 + this.n本体Y, str);
 
                     string strScore = string.Format("{0,7:######0}", CDTXMania.stage結果.st演奏記録[j].nスコア);
@@ -507,8 +591,8 @@ namespace DTXMania
         private CTexture txネームプレート用文字;
         private string strPlayerName;
         private string strTitleName;
-        private System.Drawing.Font ft表示用フォント;
-        private System.Drawing.Font ft称号フォント;
+        private CPrivateFastFont prv表示用フォント;
+        private CPrivateFastFont prv称号フォント;
 
         private CTexture tx難易度パネル;
         private CTexture tx難易度用数字;
