@@ -744,9 +744,9 @@ namespace DTXMania
                             }
                             //if ( this.txフィルインエフェクト != null )
                             CStage演奏ドラム画面 stageDrum = CDTXMania.stage演奏ドラム画面;
-                            //CStage演奏ギター画面 stageGuitar = CDTXMania.stage演奏ギター画面;
+                            CStage演奏ギター画面 stageGuitar = CDTXMania.stage演奏ギター画面;
 
-                            //if( ( CDTXMania.ConfigIni.bDrums有効 ? stageDrum.txボーナスエフェクト : stageGuitar.txボーナスエフェクト ) != null )
+                            if( ( CDTXMania.ConfigIni.bDrums有効 ? stageDrum.txボーナスエフェクト : stageGuitar.txボーナスエフェクト ) != null )
                             {
                                 //this.txフィルインエフェクト.vc拡大縮小倍率.X = 2.0f;
                                 //this.txフィルインエフェクト.vc拡大縮小倍率.Y = 2.0f;
