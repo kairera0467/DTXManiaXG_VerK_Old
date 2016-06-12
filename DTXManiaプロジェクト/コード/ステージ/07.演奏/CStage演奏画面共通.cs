@@ -1277,7 +1277,7 @@ namespace DTXMania
         {
             if( CDTXMania.bコンパクトモード )
             {
-                this.actStatusPanels.tスクリプトから難易度ラベルを取得する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
+                this.actStatusPanels.tスクリプトから難易度ラベルを取得する( "DTX" );
             }
             else if( CDTXMania.stage選曲.r確定された曲 != null )
             {

@@ -1466,6 +1466,10 @@ namespace DTXMania
                             int x_棒 = ( xc_棒 - ((int)(((nRectX * base.st状態[j].fX方向拡大率_棒) / base.st状態[j].fX方向拡大率_棒) * base.st状態[j].fX方向拡大率_棒)) + (nRectX / 2));
                             int y_棒 = ( num6 + base.st状態[ j ].n相対Y座標_棒 ) - ( (int)( ( ( ( nRectY ) / 2 ) * base.st状態[j].fY方向拡大率_棒 ) ) );
 
+                            //2016.06.09 kairera0467 棒の高さを30pxにするテスト
+                            int n棒高さ = 20;
+
+
                             //CDTXMania.act文字コンソール.tPrint( 0, j * 16, C文字コンソール.Eフォント種別.白, x.ToString() );
                             if( base.tx判定文字列[ 0 ] != null )
                             {
@@ -1475,7 +1479,8 @@ namespace DTXMania
                                         {
                                             base.tx判定文字列[ 1 ].vc拡大縮小倍率 = new Vector3( base.st状態[ j ].fX方向拡大率_棒, base.st状態[ j ].fY方向拡大率_棒, 1f );
                                             base.tx判定文字列[ 1 ].fZ軸中心回転 = base.st状態[ j ].fZ軸回転度_棒;
-                                            base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 140, 210, 15 ) );
+                                            //base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 140, 210, 15 ) );
+                                            base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 110 + n棒高さ * 2, 210, n棒高さ ) );
 
                                             base.tx判定文字列[ 0 ].vc拡大縮小倍率 = new Vector3(base.st状態[ j ].fX方向拡大率, base.st状態[ j ].fY方向拡大率, 1f );
                                             base.tx判定文字列[ 0 ].fZ軸中心回転 = base.st状態[ j ].fZ軸回転度;
@@ -1493,7 +1498,8 @@ namespace DTXMania
                                         {
                                             base.tx判定文字列[ 1 ].vc拡大縮小倍率 = new Vector3( base.st状態[ j ].fX方向拡大率_棒, base.st状態[ j ].fY方向拡大率_棒, 1f );
                                             base.tx判定文字列[ 1 ].fZ軸中心回転 = base.st状態[ j ].fZ軸回転度_棒;
-                                            base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 110, 210, 15 ) );
+                                            //base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 110, 210, 15 ) );
+                                            base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 110 + n棒高さ * 0, 210, n棒高さ ) );
 
                                             base.tx判定文字列[ 0 ].vc拡大縮小倍率 = new Vector3(base.st状態[ j ].fX方向拡大率, base.st状態[ j ].fY方向拡大率, 1f );
                                             base.tx判定文字列[ 0 ].fZ軸中心回転 = base.st状態[ j ].fZ軸回転度;
@@ -1511,7 +1517,8 @@ namespace DTXMania
                                         {
                                             base.tx判定文字列[ 1 ].vc拡大縮小倍率 = new Vector3( base.st状態[ j ].fX方向拡大率_棒, base.st状態[ j ].fY方向拡大率_棒, 1f );
                                             base.tx判定文字列[ 1 ].fZ軸中心回転 = base.st状態[ j ].fZ軸回転度_棒;
-                                            base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 125, 210, 15 ) );
+                                            //base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 125, 210, 15 ) );
+                                            base.tx判定文字列[ 1 ].t2D描画( CDTXMania.app.Device, x_棒, y_棒, new Rectangle( 0, 110 + n棒高さ * 1, 210, n棒高さ ) );
 
                                             base.tx判定文字列[ 0 ].vc拡大縮小倍率 = new Vector3( base.st状態[ j ].fX方向拡大率, base.st状態[ j ].fY方向拡大率, 1f );
                                             base.tx判定文字列[ 0 ].fZ軸中心回転 = base.st状態[ j ].fZ軸回転度;

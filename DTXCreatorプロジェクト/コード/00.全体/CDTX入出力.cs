@@ -2229,122 +2229,122 @@ namespace DTXCreator
 						}
 					}
 				}
-                //for( int num20 = 0; num20 < 8; num20++ )
+                for( int num20 = 0; num20 < 8; num20++ )
+                {
+                    if( builderArray[ num20 ].Length != 0 )
+                    {
+                        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 0x20 + num20 ), builderArray[ num20 ].ToString() );
+                    }
+                }
+                //for( int num20 = 0; num20 < 255; num20++ )
                 //{
                 //    if( builderArray[ num20 ].Length != 0 )
                 //    {
-                //        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 0x20 + num20 ), builderArray[ num20 ].ToString() );
+                //        int num16 = 0;
+                //        if (num20 < 16)
+                //        {
+                //            num16 = num20 + 32;
+                //        }
+                //        if (num20 == 16)
+                //        {
+                //            num16 = 147;
+                //        }
+                //        if (num20 == 17)
+                //        {
+                //            num16 = 148;
+                //        }
+                //        if (num20 == 18)
+                //        {
+                //            num16 = 149;
+                //        }
+                //        if (num20 == 19)
+                //        {
+                //            num16 = 150;
+                //        }
+                //        if (num20 == 20)
+                //        {
+                //            num16 = 151;
+                //        }
+                //        if (num20 == 21)
+                //        {
+                //            num16 = 152;
+                //        }
+                //        if (num20 == 22)
+                //        {
+                //            num16 = 153;
+                //        }
+                //        if (num20 == 23)
+                //        {
+                //            num16 = 154;
+                //        }
+                //        if (num20 == 32)
+                //        {
+                //            num16 = 155;
+                //        }
+                //        if (num20 == 33)
+                //        {
+                //            num16 = 156;
+                //        }
+                //        if (num20 == 34)
+                //        {
+                //            num16 = 157;
+                //        }
+                //        if (num20 == 35)
+                //        {
+                //            num16 = 158;
+                //        }
+                //        if (num20 == 36)
+                //        {
+                //            num16 = 159;
+                //        }
+                //        if (num20 == 37)
+                //        {
+                //            num16 = 169;
+                //        }
+                //        if (num20 == 38)
+                //        {
+                //            num16 = 170;
+                //        }
+                //        if (num20 == 39)
+                //        {
+                //            num16 = 171;
+                //        }
+                //        if (num20 == 48)
+                //        {
+                //            num16 = 172;
+                //        }
+                //        if (num20 == 49)
+                //        {
+                //            num16 = 173;
+                //        }
+                //        if (num20 == 50)
+                //        {
+                //            num16 = 174;
+                //        }
+                //        if (num20 == 51)
+                //        {
+                //            num16 = 175;
+                //        }
+                //        if (num20 == 52)
+                //        {
+                //            num16 = 208;
+                //        }
+                //        if (num20 == 53)
+                //        {
+                //            num16 = 209;
+                //        }
+                //        if (num20 == 54)
+                //        {
+                //            num16 = 210;
+                //        }
+                //        if (num20 == 55)
+                //        {
+                //            num16 = 211;
+                //        }
+
+                //        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( num16 ), builderArray[ num20 ].ToString() );
                 //    }
                 //}
-				for( int num20 = 0; num20 < 255; num20++ )
-				{
-					if( builderArray[ num20 ].Length != 0 )
-					{
-                        int num16 = 0;
-                        if (num20 < 16)
-                        {
-                            num16 = num20 + 32;
-                        }
-                        if (num20 == 16)
-                        {
-                            num16 = 147;
-                        }
-                        if (num20 == 17)
-                        {
-                            num16 = 148;
-                        }
-                        if (num20 == 18)
-                        {
-                            num16 = 149;
-                        }
-                        if (num20 == 19)
-                        {
-                            num16 = 150;
-                        }
-                        if (num20 == 20)
-                        {
-                            num16 = 151;
-                        }
-                        if (num20 == 21)
-                        {
-                            num16 = 152;
-                        }
-                        if (num20 == 22)
-                        {
-                            num16 = 153;
-                        }
-                        if (num20 == 23)
-                        {
-                            num16 = 154;
-                        }
-                        if (num20 == 32)
-                        {
-                            num16 = 155;
-                        }
-                        if (num20 == 33)
-                        {
-                            num16 = 156;
-                        }
-                        if (num20 == 34)
-                        {
-                            num16 = 157;
-                        }
-                        if (num20 == 35)
-                        {
-                            num16 = 158;
-                        }
-                        if (num20 == 36)
-                        {
-                            num16 = 159;
-                        }
-                        if (num20 == 37)
-                        {
-                            num16 = 169;
-                        }
-                        if (num20 == 38)
-                        {
-                            num16 = 170;
-                        }
-                        if (num20 == 39)
-                        {
-                            num16 = 171;
-                        }
-                        if (num20 == 48)
-                        {
-                            num16 = 172;
-                        }
-                        if (num20 == 49)
-                        {
-                            num16 = 173;
-                        }
-                        if (num20 == 50)
-                        {
-                            num16 = 174;
-                        }
-                        if (num20 == 51)
-                        {
-                            num16 = 175;
-                        }
-                        if (num20 == 52)
-                        {
-                            num16 = 208;
-                        }
-                        if (num20 == 53)
-                        {
-                            num16 = 209;
-                        }
-                        if (num20 == 54)
-                        {
-                            num16 = 210;
-                        }
-                        if (num20 == 55)
-                        {
-                            num16 = 211;
-                        }
-
-						sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( num16 ), builderArray[ num20 ].ToString() );
-					}
-				}
 				for( int num21 = 0; num21 < c小節.n小節長倍率を考慮した現在の小節の高さgrid; num21++ )
 				{
 					numArray[ num21, 0 ] = numArray[ num21, 1 ] = 0;
@@ -2447,121 +2447,121 @@ namespace DTXCreator
 						}
 					}
 				}
-                //for( int num32 = 0; num32 < 8; num32++ )
-                //{
-                //    if( builderArray2[ num32 ].Length != 0 )
-                //    {
-                //        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 160 + num32 ), builderArray2[ num32 ].ToString() );
-                //    }
-                //}
-                for (int num32 = 0; num32 < 255; num32++)
+                for( int num32 = 0; num32 < 8; num32++ )
                 {
-                    if (builderArray2[num32].Length != 0)
+                    if( builderArray2[ num32 ].Length != 0 )
                     {
-                        int num33 = 0;
-                        if (num32 < 16)
-                        {
-                            num33 = num32 + 160;
-                        }
-                        if (num32 == 16)
-                        {
-                            num33 = 197;
-                        }
-                        if (num32 == 17)
-                        {
-                            num33 = 198;
-                        }
-                        if (num32 == 18)
-                        {
-                            num33 = 200;
-                        }
-                        if (num32 == 19)
-                        {
-                            num33 = 201;
-                        }
-                        if (num32 == 20)
-                        {
-                            num33 = 202;
-                        }
-                        if (num32 == 21)
-                        {
-                            num33 = 203;
-                        }
-                        if (num32 == 22)
-                        {
-                            num33 = 204;
-                        }
-                        if (num32 == 23)
-                        {
-                            num33 = 205;
-                        }
-                        if (num32 == 32)
-                        {
-                            num33 = 206;
-                        }
-                        if (num32 == 33)
-                        {
-                            num33 = 207;
-                        }
-                        if (num32 == 34)
-                        {
-                            num33 = 218;
-                        }
-                        if (num32 == 35)
-                        {
-                            num33 = 219;
-                        }
-                        if (num32 == 36)
-                        {
-                            num33 = 220;
-                        }
-                        if (num32 == 37)
-                        {
-                            num33 = 221;
-                        }
-                        if (num32 == 38)
-                        {
-                            num33 = 222;
-                        }
-                        if (num32 == 39)
-                        {
-                            num33 = 223;
-                        }
-                        if (num32 == 48)
-                        {
-                            num33 = 225;
-                        }
-                        if (num32 == 49)
-                        {
-                            num33 = 226;
-                        }
-                        if (num32 == 50)
-                        {
-                            num33 = 227;
-                        }
-                        if (num32 == 51)
-                        {
-                            num33 = 228;
-                        }
-                        if (num32 == 52)
-                        {
-                            num33 = 229;
-                        }
-                        if (num32 == 53)
-                        {
-                            num33 = 230;
-                        }
-                        if (num32 == 54)
-                        {
-                            num33 = 231;
-                        }
-                        if (num32 == 55)
-                        {
-                            num33 = 232;
-                        }
-                        sw.WriteLine("#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す(c小節.n小節番号0to3599), C変換.str数値を16進数2桁に変換して返す(num33), builderArray2[num32].ToString());
+                        sw.WriteLine( "#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す( c小節.n小節番号0to3599 ), C変換.str数値を16進数2桁に変換して返す( 160 + num32 ), builderArray2[ num32 ].ToString() );
                     }
                 }
+                //for (int num32 = 0; num32 < 255; num32++)
+                //{
+                //    if (builderArray2[num32].Length != 0)
+                //    {
+                //        int num33 = 0;
+                //        if (num32 < 16)
+                //        {
+                //            num33 = num32 + 160;
+                //        }
+                //        if (num32 == 16)
+                //        {
+                //            num33 = 197;
+                //        }
+                //        if (num32 == 17)
+                //        {
+                //            num33 = 198;
+                //        }
+                //        if (num32 == 18)
+                //        {
+                //            num33 = 200;
+                //        }
+                //        if (num32 == 19)
+                //        {
+                //            num33 = 201;
+                //        }
+                //        if (num32 == 20)
+                //        {
+                //            num33 = 202;
+                //        }
+                //        if (num32 == 21)
+                //        {
+                //            num33 = 203;
+                //        }
+                //        if (num32 == 22)
+                //        {
+                //            num33 = 204;
+                //        }
+                //        if (num32 == 23)
+                //        {
+                //            num33 = 205;
+                //        }
+                //        if (num32 == 32)
+                //        {
+                //            num33 = 206;
+                //        }
+                //        if (num32 == 33)
+                //        {
+                //            num33 = 207;
+                //        }
+                //        if (num32 == 34)
+                //        {
+                //            num33 = 218;
+                //        }
+                //        if (num32 == 35)
+                //        {
+                //            num33 = 219;
+                //        }
+                //        if (num32 == 36)
+                //        {
+                //            num33 = 220;
+                //        }
+                //        if (num32 == 37)
+                //        {
+                //            num33 = 221;
+                //        }
+                //        if (num32 == 38)
+                //        {
+                //            num33 = 222;
+                //        }
+                //        if (num32 == 39)
+                //        {
+                //            num33 = 223;
+                //        }
+                //        if (num32 == 48)
+                //        {
+                //            num33 = 225;
+                //        }
+                //        if (num32 == 49)
+                //        {
+                //            num33 = 226;
+                //        }
+                //        if (num32 == 50)
+                //        {
+                //            num33 = 227;
+                //        }
+                //        if (num32 == 51)
+                //        {
+                //            num33 = 228;
+                //        }
+                //        if (num32 == 52)
+                //        {
+                //            num33 = 229;
+                //        }
+                //        if (num32 == 53)
+                //        {
+                //            num33 = 230;
+                //        }
+                //        if (num32 == 54)
+                //        {
+                //            num33 = 231;
+                //        }
+                //        if (num32 == 55)
+                //        {
+                //            num33 = 232;
+                //        }
+                //        sw.WriteLine("#{0}{1}: {2}", C変換.str小節番号を文字列3桁に変換して返す(c小節.n小節番号0to3599), C変換.str数値を16進数2桁に変換して返す(num33), builderArray2[num32].ToString());
+                //    }
+                //}
 			}
 		}
 		private bool tDTX出力_全チップ_解像度をＮ分の１にできる( int N, ref int[ , ] arrチップ配列, int n現在の解像度 )
