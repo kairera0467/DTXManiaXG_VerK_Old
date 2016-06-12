@@ -57,9 +57,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDXc_net20x86_Jun2010, Version=1002.0.10.43, Culture=neutral, PublicKeyToken=53d0e4ef1f1579f5, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\実行時フォルダ(DTXCreator)\dll\SlimDXc_net20x86_Jun2010.dll</HintPath>
+    <Reference Include="SlimDXc_net20x86_Jun2010">
+      <HintPath>..\実行時フォルダ\dll\SlimDXc_net20x86_Jun2010.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -369,7 +368,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)..\実行時フォルダ"
 copy /Y "$(TargetPath)".config "$(SolutionDir)..\実行時フォルダ"
-mkdir "$(SolutionDir)..\実行時フォルダ(DTXCreator)\ja-JP"
+mkdir "$(SolutionDir)..\実行時フォルダ\ja-JP"
 copy /Y "$(TargetDir)ja-JP" "$(SolutionDir)..\実行時フォルダ\ja-JP"
 mkdir "$(SolutionDir)..\実行時フォルダ\dll"
 move /Y "$(TargetDir)\Bass.Net.dll" "$(TargetDir)dll"
