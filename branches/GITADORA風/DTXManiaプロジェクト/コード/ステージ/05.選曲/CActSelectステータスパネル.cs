@@ -299,7 +299,7 @@ namespace DTXMania
                             {
 
                                 int nBoxX = nPanelX;
-                                int nBoxY = nPanelY + (nPanelH * (4 - i)) + (nPanelH / 2);
+                                int nBoxY = ( 391 + ( ( 4 - i ) * 60 ) ) - 2;
 
                                 if (this.n現在選択中の曲の難易度 == i && this.tx難易度枠 != null)
                                 {
