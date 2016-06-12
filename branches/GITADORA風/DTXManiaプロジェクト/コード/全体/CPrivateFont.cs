@@ -421,6 +421,7 @@ Trace.TraceError( "DrawPrivateFont()の入力不正。最小値のbitmapを返�
 
 			// レイアウト枠
 			Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 );
+            r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 3, stringSize.Height + nEdgePt * 2 ); // 2016.06.12 kairera0467 改行防止
 
 			if( bEdge && bEdgeGradation )	// 縁取り有りの描画
 			{
