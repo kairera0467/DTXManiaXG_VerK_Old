@@ -320,7 +320,7 @@ Trace.TraceError( "DrawPrivateFont()の入力不正。最小値のbitmapを返�
 
 			// レイアウト枠
 			//Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 );
-            Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 2, stringSize.Height + nEdgePt * 2 ); //#34638 2014.11.24 kairera0467 とりあえず文字の横サイズを1.5倍に変更。
+            Rectangle r = new Rectangle( 0, 0, stringSize.Width + nEdgePt * 3, stringSize.Height + nEdgePt * 2 ); //#34638 2014.11.24 kairera0467 とりあえず文字の横サイズを1.5倍に変更。
 
 			if ( bEdge )	// 縁取り有りの描画
 			{
