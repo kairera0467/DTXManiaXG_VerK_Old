@@ -703,6 +703,7 @@ namespace DTXMania
 											for( int i = 0; i < 3; i++ )
 											{
 												int nSectionHiSkill = ( i * 2 ) + 1;
+                                                int nSectionHiScore = i * 2;
 												if(    scoreIni.stセクション[ nSectionHiSkill ].b演奏にMIDI入力を使用した
 													|| scoreIni.stセクション[ nSectionHiSkill ].b演奏にキーボードを使用した
 													|| scoreIni.stセクション[ nSectionHiSkill ].b演奏にジョイパッドを使用した
@@ -726,7 +727,7 @@ namespace DTXMania
 													node.arスコア[ lv ].譜面情報.最大ランク[ i ] = (int)CScoreIni.ERANK.UNKNOWN;
 												}
 												node.arスコア[ lv ].譜面情報.最大スキル[ i ] = scoreIni.stセクション[ nSectionHiSkill ].db演奏型スキル値;
-												node.arスコア[ lv ].譜面情報.フルコンボ[ i ] = scoreIni.stセクション[ nSectionHiSkill ].bフルコンボである;
+												node.arスコア[ lv ].譜面情報.フルコンボ[ i ] = scoreIni.stセクション[ nSectionHiSkill ].bフルコンボである | scoreIni.stセクション[ nSectionHiScore ].bフルコンボである;
 											}
 											node.arスコア[ lv ].譜面情報.演奏回数.Drums = scoreIni.stファイル.PlayCountDrums;
 											node.arスコア[ lv ].譜面情報.演奏回数.Guitar = scoreIni.stファイル.PlayCountGuitar;
@@ -1713,7 +1714,7 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 					#endregion
 					score.譜面情報.最大スキル[ n楽器番号 ] = ini.stセクション[ n ].db演奏型スキル値;
                     score.譜面情報.最大曲別スキル[ n楽器番号 ] = ini.stセクション[ n ].dbゲーム型スキル値;
-					score.譜面情報.フルコンボ[ n楽器番号 ] = ini.stセクション[ n ].bフルコンボである;
+					score.譜面情報.フルコンボ[ n楽器番号 ] = ini.stセクション[ n ].bフルコンボである | ini.stセクション[ n楽器番号 * 2 ].bフルコンボである;
 				}
 				score.譜面情報.演奏回数.Drums = ini.stファイル.PlayCountDrums;
 				score.譜面情報.演奏回数.Guitar = ini.stファイル.PlayCountGuitar;
