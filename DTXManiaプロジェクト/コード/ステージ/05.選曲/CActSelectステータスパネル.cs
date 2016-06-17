@@ -321,6 +321,7 @@ namespace DTXMania
                                     {
                                         n難易度整数[i] = (int)this.n現在選択中の曲のレベル難易度毎DGB[i][j] / 10;
                                         n難易度小数[i] = (this.n現在選択中の曲のレベル難易度毎DGB[i][j] - (n難易度整数[i] * 10)) * 10;
+                                        n難易度小数[i] += this.n現在選択中の曲のレベル小数点難易度毎DGB[i][j];
                                     }
 
                                     if (this.str難易度ラベル[i] != null && this.b現在選択中の曲に譜面がある[i][j])
