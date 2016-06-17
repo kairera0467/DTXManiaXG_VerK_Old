@@ -1363,6 +1363,7 @@ namespace DTXMania
 			int nL12345 = (int)p[ 0 ];
 			if ( part != E楽器パート.UNKNOWN )
 			{
+                Trace.WriteLine( "----------ソート開始------------" );
 				ノードリスト.Sort( delegate( C曲リストノード n1, C曲リストノード n2 ) //2016.03.12 kairera0467 少数第2位も考慮するようにするテスト。
 				{
 					#region [ 共通処理 ]
@@ -1370,29 +1371,29 @@ namespace DTXMania
 					{
 						return 0;
 					}
-					int num = this.t比較0_共通( n1, n2 );
+					float num = this.t比較0_共通( n1, n2 ); //2016.06.17 kairera0467 ソートが正確に行われるよう修正。(int→float)
 					if ( num != 0 )
 					{
-						return order * num;
+						return (int)(order * num);
 					}
 					if ( ( n1.eノード種別 == C曲リストノード.Eノード種別.BOX ) && ( n2.eノード種別 == C曲リストノード.Eノード種別.BOX ) )
 					{
 						return order * n1.arスコア[ 0 ].ファイル情報.フォルダの絶対パス.CompareTo( n2.arスコア[ 0 ].ファイル情報.フォルダの絶対パス );
 					}
 					#endregion
-					int nSumPlayCountN1 = 0, nSumPlayCountN2 = 0;
+					float nSumPlayCountN1 = 0, nSumPlayCountN2 = 0;
 					if ( n1.arスコア[ nL12345 ] != null )
 					{
-						nSumPlayCountN1 = n1.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] + n1.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ];
+						nSumPlayCountN1 = ( n1.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] / 10.0f ) + ( n1.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ] / 100.0f );
 					}
 					if ( n2.arスコア[ nL12345 ] != null )
 					{
-						nSumPlayCountN2 = n2.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] + n1.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ];
+						nSumPlayCountN2 = ( n2.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] / 10.0f ) + ( n2.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ] / 100.0f );
 					}
 					num = nSumPlayCountN2 - nSumPlayCountN1;
 					if ( num != 0 )
 					{
-						return order * num;
+						return (int)( (order * num) * 100 );
 					}
 					return order * n1.strタイトル.CompareTo( n2.strタイトル );
 				} );
@@ -1401,7 +1402,7 @@ namespace DTXMania
 					int nSumPlayCountN1 = 0;
 					if ( c曲リストノード.arスコア[ nL12345 ] != null )
 					{
-						nSumPlayCountN1 = c曲リストノード.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ];
+						nSumPlayCountN1 = c曲リストノード.arスコア[ nL12345 ].譜面情報.レベル[ (int) part ] + c曲リストノード.arスコア[ nL12345 ].譜面情報.レベルDec[ (int) part ];
 					}
 // Debug.WriteLine( nSumPlayCountN1 + ":" + c曲リストノード.strタイトル );
 				}
