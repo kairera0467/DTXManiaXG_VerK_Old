@@ -57,7 +57,7 @@ namespace DTXMania
 			List<int> automode = tConfigureAuto_DefaultSettings();
 			if ( nInst == (int) E楽器パート.DRUMS )
 			{
-				l.Add( new CItemList( "Auto Mode", CItemBase.Eパネル種別.通常, automode[ nInst ], "", "", new string[] { "All Auto", "Auto LP", "Auto BD", "2Pedal Auto", "XGLaneAuto", "Custom", "OFF" } ) );
+				l.Add( new CItemList( "Auto Mode", CItemBase.Eパネル種別.通常, automode[ nInst ], "", "", new string[] { "All Auto", "Auto LP", "Auto BD", "2PedalAuto", "XGLaneAuto", "Custom", "OFF" } ) );
 			}
 			else
 			{
@@ -283,21 +283,20 @@ namespace DTXMania
 		{
 			if ( base.n現在の選択行 == (int) EOrder.AutoMode )
 			{
-					if ( tx文字列パネル == null )		// TagetとAuto Modeを全く変更せずにAuto Modeまで動かした場合限り、ここに来る
-					{
-						MakeAutoPanel();
-					}
+				if ( tx文字列パネル == null )		// TagetとAuto Modeを全く変更せずにAuto Modeまで動かした場合限り、ここに来る
+				{
+					MakeAutoPanel();
+				}
 
-					if ( this.txパネル本体 != null )
-					{
-						this.txパネル本体.t2D描画( CDTXMania.app.Device, 520, 100 );
-					}
-					if ( this.tx文字列パネル != null )
-					{
-						int x = ( nCurrentTarget == (int) E楽器パート.DRUMS ) ? 520 : 100;
-						this.tx文字列パネル.t2D描画( CDTXMania.app.Device, x + 50, 380 );
-
-					}
+				if ( this.txパネル本体 != null )
+				{
+					this.txパネル本体.t2D描画( CDTXMania.app.Device, 486, 320 );
+				}
+				if ( this.tx文字列パネル != null )
+				{
+					int x = ( nCurrentTarget == (int) E楽器パート.DRUMS ) ? 486 : 100;
+					this.tx文字列パネル.t2D描画( CDTXMania.app.Device, x + 20, 330 );
+				}
 			}
 		}
 
