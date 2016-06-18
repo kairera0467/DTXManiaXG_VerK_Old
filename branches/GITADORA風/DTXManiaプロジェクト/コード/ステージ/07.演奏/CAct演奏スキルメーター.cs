@@ -207,8 +207,8 @@ namespace DTXMania
                         //ターゲット名
                         //現在
                         this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 45, nGraphBG_YPos + 357, new Rectangle( 260, 2, 30, 120 ) );
-                        //自己ベスト
-                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 75, nGraphBG_YPos + 357, new Rectangle( 260 + 90, 2, 30, 120 ) );
+                        //比較対象
+                        this.txグラフ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 75, nGraphBG_YPos + 357, new Rectangle( 260 + ( 30 * ( (int)CDTXMania.ConfigIni.eTargetGhost[ this.nGraphUsePart ] ) ), 2, 30, 120 ) );
 
                         //以下使用予定
                         //最終プレイ
