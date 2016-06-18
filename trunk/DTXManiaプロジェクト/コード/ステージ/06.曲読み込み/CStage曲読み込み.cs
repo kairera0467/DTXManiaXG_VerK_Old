@@ -795,14 +795,27 @@ namespace DTXMania
                             }
                         }
                         
+                        string [] inst = {"dr", "gt", "bs"};
+        				if( CDTXMania.ConfigIni.bIsSwappedGuitarBass )
+				        {
+		        			inst[1] = "bs";
+        					inst[2] = "gt";
+				        }
                         //演奏記録をゴーストから逆生成
                         for( int i = 0; i < 3; i++ )
                         {
                             int nNowCombo = 0;
                             int nMaxCombo = 0;
-                            CDTXMania.listTargetGhostScoreData[ i ] = new CScoreIni.C演奏記録();
-                            if( this.stGhostLag[ i ] == null )
+
+                            //2016.06.18 kairera0467 「.ghost.score」ファイルが無かった場合ghostファイルから逆算を行う形に変更。
+                            string[] prefix = { "none", "perfect", "lastplay", "hiskill", "hiscore", "online" };
+                            int indPrefix = (int)CDTXMania.ConfigIni.eTargetGhost[ i ];
+                            string filename = cdtx.strフォルダ名 + "\\" + cdtx.strファイル名 + "." + prefix[ indPrefix ] + "." + inst[ i ] + ".ghost";
+
+                            if( this.stGhostLag[ i ] == null || File.Exists( filename + ".score" ) )
                                 continue;
+                            CDTXMania.listTargetGhostScoreData[ i ] = new CScoreIni.C演奏記録();
+
                             for( int j = 0; j < this.stGhostLag[ i ].Count; j++ )
                             {
                                 int ghostLag = 128;
@@ -816,7 +829,7 @@ namespace DTXMania
 
                                 if( ghostLag <= 127 )
                                 {
-                                    E判定 eJudge = this.e指定時刻からChipのJUDGEを返す(ghostLag, 0);
+                                    E判定 eJudge = this.e指定時刻からChipのJUDGEを返す( ghostLag, 0 );
 
                                     switch( eJudge )
                                     {
@@ -1261,75 +1274,75 @@ namespace DTXMania
                 }
             }
 
-            //if( File.Exists( filename + ".score" ) )
-            //{
-            //    using( FileStream fs = new FileStream( filename + ".score", FileMode.Open, FileAccess.Read ) )
-            //    {
-            //        using( StreamReader sr = new StreamReader( fs ) )
-            //        {
-            //            try
-            //            {
-            //                string strScoreDataFile = sr.ReadToEnd();
+            if( File.Exists( filename + ".score" ) )
+            {
+                using( FileStream fs = new FileStream( filename + ".score", FileMode.Open, FileAccess.Read ) )
+                {
+                    using( StreamReader sr = new StreamReader( fs ) )
+                    {
+                        try
+                        {
+                            string strScoreDataFile = sr.ReadToEnd();
 
-            //                strScoreDataFile = strScoreDataFile.Replace( Environment.NewLine, "\n" );
-            //                string[] delimiter = { "\n" };
-            //                string[] strSingleLine = strScoreDataFile.Split( delimiter, StringSplitOptions.RemoveEmptyEntries );
+                            strScoreDataFile = strScoreDataFile.Replace( Environment.NewLine, "\n" );
+                            string[] delimiter = { "\n" };
+                            string[] strSingleLine = strScoreDataFile.Split( delimiter, StringSplitOptions.RemoveEmptyEntries );
 
-            //                for( int i = 0; i < strSingleLine.Length; i++ )
-            //                {
-            //                    string[] strA = strSingleLine[ i ].Split( '=' );
-            //                    if (strA.Length != 2)
-            //                        continue;
+                            for( int i = 0; i < strSingleLine.Length; i++ )
+                            {
+                                string[] strA = strSingleLine[ i ].Split( '=' );
+                                if (strA.Length != 2)
+                                    continue;
 
-            //                    switch( strA[ 0 ] )
-            //                    {
-            //                        case "Score":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nスコア = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        case "PlaySkill":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].db演奏型スキル値 = Convert.ToDouble( strA[ 1 ] );
-            //                            continue;
-            //                        case "Skill":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].dbゲーム型スキル値 = Convert.ToDouble( strA[ 1 ] );
-            //                            continue;
-            //                        case "Perfect":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nPerfect数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        case "Great":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nGreat数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        case "Good":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nGood数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        case "Poor":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nPoor数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        case "Miss":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nMiss数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        case "MaxCombo":
-            //                            CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].n最大コンボ数 = Convert.ToInt32( strA[ 1 ] );
-            //                            continue;
-            //                        default:
-            //                            continue;
-            //                    }
-            //                }
-            //            }
-            //            catch( NullReferenceException )
-            //            {
-            //                Trace.TraceInformation("ゴーストデータの記録が正しく読み込まれませんでした。");
-            //            }
-            //            catch( EndOfStreamException )
-            //            {
-            //                Trace.TraceInformation("ゴーストデータの記録が正しく読み込まれませんでした。");
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ] = null;
-            //}
+                                switch( strA[ 0 ] )
+                                {
+                                    case "Score":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nスコア = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "PlaySkill":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].db演奏型スキル値 = Convert.ToDouble( strA[ 1 ] );
+                                        continue;
+                                    case "Skill":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].dbゲーム型スキル値 = Convert.ToDouble( strA[ 1 ] );
+                                        continue;
+                                    case "Perfect":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nPerfect数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Great":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nGreat数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Good":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nGood数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Poor":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nPoor数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "Miss":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].nMiss数・Auto含まない = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    case "MaxCombo":
+                                        CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ].n最大コンボ数 = Convert.ToInt32( strA[ 1 ] );
+                                        continue;
+                                    default:
+                                        continue;
+                                }
+                            }
+                        }
+                        catch( NullReferenceException )
+                        {
+                            Trace.TraceInformation("ゴーストデータの記録が正しく読み込まれませんでした。");
+                        }
+                        catch( EndOfStreamException )
+                        {
+                            Trace.TraceInformation("ゴーストデータの記録が正しく読み込まれませんでした。");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                CDTXMania.listTargetGhostScoreData[ (int)this.nCurrentInst ] = null;
+            }
         }
 
         private void t小文字表示(int x, int y, string str)
@@ -1459,8 +1472,7 @@ namespace DTXMania
 		{
 			//if ( pChip != null )
 			{
-				int nDeltaTime = Math.Abs( (int)nTime );
-				//Debug.WriteLine("nAbsTime=" + (nTime - pChip.n発声時刻ms) + ", nDeltaTime=" + (nTime + nInputAdjustTime - pChip.n発声時刻ms));
+				int nDeltaTime = Math.Abs( (int)nTime + nInputAdjustTime );
 				if ( nDeltaTime <= CDTXMania.nPerfect範囲ms )
 				{
 					return E判定.Perfect;
