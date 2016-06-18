@@ -494,7 +494,6 @@ namespace DTXMania
         public bool bAutoAddGage; //2012.9.18
 		public bool b歓声を発声する;
 		public bool b垂直帰線待ちを行う;
-        public bool b縮小文字のアンチエイリアスを有効にする;
 		public bool b選曲リストフォントを斜体にする;
 		public bool b選曲リストフォントを太字にする;
         public bool bDirectShowMode;
@@ -1023,7 +1022,6 @@ namespace DTXMania
 			this.str曲データ検索パス = @".\";
 			this.b全画面モード = false;
 			this.b垂直帰線待ちを行う = true;
-            this.b縮小文字のアンチエイリアスを有効にする = true;
             this.n初期ウィンドウ開始位置X = 0; // #30675 2013.02.04 ikanick add
             this.n初期ウィンドウ開始位置Y = 0;
             this.bDirectShowMode = false;
@@ -1495,10 +1493,6 @@ namespace DTXMania
 			sw.WriteLine( "Drums={0}", this.bDrums有効 ? 1 : 0 );
 			sw.WriteLine();
             #endregion
-            sw.WriteLine( "; 縮小文字のアンチエイリアスの有無 (0:OFF, 1:ON)");
-            sw.WriteLine( "; 文字やネームプレートなどの縮小している画像に対してアンチエイリアス処理をします。" );
-            sw.WriteLine( "Antialias={0}", this.b縮小文字のアンチエイリアスを有効にする ? 1 : 0);
-            sw.WriteLine();
             sw.WriteLine( "; DirectShowでのワイドクリップ再生 (0:OFF, 1:ON)");
             sw.WriteLine( "DirectShowMode={0}", this.bDirectShowMode ? 1 : 0);
             sw.WriteLine();
@@ -2538,10 +2532,6 @@ namespace DTXMania
                                             else if (str3.Equals("Drums"))
                                             {
                                                 this.bDrums有効 = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if (str3.Equals("Antialias"))
-                                            {
-                                                this.b縮小文字のアンチエイリアスを有効にする = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("DirectShowMode"))
                                             {
