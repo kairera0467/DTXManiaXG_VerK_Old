@@ -488,12 +488,9 @@ namespace DTXMania
             this.Device.SetRenderState(RenderState.AlphaTestEnable, true);
             this.Device.SetRenderState(RenderState.AlphaRef, 10);
 
-            if (CDTXMania.ConfigIni.b縮小文字のアンチエイリアスを有効にする == true)
-            {
-                this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
-                this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
-                this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
-            }
+            this.Device.SetRenderState(RenderState.MultisampleAntialias, true);
+            this.Device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Linear);
+            this.Device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Linear);
 
             this.Device.SetRenderState<Compare>(RenderState.AlphaFunc, Compare.Greater);
             this.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
