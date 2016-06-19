@@ -95,21 +95,21 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 16, FontStyle.Bold );
+                //this.pfNameFont = new CPrivateFastFont( new FontFamily( "Arial" ), 16, FontStyle.Bold );
                 this.txグラフ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Graph_Main.png" ) );
                 this.txグラフ_ゲージ = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\7_Graph_Gauge.png" ) );
 
-                if( this.pfNameFont != null )
-                {
-                    if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
-                    {
-                        this.txPlayerName = this.t指定された文字テクスチャを生成する( "DJ AUTO" );
-                    }
-                    else if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
-                    {
-                        this.txPlayerName = this.t指定された文字テクスチャを生成する( "LAST PLAY" );
-                    }
-                }
+                //if( this.pfNameFont != null )
+                //{
+                //    if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.PERFECT )
+                //    {
+                //        this.txPlayerName = this.t指定された文字テクスチャを生成する( "DJ AUTO" );
+                //    }
+                //    else if( CDTXMania.ConfigIni.eTargetGhost.Drums == ETargetGhostData.LAST_PLAY )
+                //    {
+                //        this.txPlayerName = this.t指定された文字テクスチャを生成する( "LAST PLAY" );
+                //    }
+                //}
 				base.OnManagedリソースの作成();
 			}
 		}
