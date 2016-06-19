@@ -696,45 +696,8 @@ namespace DTXMania
 		private const int n難易度表示可能文字数 = 0x24;
         private STDGBVALUE<int> n本体X;
         private STDGBVALUE<int> n本体Y;
-		private readonly Rectangle[] rcランク = new Rectangle[] {
-			new Rectangle( (int)(0 * Scale.X), (int)(0x20 * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) ),
-			new Rectangle( (int)(10 * Scale.X), (int)(0x20 * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) ),
-			new Rectangle( (int)(20 * Scale.X), (int)(0x20 * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) ),
-			new Rectangle( (int)(0 * Scale.X), (int)(0x2a * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) ),
-			new Rectangle( (int)(10 * Scale.X), (int)(0x2a * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) ),
-			new Rectangle( (int)(20 * Scale.X), (int)(0x2a * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) ),
-			new Rectangle( (int)(0 * Scale.X), (int)(0x34 * Scale.Y), (int)(10 * Scale.X), (int)(10 * Scale.Y) )
-		};
-		private readonly Rectangle[] rc数字 = new Rectangle[] {
-			new Rectangle( (int)(0 * Scale.X), (int)(0 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(15 * Scale.X), (int)(0 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(30 * Scale.X), (int)(0 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(0x2d * Scale.X), (int)(0 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(0 * Scale.X), (int)(0x13 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(15 * Scale.X), (int)(0x13 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(30 * Scale.X), (int)(0x13 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(0x2d * Scale.X), (int)(0x13 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(0 * Scale.X), (int)(0x26 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(15 * Scale.X),(int)(0x26 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(30 * Scale.X), (int)(0x26 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) ),
-			new Rectangle( (int)(0x2d * Scale.X), (int)(0x26 * Scale.Y), (int)(15 * Scale.X), (int)(0x13 * Scale.Y) )
-		};
 		private C曲リストノード r直前の曲;
 		private string[] str難易度ラベル = new string[] { "", "", "", "", "" };
-		private readonly ST数字[] st数字 = new ST数字[] {
-			new ST数字( '0', new Rectangle( (int)(0 * Scale.X), (int)(0 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '1', new Rectangle( (int)(8 * Scale.X), (int)(0 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '2', new Rectangle( (int)(0x10 * Scale.X), (int)(0 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '3', new Rectangle( (int)(0x18 * Scale.X), (int)(0 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '4', new Rectangle( (int)(0x20 * Scale.X), (int)(0 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '5', new Rectangle( (int)(40 * Scale.X), (int)(0 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '6', new Rectangle( (int)(0 * Scale.X), (int)(11 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '7', new Rectangle( (int)(8 * Scale.X), (int)(11 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '8', new Rectangle( (int)(0x10 * Scale.X), (int)(11 * Scale.Y), (int)(8 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( '9', new Rectangle( (int)(0x18 * Scale.X), (int)(11 * Scale.Y), (int)(8 * Scale.X),(int)( 11 * Scale.Y) ) ),
-			new ST数字( '.', new Rectangle( (int)(0x20 * Scale.X), (int)(11 * Scale.Y), (int)(4 * Scale.X), (int)(11 * Scale.Y) ) ),
-			new ST数字( 'p', new Rectangle( (int)(0x24 * Scale.X), (int)(11 * Scale.Y), (int)(15 * Scale.X), (int)(11 * Scale.Y) ) )
-		};
 		private CTexture txゲージ用数字他;
 		private CTexture txパネル本体;
         private CTexture tx難易度パネル;

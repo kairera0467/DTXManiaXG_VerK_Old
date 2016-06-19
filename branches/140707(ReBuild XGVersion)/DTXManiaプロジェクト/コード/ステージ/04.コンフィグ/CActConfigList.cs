@@ -566,6 +566,14 @@ namespace DTXMania
 				"Automatically change skin specified in box.def file." );
 			this.list項目リスト.Add( this.iSystemUseBoxDefSkin );
 
+            // #36372 2016.06.19 kairera0467
+			this.iSystemBGMAdjust = new CItemInteger( "BGMAdjust", -99, 99, CDTXMania.ConfigIni.nCommonBGMAdjustMs,
+				"BGMの再生タイミングの微調整を行います。\n" +
+				"-99 ～ 99ms まで指定可能です。\n" +
+                "値を指定してください。\n",
+				"To adjust the BGM play timing.\n" +
+				"You can set from -99 to 0ms.\n" );
+			this.list項目リスト.Add( this.iSystemBGMAdjust );
 
 			this.iSystemGoToKeyAssign = new CItemBase( "System Keys", CItemBase.Eパネル種別.通常,
 			"システムのキー入力に関する項目を設定します。",
@@ -2793,6 +2801,7 @@ namespace DTXMania
 		private CItemInteger iSystemWASAPIBufferSizeMs;		// #24820 2013.1.15 yyagi
 //		private CItemInteger iSystemASIOBufferSizeMs;		// #24820 2013.1.3 yyagi
 		private CItemList	iSystemASIODevice;				// #24820 2013.1.17 yyagi
+        private CItemInteger iSystemBGMAdjust;              // #36372 2016.06.19 kairera0467
 
 		private int iSystemSoundType_initial;
 		private int iSystemWASAPIBufferSizeMs_initial;
@@ -3063,6 +3072,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.eSkillMode = ( ESkillType )this.iSystemSkillMode.n現在選択されている項目番号;
             CDTXMania.ConfigIni.eNamePlateType = ( Eタイプ )this.iSystemNamePlateType.n現在選択されている項目番号;
             CDTXMania.ConfigIni.bJudgeCountDisp = this.iSystemJudgeCountDisp.bON;
+            CDTXMania.ConfigIni.nCommonBGMAdjustMs = this.iSystemBGMAdjust.n現在の値;                       // #36372 2016.06.19 kairera0467
 		}
 		private void tConfigIniへ記録する_Bass()
 		{

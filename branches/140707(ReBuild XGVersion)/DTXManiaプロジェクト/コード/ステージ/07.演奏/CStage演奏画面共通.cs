@@ -1903,6 +1903,16 @@ namespace DTXMania
 					CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する( ( keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.LeftControl ) || keyboard.bキーが押されている( (int) SlimDX.DirectInput.Key.RightControl ) ) ? -1 : -10 );
 					CDTXMania.DTX.tWave再生位置自動補正();
 				}
+                else if (!this.bPAUSE && keyboard.bキーが押された((int)SlimDX.DirectInput.Key.UpArrow) && (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightAlt) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftAlt)))
+                {	// alt + UpArrow (CommonBGMAdjust)
+                    CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftControl) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightControl)) ? 1 : 10, false, true);
+                    CDTXMania.DTX.tWave再生位置自動補正();
+                }
+                else if (!this.bPAUSE && keyboard.bキーが押された((int)SlimDX.DirectInput.Key.DownArrow) && (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightAlt) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftAlt)))
+                {	// alt + DownArrow (CommonBGMAdjust)
+                    CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftControl) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightControl)) ? -1 : -10, false, true);
+                    CDTXMania.DTX.tWave再生位置自動補正();
+                }
 				else if ( keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.UpArrow ) )
 				{	// UpArrow(scrollspeed up)
 					ドラムスクロール速度アップ();
@@ -3581,11 +3591,19 @@ namespace DTXMania
 		{									// Default...: レーン等があるレイヤー		bgfilename: DTXファイルで指定する背景
 			Bitmap image = null;
 			bool bSuccessLoadDTXbgfile = false;
-
-			int[] offsetX = new int[2]{ 96, 506 };
-			int nLanePosition = (int) CDTXMania.ConfigIni.eドラムレーン表示位置;
-			//int nLanePosition = (int) Eドラムレーン表示位置.Left;
 			
+            //2016.06.18 kairera0467
+            //--ムービークリップが使用されない曲の場合、デフォルトの背景画像を表示させる。
+            //--ムービークリップが使用される曲の場合、黒背景を表示させる。
+            //--BGAの場合、デフォルトの背景画像の上に、BGAの大きさの黒背景を表示させる。
+
+
+
+
+
+
+
+
 			if ( bgfilename != null && File.Exists( bgfilename ) && !CDTXMania.DTX.bチップがある.Movie )
 			{
 				try
@@ -3670,31 +3688,6 @@ namespace DTXMania
 					Trace.TraceError( "背景画像とレーン画像の合成に失敗しました。({0})", bgfilename );
 				}
 			}
-			#region [ DTXデータで指定する背景画像を合成しない場合は、レーン画像単体を背景画像とする ]
-			if ( !bSuccessLoadDTXbgfile )
-			{
-				bgfilename = CSkin.Path( DefaultBgFilename );
-				try
-				{
-					image = new Bitmap( bgfilename );
-
-					if ( DefaultLaneFilename != "" )
-					{
-						Bitmap bmLane = new Bitmap( CSkin.Path( DefaultLaneFilename ) );
-						Graphics g = Graphics.FromImage( image );
-						g.DrawImage( bmLane, offsetX[ nLanePosition ], 0 );
-						g.Dispose();
-						bmLane.Dispose();
-					}
-				}
-				catch
-				{
-					Trace.TraceError( "レーン画像の読み込みに失敗しました。({0})", bgfilename );
-					this.tx背景 = null;
-					return;
-				}
-			}
-			#endregion
 			#region [ BGA画像を表示する予定がある場合は、背景画像からあらかじめその領域を黒抜きにしておく ]
 			if ( ( CDTXMania.DTX.listBMP.Count > 0 ) || ( CDTXMania.DTX.listBMPTEX.Count > 0 ) || CDTXMania.DTX.listAVI.Count > 0 )
 			{
