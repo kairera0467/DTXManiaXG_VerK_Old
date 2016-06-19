@@ -2001,6 +2001,16 @@ namespace DTXMania
                     CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftControl) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightControl)) ? -1 : -10);
                     CDTXMania.DTX.tWave再生位置自動補正();
                 }
+                else if (!this.bPAUSE && keyboard.bキーが押された((int)SlimDX.DirectInput.Key.UpArrow) && (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightAlt) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftAlt)))
+                {	// alt + UpArrow (CommonBGMAdjust)
+                    CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftControl) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightControl)) ? 1 : 10, false, true);
+                    CDTXMania.DTX.tWave再生位置自動補正();
+                }
+                else if (!this.bPAUSE && keyboard.bキーが押された((int)SlimDX.DirectInput.Key.DownArrow) && (keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightAlt) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftAlt)))
+                {	// alt + DownArrow (CommonBGMAdjust)
+                    CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する((keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.LeftControl) || keyboard.bキーが押されている((int)SlimDX.DirectInput.Key.RightControl)) ? -1 : -10, false, true);
+                    CDTXMania.DTX.tWave再生位置自動補正();
+                }
                 else if (keyboard.bキーが押された((int)SlimDX.DirectInput.Key.UpArrow))
                 {	// UpArrow(scrollspeed up)
                     ドラムスクロール速度アップ();
