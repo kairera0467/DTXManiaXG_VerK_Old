@@ -1323,7 +1323,7 @@ namespace DTXMania
                 else
                 {
                     if( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != null && this.tx選択されている曲の曲名 == null )
-                        this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 );
+                        this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列, this.stバー情報[ n選択曲のパネル番号 ].col文字色 );
                 }
                 //曲名テクスチャ 描画
 		        if( this.tx選択されている曲の曲名 != null )
@@ -1342,7 +1342,7 @@ namespace DTXMania
                 else if( !File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) )
                 {
                     if( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != "" && this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != null && this.tx選択されている曲のアーティスト名 == null )
-                        this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 );
+                        this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名, Color.Black );
 
                     if( this.tx選択されている曲のアーティスト名 != null )
                     {
@@ -1481,7 +1481,7 @@ namespace DTXMania
                 else
                 {
                     if( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != "" && this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 != null && this.tx選択されている曲の曲名 == null )
-                        this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列 );
+                        this.tx選択されている曲の曲名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strタイトル文字列, this.stバー情報[ n選択曲のパネル番号 ].col文字色 );
                 }
                 //曲名テクスチャ 描画
 		        if( this.tx選択されている曲の曲名 != null )
@@ -1500,7 +1500,7 @@ namespace DTXMania
                 else if( !File.Exists( this.stバー情報[ n選択曲のパネル番号 ].strDTXフォルダのパス + "ArtistTexture.png" ) )
                 {
                     if( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != "" && this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 != null && this.tx選択されている曲のアーティスト名 == null )
-                        this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名 );
+                        this.tx選択されている曲のアーティスト名 = this.t指定された文字テクスチャを生成する( this.stバー情報[ n選択曲のパネル番号 ].strアーティスト名, Color.Black );
 
                     if( this.tx選択されている曲のアーティスト名 != null )
                     {
@@ -1953,7 +1953,7 @@ namespace DTXMania
 			}
                  */
         }
-        private CTexture t指定された文字テクスチャを生成する( string str文字 )
+        private CTexture t指定された文字テクスチャを生成する( string str文字, Color color )
         {
             //2013.09.05.kairera0467 中央にしか使用することはないので、色は黒固定。
             //現在は機能しない(面倒なので実装してない)が、そのうち使用する予定。
@@ -1961,8 +1961,9 @@ namespace DTXMania
             //CPrivateFastFont
             prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 14, FontStyle.Regular );
             Bitmap bmp;
-            
+
             bmp = prvFont.DrawPrivateFont( str文字, Color.Black, Color.Transparent );
+            //bmp = prvFont.DrawPrivateFont( str文字, color == Color.White ? Color.Black : color, color == Color.White ? Color.Transparent : Color.FromArgb( 64, 0, 0, 0 ) );
 
             CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
 
