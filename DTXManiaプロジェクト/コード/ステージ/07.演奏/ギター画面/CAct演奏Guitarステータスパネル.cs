@@ -396,8 +396,7 @@ namespace DTXMania
                 gLevelG.PageUnit = GraphicsUnit.Pixel;
                 gLevelG = Graphics.FromImage( this.bLevelG );
 
-                string strG = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Guitar ) / 10f );
-                strG = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Guitar ) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Guitar != 0 ? CDTXMania.DTX.LEVELDEC.Guitar / 100.0f : 0 ) );
+                string strG = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Guitar ) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Guitar != 0 ? CDTXMania.DTX.LEVELDEC.Guitar / 100.0f : 0 ) );
 
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                     ( CDTXMania.DTX.bチップがある.YPGuitar == false ) &&
@@ -456,8 +455,7 @@ namespace DTXMania
                 gLevelB.PageUnit = GraphicsUnit.Pixel;
                 gLevelB = Graphics.FromImage( this.bLevelB );
 
-                string strB = string.Format( "{0:0.00}", ((float)CDTXMania.DTX.LEVEL.Bass ) / 10f );
-                strB = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Bass ) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Bass != 0 ? CDTXMania.DTX.LEVELDEC.Bass / 100.0f : 0 ) );
+                string strB = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Bass ) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Bass != 0 ? CDTXMania.DTX.LEVELDEC.Bass / 100.0f : 0 ) );
 
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                     ( CDTXMania.DTX.bチップがある.YPBass == false ) &&

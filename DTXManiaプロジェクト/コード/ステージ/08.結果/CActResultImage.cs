@@ -396,14 +396,7 @@ namespace DTXMania
                     }
                     else
                     {
-                        if (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i] > 100)
-                        {
-                            num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]) / 100.0f;
-                        }
-                        else
-                        {
-                            num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]) / 10f + (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec[i] != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec[i] / 100.0f : 0);
-                        }
+                        num = ((float)CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベル[i]) / 10f + (CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec[i] != 0 ? CDTXMania.stage選曲.r確定されたスコア.譜面情報.レベルDec[i] / 100.0f : 0);
                     }
 
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && bClassic[i] )
