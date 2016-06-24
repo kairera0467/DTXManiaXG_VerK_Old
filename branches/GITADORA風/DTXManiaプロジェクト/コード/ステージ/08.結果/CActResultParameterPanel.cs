@@ -463,16 +463,8 @@ namespace DTXMania
             {
                 if ( this.n本体X[j] != 0 )
                 {
-                    string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 10f);
+                    string str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 10.0f + (CDTXMania.DTX.LEVELDEC[j] != 0 ? CDTXMania.DTX.LEVELDEC[j] / 100.0f : 0));
                     bool bCLASSIC = false;
-                    if (CDTXMania.DTX.LEVEL[j] > 100)
-                    {
-                        str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 100f);
-                    }
-                    else
-                    {
-                        str = string.Format("{0:0.00}", ((float)CDTXMania.DTX.LEVEL[j]) / 10.0f + (CDTXMania.DTX.LEVELDEC[j] != 0 ? CDTXMania.DTX.LEVELDEC[j] / 100.0f : 0));
-                    }
 
                     if (CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                         (CDTXMania.DTX.bチップがある.LeftCymbal == false) &&
@@ -485,10 +477,7 @@ namespace DTXMania
                         str = string.Format("{0:00}", CDTXMania.DTX.LEVEL[j]);
                         bCLASSIC = true;
                     }
-
-                    double num11 = 3.5 * (CDTXMania.stage結果.st演奏記録[j].db演奏型スキル値);
-                    int num = this.ct表示用.n現在の値;
-
+                    
                     this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y);
                     this.txネームプレート用文字[ j ].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y);
 

@@ -843,9 +843,9 @@ namespace DTXMania
 
             this.iSystemFillIn = new CItemToggle("FillIn", CDTXMania.ConfigIni.bフィルイン有効,
                 "フィルインエフェクトの使用：\n" +
-                "フィルイン区間の爆発パターンに特別\n" +
+                "フィルイン区間の爆発パターンに特別" +
                 "のエフェクトを使用します。\n" +
-                "フィルインエフェクトの描画にはそれな\n" +
+                "フィルインエフェクトの描画にはそれな" +
                 "りのマシンパワーが必要とされます。",
                 "To show bursting effects at the fill-in\n" +
                 " zone or not.");
@@ -2043,6 +2043,7 @@ namespace DTXMania
             else
             {
                 this.n目標のスクロールカウンタ += 100;
+                CDTXMania.stageコンフィグ.ct表示待機.n現在の値 = 0;
             }
         }
         public void t前に移動()
@@ -2055,6 +2056,7 @@ namespace DTXMania
             else
             {
                 this.n目標のスクロールカウンタ -= 100;
+                CDTXMania.stageコンフィグ.ct表示待機.n現在の値 = 0;
             }
         }
 
@@ -2537,7 +2539,7 @@ namespace DTXMania
             #endregion
 
             #region[ 説明文パネル ]
-            if( this.b項目リスト側にフォーカスがある && this.n目標のスクロールカウンタ == 0 )
+            if( this.b項目リスト側にフォーカスがある && this.n目標のスクロールカウンタ == 0 && CDTXMania.stageコンフィグ.ct表示待機.b終了値に達した )
             {
                 this.tx説明文パネル.t2D描画( CDTXMania.app.Device, 601, 252 );
                 if ( txSkinSample1 != null && this.n目標のスクロールカウンタ == 0 && this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemSkinSubfolder )

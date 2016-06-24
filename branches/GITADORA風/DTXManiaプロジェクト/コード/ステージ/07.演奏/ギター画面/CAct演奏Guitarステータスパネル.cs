@@ -374,16 +374,8 @@ namespace DTXMania
                 {
                     if (this.n本体X[ i ] != 0)
                     {
-                        string str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL[ i ] ) / 10f );
+                        string str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL[ i ] ) / 10.0f + ( CDTXMania.DTX.LEVELDEC[ i ] != 0 ? CDTXMania.DTX.LEVELDEC[ i ] / 100.0f : 0 ) );
                         bool bCLASSIC = false;
-                        if( CDTXMania.DTX.LEVEL[ i ] > 100 )
-                        {
-                            str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL[ i ] ) / 100f );
-                        }
-                        else
-                        {
-                            str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL[ i ] ) / 10.0f + ( CDTXMania.DTX.LEVELDEC[ i ] != 0 ? CDTXMania.DTX.LEVELDEC[ i ] / 100.0f : 0 ) );
-                        }
 
                         if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                             ( i == 1 ? !CDTXMania.DTX.bチップがある.YPGuitar : !CDTXMania.DTX.bチップがある.YPBass ) &&

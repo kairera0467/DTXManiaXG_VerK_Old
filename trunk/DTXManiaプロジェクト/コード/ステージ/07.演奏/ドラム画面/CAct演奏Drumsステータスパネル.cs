@@ -281,16 +281,8 @@ namespace DTXMania
                 }
                 #endregion
 
-                string str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Drums) / 10f );
-                if( CDTXMania.DTX.LEVEL.Drums > 100 )
-                {
-                    str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Drums) / 100f );
-                }
-                else
-                {
-                    str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Drums ) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0f : 0 ) );
-                }
-                
+                string str = string.Format( "{0:0.00}", ( (float)CDTXMania.DTX.LEVEL.Drums ) / 10.0f + ( CDTXMania.DTX.LEVELDEC.Drums != 0 ? CDTXMania.DTX.LEVELDEC.Drums / 100.0f : 0 ) );
+
                 if ( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 
                     ( CDTXMania.DTX.bチップがある.LeftCymbal == false ) && 
                     ( CDTXMania.DTX.bチップがある.LP == false ) && 

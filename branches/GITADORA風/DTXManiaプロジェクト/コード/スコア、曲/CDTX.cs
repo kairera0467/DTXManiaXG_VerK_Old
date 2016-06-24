@@ -4632,6 +4632,12 @@ namespace DTXMania
 					if( int.TryParse( strパラメータ, out dlevel ) )
 					{
 						this.LEVEL.Drums = Math.Min( Math.Max( dlevel, 0 ), 1000 );	// 0～100 に丸める
+                        if( this.LEVEL.Drums >= 100 )
+                        {
+                            int dlevelTemp = this.LEVEL.Drums;
+                            this.LEVEL.Drums = (int)( this.LEVEL.Drums / 10.0f );
+                            this.LEVELDEC.Drums = dlevelTemp - this.LEVEL.Drums * 10;
+                        }
 					}
 				}
 				//-----------------
@@ -4646,6 +4652,12 @@ namespace DTXMania
 					if( int.TryParse( strパラメータ, out glevel ) )
 					{
 						this.LEVEL.Guitar = Math.Min( Math.Max( glevel, 0 ), 1000 );		// 0～100 に丸める
+                        if( this.LEVEL.Guitar >= 100 )
+                        {
+                            int glevelTemp = this.LEVEL.Guitar;
+                            this.LEVEL.Guitar = (int)( this.LEVEL.Guitar / 10.0f );
+                            this.LEVELDEC.Guitar = glevelTemp - this.LEVEL.Guitar * 10;
+                        }
 					}
 				}
 				//-----------------
@@ -4660,6 +4672,12 @@ namespace DTXMania
 					if( int.TryParse( strパラメータ, out blevel ) )
 					{
 						this.LEVEL.Bass = Math.Min( Math.Max( blevel, 0 ), 1000 );		// 0～100 に丸める
+                        if( this.LEVEL.Bass >= 100 )
+                        {
+                            int blevelTemp = this.LEVEL.Bass;
+                            this.LEVEL.Bass = (int)( this.LEVEL.Bass / 10.0f );
+                            this.LEVELDEC.Bass = blevelTemp - this.LEVEL.Bass * 10;
+                        }
 					}
 				}
 				//-----------------
