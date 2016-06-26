@@ -95,11 +95,6 @@ namespace DTXMania
             set;
         }
 
-        public static string strSongDifficulyName
-        {
-            get;
-            set;
-        }
         #region [ 入力範囲ms ]
         public static int nPerfect範囲ms
 		{

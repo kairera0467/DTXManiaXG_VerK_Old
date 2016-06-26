@@ -196,10 +196,7 @@ namespace DTXMania
 
             }
             #endregion
-
-            this.ftSongNameFont = new System.Drawing.Font("Impact", 20f, FontStyle.Regular, GraphicsUnit.Pixel);
             base.On活性化();
-
 		}
 		public override void On非活性化()
 		{
@@ -240,44 +237,20 @@ namespace DTXMania
                 if( File.Exists( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" ) )
                     this.txカスタム曲名テクスチャ = CDTXMania.tテクスチャの生成( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" );
 
-                this.bmSongNameLength = new Bitmap(1, 1);
                 Bitmap bmpCardName = new Bitmap(1, 1);
-                Graphics songname = Graphics.FromImage(this.bmSongNameLength);
-                Graphics graphics = Graphics.FromImage(this.bmSongNameLength);
-                songname.PageUnit = GraphicsUnit.Pixel;
+                Graphics graphics = Graphics.FromImage( new Bitmap( 1280, 136 ) );
                 graphics.PageUnit = GraphicsUnit.Pixel;
 
                 if ( string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) || ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする ) )
                     this.strSongName = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
                 else
                     this.strSongName = CDTXMania.DTX.TITLE;
-
-                this.nSongNamePixelLength = (int)songname.MeasureString(this.strSongName, this.ftSongNameFont).Width;
-                this.bmSongNameLength.Dispose();
-                Bitmap image = new Bitmap(this.nSongNamePixelLength, (int)Math.Ceiling((double)this.ftSongNameFont.GetHeight()));
-                songname = Graphics.FromImage( image );
                 graphics = Graphics.FromImage( b中央パネル );
-
                 graphics.DrawImage( this.i中央パネル, 0, 0, 1280, 136 );
 
-                //2014.09.26.kairera0467 PrivateFont化により廃止。
-                //if( this.txカスタム曲名テクスチャ == null )
-                //    graphics.DrawString(this.strSongName, this.ftSongNameFont, Brushes.White, 578f, 85f);
-
-                songname.Dispose();
                 this.tx中央パネル = new CTexture( CDTXMania.app.Device, this.b中央パネル, CDTXMania.TextureFormat );
-                //this.txSongName = new CTexture(CDTXMania.app.Device, image, CDTXMania.TextureFormat, false);
                 this.tx曲名 = this.t曲名テクスチャを生成する( this.strSongName );
-                image.Dispose();
-                this.ftSongNameFont.Dispose();
-                //this.txSongDifficulty = new CTexture(CDTXMania.app.Device, bitmap2, CDTXMania.TextureFormat, false);
-                //bitmap2.Dispose();
-                Bitmap bitmap3 = new Bitmap(100, 100);
-                graphics = Graphics.FromImage(bitmap3);
 
-                //this.txSongLevel = new CTexture(CDTXMania.app.Device, bitmap3, CDTXMania.TextureFormat, false);
-                graphics.Dispose();
-                bitmap3.Dispose();
                 graphics.Dispose();
                 bmpCardName.Dispose();
                 i中央パネル.Dispose();
@@ -452,13 +425,11 @@ namespace DTXMania
             public Point pt;
         }
         private CAvi avi;
-        private Bitmap bmSongNameLength;
         private bool b動画フレームを作成した;
         public CCounter ct登場用;
         private int nAlbumHeight;
         private int nAlbumWidth;
         private long nAVI再生開始時刻;
-        private int nSongNamePixelLength;
         private int n前回描画したフレーム番号;
         private int n本体0X;
         private int n本体0Y;
@@ -469,7 +440,6 @@ namespace DTXMania
         private Surface sfリザルトAVI画像;
         private string strAVIファイル名;
         private string strSongName;
-        private System.Drawing.Font ftSongNameFont;
         private CTexture txLevel;
         private CTexture txSongName;
         private CTexture tx曲名;
