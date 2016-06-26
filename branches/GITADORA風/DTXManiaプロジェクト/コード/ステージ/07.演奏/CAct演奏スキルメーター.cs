@@ -155,7 +155,13 @@ namespace DTXMania
                     this.nGraphBG_XPos.Drums = 870;
                     this.nGraphBG_XPos.Guitar = 356;
                     this.nGraphBG_XPos.Bass = 647;
-                    this.nGraphBG_YPos = 50;
+                    this.nGraphBG_YPos = this.nGraphUsePart == 0 ? 50 : 110;
+                    //2016.06.24 kairera0467 StatusPanelとSkillMaterの場合はX座標を調整する。
+                    if( CDTXMania.ConfigIni.nInfoType == 1 )
+                    {
+                        this.nGraphBG_XPos.Guitar = 629 + 9;
+                        this.nGraphBG_XPos.Bass = 403;
+                    }
 
                     if( CDTXMania.ConfigIni.eTargetGhost[ this.nGraphUsePart ] != ETargetGhostData.NONE )
                     {
@@ -190,13 +196,13 @@ namespace DTXMania
                 {
                     //ゲージ本体
                     int nGaugeSize = (int)( 434.0f * (float)this.dbグラフ値現在 / 100.0f );
-                    int nPosY = 527 - nGaugeSize;
+                    int nPosY = this.nGraphUsePart == 0 ? 527 - nGaugeSize : 587 - nGaugeSize;
                     this.txグラフ_ゲージ.n透明度 = 255;
                     this.txグラフ_ゲージ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 45, nPosY, new Rectangle( 2, 2, 30, nGaugeSize ) );
                     
                     //ゲージ比較
                     int nTargetGaugeSize = (int)( 434.0f * ( (float)this.dbグラフ値目標 / 100.0f ) );
-                    int nTargetGaugePosY = 527 - nTargetGaugeSize;
+                    int nTargetGaugePosY = this.nGraphUsePart == 0 ? 527 - nTargetGaugeSize : 587 - nTargetGaugeSize;
                     int nTargetGaugeRectX = this.dbグラフ値現在 > this.dbグラフ値目標 ? 38 : 74;
                     this.txグラフ_ゲージ.n透明度 = 255;
                     this.txグラフ_ゲージ.t2D描画( CDTXMania.app.Device, nGraphBG_XPos[ this.nGraphUsePart ] + 75, nTargetGaugePosY, new Rectangle( nTargetGaugeRectX, 2, 30, nTargetGaugeSize ) );

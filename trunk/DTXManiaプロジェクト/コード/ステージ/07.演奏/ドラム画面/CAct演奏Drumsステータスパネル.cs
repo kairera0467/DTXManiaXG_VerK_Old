@@ -43,7 +43,6 @@ namespace DTXMania
                 }
             }
             this.nDifficulty = CDTXMania.nSongDifficulty;
-            CDTXMania.strSongDifficulyName = this.stパネルマップ[ this.nDifficulty ].label;
             base.On活性化();
         }
         public override void OnManagedリソースの作成()
@@ -295,7 +294,7 @@ namespace DTXMania
                 }
 
 
-                int width = (int)gNamePlate.MeasureString(this.stパネルマップ[this.nIndex].label.Substring(0, 3) + "   ", this.ftLevelFont).Width;
+                int width = (int)gNamePlate.MeasureString( "DTX" + "   ", this.ftLevelFont).Width;
                 //数字の描画部分。その左側。
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする && 
                     ( CDTXMania.DTX.bチップがある.LeftCymbal == false ) && 

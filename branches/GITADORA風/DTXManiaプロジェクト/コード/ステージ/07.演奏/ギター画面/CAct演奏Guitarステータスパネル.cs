@@ -169,7 +169,7 @@ namespace DTXMania
             this.n本体X[0] = 0;
             this.n本体X[1] = 373;
             this.n本体X[2] = 665;
-            this.n本体Y = 270;
+            this.n本体Y = 254;
 
             if (!CDTXMania.DTX.bチップがある.Bass)
             {
@@ -225,6 +225,8 @@ namespace DTXMania
                 this.ft称号フォント.Dispose();
                 this.ft称号フォント = null;
             }
+            CDTXMania.t安全にDisposeする( ref this.prv表示用フォント );
+            CDTXMania.t安全にDisposeする( ref this.prv称号フォント );
             CDTXMania.tテクスチャの解放(ref this.txスキルパネル);
             CDTXMania.tテクスチャの解放(ref this.txパネル文字[0]);
             CDTXMania.tテクスチャの解放(ref this.txパネル文字[1]);
@@ -336,8 +338,6 @@ namespace DTXMania
                     graネームプレート用.DrawImage( bmpTitleName, 6f, 8f );
                     #endregion
 
-                    this.prv表示用フォント.Dispose();
-                    this.prv称号フォント.Dispose();
                     bmpCardName.Dispose();
                     bmpTitleName.Dispose();
 

@@ -405,7 +405,7 @@ namespace DTXMania
                     strG = string.Format( "{0:00}", CDTXMania.DTX.LEVEL.Guitar );
                 }
 
-                int widthG = (int)gNamePlate.MeasureString( this.stパネルマップ[ this.nIndex ].label.Substring( 0, 3 ) + "   ", this.ftLevelFont ).Width;
+                int widthG = (int)gNamePlate.MeasureString( "DTX" + "   ", this.ftLevelFont ).Width;
                 //数字の描画部分。その左側。
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                     ( CDTXMania.DTX.bチップがある.YPGuitar == false ) &&
@@ -464,7 +464,7 @@ namespace DTXMania
                     strB = string.Format( "{0:00}", CDTXMania.DTX.LEVEL.Bass );
                 }
 
-                int widthB = (int)gNamePlate2P.MeasureString( this.stパネルマップ[ this.nIndex ].label.Substring( 0, 3 ) + "   ", this.ftLevelFont ).Width;
+                int widthB = (int)gNamePlate2P.MeasureString( "DTX" + "   ", this.ftLevelFont ).Width;
                 //数字の描画部分。その左側。
                 if( CDTXMania.ConfigIni.bCLASSIC譜面判別を有効にする &&
                     ( CDTXMania.DTX.bチップがある.YPBass == false ) &&
