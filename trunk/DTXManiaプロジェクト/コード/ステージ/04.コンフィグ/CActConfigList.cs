@@ -1744,6 +1744,24 @@ namespace DTXMania
                     }
                 }
                 #endregion
+                #region[ ギター・ベースグラフ ]
+                else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iGuitarGraph )
+                {
+                    if( this.iGuitarGraph.bON == true )
+                    {
+                        CDTXMania.ConfigIni.bGraph有効.Bass = false;
+                        this.iBassGraph.bON = false;
+                    }
+                }
+                else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iBassGraph )
+                {
+                    if( this.iBassGraph.bON == true )
+                    {
+                        CDTXMania.ConfigIni.bGraph有効.Guitar = false;
+                        this.iGuitarGraph.bON = false;
+                    }
+                }
+                #endregion
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemUseBoxDefSkin )			// #28195 2012.5.6 yyagi
 				{
 					CSkin.bUseBoxDefSkin = this.iSystemUseBoxDefSkin.bON;

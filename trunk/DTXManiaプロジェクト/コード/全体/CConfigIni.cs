@@ -2862,15 +2862,15 @@ namespace DTXMania
 									//-----------------------------
 									case Eセクション種別.PlayOption:
 										{
-                                            if( str3.Equals( "DrumSkillMater" ) )  // #24074 2011.01.23 addikanick
+                                            if( str3.Equals( "DrumGraph" ) )  // #24074 2011.01.23 addikanick
 											{
 												this.bGraph有効.Drums = C変換.bONorOFF( str4[ 0 ] );
 											}
-											else if( str3.Equals( "GuitarSkillMater" ) )  // #24074 2011.01.23 addikanick
+											else if( str3.Equals( "GuitarGraph" ) )  // #24074 2011.01.23 addikanick
 											{
 												this.bGraph有効.Guitar = C変換.bONorOFF( str4[ 0 ] );
 											}
-											else if( str3.Equals( "BassSkillMater" ) )  // #24074 2011.01.23 addikanick
+											else if( str3.Equals( "BassGraph" ) )  // #24074 2011.01.23 addikanick
 											{
 												this.bGraph有効.Bass = C変換.bONorOFF( str4[ 0 ] );
 											}
