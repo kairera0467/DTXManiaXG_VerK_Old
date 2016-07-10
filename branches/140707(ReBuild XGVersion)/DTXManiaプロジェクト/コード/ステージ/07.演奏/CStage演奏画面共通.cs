@@ -3711,7 +3711,7 @@ namespace DTXMania
 				this.tx背景 = null;
 			}
 			#endregion
-			image.Dispose();
+            CDTXMania.t安全にDisposeする( ref image );
 		}
 
 		protected virtual void t入力処理_ギター()
