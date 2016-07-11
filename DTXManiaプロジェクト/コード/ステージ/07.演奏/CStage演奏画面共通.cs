@@ -3970,41 +3970,6 @@ namespace DTXMania
 					}
 					#endregion
 					#region [ autopick ]
-					{
-						bool bMiss = true;
-						if ( bChipHasR == autoR && bChipHasG == autoG && bChipHasB == autoB )		// autoレーンとチップレーン一致時はOK
-						{																			// この条件を加えないと、同時に非autoレーンを押下している時にNGとなってしまう。
-							bMiss = false;
-						}
-						else if ( ( autoR || ( bChipHasR == pushingR ) ) && ( autoG || ( bChipHasG == pushingG ) ) && ( autoB || ( bChipHasB == pushingB ) ) )
-							// ( bChipHasR == ( pushingR | autoR ) ) && ( bChipHasG == ( pushingG | autoG ) ) && ( bChipHasB == ( pushingB | autoB ) ) )
-						{
-							bMiss = false;
-						}
-						else if ( ( ( bChipIsO == true ) && ( !pushingR | autoR ) && ( !pushingG | autoG ) && ( !pushingB | autoB ) ) )	// OPEN時
-						{
-							bMiss = false;
-						}
-						pChip.bHit = true;
-						this.tサウンド再生( pChip, CSound管理.rc演奏用タイマ.n前回リセットした時のシステム時刻 + pChip.n発声時刻ms + ghostLag, inst, dTX.nモニタを考慮した音量( inst ), false, bMiss );
-						this.r次にくるギターChip = null;
-						if ( !bMiss )
-						{
-							this.tチップのヒット処理(pChip.n発声時刻ms + ghostLag, pChip);
-						}
-						else
-						{
-							pChip.nLag = 0;		// tチップのヒット処理()の引数最後がfalseの時はpChip.nLagを計算しないため、ここでAutoPickかつMissのLag=0を代入
-							this.tチップのヒット処理(pChip.n発声時刻ms + ghostLag, pChip, false);
-						}
-						int chWailingChip = ( inst == E楽器パート.GUITAR ) ? 0x28 : 0xA8;
-						CDTX.CChip item = this.r指定時刻に一番近い未ヒットChip(pChip.n発声時刻ms + ghostLag, chWailingChip, this.nInputAdjustTimeMs[instIndex], 140);
-						if ( item != null && !bMiss )
-						{
-							this.queWailing[ instIndex ].Enqueue( item );
-						}
-					}
-					#endregion
 					if ( autoPick )
 					{
 						bool bMiss = true;
@@ -4040,6 +4005,8 @@ namespace DTXMania
 							this.queWailing[ instIndex ].Enqueue( item );
 						}
 					}
+					#endregion
+
 					// #35411 modify end
 				}
 
