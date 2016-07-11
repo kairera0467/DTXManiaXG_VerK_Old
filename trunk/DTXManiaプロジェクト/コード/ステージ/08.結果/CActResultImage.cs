@@ -230,30 +230,17 @@ namespace DTXMania
 				{
 					this.txリザルト画像 = this.txリザルト画像がないときの画像;
                 }
-
-                this.i中央パネル = Image.FromFile( CSkin.Path( @"Graphics\8_center panel.png" ) );
-                this.b中央パネル = new Bitmap(1280, 136);
                 
                 if( File.Exists( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" ) )
                     this.txカスタム曲名テクスチャ = CDTXMania.tテクスチャの生成( CDTXMania.stage選曲.r確定されたスコア.ファイル情報.フォルダの絶対パス + "\\TitleTexture.png" );
-
-                Bitmap bmpCardName = new Bitmap(1, 1);
-                Graphics graphics = Graphics.FromImage( new Bitmap( 1280, 136 ) );
-                graphics.PageUnit = GraphicsUnit.Pixel;
 
                 if ( string.IsNullOrEmpty( CDTXMania.DTX.TITLE ) || ( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする ) )
                     this.strSongName = CDTXMania.stage選曲.r現在選択中の曲.strタイトル;
                 else
                     this.strSongName = CDTXMania.DTX.TITLE;
-                graphics = Graphics.FromImage( b中央パネル );
-                graphics.DrawImage( this.i中央パネル, 0, 0, 1280, 136 );
 
-                this.tx中央パネル = new CTexture( CDTXMania.app.Device, this.b中央パネル, CDTXMania.TextureFormat );
+                this.tx中央パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\8_center panel.png" ) );
                 this.tx曲名 = this.t曲名テクスチャを生成する( this.strSongName );
-
-                graphics.Dispose();
-                bmpCardName.Dispose();
-                i中央パネル.Dispose();
 
                 base.OnManagedリソースの作成();
 			}
