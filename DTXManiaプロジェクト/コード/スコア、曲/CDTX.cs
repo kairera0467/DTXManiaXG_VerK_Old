@@ -3351,14 +3351,7 @@ namespace DTXMania
 		}
 		public void t各自動再生音チップの再生時刻を変更する( int nBGMAdjustの増減値 )
 		{
-            this.t各自動再生音チップの再生時刻を変更する( nBGMAdjustの増減値, true, false );
-		}
-		public void t各自動再生音チップの再生時刻を変更する( int nBGMAdjustの増減値, bool bScoreIni保存, bool bConfig保存 )
-		{
-            if( bScoreIni保存 )
-			    this.nBGMAdjust += nBGMAdjustの増減値;
-            if( bConfig保存 )
-                CDTXMania.ConfigIni.nCommonBGMAdjustMs = nBGMAdjustの増減値;
+            this.nBGMAdjust += nBGMAdjustの増減値;
 
 			for( int i = 0; i < this.listChip.Count; i++ )
 			{
@@ -3386,6 +3379,37 @@ namespace DTXMania
 				}
 			}
 		}
+		public void t各自動再生音チップの再生時刻を変更する_共通( int nBGMAdjustの増減値 )
+		{
+            CDTXMania.ConfigIni.nCommonBGMAdjustMs += nBGMAdjustの増減値;
+
+			for( int i = 0; i < this.listChip.Count; i++ )
+			{
+				int nChannelNumber = this.listChip[ i ].nチャンネル番号;
+				if( ( (
+						( nChannelNumber == 1 ) ||
+						( ( 0x61 <= nChannelNumber ) && ( nChannelNumber <= 0x69 ) )
+					  ) ||
+						( ( 0x70 <= nChannelNumber ) && ( nChannelNumber <= 0x79 ) )
+					) ||
+					( ( ( 0x80 <= nChannelNumber ) && ( nChannelNumber <= 0x89 ) ) || ( ( 0x90 <= nChannelNumber ) && ( nChannelNumber <= 0x92 ) ) )
+				  )
+				{
+					this.listChip[ i ].n発声時刻ms += nBGMAdjustの増減値;
+				}
+			}
+			foreach( CWAV cwav in this.listWAV.Values )
+			{
+				for ( int j = 0; j < nPolyphonicSounds; j++ )
+				{
+					if( ( cwav.rSound[ j ] != null ) && cwav.rSound[ j ].b再生中 )
+					{
+						cwav.n再生開始時刻[ j ] += nBGMAdjustの増減値;
+					}
+				}
+			}
+		}
+
 		public void t全チップの再生一時停止()
 		{
 			foreach( CWAV cwav in this.listWAV.Values )
@@ -3905,8 +3929,6 @@ namespace DTXMania
 						//timeBeginLoad = DateTime.Now;
 						this.nBGMAdjust = 0;
 						this.t各自動再生音チップの再生時刻を変更する( nBGMAdjust );
-                        if( CDTXMania.ConfigIni.nCommonBGMAdjustMs != 0 )
-                            this.t各自動再生音チップの再生時刻を変更する( CDTXMania.ConfigIni.nCommonBGMAdjustMs, false, true );
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );
 						//Trace.TraceInformation( "再生時刻変更:             {0}", span.ToString() );
 						//timeBeginLoad = DateTime.Now;

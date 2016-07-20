@@ -433,8 +433,6 @@ namespace DTXMania
         private CTexture txリザルト画像;
         private CTexture txリザルト画像がないときの画像;
 
-        private Bitmap b中央パネル;
-        private Image i中央パネル;
         private CTexture tx中央パネル;
         private CTexture txカスタム曲名テクスチャ;
 

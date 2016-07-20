@@ -767,6 +767,7 @@ namespace DTXMania
                             CDTXMania.DTX.On非活性化();
 
                         CDTXMania.DTX = new CDTX( str, false, ( (double)CDTXMania.ConfigIni.n演奏速度 ) / 20.0, ini.stファイル.BGMAdjust );
+                        CDTXMania.DTX.t各自動再生音チップの再生時刻を変更する_共通( CDTXMania.ConfigIni.nCommonBGMAdjustMs );
                         Trace.TraceInformation("----曲情報-----------------");
                         Trace.TraceInformation("TITLE: {0}", CDTXMania.DTX.TITLE);
                         Trace.TraceInformation("FILE: {0}",  CDTXMania.DTX.strファイル名の絶対パス);
