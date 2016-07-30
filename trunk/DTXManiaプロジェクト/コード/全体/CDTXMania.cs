@@ -2448,6 +2448,7 @@ for (int i = 0; i < 3; i++) {
 					Trace.Indent();
 					try
 					{
+                        CDTXMania.Skin.tSaveSkinConfig(); //2016.07.30 kairera0467 #36413
 						Skin.Dispose();
 						Skin = null;
 						Trace.TraceInformation( "スキンの終了処理を完了しました。" );
