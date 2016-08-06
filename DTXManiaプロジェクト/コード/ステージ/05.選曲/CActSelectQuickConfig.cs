@@ -132,7 +132,7 @@ namespace DTXMania
                 ));
             #endregion
 			#region [ 共通 SET切り替え/More/Return ]
-			l.Add( new CSwitchItemList( "Config Set", CItemBase.Eパネル種別.通常, nCurrentConfigSet, "", "", new string[] { "SET-1", "SET-2", "SET-3" } ) );
+			//l.Add( new CSwitchItemList( "Config Set", CItemBase.Eパネル種別.通常, nCurrentConfigSet, "", "", new string[] { "SET-1", "SET-2", "SET-3" } ) );
 			l.Add( new CSwitchItemList( "More...", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "" } ) );
 			l.Add( new CSwitchItemList( "Return", CItemBase.Eパネル種別.通常, 0, "", "", new string[] { "", "" } ) );
 			#endregion
@@ -414,10 +414,10 @@ namespace DTXMania
                     ETargetGhostData gtd = (ETargetGhostData)GetIndex((int)EOrder.TargetGhost);
                     CDTXMania.ConfigIni.eTargetGhost[ nCurrentTarget ] = gtd;
                     break;
-				case (int) EOrder.ConfSet:			// CONF-SET切り替え
-					nCurrentConfigSet = (int) GetIndex( (int) EOrder.ConfSet );
-					//Initialize( lci[ nCurrentConfigSet ], true, QuickCfgTitle, pos );
-					break;
+                //case (int) EOrder.ConfSet:			// CONF-SET切り替え
+                //    nCurrentConfigSet = (int) GetIndex( (int) EOrder.ConfSet );
+                //    //Initialize( lci[ nCurrentConfigSet ], true, QuickCfgTitle, pos );
+                //    break;
 
 				case (int) EOrder.More:
 					SetAutoParameters();			// 簡易CONFIGメニュー脱出に伴い、簡易CONFIG内のAUTOの設定をConfigIniクラスに反映する
@@ -617,7 +617,7 @@ namespace DTXMania
 			SuddenHidden,
             AutoGhost,
             TargetGhost,
-			ConfSet,
+            //ConfSet,
 			More,
 			Return, END,
 			Default = 99
