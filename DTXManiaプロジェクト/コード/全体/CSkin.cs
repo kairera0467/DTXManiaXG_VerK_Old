@@ -1013,7 +1013,23 @@ namespace DTXMania
                             str3 = strArray[0].Trim();
                             str4 = strArray[1].Trim();
                             //-----------------------------
-                            if (str3.Equals("NamePlateType"))
+                            if (str3.Equals("SelectListFontName"))
+                            {
+                                CDTXMania.ConfigIni.str選曲リストフォント = str4;
+                            }
+                            else if (str3.Equals("DisplayFontName"))
+                            {
+                                CDTXMania.ConfigIni.str曲名表示フォント = str4;
+                            }
+                            else if (str3.Equals("SelectListFontSize"))
+                            {
+                                CDTXMania.ConfigIni.n選曲リストフォントのサイズdot = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 1, 0x3e7, CDTXMania.ConfigIni.n選曲リストフォントのサイズdot);
+                            }
+                            else if (str3.Equals("SelectListFontBold"))
+                            {
+                                CDTXMania.ConfigIni.b選曲リストフォントを太字にする = C変換.bONorOFF(str4[0]);
+                            }
+                            else if (str3.Equals("NamePlateType"))
                             {
                                 CDTXMania.ConfigIni.eNamePlate = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)CDTXMania.ConfigIni.eNamePlate);
                             }

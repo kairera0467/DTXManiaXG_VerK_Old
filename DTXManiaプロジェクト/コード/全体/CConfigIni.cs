@@ -606,6 +606,7 @@ namespace DTXMania
         public int nCommonBGMAdjustMs;              // #36372 2016.06.19 kairera0467 全曲共通のBGMオフセット
         public STDGBVALUE<int> nJudgeLinePosOffset; // #31602 2013.6.23 yyagi 判定ライン表示位置のオフセット
         public int nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
+        public int nShowLagTypeColor;
         public STDGBVALUE<int> nHidSud;
         public bool bIsAutoResultCapture;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能のON/OFF制御
 		public int nPoliphonicSounds;				// #28228 2012.5.1 yyagi レーン毎の最大同時発音数
@@ -1212,6 +1213,7 @@ namespace DTXMania
             this.bHAZARD = false;
 			this.nRisky = 0;							// #23539 2011.7.26 yyagi RISKYモード
 			this.nShowLagType = (int) EShowLagType.OFF;	// #25370 2011.6.3 yyagi ズレ時間表示
+            this.nShowLagTypeColor = 0;
 			this.bIsAutoResultCapture = false;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能ON/OFF
 
             #region [ XGオプション ]
@@ -1638,6 +1640,9 @@ namespace DTXMania
 			sw.WriteLine( "; 判定ズレ時間表示(0:OFF, 1:ON, 2=GREAT-POOR)" );				// #25370 2011.6.3 yyagi
 			sw.WriteLine( "; Whether displaying the lag times from the just timing or not." );	//
 			sw.WriteLine( "ShowLagTime={0}", this.nShowLagType );							//
+			sw.WriteLine();
+			sw.WriteLine( "; 判定ズレ時間表示の色(0:Slow青、Fast赤, 1:Slow赤、Fast青)" );
+			sw.WriteLine( "ShowLagTimeColor={0}", this.nShowLagTypeColor );							//
 			sw.WriteLine();
 			sw.WriteLine( "; リザルト画像自動保存機能(0:OFF, 1:ON)" );						// #25399 2011.6.9 yyagi
 			sw.WriteLine( "; Set ON if you'd like to save result screen image automatically");	//
@@ -2635,6 +2640,10 @@ namespace DTXMania
                                             else if (str3.Equals("ShowLagTime"))				// #25370 2011.6.3 yyagi
                                             {
                                                 this.nShowLagType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, this.nShowLagType);
+                                            }
+                                            else if (str3.Equals("ShowLagTimeColor"))				// #25370 2011.6.3 yyagi
+                                            {
+                                                this.nShowLagTypeColor = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 1, this.nShowLagTypeColor );
                                             }
                                             else if (str3.Equals("TimeStretch"))				// #23664 2013.2.24 yyagi
                                             {
