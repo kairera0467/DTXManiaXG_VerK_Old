@@ -189,7 +189,6 @@ namespace DTXMania
                 this.bSTAGEFILEが存在する = false;
 
                 //2013.05.10.kairera0467.曲選択から持ってきた。
-                if (CDTXMania.ConfigIni.b選曲リストフォントを斜体にする) regular |= FontStyle.Italic;
                 if (CDTXMania.ConfigIni.b選曲リストフォントを太字にする) regular |= FontStyle.Bold;
                 this.ftタイトル表示用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 42f, FontStyle.Bold, GraphicsUnit.Pixel);
                 this.ftアーティスト名表示フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, 42f, FontStyle.Bold, GraphicsUnit.Pixel);

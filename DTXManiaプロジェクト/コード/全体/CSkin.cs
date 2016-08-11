@@ -936,6 +936,10 @@ namespace DTXMania
                 sw.WriteLine( "; Font size[dot] for select song item." );
                 sw.WriteLine( "SelectListFontSize={0}", CDTXMania.ConfigIni.n選曲リストフォントのサイズdot );
                 sw.WriteLine();
+			    sw.WriteLine( "; 選曲リストのフォントの横方向の縮小率 (0:OFF, 1:ON)" );
+                sw.WriteLine( "; Font ScaleX for select song item." );
+			    sw.WriteLine( "SelectListFontScaleX={0}", CDTXMania.ConfigIni.f選曲リストフォントのX縮小率 );
+			    sw.WriteLine();
                 sw.WriteLine( "; ネームプレートタイプ" );
                 sw.WriteLine( "; 0:タイプA XG2風の表示がされます。" );
                 sw.WriteLine( "; 1:タイプB XG風の表示がされます。このタイプでは7_NamePlate_XG.png、7_Difficlty_XG.pngが読み込まれます。" );
@@ -1024,7 +1028,31 @@ namespace DTXMania
                             str3 = strArray[0].Trim();
                             str4 = strArray[1].Trim();
                             //-----------------------------
-                            if (str3.Equals("NamePlateType"))
+                            if (str3.Equals("SelectListFontName"))
+                            {
+                                CDTXMania.ConfigIni.str選曲リストフォント = str4;
+                            }
+                            else if (str3.Equals("DisplayFontName"))
+                            {
+                                CDTXMania.ConfigIni.str曲名表示フォント = str4;
+                            }
+                            else if (str3.Equals("SelectListFontSize"))
+                            {
+                                CDTXMania.ConfigIni.n選曲リストフォントのサイズdot = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 1, 0x3e7, CDTXMania.ConfigIni.n選曲リストフォントのサイズdot);
+                            }
+                            else if (str3.Equals("SelectListFontScaleX"))
+                            {
+                                double dbTry = 0;
+                                if (double.TryParse(str4, out dbTry))
+                                {
+                                    CDTXMania.ConfigIni.f選曲リストフォントのX縮小率 = (float)dbTry;
+                                }
+                            }
+                            else if (str3.Equals("SelectListFontBold"))
+                            {
+                                CDTXMania.ConfigIni.b選曲リストフォントを太字にする = C変換.bONorOFF(str4[0]);
+                            }
+                            else if (str3.Equals("NamePlateType"))
                             {
                                 CDTXMania.ConfigIni.eNamePlate = (Eタイプ)C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 3, (int)CDTXMania.ConfigIni.eNamePlate);
                             }

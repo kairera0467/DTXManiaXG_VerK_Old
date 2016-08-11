@@ -566,7 +566,6 @@ namespace DTXMania
 			// 曲リスト文字は２倍（面積４倍）でテクスチャに描画してから縮小表示するので、フォントサイズは２倍とする。
 
 			FontStyle regular = FontStyle.Regular;
-			if( CDTXMania.ConfigIni.b選曲リストフォントを斜体にする ) regular |= FontStyle.Italic;
 			if( CDTXMania.ConfigIni.b選曲リストフォントを太字にする ) regular |= FontStyle.Bold;
 			this.ft曲リスト用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, (float) ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2 ), regular, GraphicsUnit.Pixel );
             //this.prvFont = new CPrivateFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
@@ -1968,7 +1967,10 @@ namespace DTXMania
             CTexture tx文字テクスチャ = CDTXMania.tテクスチャの生成( bmp, false );
 
             if( tx文字テクスチャ != null )
-                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( 0.75f, 1f, 1f );
+                //tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( 1f, 1f, 1f );
+                tx文字テクスチャ.vc拡大縮小倍率 = new Vector3( CDTXMania.ConfigIni.f選曲リストフォントのX縮小率, 1f, 1f );
+
+
 
             int n最大幅 = 290;
             if( tx文字テクスチャ.szテクスチャサイズ.Width > n最大幅 )
