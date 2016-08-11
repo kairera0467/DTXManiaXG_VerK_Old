@@ -494,7 +494,7 @@ namespace DTXMania
         public bool bAutoAddGage; //2012.9.18
 		public bool b歓声を発声する;
 		public bool b垂直帰線待ちを行う;
-		public bool b選曲リストフォントを斜体にする;
+		public float f選曲リストフォントのX縮小率;
 		public bool b選曲リストフォントを太字にする;
         public bool bDirectShowMode;
 		public bool b全画面モード;
@@ -606,6 +606,7 @@ namespace DTXMania
         public int nCommonBGMAdjustMs;              // #36372 2016.06.19 kairera0467 全曲共通のBGMオフセット
         public STDGBVALUE<int> nJudgeLinePosOffset; // #31602 2013.6.23 yyagi 判定ライン表示位置のオフセット
         public int nShowLagType;					// #25370 2011.6.5 yyagi ズレ時間表示機能
+        public int nShowLagTypeColor;
         public STDGBVALUE<int> nHidSud;
         public bool bIsAutoResultCapture;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能のON/OFF制御
 		public int nPoliphonicSounds;				// #28228 2012.5.1 yyagi レーン毎の最大同時発音数
@@ -1130,6 +1131,7 @@ namespace DTXMania
 			this.str選曲リストフォント = "MS PGothic";
 			this.n選曲リストフォントのサイズdot = 20;
 			this.b選曲リストフォントを太字にする = true;
+            this.f選曲リストフォントのX縮小率 = 1.0f;
 			this.n自動再生音量 = 80;
 			this.n手動再生音量 = 100;
 			this.bログ出力 = true;
@@ -1223,6 +1225,7 @@ namespace DTXMania
             this.bHAZARD = false;
 			this.nRisky = 0;							// #23539 2011.7.26 yyagi RISKYモード
 			this.nShowLagType = (int) EShowLagType.OFF;	// #25370 2011.6.3 yyagi ズレ時間表示
+            this.nShowLagTypeColor = 0;
 			this.bIsAutoResultCapture = false;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能ON/OFF
 
             #region [ XGオプション ]
@@ -1629,9 +1632,9 @@ namespace DTXMania
             sw.WriteLine( "; Font size[dot] for select song item." );
 			sw.WriteLine( "SelectListFontSize={0}", this.n選曲リストフォントのサイズdot );
 			sw.WriteLine();
-			sw.WriteLine( "; 選曲リストのフォントを斜体にする (0:OFF, 1:ON)" );
-            sw.WriteLine( "; Using italic font style select song list. (0:OFF, 1:ON)" );
-			sw.WriteLine( "SelectListFontItalic={0}", this.b選曲リストフォントを斜体にする ? 1 : 0 );
+			sw.WriteLine( "; 選曲リストのフォントの横方向の縮小率 (0:OFF, 1:ON)" );
+            sw.WriteLine( "; Font ScaleX for select song item." );
+			sw.WriteLine( "SelectListFontScaleX={0}", this.f選曲リストフォントのX縮小率 );
 			sw.WriteLine();
 			sw.WriteLine( "; 選曲リストのフォントを太字にする (0:OFF, 1:ON)" );
             sw.WriteLine( "; Using bold font style select song list. (0:OFF, 1:ON)" );
@@ -1670,6 +1673,9 @@ namespace DTXMania
 			sw.WriteLine( "; 判定ズレ時間表示(0:OFF, 1:ON, 2=GREAT-POOR)" );				// #25370 2011.6.3 yyagi
 			sw.WriteLine( "; Whether displaying the lag times from the just timing or not." );	//
 			sw.WriteLine( "ShowLagTime={0}", this.nShowLagType );							//
+			sw.WriteLine();
+			sw.WriteLine( "; 判定ズレ時間表示の色(0:Slow青、Fast赤, 1:Slow赤、Fast青)" );
+			sw.WriteLine( "ShowLagTimeColor={0}", this.nShowLagTypeColor );							//
 			sw.WriteLine();
 			sw.WriteLine( "; リザルト画像自動保存機能(0:OFF, 1:ON)" );						// #25399 2011.6.9 yyagi
 			sw.WriteLine( "; Set ON if you'd like to save result screen image automatically");	//
@@ -2690,9 +2696,13 @@ namespace DTXMania
                                             {
                                                 this.n選曲リストフォントのサイズdot = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 1, 0x3e7, this.n選曲リストフォントのサイズdot);
                                             }
-                                            else if (str3.Equals("SelectListFontItalic"))
+                                            else if (str3.Equals("SelectListFontScaleX"))
                                             {
-                                                this.b選曲リストフォントを斜体にする = C変換.bONorOFF(str4[0]);
+                                                double dbTry = 0;
+                                                if( double.TryParse( str4, out dbTry ) )
+                                                {
+                                                    this.f選曲リストフォントのX縮小率 = (float)dbTry;
+                                                }
                                             }
                                             else if (str3.Equals("SelectListFontBold"))
                                             {
@@ -2729,6 +2739,10 @@ namespace DTXMania
                                             else if (str3.Equals("ShowLagTime"))				// #25370 2011.6.3 yyagi
                                             {
                                                 this.nShowLagType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, this.nShowLagType);
+                                            }
+                                            else if (str3.Equals("ShowLagTimeColor"))				// #25370 2011.6.3 yyagi
+                                            {
+                                                this.nShowLagTypeColor = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 1, this.nShowLagTypeColor );
                                             }
                                             else if (str3.Equals("TimeStretch"))				// #23664 2013.2.24 yyagi
                                             {

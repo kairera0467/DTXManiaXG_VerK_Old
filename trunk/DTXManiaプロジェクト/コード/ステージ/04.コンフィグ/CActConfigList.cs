@@ -269,6 +269,12 @@ namespace DTXMania
 				new string[] { "OFF", "ON", "GREAT-" } );
 			this.list項目リスト.Add( this.iSystemShowLag );
 
+            this.iSystemShowLagColor = new CItemList("ShowLagTimeColor", CItemBase.Eパネル種別.通常, CDTXMania.ConfigIni.nShowLagTypeColor,
+				"ズレ時間表示の表示色変更：\n  TYPE-A: 早ズレを赤、遅ズレを青で表示します。\n  TYPE-B: 早ズレを青、遅ズレを赤で表示します。",
+				"ズレ時間表示の表示色変更：\n  TYPE-A: 早ズレを赤、遅ズレを青で表示します。\n  TYPE-B: 早ズレを青、遅ズレを赤で表示します。",
+				new string[] { "TYPE-A", "TYPE-B" } );
+			this.list項目リスト.Add( this.iSystemShowLagColor );
+
 			this.iSystemAutoResultCapture = new CItemToggle( "AutoSaveResult", CDTXMania.ConfigIni.bIsAutoResultCapture,
 				"リザルト画像自動保存機能：\nONにすると、ハイスコア/ハイスキル時に\n自動でリザルト画像を曲データと同じ\nフォルダに保存します。",
 				"AutoSaveResult:\nTurn ON to save your result screen\n image automatically when you get\n hiscore/hiskill." );
@@ -2606,6 +2612,7 @@ namespace DTXMania
         private CItemToggle iSystemStoicMode;
 		private CItemToggle iSystemVSyncWait;
 		private CItemList	iSystemShowLag;					// #25370 2011.6.3 yyagi
+		private CItemList	iSystemShowLagColor;
 		private CItemToggle iSystemAutoResultCapture;		// #25399 2011.6.9 yyagi
 		private CItemToggle iSystemBufferedInput;
 		private CItemInteger iSystemRisky;					// #23559 2011.7.27 yyagi
@@ -2880,6 +2887,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.ボーナス演出を表示する = this.iSystemStageEffect.bON;
 
 			CDTXMania.ConfigIni.nShowLagType = this.iSystemShowLag.n現在選択されている項目番号;				// #25370 2011.6.3 yyagi
+            CDTXMania.ConfigIni.nShowLagTypeColor = this.iSystemShowLagColor.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.bIsAutoResultCapture = this.iSystemAutoResultCapture.bON;					// #25399 2011.6.9 yyagi
             CDTXMania.ConfigIni.bAutoAddGage = this.iAutoAddGage.bON;
             CDTXMania.ConfigIni.nInfoType = this.iInfoType.n現在選択されている項目番号;
