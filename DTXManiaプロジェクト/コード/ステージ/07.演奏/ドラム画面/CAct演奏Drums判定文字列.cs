@@ -1263,33 +1263,11 @@ namespace DTXMania
                             if (j < 10)
                             {
                                 num5 = base.stレーンサイズ[j].x;
-                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ? base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ? -(this.n文字の縦表示位置[j] * 0x20) : (this.n文字の縦表示位置[j] * 0x20)) : base.iP_B;
-                            }
-                            else if (j == 11)
-                            {
-                                if (CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.D)
-                                {
-                                    continue;
-                                }
-                                num5 = base.stレーンサイズ[j].x;
-                                num6 = CDTXMania.ConfigIni.bReverse.Bass ? (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Bass == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
-                            }
-                            else if (j == 10)
-                            {
-                                if (CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.D)
-                                {
-                                    continue;
-                                }
-                                if (!(CDTXMania.DTX.bチップがある.Bass || (CDTXMania.ConfigIni.判定文字表示位置.Guitar != Eタイプ.B)))
-                                {
-                                    num5 = 0x198;
-                                    num6 = 0x93;
-                                }
-                                else
-                                {
-                                    num5 = this.stレーンサイズ[j].x;
-                                    num6 = CDTXMania.ConfigIni.bReverse.Guitar ? (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 240 : 100) + (this.n文字の縦表示位置[j] * 0x20)) : (((CDTXMania.ConfigIni.判定文字表示位置.Guitar == Eタイプ.A) ? 180 : 300) + (this.n文字の縦表示位置[j] * 0x20));
-                                }
+                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ?
+                                    (CDTXMania.ConfigIni.bReverse.Drums ? + 561
+                                        -(this.n文字の縦表示位置[j] * 0x20) :
+                                        (371 + this.n文字の縦表示位置[j] * 0x20)) :
+                                        ( CDTXMania.ConfigIni.bReverse.Drums ? 561 : 375 );
                             }
 
                             int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
@@ -1381,10 +1359,10 @@ namespace DTXMania
                             {
                                 num5 = base.stレーンサイズ[j].x;
                                 num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ?
-                                    base.iP_A + (CDTXMania.ConfigIni.bReverse.Drums ?
+                                    (CDTXMania.ConfigIni.bReverse.Drums ? + 561
                                         -(this.n文字の縦表示位置[j] * 0x20) :
-                                        (this.n文字の縦表示位置[j] * 0x20)) :
-                                    base.iP_B;
+                                        (371 + this.n文字の縦表示位置[j] * 0x20)) :
+                                        ( CDTXMania.ConfigIni.bReverse.Drums ? 561 : 375 );
                             }
 
                             int nRectX = 85;
