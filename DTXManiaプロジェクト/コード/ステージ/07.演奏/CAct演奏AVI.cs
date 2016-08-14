@@ -871,9 +871,9 @@ namespace DTXMania
                                 if( this.n総移動時間ms != -1 && this.rAVI != null )
                                 {
                                     if( this.fClipアスペクト比 < 0.96f )
-                                        this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, this.position2, 20 + this.n本体Y );
+                                        this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 20 + this.n本体Y );
                                     else
-                                        this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
+                                        this.tx描画用.t2D描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                                 }
                             }
                         }
@@ -914,9 +914,9 @@ namespace DTXMania
                                 if( this.n総移動時間ms != -1 && this.rAVI != null )
                                 {
                                     if( this.fClipアスペクト比 < 1.77f )
-                                        this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, this.position2, 30 + this.n本体Y );
+                                        this.tx描画用.t2D描画( CDTXMania.app.Device, this.position2, 30 + this.n本体Y );
                                     else
-                                        this.tx描画用.t2D上下反転描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
+                                        this.tx描画用.t2D描画( CDTXMania.app.Device, 5 + this.n本体X, this.position2 );
                                 }
                             }
                             #endregion
