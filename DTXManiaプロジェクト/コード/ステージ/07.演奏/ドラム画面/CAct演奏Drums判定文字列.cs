@@ -1263,11 +1263,14 @@ namespace DTXMania
                             if (j < 10)
                             {
                                 num5 = base.stレーンサイズ[j].x;
-                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ?
-                                    (CDTXMania.ConfigIni.bReverse.Drums ? + 561
-                                        -(this.n文字の縦表示位置[j] * 0x20) :
-                                        (371 + this.n文字の縦表示位置[j] * 0x20)) :
-                                        ( CDTXMania.ConfigIni.bReverse.Drums ? 561 : 375 );
+                                if( CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A )
+                                {
+                                    num6 = CDTXMania.ConfigIni.bReverse.Drums ? 348 + -(this.n文字の縦表示位置[j] * 0x20) : (348 + this.n文字の縦表示位置[j] * 0x20);
+                                }
+                                else
+                                {
+                                    num6 = ( CDTXMania.ConfigIni.bReverse.Drums ? 80 + this.n文字の縦表示位置[j] * 0x20 : 583 + this.n文字の縦表示位置[j] * 0x20 );
+                                }
                             }
 
                             int nRectX = CDTXMania.ConfigIni.nJudgeWidgh;
@@ -1358,11 +1361,14 @@ namespace DTXMania
                             if (j < 10)
                             {
                                 num5 = base.stレーンサイズ[j].x;
-                                num6 = (CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A) ?
-                                    (CDTXMania.ConfigIni.bReverse.Drums ? + 561
-                                        -(this.n文字の縦表示位置[j] * 0x20) :
-                                        (371 + this.n文字の縦表示位置[j] * 0x20)) :
-                                        ( CDTXMania.ConfigIni.bReverse.Drums ? 561 : 375 );
+                                if( CDTXMania.ConfigIni.判定文字表示位置.Drums == Eタイプ.A )
+                                {
+                                    num6 = CDTXMania.ConfigIni.bReverse.Drums ? 348 + -(this.n文字の縦表示位置[j] * 0x20) : (348 + this.n文字の縦表示位置[j] * 0x20);
+                                }
+                                else
+                                {
+                                    num6 = ( CDTXMania.ConfigIni.bReverse.Drums ? 80 + this.n文字の縦表示位置[j] * 0x20 : 583 + this.n文字の縦表示位置[j] * 0x20 );
+                                }
                             }
 
                             int nRectX = 85;
