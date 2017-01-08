@@ -716,25 +716,19 @@ namespace DTXMania
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txカスタムアーティスト名テクスチャ );
             }
 
-            if( this.tx選択されている曲の曲名 != null )
-            {
-                this.tx選択されている曲の曲名.Dispose();
-                this.tx選択されている曲の曲名 = null;
-            }
-            if( this.tx選択されている曲のアーティスト名 != null )
-            {
-                this.tx選択されている曲のアーティスト名.Dispose();
-                this.tx選択されている曲のアーティスト名 = null;
-            }
+            CDTXMania.tテクスチャの解放( ref this.tx選択されている曲の曲名 );
+            CDTXMania.tテクスチャの解放( ref this.tx選択されている曲のアーティスト名 );
             #region[ ジャケット画像の解放 ]
             int nKeys = this.dicThumbnail.Count;
 			string[] keys = new string[ nKeys ];
 			this.dicThumbnail.Keys.CopyTo( keys, 0 );
 			foreach( var key in keys )
 			{
-				C共通.tDisposeする( this.dicThumbnail[ key ] );
+                C共通.tDisposeする( this.dicThumbnail[ key ] );
 				this.dicThumbnail[ key ] = null;
             }
+            if( CDTXMania.ConfigIni.bJacketDicClear )
+                this.dicThumbnail.Clear();
             #endregion
 
 			CDTXMania.t安全にDisposeする( ref this.txEnumeratingSongs );
