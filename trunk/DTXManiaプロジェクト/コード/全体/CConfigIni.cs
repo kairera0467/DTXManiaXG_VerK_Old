@@ -569,6 +569,7 @@ namespace DTXMania
 
         public bool b曲名表示をdefのものにする;
 
+        public bool bJacketDicClear; // 2017.01.08 kairera0467 曲選択画面から抜け出す時にDictionaryをクリアするテスト
         #region [ XGオプション ]
         public Eタイプ eNamePlate;
         public Eタイプ eドラムセットを動かす;
@@ -1228,6 +1229,7 @@ namespace DTXMania
             this.nShowLagTypeColor = 0;
 			this.bIsAutoResultCapture = false;			// #25399 2011.6.9 yyagi リザルト画像自動保存機能ON/OFF
 
+            this.bJacketDicClear = false; // 2017.01.08 kairera0467
             #region [ XGオプション ]
             this.bLivePoint = true;
             this.bSpeaker = true;
@@ -1737,6 +1739,11 @@ namespace DTXMania
             sw.WriteLine( "; オート時のゲージ加算(0:OFF, 1:ON )");
             sw.WriteLine( "AutoAddGage={0}", this.bAutoAddGage ? 1 : 0);
             sw.WriteLine();
+            sw.WriteLine( "; 選曲画面から脱出する際にジャケット画像のリストを全クリア(0:OFF, 1:ON )");
+            sw.WriteLine( "; 実験的なオプションです。" );
+            sw.WriteLine( "JacketDicClear={0}", this.bJacketDicClear ? 1 : 0);
+            sw.WriteLine();
+
 
 			sw.WriteLine( ";-------------------" );
 			#endregion
@@ -2837,6 +2844,10 @@ namespace DTXMania
                                             else if (str3.Equals("AutoAddGage"))
                                             {
                                                 this.bAutoAddGage = C変換.bONorOFF(str4[0]);
+                                            }
+                                            else if (str3.Equals("JacketDicClear"))
+                                            {
+                                                this.bJacketDicClear = C変換.bONorOFF( str4[ 0 ] );
                                             }
                                             //else if ( str3.Equals( "NoMP3Streaming" ) )
                                             //{
