@@ -160,7 +160,7 @@ namespace DTXMania
 					    }
 
                         // 新記録スキルチェック
-                        if ( this.st演奏記録[ i ].db演奏型スキル値 > ini.stセクション[ ( i * 2 ) + 1 ].db演奏型スキル値 )
+                        if ( ( this.st演奏記録[ i ].db演奏型スキル値 > ini.stセクション[ ( i * 2 ) + 1 ].db演奏型スキル値 ) && !this.bオート[ i ] )
                         {
                             this.b新記録スキル[ i ] = true;
                             ini.stセクション[ ( i * 2 ) + 1 ] = this.st演奏記録[ i ];
