@@ -122,6 +122,33 @@ namespace FDK
 
 			return digit2 * 36 + digit1;
 		}
+		public static int n62進数2桁の文字列を数値に変換して返す( string strNum )
+		{
+			if( strNum.Length < 2 )
+				return -1;
+
+			int digit2 = str36進数文字.IndexOf( strNum[ 0 ] );
+			if( digit2 < 0 )
+				return -1;
+
+			if( digit2 >= 62 )
+				digit2 -= (62 - 10);		// A,B,C... -> 1,2,3...
+
+			int digit1 = str36進数文字.IndexOf( strNum[ 1 ] );
+			if( digit1 < 0 )
+				return -1;
+
+			if( digit1 >= 62 )
+				digit1 -= (62 - 10);
+
+            int ret = digit2 * 62 + digit1;
+
+
+            int ret36 = n36進数2桁の文字列を数値に変換して返す( strNum );
+            
+
+			return digit2 * 62 + digit1;
+		}
 		public static int n小節番号の文字列3桁を数値に変換して返す( string strNum )
 		{
 			if( strNum.Length >= 3 )
@@ -173,6 +200,15 @@ namespace FDK
 
 			char ch2 = str36進数文字[ num / 36 ];
 			char ch1 = str36進数文字[ num % 36 ];
+			return ( ch2.ToString() + ch1.ToString() );
+		}
+		public static string str数値を62進数2桁に変換して返す( int num )
+		{
+			if( ( num < 0 ) || ( num >= 62 * 62 ) )
+				return "00";
+
+			char ch2 = str36進数文字[ num / 62 ];
+			char ch1 = str36進数文字[ num % 62 ];
 			return ( ch2.ToString() + ch1.ToString() );
 		}
 

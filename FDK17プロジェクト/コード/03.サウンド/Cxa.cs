@@ -44,13 +44,13 @@ namespace FDK
 		#endregion
 
 		#region [ xadec.dllとのリンク ]
-		[DllImport( "xadec.dll", EntryPoint = "xaDecodeOpen", CallingConvention = CallingConvention.Cdecl )]
+		[DllImport( "xadec.dll", EntryPoint = "xaDecodeOpen" )]
 		public extern static IntPtr xaDecodeOpen( ref XAHEADER pxah, out FDK.CWin32.WAVEFORMATEX pwfx );
-		[DllImport( "xadec.dll", EntryPoint = "xaDecodeClose", CallingConvention = CallingConvention.Cdecl )]
+		[DllImport( "xadec.dll", EntryPoint = "xaDecodeClose" )]
 		public extern static bool xaDecodeClose( IntPtr hxas );
-		[DllImport( "xadec.dll", EntryPoint = "xaDecodeSize", CallingConvention = CallingConvention.Cdecl )]
+		[DllImport( "xadec.dll", EntryPoint = "xaDecodeSize" )]
 		public extern static bool xaDecodeSize( IntPtr hxas, uint slen, out uint pdlen );
-		[DllImport( "xadec.dll", EntryPoint = "xaDecodeConvert", CallingConvention = CallingConvention.Cdecl )]
+		[DllImport( "xadec.dll", EntryPoint = "xaDecodeConvert" )]
 		public extern static bool xaDecodeConvert( IntPtr hxas, ref XASTREAMHEADER psh );
 		#endregion
 
