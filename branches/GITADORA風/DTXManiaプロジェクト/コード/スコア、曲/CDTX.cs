@@ -2126,7 +2126,7 @@ namespace DTXMania
                                 case 0x1b:
                                 case 0x1c:
                                     {
-                                        chip.nチャンネル番号 = 0x16;
+                                        chip.nチャンネル番号 = 0x76;
                                         continue;
                                     }
                             }
