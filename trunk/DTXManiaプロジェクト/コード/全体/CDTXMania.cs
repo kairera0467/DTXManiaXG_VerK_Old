@@ -23,7 +23,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public static readonly string VERSION = "Ver3.61(160820)";
+		public static readonly string VERSION = "Ver3.61a(170430)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -2178,7 +2178,8 @@ for (int i = 0; i < 3; i++) {
                                                 CDTXMania.ConfigIni.nWASAPIBufferSizeMs,
                                                 //CDTXMania.ConfigIni.nASIOBufferSizeMs,
                                                 0,
-                                                CDTXMania.ConfigIni.nASIODevice
+                                                CDTXMania.ConfigIni.nASIODevice,
+                                                CDTXMania.ConfigIni.bUseOSTimer
                     );
                     ShowWindowTitleWithSoundType();
                     FDK.CSound管理.bIsTimeStretch = CDTXMania.ConfigIni.bTimeStretch;

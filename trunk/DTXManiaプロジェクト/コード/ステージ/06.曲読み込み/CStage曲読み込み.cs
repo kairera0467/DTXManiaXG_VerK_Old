@@ -780,18 +780,25 @@ namespace DTXMania
                         }
                         foreach (CDTX.CChip chip in CDTXMania.DTX.listChip)
                         {
-                            if (chip.e楽器パート != E楽器パート.UNKNOWN)
+                            try
                             {
-                                chip.n楽器パートでの出現順 = curCount[(int)chip.e楽器パート]++;
-                                if( CDTXMania.listTargetGhsotLag[ (int)chip.e楽器パート ] != null )
+                                if (chip.e楽器パート != E楽器パート.UNKNOWN)
                                 {
-                                    var lag = new STGhostLag();
-                                    lag.index = chip.n楽器パートでの出現順;
-                                    lag.nJudgeTime = chip.n発声時刻ms + CDTXMania.listTargetGhsotLag[ (int)chip.e楽器パート ][ chip.n楽器パートでの出現順 ];
-                                    lag.nLagTime = CDTXMania.listTargetGhsotLag[ (int)chip.e楽器パート ][ chip.n楽器パートでの出現順 ];
+                                    chip.n楽器パートでの出現順 = curCount[(int)chip.e楽器パート]++;
+                                    if( CDTXMania.listTargetGhsotLag[ (int)chip.e楽器パート ] != null )
+                                    {
+                                        var lag = new STGhostLag();
+                                        lag.index = chip.n楽器パートでの出現順;
+                                        lag.nJudgeTime = chip.n発声時刻ms + CDTXMania.listTargetGhsotLag[ (int)chip.e楽器パート ][ chip.n楽器パートでの出現順 ];
+                                        lag.nLagTime = CDTXMania.listTargetGhsotLag[ (int)chip.e楽器パート ][ chip.n楽器パートでの出現順 ];
 
-                                    this.stGhostLag[ (int)chip.e楽器パート ].Add( lag );
+                                        this.stGhostLag[ (int)chip.e楽器パート ].Add( lag );
+                                    }
                                 }
+                            }
+                            catch( Exception ex )
+                            {
+                                //エラーが発生した場合は無視する。
                             }
                         }
                         

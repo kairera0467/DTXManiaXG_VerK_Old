@@ -34,6 +34,9 @@ namespace FDK
 													// DTXC(DirectSound)でCSoundTimerを使うと、内部で無音のループサウンドを再生するため
 													// サウンドデバイスを占有してしまい、Viewerとして呼び出されるDTXManiaで、ASIOが使えなくなる。
 
+													// DTXMania単体でこれをtrueにすると、WASAPI/ASIO時に演奏タイマーとしてFDKタイマーではなく
+													// システムのタイマーを使うようになる。こうするとスクロールは滑らかになるが、音ズレが出るかもしれない。
+		
 		public static IntPtr WindowHandle;
 
 		public static bool bIsTimeStretch = false;
@@ -45,49 +48,6 @@ namespace FDK
 			{
 				return _nMasterVolume;
 			}
-			//get
-			//{
-			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI || SoundDeviceType == ESoundDeviceType.ASIO )
-			//    {
-			//        return Bass.BASS_GetConfig(BASSConfig.BASS_CONFIG_GVOL_STREAM ) / 100;
-			//    }
-			//    else
-			//    {
-			//        return 100;
-			//    }
-			//}
-			//set
-			//{
-			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI )
-			//    {
-			//        bool b = BassWasapi.BASS_WASAPI_SetVolume( BASSWASAPIVolume.BASS_WASAPI_CURVE_LINEAR, value / 100.0f );
-			//        if ( !b )
-			//        {
-			//            BASSError be = Bass.BASS_ErrorGetCode();
-			//            Trace.TraceInformation( "WASAPI Master Volume Set Error: " + be.ToString() );
-			//        }
-			//    }
-			//}
-			//set
-			//{
-			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI || SoundDeviceType == ESoundDeviceType.ASIO )
-			//    {
-			//        bool b = Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_GVOL_STREAM, value * 100 );
-			//        if ( !b )
-			//        {
-			//            BASSError be = Bass.BASS_ErrorGetCode();
-			//            Trace.TraceInformation( "Master Volume Set Error: " + be.ToString() );
-			//        }
-			//    }
-			//}
-			//set
-			//{
-			//    if ( SoundDeviceType == ESoundDeviceType.ExclusiveWASAPI || SoundDeviceType == ESoundDeviceType.ASIO )
-			//    {
-			//        var nodes = new BASS_MIXER_NODE[ 1 ] { new BASS_MIXER_NODE( 0, (float) value ) };
-			//        BassMix.BASS_Mixer_ChannelSetEnvelope( SoundDevice.hMixer, BASSMIXEnvelope.BASS_MIXER_ENV_VOL, nodes );
-			//    }
-			//}
 			set
 			{
 				SoundDevice.nMasterVolume = value;
@@ -115,7 +75,7 @@ namespace FDK
 		#region [ WASAPI/ASIO/DirectSound設定値 ]
 		/// <summary>
 		/// <para>WASAPI 排他モード出力における再生遅延[ms]（の希望値）。最終的にはこの数値を基にドライバが決定する）。</para>
-		/// <para>→ WASAPI初期化時に自動設定するようにしたため、ここで設定した値は使用しないようになった。</para>
+		/// <para>0以下の値を指定すると、この数値はWASAPI初期化時に自動設定する。正数を指定すると、その値を設定しようと試みる。</para>
 		/// </summary>
 		public static int SoundDelayExclusiveWASAPI = 0;		// SSTでは、50ms
 		public int GetSoundExclusiveWASAPI()
@@ -204,12 +164,12 @@ namespace FDK
 		/// <param name="nSoundDelayExclusiveWASAPI"></param>
 		/// <param name="nSoundDelayASIO"></param>
 		/// <param name="nASIODevice"></param>
-		public CSound管理( IntPtr handle, ESoundDeviceType soundDeviceType, int nSoundDelayExclusiveWASAPI, int nSoundDelayASIO, int nASIODevice )
+		public CSound管理( IntPtr handle, ESoundDeviceType soundDeviceType, int nSoundDelayExclusiveWASAPI, int nSoundDelayASIO, int nASIODevice, bool _bUseOSTimer )
 		{
 			WindowHandle = handle;
 			SoundDevice = null;
-			bUseOSTimer = false;
-			t初期化( soundDeviceType, nSoundDelayExclusiveWASAPI, nSoundDelayASIO, nASIODevice );
+			//bUseOSTimer = false;
+			t初期化( soundDeviceType, nSoundDelayExclusiveWASAPI, nSoundDelayASIO, nASIODevice, _bUseOSTimer );
 		}
 		public void Dispose()
 		{
@@ -230,8 +190,12 @@ namespace FDK
 				//bInitialized = true;
 			}
 		}
-
 		public void t初期化( ESoundDeviceType soundDeviceType, int _nSoundDelayExclusiveWASAPI, int _nSoundDelayASIO, int _nASIODevice )
+		{
+			t初期化( soundDeviceType, _nSoundDelayExclusiveWASAPI, _nSoundDelayASIO, _nASIODevice, false );
+		}
+
+		public void t初期化( ESoundDeviceType soundDeviceType, int _nSoundDelayExclusiveWASAPI, int _nSoundDelayASIO, int _nASIODevice, bool _bUseOSTimer )
 		{
 			//SoundDevice = null;						// 後で再初期化することがあるので、null初期化はコンストラクタに回す
 			rc演奏用タイマ = null;						// Global.Bass 依存（つまりユーザ依存）
@@ -240,6 +204,7 @@ namespace FDK
 			SoundDelayExclusiveWASAPI = _nSoundDelayExclusiveWASAPI;
 			SoundDelayASIO = _nSoundDelayASIO;
 			ASIODevice = _nASIODevice;
+			bUseOSTimer = _bUseOSTimer;
 
 			ESoundDeviceType[] ESoundDeviceTypes = new ESoundDeviceType[ 4 ]
 			{
@@ -1189,26 +1154,37 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 		}
 		public void t再生位置を変更する( long n位置ms )
 		{
-			if( this.bBASSサウンドである )
+			if ( this.bBASSサウンドである )
 			{
-				bool b = BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ), BASSMode.BASS_POS_BYTES );
-				if ( !b )
+				bool b = true;
+				try
 				{
-					BASSError be = Bass.BASS_ErrorGetCode();
-					Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + be.ToString() );
+					b = BassMix.BASS_Mixer_ChannelSetPosition( this.hBassStream, Bass.BASS_ChannelSeconds2Bytes( this.hBassStream, n位置ms * this.db周波数倍率 * this.db再生速度 / 1000.0 ), BASSMode.BASS_POS_BYTES );
+				}
+				catch ( Exception e )
+				{
+					Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + e.ToString() );
+				}
+				finally
+				{
+					if ( !b )
+					{
+						BASSError be = Bass.BASS_ErrorGetCode();
+						Trace.TraceInformation( Path.GetFileName( this.strファイル名 ) + ": Seek error: " + be.ToString() );
+					}
 				}
 			}
 			else if( this.bDirectSoundである )
 			{
 				int n位置sample = (int) ( this.Buffer.Format.SamplesPerSecond * n位置ms * 0.001 * _db周波数倍率 * _db再生速度 );	// #30839 2013.2.24 yyagi; add _db周波数倍率 and _db再生速度
-                try
-                {
-                    this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
-                }
-                catch ( DirectSoundException e )
-                {
-                    Trace.TraceError( "{0}: Seek error: {1}", Path.GetFileName( this.strファイル名 ), n位置ms, e.Message );
-                }
+				try
+				{
+					this.Buffer.CurrentPlayPosition = n位置sample * this.Buffer.Format.BlockAlignment;
+				}
+				catch ( DirectSoundException e )
+				{
+					Trace.TraceError( "{0}: Seek error: {1}", Path.GetFileName( this.strファイル名 ), n位置ms, e.Message );
+				}
 			}
 		}
 
@@ -1431,11 +1407,25 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 
 		private void tBASSサウンドを作成する( string strファイル名, int hMixer, BASSFlag flags )
 		{
-			if ( String.Compare( Path.GetExtension( strファイル名 ), ".xa", true ) == 0 )	// caselessで文字列比較
+			#region [ xaとwav(RIFF chunked vorbis)に対しては専用の処理をする ]
+			switch ( Path.GetExtension( strファイル名 ).ToLower() )
 			{
-				tBASSサウンドを作成するXA( strファイル名, hMixer, flags );
-				return;
-			}
+				case ".xa":
+					tBASSサウンドを作成するXA( strファイル名, hMixer, flags );
+					return;
+
+				case ".wav":
+					if ( tRIFFchunkedVorbisならDirectShowでDecodeする( strファイル名, ref byArrWAVファイルイメージ ) )
+					{
+						tBASSサウンドを作成する( byArrWAVファイルイメージ, hMixer, flags );
+						return;
+					}
+					break;
+
+				default:
+					break;
+				}
+			#endregion
 
 			this.e作成方法 = E作成方法.ファイルから;
 			this.strファイル名 = strファイル名;
@@ -1467,6 +1457,53 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 			nBytes = Bass.BASS_ChannelGetLength( this._hBassStream );
 	
 			tBASSサウンドを作成する・ストリーム生成後の共通処理( hMixer );
+		}
+		/// <summary>
+		/// Decode "RIFF chunked Vorbis" to "raw wave"
+		/// because BASE.DLL has two problems for RIFF chunked Vorbis;
+		/// 1. time seek is not fine  2. delay occurs (about 10ms)
+		/// </summary>
+		/// <param name="strファイル名">wave filename</param>
+		/// <param name="byArrWAVファイルイメージ">wav file image</param>
+		/// <returns></returns>
+		private bool tRIFFchunkedVorbisならDirectShowでDecodeする( string strファイル名, ref byte[] byArrWAVファイルイメージ )
+		{
+			bool bファイルにVorbisコンテナが含まれている = false;
+
+			#region [ ファイルがWAVかつ、Vorbisコンテナが含まれているかを調べ、それに該当するなら、DirectShowでデコードする。]
+			//-----------------
+			try
+			{
+				using ( var ws = new WaveStream( strファイル名 ) )
+				{
+					if ( ws.Format.FormatTag == ( WaveFormatTag ) 0x6770 ||	// Ogg Vorbis Mode 2+
+						 ws.Format.FormatTag == ( WaveFormatTag ) 0x6771 )	// Ogg Vorbis Mode 3+
+					{
+						Trace.TraceInformation( Path.GetFileName( strファイル名 ) + ": RIFF chunked Vorbis. Decode to raw Wave first, to avoid BASS.DLL troubles" );
+						try
+						{
+							CDStoWAVFileImage.t変換( strファイル名, out byArrWAVファイルイメージ );
+							bファイルにVorbisコンテナが含まれている = true;
+						}
+						catch
+						{
+							Trace.TraceWarning( "Warning: " + Path.GetFileName( strファイル名 ) + " : RIFF chunked Vorbisのデコードに失敗しました。" );
+						}
+					}
+				}
+			}
+			catch ( InvalidDataException )
+			{
+				// DirectShowのデコードに失敗したら、次はACMでのデコードを試すことになるため、ここではエラーログを出さない。
+				// Trace.TraceWarning( "Warning: " + Path.GetFileName( strファイル名 ) + " : デコードに失敗しました。" );
+			}
+			catch ( Exception e )
+			{
+				Trace.TraceWarning( "Warning: " + Path.GetFileName( strファイル名 ) + " : 読み込みに失敗しました。" );
+			}
+			#endregion
+
+			return bファイルにVorbisコンテナが含まれている;
 		}
 		private void tBASSサウンドを作成するXA( string strファイル名, int hMixer, BASSFlag flags )
 		{
@@ -1654,6 +1691,10 @@ Debug.WriteLine("更に再生に失敗: " + Path.GetFileName(this.strファイ�
 				throw new NotImplementedException();
 			}
 
+			if ( !File.Exists( strファイル名 ) )
+			{
+				throw new Exception( string.Format( "ファイルが見つかりませんでした。({0})", strファイル名 ) );
+			}
 			int nHandle = sounddecoder.Open( strファイル名 );
 			if ( nHandle < 0 )
 			{

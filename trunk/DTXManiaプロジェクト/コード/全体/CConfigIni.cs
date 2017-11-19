@@ -504,11 +504,6 @@ namespace DTXMania
 		public int nウインドウheight;				// #23510 2010.10.31 yyagi add
         public bool ボーナス演出を表示する;
         public bool bHAZARD;
-        public int nSoundDeviceType; // #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
-        public int nWASAPIBufferSizeMs; // #24820 2013.1.15 yyagi WASAPIのバッファサイズ
-        //public int nASIOBufferSizeMs; // #24820 2012.12.28 yyagi ASIOのバッファサイズ
-        public int nASIODevice; // #24820 2013.1.17 yyagi ASIOデバイス
-        public bool bDynamicBassMixerManagement; // #24820
         public STDGBVALUE<Eタイプ> eAttackEffect;
         public STDGBVALUE<Eタイプ> eNumOfLanes;
         public STDGBVALUE<Eタイプ> eDkdkType;
@@ -782,17 +777,25 @@ namespace DTXMania
 		    get;
 		    set;
 		}
-        public bool bTimeStretch;					// #23664 2013.2.24 yyagi ピッチ変更無しで再生速度を変更するかどうか
-
-        public STDGBVALUE<int> nViewerScrollSpeed;
-        public bool bViewerVSyncWait;
-        public bool bViewerShowDebugStatus;
-        public bool bViewerTimeStretch;
-        public bool bViewerDrums有効, bViewerGuitar有効;
-        //public bool bNoMP3Streaming;
-        public int nMasterVolume;
-
 		public STAUTOPLAY bAutoPlay;
+		public int nSoundDeviceType;				// #24820 2012.12.23 yyagi 出力サウンドデバイス(0=ACM(にしたいが設計がきつそうならDirectShow), 1=ASIO, 2=WASAPI)
+		public int nWASAPIBufferSizeMs;				// #24820 2013.1.15 yyagi WASAPIのバッファサイズ
+//		public int nASIOBufferSizeMs;				// #24820 2012.12.28 yyagi ASIOのバッファサイズ
+		public int nASIODevice;						// #24820 2013.1.17 yyagi ASIOデバイス
+		public bool bUseOSTimer;					// #33689 2014.6.6 yyagi 演奏タイマーの種類
+		public bool bDynamicBassMixerManagement;	// #24820
+		public bool bTimeStretch;					// #23664 2013.2.24 yyagi ピッチ変更無しで再生速度を変更するかどうか
+		//public STDGBVALUE<EInvisible> eInvisible;	// #32072 2013.9.20 yyagi チップを非表示にする
+		public int nDisplayTimesMs, nFadeoutTimeMs;
+
+		public STDGBVALUE<int> nViewerScrollSpeed;
+		public bool bViewerVSyncWait;
+		public bool bViewerShowDebugStatus;
+		public bool bViewerTimeStretch;
+		public bool bViewerDrums有効, bViewerGuitar有効;
+		//public bool bNoMP3Streaming;				// 2014.4.14 yyagi; mp3のシーク位置がおかしくなる場合は、これをtrueにすることで、wavにデコードしてからオンメモリ再生する
+		public int nMasterVolume;
+
 		public STRANGE nヒット範囲ms;
 		[StructLayout( LayoutKind.Sequential )]
 		public struct STRANGE
@@ -1254,21 +1257,25 @@ namespace DTXMania
 			this.strSystemSkinSubfolderFullName = "";	// #28195 2012.5.2 yyagi 使用中のSkinサブフォルダ名
 			this.bUseBoxDefSkin = true;					// #28195 2012.5.6 yyagi box.defによるスキン切替機能を使用するか否か
             this.bTight = false;                        // #29500 2012.9.11 kairera0467
-            this.nSoundDeviceType = (int)ESoundDeviceTypeForConfig.ACM; // #24820 2012.12.23 yyagi 初期値はACM
-            this.nWASAPIBufferSizeMs = 0;               // #24820 2013.1.15 yyagi 初期値は0(自動設定)
-            this.nASIODevice = 0;                       // #24820 2013.1.17 yyagi
-//          this.nASIOBufferSizeMs = 0;                 // #24820 2012.12.25 yyagi 初期値は0(自動設定)
-            this.bDynamicBassMixerManagement = true;    //
-            this.bTimeStretch = false;					// #23664 2013.2.24 yyagi 初期値はfalse (再生速度変更を、ピッチ変更にて行う)
+			this.nSoundDeviceType = FDK.COS.bIsVistaOrLater ?
+				(int) ESoundDeviceTypeForConfig.WASAPI : (int) ESoundDeviceTypeForConfig.ACM;	// #24820 2012.12.23 yyagi 初期値はACM | #31927 2013.8.25 yyagi OSにより初期値変更
+			this.nWASAPIBufferSizeMs = 50;				// #24820 2013.1.15 yyagi 初期値は50(0にすると自動設定)
+			this.nASIODevice = 0;						// #24820 2013.1.17 yyagi
+//			this.nASIOBufferSizeMs = 0;					// #24820 2012.12.25 yyagi 初期値は0(自動設定)
+			this.bUseOSTimer = false;;					// #33689 2014.6.6 yyagi 初期値はfalse (FDKのタイマー。ＦＲＯＭ氏考案の独自タイマー)
+			this.bDynamicBassMixerManagement = true;	//
+			this.bTimeStretch = false;					// #23664 2013.2.24 yyagi 初期値はfalse (再生速度変更を、ピッチ変更にて行う)
+			this.nDisplayTimesMs = 3000;				// #32072 2013.10.24 yyagi Semi-Invisibleでの、チップ再表示期間
+			this.nFadeoutTimeMs = 2000;					// #32072 2013.10.24 yyagi Semi-Invisibleでの、チップフェードアウト時間
 
-            bViewerVSyncWait = true;
-            bViewerShowDebugStatus = true;
-            bViewerTimeStretch = false;
-	        bViewerDrums有効 = true;
-	        bViewerGuitar有効 = true;
+			bViewerVSyncWait = true;
+			bViewerShowDebugStatus = true;
+			bViewerTimeStretch = false;
+			bViewerDrums有効 = true;
+			bViewerGuitar有効 = true;
 
-            //this.bNoMP3Streaming = false;
-            this.nMasterVolume = 100;                   // #33700 2014.4.26 yyagi マスターボリュームの設定(WASAPI/ASIO用)
+			//this.bNoMP3Streaming = false;
+			this.nMasterVolume = 100;					// #33700 2014.4.26 yyagi マスターボリュームの設定(WASAPI/ASIO用)
 		}
 		public CConfigIni( string iniファイル名 )
 			: this()
@@ -1441,34 +1448,34 @@ namespace DTXMania
             sw.WriteLine("SleepTimePerFrame={0}", this.nフレーム毎スリープms); //
             sw.WriteLine();											        			//
             #endregion
-            #region [ WASAPI/ASIO関連 ]
-            sw.WriteLine("; サウンド出力方式(0=ACM(って今はまだDirectShowですが), 1=ASIO, 2=WASAPI");
-            sw.WriteLine("; WASAPIはVista以降のOSで使用可能。推奨方式はWASAPI。");
-            sw.WriteLine("; なお、WASAPIが使用不可ならASIOを、ASIOが使用不可ならACMを使用します。");
-            sw.WriteLine("; Sound device type(0=ACM, 1=ASIO, 2=WASAPI)");
-            sw.WriteLine("; WASAPI can use on Vista or later OSs.");
-            sw.WriteLine("; If WASAPI is not available, DTXMania try to use ASIO. If ASIO can't be used, ACM is used.");
-            sw.WriteLine("SoundDeviceType={0}", (int)this.nSoundDeviceType);
-            sw.WriteLine();
+			#region [ WASAPI/ASIO関連 ]
+			sw.WriteLine( "; サウンド出力方式(0=ACM(って今はまだDirectSoundですが), 1=ASIO, 2=WASAPI)" );
+			sw.WriteLine( "; WASAPIはVista以降のOSで使用可能。推奨方式はWASAPI。" );
+			sw.WriteLine( "; なお、WASAPIが使用不可ならASIOを、ASIOが使用不可ならACMを使用します。" );
+			sw.WriteLine( "; Sound device type(0=ACM, 1=ASIO, 2=WASAPI)" );
+			sw.WriteLine( "; WASAPI can use on Vista or later OSs." );
+			sw.WriteLine( "; If WASAPI is not available, DTXMania try to use ASIO. If ASIO can't be used, ACM is used." );
+			sw.WriteLine( "SoundDeviceType={0}", (int) this.nSoundDeviceType );
+			sw.WriteLine();
 
-            sw.WriteLine("; WASAPI使用時のサウンドバッファサイズ");
-            sw.WriteLine("; (0=デバイスに設定されている値を使用, 1～9999=バッファサイズ(単位:ms)の手動指定");
-            sw.WriteLine("; WASAPI Sound Buffer Size.");
-            sw.WriteLine("; (0=Use system default buffer size, 1-9999=specify the buffer size(ms) by yourself)");
-            sw.WriteLine("WASAPIBufferSizeMs={0}", (int)this.nWASAPIBufferSizeMs);
-            sw.WriteLine();
+			sw.WriteLine( "; WASAPI使用時のサウンドバッファサイズ" );
+			sw.WriteLine( "; (0=デバイスに設定されている値を使用, 1～9999=バッファサイズ(単位:ms)の手動指定" );
+			sw.WriteLine( "; WASAPI Sound Buffer Size." );
+			sw.WriteLine( "; (0=Use system default buffer size, 1-9999=specify the buffer size(ms) by yourself)" );
+			sw.WriteLine( "WASAPIBufferSizeMs={0}", (int) this.nWASAPIBufferSizeMs );
+			sw.WriteLine();
 
-            sw.WriteLine("; ASIO使用時のサウンドデバイス");
-            sw.WriteLine("; 存在しないデバイスを指定すると、DTXManiaが起動しないことがあります。");
-            sw.WriteLine("; Sound device used by ASIO.");
-            sw.WriteLine("; Don't specify unconnected device, as the DTXMania may not bootup.");
-            string[] asiodev = CEnumerateAllAsioDevices.GetAllASIODevices();
-            for (int i = 0; i < asiodev.Length; i++)
-            {
-                sw.WriteLine("; {0}: {1}", i, asiodev[i]);
-            }
-            sw.WriteLine("ASIODevice={0}", (int)this.nASIODevice);
-            sw.WriteLine();
+			sw.WriteLine( "; ASIO使用時のサウンドデバイス" );
+			sw.WriteLine( "; 存在しないデバイスを指定すると、DTXManiaが起動しないことがあります。" );
+			sw.WriteLine( "; Sound device used by ASIO." );
+			sw.WriteLine( "; Don't specify unconnected device, as the DTXMania may not bootup." );
+			string[] asiodev = CEnumerateAllAsioDevices.GetAllASIODevices();
+			for ( int i = 0; i < asiodev.Length; i++ )
+			{
+				sw.WriteLine( "; {0}: {1}", i, asiodev[ i ] );
+			}
+			sw.WriteLine( "ASIODevice={0}", (int) this.nASIODevice );
+			sw.WriteLine();
 
 			//sw.WriteLine( "; ASIO使用時のサウンドバッファサイズ" );
 			//sw.WriteLine( "; (0=デバイスに設定されている値を使用, 1～9999=バッファサイズ(単位:ms)の手動指定" );
@@ -1477,19 +1484,26 @@ namespace DTXMania
 			//sw.WriteLine( "ASIOBufferSizeMs={0}", (int) this.nASIOBufferSizeMs );
 			//sw.WriteLine();
 
-            //sw.WriteLine("; Bass.Mixの制御を動的に行うか否か。");
-            //sw.WriteLine("; ONにすると、ギター曲などチップ音の多い曲も再生できますが、画面が少しがたつきます。");
-            //sw.WriteLine("; (0=行わない, 1=行う)");
-            //sw.WriteLine("DynamicBassMixerManagement={0}", this.bDynamicBassMixerManagement ? 1 : 0);
-            //sw.WriteLine();
+			//sw.WriteLine( "; Bass.Mixの制御を動的に行うか否か。" );
+			//sw.WriteLine( "; ONにすると、ギター曲などチップ音の多い曲も再生できますが、画面が少しがたつきます。" );
+			//sw.WriteLine( "; (0=行わない, 1=行う)" );
+			//sw.WriteLine( "DynamicBassMixerManagement={0}", this.bDynamicBassMixerManagement ? 1 : 0 );
+			//sw.WriteLine();
 
-            sw.WriteLine( "; 全体ボリュームの設定" );
-            sw.WriteLine( "; (0=無音 ～ 100=最大。WASAPI/ASIO時のみ有効)" );
-            sw.WriteLine( "; Master volume settings" );
-            sw.WriteLine( "; (0=Silent - 100=Max)" );
-            sw.WriteLine( "MasterVolume={0}", this.nMasterVolume );
-            sw.WriteLine();
-            #endregion
+			sw.WriteLine( "; WASAPI/ASIO時に使用する演奏タイマーの種類" );
+			sw.WriteLine( "; Playback timer used for WASAPI/ASIO" );
+			sw.WriteLine( "; (0=FDK Timer, 1=System Timer)" );
+			sw.WriteLine( "SoundTimerType={0}", this.bUseOSTimer ? 1 : 0 );
+			sw.WriteLine();
+
+			sw.WriteLine( "; 全体ボリュームの設定" );
+			sw.WriteLine( "; (0=無音 ～ 100=最大。WASAPI/ASIO時のみ有効)" );
+			sw.WriteLine( "; Master volume settings" );
+			sw.WriteLine( "; (0=Silent - 100=Max)" );
+			sw.WriteLine( "MasterVolume={0}", this.nMasterVolume );
+			sw.WriteLine();
+
+			#endregion
             #region [ ギター/ベース/ドラム 有効/無効 ]
 			sw.WriteLine( "; ギター/ベース有効(0:OFF,1:ON)" );
 			sw.WriteLine( "; Enable Guitar/Bass or not.(0:OFF,1:ON)" );
@@ -2508,38 +2522,44 @@ namespace DTXMania
                                             {
                                                 this.bIsEnabledSystemMenu = C変換.bONorOFF(str4[0]);
                                             }
-                                            else if (str3.Equals("SoundDeviceType"))
-                                            {
-                                                this.nSoundDeviceType = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 2, this.nSoundDeviceType);
-                                            }
-                                            else if (str3.Equals("WASAPIBufferSizeMs"))
-                                            {
-                                                this.nWASAPIBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9999, this.nWASAPIBufferSizeMs);
-                                            }
-                                            else if (str3.Equals("ASIODevice"))
-                                            {
-                                                string[] asiodev = CEnumerateAllAsioDevices.GetAllASIODevices();
-                                                this.nASIODevice = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, asiodev.Length - 1, this.nASIODevice);
-                                            }
-                                            //else if (str3.Equals("ASIOBufferSizeMs"))
-                                            //{
-                                            //    this.nASIOBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 9999, this.nASIOBufferSizeMs);
-                                            //}
-                                            else if (str3.Equals("DynamicBassMixerManagement"))
-                                            {
-                                                this.bDynamicBassMixerManagement = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if (str3.Equals("VSyncWait"))
-                                            {
-                                                this.b垂直帰線待ちを行う = C変換.bONorOFF(str4[0]);
-                                            }
-                                            else if ( str3.Equals( "MasterVolume" ) )
-                                            {
-                                                this.nMasterVolume = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nMasterVolume );
-                                            }
                                             else if (str3.Equals("BackSleep"))				// #23568 2010.11.04 ikanick add
                                             {
                                                 this.n非フォーカス時スリープms = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す(str4, 0, 50, this.n非フォーカス時スリープms);
+                                            }
+											#region [ WASAPI/ASIO関係 ]
+											else if ( str3.Equals( "SoundDeviceType" ) )
+											{
+												this.nSoundDeviceType = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 2, this.nSoundDeviceType );
+											}
+											else if ( str3.Equals( "WASAPIBufferSizeMs" ) )
+											{
+												this.nWASAPIBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 9999, this.nWASAPIBufferSizeMs );
+											}
+											else if ( str3.Equals( "ASIODevice" ) )
+											{
+												string[] asiodev = CEnumerateAllAsioDevices.GetAllASIODevices();
+												this.nASIODevice = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, asiodev.Length - 1, this.nASIODevice );
+											}
+											//else if ( str3.Equals( "ASIOBufferSizeMs" ) )
+											//{
+											//    this.nASIOBufferSizeMs = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 9999, this.nASIOBufferSizeMs );
+											//}
+											//else if ( str3.Equals( "DynamicBassMixerManagement" ) )
+											//{
+											//    this.bDynamicBassMixerManagement = C変換.bONorOFF( str4[ 0 ] );
+											//}
+											else if ( str3.Equals( "SoundTimerType" ) )			// #33689 2014.6.6 yyagi
+											{
+												this.bUseOSTimer = C変換.bONorOFF( str4[ 0 ] );
+											}
+											else if ( str3.Equals( "MasterVolume" ) )
+											{
+											    this.nMasterVolume = C変換.n値を文字列から取得して範囲内に丸めて返す( str4, 0, 100, this.nMasterVolume );
+											}
+											#endregion
+                                            else if (str3.Equals("VSyncWait"))
+                                            {
+                                                this.b垂直帰線待ちを行う = C変換.bONorOFF(str4[0]);
                                             }
                                             else if (str3.Equals("SleepTimePerFrame"))		// #23568 2011.11.27 yyagi
                                             {
