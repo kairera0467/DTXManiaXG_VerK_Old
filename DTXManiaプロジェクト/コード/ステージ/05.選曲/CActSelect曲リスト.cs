@@ -421,7 +421,8 @@ namespace DTXMania
 			}
 			this.On非活性化();
 			this.r現在選択中の曲 = null;
-			this.On活性化();
+            if( CDTXMania.r現在のステージ.eステージID == CStage.Eステージ.選曲 )
+			    this.On活性化();
 		}
 
 
@@ -537,8 +538,8 @@ namespace DTXMania
             this.tx上部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_header song list.png"), false);
             this.tx下部パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_footer song list.png"), false);
 
-            prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 30, FontStyle.Regular );
-            prvFontSmall = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 15, FontStyle.Regular );
+            this.prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 30, FontStyle.Regular );
+            this.prvFontSmall = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 15, FontStyle.Regular );
 
 			for( int i = 0; i < 13; i++ )
 				this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
@@ -621,8 +622,9 @@ namespace DTXMania
 			CDTXMania.t安全にDisposeする( ref this.tx選曲バー.Other );
             CDTXMania.t安全にDisposeする( ref this.tx上部パネル );
             CDTXMania.t安全にDisposeする( ref this.tx下部パネル );
-            prvFont.Dispose();
-            prvFontSmall.Dispose();
+
+            CDTXMania.t安全にDisposeする( ref this.prvFont );
+            CDTXMania.t安全にDisposeする( ref this.prvFontSmall );
             if( this.tx選択中の曲名テクスチャ != null )
             {
                 this.tx選択中の曲名テクスチャ.Dispose();

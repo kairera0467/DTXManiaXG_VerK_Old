@@ -119,7 +119,7 @@ namespace DTXMania
                 this.txMenuパネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_menu panel.png" ) );
                 this.txItemBar = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\4_item bar.png" ) );
 
-				prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 18 );
+				this.prvFont = new CPrivateFastFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 18 );
 				string[] strMenuItem = { "System", "Drums", "Guitar", "Bass", "Exit" };
 				txMenuItemLeft = new CTexture[ strMenuItem.Length, 2 ];
 				for ( int i = 0; i < strMenuItem.Length; i++ )
