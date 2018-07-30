@@ -71,13 +71,13 @@ namespace DTXMania
                 else
                     this.strSongName = CDTXMania.DTX.TITLE;
 
-                pfタイトル = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 20, FontStyle.Regular);
+                this.pfタイトル = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 20, FontStyle.Regular);
                 Bitmap bmpSongName = new Bitmap(1, 1);
                 bmpSongName = pfタイトル.DrawPrivateFont(this.strSongName, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
                 this.txSongName = CDTXMania.tテクスチャの生成(bmpSongName, false);
                 bmpSongName.Dispose();
 
-                pfアーティスト = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 15, FontStyle.Regular);
+                this.pfアーティスト = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 15, FontStyle.Regular);
                 Bitmap bmpArtistName = new Bitmap(1, 1);
                 bmpArtistName = pfアーティスト.DrawPrivateFont(CDTXMania.DTX.ARTIST, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
                 this.txArtistName = CDTXMania.tテクスチャの生成(bmpArtistName, false);
@@ -143,6 +143,9 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放(ref this.txSongLevel);
                 CDTXMania.tテクスチャの解放(ref this.txSongDifficulty);
                 CDTXMania.tテクスチャの解放(ref this.txDrumSpeed);
+
+                CDTXMania.t安全にDisposeする( ref this.pfタイトル );
+                CDTXMania.t安全にDisposeする( ref this.pfアーティスト );
                 base.OnManagedリソースの解放();
             }
         }

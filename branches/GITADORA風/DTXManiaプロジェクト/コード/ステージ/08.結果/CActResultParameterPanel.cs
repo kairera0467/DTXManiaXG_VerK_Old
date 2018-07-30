@@ -411,12 +411,12 @@ namespace DTXMania
                     graネームプレート用.DrawImage( bmpCardName, -2f, 26f );
                     graネームプレート用.DrawImage( bmpTitleName, 6f, 8f );
                     #endregion
-                    bmpCardName.Dispose();
-                    bmpTitleName.Dispose();
+                    CDTXMania.t安全にDisposeする( ref bmpCardName );
+                    CDTXMania.t安全にDisposeする( ref bmpTitleName );
                     this.txネームプレート用文字[ i ] = new CTexture( CDTXMania.app.Device, image2, CDTXMania.TextureFormat, false );
                     CDTXMania.t安全にDisposeする( ref image2 );
 
-                    graネームプレート用.Dispose();
+                    CDTXMania.t安全にDisposeする( ref graネームプレート用 );
                 }
                 this.prv表示用フォント.Dispose();
                 this.prv称号フォント.Dispose();

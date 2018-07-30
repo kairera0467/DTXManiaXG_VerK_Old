@@ -314,11 +314,12 @@ namespace DTXMania
                     #region[ 曲名、アーティスト名テクスチャの生成 ]
                     if ((this.str曲タイトル != null) && (this.str曲タイトル.Length > 0))
                     {
-                        pfタイトル = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 40, FontStyle.Regular);
+                        this.pfタイトル = new CPrivateFastFont(new FontFamily(CDTXMania.ConfigIni.str選曲リストフォント), 40, FontStyle.Regular);
                         Bitmap bmpSongName = new Bitmap(1, 1);
-                        bmpSongName = pfタイトル.DrawPrivateFont(this.str曲タイトル, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
+                        bmpSongName = this.pfタイトル.DrawPrivateFont(this.str曲タイトル, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
                         this.txタイトル = CDTXMania.tテクスチャの生成(bmpSongName, false);
-                        bmpSongName.Dispose();
+                        CDTXMania.t安全にDisposeする( ref bmpSongName );
+                        CDTXMania.t安全にDisposeする( ref this.pfタイトル );
                     }
                     else
                     {
@@ -331,7 +332,8 @@ namespace DTXMania
                         Bitmap bmpArtistName = new Bitmap(1, 1);
                         bmpArtistName = pfアーティスト.DrawPrivateFont(this.strアーティスト名, CPrivateFont.DrawMode.Edge, Color.Black, Color.Black, this.clGITADORAgradationTopColor, this.clGITADORAgradationBottomColor, true);
                         this.txアーティスト = CDTXMania.tテクスチャの生成(bmpArtistName, false);
-                        bmpArtistName.Dispose();
+                        CDTXMania.t安全にDisposeする( ref bmpArtistName );
+                        CDTXMania.t安全にDisposeする( ref this.pfアーティスト );
                     }
                     else
                     {
@@ -354,6 +356,7 @@ namespace DTXMania
             if( !base.b活性化してない )
             {
                 //テクスチャ11枚
+                //2018.03.15 kairera0467 PrivateFontが抜けていた＆フォント生成直後に解放するようにしてみる
                 CDTXMania.tテクスチャの解放( ref this.tx背景 );
                 CDTXMania.tテクスチャの解放( ref this.txジャケット );
                 CDTXMania.tテクスチャの解放( ref this.txタイトル );

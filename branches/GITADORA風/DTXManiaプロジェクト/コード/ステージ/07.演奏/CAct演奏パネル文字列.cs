@@ -72,8 +72,6 @@ namespace DTXMania
         }
         public override void On非活性化()
         {
-            CDTXMania.t安全にDisposeする( ref this.pfタイトル );
-            CDTXMania.t安全にDisposeする( ref this.pfアーティスト );
 //          CDTXMania.tテクスチャの解放(ref this.txPanel);
             this.ct進行用 = null;
             base.On非活性化();
@@ -126,6 +124,8 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txArtistName );
                 CDTXMania.tテクスチャの解放( ref this.txジャケットパネル );
                 CDTXMania.tテクスチャの解放( ref this.txジャケット画像 );
+                CDTXMania.t安全にDisposeする( ref this.pfタイトル );
+                CDTXMania.t安全にDisposeする( ref this.pfアーティスト );
                 base.OnManagedリソースの解放();
             }
         }

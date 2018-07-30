@@ -3755,6 +3755,7 @@ namespace DTXMania
 						//Trace.TraceInformation( "発声時刻計算:             {0}", span.ToString() );
 						//timeBeginLoad = DateTime.Now;
 						this.nBGMAdjust = 0;
+                        this.t各自動再生音チップの再生時刻を変更する( nBGMAdjust );
                         if( CDTXMania.ConfigIni.nCommonBGMAdjustMs != 0 )
                             this.t各自動再生音チップの再生時刻を変更する( CDTXMania.ConfigIni.nCommonBGMAdjustMs, false, true );
 						//span = (TimeSpan) ( DateTime.Now - timeBeginLoad );
