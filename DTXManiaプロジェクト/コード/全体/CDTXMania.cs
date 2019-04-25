@@ -23,7 +23,7 @@ namespace DTXMania
     {
         // プロパティ
 
-        public static readonly string VERSION = "Ver3.61GD(160820)";
+        public static readonly string VERSION = "Ver3.62GD(190426)";
         public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
         public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -1458,7 +1458,7 @@ for (int i = 0; i < 3; i++) {
 			}
 			try
 			{
-                Trace.WriteLine("CTextureをFileから生成 + Filename:" + fileName);
+                //Trace.WriteLine("CTextureをFileから生成 + Filename:" + fileName);
 				return new CTexture( app.Device, fileName, TextureFormat, b黒を透過する );
 			}
 			catch ( CTextureCreateFailedException )
@@ -1475,7 +1475,7 @@ for (int i = 0; i < 3; i++) {
 		public static void tテクスチャの解放( ref CTexture tx )
 		{
             if (tx != null) {
-                Trace.WriteLine( "CTextureを解放 Size W:" + tx.sz画像サイズ.Width + " H:" + tx.sz画像サイズ.Height );
+                //Trace.WriteLine( "CTextureを解放 Size W:" + tx.sz画像サイズ.Width + " H:" + tx.sz画像サイズ.Height );
 			    CDTXMania.t安全にDisposeする( ref tx );
             }
 		}
@@ -1516,7 +1516,7 @@ for (int i = 0; i < 3; i++) {
 			}
 			try
 			{
-                Trace.WriteLine( "CTextureをBitmapから生成" );
+                //Trace.WriteLine( "CTextureをBitmapから生成" );
 				return new CTexture( app.Device, bitmap, TextureFormat, b黒を透過する );
 			}
 			catch ( CTextureCreateFailedException )
