@@ -514,7 +514,7 @@ namespace DTXMania
 		{
 			if( !base.b活性化してない )
 			{
-                for (int tx1 = 0; tx1 < 9; tx1++)
+                for (int tx1 = 0; tx1 < 10; tx1++)
                 {
                     CDTXMania.tテクスチャの解放(ref this.tx火花[tx1]);
                     CDTXMania.tテクスチャの解放(ref this.tx青い星[tx1]);

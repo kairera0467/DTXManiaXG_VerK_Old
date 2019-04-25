@@ -363,6 +363,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.txアーティスト );
                 CDTXMania.tテクスチャの解放( ref this.tx難易度パネル );
                 CDTXMania.tテクスチャの解放( ref this.txパートパネル );
+                CDTXMania.tテクスチャの解放( ref this.txLevel );
                 base.OnManagedリソースの解放();
             }
         }
@@ -428,17 +429,21 @@ namespace DTXMania
             string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
             try
             {
-                if( !File.Exists( path ) )
+                if( this.txジャケット == null ) // 2019.04.26 kairera0467
                 {
-                    this.txジャケット = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
-                }
-                else
-                {
-                    this.txジャケット = CDTXMania.tテクスチャの生成( path );
+                    if( !File.Exists( path ) )
+                    {
+                        this.txジャケット = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
+                    }
+                    else
+                    {
+                        this.txジャケット = CDTXMania.tテクスチャの生成( path );
+                    }
                 }
             }
             catch( Exception ex )
             {
+                Trace.TraceError( ex.StackTrace );
             }
 
 
