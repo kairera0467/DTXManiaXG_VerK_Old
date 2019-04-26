@@ -169,7 +169,9 @@ namespace DTXMania
 			{
                 CDTXMania.tテクスチャの解放( ref this.txFullCombo );
                 CDTXMania.tテクスチャの解放( ref this.txExcellent );
-                CDTXMania.t安全にDisposeする( ref this.txランク文字 );
+                CDTXMania.t安全にDisposeする( ref this.txランク文字.Drums );
+                CDTXMania.t安全にDisposeする( ref this.txランク文字.Guitar );
+                CDTXMania.t安全にDisposeする( ref this.txランク文字.Bass );
 				base.OnManagedリソースの解放();
 			}
 		}

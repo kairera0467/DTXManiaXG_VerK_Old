@@ -486,8 +486,33 @@ namespace DTXMania
 			}
 			this.On非活性化();
 			this.r現在選択中の曲 = null;
-			this.On活性化();
-		}
+            //this.On活性化();
+            #region[ 再度活性化処理を行う ]
+            this.b登場アニメ全部完了 = false;
+			this.n目標のスクロールカウンタ = 0;
+			this.n現在のスクロールカウンタ = 0;
+			this.nスクロールタイマ = -1;
+
+			// フォント作成。
+			// 曲リスト文字は２倍（面積４倍）でテクスチャに描画してから縮小表示するので、フォントサイズは２倍とする。
+            if( this.ft曲リスト用フォント == null )
+            {
+			    FontStyle regular = FontStyle.Regular;
+			    if( CDTXMania.ConfigIni.b選曲リストフォントを太字にする ) regular |= FontStyle.Bold;
+			    this.ft曲リスト用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, (float) ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2 ), regular, GraphicsUnit.Pixel );
+                //this.prvFont = new CPrivateFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
+            }
+
+			if( ( this.r現在選択中の曲 == null ) && ( CDTXMania.Songs管理.list曲ルート.Count > 0 ) )
+				this.r現在選択中の曲 = CDTXMania.Songs管理.list曲ルート[ 0 ];
+            if( CDTXMania.r現在のステージ.eステージID == CStage.Eステージ.選曲 )
+			    this.tバーの初期化();
+
+			//base.On活性化();
+
+			this.t選択曲が変更された(true);		// #27648 2012.3.31 yyagi 選曲画面に入った直後の 現在位置/全アイテム数 の表示を正しく行うため
+            #endregion
+        }
 
 
 		/// <summary>
@@ -564,11 +589,13 @@ namespace DTXMania
 
 			// フォント作成。
 			// 曲リスト文字は２倍（面積４倍）でテクスチャに描画してから縮小表示するので、フォントサイズは２倍とする。
-
-			FontStyle regular = FontStyle.Regular;
-			if( CDTXMania.ConfigIni.b選曲リストフォントを太字にする ) regular |= FontStyle.Bold;
-			this.ft曲リスト用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, (float) ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2 ), regular, GraphicsUnit.Pixel );
-            //this.prvFont = new CPrivateFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
+            if( this.ft曲リスト用フォント == null )
+            {
+			    FontStyle regular = FontStyle.Regular;
+			    if( CDTXMania.ConfigIni.b選曲リストフォントを太字にする ) regular |= FontStyle.Bold;
+			    this.ft曲リスト用フォント = new Font( CDTXMania.ConfigIni.str選曲リストフォント, (float) ( CDTXMania.ConfigIni.n選曲リストフォントのサイズdot * 2 ), regular, GraphicsUnit.Pixel );
+                //this.prvFont = new CPrivateFont( new FontFamily( CDTXMania.ConfigIni.str選曲リストフォント ), 28, FontStyle.Regular );
+            }
 
 			// 現在選択中の曲がない（＝はじめての活性化）なら、現在選択中の曲をルートの先頭ノードに設定する。
 
@@ -603,10 +630,10 @@ namespace DTXMania
 			if( this.b活性化してない )
 				return;
 
-            this.tx選曲パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_image_panel_guitar.png" ) );
-
-            if ( this.tx選曲パネル == null || CDTXMania.ConfigIni.bDrums有効 )
-                this.tx選曲パネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_image_panel.png"));
+            if ( this.tx選曲パネル == null && CDTXMania.ConfigIni.bDrums有効 )
+                this.tx選曲パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_image_panel.png" ) );
+            else if( this.tx選曲パネル == null && CDTXMania.ConfigIni.bGuitar有効 )
+                this.tx選曲パネル = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_image_panel_guitar.png" ) );
 
             this.txパネル = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_music panel.png"));
             //this.tx帯 = CDTXMania.tテクスチャの生成Af( CSkin.Path( @"Graphics\5_backpanel.png" ) );
@@ -627,7 +654,7 @@ namespace DTXMania
             {
                 //this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
-                this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
+                //this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
                 //this.tパスを指定してサムネイル画像を生成する(i, this.stバー情報[i].strDTXフォルダのパス, this.stバー情報[i].eバー種別);
                 if( this.stバー情報[ i ].strPreimageのパス != null )
                 {
@@ -710,6 +737,7 @@ namespace DTXMania
 
             for ( int i = 0; i < 15; i++ )
             {
+                CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txパネル );
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txタイトル名 );
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txアーティスト名 );
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txカスタム曲名テクスチャ );
@@ -918,16 +946,8 @@ namespace DTXMania
 						this.n目標のスクロールカウンタ -= 100;
 
 						this.t選択曲が変更された( false );				// スクロールバー用に今何番目を選択しているかを更新
-                        if( this.tx選択されている曲の曲名 != null )
-                        {
-                            this.tx選択されている曲の曲名.Dispose();
-                            this.tx選択されている曲の曲名 = null;
-                        }
-                        if( this.tx選択されている曲のアーティスト名 != null )
-                        {
-                            this.tx選択されている曲のアーティスト名.Dispose();
-                            this.tx選択されている曲のアーティスト名 = null;
-                        }
+                        CDTXMania.t安全にDisposeする( ref this.tx選択されている曲の曲名 );
+                        CDTXMania.t安全にDisposeする( ref this.tx選択されている曲のアーティスト名 );
 
 						if( this.n目標のスクロールカウンタ == 0 )
 							CDTXMania.stage選曲.t選択曲変更通知();		// スクロール完了＝選択曲変更！
@@ -997,16 +1017,8 @@ namespace DTXMania
 
 
 						this.t選択曲が変更された( false );				// スクロールバー用に今何番目を選択しているかを更新
-                        if( this.tx選択されている曲の曲名 != null )
-                        {
-                            this.tx選択されている曲の曲名.Dispose();
-                            this.tx選択されている曲の曲名 = null;
-                        }
-                        if( this.tx選択されている曲のアーティスト名 != null )
-                        {
-                            this.tx選択されている曲のアーティスト名.Dispose();
-                            this.tx選択されている曲のアーティスト名 = null;
-                        }
+                        CDTXMania.t安全にDisposeする( ref this.tx選択されている曲の曲名 );
+                        CDTXMania.t安全にDisposeする( ref this.tx選択されている曲のアーティスト名 );
 						
 						if( this.n目標のスクロールカウンタ == 0 )
 							CDTXMania.stage選曲.t選択曲変更通知();		// スクロール完了＝選択曲変更！
@@ -1840,7 +1852,12 @@ namespace DTXMania
 				
                 this.stバー情報[ i ].strDTXフォルダのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス;
                 this.stバー情報[ i ].strPreimageのパス = song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].ファイル情報.フォルダの絶対パス + song.arスコア[ this.n現在のアンカ難易度レベルに最も近い難易度レベルを返す( song ) ].譜面情報.Preimage;
-                this.tパネルの生成(i, song.strタイトル, this.stバー情報[ i ].strアーティスト名, song.col文字色);
+
+                // 2019.4.26 kairera0467 バーの初期化は複数回行われる場合があるので、再構築する時には一度解放してから構築するほうが解放漏れは少なくなるはず。
+                CDTXMania.tテクスチャの解放( ref this.stバー情報[ i ].txパネル );
+                CDTXMania.tテクスチャの解放( ref this.txTumbnail[ i ] );
+
+                this.tパネルの生成( i, song.strタイトル, this.stバー情報[ i ].strアーティスト名, song.col文字色 );
                 if( this.stバー情報[ i ].strPreimageのパス != null )
                 {
                     if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
@@ -1869,14 +1886,15 @@ namespace DTXMania
 			{
                 //if ( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Score || this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Box)
                 {
-                    if (!File.Exists(strDTXPath))
-                    {
-                        this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
-                    }
-                    else
-                    {
-                        this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(strDTXPath);
-                    }
+                    // 2019.04.27 kairera0467 使っていないようなのでコメントアウト
+                    //if (!File.Exists(strDTXPath))
+                    //{
+                    //    this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
+                    //}
+                    //else
+                    //{
+                    //    this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(strDTXPath);
+                    //}
                 }
                 //else if( this.stバー情報[ nバー番号 ].eバー種別 == Eバー種別.Random)
                 //{

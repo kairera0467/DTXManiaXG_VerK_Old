@@ -30,6 +30,7 @@ namespace DTXMania
 			if( !base.b活性化してない )
 			{
 				CDTXMania.tテクスチャの解放( ref this.tx黒タイル64x64 );
+                CDTXMania.tテクスチャの解放( ref this.tx黒幕 );
 				base.On非活性化();
 			}
 		}
