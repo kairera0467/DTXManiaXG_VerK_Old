@@ -262,6 +262,7 @@ namespace DTXMania
                 CDTXMania.tテクスチャの解放( ref this.tx曲名 );
                 CDTXMania.tテクスチャの解放( ref this.r表示するリザルト画像 );
                 //CDTXMania.tテクスチャの解放( ref this.txSongLevel );
+                CDTXMania.tテクスチャの解放( ref this.txLevel );
                     
                 base.OnManagedリソースの解放();
             }
