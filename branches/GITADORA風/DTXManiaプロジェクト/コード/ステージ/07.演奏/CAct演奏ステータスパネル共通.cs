@@ -85,6 +85,12 @@ namespace DTXMania
             this.n現在のスコアBass = 0L;
             this.nStatus = 0;
             this.nIndex = 0;
+
+            for( int i = 0; i < 3; i++ )
+            {
+                this.db現在の達成率[ i ] = 0.0;
+            }
+
             base.On活性化();
         }
 
