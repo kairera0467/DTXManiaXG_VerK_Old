@@ -2857,7 +2857,7 @@ namespace DTXMania
                                             {
                                                 this.nVelocityMin.LP = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 127, this.nVelocityMin.LP);
                                             }
-                                            else if (str3.Equals("RDVelocityMin"))			// #23857 2011.1.31 yyagi
+                                            else if (str3.Equals("LBDVelocityMin"))			// #23857 2011.1.31 yyagi
                                             {
                                                 this.nVelocityMin.LBD = C変換.n値を文字列から取得して範囲内に丸めて返す(str4, 0, 127, this.nVelocityMin.LBD);
                                             }
