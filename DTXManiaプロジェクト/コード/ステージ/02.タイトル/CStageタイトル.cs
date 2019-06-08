@@ -184,7 +184,7 @@ namespace DTXMania
 				if( this.tx背景 != null )
 					this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
 
-                CDTXMania.act文字コンソール.tPrint( 2, 2, C文字コンソール.Eフォント種別.白, "DTX:J:A:A:2017043000" );
+                CDTXMania.act文字コンソール.tPrint( 2, 2, C文字コンソール.Eフォント種別.白, "DTX:J:A:A:2019060800" );
 
 				if( this.txメニュー != null )
 				{
