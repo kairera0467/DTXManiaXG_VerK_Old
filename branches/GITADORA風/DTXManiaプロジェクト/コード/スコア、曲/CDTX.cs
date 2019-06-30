@@ -6676,6 +6676,10 @@ namespace DTXMania
 
 				#region [ 無限定義への対応 → 内部番号の取得。]
 				//-----------------
+                // 2019.06.30 kairera0467
+                if( this.n無限管理WAV.Length < nオブジェクト数値 )
+                    break;
+
 				if( chip.bWAVを使うチャンネルである )
 				{
 					chip.n整数値・内部番号 = this.n無限管理WAV[ nオブジェクト数値 ];	// これが本当に一意なWAV番号となる。（無限定義の場合、chip.n整数値 は一意である保証がない。）
