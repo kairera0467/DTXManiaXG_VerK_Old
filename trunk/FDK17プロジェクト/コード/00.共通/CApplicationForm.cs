@@ -179,7 +179,7 @@ namespace FDK
 		/// <para>ウィンドウのクライアントサイズはバックバッファに等しく設定される。</para>
 		/// <para>処理に成功すれば true を返す。処理に失敗すれば、準正常系は false を返し、異常系は例外を発出する。</para>
 		/// </summary>
-		public bool tDirect3Dデバイスを生成・変更・リセットする( CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル, bool bマウスカーソルの表示を制御する )
+		public bool tDirect3Dデバイスを生成_変更_リセットする( CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル, bool bマウスカーソルの表示を制御する )
 		{
 			if( this.Window == null )
 				throw new InvalidOperationException( "ウィンドウが未生成のままDirect3D9デバイスを生成しようとしました。" );
@@ -384,17 +384,17 @@ namespace FDK
 
 			return true;
 		}
-		public bool tDirect3Dデバイスを生成・変更・リセットする( CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル )
+		public bool tDirect3Dデバイスを生成_変更_リセットする( CD3DSettings newD3DSettings, Size sz論理画面, uint wsウィンドウモード時のウィンドウスタイル, uint ws全画面モード時のウィンドウスタイル )
 		{
-			return this.tDirect3Dデバイスを生成・変更・リセットする( newD3DSettings, sz論理画面, wsウィンドウモード時のウィンドウスタイル, ws全画面モード時のウィンドウスタイル, true );
+			return this.tDirect3Dデバイスを生成_変更_リセットする( newD3DSettings, sz論理画面, wsウィンドウモード時のウィンドウスタイル, ws全画面モード時のウィンドウスタイル, true );
 		}
-		public bool tDirect3Dデバイスを生成・変更・リセットする( CD3DSettings newD3DSettings, Size sz論理画面 )
+		public bool tDirect3Dデバイスを生成_変更_リセットする( CD3DSettings newD3DSettings, Size sz論理画面 )
 		{
-			return this.tDirect3Dデバイスを生成・変更・リセットする( newD3DSettings, sz論理画面, uint.MaxValue, uint.MaxValue, true );
+			return this.tDirect3Dデバイスを生成_変更_リセットする( newD3DSettings, sz論理画面, uint.MaxValue, uint.MaxValue, true );
 		}
-		public bool tDirect3Dデバイスを生成・変更・リセットする( CD3DSettings newD3DSettings )
+		public bool tDirect3Dデバイスを生成_変更_リセットする( CD3DSettings newD3DSettings )
 		{
-			return this.tDirect3Dデバイスを生成・変更・リセットする( newD3DSettings, Size.Empty, uint.MaxValue, uint.MaxValue, true );
+			return this.tDirect3Dデバイスを生成_変更_リセットする( newD3DSettings, Size.Empty, uint.MaxValue, uint.MaxValue, true );
 		}
 
 		public void tDirect3Dデバイスをクリアする()
@@ -528,7 +528,7 @@ namespace FDK
 
 							try
 							{
-								if( this.tDirect3Dデバイスを生成・変更・リセットする( newSettings, CTexture.sz論理画面 ) )
+								if( this.tDirect3Dデバイスを生成_変更_リセットする( newSettings, CTexture.sz論理画面 ) )
 								{
 									// 作成成功。
 

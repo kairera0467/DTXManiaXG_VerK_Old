@@ -172,14 +172,14 @@ namespace DTXMania
             {
                 if( CDTXMania.ConfigIni.bドラムが全部オートプレイである )
                 {
-                    if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含む.Drums.Poor == 0 )
+                    if( CDTXMania.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数_Auto含む.Drums.Poor == 0 )
                         bドラムエクセ = true;
                 }
                 else
                 {
-                    if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Poor == 0 )
+                    if( CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Miss + CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Poor == 0 )
                         bドラムフルコン = true;
-                    if( CDTXMania.stage演奏ドラム画面.nヒット数・Auto含まない.Drums.Perfect == CDTXMania.DTX.n可視チップ数.Drums )
+                    if( CDTXMania.stage演奏ドラム画面.nヒット数_Auto含まない.Drums.Perfect == CDTXMania.DTX.n可視チップ数.Drums )
                         bドラムエクセ = true;
                 }
 

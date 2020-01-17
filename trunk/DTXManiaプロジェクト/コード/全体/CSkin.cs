@@ -70,7 +70,7 @@ namespace DTXMania
 					return this.rSound[ 1 - this.n次に鳴るサウンド番号 ].b再生中;
 				}
 			}
-			public int n位置・現在のサウンド
+			public int n位置_現在のサウンド
 			{
 				get
 				{
@@ -87,7 +87,7 @@ namespace DTXMania
 						sound.n位置 = value;
 				}
 			}
-			public int n位置・次に鳴るサウンド
+			public int n位置_次に鳴るサウンド
 			{
 				get
 				{
@@ -104,7 +104,7 @@ namespace DTXMania
 						sound.n位置 = value;
 				}
 			}
-			public int n音量・現在のサウンド
+			public int n音量_現在のサウンド
 			{
 				get
 				{
@@ -121,7 +121,7 @@ namespace DTXMania
 						sound.n音量 = value;
 				}
 			}
-			public int n音量・次に鳴るサウンド
+			public int n音量_次に鳴るサウンド
 			{
 				get
 				{
@@ -141,7 +141,7 @@ namespace DTXMania
 					}
 				}
 			}
-			public int n長さ・現在のサウンド
+			public int n長さ_現在のサウンド
 			{
 				get
 				{
@@ -153,7 +153,7 @@ namespace DTXMania
 					return sound.n総演奏時間ms;
 				}
 			}
-			public int n長さ・次に鳴るサウンド
+			public int n長さ_次に鳴るサウンド
 			{
 				get
 				{

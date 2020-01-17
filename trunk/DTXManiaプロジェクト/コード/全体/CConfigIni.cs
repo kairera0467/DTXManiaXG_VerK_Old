@@ -992,7 +992,7 @@ namespace DTXMania
             //CDTXMania.ConfigIni.bAutoPlay.Guitar = ts;
 
             int looptime = (int)Eレーン.GtW - (int)Eレーン.GtR + 1;		// #29390 2013.1.25 yyagi ギターのAutoLane/AutoPick対応に伴い、FLIPもこれに対応
-            for (int i = 0; i < looptime; i++)							// こんなに離れたところを独立して修正しなければならない設計ではいけませんね・・・
+            for (int i = 0; i < looptime; i++)							// こんなに離れたところを独立して修正しなければならない設計ではいけませんね...
             {
                 bool b = CDTXMania.ConfigIni.bAutoPlay[i + (int)Eレーン.BsR];
                 CDTXMania.ConfigIni.bAutoPlay[i + (int)Eレーン.BsR] = CDTXMania.ConfigIni.bAutoPlay[i + (int)Eレーン.GtR];
@@ -3025,7 +3025,7 @@ namespace DTXMania
                                             }
                                             else if( str3.Equals( "GuitarJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, 0, 999, this.nJudgeLine.Guitar );
+                                                this.nJudgeLine.Guitar = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, -100, 999, this.nJudgeLine.Guitar );
                                             }
                                             else if( str3.Equals( "GuitarShutterIn" ) )
                                             {
@@ -3037,7 +3037,7 @@ namespace DTXMania
                                             }
                                             else if( str3.Equals( "BassJudgeLine" ) )
                                             {
-                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, 0, 999, this.nJudgeLine.Bass );
+                                                this.nJudgeLine.Bass = C変換.n値を文字列から取得して範囲内にちゃんと丸めて返す( str4, -100, 999, this.nJudgeLine.Bass );
                                             }
                                             else if( str3.Equals( "BassShutterIn" ) )
                                             {

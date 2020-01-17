@@ -2308,11 +2308,11 @@ namespace DTXMania
 
             for (int p = s.Length - 1; p >= 0; p--)
             {
-                tアイテム数の描画・１桁描画(x, y, s[p]);
+                tアイテム数の描画_１桁描画(x, y, s[p]);
                 x -= 16;
             }
         }
-        private void tアイテム数の描画・１桁描画(int x, int y, char s数値)
+        private void tアイテム数の描画_１桁描画(int x, int y, char s数値)
         {
             int dx, dy;
             if (s数値 == '/')
