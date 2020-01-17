@@ -79,7 +79,7 @@ namespace DTXMania
                         {
                             var newSettings = this.currentD3DSettings.Clone();
 
-                            this.tDirect3Dデバイスを生成・変更・リセットする(		// 例外はキャッチしない。準正常じゃなくて異常なので。
+                            this.tDirect3Dデバイスを生成_変更_リセットする(		// 例外はキャッチしない。準正常じゃなくて異常なので。
                                 newSettings,
                                 this.LogicalDisplaySize,
                                 CApplicationForm.wsウィンドウスタイル,
@@ -168,8 +168,8 @@ namespace DTXMania
             終了,
             CLEAR,
             //STAGEFAILED,
-            GUI割込・演奏停止,
-            GUI割込・演奏開始,
+            GUI割込_演奏停止,
+            GUI割込_演奏開始,
         }
         public volatile bool bWM_CLOSEを受け取った = false;
 

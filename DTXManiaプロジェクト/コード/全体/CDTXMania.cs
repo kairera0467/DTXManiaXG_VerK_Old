@@ -287,7 +287,7 @@ namespace DTXMania
 			get; 
 			set;
 		}
-		public bool b次のタイミングで全画面・ウィンドウ切り替えを行う
+		public bool b次のタイミングで全画面_ウィンドウ切り替えを行う
 		{
 			get;
 			set;
@@ -341,7 +341,7 @@ namespace DTXMania
 
 		// メソッド
 
-		public void t全画面・ウィンドウモード切り替え()
+		public void t全画面_ウィンドウモード切り替え()
 		{
 #if WindowedFullscreen
 			if ( ConfigIni != null )
@@ -1229,7 +1229,7 @@ for (int i = 0; i < 3; i++) {
 
 						switch( this.n進行描画の戻り値 )
 						{
-							case (int) E演奏画面の戻り値.再読込・再演奏:
+							case (int) E演奏画面の戻り値.再読込_再演奏:
 								#region [ DTXファイルを再読み込みして、再演奏 ]
 								DTX.t全チップの再生停止();
 								DTX.On非活性化();
@@ -1564,11 +1564,11 @@ for (int i = 0; i < 3; i++) {
 
 
 			#region [ 全画面・ウインドウ切り替え ]
-			if ( this.b次のタイミングで全画面・ウィンドウ切り替えを行う )
+			if ( this.b次のタイミングで全画面_ウィンドウ切り替えを行う )
 			{
 				ConfigIni.b全画面モード = !ConfigIni.b全画面モード;
-				app.t全画面・ウィンドウモード切り替え();
-				this.b次のタイミングで全画面・ウィンドウ切り替えを行う = false;
+				app.t全画面_ウィンドウモード切り替え();
+				this.b次のタイミングで全画面_ウィンドウ切り替えを行う = false;
 			}
 			#endregion
 			#region [ 垂直基線同期切り替え ]
@@ -2000,7 +2000,7 @@ for (int i = 0; i < 3; i++) {
 			base.InactiveSleepTime = TimeSpan.FromMilliseconds((float)(ConfigIni.n非フォーカス時スリープms));	// #23568 2010.11.3 yyagi: to support valiable sleep value when !IsActive
 																												// #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
 #if WindowedFullscreen
-			this.t全画面・ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
+			this.t全画面_ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
 			actFlushGPU = new CActFlushGPU();
 			//---------------------
@@ -2812,7 +2812,7 @@ for (int i = 0; i < 3; i++) {
                 if (ConfigIni != null)
                 {
                     ConfigIni.bウィンドウモード = !ConfigIni.bウィンドウモード;
-                    this.t全画面・ウィンドウモード切り替え();
+                    this.t全画面_ウィンドウモード切り替え();
                 }
                 e.Handled = true;
                 e.SuppressKeyPress = true;
@@ -2843,7 +2843,7 @@ for (int i = 0; i < 3; i++) {
             if (mb.Equals(MouseButtons.Left) && ConfigIni.bIsAllowedDoubleClickFullscreen)	// #26752 2011.11.27 yyagi
             {
                 ConfigIni.bウィンドウモード = false;
-                this.t全画面・ウィンドウモード切り替え();
+                this.t全画面_ウィンドウモード切り替え();
             }
         }
         private void Window_ResizeEnd(object sender, EventArgs e)				// #23510 2010.11.20 yyagi: to get resized window size

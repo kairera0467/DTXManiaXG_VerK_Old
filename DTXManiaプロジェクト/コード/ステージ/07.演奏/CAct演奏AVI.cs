@@ -774,7 +774,7 @@ namespace DTXMania
                 if (CDTXMania.ConfigIni.bDrums有効)
                 {
                     if ( CDTXMania.ConfigIni.eドラムセットを動かす != Eタイプ.C )
-                        CDTXMania.stage演奏ドラム画面.t進行描画・ドラムセット();
+                        CDTXMania.stage演奏ドラム画面.t進行描画_ドラムセット();
 
                     if (CDTXMania.ConfigIni.nLaneDisp.Drums == 1 || CDTXMania.ConfigIni.nLaneDisp.Drums == 3)
                     {

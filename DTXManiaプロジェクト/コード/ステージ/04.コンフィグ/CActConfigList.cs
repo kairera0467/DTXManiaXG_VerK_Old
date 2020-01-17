@@ -64,7 +64,7 @@ namespace DTXMania
 
         // メソッド
         #region [ t項目リストの設定・System() ]
-        public void t項目リストの設定・System()
+        public void t項目リストの設定_System()
 		{
 			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -552,7 +552,7 @@ namespace DTXMania
         }
         #endregion
         #region [ t項目リストの設定・Drums() ]
-        public void t項目リストの設定・Drums()
+        public void t項目リストの設定_Drums()
 		{
 			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -1090,7 +1090,7 @@ namespace DTXMania
         }
         #endregion
         #region [ t項目リストの設定・Guitar() ]
-        public void t項目リストの設定・Guitar()
+        public void t項目リストの設定_Guitar()
 		{
 			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -1300,7 +1300,7 @@ namespace DTXMania
         }
         #endregion
         #region [ t項目リストの設定・Bass() ]
-        public void t項目リストの設定・Bass()
+        public void t項目リストの設定_Bass()
 		{
 			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -1508,19 +1508,19 @@ namespace DTXMania
 		{
 			if ( this.eメニュー種別 == Eメニュー種別.KeyAssignSystem )
 			{
-				t項目リストの設定・System();
+				t項目リストの設定_System();
 			}
 			else if ( this.eメニュー種別 == Eメニュー種別.KeyAssignDrums )
 			{
-				t項目リストの設定・Drums();
+				t項目リストの設定_Drums();
 			}
 			else if ( this.eメニュー種別 == Eメニュー種別.KeyAssignGuitar )
 			{
-				t項目リストの設定・Guitar();
+				t項目リストの設定_Guitar();
 			}
 			else if ( this.eメニュー種別 == Eメニュー種別.KeyAssignBass )
 			{
-				t項目リストの設定・Bass();
+				t項目リストの設定_Bass();
 			}
 			// これ以外なら何もしない
 		}
@@ -1677,7 +1677,7 @@ namespace DTXMania
                 this.list項目リスト[this.n現在の選択項目].tEnter押下();
 				if( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemFullscreen )
 				{
-					CDTXMania.app.b次のタイミングで全画面・ウィンドウ切り替えを行う = true;
+					CDTXMania.app.b次のタイミングで全画面_ウィンドウ切り替えを行う = true;
 				}
 				else if( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemVSyncWait )
 				{
@@ -1701,35 +1701,35 @@ namespace DTXMania
 				#region [ キーアサインへの遷移と脱出 ]
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iSystemGoToKeyAssign )			// #24609 2011.4.12 yyagi
 				{
-					t項目リストの設定・KeyAssignSystem();
+					t項目リストの設定_KeyAssignSystem();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignSystemReturnToMenu )	// #24609 2011.4.12 yyagi
 				{
-					t項目リストの設定・System();
+					t項目リストの設定_System();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iDrumsGoToKeyAssign )				// #24525 2011.3.15 yyagi
 				{
-					t項目リストの設定・KeyAssignDrums();
+					t項目リストの設定_KeyAssignDrums();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignDrumsReturnToMenu )		// #24525 2011.3.15 yyagi
 				{
-					t項目リストの設定・Drums();
+					t項目リストの設定_Drums();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iGuitarGoToKeyAssign )			// #24525 2011.3.15 yyagi
 				{
-					t項目リストの設定・KeyAssignGuitar();
+					t項目リストの設定_KeyAssignGuitar();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignGuitarReturnToMenu )	// #24525 2011.3.15 yyagi
 				{
-					t項目リストの設定・Guitar();
+					t項目リストの設定_Guitar();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iBassGoToKeyAssign )				// #24525 2011.3.15 yyagi
 				{
-					t項目リストの設定・KeyAssignBass();
+					t項目リストの設定_KeyAssignBass();
 				}
 				else if ( this.list項目リスト[ this.n現在の選択項目 ] == this.iKeyAssignBassReturnToMenu )		// #24525 2011.3.15 yyagi
 				{
-					t項目リストの設定・Bass();
+					t項目リストの設定_Bass();
 				}
 				#endregion
                 #region [ ダーク ]
@@ -1870,12 +1870,12 @@ namespace DTXMania
         }
 
         #region [ 項目リストの設定 ( Exit, KeyAssignSystem/Drums/Guitar/Bass) ]
-        public void t項目リストの設定・Exit()
+        public void t項目リストの設定_Exit()
 		{
 			this.tConfigIniへ記録する();
 			this.eメニュー種別 = Eメニュー種別.Unknown;
 		}
-		public void t項目リストの設定・KeyAssignSystem()
+		public void t項目リストの設定_KeyAssignSystem()
 		{
 			//this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -1905,7 +1905,7 @@ namespace DTXMania
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignSystem;
 		}
-		public void t項目リストの設定・KeyAssignDrums()
+		public void t項目リストの設定_KeyAssignDrums()
 		{
 //			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -1980,7 +1980,7 @@ namespace DTXMania
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignDrums;
 		}
-		public void t項目リストの設定・KeyAssignGuitar()
+		public void t項目リストの設定_KeyAssignGuitar()
 		{
 //			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -2035,7 +2035,7 @@ namespace DTXMania
 			this.n現在の選択項目 = 0;
 			this.eメニュー種別 = Eメニュー種別.KeyAssignGuitar;
 		}
-		public void t項目リストの設定・KeyAssignBass()
+		public void t項目リストの設定_KeyAssignBass()
 		{
 //			this.tConfigIniへ記録する();
 			this.list項目リスト.Clear();
@@ -2150,10 +2150,10 @@ namespace DTXMania
 			nSkinSampleIndex = -1;
 			#endregion
 
-			this.t項目リストの設定・Bass();		// #27795 2012.3.11 yyagi; System設定の中でDrumsの設定を参照しているため、
-			this.t項目リストの設定・Guitar();	// 活性化の時点でDrumsの設定も入れ込んでおかないと、System設定中に例外発生することがある。
-			this.t項目リストの設定・Drums();	// 
-			this.t項目リストの設定・System();	// 順番として、最後にSystemを持ってくること。設定一覧の初期位置がSystemのため。
+			this.t項目リストの設定_Bass();		// #27795 2012.3.11 yyagi; System設定の中でDrumsの設定を参照しているため、
+			this.t項目リストの設定_Guitar();	// 活性化の時点でDrumsの設定も入れ込んでおかないと、System設定中に例外発生することがある。
+			this.t項目リストの設定_Drums();	// 
+			this.t項目リストの設定_System();	// 順番として、最後にSystemを持ってくること。設定一覧の初期位置がSystemのため。
 			this.b要素値にフォーカス中 = false;
 			this.n目標のスクロールカウンタ = 0;
 			this.n現在のスクロールカウンタ = 0;
@@ -2872,39 +2872,39 @@ namespace DTXMania
 			switch( this.eメニュー種別 )
 			{
 				case Eメニュー種別.System:
-					this.tConfigIniへ記録する・System();
-					this.tConfigIniへ記録する・KeyAssignSystem();
+					this.tConfigIniへ記録する_System();
+					this.tConfigIniへ記録する_KeyAssignSystem();
 					return;
 
 				case Eメニュー種別.Drums:
-					this.tConfigIniへ記録する・Drums();
-					this.tConfigIniへ記録する・KeyAssignDrums();
+					this.tConfigIniへ記録する_Drums();
+					this.tConfigIniへ記録する_KeyAssignDrums();
 					return;
 
 				case Eメニュー種別.Guitar:
-					this.tConfigIniへ記録する・Guitar();
-					this.tConfigIniへ記録する・KeyAssignGuitar();
+					this.tConfigIniへ記録する_Guitar();
+					this.tConfigIniへ記録する_KeyAssignGuitar();
 					return;
 
 				case Eメニュー種別.Bass:
-					this.tConfigIniへ記録する・Bass();
-					this.tConfigIniへ記録する・KeyAssignBass();
+					this.tConfigIniへ記録する_Bass();
+					this.tConfigIniへ記録する_KeyAssignBass();
 					return;
 			}
 		}
-		private void tConfigIniへ記録する・KeyAssignBass()
+		private void tConfigIniへ記録する_KeyAssignBass()
 		{
 		}
-		private void tConfigIniへ記録する・KeyAssignDrums()
+		private void tConfigIniへ記録する_KeyAssignDrums()
 		{
 		}
-		private void tConfigIniへ記録する・KeyAssignGuitar()
+		private void tConfigIniへ記録する_KeyAssignGuitar()
 		{
 		}
-		private void tConfigIniへ記録する・KeyAssignSystem()
+		private void tConfigIniへ記録する_KeyAssignSystem()
 		{
 		}
-		private void tConfigIniへ記録する・System()
+		private void tConfigIniへ記録する_System()
 		{
 			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;
 			CDTXMania.ConfigIni.n演奏速度 = this.iCommonPlaySpeed.n現在の値;
@@ -2984,7 +2984,7 @@ namespace DTXMania
 //Trace.TraceInformation( "Skin現在BoxDef  : " + CSkin.strBoxDefSkinSubfolderFullName );
 		
 		}
-		private void tConfigIniへ記録する・Bass()
+		private void tConfigIniへ記録する_Bass()
 		{
 			//CDTXMania.ConfigIni.bAutoPlay.Bass = this.iBassAutoPlay.bON;
 			CDTXMania.ConfigIni.bAutoPlay.BsR = this.iBassR.bON;
@@ -3015,7 +3015,7 @@ namespace DTXMania
 			CDTXMania.ConfigIni.n表示可能な最小コンボ数.Bass = this.iSystemMinComboBass.n現在の値;
             CDTXMania.ConfigIni.bGraph有効.Bass = this.iBassGraph.bON;
 		}
-		private void tConfigIniへ記録する・Drums()
+		private void tConfigIniへ記録する_Drums()
 		{
 			CDTXMania.ConfigIni.bAutoPlay.LC = this.iDrumsLeftCymbal.bON;
 			CDTXMania.ConfigIni.bAutoPlay.HH = this.iDrumsHiHat.bON;
@@ -3074,7 +3074,7 @@ namespace DTXMania
             CDTXMania.ConfigIni.bGraph有効.Drums = this.iDrumsGraph.bON;
 			//CDTXMania.ConfigIni.eDark = (Eダークモード) this.iCommonDark.n現在選択されている項目番号;     // ダークはプリセット切り替えとして使うため、保存はしない。
 		}
-		private void tConfigIniへ記録する・Guitar()
+		private void tConfigIniへ記録する_Guitar()
 		{
 			//CDTXMania.ConfigIni.bAutoPlay.Guitar = this.iGuitarAutoPlay.bON;
 			CDTXMania.ConfigIni.bAutoPlay.GtR = this.iGuitarR.bON;
