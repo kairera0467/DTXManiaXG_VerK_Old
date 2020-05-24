@@ -679,20 +679,23 @@ namespace DTXMania
 							#endregion
                         }
                         #region[ debug ]
-                        if( false )
+                        //if( false )
                         {
-							if( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F6 ) )
-							{
-                                CDTXMania.ConfigIni.eAutoGhost.Drums = EAutoGhostData.LAST_PLAY;
-							}
-							if( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F7 ) )
-							{
-                                CDTXMania.ConfigIni.eAutoGhost.Drums = EAutoGhostData.PERFECT;
-							}
-							if( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F8 ) )
-							{
-                                CDTXMania.ConfigIni.eAutoGhost.Drums = EAutoGhostData.HI_SKILL;
-							}
+							//if( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F6 ) )
+							//{
+       //                         Debug.WriteLine("曲バーの強制再構成を開始");
+       //                         this.act曲リスト.t現在選択中の曲を元に曲バーを再構成する();
+       //                         Debug.WriteLine("曲バーの強制再構成を終了");
+       //                     }
+							//if( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F7 ) )
+							//{
+       //                         Debug.WriteLine("dicTumbnailの全件クリア");
+       //                         this.act曲リスト.tTumbDictionaryClear();
+							//}
+							//if( CDTXMania.Input管理.Keyboard.bキーが押された( (int) SlimDX.DirectInput.Key.F8 ) )
+							//{
+       //                         CDTXMania.ConfigIni.eAutoGhost.Drums = EAutoGhostData.HI_SKILL;
+							//}
                         }
                         #endregion
                     }

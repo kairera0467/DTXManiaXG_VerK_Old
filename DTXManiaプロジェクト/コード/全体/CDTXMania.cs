@@ -23,7 +23,7 @@ namespace DTXMania
 	{
 		// プロパティ
 
-		public static readonly string VERSION = "Ver3.62aRC2(1906--)";
+		public static readonly string VERSION = "Ver3.62aRC3(200524)";
 		public static readonly string SLIMDXDLL = "c_net20x86_Jun2010";
 		public static readonly string D3DXDLL = "d3dx9_43.dll";		// June 2010
         //public static readonly string D3DXDLL = "d3dx9_42.dll";	// February 2010
@@ -1596,9 +1596,17 @@ for (int i = 0; i < 3; i++) {
 		//-----------------
 		public static CTexture tテクスチャの生成( string fileName )
 		{
-			return tテクスチャの生成( fileName, false );
+			return tテクスチャの生成( fileName, "" );
+		}
+		public static CTexture tテクスチャの生成( string fileName, string _label )
+		{
+			return tテクスチャの生成( fileName, false, _label );
 		}
 		public static CTexture tテクスチャの生成( string fileName, bool b黒を透過する )
+		{
+			return tテクスチャの生成( fileName, false, "" );
+		}
+		public static CTexture tテクスチャの生成( string fileName, bool b黒を透過する, string _label )
 		{
 			if ( app == null )
 			{
@@ -1606,7 +1614,7 @@ for (int i = 0; i < 3; i++) {
 			}
 			try
 			{
-				return new CTexture( app.Device, fileName, TextureFormat, b黒を透過する );
+				return new CTexture( app.Device, fileName, TextureFormat, b黒を透過する, _label );
 			}
 			catch ( CTextureCreateFailedException )
 			{

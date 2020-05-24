@@ -67,6 +67,7 @@ namespace FDK
 		}
 		public Vector3 vc拡大縮小倍率;
         public string filename;
+        public string label; // DTXMania rev:2033adeeee1e46267cf36b50919c9ecee8804076
 
         	// 画面が変わるたび以下のプロパティを設定し治すこと。
 
@@ -93,6 +94,7 @@ namespace FDK
 			this.fZ軸中心回転 = 0f;
 			this.vc拡大縮小倍率 = new Vector3( 1f, 1f, 1f );
             this.filename = ""; // DTXMania rev:693bf14b0d83efc770235c788117190d08a4e531
+            this.label = ""; // DTXMania rev:2033adeeee1e46267cf36b50919c9ecee8804076
 //			this._txData = null;
 		}
 		
@@ -107,12 +109,13 @@ namespace FDK
 		/// <param name="bitmap">作成元のビットマップ。</param>
 		/// <param name="format">テクスチャのフォーマット。</param>
 		/// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
-		public CTexture( Device device, Bitmap bitmap, Format format )
+		public CTexture( Device device, Bitmap bitmap, Format format, string _label = "" )
 			: this()
 		{
 			try
 			{
 				this.Format = format;
+                this.label = _label;
 				this.sz画像サイズ = new Size( bitmap.Width, bitmap.Height );
 				this.szテクスチャサイズ = this.t指定されたサイズを超えない最適なテクスチャサイズを返す( device, this.sz画像サイズ );
 				this.rc全画像 = new Rectangle( 0, 0, this.sz画像サイズ.Width, this.sz画像サイズ.Height );
@@ -146,8 +149,8 @@ namespace FDK
 		/// <param name="n高さ">テクスチャの高さ（希望値）。</param>
 		/// <param name="format">テクスチャのフォーマット。</param>
 		/// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
-		public CTexture( Device device, int n幅, int n高さ, Format format )
-			: this( device, n幅, n高さ, format, Pool.Managed )
+		public CTexture( Device device, int n幅, int n高さ, Format format, string _label = "" )
+			: this( device, n幅, n高さ, format, Pool.Managed, _label )
 		{
 		}
 		
@@ -160,16 +163,16 @@ namespace FDK
 		/// <param name="format">テクスチャのフォーマット。</param>
 		/// <param name="b黒を透過する">画像の黒（0xFFFFFFFF）を透過させるなら true。</param>
 		/// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
-		public CTexture( Device device, string strファイル名, Format format, bool b黒を透過する )
-			: this( device, strファイル名, format, b黒を透過する, Pool.Managed )
+		public CTexture( Device device, string strファイル名, Format format, bool b黒を透過する, string _label = "" )
+			: this( device, strファイル名, format, b黒を透過する, Pool.Managed, _label )
 		{
 		}
-		public CTexture( Device device, byte[] txData, Format format, bool b黒を透過する )
-			: this( device, txData, format, b黒を透過する, Pool.Managed )
+		public CTexture( Device device, byte[] txData, Format format, bool b黒を透過する, string _label = "" )
+			: this( device, txData, format, b黒を透過する, Pool.Managed, _label )
 		{
 		}
-		public CTexture( Device device, Bitmap bitmap, Format format, bool b黒を透過する )
-			: this( device, bitmap, format, b黒を透過する, Pool.Managed )
+		public CTexture( Device device, Bitmap bitmap, Format format, bool b黒を透過する, string _label = "" )
+			: this( device, bitmap, format, b黒を透過する, Pool.Managed, _label )
 		{
 		}
 		
@@ -187,17 +190,18 @@ namespace FDK
 		/// <param name="format">テクスチャのフォーマット。</param>
 		/// <param name="pool">テクスチャの管理方法。</param>
 		/// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
-		public CTexture( Device device, int n幅, int n高さ, Format format, Pool pool )
-			: this( device, n幅, n高さ, format, pool, Usage.None )
+		public CTexture( Device device, int n幅, int n高さ, Format format, Pool pool, string _label = "" )
+			: this( device, n幅, n高さ, format, pool, Usage.None, _label )
 		{
 		}
 		
-		public CTexture( Device device, int n幅, int n高さ, Format format, Pool pool, Usage usage )
+		public CTexture( Device device, int n幅, int n高さ, Format format, Pool pool, Usage usage, string _label = "" )
 			: this()
 		{
 			try
 			{
 				this.Format = format;
+                this.label = _label;
 				this.sz画像サイズ = new Size( n幅, n高さ );
 				this.szテクスチャサイズ = this.t指定されたサイズを超えない最適なテクスチャサイズを返す( device, this.sz画像サイズ );
 				this.rc全画像 = new Rectangle( 0, 0, this.sz画像サイズ.Width, this.sz画像サイズ.Height );
@@ -241,32 +245,33 @@ namespace FDK
 		/// <param name="b黒を透過する">画像の黒（0xFFFFFFFF）を透過させるなら true。</param>
 		/// <param name="pool">テクスチャの管理方法。</param>
 		/// <exception cref="CTextureCreateFailedException">テクスチャの作成に失敗しました。</exception>
-		public CTexture( Device device, string strファイル名, Format format, bool b黒を透過する, Pool pool )
+		public CTexture( Device device, string strファイル名, Format format, bool b黒を透過する, Pool pool, string _label = "" )
 			: this()
 		{
-			MakeTexture( device, strファイル名, format, b黒を透過する, pool );
+			MakeTexture( device, strファイル名, format, b黒を透過する, pool, _label );
 		}
-		public void MakeTexture( Device device, string strファイル名, Format format, bool b黒を透過する, Pool pool )
+		public void MakeTexture( Device device, string strファイル名, Format format, bool b黒を透過する, Pool pool, string _label = "" )
 		{
 			if ( !File.Exists( strファイル名 ) )		// #27122 2012.1.13 from: ImageInformation では FileNotFound 例外は返ってこないので、ここで自分でチェックする。わかりやすいログのために。
 				throw new FileNotFoundException( string.Format( "ファイルが存在しません。\n[{0}]", strファイル名 ) );
 
 			Byte[] _txData = File.ReadAllBytes( strファイル名 );
             this.filename = Path.GetFileName( strファイル名 );
-			MakeTexture( device, _txData, format, b黒を透過する, pool );
+			MakeTexture( device, _txData, format, b黒を透過する, pool, _label );
 		}
 
-		public CTexture( Device device, byte[] txData, Format format, bool b黒を透過する, Pool pool )
+		public CTexture( Device device, byte[] txData, Format format, bool b黒を透過する, Pool pool, string _label = "" )
 			: this()
 		{
-			MakeTexture( device, txData, format, b黒を透過する, pool );
+			MakeTexture( device, txData, format, b黒を透過する, pool, _label );
 		}
-		public void MakeTexture( Device device, byte[] txData, Format format, bool b黒を透過する, Pool pool )
+		public void MakeTexture( Device device, byte[] txData, Format format, bool b黒を透過する, Pool pool, string _label = "" )
 		{
 			try
 			{
 				var information = ImageInformation.FromMemory( txData );
 				this.Format = format;
+                this.label = _label;
 				this.sz画像サイズ = new Size( information.Width, information.Height );
 				this.rc全画像 = new Rectangle( 0, 0, this.sz画像サイズ.Width, this.sz画像サイズ.Height );
 				int colorKey = ( b黒を透過する ) ? unchecked( (int) 0xFF000000 ) : 0;
@@ -290,16 +295,17 @@ namespace FDK
 			}
 		}
 
-		public CTexture( Device device, Bitmap bitmap, Format format, bool b黒を透過する, Pool pool )
+		public CTexture( Device device, Bitmap bitmap, Format format, bool b黒を透過する, Pool pool, string _label = "" )
 			: this()
 		{
-			MakeTexture( device, bitmap, format, b黒を透過する, pool );
+			MakeTexture( device, bitmap, format, b黒を透過する, pool, _label );
 		}
-		public void MakeTexture( Device device, Bitmap bitmap, Format format, bool b黒を透過する, Pool pool )
+		public void MakeTexture( Device device, Bitmap bitmap, Format format, bool b黒を透過する, Pool pool, string _label = "" )
 		{
 			try
 			{
 				this.Format = format;
+                this.label = _label;
 				this.sz画像サイズ = new Size( bitmap.Width, bitmap.Height );
 				this.rc全画像 = new Rectangle( 0, 0, this.sz画像サイズ.Width, this.sz画像サイズ.Height );
 				int colorKey = ( b黒を透過する ) ? unchecked( (int) 0xFF000000 ) : 0;
@@ -777,7 +783,7 @@ namespace FDK
 			// CTextureのDispose漏れと見做して警告をログ出力する
 			if (!this.bSlimDXTextureDispose完了済み)
 			{
-                Trace.TraceWarning("CTexture: Dispose漏れを検出しました。(Size=({0}, {1}), filename={2})", sz画像サイズ.Width, sz画像サイズ.Height, filename );
+                Trace.TraceWarning("CTexture: Dispose漏れを検出しました。(Size=({0}, {1}), filename={2}, label={3})", sz画像サイズ.Width, sz画像サイズ.Height, filename, label );
 			}
 			this.Dispose(false);
 		}
