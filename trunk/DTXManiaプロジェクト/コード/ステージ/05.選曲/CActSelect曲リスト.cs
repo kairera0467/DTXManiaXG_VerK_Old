@@ -308,13 +308,13 @@ namespace DTXMania
 				//this.t曲名バーの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].col文字色 );
                 this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
                 this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
-                if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
-			    {
-    			    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                    this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
-				    this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
-				}
-                txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
+    //            if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
+			 //   {
+    //			    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
+    //                this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
+				//    this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
+				//}
+    //            this.txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
 			}
 		}
 		public void t次に移動()
@@ -646,27 +646,28 @@ namespace DTXMania
             int nKeys = this.dicThumbnail.Count;
             string[] keys = new string[ nKeys ];
             this.dicThumbnail.Keys.CopyTo( keys, 0 );
-            foreach (var key in keys)
-                this.dicThumbnail[ key ] = this.tパスを指定してサムネイル画像を生成して返す( 0, key, this.stバー情報[ 0 ].eバー種別  );;
+            //foreach (var key in keys)
+            //    this.dicThumbnail[ key ] = this.tパスを指定してサムネイル画像を生成して返す( 0, key, this.stバー情報[ 0 ].eバー種別  );
 
-            //ここは最初に表示される画像の復元に必要。
-            for (int i = 0; i < 15; i++)
-            {
-                //this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
-                this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
-                //this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
-                //this.tパスを指定してサムネイル画像を生成する(i, this.stバー情報[i].strDTXフォルダのパス, this.stバー情報[i].eバー種別);
-                if( this.stバー情報[ i ].strPreimageのパス != null )
-                {
-                    if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
-			        {
-    				    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                        this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
-				        this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
-				    }
-                    txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
-                }
-            }
+        //    //ここは最初に表示される画像の復元に必要。
+        //    for (int i = 0; i < 15; i++)
+        //    {
+        //        //this.t曲名バーの生成(i, this.stバー情報[i].strタイトル文字列, this.stバー情報[i].col文字色);
+        //        this.tアーティスト名テクスチャの生成( i, this.stバー情報[ i ].strアーティスト名 );
+        //        //this.tパネルの生成( i, this.stバー情報[ i ].strタイトル文字列, this.stバー情報[ i ].strアーティスト名, this.stバー情報[ i ].col文字色 );
+        //        //this.tパスを指定してサムネイル画像を生成する(i, this.stバー情報[i].strDTXフォルダのパス, this.stバー情報[i].eバー種別);
+        //        if( this.stバー情報[ i ].strPreimageのパス != null )
+        //        {
+        //            if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
+			     //   {
+    				//    //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
+        //                this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
+				    //    this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
+				    //}
+        //            //txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
+        //            txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
+        //        }
+        //    }
             #endregion
 
 
@@ -742,6 +743,8 @@ namespace DTXMania
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txアーティスト名 );
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txカスタム曲名テクスチャ );
                 CDTXMania.t安全にDisposeする( ref this.stバー情報[ i ].txカスタムアーティスト名テクスチャ );
+
+                CDTXMania.tテクスチャの解放( ref this.txTumbnail[ i ] );
             }
 
             CDTXMania.tテクスチャの解放( ref this.tx選択されている曲の曲名 );
@@ -912,13 +915,22 @@ namespace DTXMania
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
                         this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
+                        //Trace.TraceInformation( "パネルを1行上にシフト" );
                         if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strPreimageのパス ) )
 				        {
-					        //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                            this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別  );
-					        this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス, this.txTumbnail[ index ] );
+                            //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
+                            //this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別  );
+		                    this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス,
+                                this.tパスを指定してサムネイル画像を生成して返す(index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別) );
+					        //this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス, this.txTumbnail[ index ] );
 				        }
-                        txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ];
+                        //else if( this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ]?.texture == null )
+                        //{
+                        //    Trace.TraceWarning( string.Format( "予期しない解放が発生していたため再生成を行いました。 ({0})", this.stバー情報[ index ].strPreimageのパス ) );
+                        //    this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ]?.Dispose();
+                        //    this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ] = CDTXMania.tテクスチャの生成( this.stバー情報[ index ].strPreimageのパス );
+                        //}
+                        //txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ];
 
 
 						// stバー情報[] の内容を1行ずつずらす。
@@ -981,13 +993,16 @@ namespace DTXMania
                         this.tアーティスト名テクスチャの生成( index, this.stバー情報[ index ].strアーティスト名 );
                         this.tパネルの生成( index, this.stバー情報[ index ].strタイトル文字列, this.stバー情報[ index ].strアーティスト名, this.stバー情報[ index ].col文字色 );
 
+                        //Trace.TraceInformation( "パネルを1行下にシフト" );
                         if( !this.dicThumbnail.ContainsKey( this.stバー情報[ index ].strPreimageのパス ) )
 				        {
 					        //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                            this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別  );
-					        this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス, this.txTumbnail[ index ] );
+                            //this.tパスを指定してサムネイル画像を生成する( index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別  );
+		                    this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス,
+                                this.tパスを指定してサムネイル画像を生成して返す(index, this.stバー情報[ index ].strPreimageのパス, this.stバー情報[ index ].eバー種別) );
+					        //this.dicThumbnail.Add( this.stバー情報[ index ].strPreimageのパス, this.txTumbnail[ index ] );
 				        }
-                        txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ];
+                        //txTumbnail[ index ] = this.dicThumbnail[ this.stバー情報[ index ].strPreimageのパス ];
 
 
 						// stバー情報[] の内容を1行ずつずらす。
@@ -1032,6 +1047,14 @@ namespace DTXMania
 				#endregion
 			}
 
+            //if( this.txTumbnail != null )
+            //{
+            //    this.txTumbnail[0]?.t2D描画( CDTXMania.app.Device, 0, 0 );
+            //}
+            if( this.stバー情報 != null )
+            {
+                this.stバー情報[0].txパネル?.t2D描画(CDTXMania.app.Device, 0, 0);
+            }
 
 			// 描画。
 
@@ -1403,17 +1426,29 @@ namespace DTXMania
                             matSongPanel[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y, fZ );
                             this.stバー情報[ nパネル番号 ].txパネル.t3D描画( CDTXMania.app.Device, matSongPanel[ i ] );
                         }
-                        if (this.txTumbnail[ nパネル番号 ] != null)
+                        if( this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ] != null )
                         {
-                            float f拡大率 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width;
-                            float f拡大率2 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
+                            float f拡大率X = (float) 172.0 / this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ].szテクスチャサイズ.Width;
+                            float f拡大率Y = (float) 172.0 / this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ].szテクスチャサイズ.Height;
 
-                            matJacket[ i ] *= SlimDX.Matrix.Scaling( f拡大率 * CTexture.f画面比率 - 0.084f, f拡大率2 * CTexture.f画面比率 + 0.05f, 1.0f );
+
+                            matJacket[ i ] *= SlimDX.Matrix.Scaling( f拡大率X * CTexture.f画面比率 - 0.084f, f拡大率Y * CTexture.f画面比率 + 0.05f, 1.0f );
                             matJacket[ i ] *= SlimDX.Matrix.RotationYawPitchRoll( fR, 0.0f, 0.0f );
                             matJacket[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y - 1.5f, fZ );
 
-                            this.txTumbnail[ nパネル番号 ].t3D描画(CDTXMania.app.Device, matJacket[ i ] );
+                            this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ].t3D描画(CDTXMania.app.Device, matJacket[ i ] );
                         }
+                        //if (this.txTumbnail[ nパネル番号 ] != null)
+                        //{
+                        //    float f拡大率 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Width;
+                        //    float f拡大率2 = (float)172.0 / this.txTumbnail[nパネル番号].szテクスチャサイズ.Height;
+
+                        //    matJacket[ i ] *= SlimDX.Matrix.Scaling( f拡大率 * CTexture.f画面比率 - 0.084f, f拡大率2 * CTexture.f画面比率 + 0.05f, 1.0f );
+                        //    matJacket[ i ] *= SlimDX.Matrix.RotationYawPitchRoll( fR, 0.0f, 0.0f );
+                        //    matJacket[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y - 1.5f, fZ );
+
+                        //    this.txTumbnail[ nパネル番号 ].t3D描画(CDTXMania.app.Device, matJacket[ i ] );
+                        //}
                         //-----------------
                         #endregion
                     }
@@ -1431,17 +1466,29 @@ namespace DTXMania
                             matSongPanel[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y, fZ );
                             this.stバー情報[ nパネル番号 ].txパネル.t3D描画( CDTXMania.app.Device, matSongPanel[ i ] );
                         }
-                        if( this.txTumbnail[ nパネル番号 ] != null )
+                        if( this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ] != null )
                         {
-                            float f拡大率 = (float)172.0 / this.txTumbnail[ nパネル番号 ].szテクスチャサイズ.Width ;
-                            float f拡大率2 = (float)172.0 / this.txTumbnail[ nパネル番号 ].szテクスチャサイズ.Height;
+                            float f拡大率X = (float) 172.0 / this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ].szテクスチャサイズ.Width;
+                            float f拡大率Y = (float) 172.0 / this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ].szテクスチャサイズ.Height;
 
-                            matJacket[ i ] *= SlimDX.Matrix.Scaling( f拡大率 * CTexture.f画面比率 - 0.084f, f拡大率2 * CTexture.f画面比率 + 0.05f, 1.0f );
+
+                            matJacket[ i ] *= SlimDX.Matrix.Scaling( f拡大率X * CTexture.f画面比率 - 0.084f, f拡大率Y * CTexture.f画面比率 + 0.05f, 1.0f );
                             matJacket[ i ] *= SlimDX.Matrix.RotationYawPitchRoll( st3D座標[ i ].rotY, 0.0f, 0.0f );
                             matJacket[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y - 1.5f, fZ );
 
-                            this.txTumbnail[ nパネル番号 ].t3D描画( CDTXMania.app.Device, matJacket[ i ] );
+                            this.dicThumbnail[ this.stバー情報[ nパネル番号 ].strPreimageのパス ].t3D描画(CDTXMania.app.Device, matJacket[ i ] );
                         }
+                        //if( this.txTumbnail[ nパネル番号 ] != null )
+                        //{
+                        //    float f拡大率 = (float)172.0 / this.txTumbnail[ nパネル番号 ].szテクスチャサイズ.Width ;
+                        //    float f拡大率2 = (float)172.0 / this.txTumbnail[ nパネル番号 ].szテクスチャサイズ.Height;
+
+                        //    matJacket[ i ] *= SlimDX.Matrix.Scaling( f拡大率 * CTexture.f画面比率 - 0.084f, f拡大率2 * CTexture.f画面比率 + 0.05f, 1.0f );
+                        //    matJacket[ i ] *= SlimDX.Matrix.RotationYawPitchRoll( );
+                        //    matJacket[ i ] *= SlimDX.Matrix.Translation( fX, st3D座標[ i ].y - 1.5f, fZ );
+
+                        //    this.txTumbnail[ nパネル番号 ].t3D描画( CDTXMania.app.Device, matJacket[ i ] );
+                        //}
                         //-----------------
                         #endregion
                     }
@@ -1468,14 +1515,23 @@ namespace DTXMania
                 }
                 #endregion
                 #region[ ジャケット画像 ]
-                if ( this.txTumbnail[ n選択曲のパネル番号 ] != null )
+                if( this.dicThumbnail[ this.stバー情報[ n選択曲のパネル番号 ].strPreimageのパス ] != null )
                 {
-                    float f拡大率 = (float)218.0 / this.txTumbnail[ n選択曲のパネル番号 ].szテクスチャサイズ.Width;
-                    float f拡大率2 = (float)218.0 / this.txTumbnail[ n選択曲のパネル番号 ].szテクスチャサイズ.Height;
-                    this.txTumbnail[ n選択曲のパネル番号 ].vc拡大縮小倍率 = new Vector3( f拡大率, f拡大率2, 1.0f );
-                    this.txTumbnail[ n選択曲のパネル番号 ].t2D描画(CDTXMania.app.Device, 537, 249 );
-                    this.txTumbnail[ n選択曲のパネル番号 ].vc拡大縮小倍率 = new Vector3( 1.0f, 1.0f, 1.0f );
+                    float f拡大率X = (float) 218.0 / this.dicThumbnail[ this.stバー情報[n選択曲のパネル番号].strPreimageのパス ].szテクスチャサイズ.Width;
+                    float f拡大率Y = (float) 218.0 / this.dicThumbnail[ this.stバー情報[n選択曲のパネル番号].strPreimageのパス ].szテクスチャサイズ.Height;
+
+                    this.dicThumbnail[ this.stバー情報[n選択曲のパネル番号].strPreimageのパス ].vc拡大縮小倍率 = new Vector3( f拡大率X, f拡大率Y, 1.0f );
+                    this.dicThumbnail[ this.stバー情報[n選択曲のパネル番号].strPreimageのパス ].t2D描画(CDTXMania.app.Device, 537, 249 );
+                    this.dicThumbnail[ this.stバー情報[n選択曲のパネル番号].strPreimageのパス ].vc拡大縮小倍率 = new Vector3( 1.0f, 1.0f, 1.0f );
                 }
+                //if ( this.txTumbnail[ n選択曲のパネル番号 ] != null )
+                //{
+                //    float f拡大率 = (float)218.0 / this.txTumbnail[ n選択曲のパネル番号 ].szテクスチャサイズ.Width;
+                //    float f拡大率2 = (float)218.0 / this.txTumbnail[ n選択曲のパネル番号 ].szテクスチャサイズ.Height;
+                //    this.txTumbnail[ n選択曲のパネル番号 ].vc拡大縮小倍率 = new Vector3( f拡大率, f拡大率2, 1.0f );
+                //    this.txTumbnail[ n選択曲のパネル番号 ].t2D描画(CDTXMania.app.Device, 537, 249 );
+                //    this.txTumbnail[ n選択曲のパネル番号 ].vc拡大縮小倍率 = new Vector3( 1.0f, 1.0f, 1.0f );
+                //}
                 #endregion
                 #region[ タイトル・アーティスト名 ]
                 //曲名テクスチャ 生成
@@ -1831,6 +1887,8 @@ namespace DTXMania
 			if( song == null )
 				return;
 
+            //Trace.TraceInformation("バーの初期化処理開始");
+
 			for( int i = 0; i < 7; i++ )
 				song = this.r前の曲( song );
 
@@ -1855,7 +1913,7 @@ namespace DTXMania
 
                 // 2019.4.26 kairera0467 バーの初期化は複数回行われる場合があるので、再構築する時には一度解放してから構築するほうが解放漏れは少なくなるはず。
                 CDTXMania.tテクスチャの解放( ref this.stバー情報[ i ].txパネル );
-                CDTXMania.tテクスチャの解放( ref this.txTumbnail[ i ] );
+                // CDTXMania.tテクスチャの解放( ref this.txTumbnail[ i ] );
 
                 this.tパネルの生成( i, song.strタイトル, this.stバー情報[ i ].strアーティスト名, song.col文字色 );
                 if( this.stバー情報[ i ].strPreimageのパス != null )
@@ -1863,10 +1921,18 @@ namespace DTXMania
                     if( !this.dicThumbnail.ContainsKey( this.stバー情報[ i ].strPreimageのパス ) )
 				    {
 			            //txTumbnail = this.tサムネイルテクスチャを作成する( Path.GetDirectoryName( song.ScoreFile ) );
-                        this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
-		                this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス, this.txTumbnail[ i ] );
+                        //this.tパスを指定してサムネイル画像を生成する( i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別  );
+                        
+		                this.dicThumbnail.Add( this.stバー情報[ i ].strPreimageのパス,
+                            this.tパスを指定してサムネイル画像を生成して返す(i, this.stバー情報[ i ].strPreimageのパス, this.stバー情報[ i ].eバー種別) );
 				    }
-                    txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
+                    //else if( this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ]?.texture == null )
+                    //{
+                    //    // キーは存在するがテクスチャがnullの場合は再生成のみ行う
+                    //    Trace.TraceInformation(string.Format("キーがあるけどnullになってるCTextureのテクスチャ再生成 {0}", this.stバー情報[ i ].strPreimageのパス));
+                    //    this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ] = CDTXMania.tテクスチャの生成( this.stバー情報[ i ].strPreimageのパス );
+                    //}
+                    //txTumbnail[ i ] = this.dicThumbnail[ this.stバー情報[ i ].strPreimageのパス ];
                 }
 
 				for( int j = 0; j < 3; j++ )
@@ -1874,6 +1940,8 @@ namespace DTXMania
 
 				song = this.r次の曲( song );
 			}
+
+            //Trace.TraceInformation("バーの初期化処理終了");
 
 			this.n現在の選択行 = 7;
 		}
@@ -1924,20 +1992,34 @@ namespace DTXMania
         private CTexture tパスを指定してサムネイル画像を生成して返す( int nバー番号, string strDTXPath, Eバー種別 eType )
         {
             if (nバー番号 < 0 || nバー番号 > 15)
-                return this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
+                return CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
+
+            // 2020.5.23 kairera0467 memo
+            // ここではtxTumbnailに生成結果を格納すると同時に、returnしたCTextureをdicTumbnailに格納している...
+            // はずだが、nバー番号が0で固定されているため、本当は無駄が発生しているかもしれない。
 
             //try
 			{
                 //if (eType == Eバー種別.Score || eType == Eバー種別.Box)
                 {
+                    // 一度txTumbnailへの格納をやめてみる。
                     if (!File.Exists(strDTXPath))
                     {
-                        return this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), false);
+                        return CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), "FILE NOT EXISTS:" + strDTXPath);
                     }
                     else
                     {
-                        return this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(strDTXPath);
+                        return CDTXMania.tテクスチャの生成(strDTXPath, "PRE:" + strDTXPath);
                     }
+
+                    //if (!File.Exists(strDTXPath))
+                    //{
+                    //    return this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(CSkin.Path(@"Graphics\5_preimage default.png"), "FILE NOT EXISTS:" + strDTXPath);
+                    //}
+                    //else
+                    //{
+                    //    return this.txTumbnail[nバー番号] = CDTXMania.tテクスチャの生成(strDTXPath, "PRE:" + strDTXPath);
+                    //}
                 }
                 //else if (eType == Eバー種別.Random)
                 {
@@ -1963,6 +2045,12 @@ namespace DTXMania
                 }
 			}
                  */
+        }
+        public void tTumbDictionaryClear()
+        {
+            // デバッグ用
+            // dicThumbnailに登録されたものを全部消去
+            this.dicThumbnail.Clear();
         }
         private CTexture t指定された文字テクスチャを生成する( string str文字, Color color )
         {
