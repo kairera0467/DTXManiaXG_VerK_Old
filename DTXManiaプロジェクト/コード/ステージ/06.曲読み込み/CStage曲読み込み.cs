@@ -197,7 +197,7 @@ namespace DTXMania
                 string strDTXファイルパス = ( CDTXMania.bコンパクトモード ) ?
                     CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
 
-                CDTX cdtx = new CDTX( strDTXファイルパス, true );
+                this.cdtx = new CDTX( strDTXファイルパス, true );
 
                 if( !CDTXMania.bコンパクトモード && CDTXMania.ConfigIni.b曲名表示をdefのものにする )
                     this.str曲タイトル = CDTXMania.stage選曲.r確定された曲.strタイトル;
@@ -396,11 +396,31 @@ namespace DTXMania
                     this.nBGMの総再生時間ms = CDTXMania.Skin.sound曲読込開始音.n長さ_現在のサウンド;
                 }
                 //				this.actFI.tフェードイン開始();							// #27787 2012.3.10 yyagi 曲読み込み画面のフェードインの省略
+                this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
+                nWAVcount = 1;
+
+                string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
+                try
+                {
+                    if( this.txジャケット == null ) // 2019.04.26 kairera0467
+                    {
+                        if( !File.Exists( path ) )
+                        {
+                            this.txジャケット = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
+                        }
+                        else
+                        {
+                            this.txジャケット = CDTXMania.tテクスチャの生成( path );
+                        }
+                    }
+                }
+                catch ( Exception ex )
+                {
+                    Trace.TraceError( ex.StackTrace );
+                }
+
                 base.eフェーズID = CStage.Eフェーズ.共通_フェードイン;
                 base.b初めての進行描画 = false;
-                this.tラベル名からステータスパネルを決定する( CDTXMania.stage選曲.r確定された曲.ar難易度ラベル[ CDTXMania.stage選曲.n確定された曲の難易度 ] );
-
-                nWAVcount = 1;
             }
             //-----------------------------
             #endregion
@@ -421,31 +441,6 @@ namespace DTXMania
             //-----------------------------
             if( this.tx背景 != null )
                 this.tx背景.t2D描画( CDTXMania.app.Device, 0, 0 );
-
-            string strDTXファイルパス = (CDTXMania.bコンパクトモード) ?
-            CDTXMania.strコンパクトモードファイル : CDTXMania.stage選曲.r確定されたスコア.ファイル情報.ファイルの絶対パス;
-            CDTX cdtx = new CDTX(strDTXファイルパス, true);
-
-            string path = cdtx.strフォルダ名 + cdtx.PREIMAGE;
-            try
-            {
-                if( this.txジャケット == null ) // 2019.04.26 kairera0467
-                {
-                    if( !File.Exists( path ) )
-                    {
-                        this.txジャケット = CDTXMania.tテクスチャの生成( CSkin.Path( @"Graphics\5_preimage default.png" ) );
-                    }
-                    else
-                    {
-                        this.txジャケット = CDTXMania.tテクスチャの生成( path );
-                    }
-                }
-            }
-            catch( Exception ex )
-            {
-                Trace.TraceError( ex.StackTrace );
-            }
-
 
             int y = 184;
 
@@ -841,6 +836,7 @@ namespace DTXMania
         }
         //		private CActFIFOBlack actFI;
         private CActFIFOBlackStart actFO;
+        private CDTX cdtx;
 
         private readonly ST文字位置[] st小文字位置;
         private readonly ST文字位置[] st大文字位置;
