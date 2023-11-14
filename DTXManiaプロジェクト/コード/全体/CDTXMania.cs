@@ -290,7 +290,7 @@ namespace DTXMania
             get;
             set;
         }
-        public bool b次のタイミングで全画面・ウィンドウ切り替えを行う
+        public bool b次のタイミングで全画面_ウィンドウ切り替えを行う
         {
             get;
             set;
@@ -339,7 +339,7 @@ namespace DTXMania
 
         // メソッド
 
-        public void t全画面・ウィンドウモード切り替え()
+        public void t全画面_ウィンドウモード切り替え()
         {
 #if WindowedFullscreen
             if ( ConfigIni != null )
@@ -615,7 +615,7 @@ namespace DTXMania
                     case CStage.Eステージ.曲読み込み:
                         if (EnumSongs != null)
                         {
-                            #region [ (特定条件時) 曲検索スレッドの起動・開始 ]
+                            #region [ (特定条件時) 曲検索スレッドの起動_開始 ]
                             if (r現在のステージ.eステージID == CStage.Eステージ.タイトル &&
                                  r直前のステージ.eステージID == CStage.Eステージ.起動 &&
                                  this.n進行描画の戻り値 == (int)CStageタイトル.E戻り値.継続 &&
@@ -624,7 +624,7 @@ namespace DTXMania
                                 actEnumSongs.On活性化();
                                 CDTXMania.stage選曲.bIsEnumeratingSongs = true;
                                 EnumSongs.Init(CDTXMania.Songs管理.listSongsDB, CDTXMania.Songs管理.nSongsDBから取得できたスコア数);	// songs.db情報と、取得した曲数を、新インスタンスにも与える
-                                EnumSongs.StartEnumFromDisk();		// 曲検索スレッドの起動・開始
+                                EnumSongs.StartEnumFromDisk();		// 曲検索スレッドの起動_開始
                                 if (CDTXMania.Songs管理.nSongsDBから取得できたスコア数 == 0)	// もし初回起動なら、検索スレッドのプライオリティをLowestでなくNormalにする
                                 {
                                     EnumSongs.ChangeEnumeratePriority(ThreadPriority.Normal);
@@ -1415,12 +1415,12 @@ for (int i = 0; i < 3; i++) {
 #if !GPUFlushAfterPresent
             actFlushGPU.On進行描画();		// Flush GPU	// EndScene()～Present()間 (つまりVSync前) でFlush実行
 #endif
-            #region [ 全画面・ウインドウ切り替え ]
-            if (this.b次のタイミングで全画面・ウィンドウ切り替えを行う)
+            #region [ 全画面_ウインドウ切り替え ]
+            if (this.b次のタイミングで全画面_ウィンドウ切り替えを行う)
             {
                 ConfigIni.b全画面モード = !ConfigIni.b全画面モード;
-                app.t全画面・ウィンドウモード切り替え();
-                this.b次のタイミングで全画面・ウィンドウ切り替えを行う = false;
+                app.t全画面_ウィンドウモード切り替え();
+                this.b次のタイミングで全画面_ウィンドウ切り替えを行う = false;
             }
             #endregion
             #region [ 垂直基線同期切り替え ]
@@ -1763,7 +1763,7 @@ for (int i = 0; i < 3; i++) {
             base.InactiveSleepTime = TimeSpan.FromMilliseconds((float)(ConfigIni.n非フォーカス時スリープms));	// #23568 2010.11.3 yyagi: to support valiable sleep value when !IsActive
             // #23568 2010.11.4 ikanick changed ( 1 -> ConfigIni )
 #if WindowedFullscreen
-			this.t全画面・ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
+			this.t全画面_ウィンドウモード切り替え();				// #30666 2013.2.2 yyagi: finalize settings for "Maximized window mode"
 #endif
             actFlushGPU = new CActFlushGPU();
             //---------------------
@@ -2541,7 +2541,7 @@ for (int i = 0; i < 3; i++) {
                 if (ConfigIni != null)
                 {
                     ConfigIni.bウィンドウモード = !ConfigIni.bウィンドウモード;
-                    this.t全画面・ウィンドウモード切り替え();
+                    this.t全画面_ウィンドウモード切り替え();
                 }
                 e.Handled = true;
                 e.SuppressKeyPress = true;
@@ -2572,7 +2572,7 @@ for (int i = 0; i < 3; i++) {
             if (mb.Equals(MouseButtons.Left) && ConfigIni.bIsAllowedDoubleClickFullscreen)	// #26752 2011.11.27 yyagi
             {
                 ConfigIni.bウィンドウモード = false;
-                this.t全画面・ウィンドウモード切り替え();
+                this.t全画面_ウィンドウモード切り替え();
             }
         }
         private void Window_ResizeEnd(object sender, EventArgs e)				// #23510 2010.11.20 yyagi: to get resized window size

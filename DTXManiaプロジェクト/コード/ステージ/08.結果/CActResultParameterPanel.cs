@@ -481,11 +481,11 @@ namespace DTXMania
                     this.txスキルパネル.t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y);
                     this.txネームプレート用文字[ j ].t2D描画(CDTXMania.app.Device, this.n本体X[j], this.n本体Y);
 
-                    this.t小文字表示(80 + this.n本体X[j], 72 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPerfect数・Auto含まない));
-                    this.t小文字表示(80 + this.n本体X[j], 102 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGreat数・Auto含まない));
-                    this.t小文字表示(80 + this.n本体X[j], 132 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGood数・Auto含まない));
-                    this.t小文字表示(80 + this.n本体X[j], 162 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPoor数・Auto含まない));
-                    this.t小文字表示(80 + this.n本体X[j], 192 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nMiss数・Auto含まない));
+                    this.t小文字表示(80 + this.n本体X[j], 72 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPerfect数_Auto含まない));
+                    this.t小文字表示(80 + this.n本体X[j], 102 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGreat数_Auto含まない));
+                    this.t小文字表示(80 + this.n本体X[j], 132 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nGood数_Auto含まない));
+                    this.t小文字表示(80 + this.n本体X[j], 162 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nPoor数_Auto含まない));
+                    this.t小文字表示(80 + this.n本体X[j], 192 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].nMiss数_Auto含まない));
                     this.t小文字表示(80 + this.n本体X[j], 222 + this.n本体Y, string.Format("{0,4:###0}", CDTXMania.stage結果.st演奏記録[j].n最大コンボ数));
 
 

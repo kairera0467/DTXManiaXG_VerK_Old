@@ -1769,7 +1769,7 @@ Debug.WriteLine( dBPM + ":" + c曲リストノード.strタイトル );
 		}
 
 		/// <summary>
-		/// 検索を中断・スローダウンする
+		/// 検索を中断_スローダウンする
 		/// </summary>
 		private void SlowOrSuspendSearchTask()
 		{

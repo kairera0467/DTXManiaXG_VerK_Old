@@ -139,7 +139,7 @@ namespace DTXMania
         }
 
         /// <summary>
-        /// 簡易CONFIGのAUTO設定値の初期値を、ConfigIniクラスから取得・推測する
+        /// 簡易CONFIGのAUTO設定値の初期値を、ConfigIniクラスから取得_推測する
         /// </summary>
         /// <returns>Drums,Guitar,BassのAutoMode値のリスト</returns>
         private List<int> tConfigureAuto_DefaultSettings()

@@ -13,13 +13,13 @@ namespace DTXMania
     internal class CAct演奏スキルメーター : CActivity
     {
         // グラフ仕様
-        // ・ギターとベースで同時にグラフを出すことはない。
+        // _ギターとベースで同時にグラフを出すことはない。
         //
-        // ・目標のメーター画像
+        // _目標のメーター画像
         //   →ゴーストがあった
-        // 　　・ゴーストに基づいたグラフ(リアルタイム比較)
+        // 　　_ゴーストに基づいたグラフ(リアルタイム比較)
         // 　→なかった
-        // 　　・ScoreIniの自己ベストのグラフ
+        // 　　_ScoreIniの自己ベストのグラフ
         //
 
 		private STDGBVALUE<int> nGraphBG_XPos = new STDGBVALUE<int>(); //ドラムにも座標指定があるためDGBVALUEとして扱う。

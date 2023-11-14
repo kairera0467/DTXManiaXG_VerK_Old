@@ -47,7 +47,7 @@ namespace DTXMania
                 nJudgeLinePosY_delta_Drums = _nJudgeLinePosY_delta_Drums;
 				for ( int j = 0; j < FIRE_MAX; j++ )
 				{
-					if ( this.st火花[ j ].b使用中 && this.st火花[ j ].nLane == (int) lane )		// yyagi 負荷軽減のつもり・・・だが、あまり効果なさげ
+					if ( this.st火花[ j ].b使用中 && this.st火花[ j ].nLane == (int) lane )		// yyagi 負荷軽減のつもり___だが、あまり効果なさげ
 					{
 						this.st火花[ j ].ct進行.t停止();
 						this.st火花[ j ].b使用中 = false;

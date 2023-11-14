@@ -388,25 +388,25 @@ namespace DTXMania
                         this.txスキルパネル.t2D描画( CDTXMania.app.Device, this.n本体X[ i ], this.n本体Y );
                         this.txネームプレート用文字[ i - 1 ].t2D描画( CDTXMania.app.Device, this.n本体X[ i ], this.n本体Y );
 
-                        this.t小文字表示( 80 + this.n本体X[ i ], 72 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Perfect ) );
-                        this.t小文字表示( 80 + this.n本体X[ i ], 102 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Great ) );
-                        this.t小文字表示( 80 + this.n本体X[ i ], 132 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Good ) );
-                        this.t小文字表示( 80 + this.n本体X[ i ], 162 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Poor ) );
-                        this.t小文字表示( 80 + this.n本体X[ i ], 192 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Miss ) );
+                        this.t小文字表示( 80 + this.n本体X[ i ], 72 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Perfect ) );
+                        this.t小文字表示( 80 + this.n本体X[ i ], 102 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Great ) );
+                        this.t小文字表示( 80 + this.n本体X[ i ], 132 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Good ) );
+                        this.t小文字表示( 80 + this.n本体X[ i ], 162 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Poor ) );
+                        this.t小文字表示( 80 + this.n本体X[ i ], 192 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Miss ) );
                         this.t小文字表示( 80 + this.n本体X[ i ], 222 + this.n本体Y, string.Format( "{0,4:###0}", CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.最高値[ i ] ) );
 
                         int n現在のノーツ数 =
-                            CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[ i ].Perfect +
-                            CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[ i ].Great +
-                            CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[ i ].Good +
-                            CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[ i ].Poor +
-                            CDTXMania.stage演奏ギター画面.nヒット数・Auto含む[ i ].Miss;
+                            CDTXMania.stage演奏ギター画面.nヒット数_Auto含む[ i ].Perfect +
+                            CDTXMania.stage演奏ギター画面.nヒット数_Auto含む[ i ].Great +
+                            CDTXMania.stage演奏ギター画面.nヒット数_Auto含む[ i ].Good +
+                            CDTXMania.stage演奏ギター画面.nヒット数_Auto含む[ i ].Poor +
+                            CDTXMania.stage演奏ギター画面.nヒット数_Auto含む[ i ].Miss;
 
-                        dbPERFECT率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Perfect) / n現在のノーツ数 );
-                        dbGREAT率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Great / n現在のノーツ数 ) );
-                        dbGOOD率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Good / n現在のノーツ数 ) );
-                        dbPOOR率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Poor / n現在のノーツ数 ) );
-                        dbMISS率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数・Auto含まない[ i ].Miss / n現在のノーツ数 ) );
+                        dbPERFECT率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Perfect) / n現在のノーツ数 );
+                        dbGREAT率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Great / n現在のノーツ数 ) );
+                        dbGOOD率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Good / n現在のノーツ数 ) );
+                        dbPOOR率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Poor / n現在のノーツ数 ) );
+                        dbMISS率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.nヒット数_Auto含まない[ i ].Miss / n現在のノーツ数 ) );
                         dbMAXCOMBO率 = Math.Round( ( 100.0 * CDTXMania.stage演奏ギター画面.actCombo.n現在のコンボ数.最高値[ i ] / n現在のノーツ数 ) );
 
                         if( double.IsNaN( dbPERFECT率 ) )

@@ -979,7 +979,7 @@ namespace DTXMania
             //CDTXMania.ConfigIni.bAutoPlay.Guitar = ts;
 
             int looptime = (int)Eレーン.GtW - (int)Eレーン.GtR + 1;		// #29390 2013.1.25 yyagi ギターのAutoLane/AutoPick対応に伴い、FLIPもこれに対応
-            for (int i = 0; i < looptime; i++)							// こんなに離れたところを独立して修正しなければならない設計ではいけませんね・・・
+            for (int i = 0; i < looptime; i++)							// こんなに離れたところを独立して修正しなければならない設計ではいけませんね___
             {
                 bool b = CDTXMania.ConfigIni.bAutoPlay[i + (int)Eレーン.BsR];
                 CDTXMania.ConfigIni.bAutoPlay[i + (int)Eレーン.BsR] = CDTXMania.ConfigIni.bAutoPlay[i + (int)Eレーン.GtR];
@@ -1710,7 +1710,7 @@ namespace DTXMania
 			sw.WriteLine( "; 曲データ検索に関するLog出力(0:OFF, 1:ON)" );
 			sw.WriteLine( "TraceSongSearch={0}", this.bLog曲検索ログ出力 ? 1 : 0 );
 			sw.WriteLine();
-			sw.WriteLine( "; 画像やサウンドの作成・解放に関するLog出力(0:OFF, 1:ON)" );
+			sw.WriteLine( "; 画像やサウンドの作成_解放に関するLog出力(0:OFF, 1:ON)" );
 			sw.WriteLine( "TraceCreatedDisposed={0}", this.bLog作成解放ログ出力 ? 1 : 0 );
 			sw.WriteLine();
 			sw.WriteLine( "; DTX読み込み詳細に関するLog出力(0:OFF, 1:ON)" );
