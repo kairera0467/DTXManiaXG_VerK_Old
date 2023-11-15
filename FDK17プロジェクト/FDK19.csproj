@@ -73,7 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="コード\00.共通\CApplicationForm.cs" />
     <Compile Include="コード\00.共通\CD3DSettings.cs" />
     <Compile Include="コード\00.共通\COS.cs" />
     <Compile Include="コード\00.共通\CPowerManagement.cs" />

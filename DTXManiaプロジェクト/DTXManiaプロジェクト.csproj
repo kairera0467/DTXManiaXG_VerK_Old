@@ -212,7 +212,6 @@
     <Compile Include="コード\プラグイン\CPluginHost.cs" />
     <Compile Include="コード\プラグイン\IPluginActivity.cs" />
     <Compile Include="コード\プラグイン\IPluginHost.cs" />
-    <Compile Include="コード\全体\App.cs" />
     <Compile Include="コード\全体\CActFlushGPU.cs" />
     <Compile Include="コード\全体\CConfigIni.cs" />
     <Compile Include="コード\全体\CDTXMania.cs" />
@@ -222,9 +221,6 @@
     <Compile Include="コード\全体\CPrivateFont.cs" />
     <Compile Include="コード\全体\CSkin.cs" />
     <Compile Include="コード\ステージ\07.演奏\CAct演奏Dshow.cs" />
-    <Compile Include="コード\全体\Cメインウィンドウ.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="コード\全体\C定数.cs" />
     <Compile Include="コード\全体\C文字コンソール.cs" />
     <Compile Include="コード\全体\Folder.cs">
