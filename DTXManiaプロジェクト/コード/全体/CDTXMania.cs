@@ -39,11 +39,7 @@ namespace DTXMania
             get;
             protected set;
         }
-        public static CApp App
-        {
-            get;
-            private set;
-        }
+
         public static C文字コンソール act文字コンソール
         {
             get;
@@ -1530,7 +1526,7 @@ for (int i = 0; i < 3; i++) {
         {
             try
             {
-                return new CTexture(CDTXMania.App.D3D9Device, width, height, CDTXMania.TextureFormat);
+                return new CTexture(CDTXMania.app.Device, width, height, CDTXMania.TextureFormat);
             }
             catch
             {
